@@ -24,12 +24,15 @@ This repository currently holds the **proposed build contract** (brief, spec, ex
 | `docs/product/Technical_Spec.md` | Normative spec: identity/revisions, node/relation semantics, persistence model, API contracts, readiness/scheduling, context algorithm, change impact, effect ledger, verification, acceptance backlog C01–C20 |
 | `docs/product/Harness.schema.json` | Derived single-file bundle embedding all 18 schema resources (JSON Schema Draft 2020-12); validates unified packages |
 | `docs/product/build-repo-knowledge.zip` | Reference APM skill package for the repository-knowledge context layer (see Packaging) |
+| `engine/` | **The absorbed memex engine (the harness brain)** — full source from `phanijapps/memex@feat/project-concept-types` (v0.5.0): `src/memex` (domain/application/infrastructure/CLI/MCP), harness marketplace adapters (pi/Claude/Codex/Copilot), tests, eval harness, ADRs, specs, docs. Imported as a history-preserving merge; browse engine history with `git log memex/engine-line` |
 
 Planned layout (per the brief's deliverable boundaries): `schemas/` (modular source schemas), `examples/` (synthetic fixtures incl. unified package + registered extension), `tools/` and `tests/` (reference checker, adversarial contract tests), `skills/` (the skill suite). When those directories land, update this map.
 
 ## Build Instructions
 
-Nothing is built yet — the specs and schemas are the current deliverable. Until code lands:
+The engine (Plane 1) is now live at `engine/`; the harness planes (2–3) are still contract-only. Until that code lands:
+
+- **Engine:** Python 3.12+ with `uv` — `cd engine && uv run memex --help`; tests via `cd engine && uv run pytest`. It is the absorbed `phanijapps/memex` codebase; do not fork behavior there without checking its ADRs (`engine/docs/adr/`).
 
 - Treat `docs/product/Technical_Spec.md` and the 18 schemas as the source of truth. Do not edit spec semantics casually; changes are compatibility events (see Guidelines).
 - Validation tooling: JSON Schema Draft 2020-12 with **format checking explicitly enabled** (e.g. python-jsonschema — format keywords are informational by default). `common.schema.json` and `api.schema.json` are definition libraries; validate concrete documents or named definitions, never those library roots. Schema refs resolve through a frozen local registry, never by fetching a URI.

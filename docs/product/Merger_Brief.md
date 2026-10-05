@@ -131,9 +131,10 @@ authoritative injection path.
 
 1. `memex_beta` renames to **memex**; owns contracts (`schemas/`, spec,
    briefs) and the new planes.
-2. Absorb `~/projects/memex` `src/memex` as the Plane-1 store engine module;
-   migrate its eval harness, specs, and ADRs (the ADR history is the decision
-   ledger).
+2. ~~Absorb `~/projects/memex` `src/memex` as the Plane-1 store engine
+   module~~ **Done (2026-10-05):** full repo merged at `engine/` with history
+   (merge commit + `memex/engine-line` ref); engine imports and builds as
+   v0.5.0. Its eval harness, specs, and ADRs came with it.
 3. `build-repo-knowledge` becomes the Plane-1b wiki engine, its output
    mapped onto harness contracts (SOURCE nodes, evidence, `derived_from`).
 4. Published `phanijapps/memex` supersedes/redirects; typed front matter is
