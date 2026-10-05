@@ -1,0 +1,4465 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.org/vsg/1.0.0/harness.schema.json",
+  "title": "Versioned Solution Graph Harness Bundle",
+  "description": "Self-contained package schema with embedded resources. The trusted runtime separately applies extension-registry payload validation.",
+  "$ref": "https://schemas.example.org/vsg/1.0.0/package.schema.json",
+  "$defs": {
+    "api": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/api.schema.json",
+      "title": "Api",
+      "description": "Closed API request and error envelopes. Reference a named $defs entry, not this library root.",
+      "$defs": {
+        "CommitRequest": {
+          "type": "object",
+          "properties": {
+            "operation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_package_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "operation_id",
+            "expected_package_revision"
+          ],
+          "additionalProperties": false
+        },
+        "ContextRequest": {
+          "type": "object",
+          "properties": {
+            "operation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_package_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "task_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "skill_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            }
+          },
+          "required": [
+            "operation_id",
+            "expected_package_revision",
+            "task_ref",
+            "skill_name"
+          ],
+          "additionalProperties": false
+        },
+        "DispatchRequest": {
+          "type": "object",
+          "properties": {
+            "operation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_package_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "expected_task_state_version": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "context_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "operation_id",
+            "expected_package_revision",
+            "expected_task_state_version",
+            "context_id"
+          ],
+          "additionalProperties": false
+        },
+        "WorkerReport": {
+          "type": "object",
+          "properties": {
+            "operation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_state_version": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "fence_token": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "requested_state": {
+              "type": "string",
+              "enum": [
+                "VERIFYING",
+                "FAILED"
+              ]
+            },
+            "outputs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "output_id": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                  },
+                  "artifact_id": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                  }
+                },
+                "required": [
+                  "output_id",
+                  "artifact_id"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 0,
+              "maxItems": 100000
+            },
+            "verification_result_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            },
+            "failure": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Blocker"
+            }
+          },
+          "required": [
+            "operation_id",
+            "expected_state_version",
+            "fence_token",
+            "requested_state",
+            "outputs",
+            "verification_result_ids"
+          ],
+          "additionalProperties": false
+        },
+        "OperationObservation": {
+          "type": "object",
+          "properties": {
+            "observation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_state_version": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "fence_token": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "outcome": {
+              "type": "string",
+              "enum": [
+                "CONFIRMED_SUCCESS",
+                "CONFIRMED_FAILURE"
+              ]
+            },
+            "receipt_artifact_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "observation_id",
+            "expected_state_version",
+            "fence_token",
+            "outcome",
+            "receipt_artifact_id"
+          ],
+          "additionalProperties": false
+        },
+        "LifecycleRequest": {
+          "type": "object",
+          "properties": {
+            "operation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "expected_package_revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "desired_state": {
+              "type": "string",
+              "enum": [
+                "ACTIVE",
+                "PAUSED",
+                "RELEASE_READY",
+                "COMPLETED",
+                "CANCELLED"
+              ]
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            }
+          },
+          "required": [
+            "operation_id",
+            "expected_package_revision",
+            "desired_state",
+            "rationale"
+          ],
+          "additionalProperties": false
+        },
+        "Error": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                },
+                "message": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 20000
+                },
+                "retryable": {
+                  "type": "boolean"
+                },
+                "correlation_id": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                },
+                "details": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "reason": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 20000
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "reason"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 0,
+                  "maxItems": 100000
+                }
+              },
+              "required": [
+                "code",
+                "message",
+                "retryable",
+                "correlation_id",
+                "details"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "error"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "attempt": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/attempt.schema.json",
+      "title": "Attempt",
+      "description": "Runtime-owned attempt snapshot. A worker cannot authoritatively change its state or fencing token.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "attempt_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "task_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "context_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "state_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "RUNNING",
+            "VERIFYING",
+            "SUCCEEDED",
+            "FAILED",
+            "CANCELLED",
+            "RECONCILE_REQUIRED"
+          ]
+        },
+        "fence_token": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "worker_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "started_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "finished_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "repository_pins": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/RepoPin"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "output_id": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "artifact_id": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              }
+            },
+            "required": [
+              "output_id",
+              "artifact_id"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "operation_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "verification_result_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "failure": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Blocker"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "attempt_id",
+        "task_ref",
+        "context_id",
+        "state_version",
+        "state",
+        "fence_token",
+        "worker_ref",
+        "started_at",
+        "repository_pins",
+        "outputs",
+        "operation_ids",
+        "verification_result_ids",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "SUCCEEDED",
+                  "FAILED",
+                  "CANCELLED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "finished_at"
+            ]
+          }
+        }
+      ]
+    },
+    "common": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/common.schema.json",
+      "title": "Common",
+      "description": "Reusable closed envelopes and scalar contracts. This library schema is not an API document type.",
+      "$defs": {
+        "Id": {
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9._:-]{0,119}$"
+        },
+        "Version": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+        },
+        "Digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "Timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "NodeRef": {
+          "type": "object",
+          "properties": {
+            "node_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "node_id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "RelationRef": {
+          "type": "object",
+          "properties": {
+            "relation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            }
+          },
+          "required": [
+            "relation_id",
+            "revision"
+          ],
+          "additionalProperties": false
+        },
+        "PolicyRef": {
+          "type": "object",
+          "properties": {
+            "policy_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "version": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+            },
+            "sha256": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+            }
+          },
+          "required": [
+            "policy_id",
+            "version",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "RepoPin": {
+          "type": "object",
+          "properties": {
+            "repository_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "uri": {
+              "type": "string",
+              "format": "uri"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$"
+            }
+          },
+          "required": [
+            "repository_id",
+            "uri",
+            "commit"
+          ],
+          "additionalProperties": false
+        },
+        "Decimal": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+        },
+        "Budget": {
+          "type": "object",
+          "properties": {
+            "max_input_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_output_tokens": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_attempts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_duration_seconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "max_cost_usd": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Decimal"
+            }
+          },
+          "required": [
+            "max_input_tokens",
+            "max_output_tokens",
+            "max_attempts",
+            "max_duration_seconds",
+            "max_cost_usd"
+          ],
+          "additionalProperties": false
+        },
+        "Extensions": {
+          "type": "object",
+          "maxProperties": 64,
+          "patternProperties": {
+            "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$": {
+              "type": "object",
+              "properties": {
+                "version": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+                },
+                "data": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "version",
+                "data"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false,
+          "description": "Namespaced extension envelopes. Payload validation and behavioral permissions come from the trusted registry."
+        },
+        "Applicability": {
+          "type": "object",
+          "properties": {
+            "scope": {
+              "type": "string",
+              "enum": [
+                "INITIATIVE",
+                "REPOSITORY",
+                "NODE"
+              ]
+            },
+            "repository_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 1,
+              "maxItems": 100000,
+              "uniqueItems": true
+            },
+            "node_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 1,
+              "maxItems": 100000,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "scope"
+          ],
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "scope": {
+                    "const": "INITIATIVE"
+                  }
+                }
+              },
+              "then": {
+                "not": {
+                  "anyOf": [
+                    {
+                      "required": [
+                        "repository_ids"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "node_ids"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "scope": {
+                    "const": "REPOSITORY"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "repository_ids"
+                ],
+                "not": {
+                  "required": [
+                    "node_ids"
+                  ]
+                }
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "scope": {
+                    "const": "NODE"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "node_ids"
+                ],
+                "not": {
+                  "required": [
+                    "repository_ids"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "OutputSlot": {
+          "type": "object",
+          "properties": {
+            "output_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "description": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "artifact_kind": {
+              "type": "string",
+              "enum": [
+                "SOURCE",
+                "PATCH",
+                "BUILD",
+                "TEST_REPORT",
+                "CONTEXT",
+                "RECEIPT",
+                "ENVIRONMENT",
+                "DOCUMENT",
+                "OTHER"
+              ]
+            },
+            "verification_required": {
+              "type": "boolean"
+            },
+            "schema_uri": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "output_id",
+            "description",
+            "artifact_kind",
+            "verification_required"
+          ],
+          "additionalProperties": false
+        },
+        "Blocker": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "detail": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "node_refs": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "code",
+            "detail",
+            "node_refs"
+          ],
+          "additionalProperties": false
+        },
+        "Artifact": {
+          "type": "object",
+          "properties": {
+            "artifact_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "SOURCE",
+                "PATCH",
+                "BUILD",
+                "TEST_REPORT",
+                "CONTEXT",
+                "RECEIPT",
+                "ENVIRONMENT",
+                "DOCUMENT",
+                "OTHER"
+              ]
+            },
+            "media_type": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "storage_uri": {
+              "type": "string",
+              "pattern": "^artifact://[A-Za-z0-9._/-]+$"
+            },
+            "sha256": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+            },
+            "size_bytes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9007199254740991
+            },
+            "created_at": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+            },
+            "producer_attempt_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "extensions": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+            }
+          },
+          "required": [
+            "artifact_id",
+            "kind",
+            "media_type",
+            "storage_uri",
+            "sha256",
+            "size_bytes",
+            "created_at",
+            "extensions"
+          ],
+          "additionalProperties": false
+        },
+        "AuthorityRecord": {
+          "type": "object",
+          "properties": {
+            "record_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "node_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "decision": {
+              "type": "string",
+              "enum": [
+                "ACCEPT",
+                "REJECT",
+                "SUPERSEDE"
+              ]
+            },
+            "actor_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "policy_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/PolicyRef"
+            },
+            "created_at": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "evidence_artifact_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "record_id",
+            "node_ref",
+            "decision",
+            "actor_ref",
+            "policy_ref",
+            "created_at",
+            "rationale",
+            "evidence_artifact_ids"
+          ],
+          "additionalProperties": false
+        },
+        "NodeState": {
+          "type": "object",
+          "properties": {
+            "node_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "authority_state": {
+              "type": "string",
+              "enum": [
+                "PROPOSED",
+                "ACCEPTED",
+                "REJECTED",
+                "SUPERSEDED"
+              ]
+            },
+            "validity": {
+              "type": "string",
+              "enum": [
+                "CURRENT",
+                "NEEDS_REVIEW",
+                "STALE"
+              ]
+            },
+            "authority_record_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "node_ref",
+            "authority_state",
+            "validity",
+            "authority_record_ids"
+          ],
+          "additionalProperties": false
+        },
+        "TaskState": {
+          "type": "object",
+          "properties": {
+            "task_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "state_version": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "READY",
+                "RUNNING",
+                "VERIFYING",
+                "SUCCEEDED",
+                "FAILED",
+                "BLOCKED",
+                "CANCELLED"
+              ]
+            },
+            "last_attempt_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "blockers": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Blocker"
+              },
+              "minItems": 0,
+              "maxItems": 100000
+            }
+          },
+          "required": [
+            "task_ref",
+            "state_version",
+            "state",
+            "blockers"
+          ],
+          "additionalProperties": false
+        },
+        "SkillRef": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "version": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+            },
+            "sha256": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+            }
+          },
+          "required": [
+            "name",
+            "version",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "ImplementationPin": {
+          "type": "object",
+          "properties": {
+            "repository_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^([a-f0-9]{40}|[a-f0-9]{64})$"
+            }
+          },
+          "required": [
+            "repository_id",
+            "commit"
+          ],
+          "additionalProperties": false
+        },
+        "ChangeDisposition": {
+          "type": "object",
+          "properties": {
+            "disposition_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "old_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "new_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "affected_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+            },
+            "action": {
+              "type": "string",
+              "enum": [
+                "RETAIN",
+                "REVISE",
+                "REPLACE",
+                "DEFER"
+              ]
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000
+            },
+            "authority_record_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            },
+            "policy_ref": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/PolicyRef"
+            },
+            "created_at": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+            }
+          },
+          "required": [
+            "disposition_id",
+            "old_ref",
+            "new_ref",
+            "affected_ref",
+            "action",
+            "rationale",
+            "authority_record_id",
+            "policy_ref",
+            "created_at"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    "context": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/context.schema.json",
+      "title": "Context",
+      "description": "Frozen context manifest. READY requires semantic coverage, permissions, artifact integrity, and budget checks beyond shape validation.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "context_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "tenant_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "initiative_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "package_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "task_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "policy_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/PolicyRef"
+        },
+        "skill_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/SkillRef"
+        },
+        "schema_bundle_sha256": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+        },
+        "loader_version": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+        },
+        "tokenizer_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "budget": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Budget"
+        },
+        "used_input_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "overhead_tokens": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "READY",
+            "CONTEXT_INSUFFICIENT"
+          ]
+        },
+        "selections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_ref": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "mandatory": {
+                "type": "boolean"
+              },
+              "artifact_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                },
+                "minItems": 0,
+                "maxItems": 100000,
+                "uniqueItems": true
+              },
+              "token_count": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 9007199254740991
+              },
+              "trust": {
+                "const": "DATA"
+              }
+            },
+            "required": [
+              "node_ref",
+              "reason",
+              "mandatory",
+              "artifact_ids",
+              "token_count",
+              "trust"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1,
+          "maxItems": 100000
+        },
+        "omissions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "node_ref": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "mandatory": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "reason",
+              "mandatory"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "rendered_artifact_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "created_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "context_id",
+        "tenant_id",
+        "initiative_id",
+        "package_revision",
+        "task_ref",
+        "policy_ref",
+        "skill_ref",
+        "schema_bundle_sha256",
+        "loader_version",
+        "tokenizer_id",
+        "budget",
+        "used_input_tokens",
+        "overhead_tokens",
+        "outcome",
+        "selections",
+        "omissions",
+        "created_at",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "READY"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "rendered_artifact_id"
+            ]
+          }
+        }
+      ]
+    },
+    "event": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/event.schema.json",
+      "title": "Event",
+      "description": "Transactional outbox envelope. v1 payload is informational and never independently authorizes an action.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "event_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "tenant_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "initiative_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "sequence": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "package_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "event_type": {
+          "type": "string",
+          "enum": [
+            "GRAPH_COMMITTED",
+            "AUTHORITY_CHANGED",
+            "CONTEXT_CREATED",
+            "ATTEMPT_CHANGED",
+            "OPERATION_CHANGED",
+            "VERIFICATION_RECORDED",
+            "LIFECYCLE_CHANGED"
+          ]
+        },
+        "occurred_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "actor_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "policy_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/PolicyRef"
+        },
+        "correlation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "payload": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "event_id",
+        "tenant_id",
+        "initiative_id",
+        "sequence",
+        "package_revision",
+        "event_type",
+        "occurred_at",
+        "actor_ref",
+        "policy_ref",
+        "correlation_id",
+        "payload",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "extension-registry": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/extension-registry.schema.json",
+      "title": "Extension Registry",
+      "description": "Trusted deployment configuration. Registry entries are not accepted from model-generated packages.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "registry_version": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$"
+              },
+              "version": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+              },
+              "role": {
+                "type": "string",
+                "enum": [
+                  "ANNOTATION",
+                  "NODE_TYPE",
+                  "RELATION_TYPE"
+                ]
+              },
+              "schema_uri": {
+                "type": "string",
+                "format": "uri"
+              },
+              "schema_sha256": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+              },
+              "allowed_locations": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "PACKAGE",
+                    "NODE",
+                    "RELATION",
+                    "CONTEXT",
+                    "ATTEMPT",
+                    "OPERATION",
+                    "ARTIFACT",
+                    "VERIFICATION_RESULT",
+                    "PROPOSAL",
+                    "EVENT"
+                  ]
+                },
+                "minItems": 1,
+                "maxItems": 100000,
+                "uniqueItems": true
+              },
+              "handler_id": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "execution_affecting": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "name",
+              "version",
+              "role",
+              "schema_uri",
+              "schema_sha256",
+              "allowed_locations",
+              "execution_affecting"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "registry_version",
+        "entries"
+      ],
+      "additionalProperties": false
+    },
+    "node-content": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/node-content.schema.json",
+      "title": "Node Content",
+      "description": "Model-proposable content. Contains no authority, execution state, actor, revision, or timestamp fields.",
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "SOURCE",
+            "GOAL",
+            "METRIC",
+            "REQUIREMENT",
+            "ACCEPTANCE",
+            "CONSTRAINT",
+            "QUESTION",
+            "ASSUMPTION",
+            "DECISION",
+            "DESIGN",
+            "TASK",
+            "VERIFICATION",
+            "EXTENSION"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "body": {},
+        "epistemic_state": {
+          "type": "string",
+          "enum": [
+            "DECLARED",
+            "OBSERVED",
+            "INFERRED",
+            "UNKNOWN",
+            "CONFLICTING"
+          ]
+        },
+        "provenance_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "node_id",
+        "kind",
+        "title",
+        "body",
+        "epistemic_state",
+        "provenance_refs",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "SOURCE"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "source_kind": {
+                    "type": "string",
+                    "enum": [
+                      "PRD",
+                      "REPOSITORY",
+                      "CONTRACT",
+                      "DOCUMENT",
+                      "OBSERVATION"
+                    ]
+                  },
+                  "locator": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "source_revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "artifact_id": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                  },
+                  "trust": {
+                    "const": "DATA"
+                  }
+                },
+                "required": [
+                  "source_kind",
+                  "locator",
+                  "source_revision",
+                  "artifact_id",
+                  "trust"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "GOAL"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "metric_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "summary",
+                  "metric_refs"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "METRIC"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "definition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "baseline": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Decimal"
+                  },
+                  "target": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Decimal"
+                  },
+                  "population": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "observation_window": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "method": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "definition",
+                  "unit",
+                  "target",
+                  "population",
+                  "observation_window",
+                  "method"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "REQUIREMENT"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "MUST",
+                      "SHOULD",
+                      "COULD"
+                    ]
+                  },
+                  "acceptance_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "exclusions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000
+                  }
+                },
+                "required": [
+                  "statement",
+                  "priority",
+                  "acceptance_refs",
+                  "exclusions"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ACCEPTANCE"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "requirement_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "given": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "when": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "then": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "verification_method": {
+                    "type": "string",
+                    "enum": [
+                      "UNIT",
+                      "INTEGRATION",
+                      "CONTRACT",
+                      "STATIC",
+                      "MANUAL",
+                      "PERFORMANCE"
+                    ]
+                  }
+                },
+                "required": [
+                  "requirement_refs",
+                  "given",
+                  "when",
+                  "then",
+                  "verification_method"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "CONSTRAINT"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "BUSINESS",
+                      "SECURITY",
+                      "COMPATIBILITY",
+                      "PERFORMANCE",
+                      "OPERATIONS",
+                      "SCOPE"
+                    ]
+                  },
+                  "applicability": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Applicability"
+                  },
+                  "mandatory": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "statement",
+                  "category",
+                  "applicability",
+                  "mandatory"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "QUESTION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "consequence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "enum": [
+                      "OPEN",
+                      "RESOLVED",
+                      "DEFERRED"
+                    ]
+                  },
+                  "resolution_ref": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                  }
+                },
+                "required": [
+                  "question",
+                  "consequence",
+                  "resolution"
+                ],
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "resolution": {
+                          "const": "RESOLVED"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "resolution_ref"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ASSUMPTION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "consequence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "enum": [
+                      "OPEN",
+                      "RESOLVED",
+                      "DEFERRED"
+                    ]
+                  },
+                  "resolution_ref": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                  }
+                },
+                "required": [
+                  "statement",
+                  "consequence",
+                  "resolution"
+                ],
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "resolution": {
+                          "const": "RESOLVED"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "resolution_ref"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "DECISION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "question_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "choice": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "alternatives": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "question_refs",
+                  "choice",
+                  "alternatives",
+                  "rationale"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "DESIGN"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "element_type": {
+                    "type": "string",
+                    "enum": [
+                      "COMPONENT",
+                      "INTERFACE",
+                      "DATA_MODEL",
+                      "WORKFLOW",
+                      "FAILURE_BEHAVIOR"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "requirement_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "decision_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "contract_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "failure_behavior": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "element_type",
+                  "description",
+                  "requirement_refs",
+                  "decision_refs",
+                  "contract_refs",
+                  "failure_behavior"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "TASK"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "task_kind": {
+                    "type": "string",
+                    "enum": [
+                      "INVESTIGATION",
+                      "IMPLEMENTATION",
+                      "VERIFICATION"
+                    ]
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "input_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "repository_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "outputs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/OutputSlot"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  },
+                  "verification_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "completion_mode": {
+                    "type": "string",
+                    "enum": [
+                      "AUTOMATED",
+                      "REVIEW",
+                      "BOTH"
+                    ]
+                  },
+                  "resource_claims": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "budget": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Budget"
+                  },
+                  "stop_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  }
+                },
+                "required": [
+                  "task_kind",
+                  "purpose",
+                  "input_refs",
+                  "repository_ids",
+                  "outputs",
+                  "verification_refs",
+                  "completion_mode",
+                  "resource_claims",
+                  "budget",
+                  "stop_conditions"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "VERIFICATION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "criterion_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "UNIT",
+                      "INTEGRATION",
+                      "CONTRACT",
+                      "STATIC",
+                      "MANUAL",
+                      "PERFORMANCE"
+                    ]
+                  },
+                  "procedure": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "expected": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "criterion_refs",
+                  "method",
+                  "procedure",
+                  "expected"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "EXTENSION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "type_name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$"
+                  },
+                  "type_version": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "type_name",
+                  "type_version",
+                  "data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "node": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/node.schema.json",
+      "title": "Node",
+      "description": "Immutable node revision assigned by the runtime. Authority and validity live in separate projections.",
+      "type": "object",
+      "properties": {
+        "node_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "SOURCE",
+            "GOAL",
+            "METRIC",
+            "REQUIREMENT",
+            "ACCEPTANCE",
+            "CONSTRAINT",
+            "QUESTION",
+            "ASSUMPTION",
+            "DECISION",
+            "DESIGN",
+            "TASK",
+            "VERIFICATION",
+            "EXTENSION"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "body": {},
+        "epistemic_state": {
+          "type": "string",
+          "enum": [
+            "DECLARED",
+            "OBSERVED",
+            "INFERRED",
+            "UNKNOWN",
+            "CONFLICTING"
+          ]
+        },
+        "provenance_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "created_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "created_by": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "node_id",
+        "kind",
+        "title",
+        "body",
+        "epistemic_state",
+        "provenance_refs",
+        "extensions",
+        "revision",
+        "created_at",
+        "created_by"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "SOURCE"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "source_kind": {
+                    "type": "string",
+                    "enum": [
+                      "PRD",
+                      "REPOSITORY",
+                      "CONTRACT",
+                      "DOCUMENT",
+                      "OBSERVATION"
+                    ]
+                  },
+                  "locator": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "source_revision": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 200
+                  },
+                  "artifact_id": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                  },
+                  "trust": {
+                    "const": "DATA"
+                  }
+                },
+                "required": [
+                  "source_kind",
+                  "locator",
+                  "source_revision",
+                  "artifact_id",
+                  "trust"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "GOAL"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "summary": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "metric_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "summary",
+                  "metric_refs"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "METRIC"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "definition": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "unit": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 120
+                  },
+                  "baseline": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Decimal"
+                  },
+                  "target": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Decimal"
+                  },
+                  "population": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "observation_window": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "method": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "definition",
+                  "unit",
+                  "target",
+                  "population",
+                  "observation_window",
+                  "method"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "REQUIREMENT"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "priority": {
+                    "type": "string",
+                    "enum": [
+                      "MUST",
+                      "SHOULD",
+                      "COULD"
+                    ]
+                  },
+                  "acceptance_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "exclusions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000
+                  }
+                },
+                "required": [
+                  "statement",
+                  "priority",
+                  "acceptance_refs",
+                  "exclusions"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ACCEPTANCE"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "requirement_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "given": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "when": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "then": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "verification_method": {
+                    "type": "string",
+                    "enum": [
+                      "UNIT",
+                      "INTEGRATION",
+                      "CONTRACT",
+                      "STATIC",
+                      "MANUAL",
+                      "PERFORMANCE"
+                    ]
+                  }
+                },
+                "required": [
+                  "requirement_refs",
+                  "given",
+                  "when",
+                  "then",
+                  "verification_method"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "CONSTRAINT"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "BUSINESS",
+                      "SECURITY",
+                      "COMPATIBILITY",
+                      "PERFORMANCE",
+                      "OPERATIONS",
+                      "SCOPE"
+                    ]
+                  },
+                  "applicability": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Applicability"
+                  },
+                  "mandatory": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "statement",
+                  "category",
+                  "applicability",
+                  "mandatory"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "QUESTION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "consequence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "enum": [
+                      "OPEN",
+                      "RESOLVED",
+                      "DEFERRED"
+                    ]
+                  },
+                  "resolution_ref": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                  }
+                },
+                "required": [
+                  "question",
+                  "consequence",
+                  "resolution"
+                ],
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "resolution": {
+                          "const": "RESOLVED"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "resolution_ref"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "ASSUMPTION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "statement": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "consequence": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "resolution": {
+                    "type": "string",
+                    "enum": [
+                      "OPEN",
+                      "RESOLVED",
+                      "DEFERRED"
+                    ]
+                  },
+                  "resolution_ref": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                  }
+                },
+                "required": [
+                  "statement",
+                  "consequence",
+                  "resolution"
+                ],
+                "additionalProperties": false,
+                "allOf": [
+                  {
+                    "if": {
+                      "properties": {
+                        "resolution": {
+                          "const": "RESOLVED"
+                        }
+                      }
+                    },
+                    "then": {
+                      "required": [
+                        "resolution_ref"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "DECISION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "question_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "choice": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "alternatives": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "question_refs",
+                  "choice",
+                  "alternatives",
+                  "rationale"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "DESIGN"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "element_type": {
+                    "type": "string",
+                    "enum": [
+                      "COMPONENT",
+                      "INTERFACE",
+                      "DATA_MODEL",
+                      "WORKFLOW",
+                      "FAILURE_BEHAVIOR"
+                    ]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "requirement_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "decision_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "contract_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "failure_behavior": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "element_type",
+                  "description",
+                  "requirement_refs",
+                  "decision_refs",
+                  "contract_refs",
+                  "failure_behavior"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "TASK"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "task_kind": {
+                    "type": "string",
+                    "enum": [
+                      "INVESTIGATION",
+                      "IMPLEMENTATION",
+                      "VERIFICATION"
+                    ]
+                  },
+                  "purpose": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "input_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "repository_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "outputs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/OutputSlot"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  },
+                  "verification_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "completion_mode": {
+                    "type": "string",
+                    "enum": [
+                      "AUTOMATED",
+                      "REVIEW",
+                      "BOTH"
+                    ]
+                  },
+                  "resource_claims": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 500
+                    },
+                    "minItems": 0,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "budget": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Budget"
+                  },
+                  "stop_conditions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000
+                  }
+                },
+                "required": [
+                  "task_kind",
+                  "purpose",
+                  "input_refs",
+                  "repository_ids",
+                  "outputs",
+                  "verification_refs",
+                  "completion_mode",
+                  "resource_claims",
+                  "budget",
+                  "stop_conditions"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "VERIFICATION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "criterion_refs": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  },
+                  "method": {
+                    "type": "string",
+                    "enum": [
+                      "UNIT",
+                      "INTEGRATION",
+                      "CONTRACT",
+                      "STATIC",
+                      "MANUAL",
+                      "PERFORMANCE"
+                    ]
+                  },
+                  "procedure": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  },
+                  "expected": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20000
+                  }
+                },
+                "required": [
+                  "criterion_refs",
+                  "method",
+                  "procedure",
+                  "expected"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "EXTENSION"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "type_name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$"
+                  },
+                  "type_version": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "type_name",
+                  "type_version",
+                  "data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "operation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/operation.schema.json",
+      "title": "Operation",
+      "description": "Effect ledger record created before dispatch. Outcomes require adapter receipts, not model claims.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "attempt_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "adapter_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "action": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "idempotency_key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "fence_token": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "request_sha256": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Digest"
+        },
+        "effect_class": {
+          "type": "string",
+          "enum": [
+            "READ_ONLY",
+            "REVERSIBLE",
+            "IRREVERSIBLE"
+          ]
+        },
+        "state_version": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "PREPARED",
+            "DISPATCHED",
+            "OBSERVED",
+            "COMMITTED",
+            "RECONCILE_REQUIRED",
+            "CANCELLED"
+          ]
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "UNKNOWN",
+            "CONFIRMED_SUCCESS",
+            "CONFIRMED_FAILURE"
+          ]
+        },
+        "receipt_artifact_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "created_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "updated_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "attempt_id",
+        "adapter_id",
+        "action",
+        "idempotency_key",
+        "fence_token",
+        "request_sha256",
+        "effect_class",
+        "state_version",
+        "state",
+        "outcome",
+        "created_at",
+        "updated_at",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "enum": [
+                  "OBSERVED",
+                  "COMMITTED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "receipt_artifact_id"
+            ],
+            "properties": {
+              "outcome": {
+                "enum": [
+                  "CONFIRMED_SUCCESS",
+                  "CONFIRMED_FAILURE"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "package": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/package.schema.json",
+      "title": "Package",
+      "description": "Unified snapshot containing current heads and referenced historical records. Import is a draft proposal; an export never grants authority.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "tenant_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "initiative_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300
+        },
+        "package_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "event_sequence": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "exported_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "lifecycle": {
+          "type": "string",
+          "enum": [
+            "DRAFT",
+            "ACTIVE",
+            "PAUSED",
+            "RELEASE_READY",
+            "COMPLETED",
+            "CANCELLED"
+          ]
+        },
+        "policy_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/PolicyRef"
+        },
+        "scope": {
+          "type": "object",
+          "properties": {
+            "repository_pins": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/RepoPin"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            },
+            "environments": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "minItems": 1,
+              "maxItems": 100000,
+              "uniqueItems": true
+            },
+            "exclusions": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "minItems": 0,
+              "maxItems": 100000
+            },
+            "allowed_action_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "minItems": 0,
+              "maxItems": 100000,
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "repository_pins",
+            "environments",
+            "exclusions",
+            "allowed_action_ids"
+          ],
+          "additionalProperties": false
+        },
+        "root_source_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 1,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/node.schema.json"
+          },
+          "minItems": 1,
+          "maxItems": 100000
+        },
+        "node_states": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeState"
+          },
+          "minItems": 1,
+          "maxItems": 100000
+        },
+        "relations": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/relation.schema.json"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "relation_heads": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/RelationRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "authority_records": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/AuthorityRecord"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "change_dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/ChangeDisposition"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "task_states": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/TaskState"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Artifact"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "contexts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/context.schema.json"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "attempts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/attempt.schema.json"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/operation.schema.json"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "verification_results": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/verification-result.schema.json"
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "tenant_id",
+        "initiative_id",
+        "title",
+        "package_revision",
+        "event_sequence",
+        "exported_at",
+        "lifecycle",
+        "policy_ref",
+        "scope",
+        "root_source_refs",
+        "nodes",
+        "node_states",
+        "relations",
+        "relation_heads",
+        "authority_records",
+        "change_dispositions",
+        "task_states",
+        "artifacts",
+        "contexts",
+        "attempts",
+        "operations",
+        "verification_results",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "proposal": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/proposal.schema.json",
+      "title": "Proposal",
+      "description": "Atomic graph mutation proposal. Authentication and acceptance authority never come from this body.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "proposal_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "operation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "tenant_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "initiative_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "expected_package_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "context_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "origin": {
+          "type": "object",
+          "properties": {
+            "skill_name": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "skill_version": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+            },
+            "invocation_id": {
+              "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "skill_name",
+            "skill_version",
+            "invocation_id"
+          ],
+          "additionalProperties": false
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "put_node"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "node": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/node-content.schema.json"
+                  }
+                },
+                "required": [
+                  "op",
+                  "expected_revision",
+                  "node"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "put_relation"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "relation": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/relation-content.schema.json"
+                  }
+                },
+                "required": [
+                  "op",
+                  "expected_revision",
+                  "relation"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "op": {
+                    "const": "retire_relation"
+                  },
+                  "relation_id": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                  },
+                  "expected_revision": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "op",
+                  "relation_id",
+                  "expected_revision"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 100000
+        },
+        "evidence_artifact_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "proposal_id",
+        "operation_id",
+        "tenant_id",
+        "initiative_id",
+        "expected_package_revision",
+        "origin",
+        "rationale",
+        "commands",
+        "evidence_artifact_ids",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "relation-content": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/relation-content.schema.json",
+      "title": "Relation Content",
+      "description": "Proposable relationship. requires points from dependent task to prerequisite task.",
+      "type": "object",
+      "properties": {
+        "relation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "derived_from",
+            "addresses",
+            "implements",
+            "requires",
+            "checks",
+            "resolves",
+            "supersedes",
+            "conflicts_with",
+            "extension"
+          ]
+        },
+        "from_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "to_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "epistemic_state": {
+          "type": "string",
+          "enum": [
+            "DECLARED",
+            "OBSERVED",
+            "INFERRED",
+            "CONFLICTING"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "body": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "relation_id",
+        "kind",
+        "from_ref",
+        "to_ref",
+        "epistemic_state",
+        "evidence_refs",
+        "body",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "requires"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "output_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "output_ids"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "extension"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "type_name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$"
+                  },
+                  "type_version": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "type_name",
+                  "type_version",
+                  "data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "requires",
+                    "extension"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "relation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/relation.schema.json",
+      "title": "Relation",
+      "description": "Immutable typed relation revision with pinned endpoint revisions.",
+      "type": "object",
+      "properties": {
+        "relation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "derived_from",
+            "addresses",
+            "implements",
+            "requires",
+            "checks",
+            "resolves",
+            "supersedes",
+            "conflicts_with",
+            "extension"
+          ]
+        },
+        "from_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "to_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "epistemic_state": {
+          "type": "string",
+          "enum": [
+            "DECLARED",
+            "OBSERVED",
+            "INFERRED",
+            "CONFLICTING"
+          ]
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "body": {
+          "type": "object"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "created_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "created_by": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "relation_id",
+        "kind",
+        "from_ref",
+        "to_ref",
+        "epistemic_state",
+        "evidence_refs",
+        "body",
+        "extensions",
+        "revision",
+        "created_at",
+        "created_by"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "requires"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "output_ids": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100000,
+                    "uniqueItems": true
+                  }
+                },
+                "required": [
+                  "output_ids"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "extension"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {
+                  "type_name": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9_-]*(\\.[a-z][a-z0-9_-]*){2,}$"
+                  },
+                  "type_version": {
+                    "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Version"
+                  },
+                  "data": {
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "type_name",
+                  "type_version",
+                  "data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "requires",
+                    "extension"
+                  ]
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "body": {
+                "type": "object",
+                "properties": {},
+                "required": [],
+                "additionalProperties": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    "review-request": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/review-request.schema.json",
+      "title": "Review Request",
+      "description": "Authorized review request. Actor, tenant, policy, and resulting authority records are server supplied.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "operation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "expected_package_revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "node_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 1,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "decision": {
+          "type": "string",
+          "enum": [
+            "ACCEPT",
+            "REJECT"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "evidence_artifact_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation_id",
+        "expected_package_revision",
+        "node_refs",
+        "decision",
+        "rationale",
+        "evidence_artifact_ids"
+      ],
+      "additionalProperties": false
+    },
+    "risk-extension": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/risk-extension.schema.json",
+      "title": "Risk Extension",
+      "description": "Example org.acme.delivery_risk annotation payload. Does not change scheduling or approval policy.",
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "reviewer_group": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "required": [
+        "score",
+        "rationale",
+        "reviewer_group"
+      ],
+      "additionalProperties": false
+    },
+    "skill-invocation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/skill-invocation.schema.json",
+      "title": "Skill Invocation",
+      "description": "Runtime-supplied model invocation binding a trusted skill, frozen context, approved route, output contract, and budget.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "invocation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "tenant_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "initiative_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "skill_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/SkillRef"
+        },
+        "context_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "task_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "model_route_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "output_schema_uri": {
+          "type": "string",
+          "format": "uri"
+        },
+        "budget": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Budget"
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "invocation_id",
+        "tenant_id",
+        "initiative_id",
+        "skill_ref",
+        "context_id",
+        "purpose",
+        "model_route_id",
+        "output_schema_uri",
+        "budget",
+        "extensions"
+      ],
+      "additionalProperties": false
+    },
+    "skill-result": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/skill-result.schema.json",
+      "title": "Skill Result",
+      "description": "Model response. Outputs remain untrusted proposals and observations until validated by the runtime.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "invocation_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "PROPOSAL_READY",
+            "MORE_CONTEXT_REQUIRED",
+            "DECISION_REQUIRED",
+            "NO_CHANGE",
+            "UNSUPPORTED",
+            "WORK_REPORTED"
+          ]
+        },
+        "proposal": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/proposal.schema.json"
+        },
+        "work_report": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/api.schema.json#/$defs/WorkerReport"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "finding_id": {
+                "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+              },
+              "severity": {
+                "type": "string",
+                "enum": [
+                  "INFO",
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "CRITICAL"
+                ]
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "affected_refs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                },
+                "minItems": 0,
+                "maxItems": 100000,
+                "uniqueItems": true
+              },
+              "evidence_artifact_ids": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+                },
+                "minItems": 0,
+                "maxItems": 100000,
+                "uniqueItems": true
+              },
+              "resolution_needed": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              }
+            },
+            "required": [
+              "finding_id",
+              "severity",
+              "description",
+              "affected_refs",
+              "evidence_artifact_ids",
+              "resolution_needed"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "requested_context": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "reason": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              },
+              "node_refs": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+                },
+                "minItems": 0,
+                "maxItems": 100000,
+                "uniqueItems": true
+              },
+              "search_query": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 20000
+              }
+            },
+            "required": [
+              "reason",
+              "node_refs"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 0,
+          "maxItems": 100000
+        },
+        "unresolved_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 0,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "invocation_id",
+        "outcome",
+        "findings",
+        "requested_context",
+        "unresolved_refs",
+        "notes",
+        "extensions"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "PROPOSAL_READY"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proposal"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "WORK_REPORTED"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "work_report"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "outcome": {
+                "const": "MORE_CONTEXT_REQUIRED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "requested_context": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "verification-result": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "https://schemas.example.org/vsg/1.0.0/verification-result.schema.json",
+      "title": "Verification Result",
+      "description": "Observed verification result for exact criteria, code, and environment. PASS is never inferred from schema conformance.",
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "result_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "verification_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+        },
+        "criterion_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/NodeRef"
+          },
+          "minItems": 1,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "attempt_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "result": {
+          "type": "string",
+          "enum": [
+            "PASS",
+            "FAIL",
+            "INCONCLUSIVE"
+          ]
+        },
+        "implementation_pins": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/ImplementationPin"
+          },
+          "minItems": 1,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "environment_artifact_id": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "evidence_artifact_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "maxItems": 100000,
+          "uniqueItems": true
+        },
+        "executed_at": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Timestamp"
+        },
+        "runner_ref": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Id"
+        },
+        "exit_code": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20000
+        },
+        "extensions": {
+          "$ref": "https://schemas.example.org/vsg/1.0.0/common.schema.json#/$defs/Extensions"
+        }
+      },
+      "required": [
+        "schema_version",
+        "result_id",
+        "verification_ref",
+        "criterion_refs",
+        "attempt_id",
+        "result",
+        "implementation_pins",
+        "environment_artifact_id",
+        "evidence_artifact_ids",
+        "executed_at",
+        "runner_ref",
+        "notes",
+        "extensions"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
