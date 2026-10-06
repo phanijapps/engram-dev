@@ -21,6 +21,7 @@ This repository currently holds the **proposed build contract** (brief, spec, ex
 | `docs/product/Structured_Brief.md` | The decision brief: problem, desired behavior, scope, architecture, skills to author, milestones M0–M5, evaluation/stop criteria |
 | `docs/product/Merger_Brief.md` | Draft merger brief: memex (memory layer) + Graph Engineering → context engine with knowledge wiki; flaws→fixes map, tensions, sequencing, open decisions |
 | `docs/product/Repo_Knowledge_Skill.md` | Draft v2 design combining build-repo-knowledge (spine) with adapt-to-project's bindingness ladder, normative tier, findings ledger, and safety rails |
+| `docs/product/Engine_Conformance_Strategy.md` | Strategy transforming `engine/` into the knowledge-first context engine: store split, domain additions, pipeline/compiler services, index evolution, UI reorientation, APM packaging, workstreams WS1–WS6 |
 | `docs/product/Technical_Spec.md` | Normative spec: identity/revisions, node/relation semantics, persistence model, API contracts, readiness/scheduling, context algorithm, change impact, effect ledger, verification, acceptance backlog C01–C20 |
 | `docs/product/Harness.schema.json` | Derived single-file bundle embedding all 18 schema resources (JSON Schema Draft 2020-12); validates unified packages |
 | `docs/product/build-repo-knowledge.zip` | Reference APM skill package for the repository-knowledge context layer (see Packaging) |
