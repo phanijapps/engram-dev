@@ -9,12 +9,14 @@ depends_on: [Merger_Brief.md, Repo_Knowledge_Skill.md]
 
 # Engine Conformance Strategy
 
-Transform the absorbed engine (`engine/`, memex v0.5.0) from a memory-centric
-tool into the merged product's core: **per-project knowledge is the headline,
+Transform the engine (`engine/`, memex v0.5.0) and the kit (`kit/`, okf-kit)
+into the merged product's core: **per-project knowledge is the headline,
 memory is a co-equal citizen, compiled context is the product function, and
-the UI reorients around knowledge.** Legacy per-harness pack configs
-(`engine/.agents`, `.claude`, `.codex`) are already removed; they return as
-APM packages (WS5), not as checked-in scaffolding.
+the UI reorients around knowledge.** Two codebases, one product: `kit/` is
+the knowledge plane (project wiki = OKF bundle at `<repo>/wiki/`, per
+`Kit_Wiki_Engine_Plan.md`); `engine/` is the memory plane. Legacy
+per-harness pack configs (`engine/.agents`, `.claude`, `.codex`) are
+removed; they return as APM packages (WS5).
 
 ## 1. Grounding: what the engine is today
 
@@ -31,12 +33,16 @@ APM packages (WS5), not as checked-in scaffolding.
 ## 2. Store split: knowledge lives with the project
 
 **Principle: knowledge about a repository lives in the repository** (Merger
-Brief §6 option A). `~/.memex` remains home for personal and global memory.
+Brief §6 option A), as an **OKF v0.2 bundle** — a directory of concept
+Markdown files with YAML front matter (`type`, `sources`, `generated`,
+`verified`, `status`, `stale_after`), `index.md`, and `log.md`. `~/.memex`
+remains home for personal and global memory. Bundle machinery comes from
+`kit/` (see `Kit_Wiki_Engine_Plan.md`).
 
 | Artifact | Home | Shape |
 |---|---|---|
-| Knowledge wiki (articles, taxonomy, ontology, indexes) | `<repo>/wiki/` (managed dir, git-versioned with the code it describes) | Markdown articles + `manifest.json` + `index.json` |
-| Findings ledger (normative approvals) | `<repo>/wiki/` (`.findings/`) | TOML/JSONL, dedupe key `(source, destination, kind)` |
+| Knowledge wiki (concepts, typed relations, indexes) | `<repo>/wiki/` — an OKF bundle, git-versioned with the code it describes | concept `.md` files + `index.md`/`log.md` + `.okf/` managed state (fingerprints, findings) |
+| Findings ledger (normative approvals) | `<repo>/wiki/.okf/findings.toml` | dedupe key `(source, destination, kind)` |
 | Episodes + transcripts | `~/.memex` | unchanged |
 | Global/project notes (nuggets) | `~/.memex` | unchanged — untyped pages are notes forever |
 | Project registry (repo ↔ wiki mapping, identity) | `~/.memex` | extends workspace_context repo identity |
@@ -47,21 +53,26 @@ first concrete instance of git-as-revision-authority (Merger Brief T1).
 
 ## 3. Domain additions (typed, opt-in, additive)
 
-- `KnowledgeNode` (article): `kind` (system/concept/interface/message/rule/
-  workflow + normative kinds golden-path/constraint/standard), stable ID,
-  taxonomy/ontology refs, evidence records, bindingness label, lifecycle
-  (active/retired/stale). Strict validation only when kind is present.
-- `TypedRelation`: `is_a`, `represents`, `maps_to`, `derived_from`,
-  `checks`, `constrains` — endpoint-validated, replaces ad-hoc link
-  expansion for knowledge (notes keep plain links).
-- `EvidenceRecord`: repo revision, path, locator, content hash, status
-  (declared / implementation-supported / inferred / conflicting / unknown).
-- `FreshnessFingerprint`: source-unit hash set → invalidation inputs.
-- `Finding`: normative/restructuring proposal with disposition
-  (accepted/declined/pending) — never re-propose declined at the observed
-  scope.
+The knowledge node **is an OKF concept** (SPEC §4) extended with
+spec-legal optional keys; no fork of the format:
+
+- Concept `type` values for repo knowledge: system/concept/interface/
+  message/rule/workflow; normative types golden-path/constraint/standard
+  with `bindingness` (explicit / framework-owned / convergent / tentative) —
+  normative `status: stable` requires binding evidence or an accepted
+  finding.
+- `relations: [{ to, kind }]` extension key for typed edges (`is_a`,
+  `represents`, `maps_to`, `derived_from`, `checks`, `constrains`);
+  untyped markdown links remain first-class.
+- Evidence = OKF `sources` entries pinning repo path + content hash
+  (+ commit), with per-claim footnotes; freshness = fingerprints +
+  `stale_after`/NEEDS_REVIEW.
+- Finding (`.okf/findings.toml`): normative/restructuring proposal with
+disposition (accepted/declined/pending) — never re-propose declined at
+the observed scope.
 - `ContextManifest` / `CompiledContext`: selections, omissions, digests,
-  budget accounting (Plane 2 contract seeds).
+  budget accounting (Plane 2 contract seeds; compiler core lives in
+  `kit/core/context.py`).
 
 ## 4. Application service changes
 
@@ -132,9 +143,9 @@ All existing verbs (write/recall/consolidate/approve/types/…) unchanged.
 
 | WS | Deliverable | Gate (exit evidence) |
 |---|---|---|
-| WS1 Store contracts | Typed model + in-repo wiki layout + index schema | Round-trip: untyped stores unchanged; typed wiki rebuilds byte-identical |
-| WS2 Knowledge pipeline | Phases 0–7 in engine, LLM behind port | Reproducibility + coverage-gap report on 2 real repos; findings never re-proposed |
-| WS3 Context compiler | Mandatory closure + manifest + insufficiency | Injection eval: task recall ≥ focused-query baseline (6/6) within budget |
+| WS1 Store contracts | kit U1: OKF 0.2 upgrade + in-repo bundle layout | Round-trip: kit wiki migrated; 0.1 fixtures still validate |
+| WS2 Knowledge pipeline | kit U2–U3: sources+fingerprints, findings+bindingness, gardener port | Reproducibility + coverage-gap report on 2 real repos; findings never re-proposed |
+| WS3 Context compiler | kit U4: mandatory closure + manifest + insufficiency | Injection eval: task recall ≥ focused-query baseline (6/6) within budget |
 | WS4 UI reorientation | New IA in viz | Findings inbox usable; staleness visible; old views still reachable |
 | WS5 APM packaging | build-repo-knowledge v2 pack installs on pi + Claude Code | Fresh-clone install → wiki builds end-to-end |
 | WS6 Delivery loop (Plane 3) | deferred by Merger Brief sequencing | — |
