@@ -1,3 +1,0 @@
-# Plan: dependant
-
-- **Status:** Approved

@@ -1,3 +1,0 @@
-# Spec: Dependant
-
-- **Status:** Approved
