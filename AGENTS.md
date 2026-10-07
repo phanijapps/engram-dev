@@ -30,6 +30,7 @@ This repository currently holds the **proposed build contract** (brief, spec, ex
 | `docs/product/OKF_SPEC_v0.2.md` | Vendored frozen reference copy of the OKF v0.2 spec (Apache-2.0, source: GoogleCloudPlatform/knowledge-catalog) — the canonical concept format for project wikis |
 | `docs/product/Engine_Conformance_Strategy.md` | Strategy for the merged product: memory plane (`engine/`) + knowledge plane (`kit/`), in-repo OKF-bundle wiki, domain extensions, UI reorientation, workstreams WS1–WS6 |
 | `docs/product/Kit_Wiki_Engine_Plan.md` | okf-kit 0.1beta→0.2 upgrade table (U1) + wiki-engine improvements U2–U6 (fingerprints, findings, bindingness, typed relations, context compiler, federation) |
+| `docs/product/Lean_Control_Plane_Review.md` | Subagent code-review synthesis: the 8-op control-plane contract, dispositioned findings, phased lean-down P1–P4 awaiting owner approval, invariants, decisions requested |
 
 Planned layout (per the brief's deliverable boundaries): `schemas/` (modular source schemas), `examples/` (synthetic fixtures incl. unified package + registered extension), `tools/` and `tests/` (reference checker, adversarial contract tests), `skills/` (the skill suite). When those directories land, update this map.
 
