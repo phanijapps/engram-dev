@@ -21,7 +21,7 @@ Layering (hexagonal):
 - `memex/application/` — use cases: `Memex` facade, compiler (token
   estimation / budget packing), consolidator, verify, ports (`LLMClient`).
 - `memex/infrastructure/` — adapters: config, store, search index, harness
-  (hook/transcript capture), `llm_clients`, web server, workspace context.
+  (hook/transcript capture), `llm_clients`, workspace context.
 
 The `Memex` facade (`engine/memex/memex/application/memory.py:56`) is the
 public API surface `memex-core` calls: `write`, `recall`, `recall_task`,
@@ -29,8 +29,9 @@ public API surface `memex-core` calls: `write`, `recall`, `recall_task`,
 `restore`, `approve`, `get_provenance`, `list_sessions`, `status`.
 
 CLI: `memex` — the plumbing/deployed surface (write, recall, consolidate,
-forget, ingest-transcript, rebuild-index, backup, restore, approve, types,
-sessions, info, status, verify). Adapters install its hook/capture surface
+forget, ingest-transcript, clear-transcripts, rebuild-index, backup,
+restore, approve, types, sessions, info, status, verify). Adapters install
+its hook/capture surface
 today; agents target `memex-core` instead.
 
 # Relationships

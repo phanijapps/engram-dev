@@ -43,7 +43,7 @@ re-proposed. The ledger lives with the knowledge it governs, in
 **Front matter.** Non-empty `type` is required; `title` and `description`
 recommended; known keys are `type, title, description, resource, tags,
 timestamp, okf_version`; unknown keys are allowed extensions
-(`engine/okf/okf_kit/core/validate.py:26-31`).
+(`engine/okf/okf_kit/core/validate.py:25-29`).
 
 # Relationships
 
@@ -57,15 +57,37 @@ timestamp, okf_version`; unknown keys are allowed extensions
 - The [one-engine](/systems/one-engine.md) architecture doc references this
   contract for where wiki state lives.
 
+# Counting rules and coverage
+
+Three different concept counts surface in this repo; each is correct
+under its own rule (implementation-supported: `resolve.py:78-81`,
+`wiki/.okf/last-index.json`, raw file enumeration):
+
+- **83 managed concepts** — what `wiki update` wrote/updated under
+  `wiki/code/**` (the indexer's count).
+- **94 concept_count** — `memex-core resolve`: every `.md` under `wiki/`
+  except `index.md`/`log.md` and anything under `.okf/` (managed +
+  curated + summaries).
+- **95 files** — raw `*.md` count: the 94 plus the root `index.md`.
+
+**Coverage:** the managed tree indexes non-test Python across the three
+packages only (`include_tests=False` default, `knowledge.py`). Not
+indexed: `docs/product/**` (the normative spec corpus), `skills/**`,
+root manifests, `engine/okf/tests/fixtures/wiki/**`, and all test
+modules. `code-summaries/repository.md` is managed (regenerates every
+update) — scope statements live here, not there.
+
 # Evidence
 
 - `engine/core/src/memex_core/resolve.py` — `WIKI_DIRNAME`,
   `OKF_STATE_DIRNAME`, `LAST_INDEX_STAMP` constants; freshness comparison.
-- `wiki/.okf/last-index.json` — live stamp from this rebuild:
-  `repo_head 39bad0f…`, 70 written / 0 updated / 0 skipped.
+- `wiki/.okf/last-index.json` — the live freshness stamp (repo_head,
+  written/updated/skipped). Values are read from the file, never restated
+  here: restated copies rot — this line previously froze a 39bad0f-era
+  stamp and was falsified within a day (implementation-supported).
 - `engine/core/src/memex_core/findings.py` — `Finding`,
   `findings_path`, propose/resolve with declined-reproposal guard.
 - `engine/okf/okf_kit/code/managed.py` — the managed-section markers.
-- `engine/okf/okf_kit/core/validate.py:26-31` — front-matter key rules.
+- `engine/okf/okf_kit/core/validate.py:25-29` — front-matter key rules.
 - `docs/product/Memex_Core_Layer.md` — "Conventions" section states the
   same rules as design intent.

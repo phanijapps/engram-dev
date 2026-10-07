@@ -24,8 +24,8 @@ plane internals migrate inward (strangler fig) until one engine remains.
 
 # Relationships
 
-The 8 ops and their per-op delegation, as wired in the code (all imports
-verified at repo HEAD 39bad0f):
+The 8 ops and their per-op delegation, as wired in the code (imports
+verified against the revision pinned in `wiki/.okf/last-index.json`):
 
 | Op | Delegates to | Import site |
 |---|---|---|
@@ -40,9 +40,11 @@ verified at repo HEAD 39bad0f):
 
 The dependency direction is strictly core → planes: `engine/core/pyproject.toml`
 depends on workspace `memex` and `okf-kit`; neither plane imports `memex_core`.
-Package-level dependency edges are also visible in the graphify per-package
-extracts (`core::pkg_memex_core` depends_on `core::pkg_memex`,
-`engine/core/pyproject.toml` L1).
+Package-level dependency: `memex-core` depends on `memex` and `okf-kit`
+(`engine/core/pyproject.toml` L10-13). A graphify per-package extract was
+cited here previously; that artifact is gitignored and local-only, so the
+citation was unverifiable and has been removed (implementation-supported
+for the pyproject edge).
 
 The wiki itself is the dogfood instance of this architecture: it is an OKF
 bundle (knowledge plane product) at `<repo>/wiki/`, indexed by the same
