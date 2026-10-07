@@ -88,6 +88,22 @@ def _build_parser() -> argparse.ArgumentParser:
     p_regen = idx_sub.add_parser("regen", help="Regenerate per-directory index.md files.")
     p_regen.add_argument("bundle")
 
+    p_findings = sub.add_parser("findings", help="Normative proposal ledger for a bundle.")
+    findings_sub = p_findings.add_subparsers(dest="findings_command", required=True)
+    p_f_propose = findings_sub.add_parser("propose", help="Add a finding (deduped per source/destination/kind; declined keys are refused).")
+    p_f_propose.add_argument("bundle")
+    p_f_propose.add_argument("--source", required=True)
+    p_f_propose.add_argument("--destination", required=True)
+    p_f_propose.add_argument("--kind", required=True)
+    p_f_propose.add_argument("--rationale", default="")
+    p_f_list = findings_sub.add_parser("list", help="List findings, optionally filtered by status.")
+    p_f_list.add_argument("bundle")
+    p_f_list.add_argument("--status", choices=["pending", "accepted", "declined"])
+    p_f_resolve = findings_sub.add_parser("resolve", help="Accept or decline a pending finding (terminal).")
+    p_f_resolve.add_argument("bundle")
+    p_f_resolve.add_argument("finding_id")
+    p_f_resolve.add_argument("--decision", required=True, choices=["accepted", "declined"])
+
     p_code = sub.add_parser("code", help="Codebase indexing into OKF concepts.")
     code_sub = p_code.add_subparsers(dest="code_command", required=True)
     p_code_index = code_sub.add_parser(
@@ -176,6 +192,8 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _cmd_index_regen(args)
     if args.command == "code":
         return _cmd_code(args)
+    if args.command == "findings":
+        return _cmd_findings(args)
     return 2  # unreachable: argparse requires a subcommand
 
 
@@ -237,6 +255,39 @@ def _cmd_read(args: argparse.Namespace) -> int:
 def _cmd_index_regen(args: argparse.Namespace) -> int:
     written = regenerate_indexes(Path(args.bundle))
     print(f"regenerated {len(written)} index.md file(s)")
+    return 0
+
+
+def _cmd_findings(args: argparse.Namespace) -> int:
+    import json
+
+    from okf_kit.core.findings import list_findings, propose_finding, resolve_finding
+
+    bundle = Path(args.bundle)
+    if args.findings_command == "propose":
+        result = propose_finding(
+            args.source,
+            args.destination,
+            args.kind,
+            rationale=args.rationale,
+            bundle=bundle,
+        )
+        print(json.dumps(result, indent=2))
+        return 0
+    if args.findings_command == "resolve":
+        try:
+            result = resolve_finding(args.finding_id, decision=args.decision, bundle=bundle)
+        except Exception as exc:  # noqa: BLE001 — CLI boundary
+            print(f"error: {exc}")
+            return 1
+        print(json.dumps(result, indent=2))
+        return 0
+    if args.findings_command == "list":
+        for finding in list_findings(status=args.status, bundle=bundle):
+            print(
+                f"{finding['id']}\t[{finding['status']}]\t{finding['source']} -> "
+                f"{finding['destination']} ({finding['kind']})"
+            )
     return 0
 
 

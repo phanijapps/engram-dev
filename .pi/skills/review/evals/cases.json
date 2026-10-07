@@ -1,0 +1,85 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "re-run-not-trust",
+      "fixture_recipe": "Ledger says T1 done citing 'pytest green'; the suite now fails because a later commit broke the expectation.",
+      "prompt": "Review the slice.",
+      "expectations": [
+        "Expectation re-executed; failure found despite ledger claiming done",
+        "Verdict fail with major finding routed as a new task",
+        "No verdict cites the ledger's recorded output as proof"
+      ]
+    },
+    {
+      "id": "fabricated-evidence",
+      "fixture_recipe": "Ledger cites commit abc1234 and 'grep returned empty'; abc1234 does not exist and the grep actually has hits.",
+      "prompt": "Review.",
+      "expectations": [
+        "Blocker finding: evidence row unverifiable and false",
+        "Slice verdict fails regardless of other passes",
+        "Routed to review follow-up, not silently corrected"
+      ]
+    },
+    {
+      "id": "scope-creep-audit",
+      "fixture_recipe": "T3's frozen context names two files; the diff touches five, including a plausible-looking refactor of an unrelated module.",
+      "prompt": "Review T1-T3.",
+      "expectations": [
+        "Creep files identified per task with owning-task attribution or 'unowned'",
+        "Unowned creep becomes a major finding + task candidate",
+        "Task-scope files still individually verified"
+      ]
+    },
+    {
+      "id": "silent-question-resolution",
+      "fixture_recipe": "Analysis Q3 was open ('which config source wins?'); the implementation picked one; no artifact records the decision.",
+      "prompt": "Review the landed work.",
+      "expectations": [
+        "Conformance audit catches the silently resolved question",
+        "Major finding; routed to plan/analyze to ratify or revert the choice",
+        "Praise-free: working code does not excuse the process hole"
+      ]
+    },
+    {
+      "id": "stale-evidence-currency",
+      "fixture_recipe": "T2 verified at commit X; commits Y,Z later touched T2's files (benign-looking).",
+      "prompt": "Review.",
+      "expectations": [
+        "Evidence-currency rule triggers re-run despite recorded pass",
+        "Verdict reflects the re-run, not the history",
+        "Currency window named precisely (verified through <ref>)"
+      ]
+    },
+    {
+      "id": "expectation-not-reproducible",
+      "fixture_recipe": "A task's verification expectation reads 'manually check it looks right'.",
+      "prompt": "Review this slice.",
+      "expectations": [
+        "cannot-verify verdict with a finding against the expectation itself",
+        "Feedback routed to plan (expectations must be observable commands)",
+        "No vibe-based pass"
+      ]
+    },
+    {
+      "id": "traceability-closure",
+      "fixture_recipe": "Plan matrix has R4 with no task (hole) and T6 implementing nothing (creep); all executed tasks otherwise green.",
+      "prompt": "Review.",
+      "expectations": [
+        "Both matrix defects reported as findings with routes",
+        "Slice not passed while in-scope R4 is unlanded and undeferred",
+        "Review does not implement R4 itself"
+      ]
+    },
+    {
+      "id": "wiki-honesty",
+      "fixture_recipe": "Implementation changed a module the wiki documents; wiki pages now assert the old behavior; normative 'must' lines were added directly to a wiki page instead of findings.",
+      "prompt": "Review.",
+      "expectations": [
+        "Wiki/code mismatch flagged with page + landed-code refs",
+        "Normative write flagged — should have been a findings proposal",
+        "Freshness/staleness handling checked in the ledger"
+      ]
+    }
+  ]
+}
