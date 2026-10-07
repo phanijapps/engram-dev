@@ -32,6 +32,29 @@ def _check(name: str, passed: bool, detail: str = "") -> dict[str, object]:
     return {"check": name, "ok": passed, "detail": detail}
 
 
+def count_stale_index_rows(nodes, index_manager) -> int:
+    """Rows missing from the index or diverging from their page's current bytes.
+
+    Shared by ``verify`` (index-fresh gate) and ``Memex.status`` so both
+    compute freshness from one definition.
+    """
+    stale = 0
+    for node in nodes:
+        row = index_manager.get(
+            node.slug,
+            scope=node.scope,
+            project_id=node.project_id or "",
+            node_type=node.type,
+        )
+        if (
+            row is None
+            or str(row["content_hash"]) != hash_body(node.body)
+            or str(row["description"] or "") != node.description
+        ):
+            stale += 1
+    return stale
+
+
 def verify(
     memex: Memex,
     *,
@@ -46,20 +69,7 @@ def verify(
     nodes = memex.wiki_store.scan_all(scan_errors)
     checks.append(_check("wiki-parseable", not scan_errors, f"{len(scan_errors)} malformed pages"))
 
-    stale = 0
-    for node in nodes:
-        row = memex.index_manager.get(
-            node.slug,
-            scope=node.scope,
-            project_id=node.project_id or "",
-            node_type=node.type,
-        )
-        if (
-            row is None
-            or str(row["content_hash"]) != hash_body(node.body)
-            or str(row["description"] or "") != node.description
-        ):
-            stale += 1
+    stale = count_stale_index_rows(nodes, memex.index_manager)
     checks.append(_check("index-fresh", stale == 0, f"{stale} stale or missing rows"))
 
     broken: list[str] = []
