@@ -56,5 +56,5 @@ loads without either plane present until an op actually needs it
   search origin interleaving, findings, record/status (e.g.
   `engine/core/tests/test_resolve_knowledge.py`,
   `engine/core/tests/test_ops.py`).
-- [core package summary](/code-summaries/packages/engine/core.md) — module
+- core package summary — module
   impact map (resolve is the most depended-on module: used by 6).

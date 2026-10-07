@@ -69,7 +69,7 @@ bundle (knowledge plane product) at `<repo>/wiki/`, indexed by the same
   `engine/{memex,okf,core}`; one root venv; all three CLIs on PATH.
 - `docs/product/Lean_Control_Plane_Review.md` §1 — the 8-op control-plane
   contract this shape implements; §"Invariants" for the over-trim guard.
-- Package summaries: [core](/code-summaries/packages/engine/core.md),
-  [memex](/code-summaries/packages/engine/memex.md),
+- Package summaries: core,
+  memex,
   [okf](/code-summaries/packages/engine/okf.md),
   [area: engine](/code-summaries/areas/engine.md).

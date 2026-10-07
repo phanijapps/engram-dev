@@ -64,7 +64,7 @@ CLI: `okf` — bundle tooling for wiki maintainers and CI: `init`, `new`,
   "description")`, `broken_links`).
 - `engine/okf/okf_kit/code/indexer.py` — `index_codebase`,
   `extract_module`; `code/managed.py` — managed-section merge/split.
-- This wiki's own generated tree: [knowledge.py](/code/engine/core/src/memex_core/knowledge.py.md)
+- This wiki's own generated tree: knowledge.py
   and [code-summaries/](/code-summaries/repository.md) produced by that
   indexer (revision: see `wiki/.okf/last-index.json`).
 - [okf package summary](/code-summaries/packages/engine/okf.md).

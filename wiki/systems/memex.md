@@ -67,4 +67,4 @@ today; agents target `memex-core` instead.
 - `docs/product/Lean_Control_Plane_Review.md` — review verdict on this
   codebase: well-layered for the trim, `web/` a leaf with zero core imports,
   small test-pinned adapter contract.
-- [memex package summary](/code-summaries/packages/engine/memex.md).
+- memex package summary.
