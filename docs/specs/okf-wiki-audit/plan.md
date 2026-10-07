@@ -64,7 +64,11 @@ bundle to keep the clean-wiki invariant monotonic).
 
 | Task | Status | Evidence |
 |------|--------|----------|
-| — | — | (implement fills: commands, commits, review refs) |
+| T1 | done | `cd engine/okf && uv run pytest -q` → `159 passed in 0.97s` incl. 6 new `_clean_imports` pins; commit `3b47f7c`. Note: wiki was stale (stamp 5d0f9e2) at start — stale-pinned per freshness gate; task truth is source files, reindex belongs to T2 |
+| T2 | todo (ready) | unblocked by T1 |
+| T3 | todo | — |
+| T4 | todo | — |
+| T5 | done | 6/6 U-rows carry exactly one marker (`rg -c` = 6), consistent with L3#18; commit `01aa49b` |
 
 ## Handoff
 
