@@ -12,7 +12,7 @@ managed_by: okf-code
 created: 2026-10-07T23:07:31Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:07:34Z'
+  at: '2026-10-07T23:13:36Z'
 status: stable
 package: engine/okf
 ---
@@ -43,7 +43,7 @@ Generated package summary for `repository/engine/okf`. Purpose: provide a low-to
 - [engine/okf/okf_kit/core/model.py](/code/engine/okf/okf_kit/core/model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `Concept`
 - [engine/okf/okf_kit/core/parse.py](/code/engine/okf/okf_kit/core/parse.py.md) - model module; depends on 0; used by 0; high-signal symbols: `FrontmatterResult`, `split_frontmatter`, `parse_concept`
 - [engine/okf/okf_kit/core/search.py](/code/engine/okf/okf_kit/core/search.py.md) - model module; depends on 0; used by 0; high-signal symbols: `_tokenize`, `_fm_str`, `_fm_str_list`
-- 2 modules omitted from compact summary.
+- 3 modules omitted from compact summary.
 
 # Impact map
 

@@ -248,6 +248,7 @@ def _cmd_code(args: argparse.Namespace) -> int:
 
 def _cmd_code_index(args: argparse.Namespace) -> int:
     from okf_kit.code.indexer import index_codebase
+    from okf_kit.core.stamp import write_freshness_stamp
 
     result = index_codebase(
         Path(args.workspace),
@@ -260,10 +261,18 @@ def _cmd_code_index(args: argparse.Namespace) -> int:
         exclude=args.exclude,
         repos=args.repos,
     )
+    stamp_path = write_freshness_stamp(
+        Path(args.bundle),
+        Path(args.workspace),
+        written=result.written,
+        updated=result.updated,
+        skipped=result.skipped,
+    )
     print(
         "indexed code: "
         f"wrote {result.written}, updated {result.updated}, skipped {result.skipped}"
     )
+    print(f"freshness stamp: {stamp_path}")
     return 0
 
 
