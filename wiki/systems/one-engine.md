@@ -38,5 +38,5 @@ index absorbs the other's rows.
   `pyproject.toml` (`[tool.uv.workspace] members`).
 - Front-face decision: `docs/product/Memex_Core_Layer.md`;
   execution log in `docs/product/Lean_Control_Plane_Review.md`.
-- This wiki itself was produced by the `build-kb` skill driving
-  `memex-core wiki init|update` — twice, byte-identically.
+- This wiki was built by the `build-kb` skill driving `memex-core
+  wiki init|update`; the generated tree is byte-reproducible.
