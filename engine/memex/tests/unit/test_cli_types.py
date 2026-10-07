@@ -189,55 +189,6 @@ def test_recall_filters_by_declared_type(
     assert code == 0 and [h["slug"] for h in result["hits"]] == ["choose-kafka"]
 
 
-def test_mcp_write_rejects_undeclared_type(data_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    from memex import mcp_server
-
-    monkeypatch.setenv("MEMEX_DATA_DIR", str(data_dir))
-    mcp_server._reset()
-    try:
-        result = mcp_server.memex_write(
-            type="decision", title="X", body="b", scope="project", project_id=PROJECT
-        )
-        assert "error" in result and "undeclared type" in str(result["error"])
-        assert not list((data_dir / "docs").rglob("x.md"))
-    finally:
-        mcp_server._reset()
-
-
-def test_mcp_write_names_the_withdrawn_remedy(
-    capsys: pytest.CaptureFixture[str], data_dir: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    _run(capsys, data_dir, "types", "enable", "decision", "--project-id", PROJECT)
-    _run(
-        capsys,
-        data_dir,
-        "write",
-        "--type",
-        "decision",
-        "--title",
-        "Choose Kafka",
-        "--body",
-        "b",
-        "--scope",
-        "project",
-        "--project-id",
-        PROJECT,
-    )
-    _run(capsys, data_dir, "types", "remove", "decision", "--project-id", PROJECT, "--force")
-
-    from memex import mcp_server
-
-    monkeypatch.setenv("MEMEX_DATA_DIR", str(data_dir))
-    mcp_server._reset()
-    try:
-        result = mcp_server.memex_write(
-            type="decision", title="Choose Redis", body="b", scope="project", project_id=PROJECT
-        )
-        assert "error" in result and "withdrawn" in str(result["error"])
-    finally:
-        mcp_server._reset()
-
-
 def test_suggest_counts_tags_that_are_not_types(
     capsys: pytest.CaptureFixture[str], data_dir: Path
 ) -> None:

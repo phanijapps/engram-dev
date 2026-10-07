@@ -5,14 +5,13 @@ build-backend = "hatchling.build"
 [project]
 name = "okf-kit"
 version = "0.1.0"
-description = "Open Knowledge Format (OKF v0.1): core library, CLI, and MCP server."
+description = "Open Knowledge Format (OKF): bundle machinery and CLI (knowledge plane internals)."
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [{ name = "okf-kit" }]
 dependencies = [
     "pyyaml>=6.0",
-    "mcp>=1.0",
     "pydantic>=2.0",
 ]
 
@@ -42,11 +41,10 @@ dev = [
 
 [project.scripts]
 okf = "okf_kit.cli:main"
-okf-mcp = "okf_kit.mcp:main"
 
 # The import package `okf_kit` lives under the `okf-kit/` source directory.
 [tool.hatch.build.targets.wheel]
-packages = ["okf-kit/okf_kit"]
+packages = ["okf_kit"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "THIRD_PARTY_NOTICES.md" = "THIRD_PARTY_NOTICES.md"
@@ -62,7 +60,7 @@ include = [
 
 [tool.pytest.ini_options]
 pythonpath = ["okf-kit"]
-testpaths = ["okf-kit/tests"]
+testpaths = ["tests"]
 addopts = "-ra"
 
 [tool.ruff]

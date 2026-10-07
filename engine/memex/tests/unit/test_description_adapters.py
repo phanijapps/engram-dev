@@ -23,7 +23,6 @@ from memex.infrastructure.config import ConfigLoader, MemexConfig
 from memex.infrastructure.search.index_manager import IndexManager
 from memex.infrastructure.search.link_manager import LinkManager
 from memex.infrastructure.store.wiki_store import WikiStore
-from memex.mcp_server import memex_recall, memex_write
 
 VALID_DESCRIPTION = "signpost sentence for the adapter matrix"
 OVER_512_BYTES = "x" * 513
@@ -82,28 +81,6 @@ def _cli_write(data_dir: Path, description: str) -> int:
     )
 
 
-def _mcp_write(description: str) -> dict[str, object]:
-    result = memex_write(
-        type="entity",
-        title="Adapter target",
-        body="plain body text",
-        scope="global",
-        description=description,
-    )
-    return cast(dict[str, object], result)
-
-
-@pytest.fixture
-def mcp_env(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Iterator[Path]:
-    from memex import mcp_server
-
-    data_dir = tmp_path / "mcp-desc-home"
-    monkeypatch.setenv("MEMEX_DATA_DIR", str(data_dir))
-    mcp_server._reset()
-    yield data_dir
-    mcp_server._reset()
-
-
 class TestAdapterParity:
     """AC-0008: same description contract in Python, CLI, and MCP."""
 
@@ -122,13 +99,6 @@ class TestAdapterParity:
         assert _cli_write(tmp_path / "cli-home", VALID_DESCRIPTION) == 0
         payload = json.loads(capture["out"])
         page = Path(str(payload["file_path"]))
-        assert f'description: "{VALID_DESCRIPTION}"' in page.read_text(encoding="utf-8")
-
-    def test_valid_description_accepted_by_mcp(self, mcp_env: Path) -> None:
-        result = _mcp_write(VALID_DESCRIPTION)
-        assert "error" not in result
-        page = Path(str(result["file_path"]))
-        assert page.is_relative_to(mcp_env)
         assert f'description: "{VALID_DESCRIPTION}"' in page.read_text(encoding="utf-8")
 
     @pytest.mark.parametrize(
@@ -164,19 +134,6 @@ class TestAdapterParity:
         assert "description" in capsys.readouterr().err
         assert not list((data_dir / "docs/global/entities").glob("*.md"))
 
-    @pytest.mark.parametrize(
-        "invalid",
-        [
-            "two\nlines",
-            OVER_512_BYTES,
-            "control\x00char",
-            "carriage\rreturn",
-        ],
-        ids=["newline", "over-512-bytes", "nul", "carriage-return"],
-    )
-    def test_invalid_description_rejected_by_mcp(self, mcp_env: Path, invalid: str) -> None:
-        assert _mcp_write(invalid) == {"error": "invalid arguments for this operation"}
-        assert not list((mcp_env / "docs/global/entities").glob("*.md"))
 
     def test_cli_recall_serializes_description_and_legacy_fields(
         self, tmp_path: Path, capture: dict[str, str]
@@ -185,14 +142,6 @@ class TestAdapterParity:
         assert _cli_write(data_dir, VALID_DESCRIPTION) == 0
         assert cli.main(["--data-dir", str(data_dir), "recall", "signpost"]) == 0
         hit = json.loads(capture["out"])["hits"][0]
-        assert hit["description"] == VALID_DESCRIPTION
-        assert set(hit) >= LEGACY_HIT_KEYS
-
-    def test_mcp_recall_serializes_description_and_legacy_fields(self, mcp_env: Path) -> None:
-        assert "error" not in _mcp_write(VALID_DESCRIPTION)
-        result = cast(RecallResultDict, memex_recall("signpost"))
-        assert result["hits"]
-        hit = cast(dict[str, object], result["hits"][0])
         assert hit["description"] == VALID_DESCRIPTION
         assert set(hit) >= LEGACY_HIT_KEYS
 

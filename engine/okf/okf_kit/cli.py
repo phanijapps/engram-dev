@@ -158,28 +158,6 @@ def _build_parser() -> argparse.ArgumentParser:
         help="Discovered repository id or workspace-relative repository path to index.",
     )
 
-    p_serve = sub.add_parser(
-        "serve", help="Serve a read-only web UI for a bundle (localhost, on demand)."
-    )
-    p_serve.add_argument("bundle")
-    p_serve.add_argument("--host", default="127.0.0.1")
-    p_serve.add_argument("--port", type=int, default=0)
-
-    p_agent = sub.add_parser("agent", help="Install OKF agent assets.")
-    agent_sub = p_agent.add_subparsers(dest="agent_command", required=True)
-    p_agent_install = agent_sub.add_parser(
-        "install", help="Install OKF skills for Claude Code or Codex."
-    )
-    p_agent_install.add_argument("target", choices=("claude-code", "codex"))
-    p_agent_install.add_argument("--scope", choices=("project", "user"), default="project")
-    p_agent_install.add_argument("--dry-run", action="store_true")
-    p_agent_install.add_argument(
-        "--update",
-        action="store_true",
-        default=True,
-        help="Accepted for compatibility; OKF-owned skills refresh by default.",
-    )
-
     return parser
 
 
@@ -198,10 +176,6 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _cmd_index_regen(args)
     if args.command == "code":
         return _cmd_code(args)
-    if args.command == "serve":
-        return _cmd_serve(args)
-    if args.command == "agent":
-        return _cmd_agent(args)
     return 2  # unreachable: argparse requires a subcommand
 
 
@@ -290,34 +264,6 @@ def _cmd_code_index(args: argparse.Namespace) -> int:
         "indexed code: "
         f"wrote {result.written}, updated {result.updated}, skipped {result.skipped}"
     )
-    return 0
-
-
-def _cmd_serve(args: argparse.Namespace) -> int:
-    from okf_kit.web.server import serve as serve_web
-
-    serve_web(Path(args.bundle), host=args.host, port=args.port)
-    return 0
-
-
-def _cmd_agent(args: argparse.Namespace) -> int:
-    if args.agent_command == "install":
-        return _cmd_agent_install(args)
-    return 2
-
-
-def _cmd_agent_install(args: argparse.Namespace) -> int:
-    from okf_kit.agent_install import install_agent_assets
-
-    actions = install_agent_assets(
-        Path.cwd(),
-        args.target,
-        scope=args.scope,
-        dry_run=args.dry_run,
-        update=args.update,
-    )
-    for action in actions:
-        print(action.message)
     return 0
 
 

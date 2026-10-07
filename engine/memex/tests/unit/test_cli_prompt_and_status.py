@@ -9,7 +9,7 @@ from pathlib import Path
 
 import pytest
 
-from memex.cli import _load_turns, _prompt_from_stdin
+from memex.cli import _load_turns
 
 
 class _FakeStdin:
@@ -22,36 +22,6 @@ class _FakeStdin:
 
     def read(self) -> str:
         return self._stream.read()
-
-
-def test_prompt_from_stdin_json_payload(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin('{"prompt": "fix the bug"}'))
-    assert _prompt_from_stdin() == "fix the bug"
-
-
-def test_prompt_from_stdin_tty(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin("", tty=True))
-    assert _prompt_from_stdin() == ""
-
-
-def test_prompt_from_stdin_empty(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin(""))
-    assert _prompt_from_stdin() == ""
-
-
-def test_prompt_from_stdin_raw_text_passthrough(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin("not json, just a prompt"))
-    assert _prompt_from_stdin() == "not json, just a prompt"
-
-
-def test_prompt_from_stdin_non_string_prompt_field(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin('{"prompt": 123}'))
-    assert _prompt_from_stdin() == '{"prompt": 123}'
-
-
-def test_prompt_from_stdin_non_dict_json(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sys, "stdin", _FakeStdin("[1, 2]"))
-    assert _prompt_from_stdin() == "[1, 2]"
 
 
 class TestLoadTurns:
@@ -110,15 +80,6 @@ class TestStatusInfoDispatch:
 
 
 class TestDispatchSmoke:
-    def test_serve_mcp(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-        from memex import cli
-
-        called = []
-        monkeypatch.setattr("memex.mcp_server.run_server", lambda: called.append(1))
-        monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path))
-        monkeypatch.setattr("sys.argv", ["memex", "serve-mcp"])
-        assert cli.main() == 0
-        assert called == [1]
 
     def test_backup(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
         from memex import cli
@@ -137,18 +98,3 @@ class TestDispatchSmoke:
         monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path))
         monkeypatch.setattr("sys.argv", ["memex", "approve", "ghost"])
         assert cli.main() != 0
-
-    def test_install_missing_marketplace(
-        self,
-        monkeypatch: pytest.MonkeyPatch,
-        tmp_path: Path,
-        capsys: pytest.CaptureFixture[str],
-    ) -> None:
-        from memex import cli
-
-        monkeypatch.setattr(
-            "sys.argv",
-            ["memex", "install", "codex", "--from", str(tmp_path / "nope")],
-        )
-        assert cli.main() == 1
-        assert "memex:" in capsys.readouterr().err

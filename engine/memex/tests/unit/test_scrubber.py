@@ -142,28 +142,6 @@ class TestDescriptionScrub:
         assert DESCRIPTION_SECRET not in text
         assert "[REDACTED:openai_key]" in text
 
-    def test_mcp_scrubs_description(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        from memex import mcp_server
-        from memex.mcp_server import memex_write
-
-        monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path / "mcp-scrub-home"))
-        mcp_server._reset()
-        try:
-            result = memex_write(
-                type="entity",
-                title="MCP desc leak",
-                body="clean body",
-                scope="global",
-                description=f"tok {DESCRIPTION_SECRET}",
-            )
-        finally:
-            mcp_server._reset()
-        assert "error" not in result
-        page = Path(str(result["file_path"]))
-        text = page.read_text(encoding="utf-8")
-        assert DESCRIPTION_SECRET not in text
-        assert "[REDACTED:openai_key]" in text
-
     def test_consolidation_scrubs_description(self, data_dir: Path) -> None:
         import json
 

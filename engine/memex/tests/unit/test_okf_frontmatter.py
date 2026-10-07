@@ -428,32 +428,6 @@ class TestReviewedCriteria:
 
 
 class TestAdapterRelations:
-    def test_mcp_write_accepts_both_link_forms(
-        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
-    ) -> None:
-        """AC-0021: the MCP tool takes 'target' and 'target:rel'."""
-        from memex import mcp_server
-
-        monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path / "mcp-okf-home"))
-        mcp_server._reset()
-        try:
-            result = mcp_server.memex_write(
-                type="entity",
-                title="Page",
-                body="b",
-                scope="global",
-                links=["alpha", "beta:depends-on"],
-                parent="estate",
-            )
-            page = Path(str(result["file_path"]))
-            data = _front_matter(page)
-            assert data["links"] == [
-                {"target": "alpha", "rel": "relates-to"},
-                {"target": "beta", "rel": "depends-on"},
-            ]
-            assert data["parent"] == "estate"
-        finally:
-            mcp_server._reset()
 
     def test_consolidation_links_get_a_relation(self, memex: Memex) -> None:
         """AC-0023: a bare consolidation slug becomes a relates-to link."""
