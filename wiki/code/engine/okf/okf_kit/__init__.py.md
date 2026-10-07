@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/__init__.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/__init__.py
 source_hash: 662bef953f1d9a27a6b3f05e108d78e4e0bdb5258cc90a302ff88b99af12d5a2
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -35,8 +38,4 @@ No imports detected.
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/__init__.py`
-- Source hash: `662bef953f1d9a27a6b3f05e108d78e4e0bdb5258cc90a302ff88b99af12d5a2`
 <!-- okf-code:end -->

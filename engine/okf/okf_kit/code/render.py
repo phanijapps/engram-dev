@@ -58,6 +58,7 @@ def render_concept(module: CodeModule) -> str:
         ],
         "source_path": module.source_path,
         "language": module.language,
+        "sources": [{"id": "src", "resource": module.source_path}],
         "source_hash": module.source_hash,
         "managed_by": "okf-code",
         "generated_profile": module.profile,
@@ -153,9 +154,6 @@ def _managed_body(module: CodeModule) -> str:
         "Impact candidates on this page are syntax-derived. Treat them as a "
         "starting point for inspection, not as complete semantic proof of all "
         "callers, callees, or runtime effects.\n\n"
-        "# Citations\n\n"
-        f"- Source: `{module.source_path}`\n"
-        f"- Source hash: `{module.source_hash}`\n"
         f"{MANAGED_END}\n"
     )
 

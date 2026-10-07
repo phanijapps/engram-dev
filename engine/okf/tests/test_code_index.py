@@ -236,6 +236,8 @@ def test_index_codebase_writes_valid_searchable_managed_concepts(tmp_path: Path)
     assert "source_path: pkg/service.py" in text
     assert "language: python" in text
     assert "managed_by: okf-code" in text
+    assert "sources:" in text and "resource: pkg/service.py" in text
+    assert "# Citations" not in text  # superseded by frontmatter sources (§13.1)
     assert "# Overview" in text
     assert "# Symbols" in text
     assert "UserService" in text
@@ -244,7 +246,7 @@ def test_index_codebase_writes_valid_searchable_managed_concepts(tmp_path: Path)
     assert "json" in text
     assert "# Impact notes" in text
     assert "syntax-derived" in text
-    assert "# Citations" in text
+    assert "# Citations" not in text  # superseded by frontmatter sources (§13.1)
     assert "<!-- okf-code:start -->" in text
     assert "<!-- okf-code:end -->" in text
 

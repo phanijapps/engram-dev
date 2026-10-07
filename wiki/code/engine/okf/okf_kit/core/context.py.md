@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/context.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/context.py
 source_hash: 32fa36dbe665c23e46e9bacbeae4cc91df3d32075d5498532a263ba24e8c82f8
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -51,8 +54,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/context.py`. Purpose: 
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/context.py`
-- Source hash: `32fa36dbe665c23e46e9bacbeae4cc91df3d32075d5498532a263ba24e8c82f8`
 <!-- okf-code:end -->

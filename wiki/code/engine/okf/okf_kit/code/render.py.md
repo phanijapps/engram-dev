@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/render.py
 language: python
-source_hash: 81434e864018c114b35af58be22ae070e6b6b1b2f0d4d56f2a37927668b9e2f9
+sources:
+- id: src
+  resource: engine/okf/okf_kit/code/render.py
+source_hash: 475a9fe08736162c61cccb405cceec4879d6bfe2a7d9d51d1b7dd4ff15497953
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -28,23 +31,23 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/render.py`. Purpose: e
 | Kind | Name | Lines |
 |---|---|---|
 | function | `_lifecycle_frontmatter` | 16-30 |
-| function | `render_concept` | 33-73 |
-| function | `render_summary_concept` | 76-140 |
-| function | `_managed_body` | 143-160 |
-| function | `_description` | 163-171 |
-| function | `_overview` | 174-192 |
-| function | `_symbols_table` | 195-207 |
-| function | `_relationships_list` | 210-251 |
-| function | `_title` | 254-257 |
-| function | `_resource` | 260-263 |
-| function | `_role` | 266-279 |
-| function | `_symbol_names` | 282-283 |
-| function | `_summary_links` | 286-308 |
-| function | `_summary_description` | 311-323 |
-| function | `_summary_impact` | 326-360 |
-| function | `_summary_relationships` | 363-377 |
-| function | `_impact_score` | 380-381 |
-| function | `_relationship_counts` | 384-391 |
+| function | `render_concept` | 33-74 |
+| function | `render_summary_concept` | 77-141 |
+| function | `_managed_body` | 144-158 |
+| function | `_description` | 161-169 |
+| function | `_overview` | 172-190 |
+| function | `_symbols_table` | 193-205 |
+| function | `_relationships_list` | 208-249 |
+| function | `_title` | 252-255 |
+| function | `_resource` | 258-261 |
+| function | `_role` | 264-277 |
+| function | `_symbol_names` | 280-281 |
+| function | `_summary_links` | 284-306 |
+| function | `_summary_description` | 309-321 |
+| function | `_summary_impact` | 324-358 |
+| function | `_summary_relationships` | 361-375 |
+| function | `_impact_score` | 378-379 |
+| function | `_relationship_counts` | 382-389 |
 
 # Relationships
 
@@ -61,8 +64,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/render.py`. Purpose: e
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/code/render.py`
-- Source hash: `81434e864018c114b35af58be22ae070e6b6b1b2f0d4d56f2a37927668b9e2f9`
 <!-- okf-code:end -->

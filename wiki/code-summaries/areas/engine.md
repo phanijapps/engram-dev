@@ -12,7 +12,7 @@ managed_by: okf-code
 created: 2026-10-07T23:07:31Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 area: engine
 ---
@@ -38,12 +38,12 @@ Generated area summary for `repository/engine`. Purpose: provide a low-token ent
 - [engine/okf/okf_kit/code/treesitter/runtime.py](/code/engine/okf/okf_kit/code/treesitter/runtime.py.md) - module; depends on 0; used by 0; high-signal symbols: `parse_source`, `root_node`, `node_kind`
 - [engine/okf/okf_kit/core/__init__.py](/code/engine/okf/okf_kit/core/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/core/context.py](/code/engine/okf/okf_kit/core/context.py.md) - model module; depends on 0; used by 0; high-signal symbols: `ConceptNotFound`, `__init__`, `read_concept`
+- [engine/okf/okf_kit/core/findings.py](/code/engine/okf/okf_kit/core/findings.py.md) - model module; depends on 0; used by 0; high-signal symbols: `FindingsError`, `Finding`, `findings_path`
 - [engine/okf/okf_kit/core/index.py](/code/engine/okf/okf_kit/core/index.py.md) - module; depends on 0; used by 0; high-signal symbols: `regenerate_indexes`, `_render_index`, `_str_field`
 - [engine/okf/okf_kit/core/links.py](/code/engine/okf/okf_kit/core/links.py.md) - module; depends on 0; used by 0; high-signal symbols: `is_external_target`, `is_absolute_target`, `cid_segments_valid`
 - [engine/okf/okf_kit/core/model.py](/code/engine/okf/okf_kit/core/model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `Concept`
 - [engine/okf/okf_kit/core/parse.py](/code/engine/okf/okf_kit/core/parse.py.md) - model module; depends on 0; used by 0; high-signal symbols: `FrontmatterResult`, `split_frontmatter`, `parse_concept`
-- [engine/okf/okf_kit/core/search.py](/code/engine/okf/okf_kit/core/search.py.md) - model module; depends on 0; used by 0; high-signal symbols: `_tokenize`, `_fm_str`, `_fm_str_list`
-- 3 modules omitted from compact summary.
+- 4 modules omitted from compact summary.
 
 # Impact map
 

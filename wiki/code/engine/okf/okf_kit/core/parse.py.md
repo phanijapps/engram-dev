@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/parse.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/parse.py
 source_hash: a6fff1bbc564c9644f3aaa40bd4558f4121a14a6a3435d4857c441b0fdf5313b
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:48Z'
 status: stable
 package: engine/okf
 ---
@@ -45,8 +48,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/parse.py`. Purpose: en
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/parse.py`
-- Source hash: `a6fff1bbc564c9644f3aaa40bd4558f4121a14a6a3435d4857c441b0fdf5313b`
 <!-- okf-code:end -->

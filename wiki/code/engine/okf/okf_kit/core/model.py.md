@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/model.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/model.py
 source_hash: cfe686eeb1c8ed3f96d175bbc71d952848b2423a03700063842f242d95791d85
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -41,8 +44,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/model.py`. Purpose: en
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/model.py`
-- Source hash: `cfe686eeb1c8ed3f96d175bbc71d952848b2423a03700063842f242d95791d85`
 <!-- okf-code:end -->

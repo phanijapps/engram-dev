@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/paths.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/code/paths.py
 source_hash: 798f2ed0d350cd788c0798b374937cb792ff298d329f183393e6f735c04efe7e
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -43,8 +46,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/paths.py`. Purpose: en
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/code/paths.py`
-- Source hash: `798f2ed0d350cd788c0798b374937cb792ff298d329f183393e6f735c04efe7e`
 <!-- okf-code:end -->

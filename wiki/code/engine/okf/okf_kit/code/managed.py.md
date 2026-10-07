@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/managed.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/code/managed.py
 source_hash: ff11647db933c9d0b9e5802eee0d02479b59d10c114ca7e2854dc3d3a114c19d
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -39,8 +42,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/managed.py`. Purpose: 
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/code/managed.py`
-- Source hash: `ff11647db933c9d0b9e5802eee0d02479b59d10c114ca7e2854dc3d3a114c19d`
 <!-- okf-code:end -->

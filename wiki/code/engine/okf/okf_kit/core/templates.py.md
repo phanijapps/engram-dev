@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/templates.py
 language: python
-source_hash: 0715079bdfd4829e5edc8836e9ecaf5fe4b2e2c676a7210419e52fe3db3fe3c3
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/templates.py
+source_hash: da938443c583af10390acb1c53d5ebd62c5eb8311525ef747d2d32ee04f28cf6
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:48Z'
 status: stable
 package: engine/okf
 ---
@@ -44,8 +47,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/templates.py`. Purpose
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/templates.py`
-- Source hash: `0715079bdfd4829e5edc8836e9ecaf5fe4b2e2c676a7210419e52fe3db3fe3c3`
 <!-- okf-code:end -->

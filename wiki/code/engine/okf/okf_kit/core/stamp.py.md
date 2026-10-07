@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/stamp.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/stamp.py
 source_hash: a82cbb66d0472a7f2ec548d4061ce78d1f6ebf7208498b699c67dbe486fac770
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:13:16Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:48Z'
 status: stable
 package: engine/okf
 ---
@@ -43,8 +46,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/stamp.py`. Purpose: en
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/stamp.py`
-- Source hash: `a82cbb66d0472a7f2ec548d4061ce78d1f6ebf7208498b699c67dbe486fac770`
 <!-- okf-code:end -->

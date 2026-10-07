@@ -1,10 +1,12 @@
 ---
 type: Decision
-title: Okf-only engine (draft — acceptance pending)
+title: Okf-only engine (accepted 2026-10-07)
 description: 'DRAFT. The engine is okf alone: repository in, knowledge out, tree-sitter for codebase understanding (structural today; business rules, encapsulated logic, patterns, and policies next). A future memex is a consumer layer on top, not a plane. Supersedes the deprecated one-engine strangler direction.'
-status: draft
+status: stable
 created: 2026-10-07
 updated: 2026-10-07
+verified:
+  - { by: human:owner, at: 2026-10-07T23:30:00Z }
 tags: [decision, architecture, okf, draft]
 ---
 

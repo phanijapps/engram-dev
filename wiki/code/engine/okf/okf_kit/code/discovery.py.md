@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/discovery.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/code/discovery.py
 source_hash: c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -58,8 +61,4 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/discovery.py`. Purpose
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/code/discovery.py`
-- Source hash: `c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c`
 <!-- okf-code:end -->

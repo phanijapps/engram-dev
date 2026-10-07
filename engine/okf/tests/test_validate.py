@@ -115,3 +115,88 @@ def test_invalid_cid_is_warning(tmp_path):
     _w(tmp_path, "has space.md", "---\ntype: T\ntitle: A\ndescription: d.\n---\nx\n")
     r = validate_bundle(tmp_path)
     assert _codes(r.warnings, "invalid-cid")
+
+
+# --- OKF 0.2 semantics (audit G1/G6; wave U) ---
+
+
+def test_02_bundle_with_lifecycle_frontmatter_is_clean(tmp_path):
+    _w(tmp_path, "index.md", "---\nokf_version: '0.2'\n---\n# Root\n")
+    _w(
+        tmp_path,
+        "code/mod.py.md",
+        "---\n"
+        "type: CodeModule\n"
+        "title: mod\n"
+        "description: test concept\n"
+        "status: stable\n"
+        "created: 2026-10-07T00:00:00Z\n"
+        "generated: { by: process:okf-code, at: 2026-10-07T00:00:00Z }\n"
+        "sources: [{ id: src, resource: src/mod.py }]\n"
+        "---\n"
+        "<!-- okf-code:start -->\n"
+        "body\n"
+        "<!-- okf-code:end -->\n",
+    )
+    r = validate_bundle(tmp_path)
+    assert r.conformant
+    assert not r.warnings
+    assert not _codes(r.info, "okf-version-mismatch")
+
+
+def test_02_bundle_warns_on_legacy_timestamp_and_citations(tmp_path):
+    _w(tmp_path, "index.md", "---\nokf_version: '0.2'\n---\n# Root\n")
+    _w(
+        tmp_path,
+        "code/old.py.md",
+        "---\n"
+        "type: CodeModule\n"
+        "title: old\n"
+        "timestamp: 2020-01-01T00:00:00Z\n"
+        "---\n"
+        "# Citations\n\n"
+        "- Source: `src/old.py`\n",
+    )
+    r = validate_bundle(tmp_path)
+    assert _codes(r.warnings, "legacy-timestamp")
+    assert _codes(r.warnings, "legacy-citations")
+
+
+def test_02_bundle_warns_on_invalid_status_and_shapes(tmp_path):
+    _w(tmp_path, "index.md", "---\nokf_version: '0.2'\n---\n# Root\n")
+    _w(
+        tmp_path,
+        "code/bad.py.md",
+        "---\n"
+        "type: CodeModule\n"
+        "title: bad\n"
+        "status: final\n"
+        "generated: just a string\n"
+        "verified: nope\n"
+        "sources: not-a-list\n"
+        "stale_after: 7\n"
+        "---\n"
+        "# Body\n",
+    )
+    r = validate_bundle(tmp_path)
+    for code in ("invalid-status", "invalid-generated", "invalid-verified", "invalid-sources", "invalid-stale-after"):
+        assert _codes(r.warnings, code), code
+
+
+def test_01_bundle_still_validates_without_02_warnings(tmp_path):
+    _w(tmp_path, "index.md", "---\nokf_version: '0.1'\n---\n# Root\n")
+    _w(
+        tmp_path,
+        "code/legacy.py.md",
+        "---\n"
+        "type: CodeModule\n"
+        "title: legacy\n"
+        "timestamp: 2020-01-01T00:00:00Z\n"
+        "---\n"
+        "# Citations\n\n"
+        "- Source: `src/legacy.py`\n",
+    )
+    r = validate_bundle(tmp_path)
+    assert r.conformant
+    assert not _codes(r.warnings, "legacy-timestamp")  # legacy checks are 0.2-only
+    assert not _codes(r.warnings, "legacy-citations")

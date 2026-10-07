@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/core/validate.py
 language: python
-source_hash: af49a63d72497d675218bfe957e10bf618c743c4f6871f83f0d91515ee9f89df
+sources:
+- id: src
+  resource: engine/okf/okf_kit/core/validate.py
+source_hash: 57dbdc10c063bcc963ae0c0c645053b5423c703c6b0c328fd9f0678f4da86d7d
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:48Z'
 status: stable
 package: engine/okf
 ---
@@ -27,13 +30,14 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/validate.py`. Purpose:
 
 | Kind | Name | Lines |
 |---|---|---|
-| class | `Finding` | 36-41 |
-| class | `Report` | 45-60 |
-| function | `conformant` | 51-52 |
-| function | `to_dict` | 54-60 |
-| function | `validate_bundle` | 63-121 |
-| function | `_check_concept` | 124-176 |
-| function | `_check_okf_version` | 179-192 |
+| class | `Finding` | 45-50 |
+| class | `Report` | 54-69 |
+| function | `conformant` | 60-61 |
+| function | `to_dict` | 63-69 |
+| function | `validate_bundle` | 72-138 |
+| function | `_check_concept` | 141-196 |
+| function | `_check_concept_0_2` | 199-264 |
+| function | `_check_okf_version` | 267-280 |
 
 # Relationships
 
@@ -45,14 +49,11 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/validate.py`. Purpose:
 - `okf_kit.core.links.iter_concept_files`
 - `okf_kit.core.parse.parse_concept`
 - `pathlib.Path`
+- `re`
 - `typing.Any`
 
 # Impact notes
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/core/validate.py`
-- Source hash: `af49a63d72497d675218bfe957e10bf618c743c4f6871f83f0d91515ee9f89df`
 <!-- okf-code:end -->

@@ -8,13 +8,16 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/treesitter/languages/__init__.py
 language: python
+sources:
+- id: src
+  resource: engine/okf/okf_kit/code/treesitter/languages/__init__.py
 source_hash: 6db7fa0b3d6f1a8dd274a3b357fb1840a2f3a7479747dc0c3032d16d09c99942
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:13:36Z'
+  at: '2026-10-07T23:50:47Z'
 status: stable
 package: engine/okf
 ---
@@ -36,8 +39,4 @@ No classes, functions, methods, or elements detected.
 
 Impact candidates on this page are syntax-derived. Treat them as a starting point for inspection, not as complete semantic proof of all callers, callees, or runtime effects.
 
-# Citations
-
-- Source: `engine/okf/okf_kit/code/treesitter/languages/__init__.py`
-- Source hash: `6db7fa0b3d6f1a8dd274a3b357fb1840a2f3a7479747dc0c3032d16d09c99942`
 <!-- okf-code:end -->
