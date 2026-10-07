@@ -40,8 +40,9 @@ Planned layout (per the brief's deliverable boundaries): `schemas/` (modular sou
 
 The engine (Plane 1) is now live at `engine/`; the harness planes (2–3) are still contract-only. Until that code lands:
 
-- **Core (the one-engine seed and CLI front face):** `cd engine/core && uv sync --extra dev`; `uv run memex-core --help` (resolve · wiki · search · compile · record · findings · status); tests `uv run pytest`. New control-plane work lands HERE, not in engine/memex/ or engine/okf/.
-- **Planes:** `engine/memex` (memory CLI `memex` — hook/capture surface + plane internals) and `engine/okf` (bundle plumbing CLI `okf` — validate/serve/read). Agents and skills target `memex-core`; the plane CLIs are plumbing during the migration.
+- **One workspace venv (root):** `uv sync` at the repo root creates the single `.venv` and root `uv.lock` (uv workspace; members `engine/memex`, `engine/okf`, `engine/core`; no per-plane venvs or locks). All three CLIs on PATH from anywhere: `memex-core` (front face), `memex`, `okf`. Run a plane's tests from its dir (`cd engine/memex && uv run pytest tests/unit -q`) — it uses the root venv.
+- **Core (the one-engine seed and CLI front face):** `memex-core --help` (resolve · wiki · search · compile · record · findings · status). New control-plane work lands HERE, not in engine/memex/ or engine/okf/.
+- **Planes:** `engine/memex` (memory CLI `memex` — plane plumbing) and `engine/okf` (bundle tooling CLI `okf`). Agents and skills target `memex-core` only.
 
 - Treat `docs/product/Technical_Spec.md` and the 18 schemas as the source of truth. Do not edit spec semantics casually; changes are compatibility events (see Guidelines).
 - Validation tooling: JSON Schema Draft 2020-12 with **format checking explicitly enabled** (e.g. python-jsonschema — format keywords are informational by default). `common.schema.json` and `api.schema.json` are definition libraries; validate concrete documents or named definitions, never those library roots. Schema refs resolve through a frozen local registry, never by fetching a URI.

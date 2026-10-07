@@ -26,8 +26,8 @@ memex-core = "memex_core.cli:main"
 packages = ["src/memex_core"]
 
 [tool.uv.sources]
-memex = { path = "../memex" }
-okf-kit = { path = "../okf" }
+memex = { workspace = true }
+okf-kit = { workspace = true }
 
 [tool.ruff]
 line-length = 100
