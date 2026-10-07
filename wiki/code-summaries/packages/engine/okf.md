@@ -9,6 +9,11 @@ tags:
 - package
 summary_level: package
 managed_by: okf-code
+created: 2026-10-07T23:07:31Z
+generated:
+  by: process:okf-code
+  at: '2026-10-07T23:07:34Z'
+status: stable
 package: engine/okf
 ---
 <!-- okf-code:start -->
@@ -26,7 +31,7 @@ Generated package summary for `repository/engine/okf`. Purpose: provide a low-to
 - [engine/okf/okf_kit/code/managed.py](/code/engine/okf/okf_kit/code/managed.py.md) - module; depends on 0; used by 0; high-signal symbols: `merge_managed`, `split_generated`
 - [engine/okf/okf_kit/code/model.py](/code/engine/okf/okf_kit/code/model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `DiscoveredSource`, `CodeSymbol`, `CodeRelationship`
 - [engine/okf/okf_kit/code/paths.py](/code/engine/okf/okf_kit/code/paths.py.md) - module; depends on 0; used by 0; high-signal symbols: `concept_id`, `concept_path`, `safe_segment`
-- [engine/okf/okf_kit/code/render.py](/code/engine/okf/okf_kit/code/render.py.md) - module; depends on 0; used by 0; high-signal symbols: `render_concept`, `render_summary_concept`, `_managed_body`
+- [engine/okf/okf_kit/code/render.py](/code/engine/okf/okf_kit/code/render.py.md) - module; depends on 0; used by 0; high-signal symbols: `_lifecycle_frontmatter`, `render_concept`, `render_summary_concept`
 - [engine/okf/okf_kit/code/treesitter/__init__.py](/code/engine/okf/okf_kit/code/treesitter/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/__init__.py](/code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/base.py](/code/engine/okf/okf_kit/code/treesitter/languages/base.py.md) - model module; depends on 0; used by 0; high-signal symbols: `LanguageAdapter`, `extract`, `_walk`

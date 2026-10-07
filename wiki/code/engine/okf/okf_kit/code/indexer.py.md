@@ -8,9 +8,14 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/indexer.py
 language: python
-source_hash: d0bae4269a7cf9ff53f1df7df47598e0bbf7e6919f7c15d3b210c5506395164f
+source_hash: 6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4
 managed_by: okf-code
 generated_profile: compact
+created: 2026-10-07T23:07:32Z
+generated:
+  by: process:okf-code
+  at: '2026-10-07T23:07:34Z'
+status: stable
 package: engine/okf
 ---
 <!-- okf-code:start -->
@@ -22,34 +27,36 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/indexer.py`. Purpose: 
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `extract_module` | 20-38 |
-| function | `index_codebase` | 41-149 |
-| function | `_has_explicit_scope` | 152-153 |
-| function | `_extract_discovered` | 156-169 |
-| function | `_source_key` | 172-173 |
-| function | `_preflight_destinations` | 176-195 |
-| function | `_preflight_existing_concepts` | 198-219 |
-| function | `_write_summaries` | 222-238 |
-| function | `_preflight_summary` | 241-251 |
-| function | `_preflight_summary_destinations` | 254-270 |
-| function | `_preflight_managed_roots` | 273-288 |
-| function | `_preflight_existing_summaries` | 291-294 |
-| function | `_prune_stale_generated` | 297-319 |
-| function | `_remove_empty_dirs` | 322-325 |
-| function | `_summary_concepts` | 328-383 |
-| function | `_with_relationships` | 386-402 |
-| function | `_with_reverse_relationships` | 405-435 |
-| function | `_relationship_label` | 438-441 |
-| function | `_module_keys` | 444-479 |
-| function | `_rust_crate_keys` | 482-495 |
+| function | `extract_module` | 22-40 |
+| function | `index_codebase` | 43-154 |
+| function | `_has_explicit_scope` | 157-158 |
+| function | `_extract_discovered` | 161-174 |
+| function | `_source_key` | 177-178 |
+| function | `_preflight_destinations` | 181-200 |
+| function | `_preflight_existing_concepts` | 203-224 |
+| function | `_existing_created` | 227-242 |
+| function | `_set_created` | 245-255 |
+| function | `_write_summaries` | 258-277 |
+| function | `_preflight_summary` | 280-290 |
+| function | `_preflight_summary_destinations` | 293-309 |
+| function | `_preflight_managed_roots` | 312-327 |
+| function | `_preflight_existing_summaries` | 330-333 |
+| function | `_prune_stale_generated` | 336-358 |
+| function | `_remove_empty_dirs` | 361-364 |
+| function | `_summary_concepts` | 367-422 |
+| function | `_with_relationships` | 425-441 |
+| function | `_with_reverse_relationships` | 444-474 |
+| function | `_relationship_label` | 477-480 |
 
-10 symbols omitted from compact profile.
+12 symbols omitted from compact profile.
 
 # Relationships
 
 - `__future__.annotations`
 - `contextlib.suppress`
 - `dataclasses.replace`
+- `datetime.UTC`
+- `datetime.datetime`
 - `okf_kit.code.discovery.adapter_for_path`
 - `okf_kit.code.discovery.adapters_for`
 - `okf_kit.code.discovery.iter_source_files`
@@ -65,9 +72,7 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/indexer.py`. Purpose: 
 - `okf_kit.code.render.render_concept`
 - `okf_kit.code.render.render_summary_concept`
 - `okf_kit.code.treesitter.languages.LanguageAdapter`
-- `okf_kit.core.links.is_within`
-- `okf_kit.core.parse.split_frontmatter`
-- 3 imports omitted from compact profile.
+- 6 imports omitted from compact profile.
 
 # Impact notes
 
@@ -76,5 +81,5 @@ Impact candidates on this page are syntax-derived. Treat them as a starting poin
 # Citations
 
 - Source: `engine/okf/okf_kit/code/indexer.py`
-- Source hash: `d0bae4269a7cf9ff53f1df7df47598e0bbf7e6919f7c15d3b210c5506395164f`
+- Source hash: `6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4`
 <!-- okf-code:end -->

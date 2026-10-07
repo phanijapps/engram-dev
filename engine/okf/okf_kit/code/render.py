@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import yaml
+from datetime import UTC, datetime
 
 from okf_kit.code.managed import MANAGED_END, MANAGED_START
 from okf_kit.code.model import CodeModule, CodeSymbol
@@ -10,6 +11,23 @@ _COMPACT_SYMBOL_LIMIT = 20
 _COMPACT_IMPORT_LIMIT = 20
 _COMPACT_RELATIONSHIP_LIMIT = 10
 _COMPACT_HINT_LIMIT = 5
+
+
+def _lifecycle_frontmatter() -> dict[str, object]:
+    """OKF 0.2 lifecycle keys (§5.2, §5.4): created + generated + status.
+
+    ``created`` is a legal extension key (§4.1); ``generated.at`` carries
+    the last-meaningful-change instant; ``status: stable`` reflects that
+    managed extractions are deterministic and complete for their scope
+    (trust tier stays unverified until a ``verified`` event lands).
+    """
+
+    now = datetime.now(UTC).isoformat(timespec="seconds").replace("+00:00", "Z")
+    return {
+        "created": now,
+        "generated": {"by": "process:okf-code", "at": now},
+        "status": "stable",
+    }
 
 
 def render_concept(module: CodeModule) -> str:
@@ -44,6 +62,7 @@ def render_concept(module: CodeModule) -> str:
         "managed_by": "okf-code",
         "generated_profile": module.profile,
     }
+    frontmatter.update(_lifecycle_frontmatter())
     if module.repo_id is not None:
         frontmatter["repo"] = module.repo_id
     if module.repo_path is not None:
@@ -95,6 +114,7 @@ def render_summary_concept(
         "summary_level": summary_level,
         "managed_by": "okf-code",
     }
+    frontmatter.update(_lifecycle_frontmatter())
     if repo_id is not None:
         frontmatter["repo"] = repo_id
     if area is not None:

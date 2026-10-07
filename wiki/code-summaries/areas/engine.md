@@ -16,6 +16,11 @@ tags:
 - used-by
 summary_level: area
 managed_by: okf-code
+created: 2026-10-07T23:07:31Z
+generated:
+  by: process:okf-code
+  at: '2026-10-07T23:07:34Z'
+status: stable
 area: engine
 ---
 <!-- okf-code:start -->

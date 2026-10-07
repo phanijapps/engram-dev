@@ -1,5 +1,8 @@
 ---
 type: System
+status: stable
+created: 2026-10-06
+updated: 2026-10-07
 title: memex — the memory plane
 description: 'engine/memex (package memex v0.5.0): durable memory layer for AI coding agents - hexagonal layers, wiki-as-store, SQLite secondary index, transcript ingestion, backup/restore.'
 tags: [memory, package, engine-memex, agents]

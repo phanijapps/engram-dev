@@ -1,5 +1,8 @@
 ---
 type: System
+status: stable
+created: 2026-10-06
+updated: 2026-10-07
 title: One-engine architecture (memex-core over two planes)
 description: How engine/core (control-plane front face), engine/memex (memory plane), and engine/okf (knowledge plane) compose into one engine via strangler-fig delegation.
 tags: [architecture, control-plane, strangler-fig]

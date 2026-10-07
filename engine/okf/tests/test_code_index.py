@@ -1542,3 +1542,47 @@ def test_clean_imports_module_specifier_form_unchanged_without_tree_sitter():
     from okf_kit.code.treesitter.languages.base import _clean_imports
 
     assert _clean_imports('import { a } from "mod"') == ("mod",)
+
+
+# --- OKF 0.2 lifecycle frontmatter (status/created/generated; audit G6) ---
+
+
+def test_render_concept_emits_lifecycle_frontmatter_without_tree_sitter():
+    import yaml
+
+    from okf_kit.code.model import CodeModule
+    from okf_kit.code.render import render_concept
+
+    doc = render_concept(CodeModule("src/mod.py", "python", "h1", (), ()))
+    head = doc.split("\n---\n")[0]
+    fm = yaml.safe_load(head.removeprefix("---\n"))
+    assert fm["status"] == "stable"
+    assert fm["generated"]["by"] == "process:okf-code"
+    assert fm["generated"]["at"].endswith("Z")
+    assert fm["created"].endswith("Z")
+
+
+def test_reindex_preserves_created_and_advances_generated_without_tree_sitter():
+    import yaml
+
+    from okf_kit.code.indexer import _existing_created, _set_created
+
+    original = (
+        "---\n"
+        "type: CodeModule\n"
+        "title: t\n"
+        "created: 2020-01-01T00:00:00Z\n"
+        "generated:\n"
+        "  by: process:okf-code\n"
+        "  at: 2020-01-01T00:00:00Z\n"
+        "status: stable\n"
+        "---\n"
+        "<!-- okf-code:start -->\n"
+        "body\n"
+        "<!-- okf-code:end -->\n"
+    )
+    assert _existing_created(original) == "2020-01-01T00:00:00Z"
+    fresh = _set_created(original.replace("created: 2020-01-01T00:00:00Z\n", ""), "2020-01-01T00:00:00Z")
+    assert _existing_created(fresh) == "2020-01-01T00:00:00Z"
+    fm = yaml.safe_load(fresh.split("\n---\n")[0].removeprefix("---\n"))
+    assert fm["status"] == "stable"

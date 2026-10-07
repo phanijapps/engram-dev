@@ -3,6 +3,8 @@ type: Decision
 title: One engine via strangler fig (draft — acceptance pending)
 description: DRAFT. Absorb both planes into memex-core incrementally instead of a big-bang rewrite or keeping two engines; normative acceptance requested through the findings ledger.
 status: draft
+created: 2026-10-07
+updated: 2026-10-07
 tags: [decision, architecture, strangler-fig, migration, draft]
 ---
 

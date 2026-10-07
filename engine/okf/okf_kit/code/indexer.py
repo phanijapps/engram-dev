@@ -2,7 +2,9 @@
 from __future__ import annotations
 
 import posixpath
+import re
 from contextlib import suppress
+from datetime import UTC, datetime
 from dataclasses import replace
 from pathlib import Path
 
@@ -139,6 +141,9 @@ def index_codebase(
                 skipped += 1
                 continue
             existing = dest.read_text(encoding="utf-8")
+            created = _existing_created(existing)
+            if created:
+                rendered = _set_created(rendered, created)
             dest.write_text(merge_managed(existing, rendered), encoding="utf-8")
             updated += 1
         else:
@@ -219,6 +224,37 @@ def _preflight_existing_concepts(
             )
 
 
+def _existing_created(text: str) -> str | None:
+    """Return the ``created`` value from a concept's frontmatter, if any.
+
+    YAML resolves ISO instants to ``datetime``; normalize to a canonical
+    ``Z`` string so the value round-trips identically across reindexes.
+    """
+
+    fm = split_frontmatter(text)
+    if not fm.present:
+        return None
+    value = fm.data.get("created")
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value.isoformat().replace("+00:00", "Z")
+    return str(value)
+
+
+def _set_created(text: str, created: str) -> str:
+    """Rewrite ``created`` in a rendered concept's frontmatter."""
+
+    head, sep, rest = text.partition("\n---\n")
+    if not sep or not head.startswith("---\n"):
+        return text
+    if re.search(r"^created:", head, re.MULTILINE):
+        head = re.sub(r"^created:.*$", f"created: {created}", head, count=1, flags=re.MULTILINE)
+    else:
+        head = head + f"\ncreated: {created}"
+    return head + sep + rest
+
+
 def _write_summaries(
     bundle: Path,
     summary_concepts: dict[str, str],
@@ -232,6 +268,9 @@ def _write_summaries(
             if not update:
                 continue
             existing = dest.read_text(encoding="utf-8")
+            created = _existing_created(existing)
+            if created:
+                rendered = _set_created(rendered, created)
             dest.write_text(merge_managed(existing, rendered), encoding="utf-8")
         else:
             dest.parent.mkdir(parents=True, exist_ok=True)

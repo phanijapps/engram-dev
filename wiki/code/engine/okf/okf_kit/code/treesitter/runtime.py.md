@@ -11,6 +11,11 @@ language: python
 source_hash: 615282db941a4e00ee03159a9b25f596fda8ba819134ef7b62b7a4be44d88b97
 managed_by: okf-code
 generated_profile: compact
+created: 2026-10-07T23:07:32Z
+generated:
+  by: process:okf-code
+  at: '2026-10-07T23:07:34Z'
+status: stable
 package: engine/okf
 ---
 <!-- okf-code:start -->

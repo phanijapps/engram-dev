@@ -1,5 +1,8 @@
 ---
 type: Domain
+status: stable
+created: 2026-10-06
+updated: 2026-10-07
 title: The wiki contract — bundle layout, freshness stamp, findings ledger
 description: 'The implemented contract the three engine packages exchange: OKF bundle at <repo>/wiki/, .okf/last-index.json freshness semantics, .okf/findings.toml proposal ledger, managed-section markers, and front-matter rules.'
 tags: [contract, okf, freshness, findings, conventions]

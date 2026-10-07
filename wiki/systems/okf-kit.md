@@ -1,5 +1,8 @@
 ---
 type: System
+status: stable
+created: 2026-10-06
+updated: 2026-10-07
 title: okf-kit — the knowledge plane
 description: 'engine/okf (package okf-kit v0.1.0): Open Knowledge Format bundle machinery - parse/model/links/index/search/validate/context - plus the tree-sitter code indexer that writes managed wiki/code concepts.'
 tags: [knowledge, okf, package, engine-okf, tree-sitter]

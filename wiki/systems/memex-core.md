@@ -1,5 +1,8 @@
 ---
 type: System
+status: stable
+created: 2026-10-06
+updated: 2026-10-07
 title: memex-core — the control-plane front face
 description: 'engine/core (package memex-core): the 8-op control plane CLI and library that fronts both planes; where new control-plane work lands.'
 tags: [cli, control-plane, package, engine-core]

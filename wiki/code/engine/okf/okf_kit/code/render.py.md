@@ -8,41 +8,49 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/render.py
 language: python
-source_hash: 765fe7b780183661aeaeca6703c09f867a7d157e7c22a22801842b8ee239a24f
+source_hash: 81434e864018c114b35af58be22ae070e6b6b1b2f0d4d56f2a37927668b9e2f9
 managed_by: okf-code
 generated_profile: compact
+created: 2026-10-07T23:07:32Z
+generated:
+  by: process:okf-code
+  at: '2026-10-07T23:07:34Z'
+status: stable
 package: engine/okf
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/okf/okf_kit/code/render.py`. Purpose: engine/okf/okf_kit/code/render.py is a `python` module in package `engine/okf`. Role: module. high-signal symbols: `render_concept`, `render_summary_concept`, `_managed_body`, `_description`, `_overview`. Dependency context: 0 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/okf/okf_kit/code/render.py`. Purpose: engine/okf/okf_kit/code/render.py is a `python` module in package `engine/okf`. Role: module. high-signal symbols: `_lifecycle_frontmatter`, `render_concept`, `render_summary_concept`, `_managed_body`, `_description`. Dependency context: 0 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `render_concept` | 15-54 |
-| function | `render_summary_concept` | 57-120 |
-| function | `_managed_body` | 123-140 |
-| function | `_description` | 143-151 |
-| function | `_overview` | 154-172 |
-| function | `_symbols_table` | 175-187 |
-| function | `_relationships_list` | 190-231 |
-| function | `_title` | 234-237 |
-| function | `_resource` | 240-243 |
-| function | `_role` | 246-259 |
-| function | `_symbol_names` | 262-263 |
-| function | `_summary_links` | 266-288 |
-| function | `_summary_description` | 291-303 |
-| function | `_summary_impact` | 306-340 |
-| function | `_summary_relationships` | 343-357 |
-| function | `_impact_score` | 360-361 |
-| function | `_relationship_counts` | 364-371 |
+| function | `_lifecycle_frontmatter` | 16-30 |
+| function | `render_concept` | 33-73 |
+| function | `render_summary_concept` | 76-140 |
+| function | `_managed_body` | 143-160 |
+| function | `_description` | 163-171 |
+| function | `_overview` | 174-192 |
+| function | `_symbols_table` | 195-207 |
+| function | `_relationships_list` | 210-251 |
+| function | `_title` | 254-257 |
+| function | `_resource` | 260-263 |
+| function | `_role` | 266-279 |
+| function | `_symbol_names` | 282-283 |
+| function | `_summary_links` | 286-308 |
+| function | `_summary_description` | 311-323 |
+| function | `_summary_impact` | 326-360 |
+| function | `_summary_relationships` | 363-377 |
+| function | `_impact_score` | 380-381 |
+| function | `_relationship_counts` | 384-391 |
 
 # Relationships
 
 - `__future__.annotations`
+- `datetime.UTC`
+- `datetime.datetime`
 - `okf_kit.code.managed.MANAGED_END`
 - `okf_kit.code.managed.MANAGED_START`
 - `okf_kit.code.model.CodeModule`
@@ -56,5 +64,5 @@ Impact candidates on this page are syntax-derived. Treat them as a starting poin
 # Citations
 
 - Source: `engine/okf/okf_kit/code/render.py`
-- Source hash: `765fe7b780183661aeaeca6703c09f867a7d157e7c22a22801842b8ee239a24f`
+- Source hash: `81434e864018c114b35af58be22ae070e6b6b1b2f0d4d56f2a37927668b9e2f9`
 <!-- okf-code:end -->
