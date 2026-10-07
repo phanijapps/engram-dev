@@ -76,6 +76,29 @@ Shared contracts, storage, and public APIs are touched at every layer →
 full impact analysis run as a separate artifact: **[impact-okf-only.md](impact-okf-only.md)**
 (11 candidate effects with dispositions).
 
+## Owner answers (round 1, 2026-10-07 — recorded verbatim-adjacent)
+
+- **Learnings/memory:** "not sure learnings matter at this point"; "don't
+  want the hook to capture sessions/tokens at some point in the future"
+  → Q4 resolved: project memory + hooks/session capture **back-burnered**;
+  hooks are a declared engine non-goal.
+- **Goal:** "a perfect okf engine that future memex can use" → the engine
+  is okf-only; a future memex is a **consumer layer on top**, not a plane.
+  D1 signed in substance.
+- **Q3 (tree-sitter):** "capture business rules, encapsulated logic,
+  patterns, policies placed in wiki. Keep it bit technical on where
+  things can be found but searchable" → the extraction target shifts
+  from per-module structural pages to **semantic concept pages
+  (rules/logic/patterns/policies) anchored to locations, searchable**.
+  This is the next initiative's design space (sequel, not this wave).
+- **Q5:** reframed (see conversation + plan.md T-gate): should okf grow a
+  `status` command — wiki present? built-at commit vs code commit →
+  refresh recommended + health counters? Answer pending; does not block
+  the removal wave.
+- **Q1/Q2 implied:** skills retarget to okf verbs; stamp + ledger port
+  into okf (ledger port flagged as assumption A2 — it preserves the
+  normative discipline; owner can shrink it later).
+
 ## Open questions
 
 | ID | Question | Blocks | Owner | Resolution path |
