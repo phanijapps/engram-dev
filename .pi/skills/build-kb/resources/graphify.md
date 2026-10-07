@@ -26,7 +26,7 @@ wiki is human/agent-readable knowledge.
 
 - `graphify-out/` is generated output: keep it out of git (gitignore it);
   cite *findings*, not the artifact, in the wiki.
-- The graph is a snapshot — regenerate when `memex-core resolve` says the
-  wiki is stale, so graph and wiki describe the same revision.
+- The graph is a snapshot — regenerate when the stamp says the wiki is stale
+  (`repo_head` ≠ HEAD), so graph and wiki describe the same revision.
 - Graph claims are evidence, not authority: verify against source before a
   curated concept asserts a relationship.

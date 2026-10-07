@@ -5,7 +5,7 @@ One package, one product, wiki at the repo root.
 ## Index pass
 
 ```
-memex-core wiki update \
+okf code index . wiki \
   --include "src/**" \
   --exclude "src/**/tests/**"
 ```
@@ -23,5 +23,5 @@ Generated `wiki/code/**` mirrors the package layout.
 
 ## Signals you are done for this pass
 
-`memex-core status` → wiki fresh; every curated concept has ≥1 path-level
+Stamp check (`repo_head` == HEAD) → wiki fresh; every curated concept has ≥1 path-level
 evidence claim; no pending findings older than the session.

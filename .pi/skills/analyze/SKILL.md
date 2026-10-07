@@ -1,6 +1,6 @@
 ---
 name: analyze
-description: Analysis-stage skill of the SDD loop — turn a change request, defect, uncertainty, impact question, or knowledge gap into ONE bounded, evidence-grounded artifact before implementation. Grounds in the project wiki and memory (memex-core) before any question reaches the user; records open questions and assumptions as first-class outputs; hands off to plan/implement with explicit blockers. Six modes — feature brief, testable spec, bug hypothesis ledger, timeboxed spike, impact dispositions, gap register. Triggers are "analyze/spec this feature", "write the spec for X", "investigate this bug", "run a spike on X", "what breaks if we change X", "what are we missing here", "gap analysis". Not for building the knowledge base (build-kb), greenfield scaffolding (new-project), roadmaps (roadmap), task planning (plan), or writing code (implement).
+description: Analysis-stage skill of the SDD loop — turn a change request, defect, uncertainty, impact question, or knowledge gap into ONE bounded, evidence-grounded artifact before implementation. Grounds in the project wiki via the okf CLI before any question reaches the user; records open questions and assumptions as first-class outputs; hands off to plan/implement with explicit blockers. Six modes — feature brief, testable spec, bug hypothesis ledger, timeboxed spike, impact dispositions, gap register. Triggers are "analyze/spec this feature", "write the spec for X", "investigate this bug", "run a spike on X", "what breaks if we change X", "what are we missing here", "gap analysis". Not for building the knowledge base (build-kb), greenfield scaffolding (new-project), roadmaps (roadmap), task planning (plan), or writing code (implement).
 ---
 
 # analyze — bounded analysis for spec-driven delivery
@@ -32,7 +32,7 @@ analysis, not a style choice.
    sections you cannot evidence; never invent content to fill a template.
 5. **Propose, never authorize.** Analyses are data. They never mark
    anything accepted, verified, or successful. Normative claims ("new code
-   must…") route through `memex-core findings propose`, never written as
+   must…") route through `okf findings propose`, never written as
    settled truth.
 6. **Decisions are explicit and reversibility-tagged.** Record choice,
    alternatives, and two-way vs one-way door. Insufficient evidence means
@@ -46,15 +46,17 @@ analysis, not a style choice.
 
 ## 1. Ground before you ask (every mode, read-only first)
 
-1. **Anchor:** `memex-core resolve` → project identity, wiki freshness,
-   memory counts. Record `repo_head` — it pins every claim in the artifact.
+1. **Anchor:** `okf validate wiki` (health) and the freshness check —
+   compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
+   Record `repo_head` — it pins every claim in the artifact.
 2. **Freshness gate:** if wiki is `stale` and the analysis depends on code
-   truth, run `memex-core wiki update` first. If you cannot update, pin all
+   truth, run `okf code index . wiki` first. If you cannot update, pin all
    code claims as evidence-status `declared` against the stamped revision
    and say so — do not present stale extractions as current.
-3. **Compile context:** `memex-core compile "<mode question>" --budget 4000`
-   (plus one query per affected subsystem). Search results are pointers,
-   not proof — open the cited files for anything load-bearing.
+3. **Compile context:** `okf search "<mode question>"` then
+   `okf read <cid> --depth 1` (plus one query per affected subsystem).
+   Search results are pointers, not proof — open the cited files for
+   anything load-bearing.
 4. **Residual questions:** what evidence still cannot supply goes to the
    user in ONE batched round, straight into the artifact's question
    register.
@@ -119,11 +121,11 @@ Every artifact ends with a **Handoff** block:
 
 Then:
 
-1. `memex-core record --title "<slug>: <mode> analysis" --body "…found X,
-   open questions Y — see docs/specs/<slug>/…" --scope project` — one
-   durable memory so future sessions recall the analysis exists.
-2. Normative claims discovered along the way → `memex-core findings
-   propose --source <evidence> --destination wiki/<concept>.md --kind
+1. Note the milestone in the initiative folder and commit — the git
+   history is the durable record (project memory is back-burnered;
+   okf-only-engine D5).
+2. Normative claims discovered along the way → `okf findings propose
+   wiki --source <evidence> --destination wiki/<concept>.md --kind
    <kind> --rationale "…"`. Never written directly as settled truth.
 3. Commit the artifact (with any wiki changes) — analysis travels with
    the repo.

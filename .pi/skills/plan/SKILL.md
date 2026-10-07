@@ -60,9 +60,10 @@ come back.
    section, stated rationale for skipping analysis).
 2. Extract: Ready-now slices, Blocked-on register (Q/A/D ids), route
    hints (needs impact? needs spike?).
-3. **Ground:** `memex-core resolve` → freshness gate (`wiki update` or
-   stale-pin) → `memex-core compile "<design question>" --budget 4000`
-   per affected surface → open the cited wiki concepts and source files
+3. **Ground:** freshness check (stamp `repo_head` vs `git rev-parse
+   HEAD`; `okf code index . wiki` or stale-pin) → `okf search "<design
+   question>"` + `okf read <cid> --depth 1` per affected surface → open
+   the cited wiki concepts and source files
    for anything load-bearing. Residual unknowns → ONE batched question
    round, recorded as new Q-ids in the artifact they belong to.
 
@@ -106,11 +107,11 @@ block. Then:
 
 ## 5. Close: record, hand off
 
-1. `memex-core record --title "<slug>: design + plan (<n> tasks, <m>
-   ready)" --body "…key decisions D-…, ready set T-… — see
-   docs/specs/<slug>/" --scope project`.
-2. Normative discoveries ("new code in X must…") → `memex-core findings
-   propose`, never written as settled truth.
+1. Commit the artifacts — the git history is the durable record
+   (project memory back-burnered, okf-only-engine D5).
+2. Normative discoveries ("new code in X must…") → `okf findings
+   propose wiki --source … --destination wiki/<concept>.md --kind …`,
+   never written as settled truth.
 3. Commit both artifacts. **Handoff**: ready set with per-task frozen
    context → `implement`; blocked set with owners → the analysis's
    question register.

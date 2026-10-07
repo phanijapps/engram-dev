@@ -3,7 +3,7 @@
 Run each case against its fixture with the skill and a clean workspace.
 Evaluate the produced artifact, not the conversation. Keep expectations
 out of the execution prompt. Record fixture revision, skill version,
-tools (memex-core version), results, and failure evidence. Do not label
+tools (okf version), results, and failure evidence. Do not label
 unevaluated cases as passed.
 
 ## Critical gates (all must pass — zero tolerance)
@@ -33,7 +33,7 @@ unevaluated cases as passed.
 - Mode routing (right mode, right artifact, no mode blur)
 - Template conformance (contract filled honestly)
 - Handoff quality (interleavable next steps)
-- Tool discipline (memex-core used as specified; freshness gate honored)
+- Tool discipline (okf used as specified; freshness gate honored)
 
 Release threshold: all critical gates + at least 13/16. A single
 fabricated-evidence or authority-claim instance fails the run regardless

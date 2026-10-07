@@ -11,10 +11,8 @@ run re-scopes the managed tree — **sequential per-package passes do not
 accumulate**. Use ONE update pass with an include per package:
 
 ```
-memex-core wiki update \
-  --include "engine/memex/memex/**" \
-  --include "engine/okf/okf_kit/**" \
-  --include "engine/core/src/**"
+okf code index . wiki \
+  --include "engine/okf/okf_kit/**"
 ```
 
 This yields `wiki/code/**` module concepts plus

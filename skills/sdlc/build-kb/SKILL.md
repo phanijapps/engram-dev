@@ -1,18 +1,19 @@
 ---
 name: build-kb
-description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives memex-core (OKF wiki init/update, federated search, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
+description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives the okf CLI (bundle init, tree-sitter code indexing, search, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
 ---
 
 # build-kb — build the project knowledge base
 
 The project wiki is an **OKF bundle at `<repo>/wiki/`** — concepts as
 Markdown, git-versioned with the code. All engine operations go through
-**`memex-core`** (run from the repo root; `uv run memex-core …` in the
-memex workspace). Never hand-edit generated sections inside `wiki/code/**`.
+the **`okf` CLI** (run from the repo root; `uv run okf …`). Never hand-edit generated sections inside `wiki/code/**`.
 
 ## 1. Understand the repo (always, read-only)
 
-Run `memex-core resolve` first. Record:
+Anchor first: `okf validate wiki` (health) and the freshness check —
+compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
+Record:
 
 1. **Shape** — mono-repo vs single project vs partial wiki
    (`resolve` reports `wiki.present` / `freshness`). Pick the matching
@@ -28,17 +29,17 @@ If `stale`, run §3 then §5.
 
 ## 2. Knowledge base shape (create or adopt)
 
-- No wiki → `memex-core wiki init` (creates `<repo>/wiki/` as an OKF
-  bundle, `.okf/` state dir). Then §3.
+- No wiki → `okf init wiki` (creates `<repo>/wiki/` as an OKF bundle,
+  `.okf/` state dir). Then §3.
 - Wiki exists → never re-init; adopt it: read `wiki/index.md` and the
   newest concepts, then §3 (update is incremental and fingerprint-safe).
 
 ## 3. Deterministic index (tree-sitter, no LLM)
 
-`memex-core wiki update` with the strategy's include/exclude globs. This
-writes managed `wiki/code/**` concepts (modules, symbols, imports) and
-stamps `.okf/last-index.json` — which is what makes `resolve` report
-freshness. Re-runs re-extract only what changed; unchanged sources are
+`okf code index . wiki` with the strategy's `--include`/`--exclude`
+globs. This writes managed `wiki/code/**` concepts (modules, symbols,
+imports) and stamps `.okf/last-index.json` — which is what makes the
+freshness check report freshness. Re-runs re-extract only what changed; unchanged sources are
 never rewritten.
 
 ## 4. Code graph (optional, when graphify is installed)
@@ -62,20 +63,20 @@ must conform to") is **never written directly as settled truth**: author it
 as `status: draft` and route acceptance through the findings ledger:
 
 ```
-memex-core findings propose --source <evidence-path> \
+okf findings propose wiki --source <evidence-path> \
   --destination wiki/<concept>.md --kind golden-path --rationale "…"
 ```
 
-A human accepts or declines (`memex-core findings resolve <id> --decision
+A human accepts or declines (`okf findings resolve wiki <id> --decision
 accepted|declined`). Declined findings are never re-proposed.
 
 ## 6. Validate, record, commit
 
-1. `uv run okf validate wiki` (conformance) and `memex-core status`
-   (freshness + pending findings must be 0 or known).
-2. `memex-core record --title "<repo> wiki: <what you added/learned>" \
-   --body "…" --scope project` — one durable project memory pointing at
-   the wiki, so future sessions recall it exists.
+1. `uv run okf validate wiki` (conformance) and the freshness check
+   (stamp `repo_head` == HEAD); `okf findings list wiki --status pending`
+   must be 0 or known.
+2. Commit the wiki with the code it describes — git history is the
+   durable record (project memory back-burnered, okf-only-engine D5).
 3. Commit `wiki/` **with the code it describes** (same commit or an
    adjacent one). The wiki travels with the repo.
 

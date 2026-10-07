@@ -48,7 +48,7 @@ does not certify it).
 
 ## 1. Load
 
-1. `memex-core resolve` → freshness gate.
+1. Freshness gate: stamp `repo_head` vs `git rev-parse HEAD`.
 2. Read the initiative folder: plan.md (DAG, ledger, frozen contexts),
    design.md (decisions), analysis artifacts (registers, matrix).
 3. Establish the diff base: the plan's `repo_head` pin → HEAD. Commit
@@ -79,9 +79,8 @@ discipline for normative writes.
    verdicts, findings with severity + route, re-run log (verbatim).
 2. Append routed fixes as tasks in plan.md (T-next rows, prereqs set) —
    status `todo`, owned by the next `implement` pass.
-3. `memex-core record --title "slug: review-<n> — <pass|x/y> verified,
-   <k> findings" --body "…verdicts + routes — see review-<n>.md"
-   --scope project`.
+3. Milestone note in the plan ledger + commit — the review artifact is
+   the durable record (project memory back-burnered, okf-only D5).
 4. Commit review artifact + plan update. Handoff: all-pass → slice
    complete, evidence current (say until which commit); else → next
    ready set after routed tasks.

@@ -42,8 +42,8 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    changed files, current state (`doing`), and what remains. Recovery
    resumes from the ledger's evidence, never from memory.
 7. **Close per task:** ledger update (evidence-cited) → commit (message
-   carries `<slug> T<n>: <goal>`) → `memex-core record` only at
-   cross-task milestones. If the change invalidates wiki content, note
+   carries `<slug> T<n>: <goal>`); milestone notes live in the plan's
+   ledger (project memory back-burnered, okf-only-engine D5). If the change invalidates wiki content, note
    the staleness in the ledger entry (wiki update is a task or review
    follow-up — never skipped silently).
 8. **Task done ≠ requirement verified.** `done` means *this task's
@@ -58,8 +58,8 @@ the first unblock move (which Q/D/task gates it).
 
 ## 2. Load
 
-1. `memex-core resolve` → freshness gate (`wiki update` or stale-pin,
-   same rule as always).
+1. Freshness gate: stamp `repo_head` vs `git rev-parse HEAD`
+   (`okf code index . wiki` or stale-pin, same rule as always).
 2. Run the task's frozen-context compile query; open the listed wiki
    cids and key files. Read the design sections the task implements.
 3. Insufficient → STOP (rule 2). Sufficient → state `doing` in the
@@ -79,7 +79,7 @@ marked throwaway — a spike that ships feature code failed.
 2. Flip status on evidence only (`done`, or `doing` + red-with-reason).
 3. Task-candidates discovered en route: one line each in the plan's
    Handoff (for the next `plan` pass). Never self-expand scope.
-4. Commit; `memex-core record` at milestones ("slug: T1+T2 done, T3
+4. Commit; milestone notes in the plan ledger ("slug: T1+T2 done, T3
    ready — see plan.md").
 
 ## 5. Recovery
