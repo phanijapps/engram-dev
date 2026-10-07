@@ -10,9 +10,16 @@ spans both planes today and absorbs them over time (strangler fig):
    CLI/MCP ───► │ record · findings · status         │
                 └──────┬───────────────────┬─────────┘
                        ▼ delegates         ▼ delegates
-              engine/ (memory)      kit/ (knowledge)
-              memex v0.5.0          okf-kit (OKF)
+          engine/memex (memory)     engine/okf (knowledge)
+          memex v0.5.0              okf-kit (OKF)
 ```
+
+**CLI front face:** `memex-core` is the porcelain — the surface agents,
+skills, and users drive. The plane CLIs (`memex`, `okf`) are plumbing:
+`memex` remains the deployed hook/capture surface adapters install today;
+`okf` remains bundle tooling (validate/serve/read) for wiki maintainers and
+CI. During migration their verbs fold into core; at the end core's binary
+takes the `memex` name and the plumbing CLIs retire.
 
 ## The minimal shape (8 ops)
 

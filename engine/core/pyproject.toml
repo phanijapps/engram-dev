@@ -27,5 +27,5 @@ memex-core = "memex_core.cli:main"
 packages = ["src/memex_core"]
 
 [tool.uv.sources]
-memex = { path = "../engine" }
-okf-kit = { path = "../kit" }
+memex = { path = "../memex" }
+okf-kit = { path = "../okf" }

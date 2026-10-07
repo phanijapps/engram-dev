@@ -478,7 +478,7 @@ wheels = [
 [[package]]
 name = "memex"
 version = "0.5.0"
-source = { directory = "../engine" }
+source = { directory = "../memex" }
 dependencies = [
     { name = "mcp" },
     { name = "openai" },
@@ -525,8 +525,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "memex", directory = "../engine" },
-    { name = "okf-kit", directory = "../kit" },
+    { name = "memex", directory = "../memex" },
+    { name = "okf-kit", directory = "../okf" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8" },
     { name = "tree-sitter", specifier = "==0.25.2" },
     { name = "tree-sitter-language-pack", specifier = "==1.8.1" },
@@ -536,7 +536,7 @@ provides-extras = ["dev"]
 [[package]]
 name = "okf-kit"
 version = "0.1.0"
-source = { directory = "../kit" }
+source = { directory = "../okf" }
 dependencies = [
     { name = "mcp" },
     { name = "pydantic" },
