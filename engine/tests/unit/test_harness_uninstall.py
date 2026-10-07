@@ -197,7 +197,7 @@ def test_cli_uninstall_alias_keeps_memory_data(
     monkeypatch.chdir(project)
     install_harness("pi", MARKETPLACE, home=home, project=project)
 
-    assert cli.main(["harness", "uninstall", "pi", "--home", str(home)]) == 0
+    assert cli.main(["uninstall", "pi", "--home", str(home)]) == 0
 
     result = json.loads(capsys.readouterr().out)
     assert result["harness"] == "pi"

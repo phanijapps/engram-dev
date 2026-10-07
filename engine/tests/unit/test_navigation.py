@@ -10,7 +10,6 @@ from __future__ import annotations
 import json
 import tarfile
 from pathlib import Path
-from typing import cast
 
 import pytest
 
@@ -214,9 +213,6 @@ def test_structural_reserved_files_are_invisible_to_memory_surfaces(
     assert count == 1
     links = memex.link_manager.get_link_graph()
     assert links == {}
-    export = memex.import_export.export()
-    exported = cast("list[dict[str, object]]", export["nodes"])
-    assert [n["slug"] for n in exported] == [slug]
 
     entities_index = (entities / "index.md").read_text(encoding="utf-8")
     assert "[Real page](real-page.md)" in entities_index
@@ -433,27 +429,6 @@ def test_consolidation_refreshes_navigation(data_dir: Path) -> None:
     assert "[Distilled fact](distilled-fact.md) — one line signpost" in entities
 
 
-def test_import_refreshes_navigation(data_dir: Path) -> None:
-    memex = _memex(data_dir)
-    document: dict[str, object] = {
-        "nodes": [
-            {
-                "slug": "imported-page",
-                "type": "entity",
-                "title": "Imported page",
-                "body": "b",
-                "description": "imported desc",
-            }
-        ]
-    }
-    result = memex.import_export.import_data(document)
-    assert result["imported"] == 1
-    entities = (memex.wiki_store.wiki_dir / "global" / "entities" / "index.md").read_text(
-        encoding="utf-8"
-    )
-    assert "[Imported page](imported-page.md) — imported desc" in entities
-
-
 def test_write_refresh_survives_unrelated_malformed_page(data_dir: Path) -> None:
     memex = _memex(data_dir)
     _write(memex, "Good page", description="d")
@@ -468,7 +443,7 @@ def test_write_refresh_survives_unrelated_malformed_page(data_dir: Path) -> None
     assert "[Second page](second-page.md) — d2" in entities
 
 
-def test_lifecycle_and_merge_refresh_navigation(data_dir: Path) -> None:
+def test_lifecycle_and_supersede_refresh_navigation(data_dir: Path) -> None:
     memex = _memex(data_dir)
     slug = _write(memex, "Pending page", description="before")
     entities_index = memex.wiki_store.wiki_dir / "global" / "entities" / "index.md"
@@ -480,8 +455,15 @@ def test_lifecycle_and_merge_refresh_navigation(data_dir: Path) -> None:
     text = path.read_text(encoding="utf-8").replace("before", "after")
     path.write_text(text, encoding="utf-8")
 
-    other = _write(memex, "Merge target", description="target")
-    memex.merge(other, slug)
+    other = _write(memex, "Supersedes target", description="target")
+    node2 = memex.wiki_store.read(other)
+    assert node2 is not None
+    node2.supersedes = [slug]
+    stored = memex.wiki_store.write(node2)
+    memex.index_manager.update_record(stored)
+    memex.link_manager.sync_node(stored)
+    memex._refresh_navigation(Path(stored.file_path))  # noqa: SLF001 - navigation refresh is the unit under test
+    memex._refresh_navigation(path)  # noqa: SLF001
     merged_index = entities_index.read_text(encoding="utf-8")
     assert "— after" in merged_index
 
@@ -625,35 +607,20 @@ def test_navigation_diagnostics_never_carry_memory_content_or_secrets(
 
 
 def test_generator_writes_do_not_feed_back_into_memory_reindex(data_dir: Path) -> None:
-    from memex.infrastructure.store.watcher import IndexWatcher
-
     memex = _memex(data_dir)
     _write(memex, "Watched page")
-    watcher = IndexWatcher(
-        memex.wiki_store.wiki_dir,
-        memex.index_manager,
-        memex.wiki_store,
-        link_mgr=memex.link_manager,
-        navigation=memex.navigation,
-    )
-    assert watcher.check() == []
+    before = memex.index_manager.count()
+    errors: list[str] = []
+    nodes_before = sorted(n.slug for n in memex.wiki_store.scan_all(errors))
     _regenerate(memex)
-    assert watcher.check() == []
-    assert watcher.reindex_changed() == 0
+    # Generated index.md/log.md stay invisible to memory surfaces after regeneration.
+    assert memex.index_manager.count() == before
+    assert sorted(n.slug for n in memex.wiki_store.scan_all(errors)) == nodes_before
 
 
 def test_external_edit_refreshes_navigation(data_dir: Path) -> None:
-    from memex.infrastructure.store.watcher import IndexWatcher
-
     memex = _memex(data_dir)
     slug = _write(memex, "Edited page", description="old text")
-    watcher = IndexWatcher(
-        memex.wiki_store.wiki_dir,
-        memex.index_manager,
-        memex.wiki_store,
-        link_mgr=memex.link_manager,
-        navigation=memex.navigation,
-    )
     node = memex.wiki_store.read(slug)
     assert node is not None and node.file_path
     path = Path(node.file_path)
@@ -661,12 +628,12 @@ def test_external_edit_refreshes_navigation(data_dir: Path) -> None:
     path.write_text(text, encoding="utf-8")
 
     entities_index = memex.wiki_store.wiki_dir / "global" / "entities" / "index.md"
-    assert watcher.reindex_changed() == 1
+    memex.rebuild_index()
     assert "new text" in entities_index.read_text(encoding="utf-8")
 
-    # External deletion removes the obsolete index through the watcher path.
+    # External deletion removes the obsolete index on rebuild.
     path.unlink()
-    watcher.reindex_changed()
+    memex.rebuild_index()
     assert not entities_index.exists()
 
 

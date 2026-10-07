@@ -157,29 +157,6 @@ the transcript and metadata file paths.
 Failures arrive on two channels, but this tool only produces
 {"error": "memory node not found"} for an unknown slug — check that
 key first. No side effects.""",
-    "memex_export": """Export all memory nodes as a JSON document.
-
-When to use: backup, migration, or inspecting the full memory store.
-
-Returns {"version", "exported_at", "nodes"} where each node carries
-slug, type, title, body, tags, importance, timestamps, links, and
-transcript_ref.
-
-Errors return {"error": "..."} — check that key first. No side
-effects: nothing is written and no memory state changes.""",
-    "memex_import": """Import memory nodes from a JSON export document.
-
-When to use: restore or migrate memories produced by memex_export.
-
-Key constraints: nodes is a list of objects as emitted by
-memex_export; each needs a valid type and a non-empty title; invalid
-entries are reported and skipped, not fatal.
-
-Returns {"imported", "skipped", "errors"} counts.
-
-Errors return {"error": "..."} — check that key first. Side effects:
-writes wiki pages for imported nodes and updates the index and link
-graph; importing an existing slug updates it.""",
 }
 
 

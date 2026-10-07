@@ -279,7 +279,6 @@ def test_cli_harness_install(
     monkeypatch.setenv("MEMEX_DATA_DIR", str(project / "memex-data"))
     code = cli.main(
         [
-            "harness",
             "install",
             "pi",
             "--from",

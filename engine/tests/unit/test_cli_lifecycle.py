@@ -113,30 +113,3 @@ class TestArchiveAndMerge:  # AC-0005, AC-0006
         assert node is not None and node.status == "archived"
         assert m.recall("archive body").hits == []
         m.close()
-
-    def test_merge_supersedes_source(self, data_dir: Path) -> None:
-        m = Memex(MemexConfig(data_dir=data_dir))
-        m.write(WriteInput(type="entity", title="Merge target", body="target body"))
-        m.write(WriteInput(type="entity", title="Merge source", body="source body"))
-
-        result = m.merge("merge-target", "merge-source")
-        assert result["source_status"] == "superseded"
-
-        target = m.wiki_store.read("merge-target")
-        assert target is not None
-        assert "source body" in target.body
-        assert "[[merge-source]]" in target.body
-
-        source = m.wiki_store.read("merge-source")
-        assert source is not None
-        assert source.status == "superseded"
-        # OKF records the replacement on the surviving page, not the retired one.
-        assert "merge-source" in target.supersedes
-        # source invisible to recall; target finds merged content
-        assert m.recall("source body", include_inactive=True).hits
-        assert any(h.slug == "merge-target" for h in m.recall("source body").hits)
-        m.close()
-
-    def test_merge_missing_raises(self, memex: Memex) -> None:
-        with pytest.raises(FileNotFoundError):
-            memex.merge("ghost", "also-ghost")

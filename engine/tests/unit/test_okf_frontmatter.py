@@ -21,7 +21,6 @@ from memex.application.verify import verify
 from memex.domain.errors import WikiStoreError
 from memex.domain.models import SemanticLink, WriteInput
 from memex.domain.reserved import OKF_VERSION
-from memex.infrastructure.store.import_export import ImportExport
 from memex.infrastructure.store.wiki_store import _OKF_KEYS, WikiStore
 
 
@@ -52,10 +51,6 @@ def _front_matter(path: Path) -> dict[str, object]:
     parsed = yaml.safe_load(block)
     assert isinstance(parsed, dict)
     return parsed
-
-
-def _exporter(memex: Memex) -> ImportExport:
-    return ImportExport(memex.wiki_store, memex.index_manager, memex.link_manager)
 
 
 def _write(memex: Memex, **kwargs: object) -> Path:
@@ -314,55 +309,6 @@ class TestExternalConformance:
         theirs = _front_matter(page)
         assert list(ours) == list(theirs)
         assert ours == theirs
-
-    def test_export_carries_okf_names(self, memex: Memex, tmp_path: Path) -> None:
-        """AC-0011: export emits every front-matter key under its OKF name."""
-        memex.write(WriteInput(type="entity", title="Page", body="b", links=["alpha"]))
-        archive = tmp_path / "export.json"
-        _exporter(memex).export(archive)
-        entry = json.loads(archive.read_text())["nodes"][0]
-        assert {"timestamp", "updated_at", "valid_until", "stale_after", "links"} <= set(entry)
-        assert entry["links"] == [{"target": "alpha", "rel": "relates-to"}]
-        assert "updated" not in entry and "valid_to" not in entry
-
-    def test_export_import_preserves_every_value(self, memex: Memex, tmp_path: Path) -> None:
-        """AC-0011: an import into an empty store reproduces the field values."""
-        memex.write(
-            WriteInput(
-                type="entity",
-                title="Page",
-                body="b",
-                links=["alpha:depends-on"],
-                parent="estate",
-                supersedes=["old"],
-                valid_from="2020-01-01T00:00:00Z",
-            )
-        )
-        archive = tmp_path / "export.json"
-        _exporter(memex).export(archive)
-        original = memex.wiki_store.read("page")
-
-        from memex.infrastructure.config import MemexConfig
-
-        other = Memex(MemexConfig(data_dir=tmp_path / "second"))
-        _exporter(other).import_file(archive)
-        restored = other.wiki_store.read("page")
-
-        assert original is not None and restored is not None
-        # An import is a write, so the write instants legitimately move.
-        assert restored.timestamp >= original.timestamp
-        for name in (
-            "created",
-            "valid_from",
-            "valid_until",
-            "stale_after",
-            "parent",
-            "supersedes",
-            "implements",
-            "depends_on",
-            "links",
-        ):
-            assert getattr(restored, name) == getattr(original, name), name
 
 
 class TestReviewedCriteria:

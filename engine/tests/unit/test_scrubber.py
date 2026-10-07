@@ -231,11 +231,6 @@ class TestDescriptionScrub:
             assert DESCRIPTION_SECRET not in hit.description
             assert DESCRIPTION_SECRET not in hit.snippet
 
-        export_path = tmp_path / "nodes.json"
-        document = memex.import_export.export(export_path)
-        assert DESCRIPTION_SECRET not in json.dumps(document)
-        assert DESCRIPTION_SECRET not in export_path.read_text(encoding="utf-8")
-
         archive = tmp_path / "backup.tar.gz"
         memex.backup(archive)
         memex.close()

@@ -87,6 +87,4 @@ def test_registry_has_all_operations() -> None:
         "memex_ingest_transcript",
         "memex_clear_transcripts",
         "memex_provenance",
-        "memex_export",
-        "memex_import",
     }

@@ -120,19 +120,6 @@ class TestDispatchSmoke:
         assert cli.main() == 0
         assert called == [1]
 
-    def test_viz(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-        from memex import cli
-
-        called = []
-        monkeypatch.setattr(
-            "memex.infrastructure.web.server.serve",
-            lambda **kw: called.append(kw),
-        )
-        monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path))
-        monkeypatch.setattr("sys.argv", ["memex", "viz", "--port", "0"])
-        assert cli.main() == 0
-        assert called == [{"data_dir": None, "port": 0}]
-
     def test_backup(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
         from memex import cli
 
@@ -165,64 +152,3 @@ class TestDispatchSmoke:
         )
         assert cli.main() == 1
         assert "memex:" in capsys.readouterr().err
-
-
-class TestWatchCommand:
-    def test_watch_starts_and_stops(self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
-        import time as time_mod
-
-        from memex import cli
-        from memex.infrastructure.search.index_manager import IndexManager
-        from memex.infrastructure.search.link_manager import LinkManager
-        from memex.infrastructure.store import watcher as watcher_mod
-        from memex.infrastructure.store.navigation import NavigationGenerator
-        from memex.infrastructure.store.watcher import IndexWatcher
-        from memex.infrastructure.store.wiki_store import WikiStore
-
-        seen_link_managers: list[LinkManager | None] = []
-        seen_navigation: list[NavigationGenerator | None] = []
-        started = []
-        stopped = []
-        monkeypatch.setenv("MEMEX_DATA_DIR", str(tmp_path))
-        original_init = IndexWatcher.__init__
-
-        def capture_init(
-            self: IndexWatcher,
-            wiki_dir: Path,
-            index_mgr: IndexManager,
-            wiki_store: WikiStore,
-            poll_interval: int = 60,
-            link_mgr: LinkManager | None = None,
-            *,
-            navigation: NavigationGenerator | None = None,
-        ) -> None:
-            seen_link_managers.append(link_mgr)
-            seen_navigation.append(navigation)
-            original_init(
-                self,
-                wiki_dir,
-                index_mgr,
-                wiki_store,
-                poll_interval=poll_interval,
-                link_mgr=link_mgr,
-                navigation=navigation,
-            )
-
-        monkeypatch.setattr(watcher_mod.IndexWatcher, "__init__", capture_init)
-        monkeypatch.setattr(
-            watcher_mod.IndexWatcher, "start_polling", lambda self: started.append(1)
-        )
-        monkeypatch.setattr(
-            watcher_mod.IndexWatcher, "stop_polling", lambda self: stopped.append(1)
-        )
-
-        def fake_sleep(seconds: float) -> None:
-            raise KeyboardInterrupt
-
-        monkeypatch.setattr(time_mod, "sleep", fake_sleep)
-        monkeypatch.setattr("sys.argv", ["memex", "watch", "--poll-interval", "1"])
-        assert cli.main() == 0
-        assert seen_link_managers and seen_link_managers[0] is not None
-        assert seen_navigation and seen_navigation[0] is not None
-        assert started == [1]
-        assert stopped == [1]

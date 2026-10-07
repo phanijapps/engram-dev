@@ -39,40 +39,6 @@ def test_write_and_recall_roundtrip(data_dir: Path, capture: dict[str, str]) -> 
     assert [hit["slug"] for hit in result["hits"]] == ["cli-entity"]
 
 
-def test_watch_command_wires_navigation_and_refreshes(
-    data_dir: Path, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    """The shipped `memex watch` command must refresh generated indexes
-    after an external edit (AC-0017 watcher clause)."""
-    from memex.application.memory import Memex
-    from memex.domain.models import WriteInput
-    from memex.infrastructure.config import MemexConfig
-    from memex.infrastructure.store.watcher import IndexWatcher
-
-    memex = Memex(MemexConfig(data_dir=data_dir))
-    memex.write(WriteInput(type="entity", title="Watched", body="b", description="old text"))
-    memex.close()
-    page = data_dir / "docs" / "global" / "entities" / "watched.md"
-    entities_index = data_dir / "docs" / "global" / "entities" / "index.md"
-    assert "old text" in entities_index.read_text(encoding="utf-8")
-
-    def start_and_reindex(self: IndexWatcher) -> None:
-        """One synchronous poll cycle: external edit, then re-index."""
-        page.write_text(
-            page.read_text(encoding="utf-8").replace("old text", "new text"), encoding="utf-8"
-        )
-        self.reindex_changed()
-
-    def interrupt(_seconds: float) -> None:
-        raise KeyboardInterrupt
-
-    monkeypatch.setattr(IndexWatcher, "start_polling", start_and_reindex)
-    monkeypatch.setattr("time.sleep", interrupt)
-    code = cli.main(["--data-dir", str(data_dir), "watch"])
-    assert code == 0
-    assert "new text" in entities_index.read_text(encoding="utf-8")
-
-
 def test_task_recall_derives_project_and_preserves_single_query_shape(
     data_dir: Path, capture: dict[str, str], monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -326,23 +292,6 @@ def test_ingest_bad_turns_file(
     )
     assert code == 1
     assert "bad.jsonl:1" in capsys.readouterr().err
-
-
-def test_export_import_cli(data_dir: Path, capture: dict[str, str], tmp_path: Path) -> None:
-    cli.main(
-        ["--data-dir", str(data_dir), "write", "--type", "entity", "--title", "Ex", "--body", "b"]
-    )
-    export_path = tmp_path / "nodes.json"
-    code = cli.main(["--data-dir", str(data_dir), "export", "--output", str(export_path)])
-    assert code == 0
-    assert export_path.exists()
-
-    other_dir = tmp_path / "other-home"
-    code = cli.main(["--data-dir", str(other_dir), "import", "--input", str(export_path)])
-    assert code == 0
-    payload = json.loads(capture["out"])
-    assert payload["imported"] == 1
-    assert (other_dir / "docs/global/entities/ex.md").exists()
 
 
 def test_consolidate_requires_api_key(

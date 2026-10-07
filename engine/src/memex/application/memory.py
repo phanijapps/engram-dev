@@ -10,7 +10,7 @@ from typing import Literal
 
 from memex.application.concept_types import ConceptTypes
 from memex.application.consolidator import WikiConsolidator
-from memex.application.decay import RecencyDecay
+from memex.application.dto import to_jsonable
 from memex.application.ports import LLMClient
 from memex.domain.errors import LLMError, WikiStoreError
 from memex.domain.models import (
@@ -45,7 +45,6 @@ from memex.infrastructure.search.bm25_retriever import BM25Retriever, _query_tok
 from memex.infrastructure.search.index_manager import IndexManager
 from memex.infrastructure.search.link_manager import LinkManager
 from memex.infrastructure.store.backup import BackupRestore
-from memex.infrastructure.store.import_export import ImportExport
 from memex.infrastructure.store.navigation import NavigationGenerator
 from memex.infrastructure.store.navigation_search import FALLBACK_SEARCH_ENGINE, NavigationSearch
 from memex.infrastructure.store.wiki_store import WikiStore, hash_body
@@ -92,12 +91,6 @@ class Memex:
             on_page_written=self._on_page_written,
         )
         self.backup_restore = BackupRestore(self.data_dir, self.config.db_path)
-        self.import_export = ImportExport(
-            self.wiki_store,
-            self.index_manager,
-            self.link_manager,
-            on_page_written=self._on_page_written,
-        )
         self.navigation = NavigationGenerator(self.wiki_store.wiki_dir)
         self.types = ConceptTypes(self.wiki_store, self.index_manager, self.navigation)
         if rebuild_on_open:
@@ -695,30 +688,6 @@ class Memex:
         self.logger.info("operation=approve slug=%s", slug)
         return {"slug": slug, "status": "active"}
 
-    def merge(self, target: str, source: str) -> dict[str, object]:
-        """Append source's body into target; source becomes superseded."""
-        target_node = self.wiki_store.read(target)
-        if target_node is None:
-            raise FileNotFoundError(f"no wiki page for slug: {target!r}")
-        source_node = self.wiki_store.read(source)
-        if source_node is None:
-            raise FileNotFoundError(f"no wiki page for slug: {source!r}")
-        target_node.body = (
-            target_node.body.rstrip() + f"\n\n## Merged from [[{source}]]\n\n{source_node.body}"
-        )
-        target_node.supersedes = sorted({*target_node.supersedes, source})
-        target_node = self.wiki_store.write(target_node)
-        self.index_manager.update_record(target_node)
-        self.link_manager.sync_node(target_node)
-
-        source_node.status = "superseded"
-        source_node = self.wiki_store.write(source_node)
-        self.index_manager.update_record(source_node)
-        self._refresh_navigation(target_node.file_path)
-        self._refresh_navigation(source_node.file_path)
-        self.logger.info("operation=merge target=%s source=%s", target, source)
-        return {"target": target, "source": source, "source_status": "superseded"}
-
     def _on_page_written(self, path: Path) -> None:
         """Shared post-write hook for component-driven page writes.
 
@@ -807,19 +776,6 @@ class Memex:
             "superseded": counts["superseded"],
             "zero_yield_streak": zero_yield_streak(runs),
         }
-
-    def apply_decay(self, *, dry_run: bool = False) -> list[tuple[str, float, float]]:
-        """Recompute importance for every node via half-life decay.
-
-        Explicit maintenance call — decay is never applied on access.
-        Returns ``(slug, old, new)`` for each node that would change; with
-        ``dry_run`` the wiki files and index are left untouched.
-        """
-        decay = RecencyDecay(
-            half_life_days=self.config.recency_decay.half_life_days,
-            enabled=self.config.recency_decay.enabled,
-        )
-        return decay.apply_decay(self.wiki_store, self.index_manager, dry_run=dry_run)
 
     def _llm_client(self) -> LLMClient:
         """The consolidation client: [consolidation] overrides over [llm].

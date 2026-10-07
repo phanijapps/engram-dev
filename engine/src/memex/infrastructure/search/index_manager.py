@@ -200,7 +200,7 @@ class IndexManager:
 
     @property
     def connection(self) -> sqlite3.Connection:
-        """Shared connection for collaborators (LinkManager, watcher)."""
+        """Shared connection for collaborators (LinkManager)."""
         return self._conn
 
     def needs_rebuild(self) -> bool:

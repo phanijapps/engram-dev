@@ -123,76 +123,6 @@ def test_provenance_and_sessions(memex: Memex) -> None:
     assert provenance.transcript_files[0].endswith("sess-facade.jsonl")
 
 
-def test_export_import_roundtrip(memex: Memex, data_dir: Path) -> None:
-    memex.write(WriteInput(type="entity", title="Export me", body="roundtrip body"))
-    export_path = data_dir.parent / "export.json"
-    document = memex.import_export.export(export_path)
-    assert document["version"] == "1.0"
-    assert len(document["nodes"]) == 1  # type: ignore[arg-type]
-    assert export_path.exists()
-
-    import shutil
-
-    shutil.rmtree(data_dir / "docs")
-    memex.import_export.import_file(export_path)
-    assert memex.wiki_store.exists("export-me")
-    assert memex.index_manager.get("export-me") is not None
-
-
-def test_export_import_roundtrip_preserves_project_scope(memex: Memex, data_dir: Path) -> None:
-    node = memex.write(
-        WriteInput(
-            type="entity",
-            title="Scoped export",
-            body="roundtrip project body",
-            scope="project",
-            project_id="a" * 24,
-            project_label="Project alpha",
-            project_locator="git-alpha",
-        )
-    )
-    export_path = data_dir.parent / "scoped-export.json"
-    document = memex.import_export.export(export_path)
-    nodes = document["nodes"]
-    assert isinstance(nodes, list)
-    exported = nodes[0]
-    assert isinstance(exported, dict)
-    assert exported["scope"] == "project"
-    assert exported["project_id"] == "a" * 24
-    assert exported["project_label"] == "Project alpha"
-
-    import shutil
-
-    shutil.rmtree(data_dir / "docs")
-    memex.import_export.import_file(export_path)
-
-    restored = memex.wiki_store.read(node.slug, "entity", scope="project", project_id="a" * 24)
-    assert restored is not None
-    assert restored.project_id == "a" * 24
-
-
-def test_import_scrubs_secret_shaped_description(memex: Memex, data_dir: Path) -> None:
-    secret = "sk-proj-1234567890abcdefghij"  # noqa: S105 - fixture, never real
-    document: dict[str, object] = {
-        "nodes": [
-            {
-                "slug": "imported-secret",
-                "type": "entity",
-                "title": "Imported secret",
-                "body": "clean body",
-                "description": f"token {secret} here",
-            }
-        ]
-    }
-    result = memex.import_export.import_data(document)
-    assert result["imported"] == 1
-    node = memex.wiki_store.read("imported-secret")
-    assert node is not None and node.file_path
-    assert secret not in node.description
-    assert "[REDACTED:openai_key]" in node.description
-    assert secret not in Path(node.file_path).read_text(encoding="utf-8")
-
-
 def test_rebuild_after_manual_edit(memex: Memex) -> None:
     memex.write(WriteInput(type="entity", title="Manual edit", body="original"))
     page = data_dir_page(memex)
@@ -209,9 +139,3 @@ def data_dir_page(memex: Memex) -> Path:
     return next(
         p for p in (memex.data_dir / "docs/global/entities").glob("*.md") if p.name != "index.md"
     )
-
-
-def test_apply_decay_via_facade(memex: Memex) -> None:
-    memex.write(WriteInput(type="entity", title="Decayable", body="x"))
-    changes = memex.apply_decay(dry_run=True)
-    assert changes == [] or changes[0][0] == "decayable"

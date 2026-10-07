@@ -7,7 +7,6 @@ import json
 import os
 import re
 import sys
-import time
 from collections.abc import Sequence
 from pathlib import Path
 
@@ -133,12 +132,6 @@ def _build_parser() -> argparse.ArgumentParser:
     restore = sub.add_parser("restore", help="Restore from an archive")
     restore.add_argument("--input", type=Path, required=True)
 
-    export = sub.add_parser("export", help=summary("memex_export"))
-    export.add_argument("--output", type=Path, default=None)
-
-    import_cmd = sub.add_parser("import", help=summary("memex_import"))
-    import_cmd.add_argument("--input", type=Path, required=True)
-
     approve_cmd = sub.add_parser("approve", help="Approve a pending page (flip status to active)")
     approve_cmd.add_argument("slug")
 
@@ -164,25 +157,13 @@ def _build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--project-id", default=None)
         sp.add_argument("--project-label", default=None)
 
-    merge_cmd = sub.add_parser(
-        "merge", help="Merge source page into target; source becomes superseded"
-    )
-    merge_cmd.add_argument("target")
-    merge_cmd.add_argument("source")
-
     sub.add_parser("sessions", help="List captured sessions with harness token usage")
 
     sub.add_parser("info", help="Show data directory and index statistics")
 
     sub.add_parser("status", help="Memory health: freshness, captures, pending, zero-yield")
 
-    watch = sub.add_parser("watch", help="Poll for external wiki edits and re-index")
-    watch.add_argument("--poll-interval", type=int, default=60)
-
     sub.add_parser("serve-mcp", help="Run the stdio MCP server")
-
-    viz_cmd = sub.add_parser("viz", help="Start the on-demand HTMX dashboard (localhost)")
-    viz_cmd.add_argument("--port", type=int, default=7171)
 
     verify_cmd = sub.add_parser(
         "verify", help="Deterministic gate: memory health and activity evidence"
@@ -215,27 +196,6 @@ def _build_parser() -> argparse.ArgumentParser:
     uninstall.add_argument("harness", choices=list(SUPPORTED))
     uninstall.add_argument("--home", type=Path, default=None, help="Override HOME (testing)")
     uninstall.add_argument("--from", dest="marketplace", type=Path, default=None)
-
-    harness = sub.add_parser("harness", help="Harness integration management (alias of install)")
-    harness_sub = harness.add_subparsers(dest="harness_command", required=True)
-    harness_install = harness_sub.add_parser("install", help="Install a harness adapter")
-    harness_install.add_argument("name", choices=list(SUPPORTED))
-    harness_install.add_argument(
-        "--from",
-        dest="marketplace",
-        type=Path,
-        default=Path("marketplace"),
-        help="Marketplace directory (default: ./marketplace)",
-    )
-    harness_install.add_argument(
-        "--home", type=Path, default=None, help="Override HOME for install targets (testing)"
-    )
-    harness_uninstall = harness_sub.add_parser("uninstall", help="Remove a harness adapter")
-    harness_uninstall.add_argument("name", choices=list(SUPPORTED))
-    harness_uninstall.add_argument(
-        "--home", type=Path, default=None, help="Override HOME (testing)"
-    )
-    harness_uninstall.add_argument("--from", dest="marketplace", type=Path, default=None)
 
     hook = sub.add_parser(
         "hook", help="Harness lifecycle hooks: context injection and transcript capture"
@@ -340,7 +300,7 @@ def _make_memex(args: argparse.Namespace) -> Memex:
 
 
 def _run_install(args: argparse.Namespace) -> int:
-    name = args.harness if args.command == "install" else args.name
+    name = args.harness
     if name is None:
         name = _pick_harness()
         if name is None:
@@ -366,7 +326,7 @@ def _run_install(args: argparse.Namespace) -> int:
 
 
 def _run_uninstall(args: argparse.Namespace) -> int:
-    name = args.harness if args.command == "uninstall" else args.name
+    name = args.harness
     marketplace = None if name == "custom" else default_marketplace(args.marketplace)
     home = args.home if args.home is not None else Path.home()
     try:
@@ -622,13 +582,6 @@ def _run(args: argparse.Namespace) -> int:
         run_server()
         return 0
 
-    if args.command == "viz":
-        from memex.infrastructure.web.server import serve
-
-        data_dir = args.data_dir.expanduser() if args.data_dir else None
-        serve(data_dir=data_dir, port=args.port)
-        return 0
-
     if args.command == "hook":
         return _run_hook(args)
 
@@ -729,10 +682,6 @@ def _run(args: argparse.Namespace) -> int:
             _emit(memex.backup(args.output, include_mem_db=not args.no_mem_db))
         elif args.command == "restore":
             _emit(memex.restore(args.input))
-        elif args.command == "export":
-            _emit(memex.import_export.export(args.output))
-        elif args.command == "import":
-            _emit(memex.import_export.import_file(args.input))
         elif args.command == "approve":
             _emit(memex.approve(args.slug))
         elif args.command == "types":
@@ -771,8 +720,6 @@ def _run(args: argparse.Namespace) -> int:
                         )
                     ]
                 )
-        elif args.command == "merge":
-            _emit(memex.merge(args.target, args.source))
         elif args.command == "verify":
             report = run_verify(
                 memex,
@@ -788,28 +735,9 @@ def _run(args: argparse.Namespace) -> int:
             _emit(to_jsonable(memex.list_sessions()))
         elif args.command == "info":
             _emit(_info(memex))
-        elif args.command == "watch":
-            from memex.infrastructure.store.watcher import IndexWatcher
-
-            watcher = IndexWatcher(
-                memex.wiki_store.wiki_dir,
-                memex.index_manager,
-                memex.wiki_store,
-                poll_interval=args.poll_interval,
-                link_mgr=memex.link_manager,
-                navigation=memex.navigation,
-            )
-            watcher.start_polling()
-            print("watching for wiki edits; press Ctrl-C to stop", file=sys.stderr)
-            try:
-                while True:
-                    time.sleep(3600)
-            except KeyboardInterrupt:
-                watcher.stop_polling()
         return 0
     finally:
-        if args.command != "watch":
-            memex.close()
+        memex.close()
 
 
 def _info(memex: Memex) -> dict[str, object]:

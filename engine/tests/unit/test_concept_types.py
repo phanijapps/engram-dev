@@ -8,7 +8,6 @@ from pathlib import Path
 
 import pytest
 
-from memex.application.decay import RecencyDecay
 from memex.application.memory import Memex
 from memex.application.ports import LLMResponse
 from memex.application.verify import VerifyReport, verify
@@ -17,7 +16,6 @@ from memex.domain.errors import WikiStoreError
 from memex.domain.models import ConsolidateInput, TaskRecallInput, WikiNode, WriteInput
 from memex.domain.types import TYPE_DIRS
 from memex.infrastructure.config import GovernanceConfig, MemexConfig
-from memex.infrastructure.store.import_export import ImportExport
 from memex.infrastructure.store.wiki_store import WikiStore
 
 
@@ -351,11 +349,6 @@ def test_withdrawn_type_is_a_state_not_erased(data_dir: Path) -> None:
     assert "types-declared" not in failed
     assert "draft-types-pending" not in failed
 
-    doc = ImportExport(m.wiki_store, m.index_manager, m.link_manager).export()
-    exported_types = doc["types"]
-    assert isinstance(exported_types, list)
-    assert not any(t["name"] == "access-matrix" for t in exported_types)
-
     with pytest.raises(WikiStoreError, match="already withdrawn"):
         m.types.remove("access-matrix", project_id=PROJECT)
 
@@ -426,37 +419,6 @@ def test_suggest_surfaces_unenabled_catalogue_name_but_not_after_enable(data_dir
     assert not any(tag == "decision" for tag, _count in suggestions_after)
 
 
-def test_import_type_with_multiline_description_records_error(
-    data_dir: Path, tmp_path: Path
-) -> None:
-    other = Memex(MemexConfig(data_dir=data_dir))
-    archive = tmp_path / "bad-desc.json"
-    archive.write_text(
-        json.dumps(
-            {
-                "version": "1.0",
-                "exported_at": "2026-01-01T00:00:00Z",
-                "types": [
-                    {
-                        "scope": "project",
-                        "project_id": PROJECT,
-                        "name": "story-map",
-                        "kind": "custom",
-                        "description": "line one\nline two",
-                    }
-                ],
-                "nodes": [],
-            }
-        )
-    )
-    io = ImportExport(other.wiki_store, other.index_manager, other.link_manager)
-    result = io.import_file(archive)
-    import_errors = result["errors"]
-    assert isinstance(import_errors, list)
-    assert any("story-map" in e for e in import_errors)
-    assert "story-map" not in other.wiki_store.declared_types(scope="project", project_id=PROJECT)
-
-
 class TestWritesRespectDeclarations:
     def test_write_to_enabled_type_lands_in_its_directory(self, data_dir: Path) -> None:
         store = _store(data_dir)
@@ -497,18 +459,6 @@ class TestWritesRespectDeclarations:
         node = store.write(WikiNode(type="entity", title="Global thing", body="b", id=""))
         assert Path(node.file_path or "").parts[-3:-1] == ("global", "entities")
         assert store.declared_types(scope="global", project_id=None).keys() == set(TYPE_DIRS)
-
-
-def test_catalogue_pages_never_decay_builtins_do(data_dir: Path) -> None:
-    store = _store(data_dir)
-    store.declare_type("policy", scope="project", project_id=PROJECT)
-    old = "2020-01-01T00:00:00Z"
-    _page(store, "policy", "Prefer boring tech", importance=1.0, created=old, last_access=old)
-    _page(store, "entity", "Kafka", importance=1.0, created=old, last_access=old)
-    changes = RecencyDecay(half_life_days=30).apply_decay(store)
-    assert [slug for slug, _old, _new in changes] == ["kafka"]
-    policy = store.read("prefer-boring-tech")
-    assert policy is not None and policy.importance == 1.0
 
 
 class _FakeLLM:
@@ -722,135 +672,3 @@ def test_declared_types_in_matches_declared_types(data_dir: Path) -> None:
     declared_in = store.declared_types_in(project_dir)
     declared = store.declared_types(scope="project", project_id=PROJECT)
     assert declared_in == declared
-
-
-def test_export_import_round_trips_declared_types(data_dir: Path, tmp_path: Path) -> None:
-    m = Memex(MemexConfig(data_dir=data_dir))
-    m.wiki_store.declare_type("decision", scope="project", project_id=PROJECT)
-    m.wiki_store.declare_type(
-        "access-matrix", scope="project", project_id=PROJECT, description="Who may edit."
-    )
-    m.write(
-        WriteInput(type="decision", title="Choose", body="b", scope="project", project_id=PROJECT)
-    )
-    archive = tmp_path / "e.json"
-    doc = ImportExport(m.wiki_store, m.index_manager, m.link_manager).export(archive)
-    exported_types = doc["types"]
-    assert isinstance(exported_types, list)
-    assert {
-        "scope": "project",
-        "project_id": PROJECT,
-        "name": "access-matrix",
-        "kind": "custom",
-        "description": "Who may edit.",
-    } in exported_types
-
-    other = Memex(MemexConfig(data_dir=tmp_path / "second"))
-    ImportExport(other.wiki_store, other.index_manager, other.link_manager).import_file(archive)
-    types = other.wiki_store.declared_types(scope="project", project_id=PROJECT)
-    assert types["decision"].kind == "catalogue"
-    assert types["access-matrix"].description == "Who may edit."
-    read = other.wiki_store.read("choose")
-    assert read is not None and read.type == "decision"
-
-
-def test_import_fails_on_page_of_undeclared_type(data_dir: Path, tmp_path: Path) -> None:
-    other = Memex(MemexConfig(data_dir=data_dir))
-    archive = tmp_path / "bad.json"
-    archive.write_text(
-        json.dumps(
-            {
-                "version": "1.0",
-                "exported_at": "2026-01-01T00:00:00Z",
-                "types": [],
-                "nodes": [
-                    {
-                        "slug": "x",
-                        "type": "decision",
-                        "title": "X",
-                        "body": "b",
-                        "tags": [],
-                        "importance": 0.5,
-                        "created": "2026-01-01T00:00:00Z",
-                        "timestamp": "2026-01-01T00:00:00Z",
-                        "updated_at": "2026-01-01T00:00:00Z",
-                        "links": [],
-                        "scope": "project",
-                        "project_id": PROJECT,
-                    }
-                ],
-            }
-        )
-    )
-    io = ImportExport(other.wiki_store, other.index_manager, other.link_manager)
-    result = io.import_file(archive)
-    import_errors = result["errors"]
-    assert result["imported"] == 0
-    assert isinstance(import_errors, list)
-    assert any("x" in e and "undeclared" in e for e in import_errors)
-
-
-def test_export_skips_project_whose_pages_disagree_on_id(data_dir: Path, tmp_path: Path) -> None:
-    m = Memex(MemexConfig(data_dir=data_dir))
-    m.wiki_store.declare_type("decision", scope="project", project_id=PROJECT)
-    m.write(
-        WriteInput(type="decision", title="Choose", body="b", scope="project", project_id=PROJECT)
-    )
-    second = m.write(
-        WriteInput(
-            type="decision", title="Choose Two", body="b", scope="project", project_id=PROJECT
-        )
-    )
-    other_id = "c" * 24
-    second_path = Path(second.file_path or "")
-    second_path.write_text(
-        second_path.read_text(encoding="utf-8").replace(
-            f'project_id: "{PROJECT}"', f'project_id: "{other_id}"'
-        ),
-        encoding="utf-8",
-    )
-
-    archive = tmp_path / "e.json"
-    doc = ImportExport(m.wiki_store, m.index_manager, m.link_manager).export(archive)
-    exported_types = doc["types"]
-    assert isinstance(exported_types, list)
-    assert not any(t.get("project_id") == PROJECT for t in exported_types)
-    _, skipped = m.wiki_store.project_declarations()
-    assert skipped == 1
-
-
-def test_export_warns_when_a_declared_project_is_skipped(
-    data_dir: Path, tmp_path: Path, caplog: pytest.LogCaptureFixture
-) -> None:
-    m = Memex(MemexConfig(data_dir=data_dir))
-    m.logger.propagate = True  # caplog visibility; production keeps False
-    m.wiki_store.declare_type("decision", scope="project", project_id=PROJECT)
-    archive = tmp_path / "e.json"
-
-    with caplog.at_level(logging.WARNING, logger="memex"):
-        ImportExport(m.wiki_store, m.index_manager, m.link_manager).export(archive)
-
-    warnings = [r.getMessage() for r in caplog.records if r.levelno >= logging.WARNING]
-    assert "operation=export types_skipped=1" in warnings
-
-
-def test_import_records_non_object_type_entry(data_dir: Path, tmp_path: Path) -> None:
-    other = Memex(MemexConfig(data_dir=data_dir))
-    archive = tmp_path / "bad-types.json"
-    archive.write_text(
-        json.dumps(
-            {
-                "version": "1.0",
-                "exported_at": "2026-01-01T00:00:00Z",
-                "types": [42],
-                "nodes": [],
-            }
-        )
-    )
-    result = ImportExport(other.wiki_store, other.index_manager, other.link_manager).import_file(
-        archive
-    )
-    import_errors = result["errors"]
-    assert isinstance(import_errors, list)
-    assert "non-object type entry skipped" in import_errors
-    assert result["imported"] == 0
