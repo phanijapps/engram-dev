@@ -65,9 +65,9 @@ bundle to keep the clean-wiki invariant monotonic).
 | Task | Status | Evidence |
 |------|--------|----------|
 | T1 | done | `cd engine/okf && uv run pytest -q` → `159 passed in 0.97s` incl. 6 new `_clean_imports` pins; commit `3b47f7c`. Note: wiki was stale (stamp 5d0f9e2) at start — stale-pinned per freshness gate; task truth is source files, reindex belongs to T2 |
-| T2 | todo (ready) | unblocked by T1 |
-| T3 | todo | — |
-| T4 | todo | — |
+| T2 | done | `memex-core wiki update` → 83 updated; `grep -rlF ".( " wiki/code` = 0, `grep -rlF ".)" wiki/code` = 0 (were 13/13); `memory.py.md:55` lists `compiler.assemble_task_recall`; commit `c883fd2` |
+| T3 | done | 10-point re-check green: web-server gone (grep 0), clear-transcripts in (cli.py:116), 39bad0f pins → pointers (D4; 2 remaining hits are correction-provenance notes), graphify removed + L10-13 correct, validate.py 25-29 ×2, counting-rules section present, label fixed, reachability via decisions/index.md:3; commit `1604e35`. Micro-adaptation recorded: scope statement lives in curated wiki-contract.md — repository.md is managed |
+| T4 | done | `wiki update` → `indexes: 28`, root `okf_version: '0.2'` preserved, D5 held (0 `indexes` in stamp), engine/core pytest `15 passed`, status 0 errors/0 warnings/fresh; commit `036bed2`. Expectation-wording note for review: plan said "root enumerates concepts by type" — §8 shape is per-directory (root→subdir→concept); reachability core holds |
 | T5 | done | 6/6 U-rows carry exactly one marker (`rg -c` = 6), consistent with L3#18; commit `01aa49b` |
 
 ## Handoff
