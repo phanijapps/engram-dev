@@ -10,7 +10,7 @@ tags:
 - depends-on
 source_path: engine/core/src/memex_core/knowledge.py
 language: python
-source_hash: 352717021cf6fe410b0e44f2ac6437892bdd4819088b1416e3d9b8336dd5c219
+source_hash: 8e17539fcab290524361bc87ec71646b4dc6199da405b6b7e07d1253b5b043cf
 managed_by: okf-code
 generated_profile: compact
 package: engine/core
@@ -28,8 +28,8 @@ Generated CodeModule concept for `engine/core/src/memex_core/knowledge.py`. Purp
 | function | `_bundle_root` | 31-32 |
 | function | `wiki_init` | 35-52 |
 | function | `_counts_as_dict` | 55-60 |
-| function | `wiki_update` | 63-102 |
-| function | `_head` | 105-119 |
+| function | `wiki_update` | 63-116 |
+| function | `_head` | 119-133 |
 
 # Relationships
 
@@ -45,6 +45,7 @@ Depends on:
 - `memex_core.resolve.WIKI_DIRNAME`
 - `memex_core.resolve.repo_root_of`
 - `okf_kit.code.indexer.index_codebase`
+- `okf_kit.core.index.regenerate_indexes`
 - `okf_kit.core.templates.init_bundle`
 - `pathlib.Path`
 - `subprocess`
@@ -60,5 +61,5 @@ Impact candidates on this page are syntax-derived. Treat them as a starting poin
 # Citations
 
 - Source: `engine/core/src/memex_core/knowledge.py`
-- Source hash: `352717021cf6fe410b0e44f2ac6437892bdd4819088b1416e3d9b8336dd5c219`
+- Source hash: `8e17539fcab290524361bc87ec71646b4dc6199da405b6b7e07d1253b5b043cf`
 <!-- okf-code:end -->

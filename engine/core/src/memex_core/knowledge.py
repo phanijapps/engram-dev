@@ -77,6 +77,7 @@ def wiki_update(
     if not (bundle / "index.md").is_file():
         raise KnowledgeError(f"no wiki at {bundle}; run wiki init first")
     from okf_kit.code.indexer import index_codebase
+    from okf_kit.core.index import regenerate_indexes
 
     result = index_codebase(
         root,
@@ -87,7 +88,15 @@ def wiki_update(
         include=include,
         exclude=exclude,
     )
+    # §8 progressive disclosure: every directory containing concepts gets an
+    # index; root preserves its okf_version. Reserved files — excluded from
+    # concept counts and the stamp contract (design D5).
+    index_files = regenerate_indexes(bundle)
+    # §8 progressive disclosure: every directory containing concepts gets an
+    # index; root preserves its okf_version. Reserved files — excluded from
+    # concept counts and the stamp contract (design D5).
     counts = _counts_as_dict(result)
+    index_files = regenerate_indexes(bundle)
     stamp = {
         "repo_root": str(root),
         "repo_head": _head(root),
@@ -99,7 +108,12 @@ def wiki_update(
     (state_dir / LAST_INDEX_STAMP).write_text(
         json.dumps(stamp, indent=2, sort_keys=True), encoding="utf-8"
     )
-    return {"bundle_root": str(bundle), "counts": counts, "stamp": stamp}
+    return {
+        "bundle_root": str(bundle),
+        "counts": counts,
+        "indexes": len(index_files),
+        "stamp": stamp,
+    }
 
 
 def _head(root: Path) -> str:
