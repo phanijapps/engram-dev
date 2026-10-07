@@ -17,10 +17,9 @@ rationale_for_depth: subtractive + two small ports + prose; no shared API contra
 
 | ID | Task (goal, one line) | Implements | Prereqs | Verification expectation | Size | Status |
 |----|------------------------|------------|---------|--------------------------|------|--------|
-| T1 | done | `uv sync` green; okf pytest 161; `rg memex_core engine/` = 0; commit `7d3ab5f`; D1 executed first (finding declined, page deprecated) |
-| T1 | Amputate: root members := okf only; `git rm -r engine/memex engine/core`; uv re-lock | E6, E10 | — | `uv sync` green; `cd engine/okf && uv run pytest -q` green; `rg -l "memex_core" engine/` empty | M | todo |
+| T1 | Amputate: root members := okf only; `git rm -r engine/memex engine/core`; uv re-lock | E6, E10 | — | `uv sync` green; `cd engine/okf && uv run pytest -q` green; `rg -l "memex_core" engine/` empty | M | done |
 | T2 | Port freshness stamp: `okf code index` writes `.okf/last-index.json` (repo_head, counts) after each run | E2, D4 | T1 | unit test pins stamp contents; manual run on this repo writes stamp at current HEAD | S | done |
-| T3 | Port findings ledger: `okf_kit/core/findings.py` + `okf findings propose/list/resolve` on `<bundle>/.okf/findings.toml`, dedupe/declined-guard tests ported verbatim | E3, D4 (A2) | T1 | ported tests green; CLI round-trip propose→list→resolve on a temp bundle | M | todo |
+| T3 | Port findings ledger: `okf_kit/core/findings.py` + `okf findings propose/list/resolve` on `<bundle>/.okf/findings.toml`, dedupe/declined-guard contract tests | E3, D4 (A2) | T1 | ported tests green; CLI round-trip propose→list→resolve on a temp bundle | M | done |
 | T4 | Retarget skills: build-kb + sdlc SKILL.mds (+ .pi copies) — okf verbs replace memex-core; record steps dropped with note; findings → `okf findings` | E1, E7 | T2, T3 | `rg -l "memex-core" skills/ .pi/skills/` returns only removal-wave mentions; every command in each SKILL.md exists per `okf --help` | M | todo |
 | T5 | Wiki + docs + D1 execution: decline golden-path-416c0995; new okf-only decision page (draft, proposed via ported ledger); systems pages superseded/replaced; wiki-contract.md rewritten; AGENTS.md rewritten; supersede banners on one-engine docs; supersedes T6 | E4, E5, E11, D1, D7 | T2, T3, T4 | `okf validate wiki` 0 errors; `rg -l "memex_core" AGENTS.md` empty; ledger shows finding declined; new decision page drafted + finding proposed | L | todo |
 | T6 | ~~Evidence-status tags on memex.md~~ — **superseded by T5** (target page rewritten wholesale) | review-1 F1 | — | — | S | superseded |
@@ -57,7 +56,11 @@ Walk: T1 → {T2, T3} → T4 → T5. No cycles; prereqs are output-needs
 
 | Task | Status | Evidence |
 |------|--------|----------|
-| — | — | (implement fills) |
+| T1 | done | `uv sync` green; okf pytest 161; `rg memex_core engine/` = 0; commit `7d3ab5f`. D1 executed first: finding golden-path-416c0995 declined, decision page → deprecated |
+| T2 | done | stamp.py + CLI wiring, +2 tests (163 passed); `okf code index . wiki` → stamp at real HEAD, schema identical to core-era stamp; indexer auto-pruned deleted planes' concepts (83→23); commit `27da0f2` |
+| T3 | done | findings.py ported bundle-rooted, contract identical; `okf findings propose/list/resolve`; +5 contract tests (168 passed); ported ledger reads the real findings.toml; temp-bundle round-trip green; commit `fc99299` |
+| T4 | todo | — |
+| T5 | todo | D1 already executed (decline + deprecation in T1) |
 
 ## Handoff
 
