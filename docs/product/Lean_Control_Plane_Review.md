@@ -1,7 +1,7 @@
 ---
 title: Lean Control Plane Review — subagent code review synthesis
 document_type: review_synthesis
-status: findings_ready_for_approval
+status: executing — P1, P2a, P2b landed 2026-10-06 (owner approved all); P2c–P4 remain
 version: 0.1.0
 date: 2026-10-05
 review_method: 3 parallel fresh-context read-only reviewers (app-services, surface-trim, plane-contract); parent synthesis
@@ -102,11 +102,17 @@ into mem.db) · budget honesty (kit's truncate-with-marker is not
 
 ## 6. Decisions requested from the owner
 
-1. **Approve P1 cuts** (web/viz, watch, decay, harness alias) — recommended.
-2. **UI re-target**: engine dashboard deleted; bundle browsing stays in
-   kit's web. (Charter's "read-only local dashboard" line gets revised.)
-3. **`merge` + `import`/`export` verb deletion** — recommended per
-   supersede-not-delete policy, but they are human tools; your call.
-4. **MCP reshape to the 8-op contract** — recommended.
-5. Greenfield + brownfield skills enter the roadmap as the first APM packs
-   built on this contract (after federation P4 + kit U3/U4).
+**All approved 2026-10-06 ("go for it all").** Execution log:
+
+| Phase | Status | Commit | Notes |
+|---|---|---|---|
+| P1 cuts (web/viz, watch, decay, harness alias, merge, import/export) | **done** | 6abf3b9 | −3,800 LOC; gates green; baseline failures unchanged (2 unit env, 1 integration score) |
+| P2a trio merge → `application/compiler.py` | **done** | 07f76d9 | one estimator/identity/expansion; named packing policies; eval harness rewired |
+| P2b stale-check dedupe | **done** | f6ad3f7 | `verify.count_stale_index_rows` shared by `status()`; single scan |
+| P2c facade split (recorder/search/compiler/maintenance/propose) | next | — | pure moves behind unchanged facade API |
+| P2d transcript merge/enrichment logic out of cli.py | next | — | moves into TranscriptHook/facade |
+| P3 surface alignment (MCP 8+1, sessions/info folds, registry) | next | — | registry pin updated same-commit |
+| P4 federation (wiki_root, federated recall) | next | — | additive; hit-list merge, no mem.db mixing |
+
+Note: mid-execution, `skills/sdlc/*` drafts appeared in the working tree
+(not authored by this work); kept on disk, excluded from commits.
