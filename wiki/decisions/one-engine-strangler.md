@@ -1,35 +1,59 @@
 ---
 type: Decision
-title: One engine, strangler-fig migration
-description: Core fronts and progressively absorbs the two planes instead of a big-bang merge
-tags: [decision, architecture, normative-draft]
+title: One engine via strangler fig (draft — acceptance pending)
+description: DRAFT. Absorb both planes into memex-core incrementally instead of a big-bang rewrite or keeping two engines; normative acceptance requested through the findings ledger.
 status: draft
+tags: [decision, architecture, strangler-fig, migration, draft]
 ---
 
 # Overview
 
-Chosen: keep two absorbed codebases as plane internals behind a new core
-layer; migrate inward (fronts → contract stabilizes → internals move in →
-planes become shims → core takes the `memex` name) rather than rewriting
-or merging in place.
+**Status: draft — normative acceptance requested** (see the pending finding
+in `wiki/.okf/findings.toml`; a human must accept before this page is
+treated as settled).
 
-# Alternatives considered
+The chosen architecture direction: **one engine, reached by strangler fig**.
+`memex-core` (engine/core) already fronts both planes through their public
+APIs. The internals migrate inward over time — engine's store/search and
+kit's bundle machinery become `memex_core` internals; `engine/` and `kit/`
+shrink to compatibility shims, then vanish; the repo renames to memex and
+the core binary takes the `memex` name. Meanwhile every new control-plane
+op lands in `engine/core`, not in the planes.
 
-- **Big-bang merge of memex + okf** — rejected: high blast radius, loses
-  runnable tests-per-plane during the merge window.
-- **Keep three front faces (memex, okf, core CLIs)** — rejected:
-  institutionalizes three contracts; recreates the verb bloat the
-  lean-down removed.
+Rationale:
 
-# Consequences
+- The 8-op surface is small and test-pinned — fronting it first lets agents
+  and skills migrate to one CLI immediately, without waiting for internal
+  unification.
+- Strangler fig keeps each plane working (and tested) at every step; no
+  feature freeze, no big-bang cutover risk.
+- The alternative — a greenfield rewrite — discards two tested codebases and
+  their pinned tests; the other alternative — keeping two engines —
+  permanently pays double maintenance and confuses the "which CLI do I
+  call?" answer.
 
-- One CLI front face from day one; planes stay green and testable.
-- Adapter/hook surface retired, to be rebuilt from scratch on core.
-- This page is normative (architecture direction): acceptance tracked as
-  a finding; see the ledger.
+Rejected alternatives (recorded in the review docs): big-bang rewrite into a
+single new package; long-term two-engine federation with no convergence
+plan.
+
+# Relationships
+
+- Implemented by [memex-core](/systems/memex-core.md); shapes the delegation
+  map in [one-engine](/systems/one-engine.md).
+- Sequenced in `docs/product/Memex_Core_Layer.md` ("Migration path to one
+  engine", steps 1–3) and workstreams WS1–WS6 in
+  `docs/product/Engine_Conformance_Strategy.md`.
+- Owner decisions and dispositioned findings live in
+  `docs/product/Lean_Control_Plane_Review.md` §6.
 
 # Evidence
 
-- Decision record + execution: `docs/product/Lean_Control_Plane_Review.md`
-  (core-layer decision, 2026-10-07); `docs/product/Memex_Core_Layer.md`
-  migration path.
+- `docs/product/Memex_Core_Layer.md` — the migration-path section and the
+  "End goal: one engine" statement.
+- `docs/product/Lean_Control_Plane_Review.md` — review synthesis that
+  arbitrated the lean-down and requested owner decisions; §5 invariants
+  survive every phase.
+- `AGENTS.md` (repo root) — "New control-plane work lands HERE [engine/core],
+  not in engine/memex/ or engine/okf/".
+- Pending finding in `wiki/.okf/findings.toml` — the acceptance route for
+  this page.
