@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 from memex import Memex
-from memex.application.context_injection import (
+from memex.application.compiler import (
     CONSTITUTION,
     DEFAULT_MAX_TOKENS,
     build_injection,

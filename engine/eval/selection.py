@@ -52,7 +52,7 @@ from eval.workloads import (
     validate_queries,
 )
 from memex import __version__ as MEMEX_VERSION
-from memex.application import context_injection
+from memex.application import compiler as context_injection
 from memex.application.memory import Memex
 from memex.domain.frontmatter import serialize_front_matter
 from memex.domain.models import RecallHit, WikiNode, utc_now_iso
@@ -1462,8 +1462,8 @@ def _metadata(
         },
         "top_k": config.top_k,
         "token_budget": TOKEN_BUDGET,
-        "renderer_identity": "memex.application.context_injection.format_context_block",
-        "token_estimator_identity": "memex.application.context_injection.estimate_tokens",
+        "renderer_identity": "memex.application.compiler.format_context_block",
+        "token_estimator_identity": "memex.application.compiler.estimate_tokens",
         "percentile_method": "nearest-rank",
     }
 
@@ -1491,8 +1491,8 @@ def _comparison_metadata(
         query_count=len(corpora[min(sizes)].queries),
         top_k=config.top_k,
         token_budget=TOKEN_BUDGET,
-        renderer_identity="memex.application.context_injection.format_context_block",
-        token_estimator_identity="memex.application.context_injection.estimate_tokens",  # noqa: S106
+        renderer_identity="memex.application.compiler.format_context_block",
+        token_estimator_identity="memex.application.compiler.estimate_tokens",  # noqa: S106
         percentile_method="nearest-rank",
         baseline_ranker=baseline_ranker,
         candidate_ranker={"candidate": name, **candidate_ranker},

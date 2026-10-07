@@ -11,7 +11,7 @@ from collections.abc import Sequence
 from pathlib import Path
 
 from memex import Memex, __version__
-from memex.application.context_injection import build_injection
+from memex.application.compiler import build_injection
 from memex.application.dto import to_jsonable
 from memex.application.verify import verify as run_verify
 from memex.domain.errors import MemexError

@@ -279,7 +279,7 @@ class Memex:
                     )
                     return result
         if max_tokens is not None:
-            from memex.application.context_injection import pack_to_budget
+            from memex.application.compiler import pack_to_budget
 
             result = self.retriever.retrieve_without_access(
                 query,
@@ -326,7 +326,6 @@ class Memex:
         project_id: str | None,
     ) -> RecallResult:
         """Recall from the generated navigation; no index row is touched."""
-        from memex.application.context_injection import pack_to_budget
 
         result = NavigationSearch(
             self.wiki_store.wiki_dir, default_top_k=self.config.bm25.default_top_k
@@ -342,12 +341,14 @@ class Memex:
             project_id=project_id,
         )
         if max_tokens is not None:
+            from memex.application.compiler import pack_to_budget
+
             result.hits = _renumber_hits(pack_to_budget(result.hits, max_tokens))
         return result
 
     def recall_task(self, input: TaskRecallInput) -> TaskRecallResult:
         """Gather project evidence for caller-written questions within one budget."""
-        from memex.application.task_recall import (
+        from memex.application.compiler import (
             assemble_task_recall,
             validate_task_budget,
             with_linked_pages,

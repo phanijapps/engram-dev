@@ -8,7 +8,7 @@ from typing import Any, cast
 import pytest
 
 from memex.application.memory import Memex
-from memex.application.task_recall import assemble_task_recall
+from memex.application.compiler import assemble_task_recall
 from memex.domain.models import RecallHit, TaskRecallInput, WikiNode, WriteInput, new_id
 from memex.infrastructure.config import MemexConfig
 

@@ -13,7 +13,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import NotRequired, TypedDict, cast
 
-from memex.application.context_injection import (
+from memex.application.compiler import (
     DEFAULT_INJECTION_TOP_K,
     build_injection,
     estimate_tokens,

@@ -7,7 +7,7 @@ from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
 from eval.runner import HitResult
-from memex.application import context_injection
+from memex.application import compiler as context_injection
 from memex.domain.models import RecallHit, RecallResult
 
 HARD_QUERY_MIN_IMPROVEMENT = 0.05

@@ -15,7 +15,7 @@ from eval.comparison import (
     tokens_per_correct_hard_query,
 )
 from eval.runner import HitResult
-from memex.application.context_injection import (
+from memex.application.compiler import (
     estimate_tokens,
     format_context_block,
     pack_to_budget,
@@ -335,8 +335,8 @@ def test_comparison_report_separates_stable_and_volatile_fields() -> None:
             query_count=208,
             top_k=10,
             token_budget=4096,
-            renderer_identity="memex.application.context_injection.format_context_block",
-            token_estimator_identity="memex.application.context_injection.estimate_tokens",  # noqa: S106
+            renderer_identity="memex.application.compiler.format_context_block",
+            token_estimator_identity="memex.application.compiler.estimate_tokens",  # noqa: S106
             percentile_method="nearest-rank",
             baseline_ranker={"name": "sqlite-fts5-bm25"},
             candidate_ranker={"name": "candidate"},

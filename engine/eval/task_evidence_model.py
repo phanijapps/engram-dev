@@ -26,7 +26,7 @@ from eval.agent_workflow import (
     run_benchmark,
     run_benchmark_for_fixture,
 )
-from memex.application.context_injection import estimate_tokens
+from memex.application.compiler import estimate_tokens
 from memex.application.memory import Memex
 from memex.infrastructure.config import MemexConfig
 

@@ -7,19 +7,18 @@ from pathlib import Path
 
 import pytest
 
-from memex.application.context_injection import (
+from memex.application.compiler import (
     DEFAULT_MAX_TOKENS,
+    ExpansionEntry,
+    assemble_task_recall,
     build_injection,
     estimate_tokens,
-)
-from memex.application.graph_expansion import (
-    ExpansionEntry,
     expand_links,
     omitted_marker,
     render_expansion,
+    with_linked_pages,
 )
 from memex.application.memory import Memex
-from memex.application.task_recall import assemble_task_recall, with_linked_pages
 from memex.domain.models import RecallHit, TaskRecallInput, WikiNode, WriteInput, new_id
 from memex.infrastructure.config import MemexConfig
 

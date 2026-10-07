@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from memex.application.context_injection import build_injection, format_context_block
+from memex.application.compiler import build_injection, format_context_block
 from memex.application.memory import Memex
 from memex.domain.models import WriteInput
 from memex.infrastructure.config import MemexConfig
