@@ -96,14 +96,14 @@ receipts.)
 
 ## C. Sequencing and gates
 
-| Step | Deliverable | Gate |
-|---|---|---|
-| U1 | 0.2 upgrade (A-table) | kit wiki migrated; 0.1 fixtures still validate; tests extended |
-| U2 | Sources + fingerprints | re-index of unchanged repo = zero concept diff; changed file marks only dependents stale |
-| U3 | Findings + bindingness | declined finding never re-proposed (idempotence test); normative-stable rule enforced |
-| U4 | Context compiler | manifest exact; insufficiency explicit; deterministic bytes on frozen inputs |
-| U5 | UI + MCP polish | findings inbox usable; staleness visible |
-| U6 | Engine federation | `memex recall` spans store + bundle; consolidation lands as finding |
+| Step | Deliverable | Gate | Status (2026-10-07 audit, gap-1.md G12 / L3#18) |
+|---|---|---|---|
+| U1 | 0.2 upgrade (A-table) | kit wiki migrated; 0.1 fixtures still validate; tests extended | **paper in kit** — core writes 0.2 declarations (`memex_core/knowledge.py:20`) while kit validates/authors 0.1 (`validate.py:32`, `templates.py:29`) |
+| U2 | Sources + fingerprints | re-index of unchanged repo = zero concept diff; changed file marks only dependents stale | **paper** — no fingerprint code anywhere in `engine/`; `.okf/` holds only stamp + findings |
+| U3 | Findings + bindingness | declined finding never re-proposed (idempotence test); normative-stable rule enforced | **partial** — ledger real but lives in `engine/core`, not kit as §D assigns; `bindingness` absent repo-wide |
+| U4 | Context compiler | manifest exact; insufficiency explicit; deterministic bytes on frozen inputs | **partial** — `compile_context` real (manifest, CONTEXT_INSUFFICIENT) but keyword federated search, not relations+provenance mandatory closure |
+| U5 | UI + MCP polish | findings inbox usable; staleness visible | **paper** — no findings inbox in `engine/okf/web`; staleness not surfaced |
+| U6 | Engine federation | `memex recall` spans store + bundle; consolidation lands as finding | **partial** — core `search` federates memory+wiki; consolidation→findings path missing |
 
 U1–U4 correspond to conformance WS1–WS3 (first release gate of the merger
 brief); the engine-side work narrows to federation (U6) and its own
