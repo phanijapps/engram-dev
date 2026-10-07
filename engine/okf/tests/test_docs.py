@@ -11,7 +11,7 @@ import re
 from pathlib import Path
 
 
-WIKI = Path(__file__).resolve().parent.parent / "wiki"
+WIKI = Path(__file__).resolve().parent / "fixtures" / "wiki"
 TOOLS_REFERENCE = WIKI / "reference" / "tools.md"
 
 
@@ -35,7 +35,6 @@ def _extract_description(md: str, tool: str) -> str:
 
 def test_code_index_docs_are_syntax_grounded_and_polyglot():
     docs = [
-        Path(__file__).resolve().parent.parent / "README.md",
         WIKI / "interfaces" / "okf-cli.md",
         WIKI / "guides" / "authoring.md",
         TOOLS_REFERENCE,

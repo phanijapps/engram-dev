@@ -2,7 +2,9 @@ from pathlib import Path
 
 
 def test_architecture_pins_retrieval_evaluation_security_controls() -> None:
-    architecture = Path("docs/architecture/overview.md").read_text(encoding="utf-8")
+    architecture = (
+        Path(__file__).resolve().parents[4] / "docs/history/memex-architecture/overview.md"
+    ).read_text(encoding="utf-8")
 
     required_topics = (
         "Retrieval evaluation security controls",

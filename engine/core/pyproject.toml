@@ -6,7 +6,6 @@ build-backend = "hatchling.build"
 name = "memex-core"
 version = "0.1.0"
 description = "The one-engine core: unified memory + knowledge control plane. Strangler-fig seed over engine/ (memory plane) and kit/ (knowledge plane); they migrate into this package until one engine remains."
-readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [{ name = "memex contributors" }]
@@ -29,3 +28,10 @@ packages = ["src/memex_core"]
 [tool.uv.sources]
 memex = { path = "../memex" }
 okf-kit = { path = "../okf" }
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
