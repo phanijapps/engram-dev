@@ -34,18 +34,18 @@ Generated area summary for `repository/engine`. Purpose: provide a low-token ent
 - [engine/core/src/memex_core/knowledge.py](/code/engine/core/src/memex_core/knowledge.py.md) - model module; depends on 1; used by 2; high-signal symbols: `KnowledgeError`, `_bundle_root`, `wiki_init`
 - [engine/core/src/memex_core/status.py](/code/engine/core/src/memex_core/status.py.md) - module; depends on 1; used by 2; high-signal symbols: `combined_status`
 - [engine/core/src/memex_core/record.py](/code/engine/core/src/memex_core/record.py.md) - module; depends on 0; used by 2; high-signal symbols: `record_note`
-- [engine/memex/memex/__init__.py](/code/engine/memex/memex/__init__.py.md) - module; depends on 0; used by 0
-- [engine/memex/memex/application/__init__.py](/code/engine/memex/memex/application/__init__.py.md) - module; depends on 0; used by 0
-- [engine/memex/memex/application/compiler.py](/code/engine/memex/memex/application/compiler.py.md) - model module; depends on 0; used by 0; high-signal symbols: `estimate_tokens`, `identity`, `_hit_identity`
-- [engine/memex/memex/application/concept_types.py](/code/engine/memex/memex/application/concept_types.py.md) - model module; depends on 0; used by 0; high-signal symbols: `ConceptTypes`, `__init__`, `add`
-- [engine/memex/memex/application/consolidator.py](/code/engine/memex/memex/application/consolidator.py.md) - model module; depends on 0; used by 0; high-signal symbols: `_format_existing`, `_format_episodes`, `WikiConsolidator`
-- [engine/memex/memex/application/dto.py](/code/engine/memex/memex/application/dto.py.md) - module; depends on 0; used by 0; high-signal symbols: `to_jsonable`
-- [engine/memex/memex/application/memory.py](/code/engine/memex/memex/application/memory.py.md) - model module; depends on 0; used by 0; high-signal symbols: `Memex`, `__init__`, `_open_storage`
-- [engine/memex/memex/application/ports.py](/code/engine/memex/memex/application/ports.py.md) - model module; depends on 0; used by 0; high-signal symbols: `LLMResponse`, `LLMClient`, `complete`
-- [engine/memex/memex/application/verify.py](/code/engine/memex/memex/application/verify.py.md) - model module; depends on 0; used by 0; high-signal symbols: `VerifyReport`, `_check`, `count_stale_index_rows`
-- [engine/memex/memex/cli.py](/code/engine/memex/memex/cli.py.md) - module; depends on 0; used by 0; high-signal symbols: `_build_parser`, `_csv`, `_load_turns`
-- [engine/memex/memex/domain/__init__.py](/code/engine/memex/memex/domain/__init__.py.md) - module; depends on 0; used by 0
-- 50 modules omitted from compact summary.
+- [engine/memex/eval/__init__.py](/code/engine/memex/eval/__init__.py.md) - module; depends on 0; used by 0
+- [engine/memex/eval/agent_workflow.py](/code/engine/memex/eval/agent_workflow.py.md) - model module; depends on 0; used by 0; high-signal symbols: `_summary_links`, `MemorySpec`, `TaskSpec`
+- [engine/memex/eval/candidates.py](/code/engine/memex/eval/candidates.py.md) - model module; depends on 0; used by 0; high-signal symbols: `RankedCandidate`, `CandidateSource`, `CurrentFtsSearcher`
+- [engine/memex/eval/comparison.py](/code/engine/memex/eval/comparison.py.md) - model module; depends on 0; used by 0; high-signal symbols: `CandidateMetrics`, `GateVerdict`, `to_dict`
+- [engine/memex/eval/corpus.py](/code/engine/memex/eval/corpus.py.md) - model module; depends on 0; used by 0; high-signal symbols: `QuerySpec`, `relevant_slugs`, `CorpusResult`
+- [engine/memex/eval/realistic.py](/code/engine/memex/eval/realistic.py.md) - model module; depends on 0; used by 0; high-signal symbols: `RealisticCorpusGenerator`, `__init__`, `generate`
+- [engine/memex/eval/rgapi_candidate.py](/code/engine/memex/eval/rgapi_candidate.py.md) - model module; depends on 0; used by 0; high-signal symbols: `RgapiCandidateResult`, `actual_slugs`, `ranker_metadata`
+- [engine/memex/eval/run.py](/code/engine/memex/eval/run.py.md) - module; depends on 0; used by 0; high-signal symbols: `_build_parser`, `_generate_corpus`, `_git_state`
+- [engine/memex/eval/runner.py](/code/engine/memex/eval/runner.py.md) - model module; depends on 0; used by 0; high-signal symbols: `HitResult`, `EvalReport`, `run_retrieval_eval`
+- [engine/memex/eval/selection.py](/code/engine/memex/eval/selection.py.md) - model module; depends on 0; used by 0; high-signal symbols: `GitState`, `promotion_eligible`, `EvaluationConfig`
+- [engine/memex/eval/task_evidence_model.py](/code/engine/memex/eval/task_evidence_model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `TaskQuestionInput`, `TaskEvidenceSnapshot`, `BaselineTaskEvidenceSnapshot`
+- 63 modules omitted from compact summary.
 
 # Impact map
 
