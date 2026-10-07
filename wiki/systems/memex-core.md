@@ -1,12 +1,14 @@
 ---
 type: System
-status: stable
+status: deprecated
 created: 2026-10-06
 updated: 2026-10-07
 title: memex-core — the control-plane front face
 description: 'engine/core (package memex-core): the 8-op control plane CLI and library that fronts both planes; where new control-plane work lands.'
 tags: [cli, control-plane, package, engine-core]
 ---
+
+> **SUPERSEDED 2026-10-07 — engine/core was removed (okf-only direction).** This page describes removed architecture. See [Okf-only engine](/decisions/okf-only-engine.md).
 
 # Overview
 

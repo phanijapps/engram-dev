@@ -11,6 +11,8 @@ artifacts:
   - subagent-artifacts/cbdce36d_reviewer_output.md (lane 2)
 ---
 
+> **SUPERSEDED 2026-10-07 (in part or whole):** the engine is now okf only — `engine/memex` and `engine/core` were removed; the one-engine direction was declined. See `wiki/decisions/okf-only-engine.md` and `docs/specs/okf-only-engine/`. This document is preserved for history.
+
 # Lean Control Plane Review — synthesis
 
 **Verdict: OK with notes.** The engine is well-layered for this trim: `web/`

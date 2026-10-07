@@ -10,8 +10,9 @@ tags: [contract, okf, freshness, findings, conventions]
 
 # Overview
 
-The engine packages exchange knowledge through one concrete contract,
-implemented in `memex_core` and enforced by `okf-kit`:
+The wiki's knowledge contract is implemented in **`okf-kit` alone**
+(okf-only engine, 2026-10-07; the former `memex_core` half was removed —
+see [Okf-only engine](/decisions/okf-only-engine.md)):
 
 **Bundle location and shape.** The project wiki is an OKF bundle at
 `<repo>/wiki/` — convention over registry, no mapping table. Root
@@ -22,9 +23,10 @@ the path relative to the bundle root without `.md`.
 `last-index.json` (the freshness stamp) and `findings.toml` (the proposal
 ledger).
 
-**Freshness stamp.** `wiki update` writes `last-index.json` with `repo_head`
-and counts (`written/updated/skipped`). `resolve` compares the stamped
-`repo_head` to `git HEAD` and reports `fresh | stale | unknown` (plus
+**Freshness stamp.** `okf code index` writes `last-index.json`
+(`okf_kit/core/stamp.py`) with `repo_head` and counts
+(`written/updated/skipped`). Consumers compare the stamped `repo_head`
+to `git rev-parse HEAD` and report `fresh | stale | unknown` (plus
 `absent` when no wiki exists). Freshness is the trust contract for
 `wiki/code/**`: a stale stamp means the generated tree may not describe the
 code at HEAD.
@@ -38,9 +40,9 @@ edits belong only in curated concepts (e.g. `wiki/systems/**`,
 **Findings ledger.** Normative content (golden paths, constraints,
 standards — "what new code must conform to") is never written directly as
 settled truth: it is authored `status: draft` and routed through
-`memex-core findings propose`; a human accepts or declines
-(`findings resolve <id> --decision …`). Declined findings are never
-re-proposed. The ledger lives with the knowledge it governs, in
+`okf findings propose`; a human accepts or declines
+(`okf findings resolve <bundle> <id> --decision …`). Declined findings are
+never re-proposed. The ledger lives with the knowledge it governs, in
 `wiki/.okf/findings.toml`.
 
 **Front matter.** Non-empty `type` is required; `title` and `description`

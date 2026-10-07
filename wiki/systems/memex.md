@@ -1,12 +1,14 @@
 ---
 type: System
-status: stable
+status: deprecated
 created: 2026-10-06
 updated: 2026-10-07
 title: memex — the memory plane
 description: 'engine/memex (package memex v0.5.0): durable memory layer for AI coding agents - hexagonal layers, wiki-as-store, SQLite secondary index, transcript ingestion, backup/restore.'
 tags: [memory, package, engine-memex, agents]
 ---
+
+> **SUPERSEDED 2026-10-07 — engine/memex was removed (okf-only direction).** This page describes removed architecture. See [Okf-only engine](/decisions/okf-only-engine.md).
 
 # Overview
 

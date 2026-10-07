@@ -1,3 +1,5 @@
+
+> **SUPERSEDED 2026-10-07 (in part or whole):** the engine is now okf only — `engine/memex` and `engine/core` were removed; the one-engine direction was declined. See `wiki/decisions/okf-only-engine.md` and `docs/specs/okf-only-engine/`. This document is preserved for history.
 # memex-core — the one-engine seed
 
 **End goal: one engine.** This package is the unified control plane that

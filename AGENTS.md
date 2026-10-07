@@ -2,6 +2,8 @@
 
 An agent harness for spec-driven development that ships on any coding agent — pi, Claude Code, Codex, Cursor, Kiro — packaged with Microsoft APM.
 
+> **2026-10-07 — engine pivot: okf only.** The engine is `engine/okf` alone (repository → knowledge, tree-sitter for codebase understanding). `engine/memex` (memory plane) and `engine/core` (memex-core control plane) were removed; a future memex is a consumer layer on top. Decision: `wiki/decisions/okf-only-engine.md`; analysis: `docs/specs/okf-only-engine/`. Pre-pivot docs describe the removed architecture.
+
 **The problem we solve:** Spec-driven development is a pain because specs arrive without context, and agents replace missing context with repetitive questions that annoy the user. **The fix is shift-left:** build a rich context layer from code and docs first, then help the user frame briefs that teams or agents can directly convert to shippable products.
 
 **How it works:** The harness is built around a **versioned solution graph** — one logical package connecting PRD sources, goals, requirements, acceptance criteria, constraints, questions, assumptions, decisions, design, tasks, and verification. Deterministic software owns persistence, context compilation, scheduling, permissions, and evidence checks. Model reasoning supplies proposals and implementation work — never authority. Two components carry the strategy:
@@ -25,11 +27,10 @@ This repository currently holds the **proposed build contract** (brief, spec, ex
 | `docs/product/Technical_Spec.md` | Normative spec: identity/revisions, node/relation semantics, persistence model, API contracts, readiness/scheduling, context algorithm, change impact, effect ledger, verification, acceptance backlog C01–C20 |
 | `docs/product/Harness.schema.json` | Derived single-file bundle embedding all 18 schema resources (JSON Schema Draft 2020-12); validates unified packages |
 | `docs/product/build-repo-knowledge.zip` | Reference APM skill package for the repository-knowledge context layer (see Packaging) |
-| `engine/` | **The one-engine umbrella** — all code lives here, each plane minimal (source, tests, pyproject, ruff, uv.lock, .gitignore only). `engine/memex/` = memory plane, `engine/okf/` = knowledge plane (its dogfood wiki lives at `engine/okf/tests/fixtures/wiki/` as the OKF 0.2 migration fixture), `engine/core/` = **memex-core, the one-engine seed and CLI front face**. Docs written before 2026-10-07 say `engine/`, `kit/`, `core/` — map them to `engine/memex/`, `engine/okf/`, `engine/core/`. History: `git log memex/engine-line`, `git log okfkit/main` |
+| `engine/okf/` | **THE engine (okf-only since 2026-10-07)** — OKF bundle machinery (parse/model/links/index/search/validate/context), tree-sitter code→concept indexer with managed human sections, freshness stamp + findings ledger (ported from the removed control plane), CLI (`init/new/validate/search/read/index/code/findings`), MCP, web, agent skills. Its dogfood wiki lives at `engine/okf/tests/fixtures/wiki/`. Docs written before 2026-10-07 may say `engine/memex`, `engine/core`, `memex-core`, or `kit/` — those planes are removed (see git history). History: `git log okfkit/main` |
 | `docs/history/` | Preserved decision ledger from the absorbed memex repo: `memex-adr/` (ADRs 0001–0007), `memex-CHARTER.md`, `memex-architecture/` (overview, security — pinned by engine/memex tests) |
 | `skills/sdlc/` | The SDLC skill suite — one spine, bounded artifacts: `build-kb` (brownfield knowledge), `analyze` (6 analysis modes → `docs/specs/<slug>/` artifacts), `plan` (analysis → design.md + task DAG), `implement` (one task, frozen context, evidence-only status), `review` (re-run-don't-trust verification, read-only verdicts). `new-project`/`roadmap` are stubs. Installed copies live in `.pi/skills/` |
 | `docs/specs/<slug>/` | Per-initiative SDD artifacts: analysis outputs (feature/spec/bug/spike/impact/gap), design.md, plan.md — git-versioned with the code; see skills/sdlc/*/SKILL.md contracts |
-| `engine/okf/` | **Knowledge-plane codebase** — full source from `phanijapps/okf-kit@main`: OKF bundle machinery (parse/model/links/index/search/validate/context), tree-sitter code→concept indexer with managed human sections, web graph UI, MCP, agent skills. OKF 0.1beta today → 0.2 per `Kit_Wiki_Engine_Plan.md`. Browse with `git log okfkit/main` |
 | `docs/product/OKF_SPEC_v0.2.md` | Vendored frozen reference copy of the OKF v0.2 spec (Apache-2.0, source: GoogleCloudPlatform/knowledge-catalog) — the canonical concept format for project wikis |
 | `docs/product/Engine_Conformance_Strategy.md` | Strategy for the merged product: memory plane (`engine/`) + knowledge plane (`kit/`), in-repo OKF-bundle wiki, domain extensions, UI reorientation, workstreams WS1–WS6 |
 | `docs/product/Kit_Wiki_Engine_Plan.md` | okf-kit 0.1beta→0.2 upgrade table (U1) + wiki-engine improvements U2–U6 (fingerprints, findings, bindingness, typed relations, context compiler, federation) |
@@ -40,11 +41,12 @@ Planned layout (per the brief's deliverable boundaries): `schemas/` (modular sou
 
 ## Build Instructions
 
-The engine (Plane 1) is now live at `engine/`; the harness planes (2–3) are still contract-only. Until that code lands:
+The engine is **okf only** (`engine/okf`); the harness planes (2–3) are contract-only.
 
-- **One workspace venv (root):** `uv sync` at the repo root creates the single `.venv` and root `uv.lock` (uv workspace; members `engine/memex`, `engine/okf`, `engine/core`; no per-plane venvs or locks). All three CLIs on PATH from anywhere: `memex-core` (front face), `memex`, `okf`. Run a plane's tests from its dir (`cd engine/memex && uv run pytest tests/unit -q`) — it uses the root venv.
-- **Core (the one-engine seed and CLI front face):** `memex-core --help` (resolve · wiki · search · compile · record · findings · status). New control-plane work lands HERE, not in engine/memex/ or engine/okf/.
-- **Planes:** `engine/memex` (memory CLI `memex` — plane plumbing) and `engine/okf` (bundle tooling CLI `okf`). Agents and skills target `memex-core` only.
+- **One workspace venv (root):** `uv sync` at the repo root (workspace member: `engine/okf`).
+- **okf CLI:** `uv run okf --help` (`init` · `new` · `validate` · `search` · `read --depth` · `index regen` · `code index` · `findings propose|list|resolve`). The project wiki is the OKF bundle at `wiki/`; `okf code index . wiki` rebuilds managed concepts and stamps freshness (`.okf/last-index.json` — compare `repo_head` to `git rev-parse HEAD`).
+- **Tests:** `cd engine/okf && uv run pytest -q`.
+- **The project wiki** (`wiki/`) documents the repo itself; build/update it with the `build-kb` skill. SDD work flows through the `skills/sdlc/` suite (analyze → plan → implement → review), artifacts in `docs/specs/<slug>/`.
 
 - Treat `docs/product/Technical_Spec.md` and the 18 schemas as the source of truth. Do not edit spec semantics casually; changes are compatibility events (see Guidelines).
 - Validation tooling: JSON Schema Draft 2020-12 with **format checking explicitly enabled** (e.g. python-jsonschema — format keywords are informational by default). `common.schema.json` and `api.schema.json` are definition libraries; validate concrete documents or named definitions, never those library roots. Schema refs resolve through a frozen local registry, never by fetching a URI.
