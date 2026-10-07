@@ -70,7 +70,8 @@ Wave-2 work (U1) enters via its own impact cycle per the strategy.
 | T3 | done | 10-point re-check green: web-server gone (grep 0), clear-transcripts in (cli.py:116), 39bad0f pins → pointers (D4; 2 remaining hits are correction-provenance notes), graphify removed + L10-13 correct, validate.py 25-29 ×2, counting-rules section present, label fixed, reachability via decisions/index.md:3; commit `1604e35`. Micro-adaptation recorded: scope statement lives in curated wiki-contract.md — repository.md is managed |
 | T4 | done | `wiki update` → `indexes: 28`, root `okf_version: '0.2'` preserved, D5 held (0 `indexes` in stamp), engine/core pytest `15 passed`, status 0 errors/0 warnings/fresh; commit `036bed2`. Expectation-wording note for review: plan said "root enumerates concepts by type" — §8 shape is per-directory (root→subdir→concept); reachability core holds |
 | T5 | done | 6/6 U-rows carry exactly one marker (`rg -c` = 6), consistent with L3#18; commit `01aa49b` |
-| T6 | todo (ready) | routed by review-1 (F1 minor): evidence-status tags on memex.md T3-edited sections |
+| T6 | superseded by T5's page rewrites (review-1 F1) | — | — | — | S | superseded |
+| T7 | done | OKF 0.2 lifecycle frontmatter on every concept (owner request): status + created + generated{by,at}. Evidence: `engine/okf pytest` → 161 passed (+2 pins); reindex ×2 → created identical, generated.at advances; validate 0 errors; commit `71e192c` |
 
 ## Handoff
 
