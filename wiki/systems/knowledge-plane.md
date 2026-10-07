@@ -21,7 +21,8 @@ reports the mismatch at info level until U1 lands).
 # Relationships
 
 - Core `wiki init/update` wrap `init_bundle`/`index_codebase`.
-- The indexer produced every page under `wiki/code/**` in this bundle.
+- The indexer produced every page under `wiki/code/**` in this bundle —
+  and rebuilds them byte-identically from unchanged sources.
 
 # Evidence
 

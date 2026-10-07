@@ -39,4 +39,4 @@ index absorbs the other's rows.
 - Front-face decision: `docs/product/Memex_Core_Layer.md`;
   execution log in `docs/product/Lean_Control_Plane_Review.md`.
 - This wiki itself was produced by the `build-kb` skill driving
-  `memex-core wiki init|update`.
+  `memex-core wiki init|update` — twice, byte-identically.
