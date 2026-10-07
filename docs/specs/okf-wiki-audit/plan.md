@@ -81,6 +81,11 @@ Wave-2 work (U1) enters via its own impact cycle per the strategy.
 - **Next step:** `implement` T1+T5 in one sitting (both small, disjoint),
   then T2→T3/T4.
 
+
+## Wave U — executed 2026-10-07 (commit d28f6eb)
+
+U1 landed: validator dual-version (0.1+0.2), 0.2 keyset + advisory semantic checks (§5/§13.1), renderer emits `sources` frontmatter (legacy # Citations removed), templates default 0.2, fixture stays 0.1 (backward-compat proof). Verify: 172 tests; `okf validate wiki` → 0 errors / 0 warnings; okf-version-mismatch GONE; extension-key infos 513 → 193 (genuinely private keys only).
+
 ## Strategy — wave sequencing beyond this plan
 
 | Wave | Content | Why this order |
