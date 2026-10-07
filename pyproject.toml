@@ -1,10 +1,10 @@
 [project]
 name = "memex-beta"
 version = "0.1.0"
-description = "memex — the one-engine workspace: core (front face), memex (memory plane), okf (knowledge plane)"
+description = "memex — okf-only engine: repository knowledge built by the OKF knowledge plane"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-dependencies = ["memex", "okf-kit", "memex-core"]
+dependencies = ["okf-kit"]
 
 [dependency-groups]
 dev = [
@@ -19,12 +19,10 @@ dev = [
 package = false
 
 [tool.uv.workspace]
-members = ["engine/memex", "engine/okf", "engine/core"]
+members = ["engine/okf"]
 
 [tool.uv.sources]
-memex = { workspace = true }
 okf-kit = { workspace = true }
-memex-core = { workspace = true }
 
 [tool.ruff]
 line-length = 100
