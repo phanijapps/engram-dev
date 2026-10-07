@@ -1491,3 +1491,54 @@ def test_generated_code_search_ranks_path_symbol_repo_language_and_dependency_qu
     assert search(index, "depends-on billing.models")[0].cid == (
         "code/billing-repo/services/billing/src/billing/service.py"
     )
+
+
+# --- _clean_imports: parenthesized from-import sanitation (audit G2, D1) ---
+
+
+def test_clean_imports_parenthesized_multiline_from_import_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    text = (
+        "from memex.application.compiler import (\n"
+        "    assemble_task_recall,\n"
+        "    validate_task_budget,\n"
+        ")"
+    )
+    assert _clean_imports(text) == (
+        "memex.application.compiler.assemble_task_recall",
+        "memex.application.compiler.validate_task_budget",
+    )
+
+
+def test_clean_imports_parenthesized_with_alias_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    assert _clean_imports("from x import (a as b, c)") == ("x.a", "x.c")
+
+
+def test_clean_imports_redundant_single_parens_with_alias_suffix_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    # Valid Python: "from x import (a) as c" — parens must vanish, alias still applies.
+    assert _clean_imports("from x import (a) as c") == ("x.a",)
+
+
+def test_clean_imports_plain_and_relative_from_imports_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    assert _clean_imports("from memex.domain import models") == ("memex.domain.models",)
+    assert _clean_imports("from . import (a, b)") == (".a", ".b")
+
+
+def test_clean_imports_star_and_direct_imports_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    assert _clean_imports("from x import *") == ("x",)
+    assert _clean_imports("import os, sys") == ("os", "sys")
+
+
+def test_clean_imports_module_specifier_form_unchanged_without_tree_sitter():
+    from okf_kit.code.treesitter.languages.base import _clean_imports
+
+    assert _clean_imports('import { a } from "mod"') == ("mod",)

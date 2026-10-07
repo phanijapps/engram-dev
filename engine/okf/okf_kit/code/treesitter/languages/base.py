@@ -128,8 +128,11 @@ def _clean_imports(text: str) -> tuple[str, ...]:
     from_import = re.match(r"from\s+([A-Za-z0-9_.]+)\s+import\s+(.+)", text)
     if from_import:
         module = from_import.group(1)
-        raw_names = from_import.group(2).split(",")
-        names = [part.strip().split(" as ", maxsplit=1)[0] for part in raw_names]
+        # Multi-line parenthesized from-imports ("from m import (\n a,\n b,\n)")
+        # leave "(" / ")" fragments on name parts; neutralize them before
+        # splitting so no malformed label survives (audit G2, design D1).
+        raw_names = from_import.group(2).replace("(", " ").replace(")", " ").split(",")
+        names = [part.strip().split(" as ", maxsplit=1)[0].strip() for part in raw_names]
         names = [name for name in names if name and name != "*"]
         if names:
             if module.strip(".") == "":
