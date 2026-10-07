@@ -109,10 +109,18 @@ into mem.db) · budget honesty (kit's truncate-with-marker is not
 | P1 cuts (web/viz, watch, decay, harness alias, merge, import/export) | **done** | 6abf3b9 | −3,800 LOC; gates green; baseline failures unchanged (2 unit env, 1 integration score) |
 | P2a trio merge → `application/compiler.py` | **done** | 07f76d9 | one estimator/identity/expansion; named packing policies; eval harness rewired |
 | P2b stale-check dedupe | **done** | f6ad3f7 | `verify.count_stale_index_rows` shared by `status()`; single scan |
-| P2c facade split (recorder/search/compiler/maintenance/propose) | next | — | pure moves behind unchanged facade API |
+| P2c facade split (recorder/search/compiler/maintenance/propose) | **superseded** | — | replaced by the core-layer decision below |
 | P2d transcript merge/enrichment logic out of cli.py | next | — | moves into TranscriptHook/facade |
-| P3 surface alignment (MCP 8+1, sessions/info folds, registry) | next | — | registry pin updated same-commit |
-| P4 federation (wiki_root, federated recall) | next | — | additive; hit-list merge, no mem.db mixing |
+| P3 surface alignment (MCP 8+1, sessions/info folds, registry) | **superseded** | — | the 8-op surface now lives in `core/` (memex-core) |
+| P4 federation (wiki_root, federated recall) | **landed in core/** | core commit | `memex_core`: resolve/wiki/search/compile/record/findings/status, 15 tests green |
+
+**Core-layer decision (2026-10-07):** the end goal is **one engine**. A new
+unified layer (`core/`, package `memex-core`) was created with the minimal
+shape spanning both planes — it fronts engine/ and kit/ through their public
+APIs today and absorbs them inward (strangler fig) until they are internals;
+the repo then renames to memex and this package takes the `memex` name.
+Wiki convention over registry: `<repo>/wiki/`; findings ledger at
+`<repo>/wiki/.okf/findings.toml`; freshness stamp `.okf/last-index.json`.
 
 Note: mid-execution, `skills/sdlc/*` drafts appeared in the working tree
 (not authored by this work); kept on disk, excluded from commits.
