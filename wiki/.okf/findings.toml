@@ -1,0 +1,11 @@
+# memex-core findings ledger (managed)
+
+[[findings]]
+id = "golden-path-416c0995"
+source = "docs/product/Lean_Control_Plane_Review.md"
+destination = "wiki/decisions/one-engine-strangler.md"
+kind = "golden-path"
+status = "pending"
+rationale = "Architecture direction: one engine via strangler-fig; normative acceptance requested"
+proposed_at = "2026-10-07T03:06:23.903080+00:00"
+resolved_at = ""

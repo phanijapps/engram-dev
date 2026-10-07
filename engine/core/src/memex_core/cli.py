@@ -53,6 +53,7 @@ def _build_parser() -> argparse.ArgumentParser:
     wiki_update = wiki_sub.add_parser("update", help="Index source into the wiki (deterministic)")
     wiki_update.add_argument("--profile", choices=["compact", "full"], default="compact")
     wiki_update.add_argument("--include-tests", action="store_true")
+    wiki_update.add_argument("--include", action="append", default=None)
     wiki_update.add_argument("--exclude", action="append", default=None)
 
     search = sub.add_parser("search", help="Federated search over memory + wiki")
@@ -114,6 +115,7 @@ def main(argv: list[str] | None = None) -> int:
                         cwd,
                         profile=args.profile,
                         include_tests=args.include_tests,
+                        include=args.include,
                         exclude=args.exclude,
                     )
                 )
