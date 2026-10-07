@@ -44,17 +44,17 @@ Generated CodeModule concept for `engine/memex/memex/cli.py`. Purpose: engine/me
 - `memex.application.dto.to_jsonable`
 - `memex.application.verify.verify`
 - `memex.domain.errors.MemexError`
-- `memex.domain.models.( ConsolidateInput`
-- `memex.domain.models.)`
+- `memex.domain.models.ConsolidateInput`
 - `memex.domain.models.IngestTranscriptInput`
 - `memex.domain.models.TaskRecallInput`
 - `memex.domain.models.TurnStreamEntry`
 - `memex.domain.models.WriteInput`
 - `memex.domain.operations.summary`
 - `memex.infrastructure.config.ConfigLoader`
-- `memex.infrastructure.harness.transcripts.( HARNESSES`
-- `memex.infrastructure.harness.transcripts.)`
-- 9 imports omitted from compact profile.
+- `memex.infrastructure.harness.transcripts.HARNESSES`
+- `memex.infrastructure.harness.transcripts.parse_transcript`
+- `memex.infrastructure.harness.transcripts.read_transcript_turns`
+- 7 imports omitted from compact profile.
 
 # Impact notes
 

@@ -3,7 +3,7 @@ type: CodeSummary
 title: repository
 description: 'Generated repository code summary for repository. Top dependencies:
   memex_core.compile_context.Compiled, memex_core.compile_context.compile_context,
-  memex_core.findings.( findings_path, memex_core.findings.list_findings, memex_core.knowledge.wiki_init.
+  memex_core.findings.findings_path, memex_core.findings.list_findings, memex_core.knowledge.wiki_init.
   Top dependents: engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py,
   engine/core/src/memex_core/compile_context.py, engine/core/src/memex_core/findings.py,
   engine/core/src/memex_core/knowledge.py.'
@@ -50,13 +50,13 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 
 | Module | Depends | Used by | Relationship signals |
 |---|---:|---:|---|
-| [engine/core/src/memex_core/__init__.py](/code/engine/core/src/memex_core/__init__.py.md) | 7 | 0 | memex_core.compile_context.Compiled, memex_core.findings.( findings_path, memex_core.knowledge.wiki_init |
+| [engine/core/src/memex_core/__init__.py](/code/engine/core/src/memex_core/__init__.py.md) | 7 | 0 | memex_core.compile_context.Compiled, memex_core.findings.findings_path, memex_core.knowledge.wiki_init |
 | [engine/core/src/memex_core/cli.py](/code/engine/core/src/memex_core/cli.py.md) | 7 | 0 | memex_core.compile_context.compile_context, memex_core.findings.list_findings, memex_core.knowledge.wiki_init |
 | [engine/core/src/memex_core/resolve.py](/code/engine/core/src/memex_core/resolve.py.md) | 0 | 6 | engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py, engine/core/src/memex_core/findings.py |
 | [engine/core/src/memex_core/search.py](/code/engine/core/src/memex_core/search.py.md) | 1 | 3 | memex_core.resolve.WIKI_DIRNAME, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py, engine/core/src/memex_core/compile_context.py |
 | [engine/core/src/memex_core/compile_context.py](/code/engine/core/src/memex_core/compile_context.py.md) | 1 | 2 | memex_core.search.CoreHit, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
 | [engine/core/src/memex_core/findings.py](/code/engine/core/src/memex_core/findings.py.md) | 1 | 2 | memex_core.resolve.OKF_STATE_DIRNAME, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
-| [engine/core/src/memex_core/knowledge.py](/code/engine/core/src/memex_core/knowledge.py.md) | 1 | 2 | memex_core.resolve.( LAST_INDEX_STAMP, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
+| [engine/core/src/memex_core/knowledge.py](/code/engine/core/src/memex_core/knowledge.py.md) | 1 | 2 | memex_core.resolve.LAST_INDEX_STAMP, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
 | [engine/core/src/memex_core/status.py](/code/engine/core/src/memex_core/status.py.md) | 1 | 2 | memex_core.resolve.WIKI_DIRNAME, engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
 | [engine/core/src/memex_core/record.py](/code/engine/core/src/memex_core/record.py.md) | 0 | 2 | engine/core/src/memex_core/__init__.py, engine/core/src/memex_core/cli.py |
 

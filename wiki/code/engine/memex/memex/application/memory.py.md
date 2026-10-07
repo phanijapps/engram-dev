@@ -52,8 +52,7 @@ Generated CodeModule concept for `engine/memex/memex/application/memory.py`. Pur
 - `datetime.UTC`
 - `datetime.datetime`
 - `datetime.timedelta`
-- `memex.application.compiler.( assemble_task_recall`
-- `memex.application.compiler.)`
+- `memex.application.compiler.assemble_task_recall`
 - `memex.application.compiler.pack_to_budget`
 - `memex.application.compiler.validate_task_budget`
 - `memex.application.compiler.with_linked_pages`
@@ -64,10 +63,11 @@ Generated CodeModule concept for `engine/memex/memex/application/memory.py`. Pur
 - `memex.application.verify.count_stale_index_rows`
 - `memex.domain.errors.LLMError`
 - `memex.domain.errors.WikiStoreError`
-- `memex.domain.models.( FORGET_MODES`
-- `memex.domain.models.)`
 - `memex.domain.models.BackupReport`
-- 40 imports omitted from compact profile.
+- `memex.domain.models.ConsolidateInput`
+- `memex.domain.models.ConsolidationReport`
+- `memex.domain.models.FORGET_MODES`
+- 38 imports omitted from compact profile.
 
 # Impact notes
 

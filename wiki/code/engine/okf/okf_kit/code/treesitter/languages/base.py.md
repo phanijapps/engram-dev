@@ -8,7 +8,7 @@ tags:
 - python
 source_path: engine/okf/okf_kit/code/treesitter/languages/base.py
 language: python
-source_hash: 6f622f283ddabb807608b5c86311af49f2b8115b755fa1c6860f0a256e799f62
+source_hash: 676cb2c1cf6fe7f1b6a00f03e3564abb79511cabb348604df394357c7c491b48
 managed_by: okf-code
 generated_profile: compact
 package: engine/okf
@@ -27,7 +27,7 @@ Generated CodeModule concept for `engine/okf/okf_kit/code/treesitter/languages/b
 | function | `_walk` | 84-106 |
 | function | `_symbol_name` | 108-112 |
 | function | `_parser_name` | 114-117 |
-| function | `_clean_imports` | 120-150 |
+| function | `_clean_imports` | 120-153 |
 
 # Relationships
 
@@ -48,5 +48,5 @@ Impact candidates on this page are syntax-derived. Treat them as a starting poin
 # Citations
 
 - Source: `engine/okf/okf_kit/code/treesitter/languages/base.py`
-- Source hash: `6f622f283ddabb807608b5c86311af49f2b8115b755fa1c6860f0a256e799f62`
+- Source hash: `676cb2c1cf6fe7f1b6a00f03e3564abb79511cabb348604df394357c7c491b48`
 <!-- okf-code:end -->

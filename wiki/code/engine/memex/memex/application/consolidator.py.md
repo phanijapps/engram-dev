@@ -45,8 +45,7 @@ Generated CodeModule concept for `engine/memex/memex/application/consolidator.py
 - `logging`
 - `memex.application.ports.LLMClient`
 - `memex.domain.errors.LLMError`
-- `memex.domain.models.( ConsolidateInput`
-- `memex.domain.models.)`
+- `memex.domain.models.ConsolidateInput`
 - `memex.domain.models.ConsolidationReport`
 - `memex.domain.models.SemanticLink`
 - `memex.domain.models.WikiNode`
@@ -58,7 +57,8 @@ Generated CodeModule concept for `engine/memex/memex/application/consolidator.py
 - `memex.infrastructure.search.index_manager.IndexManager`
 - `memex.infrastructure.search.link_manager.LinkManager`
 - `memex.infrastructure.store.wiki_store.WikiStore`
-- 2 imports omitted from compact profile.
+- `pathlib.Path`
+- 1 imports omitted from compact profile.
 
 # Impact notes
 

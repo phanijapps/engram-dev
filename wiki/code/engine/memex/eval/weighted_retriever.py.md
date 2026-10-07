@@ -38,9 +38,8 @@ Generated CodeModule concept for `engine/memex/eval/weighted_retriever.py`. Purp
 
 - `__future__.annotations`
 - `collections.abc.Sequence`
-- `eval.candidates.( DEFAULT_LEXICAL_RECIPE`
-- `eval.candidates.)`
 - `eval.candidates.CandidateSource`
+- `eval.candidates.DEFAULT_LEXICAL_RECIPE`
 - `eval.candidates.RRF_RANK_CONSTANT`
 - `eval.candidates.RankedCandidate`
 - `eval.candidates.fuse_candidate_sources`

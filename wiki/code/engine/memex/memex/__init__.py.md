@@ -25,15 +25,13 @@ No classes, functions, methods, or elements detected.
 # Relationships
 
 - `memex.application.memory.Memex`
-- `memex.domain.errors.( BackupError`
-- `memex.domain.errors.)`
+- `memex.domain.errors.BackupError`
 - `memex.domain.errors.ConfigError`
 - `memex.domain.errors.IndexManagerError`
 - `memex.domain.errors.LLMError`
 - `memex.domain.errors.MemexError`
 - `memex.domain.errors.WikiStoreError`
-- `memex.domain.models.( BackupReport`
-- `memex.domain.models.)`
+- `memex.domain.models.BackupReport`
 - `memex.domain.models.ConsolidateInput`
 - `memex.domain.models.ConsolidationReport`
 - `memex.domain.models.ForgetResult`
@@ -44,7 +42,9 @@ No classes, functions, methods, or elements detected.
 - `memex.domain.models.RecallResult`
 - `memex.domain.models.RestoreReport`
 - `memex.domain.models.SessionSummary`
-- 7 imports omitted from compact profile.
+- `memex.domain.models.TaskRecallInput`
+- `memex.domain.models.TaskRecallResult`
+- 5 imports omitted from compact profile.
 
 # Impact notes
 

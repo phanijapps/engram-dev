@@ -50,8 +50,7 @@ Generated CodeModule concept for `engine/memex/eval/task_evidence_model.py`. Pur
 - `__future__.annotations`
 - `dataclasses.dataclass`
 - `dataclasses.replace`
-- `eval.agent_workflow.( BenchmarkReport`
-- `eval.agent_workflow.)`
+- `eval.agent_workflow.BenchmarkReport`
 - `eval.agent_workflow.Fixture`
 - `eval.agent_workflow.LinkedSummaryFixture`
 - `eval.agent_workflow.StrategyReport`
@@ -67,7 +66,8 @@ Generated CodeModule concept for `engine/memex/eval/task_evidence_model.py`. Pur
 - `memex.application.compiler.estimate_tokens`
 - `memex.application.memory.Memex`
 - `memex.infrastructure.config.MemexConfig`
-- 10 imports omitted from compact profile.
+- `os`
+- 9 imports omitted from compact profile.
 
 # Impact notes
 

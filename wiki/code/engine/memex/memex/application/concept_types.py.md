@@ -36,8 +36,7 @@ Generated CodeModule concept for `engine/memex/memex/application/concept_types.p
 - `collections.Counter`
 - `memex.domain.errors.WikiStoreError`
 - `memex.domain.reserved.RESERVED_SLUGS`
-- `memex.domain.types.( CATALOGUE`
-- `memex.domain.types.)`
+- `memex.domain.types.CATALOGUE`
 - `memex.domain.types.SUBDIRECTORIES_HEADING`
 - `memex.domain.types.TYPE_DIRS`
 - `memex.domain.types.TypeDeclaration`

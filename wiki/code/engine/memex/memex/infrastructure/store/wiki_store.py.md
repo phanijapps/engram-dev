@@ -52,8 +52,7 @@ Generated CodeModule concept for `engine/memex/memex/infrastructure/store/wiki_s
 - `memex.domain.errors.WikiStoreError`
 - `memex.domain.frontmatter.parse_front_matter`
 - `memex.domain.frontmatter.serialize_front_matter`
-- `memex.domain.models.( PAGE_STATUSES`
-- `memex.domain.models.)`
+- `memex.domain.models.PAGE_STATUSES`
 - `memex.domain.models.SemanticLink`
 - `memex.domain.models.WikiNode`
 - `memex.domain.models.new_id`
@@ -63,11 +62,12 @@ Generated CodeModule concept for `engine/memex/memex/infrastructure/store/wiki_s
 - `memex.domain.reserved.is_structural`
 - `memex.domain.slugs.derive_slug`
 - `memex.domain.slugs.unique_slug`
-- `memex.domain.types.( CATALOGUE`
-- `memex.domain.types.)`
+- `memex.domain.types.CATALOGUE`
 - `memex.domain.types.DESCRIPTION_MAX_BYTES`
 - `memex.domain.types.TYPE_DIRS`
-- 9 imports omitted from compact profile.
+- `memex.domain.types.TypeDeclaration`
+- `memex.domain.types.TypeKind`
+- 7 imports omitted from compact profile.
 
 # Impact notes
 

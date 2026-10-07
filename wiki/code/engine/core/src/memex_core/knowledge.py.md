@@ -2,7 +2,7 @@
 type: CodeModule
 title: engine/core/src/memex_core/knowledge.py
 description: Generated code map for engine/core/src/memex_core/knowledge.py. Depends
-  on memex_core.resolve.( LAST_INDEX_STAMP.
+  on memex_core.resolve.LAST_INDEX_STAMP.
 resource: engine/core/src/memex_core/knowledge.py
 tags:
 - code
@@ -34,14 +34,13 @@ Generated CodeModule concept for `engine/core/src/memex_core/knowledge.py`. Purp
 # Relationships
 
 Depends on:
-- [memex_core.resolve.( LAST_INDEX_STAMP](/code/engine/core/src/memex_core/resolve.py.md)
+- [memex_core.resolve.LAST_INDEX_STAMP](/code/engine/core/src/memex_core/resolve.py.md)
 - `__future__.annotations`
 - `dataclasses.asdict`
 - `dataclasses.is_dataclass`
 - `datetime.UTC`
 - `datetime.datetime`
 - `json`
-- `memex_core.resolve.)`
 - `memex_core.resolve.OKF_STATE_DIRNAME`
 - `memex_core.resolve.WIKI_DIRNAME`
 - `memex_core.resolve.repo_root_of`

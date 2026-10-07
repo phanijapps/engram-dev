@@ -54,8 +54,7 @@ Generated CodeModule concept for `engine/memex/memex/infrastructure/harness/tran
 - `json`
 - `memex.__version__`
 - `memex.application.dto.to_jsonable`
-- `memex.domain.models.( IngestTranscriptInput`
-- `memex.domain.models.)`
+- `memex.domain.models.IngestTranscriptInput`
 - `memex.domain.models.ProvenanceReport`
 - `memex.domain.models.SessionSummary`
 - `memex.domain.models.TranscriptLinkReport`

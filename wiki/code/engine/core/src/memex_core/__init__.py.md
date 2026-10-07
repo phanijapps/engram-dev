@@ -2,7 +2,7 @@
 type: CodeModule
 title: engine/core/src/memex_core/__init__.py
 description: Generated code map for engine/core/src/memex_core/__init__.py. Depends
-  on memex_core.compile_context.Compiled, memex_core.findings.( findings_path, memex_core.knowledge.wiki_init,
+  on memex_core.compile_context.Compiled, memex_core.findings.findings_path, memex_core.knowledge.wiki_init,
   memex_core.record.record_note, memex_core.resolve.ResolveReport.
 resource: engine/core/src/memex_core/__init__.py
 tags:
@@ -29,7 +29,7 @@ No classes, functions, methods, or elements detected.
 
 Depends on:
 - [memex_core.compile_context.Compiled](/code/engine/core/src/memex_core/compile_context.py.md)
-- [memex_core.findings.( findings_path](/code/engine/core/src/memex_core/findings.py.md)
+- [memex_core.findings.findings_path](/code/engine/core/src/memex_core/findings.py.md)
 - [memex_core.knowledge.wiki_init](/code/engine/core/src/memex_core/knowledge.py.md)
 - [memex_core.record.record_note](/code/engine/core/src/memex_core/record.py.md)
 - [memex_core.resolve.ResolveReport](/code/engine/core/src/memex_core/resolve.py.md)
@@ -37,7 +37,6 @@ Depends on:
 - [memex_core.status.combined_status](/code/engine/core/src/memex_core/status.py.md)
 - `__future__.annotations`
 - `memex_core.compile_context.compile_context`
-- `memex_core.findings.)`
 - `memex_core.findings.list_findings`
 - `memex_core.findings.propose_finding`
 - `memex_core.findings.resolve_finding`

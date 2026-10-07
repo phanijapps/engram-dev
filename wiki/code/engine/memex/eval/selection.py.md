@@ -55,8 +55,7 @@ Generated CodeModule concept for `engine/memex/eval/selection.py`. Purpose: engi
 - `dataclasses.field`
 - `datetime.UTC`
 - `datetime.datetime`
-- `eval.comparison.( ABSOLUTE_P99_LIMITS_MS`
-- `eval.comparison.)`
+- `eval.comparison.ABSOLUTE_P99_LIMITS_MS`
 - `eval.comparison.COMPARISON_SCHEMA_VERSION`
 - `eval.comparison.CandidateMetrics`
 - `eval.comparison.ComparisonMetadata`
@@ -67,7 +66,8 @@ Generated CodeModule concept for `engine/memex/eval/selection.py`. Purpose: engi
 - `eval.comparison.evaluate_candidate`
 - `eval.comparison.nearest_rank_p99_ms`
 - `eval.comparison.p99_latency_from_hits`
-- 47 imports omitted from compact profile.
+- `eval.comparison.tokens_per_correct_hard_query`
+- 45 imports omitted from compact profile.
 
 # Impact notes
 

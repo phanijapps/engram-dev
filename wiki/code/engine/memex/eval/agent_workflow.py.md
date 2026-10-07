@@ -51,8 +51,7 @@ Generated CodeModule concept for `engine/memex/eval/agent_workflow.py`. Purpose:
 - `dataclasses.asdict`
 - `dataclasses.dataclass`
 - `json`
-- `memex.application.compiler.( DEFAULT_INJECTION_TOP_K`
-- `memex.application.compiler.)`
+- `memex.application.compiler.DEFAULT_INJECTION_TOP_K`
 - `memex.application.compiler.build_injection`
 - `memex.application.compiler.estimate_tokens`
 - `memex.application.memory.Memex`
