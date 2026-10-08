@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/cli.py
-source_hash: a5f31f2a3dfa7e80f38dc20ea83a8c9be5fa43268aec0e3d7d3fe3a56e74f439
+source_hash: 77bda708b72f278d174563fc965f761c10938cb89ef78290dc044e336b3d0155
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-07T23:50:47Z'
+  at: '2026-10-08T00:03:19Z'
 status: stable
 package: engine/okf
 ---
@@ -31,20 +31,21 @@ Generated CodeModule concept for `engine/okf/okf_kit/cli.py`. Purpose: engine/ok
 | Kind | Name | Lines |
 |---|---|---|
 | function | `main` | 22-37 |
-| function | `_build_parser` | 40-177 |
-| function | `_dispatch` | 180-197 |
-| function | `_cmd_init` | 200-203 |
-| function | `_cmd_new` | 206-216 |
-| function | `_cmd_validate` | 219-225 |
-| function | `_cmd_search` | 228-241 |
-| function | `_cmd_read` | 244-252 |
-| function | `_cmd_index_regen` | 255-258 |
-| function | `_cmd_findings` | 261-291 |
-| function | `_cmd_code` | 294-297 |
-| function | `_cmd_code_index` | 300-327 |
-| function | `_print_report` | 330-339 |
-| function | `_print_hits` | 342-348 |
-| function | `_hit_dict` | 351-358 |
+| function | `_build_parser` | 40-180 |
+| function | `_dispatch` | 183-202 |
+| function | `_cmd_init` | 205-208 |
+| function | `_cmd_new` | 211-221 |
+| function | `_cmd_validate` | 224-230 |
+| function | `_cmd_search` | 233-246 |
+| function | `_cmd_read` | 249-257 |
+| function | `_cmd_index_regen` | 260-263 |
+| function | `_cmd_findings` | 266-296 |
+| function | `_cmd_status` | 299-311 |
+| function | `_cmd_code` | 314-317 |
+| function | `_cmd_code_index` | 320-347 |
+| function | `_print_report` | 350-359 |
+| function | `_print_hits` | 362-368 |
+| function | `_hit_dict` | 371-378 |
 
 # Relationships
 
@@ -61,14 +62,14 @@ Generated CodeModule concept for `engine/okf/okf_kit/cli.py`. Purpose: engine/ok
 - `okf_kit.core.search.build_index`
 - `okf_kit.core.search.search`
 - `okf_kit.core.stamp.write_freshness_stamp`
+- `okf_kit.core.status.bundle_status`
 - `okf_kit.core.templates.TEMPLATE_TYPES`
 - `okf_kit.core.templates.create_concept`
 - `okf_kit.core.templates.init_bundle`
 - `okf_kit.core.validate.Report`
 - `okf_kit.core.validate.validate_bundle`
 - `pathlib.Path`
-- `sys`
-- 1 imports omitted from compact profile.
+- 2 imports omitted from compact profile.
 
 # Impact notes
 
