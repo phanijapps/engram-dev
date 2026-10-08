@@ -30,7 +30,8 @@ before trusting `wiki/code/**`.
 machine-managed — everything between `<!-- okf-code:start -->` and
 `<!-- okf-code:end -->` regenerates; hand edits there are lost or brick
 the indexer. Hand-authored knowledge lives in curated concepts
-(`systems/**`, `domain/**`, `decisions/**`).
+(`systems/**`, `domain/**`, `decisions/**`, `research/**` — research-derived
+knowledge with paper-anchored evidence).
 
 **Normative content.** Rules, policies, golden paths never become settled
 truth directly: author `status: draft`, then

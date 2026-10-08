@@ -7,4 +7,5 @@ okf_version: '0.2'
 * [code-summaries](code-summaries/index.md)
 * [decisions](decisions/index.md)
 * [domain](domain/index.md)
+* [research](research/index.md)
 * [systems](systems/index.md)

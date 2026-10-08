@@ -58,6 +58,8 @@ Rules of thumb:
 
 ## Guidelines
 
+**Writing Guidelines.** Always use `writer` skill when communicating with the user or writing/building artifacts
+
 **Context before questions.** The wiki and the code answer most questions. Ask the user only what evidence cannot supply — once, batched, and recorded in the artifact you are writing.
 
 **Deterministic anchors, agent proposals, human acceptance.** Every knowledge claim cites a location (`path:line`). Normative content goes through `okf findings propose` — a human accepts or declines; declined proposals are never re-raised.
