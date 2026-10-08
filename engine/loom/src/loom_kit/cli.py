@@ -279,8 +279,9 @@ def cmd_status(args) -> int:
 def _next_specpack(args) -> int:
     doc, path = specpack.load_specpack(args.directory)
     out = specpack.next_task(doc, path)
-    # pin only when no drift: a refused handout must not persist new pins
-    if out["status"] != "needs_rebase":
+    # pin only when no drift and never for a frozen pack: a complete pack's
+    # bytes stay untouched (D-2 of status-vocabulary)
+    if out["status"] not in ("needs_rebase", "COMPLETE"):
         specpack.save(doc, path)
     if args.json:
         print(json.dumps(out, indent=2, sort_keys=True))
@@ -384,9 +385,9 @@ def _status_specpack(args) -> int:
     with open(path, encoding="utf-8") as f:
         doc = json.load(f)
     errs = specpack.validate(doc, path)
-    life = doc.get("status", "active")
+    life = doc.get("status") or specpack.PACK_ACTIVE
     print(f"specpack: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)} [{life}]" + ("  [SCHEMA INVALID]" if errs else ""))
-    if life == "complete":
+    if life == specpack.PACK_COMPLETE:
         print(f"  closed by {doc.get('closed_by', '?')}; the record is frozen")
         return 0
     gaps = specpack.closure_gaps(doc)

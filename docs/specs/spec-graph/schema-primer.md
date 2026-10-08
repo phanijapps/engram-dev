@@ -309,3 +309,14 @@ DONE.
 A complete pack refuses `record`, `rebase`, `accept`, `reject`,
 `close`, and task handouts. `loom next` reports `COMPLETE`. Follow-up work opens a
 new pack that supersedes the old one; history is never edited.
+
+### The status vocabulary (one table)
+
+Every stored and reported status lives in one machine-maintained
+table: `wiki/domain/specpack-status-vocabulary.md`. The constants in
+`specpack.py` equal the schema enums by guard test. A new status lands
+in three moves at once (schema enum, constant plus guard, table row);
+a status without all three is not a status. Complete packs are
+read-only reference for future loops: query them, never rewrite them.
+Materializing an explicit `active` rides the next substantive save
+and does not bump the revision fence: it governs no content.

@@ -17,9 +17,19 @@ from jsonschema import Draft202012Validator
 from .spine import LoomError, save
 
 SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "specpack.schema.json"
-STATES = ("todo", "doing", "done", "blocked")
 STALL_LIMIT = 2
 KNOWN_FORMATS = ("specpack/0.2", "specpack/0.3")
+
+# The status vocabulary — one source of truth (FR-2 of status-vocabulary).
+# The vendored schema enums must equal these tuples; a guard test enforces it.
+PACK_ACTIVE, PACK_COMPLETE = "active", "complete"
+PACK_STATUSES = (PACK_ACTIVE, PACK_COMPLETE)
+TASK_STATUSES = ("todo", "doing", "done", "blocked")
+DECISION_STATUSES = ("proposed", "accepted", "rejected")
+QUESTION_STATUSES = ("open", "resolved")
+VERDICTS = ("PASS", "IMPROVE", "REPLAN")
+# Reported (transient) statuses of `loom next` — never stored in a pack.
+HANDOUT_STATUSES = ("task", "DONE", "BLOCKED", "WAITING", "needs_rebase", "needs_closure", "COMPLETE")
 
 
 def _now() -> str:
@@ -53,6 +63,8 @@ def load_specpack(directory: str | Path) -> tuple[dict, Path]:
             f"{path}: unsupported format {doc.get('format')!r} "
             f"(this loom speaks: {', '.join(KNOWN_FORMATS)})"
         )
+    if "status" not in doc:
+        doc["status"] = PACK_ACTIVE  # explicit from the first machine touch (FR-1)
     validate(doc, path)
     return doc, path
 
@@ -210,7 +222,7 @@ def _decision(doc: dict, decision_id: str) -> dict:
 
 
 def _assert_mutable(doc: dict) -> None:
-    if doc.get("status") == "complete":
+    if doc.get("status") == PACK_COMPLETE:
         raise LoomError("pack is complete: the record is frozen; open a new initiative instead")
 
 
@@ -276,12 +288,12 @@ def close(doc: dict, by: str, at: str | None = None) -> dict:
         problems.append("no PASS verdict on PACK (review.verdicts)")
     if problems:
         raise LoomError("cannot close: " + "; ".join(problems))
-    doc["status"] = "complete"
+    doc["status"] = PACK_COMPLETE
     doc["closed_by"] = by
     if at:
         doc["closed_at"] = at
     doc["revision"] = doc.get("revision", 1) + 1
-    return {"name": doc["name"], "status": "complete", "closed_by": by, "revision": doc["revision"]}
+    return {"name": doc["name"], "status": PACK_COMPLETE, "closed_by": by, "revision": doc["revision"]}
 
 
 def _fail_streak(doc: dict, task_id: str) -> int:
@@ -430,7 +442,7 @@ def next_task(doc: dict, pack_path: Path | None = None) -> dict:
     every handout; drift refuses the handout (status needs_rebase, no state
     change, no revision bump). A complete pack reports COMPLETE: frozen.
     """
-    if doc.get("status") == "complete":
+    if doc.get("status") == PACK_COMPLETE:
         return {"status": "COMPLETE", "closed_by": doc.get("closed_by")}
     tasks = doc["tasks"]
     done = {t["id"] for t in tasks if t["status"] == "done"}

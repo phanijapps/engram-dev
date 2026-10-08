@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: 94762572407bcc3064a67b88568f8c493c1fac49736f4a7c2de8c89568f0515c
+source_hash: 1677e00afda97790884a95c242b8bc5a5f9125e9d8d0dac39e538fc6d09cec4a
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T22:24:57Z'
+  at: '2026-10-08T23:21:37Z'
 status: stable
 package: engine/loom
 ---
@@ -32,26 +32,26 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `_now` | 25-26 |
-| function | `_digest` | 29-30 |
-| function | `_vschema` | 33-35 |
-| function | `load_specpack` | 38-57 |
-| function | `validate` | 60-64 |
-| function | `_families` | 67-76 |
-| function | `alignment` | 79-191 |
-| function | `dfs` | 131-138 |
-| function | `closure_gaps` | 194-202 |
-| function | `_decision` | 205-209 |
-| function | `_assert_mutable` | 212-214 |
-| function | `accept_decision` | 217-237 |
-| function | `reject_decision` | 240-251 |
-| function | `close` | 254-284 |
-| function | `_fail_streak` | 287-294 |
-| function | `_task` | 297-301 |
-| function | `_git_root` | 304-309 |
-| function | `_resolve_path` | 312-317 |
-| function | `_pin_or_verify` | 320-349 |
-| function | `_verify_refs` | 352-384 |
+| function | `_now` | 35-36 |
+| function | `_digest` | 39-40 |
+| function | `_vschema` | 43-45 |
+| function | `load_specpack` | 48-69 |
+| function | `validate` | 72-76 |
+| function | `_families` | 79-88 |
+| function | `alignment` | 91-203 |
+| function | `dfs` | 143-150 |
+| function | `closure_gaps` | 206-214 |
+| function | `_decision` | 217-221 |
+| function | `_assert_mutable` | 224-226 |
+| function | `accept_decision` | 229-249 |
+| function | `reject_decision` | 252-263 |
+| function | `close` | 266-296 |
+| function | `_fail_streak` | 299-306 |
+| function | `_task` | 309-313 |
+| function | `_git_root` | 316-321 |
+| function | `_resolve_path` | 324-329 |
+| function | `_pin_or_verify` | 332-361 |
+| function | `_verify_refs` | 364-396 |
 
 7 symbols omitted from compact profile.
 

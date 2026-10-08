@@ -135,7 +135,9 @@ every task done with evidence, no proposed decision, no open
 question, and a `PASS` review verdict on `PACK`. A complete pack is
 frozen: record, rebase, accept, reject, and handouts all refuse;
 `loom next` reports `COMPLETE`. Follow-up work opens a new pack.
-See primer section 7 for the command contracts.
+See primer section 7 for the command contracts, and
+[the status vocabulary](/domain/specpack-status-vocabulary.md) for
+the one machine-maintained status table.
 
 **Specpack load is not fail-closed for schema errors.**
 `load_specpack` raises on invalid JSON and on a wrong `format` value,

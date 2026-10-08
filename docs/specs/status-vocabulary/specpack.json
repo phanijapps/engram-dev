@@ -1,0 +1,300 @@
+{
+  "closed_at": "2026-10-09T00:00:00Z",
+  "closed_by": "human:owner",
+  "format": "specpack/0.3",
+  "name": "status-vocabulary",
+  "plan": {
+    "approach": "Materialize explicit status at load (persisted by the next save), skip the save for COMPLETE handouts, add the vocabulary constants plus a schema-equality guard, document the table in the wiki, then close this pack as the first reference.",
+    "data": [],
+    "decisions": [
+      {
+        "accepted_by": "human:owner",
+        "because": "Complete packs become queryable reference material only if every consumer can trust the same closed sets; conventions drift, constants and guards do not.",
+        "decision": "Statuses are one machine-maintained vocabulary: stored statuses (pack, task, decision, question, verdict) and reported statuses (handout results) are defined once, guarded against the schema, and documented on one wiki page.",
+        "id": "D-1",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Reference value depends on immutability; byte-identical re-saves are harmless today but break change detection and trust tomorrow.",
+        "decision": "A complete pack is read-only reference: the loop reports from it (COMPLETE, check, status) but never rewrites it, not even byte-identically; new work opens a new pack that references the old one.",
+        "id": "D-2",
+        "status": "accepted"
+      }
+    ],
+    "designs": [
+      {
+        "addresses": [
+          "FR-1"
+        ],
+        "detail": "load_specpack materializes status active when absent (in memory; persisted by whichever save follows). The CLI never saves a COMPLETE handout: a frozen pack's bytes stay untouched. Comparisons use the PACK_STATUSES constants.",
+        "id": "DES-1",
+        "kind": "flow",
+        "title": "Explicit status and the frozen non-touch"
+      },
+      {
+        "addresses": [
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "specpack.py defines PACK_STATUSES, TASK_STATUSES, DECISION_STATUSES, QUESTION_STATUSES, VERDICTS, and HANDOUT_STATUSES. A test parses the vendored schema and asserts every enum equals its constant. The wiki page domain/specpack-status-vocabulary.md documents the table: level, statuses, who sets them, stored or reported, terminality.",
+        "id": "DES-2",
+        "kind": "data",
+        "title": "Single-source vocabulary with a guard"
+      }
+    ],
+    "diagrams": [],
+    "stack": {
+      "env": "uv",
+      "language": "Python 3.12+",
+      "tests": "pytest"
+    },
+    "structure": [
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/src/loom_kit/cli.py",
+      "engine/loom/tests/test_specpack_status.py",
+      "wiki/domain/specpack-status-vocabulary.md",
+      "docs/specs/spec-graph/schema-primer.md"
+    ]
+  },
+  "review": {
+    "checklist": "red-foreman",
+    "verdicts": [
+      {
+        "at": "2026-10-08T23:40:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "Disclosed here verbatim; the evidence row itself stays \u2014 history is never edited.",
+            "note": "T-1's evidence row records exit 0 and '101 tests green' but the suite was RED at record time: a shell pipe through tail masked pytest's failure exit, and a dead loop inside the new guard test raised KeyError. Fixed immediately after (dead loop removed, 101 green with the exit code checked directly). The ledger must not overclaim; the frozen specpack-context pack records the identical T-4 precedent.",
+            "severity": "DEFECT"
+          }
+        ],
+        "on": "T-1",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T23:40:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "PACK_ACTIVE/PACK_COMPLETE used at all three sites.",
+            "note": "DES-1 claimed constants-based comparisons while cli.py and close() compared literals.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "STATES deleted (zero usages verified).",
+            "note": "Dead duplicate STATES tuple beside TASK_STATUSES in the one-source-of-truth module.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Citation corrected.",
+            "note": "Wiki footnote cited machine.py for TASK_STATES; it lives in __init__.py.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "FR-1 and the wiki reworded.",
+            "note": "FR-1 said machine-touched; the code delivers machine-written (read-only packs stay as authored).",
+            "severity": "SMELL"
+          },
+          {
+            "fix": "Documented as riding the next substantive save (primer + wiki): it governs no content.",
+            "note": "Materialization persisted without a revision bump.",
+            "severity": "SMELL"
+          },
+          {
+            "fix": "Exhaustive branch fixture asserts set equality with HANDOUT_STATUSES.",
+            "note": "The handout guard could not fail (four literal memberships).",
+            "severity": "SMELL"
+          },
+          {
+            "fix": "Marked as convention in the table.",
+            "note": "Verdict row claimed append-only history as if enforced.",
+            "severity": "SMELL"
+          }
+        ],
+        "on": "T-2",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T23:45:00Z",
+        "by": "agent:red-foreman",
+        "findings": [],
+        "on": "PACK",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "revision": 8,
+  "spec": {
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "No schema enum changes: the vocabulary already in the schema is the truth; code constants are added to match it, not to redefine it."
+      },
+      {
+        "id": "CON-2",
+        "text": "Spine mode (sdd.json) keeps its own state set; it is legacy and out of scope."
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "a pack authored without a status field",
+            "id": "AC-1",
+            "then": "the file carries status active explicitly",
+            "when": "the machine loads and saves it"
+          },
+          {
+            "given": "a complete pack",
+            "id": "AC-2",
+            "then": "the file bytes are unchanged and the command reports COMPLETE",
+            "when": "loom next runs"
+          }
+        ],
+        "text": "The machine MUST make pack status explicit: any machine-touched pack carries status active or complete, never an implicit absent; and a complete pack MUST never be rewritten by the loop, not even byte-identically."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "the schema, the code constants, and the wiki vocabulary page",
+            "id": "AC-3",
+            "then": "all three agree on every status family",
+            "when": "the guard test runs"
+          }
+        ],
+        "text": "The status vocabulary MUST have one source of truth: code constants for every stored and reported status family, a guard test that the vendored schema enums equal those constants, and a wiki page that documents the full table."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "text": "Complete packs MUST be positioned as read-only reference for future loops; the primer and the wiki MUST say so, and this pack MUST close itself to become the first reference under the new rule."
+      }
+    ],
+    "why": "A complete pack is reference material for future loops: queries, semantic search, cross-spec learning. That only works if statuses are one consistent, machine-maintained vocabulary. Today status is implicit when absent, the enums live only in the schema json, and a frozen pack is still re-saved byte-for-byte by next."
+  },
+  "status": "complete",
+  "tasks": [
+    {
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-3"
+      ],
+      "context": {
+        "notes": [
+          "The frozen specpack-context pack is reference only; this wave must not touch its bytes."
+        ],
+        "read": [
+          {
+            "path": "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+            "why": "the enums the guard parses"
+          },
+          {
+            "path": "docs/specs/specpack-context/specpack.json",
+            "why": "the frozen reference pack this wave builds on"
+          }
+        ],
+        "touch": [
+          {
+            "path": "engine/loom/src/loom_kit/specpack.py",
+            "sha256": "94762572407bcc3064a67b88568f8c493c1fac49736f4a7c2de8c89568f0515c",
+            "why": "constants, materialize, comparisons"
+          },
+          {
+            "path": "engine/loom/src/loom_kit/cli.py",
+            "sha256": "f7b4d912e847fae35b65b82a245642a7d3bbcd7b9e7373ac45fe7c8e9bb72347",
+            "why": "skip save on COMPLETE"
+          },
+          {
+            "path": "engine/loom/tests/test_specpack_status.py",
+            "why": "the guard"
+          }
+        ],
+        "wiki": [
+          "systems/loom-engine.md"
+        ]
+      },
+      "detail": "Per DES-1 and DES-2: load_specpack materializes status active when absent; _next_specpack skips save when the report is COMPLETE (frozen bytes untouched); specpack.py gains the six status constants and uses them where statuses are compared; new test file asserts the schema enums equal the constants, that a status-less pack persists explicit active after a machine save, and that a complete pack's bytes are unchanged by loom next.",
+      "evidence": [
+        {
+          "at": "2026-10-08T23:14:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "101 tests green; schema-equality guard, explicit-active persistence, frozen byte-untouch asserted; selftest green"
+        }
+      ],
+      "honors": [
+        "CON-1"
+      ],
+      "id": "T-1",
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
+      "needs": [],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_status.py"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2"
+      ],
+      "status": "done",
+      "title": "Explicit status, frozen non-touch, vocabulary constants + guard",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 vocabulary guard, explicit-active persistence, frozen non-touch asserted; full suite green"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "Per FR-3: write wiki/domain/specpack-status-vocabulary.md (level, statuses, who sets, stored or reported, terminality; cite schema + constants + the owner directive of 2026-10-08); primer section 7 gains the pointer; loom-engine lifecycle paragraph gains the pointer; okf chain green. Then red-foreman over the wave diff, fix findings, record the PACK PASS verdict, accept D-1 and D-2 per the owner directive, and close this pack as the first reference under the new rule.",
+      "evidence": [
+        {
+          "at": "2026-10-08T23:21:25Z",
+          "by": "agent:pi",
+          "cmd": "cd /home/videogamer/code/memex_beta && uv run loom check docs/specs/status-vocabulary && uv run okf validate wiki",
+          "exit": 0,
+          "notes": "check 0/0; wiki conformant; vocabulary page + primer + pointer; all 8 review findings fixed (101 tests, selftest, exits verified directly)"
+        }
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-2",
+      "implements": [],
+      "needs": [
+        "T-1"
+      ],
+      "parallel": false,
+      "phase": "polish",
+      "produces": [
+        "wiki/domain/specpack-status-vocabulary.md",
+        "docs/specs/spec-graph/schema-primer.md",
+        "wiki/systems/loom-engine.md",
+        "docs/specs/status-vocabulary/specpack.json"
+      ],
+      "satisfies": [
+        "FR-3"
+      ],
+      "status": "done",
+      "title": "Vocabulary page, primer note, closing review, self-closure",
+      "verify": {
+        "cmd": "cd /home/videogamer/code/memex_beta && uv run loom status docs/specs/status-vocabulary && uv run loom check docs/specs/status-vocabulary && uv run okf validate wiki",
+        "expect": "exit 0 \u2014 pack COMPLETE, check 0/0, wiki conformant"
+      }
+    }
+  ],
+  "title": "One status vocabulary, maintained by the loop"
+}

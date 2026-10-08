@@ -4,6 +4,7 @@
 * [A declined finding is never re-proposed; terminal states are immutable](rule-declined-findings-immutable.md) - The findings ledger refuses proposals at a declined (source, destination, kind) key, and accepted/declined findings can never change state again — the suggestion box cannot be worn down.
 
 # Domain
+* [The specpack status vocabulary: one table, machine-maintained](specpack-status-vocabulary.md) - Every status a specpack carries or reports: level, statuses, who sets them, stored or reported, terminality. Complete packs are read-only reference for future loops.
 * [The wiki contract — bundle rules every harness repo follows](wiki-contract.md) - The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections.
 
 # Pattern
