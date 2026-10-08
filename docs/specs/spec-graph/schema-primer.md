@@ -269,3 +269,43 @@ what it cannot read) or repo-relative paths.
   as a pack artifact with its digest; keep the URL as provenance.
 - **Pin only the scope jail**: `touch` is what the task may change;
   everything else is `read` or `links`.
+
+## 7. The decision ledger and the final state (0.3)
+
+The loop records decision verdicts and closes the pack itself. Nothing
+closure-shaped lives in chat memory or in a commit message alone.
+
+### Owner commands (write-fenced, human-claim gated)
+
+| Command | Effect |
+|---|---|
+| `loom accept <dir> --decision D-x --by human:<owner> --expected-revision N` | proposed to accepted, `accepted_by` recorded; the questions the decision resolves become resolved |
+| `loom reject <dir> --decision D-x --because <why> --by human:<owner> --expected-revision N` | proposed to rejected, `rejected_because` recorded; its questions stay open |
+| `loom close <dir> --by human:<owner> --expected-revision N [--at ISO]` | the pack moves to `status: complete`; the record freezes |
+
+The human claim is a shape check (the A7 pattern): the machine checks
+the form, git and review carry the truth.
+
+### needs_closure
+
+When every task is done but owner work remains, `loom next` returns
+`needs_closure` instead of `DONE` and prints the runnable commands:
+
+- a proposed decision needs a verdict (`accept` or `reject`),
+- an open question needs an answer.
+
+`DONE` means no work remains. The review gate lives at close, not at
+DONE.
+
+### close preconditions (each gap is named on refusal)
+
+1. Every task is `done` and carries at least one evidence row.
+2. No decision is `proposed` (accepted or rejected, never dangling).
+3. No question is `open`.
+4. `review.verdicts` holds a `PASS` on `PACK` (the closing review).
+
+### The frozen record
+
+A complete pack refuses `record`, `rebase`, `accept`, `reject`,
+`close`, and task handouts. `loom next` reports `COMPLETE`. Follow-up work opens a
+new pack that supersedes the old one; history is never edited.

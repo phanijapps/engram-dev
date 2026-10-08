@@ -55,6 +55,22 @@
       "maximum": 9007199254740991,
       "title": "Revision \u2014 bumped on every machine mutation",
       "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
+    },
+    "status": {
+      "enum": [
+        "active",
+        "complete"
+      ],
+      "title": "Pack lifecycle",
+      "description": "Absent means active. complete is the final state: set by loom close, frozen afterwards."
+    },
+    "closed_by": {
+      "type": "string",
+      "title": "Who closed the pack (human:<owner>)"
+    },
+    "closed_at": {
+      "type": "string",
+      "title": "When the pack closed (owner-supplied ISO-8601)"
     }
   },
   "required": [
@@ -462,7 +478,8 @@
         "status": {
           "enum": [
             "proposed",
-            "accepted"
+            "accepted",
+            "rejected"
           ],
           "title": "A human accepts decisions"
         },
@@ -470,6 +487,10 @@
           "type": "string",
           "title": "Who accepted it",
           "description": "A7: status 'accepted' requires accepted_by starting with 'human:' \u2014 agents may draft decisions, only humans accept them."
+        },
+        "rejected_because": {
+          "type": "string",
+          "title": "Why the decision was not taken (owner-supplied on rejection)"
         }
       },
       "required": [
@@ -697,7 +718,7 @@
       "properties": {
         "on": {
           "type": "string",
-          "pattern": "^(T|D|DES|FR|CON|Q|US|DG)-[A-Za-z0-9-]+$"
+          "pattern": "^(PACK|(T|D|DES|FR|CON|Q|US|DG)-[A-Za-z0-9-]+)$"
         },
         "verdict": {
           "enum": [

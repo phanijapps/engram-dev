@@ -89,7 +89,7 @@ be deleted. **STALE-DOC** is a doc that names things that do not exist.
 | loom `specpack.schema.json` | CRITICAL | The native format contract, validated by `specpack.py` at check time, not at load. |
 | okf `core.{validate,search,context,fingerprints,status}` | CORE | Health, retrieval, drift detection. |
 | okf `code.{discovery,render,semantic,treesitter.*}` | CORE | The extraction pipeline stages. |
-| loom `specpack.py` | CORE | The specpack 0.3 native mode: slice resolver, pin and rebase, alignment checks, and its own state moves. |
+| loom `specpack.py` | CORE | The specpack 0.3 native mode: slice resolver, pin and rebase, decision ledger, pack lifecycle (needs_closure, close, freeze), alignment checks, and its own state moves. |
 | okf `core.{templates,index}`, `code.{paths,managed}` | PERIPHERAL | Scaffolding and layout helpers. |
 | loom `templates.py` | PERIPHERAL | Used only by `loom init` (three markdown templates). [^p7] |
 | `language_help()` in okf | DEAD | Defined at `code/discovery.py:201`, referenced nowhere. See the okf page. |
@@ -116,4 +116,4 @@ its CLI entry point. [^p3]
 [^p5]: `engine/okf/pyproject.toml` `[project.scripts]`; `engine/loom/pyproject.toml` `[project.scripts]` (observed).
 [^p6]: AST import counts, 2026-10-08; cross-checked against `wiki/code/**` "Used by" sections (implementation-supported).
 [^p7]: `engine/loom/src/loom_kit/cli.py:85`: templates used in `cmd_init` only (observed).
-[^p8]: `engine/okf/pyproject.toml` defines one script: `okf`. No `mcp` module exists under `okf_kit/`. `engine/loom/src/loom_kit/cli.py` defines 9 subcommands (rebase joined with the 0.3 wave); none is `run` (observed, 2026-10-08).
+[^p8]: `engine/okf/pyproject.toml` defines one script: `okf`. No `mcp` module exists under `okf_kit/`. `engine/loom/src/loom_kit/cli.py` defines 12 subcommands (rebase, accept, reject, close joined the 0.3 waves); none is `run` (observed, 2026-10-08).

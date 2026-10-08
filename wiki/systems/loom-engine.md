@@ -17,8 +17,9 @@ and evidence. The engine owns every state move. The model works inside
 the machine and proposes. [^l1]
 
 **CLI surface** (entry `loom = loom_kit.cli:main`): `init`, `add`,
-`validate`, `next`, `record`, `check`, `rebase`, `status`, `selftest`.
-Client profiles: `generic`, `pi`, `claude`, `codex`. [^l2]
+`validate`, `next`, `record`, `check`, `rebase`, `accept`, `reject`,
+`close`, `status`, `selftest`. Client profiles: `generic`, `pi`,
+`claude`, `codex`. [^l2]
 
 **Two modes, two state owners.** In spine mode (`sdd.json`),
 `machine.py` is the only code that moves task states. In specpack
@@ -27,22 +28,23 @@ mode, `specpack.py` moves task states in its own `record`
 
 # Internal architecture: four modules, one authority
 
-loom is small by design: 6 modules, 1661 raw lines (`wc -l`). The
+loom is small by design: 6 modules, 1890 raw lines (`wc -l`). The
 shape is a star around the spine. [^m1]
 
 ```
 loom_kit/
-  cli.py        thin dispatch: 9 commands            (494 LOC)
+  cli.py        thin dispatch: 12 commands           (582 LOC)
   spine.py      THE AUTHORITY: load, validate, save   CRITICAL (291)
                 sdd.json schema + semantic invariants
                 (MiniValidator, fail-closed, thread lock)
   machine.py    SPINE-MODE STATE MACHINE:             CRITICAL (322)
                 add_node, promote, next_task,
                 compile_context, record
-  specpack.py   SPEC PACK 0.3 NATIVE MODE: load,       CORE     (464)
+  specpack.py   SPEC PACK 0.3 NATIVE MODE: load,       CORE     (605)
                 validate, alignment checks, slice
-                resolver, pin + rebase, next, record
-                (moves states in this mode)
+                resolver, pin + rebase, decision
+                ledger (accept, reject), close and
+                freeze, next, record
   templates.py  three markdown stubs for init         PERIPHERAL (64)
   schemas/      spine.schema.json + specpack.schema.json  CRITICAL
 ```
@@ -122,6 +124,18 @@ marker); every accepted decision rides along; prerequisite tasks
 contribute their detail, produced files, and evidence; a plan prelude
 leads. See `docs/specs/spec-graph/schema-primer.md` section 6 for the
 context block field contracts.
+
+The pack has a lifecycle. When every task is done but owner work
+remains (a proposed decision, an open question), `loom next` returns
+`needs_closure` and prints the runnable verdict commands. `loom
+accept` records a human acceptance and resolves the questions the
+decision lists; `loom reject` records a rejection and a reason. `loom
+close` moves the pack to `status: complete` after the machine checks:
+every task done with evidence, no proposed decision, no open
+question, and a `PASS` review verdict on `PACK`. A complete pack is
+frozen: record, rebase, accept, reject, and handouts all refuse;
+`loom next` reports `COMPLETE`. Follow-up work opens a new pack.
+See primer section 7 for the command contracts.
 
 **Specpack load is not fail-closed for schema errors.**
 `load_specpack` raises on invalid JSON and on a wrong `format` value,

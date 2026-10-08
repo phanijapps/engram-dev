@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: c0090bb76cdbf701ff3f11b80d615d2121dc6955d0211d2d52fa906e4ca7d72d
+source_hash: f7b4d912e847fae35b65b82a245642a7d3bbcd7b9e7373ac45fe7c8e9bb72347
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T21:54:43Z'
+  at: '2026-10-08T22:24:46Z'
 status: stable
 package: engine/loom
 ---
@@ -41,15 +41,19 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 | function | `cmd_validate` | 129-138 |
 | function | `cmd_next` | 141-170 |
 | function | `cmd_record` | 173-197 |
-| function | `cmd_rebase` | 200-212 |
-| function | `cmd_status` | 215-229 |
-| function | `_next_specpack` | 232-296 |
-| function | `esc_local` | 299-300 |
-| function | `_record_specpack` | 303-321 |
-| function | `_status_specpack` | 324-336 |
-| function | `cmd_selftest` | 339-426 |
-| function | `main` | 429-500 |
-| function | `d` | 434-435 |
+| function | `cmd_accept` | 200-212 |
+| function | `cmd_close` | 215-232 |
+| function | `cmd_reject` | 235-244 |
+| function | `cmd_rebase` | 247-259 |
+| function | `cmd_status` | 262-276 |
+| function | `_next_specpack` | 279-354 |
+| function | `esc_local` | 357-358 |
+| function | `_record_specpack` | 361-379 |
+| function | `_status_specpack` | 382-403 |
+| function | `cmd_selftest` | 406-493 |
+| function | `main` | 496-586 |
+
+1 symbols omitted from compact profile.
 
 # Relationships
 
@@ -71,10 +75,10 @@ Depends on:
 - `__future__.annotations`
 - `argparse`
 - `collections.Counter`
+- `datetime.datetime`
 - `json`
 - `loom_kit.specpack`
-- `pathlib.Path`
-- 2 imports omitted from compact profile.
+- 3 imports omitted from compact profile.
 
 # Impact notes
 

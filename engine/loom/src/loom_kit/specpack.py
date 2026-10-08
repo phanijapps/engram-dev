@@ -191,6 +191,99 @@ def alignment(doc: dict) -> tuple[list[str], dict]:
     return errs, coverage
 
 
+def closure_gaps(doc: dict) -> dict:
+    """What stands between this pack and its final state (DES-7)."""
+    pending = sorted(d["id"] for d in doc["plan"].get("decisions", []) if d.get("status") == "proposed")
+    openq = sorted(q["id"] for q in doc["spec"].get("clarifications", []) if q.get("status") == "open")
+    review_pass = any(
+        v.get("verdict") == "PASS" and v.get("on") == "PACK"
+        for v in (doc.get("review") or {}).get("verdicts") or []
+    )
+    return {"pending_decisions": pending, "open_questions": openq, "review_pass": review_pass}
+
+
+def _decision(doc: dict, decision_id: str) -> dict:
+    for d in doc["plan"].get("decisions", []):
+        if d["id"] == decision_id:
+            return d
+    raise LoomError(f"{decision_id}: no such decision")
+
+
+def _assert_mutable(doc: dict) -> None:
+    if doc.get("status") == "complete":
+        raise LoomError("pack is complete: the record is frozen; open a new initiative instead")
+
+
+def accept_decision(doc: dict, decision_id: str, by: str) -> dict:
+    """Record owner acceptance of a decision (FR-8). Resolves its questions."""
+    _assert_mutable(doc)
+    if not str(by).startswith("human:"):
+        raise LoomError("acceptance needs a human claim: pass --by human:<owner> (A7 shape check)")
+    d = _decision(doc, decision_id)
+    if d.get("status") == "accepted":
+        raise LoomError(f"{decision_id}: already accepted by {d.get('accepted_by')}")
+    if d.get("status") == "rejected":
+        raise LoomError(f"{decision_id}: rejected; a rejected decision is history")
+    d["status"] = "accepted"
+    d["accepted_by"] = by
+    resolved = []
+    for q in doc["spec"].get("clarifications", []):
+        resolves_it = q.get("resolved_by") == decision_id or q["id"] in d.get("resolves", [])
+        if resolves_it and q.get("status") == "open":
+            q["status"] = "resolved"
+            q["answer"] = f"Accepted as {decision_id} by {by}"
+            resolved.append(q["id"])
+    doc["revision"] = doc.get("revision", 1) + 1
+    return {"decision": decision_id, "status": "accepted", "accepted_by": by, "resolved_questions": sorted(resolved)}
+
+
+def reject_decision(doc: dict, decision_id: str, by: str, because: str) -> dict:
+    """Record owner rejection of a decision (FR-8). Questions stay open."""
+    _assert_mutable(doc)
+    if not str(by).startswith("human:"):
+        raise LoomError("rejection needs a human claim: pass --by human:<owner>")
+    d = _decision(doc, decision_id)
+    if d.get("status") != "proposed":
+        raise LoomError(f"{decision_id}: already {d.get('status')}")
+    d["status"] = "rejected"
+    d["rejected_because"] = because
+    doc["revision"] = doc.get("revision", 1) + 1
+    return {"decision": decision_id, "status": "rejected", "rejected_because": because}
+
+
+def close(doc: dict, by: str, at: str | None = None) -> dict:
+    """Transition the pack to its final state (FR-9). Refuses naming every gap.
+
+    Preconditions: every task done with evidence, no proposed decision, no
+    open question, and a PASS verdict on PACK in review.verdicts.
+    """
+    _assert_mutable(doc)
+    if not str(by).startswith("human:"):
+        raise LoomError("closing needs a human claim: pass --by human:<owner>")
+    problems = []
+    undone = sorted(t["id"] for t in doc["tasks"] if t["status"] != "done")
+    if undone:
+        problems.append(f"tasks not done: {', '.join(undone)}")
+    unevidenced = sorted(t["id"] for t in doc["tasks"] if t["status"] == "done" and not t.get("evidence"))
+    if unevidenced:
+        problems.append(f"done without evidence: {', '.join(unevidenced)}")
+    gaps = closure_gaps(doc)
+    if gaps["pending_decisions"]:
+        problems.append(f"decisions proposed: {', '.join(gaps['pending_decisions'])}")
+    if gaps["open_questions"]:
+        problems.append(f"questions open: {', '.join(gaps['open_questions'])}")
+    if not gaps["review_pass"]:
+        problems.append("no PASS verdict on PACK (review.verdicts)")
+    if problems:
+        raise LoomError("cannot close: " + "; ".join(problems))
+    doc["status"] = "complete"
+    doc["closed_by"] = by
+    if at:
+        doc["closed_at"] = at
+    doc["revision"] = doc.get("revision", 1) + 1
+    return {"name": doc["name"], "status": "complete", "closed_by": by, "revision": doc["revision"]}
+
+
 def _fail_streak(doc: dict, task_id: str) -> int:
     t = _task(doc, task_id)
     streak = 0
@@ -299,6 +392,7 @@ def rebase(doc: dict, task_id: str, pack_path: Path, approved_by: str) -> dict:
     Git history of the pack is the provenance record. Remote URLs are never
     fetched; their digests are left untouched.
     """
+    _assert_mutable(doc)
     if not str(approved_by).startswith("human:"):
         raise LoomError(
             "rebase needs owner approval: pass --approved-by human:<owner> "
@@ -334,8 +428,10 @@ def next_task(doc: dict, pack_path: Path | None = None) -> dict:
 
     With pack_path, touch digests are pinned at first handout and verified at
     every handout; drift refuses the handout (status needs_rebase, no state
-    change, no revision bump).
+    change, no revision bump). A complete pack reports COMPLETE: frozen.
     """
+    if doc.get("status") == "complete":
+        return {"status": "COMPLETE", "closed_by": doc.get("closed_by")}
     tasks = doc["tasks"]
     done = {t["id"] for t in tasks if t["status"] == "done"}
     pick = None
@@ -355,6 +451,9 @@ def next_task(doc: dict, pack_path: Path | None = None) -> dict:
         if any(t["status"] == "blocked" for t in tasks):
             return {"status": "BLOCKED", "tasks": sorted(t["id"] for t in tasks if t["status"] == "blocked")}
         if all(t["status"] == "done" for t in tasks):
+            gaps = closure_gaps(doc)
+            if gaps["pending_decisions"] or gaps["open_questions"]:
+                return {"status": "needs_closure", "revision": doc.get("revision", 1), **gaps}
             return {"status": "DONE"}
         return {"status": "WAITING", "reason": "no ready task"}
     if pack_path is not None:
@@ -464,6 +563,7 @@ def slice_for(doc: dict, task_id: str) -> dict:
 
 
 def record(doc: dict, task_id: str, result: str, commands: list[dict], expected_revision: int, by: str, notes: str | None = None) -> dict:
+    _assert_mutable(doc)
     if doc.get("revision", 1) != expected_revision:
         raise LoomError(f"stale writer: file is at revision {doc.get('revision', 1)}, caller expected {expected_revision}")
     t = _task(doc, task_id)

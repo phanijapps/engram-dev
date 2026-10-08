@@ -53,7 +53,14 @@ def test_next_record_loop_to_done(ws: Path):
     assert main(["next", str(ws)]) == 0  # T-4
     assert main(["record", str(ws), "--task", "T-4", "--result", "pass",
                  "--cmd", "mvn -q test", "--exit", "0", "--expected-revision", str(_rev(ws))]) == 0
-    assert main(["next", str(ws)]) == 0  # DONE
+    assert main(["next", str(ws)]) == 2  # needs_closure: shipped example keeps Q-2 open
+    p = ws / "todo-api.json"
+    doc = json.loads(p.read_text())
+    q2 = next(q for q in doc["spec"]["clarifications"] if q["id"] == "Q-2")
+    q2["status"] = "resolved"
+    q2["answer"] = "resolved in the follow-up initiative"
+    p.write_text(json.dumps(doc))
+    assert main(["next", str(ws)]) == 0  # DONE once the owner work closes
     doc = json.loads((ws / "todo-api.json").read_text())
     assert {t["id"]: t["status"] for t in doc["tasks"]} == {
         "T-1": "done", "T-2": "done", "T-3": "done", "T-4": "done"}

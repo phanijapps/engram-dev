@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: 9e997d5611c270f25222618d4f0fb33c3236e0327d31c9f5725a2236b600644a
+source_hash: 94762572407bcc3064a67b88568f8c493c1fac49736f4a7c2de8c89568f0515c
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T21:54:43Z'
+  at: '2026-10-08T22:24:46Z'
 status: stable
 package: engine/loom
 ---
@@ -40,20 +40,20 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose
 | function | `_families` | 67-76 |
 | function | `alignment` | 79-191 |
 | function | `dfs` | 131-138 |
-| function | `_fail_streak` | 194-201 |
-| function | `_task` | 204-208 |
-| function | `_git_root` | 211-216 |
-| function | `_resolve_path` | 219-224 |
-| function | `_pin_or_verify` | 227-256 |
-| function | `_verify_refs` | 259-291 |
-| function | `rebase` | 294-329 |
-| function | `_repin` | 310-317 |
-| function | `next_task` | 332-372 |
-| function | `_task_body` | 375-381 |
-| function | `_node_body` | 384-410 |
-| function | `slice_for` | 413-463 |
+| function | `closure_gaps` | 194-202 |
+| function | `_decision` | 205-209 |
+| function | `_assert_mutable` | 212-214 |
+| function | `accept_decision` | 217-237 |
+| function | `reject_decision` | 240-251 |
+| function | `close` | 254-284 |
+| function | `_fail_streak` | 287-294 |
+| function | `_task` | 297-301 |
+| function | `_git_root` | 304-309 |
+| function | `_resolve_path` | 312-317 |
+| function | `_pin_or_verify` | 320-349 |
+| function | `_verify_refs` | 352-384 |
 
-1 symbols omitted from compact profile.
+7 symbols omitted from compact profile.
 
 # Relationships
 
