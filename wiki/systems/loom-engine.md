@@ -17,8 +17,8 @@ and evidence. The engine owns every state move. The model works inside
 the machine and proposes. [^l1]
 
 **CLI surface** (entry `loom = loom_kit.cli:main`): `init`, `add`,
-`validate`, `next`, `record`, `check`, `status`, `selftest`. Client
-profiles: `generic`, `pi`, `claude`, `codex`. [^l2]
+`validate`, `next`, `record`, `check`, `rebase`, `status`, `selftest`.
+Client profiles: `generic`, `pi`, `claude`, `codex`. [^l2]
 
 **Two modes, two state owners.** In spine mode (`sdd.json`),
 `machine.py` is the only code that moves task states. In specpack
@@ -27,20 +27,21 @@ mode, `specpack.py` moves task states in its own `record`
 
 # Internal architecture: four modules, one authority
 
-loom is small by design: 6 modules, 1446 raw lines (`wc -l`). The
+loom is small by design: 6 modules, 1661 raw lines (`wc -l`). The
 shape is a star around the spine. [^m1]
 
 ```
 loom_kit/
-  cli.py        thin dispatch: 8 commands            (425 LOC)
+  cli.py        thin dispatch: 9 commands            (494 LOC)
   spine.py      THE AUTHORITY: load, validate, save   CRITICAL (291)
                 sdd.json schema + semantic invariants
                 (MiniValidator, fail-closed, thread lock)
   machine.py    SPINE-MODE STATE MACHINE:             CRITICAL (322)
                 add_node, promote, next_task,
                 compile_context, record
-  specpack.py   SPEC PACK 0.2 NATIVE MODE: load,       CORE     (318)
-                validate, alignment checks, next, record
+  specpack.py   SPEC PACK 0.3 NATIVE MODE: load,       CORE     (464)
+                validate, alignment checks, slice
+                resolver, pin + rebase, next, record
                 (moves states in this mode)
   templates.py  three markdown stubs for init         PERIPHERAL (64)
   schemas/      spine.schema.json + specpack.schema.json  CRITICAL
@@ -59,7 +60,14 @@ rule. [^l3]
 
 # The task loop: call paths (spine mode)
 
-`loom next` is the whole loop in one call: [^t1]
+`loom next` is the whole loop in one call. In specpack mode it also
+pins and verifies the task's `context.touch` digests: first handout
+writes the pins; every later handout verifies them against current
+file bytes; drift returns `needs_rebase` with a drift list and the
+task is not handed out (`specpack.py`, `_pin_or_verify`). Artifact and
+local-link digests verify the same way (`_verify_refs`; a remote URL
+is never fetched). `loom rebase <dir> --task T-x` re-pins to current
+truth; the pack's git history is the provenance record. [^t1]
 
 ```
 cli cmd_next
@@ -107,6 +115,14 @@ the legacy spine takes precedence (`specpack.py:37`). Specpack mode
 has its own states (`todo`, `doing`, `done`, `blocked`), its own
 alignment checks, and its own `record` path in the CLI. [^s1]
 
+The handout (0.3) is the slice resolver (`slice_for`): full node
+bodies, never flattened one-liners; designs expand one hop through
+`addresses` so the requirement behind a design travels (with a `via`
+marker); every accepted decision rides along; prerequisite tasks
+contribute their detail, produced files, and evidence; a plan prelude
+leads. See `docs/specs/spec-graph/schema-primer.md` section 6 for the
+context block field contracts.
+
 **Specpack load is not fail-closed for schema errors.**
 `load_specpack` raises on invalid JSON and on a wrong `format` value,
 but it discards the schema validation result (`specpack.py:52`
@@ -139,7 +155,7 @@ lives inside evidence rows the caller supplies. [^s1]
 | `spine.py` + `schemas/spine.schema.json` | CRITICAL | Single load and save path for `sdd.json`. Fail-closed load. A corrupt spine stops the loop by design. |
 | `schemas/specpack.schema.json` | CRITICAL | The native format contract. Validated by `specpack.py` at check time. |
 | `machine.py` | CRITICAL | The only spine-mode code that moves task states. A defect here breaks the loop contract. |
-| `specpack.py` | CORE | Native mode: alignment checks A1 to A5 and A7, the A6 record rule, and its own state moves. |
+| `specpack.py` | CORE | Native mode: slice resolver with full bodies, pin + rebase, alignment checks A1 to A5 and A7, the A6 record rule, and its own state moves. |
 | `cli.py` | CORE | Dispatch and profiles. Thin by design. |
 | `templates.py` | PERIPHERAL | Three stub files for `loom init`. Referenced only at `cli.py:85`. |
 

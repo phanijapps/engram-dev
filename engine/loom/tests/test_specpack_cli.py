@@ -84,3 +84,67 @@ def test_legacy_spine_dir_still_routes_to_legacy(tmp_path: Path, capsys):
     assert main(["next", str(tmp_path)]) == 1
     # the legacy loader's message proves the legacy branch was taken
     assert "schema violations" in capsys.readouterr().err
+
+
+def test_next_renders_steps_env_and_context(tmp_path: Path, capsys):
+    """FR-5: the human handout prints verify steps, env, and the context block."""
+    import hashlib
+    d = tmp_path / "ctx-pack"
+    d.mkdir()
+    (d / "src").mkdir()
+    (d / "src" / "thing.py").write_bytes(b"v1\n")
+    pack = {
+        "format": "specpack/0.3",
+        "name": "render-fixture",
+        "title": "Render fixture",
+        "env": {"build": "uv sync", "test": "uv run pytest -q", "toolchain": "Python 3.12"},
+        "spec": {"why": "f", "requirements": [{"id": "FR-1", "text": "r", "priority": "P1"}]},
+        "plan": {"approach": "render it", "stack": {"language": "Python"}, "decisions": [{"id": "D-1", "decision": "d", "because": "b", "status": "proposed"}]},
+        "tasks": [{
+            "id": "T-1", "title": "Rendered", "detail": "d", "satisfies": ["FR-1"],
+            "verify": {"cmd": "true", "expect": "exit 0", "steps": [{"run": "echo ok", "expect_exit": 0, "expect_contains": "ok"}]},
+            "status": "todo",
+            "context": {
+                "touch": [{"path": "src/thing.py", "why": "in scope"}],
+                "read": [{"path": "pyproject.toml", "why": "toolchain"}],
+                "wiki": ["systems/loom-engine.md"],
+                "links": [{"url": "https://example.org/p", "why": "pattern"}, {"url": "docs/r.md", "why": "r", "sha256": hashlib.sha256(b"x").hexdigest()}],
+                "notes": ["watch the flaky test"],
+                "commands": [{"cmd": "uv run pytest -q", "expect_exit": 0}],
+            },
+        }],
+    }
+    (d / "pack.json").write_text(json.dumps(pack))
+    assert main(["next", str(d)]) == 0
+    out = capsys.readouterr().out
+    assert 'step 1: echo ok  [exit 0]  contains \'ok\'' in out
+    assert "env:" in out and "uv sync" in out
+    assert "touch: src/thing.py" in out
+    assert "read: pyproject.toml" in out
+    assert "wiki: systems/loom-engine.md" in out
+    assert "link: https://example.org/p (advisory)" in out
+    assert "link: docs/r.md (pinned)" in out
+    assert "note: watch the flaky test" in out
+    assert "cmd: uv run pytest -q" in out
+
+
+def test_check_prints_context_coverage_lines(ws: Path, capsys):
+    """FR-6: loom check prints the context section, exit stays 0."""
+    p = ws / "todo-api.json"
+    doc = json.loads(p.read_text())
+    doc["spec"]["clarifications"] = [{"id": "Q-1", "question": "ship?", "status": "open"}]
+    doc["tasks"][3]["status"] = "todo"  # an active task with no context block
+    p.write_text(json.dumps(doc))
+    assert main(["check", str(ws)]) == 0
+    out = capsys.readouterr().out
+    assert "context: env block absent" in out
+    assert "context: touch missing: T-3, T-4" in out
+    assert "context: detail missing" not in out  # T-4 has detail
+    assert "context: open questions: Q-1" in out  # test replaced clarifications, so only Q-1 exists
+
+
+def test_next_renders_ac_and_us_lines(ws: Path, capsys):
+    """DEFECT-3 fix: AC and US must render, not print empty labels."""
+    assert main(["next", str(ws)]) == 0  # example pack: T-4 hands out with AC-1..AC-4 in slice
+    out = capsys.readouterr().out
+    assert "Given" in out and "/ When" in out and "/ Then" in out

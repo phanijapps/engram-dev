@@ -19,6 +19,7 @@ from .spine import LoomError, save
 SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "specpack.schema.json"
 STATES = ("todo", "doing", "done", "blocked")
 STALL_LIMIT = 2
+KNOWN_FORMATS = ("specpack/0.2", "specpack/0.3")
 
 
 def _now() -> str:
@@ -47,8 +48,11 @@ def load_specpack(directory: str | Path) -> tuple[dict, Path]:
             doc = json.load(f)
         except json.JSONDecodeError as e:
             raise LoomError(f"{path}: invalid JSON: {e}") from e
-    if doc.get("format", "").startswith("specpack/") is False:
-        raise LoomError(f"{path}: not a specpack (format={doc.get('format')!r})")
+    if doc.get("format", "") not in KNOWN_FORMATS:
+        raise LoomError(
+            f"{path}: unsupported format {doc.get('format')!r} "
+            f"(this loom speaks: {', '.join(KNOWN_FORMATS)})"
+        )
     validate(doc, path)
     return doc, path
 
@@ -168,6 +172,22 @@ def alignment(doc: dict) -> tuple[list[str], dict]:
             for d in sorted(fams["DES"])
         },
     }
+    active = [t for t in doc["tasks"] if t.get("status") in ("todo", "doing")]
+    coverage["context"] = {
+        "missing_detail": sorted(t["id"] for t in active if not t.get("detail")),
+        "missing_touch": sorted(t["id"] for t in active if not (t.get("context") or {}).get("touch")),
+        "long_notes": sorted(
+            t["id"]
+            for t in active
+            if any(len(n) > 280 for n in (t.get("context") or {}).get("notes") or [])
+        ),
+        "env_absent": not doc.get("env"),
+        "open_questions": (
+            sorted(q["id"] for q in doc["spec"].get("clarifications", []) if q.get("status") == "open")
+            if active
+            else []
+        ),
+    }
     return errs, coverage
 
 
@@ -188,8 +208,127 @@ def _task(doc: dict, task_id: str) -> dict:
     raise LoomError(f"no task {task_id}")
 
 
-def next_task(doc: dict) -> dict:
-    """Resume doing-without-evidence, then ready todo; id order. Deterministic."""
+def _git_root(start: Path) -> Path:
+    """The repository root containing the pack; the pack parent when outside git."""
+    for p in (start, *start.parents):
+        if (p / ".git").exists():
+            return p
+    return start.parent if start.is_file() else start
+
+
+def _resolve_path(root: Path, rel: str) -> Path | None:
+    """Join a context path onto its root; None when the path escapes the root."""
+    q = Path(rel)
+    if q.is_absolute() or ".." in q.parts:
+        return None
+    return root / q
+
+
+def _pin_or_verify(doc: dict, task_id: str, pack_path: Path) -> list[dict]:
+    """Pin-or-verify touch digests (DES-3). Mutates doc only when pinning.
+
+    Rules: a file with no pinned digest gets pinned at first sighting; a file
+    pinned then changed or missing is drift; a file absent at first sighting
+    stays unpinned until it exists (resume-safe: the task's own creation is
+    not drift). Returns the drift list; empty means the handout may proceed.
+    """
+    t = _task(doc, task_id)
+    touch = (t.get("context") or {}).get("touch") or []
+    if not touch:
+        return []
+    root = _git_root(pack_path)
+    drift = []
+    for e in touch:
+        f = _resolve_path(root, e["path"])
+        if f is None:
+            drift.append({"path": e["path"], "why": "invalid-path"})
+            continue
+        pinned = e.get("sha256")
+        if not f.is_file():
+            if pinned:
+                drift.append({"path": e["path"], "why": "missing", "pinned": pinned})
+            continue
+        current = hashlib.sha256(f.read_bytes()).hexdigest()
+        if not pinned:
+            e["sha256"] = current
+        elif pinned != current:
+            drift.append({"path": e["path"], "why": "changed", "pinned": pinned, "current": current})
+    return drift
+
+
+def _verify_refs(doc: dict, task_id: str, pack_path: Path) -> list[dict]:
+    """Verify artifact and link digests at handout (DES-4).
+
+    Artifacts verify against the pack file's directory (0.2 rule). Links with
+    a digest verify only when they are local paths; a remote URL cannot be
+    verified by the machine and passes through (reported by coverage, T-6).
+    """
+    drift = []
+    for key, a in sorted((doc.get("artifacts") or {}).items()):
+        pin = a.get("sha256")
+        if not pin:
+            continue
+        f = pack_path.parent / a["file"]
+        if not f.is_file():
+            continue  # incomplete pack, not drift: FR-4 refuses on mismatch only
+        cur = hashlib.sha256(f.read_bytes()).hexdigest()
+        if cur != pin:
+            drift.append({"path": a["file"], "why": "artifact-digest", "pinned": pin, "current": cur})
+    t = _task(doc, task_id)
+    for e in (t.get("context") or {}).get("links") or []:
+        pin = e.get("sha256")
+        if not pin or "://" in e["url"]:
+            continue
+        f = _resolve_path(_git_root(pack_path), e["url"])
+        if f is None:
+            drift.append({"path": e["url"], "why": "invalid-path"})
+            continue
+        if not f.is_file():
+            continue  # missing reference is not a mismatch; coverage reports it (T-6)
+        cur = hashlib.sha256(f.read_bytes()).hexdigest()
+        if cur != pin:
+            drift.append({"path": e["url"], "why": "link-digest", "pinned": pin, "current": cur})
+    return drift
+
+
+def rebase(doc: dict, task_id: str, pack_path: Path) -> dict:
+    """Re-pin touch, local-link, and artifact digests to current truth (D-7).
+
+    Git history of the pack is the provenance record. Remote URLs are never
+    fetched; their digests are left untouched.
+    """
+    root = _git_root(pack_path)
+    repinned, dropped = [], []
+
+    def _repin(entry: dict, base: Path) -> None:
+        f = _resolve_path(base, entry["path"] if "path" in entry else entry["file"])
+        if f is not None and f.is_file():
+            entry["sha256"] = hashlib.sha256(f.read_bytes()).hexdigest()
+            repinned.append(f"{entry.get('path') or entry['file']}")
+        elif "sha256" in entry:
+            entry.pop("sha256")
+            dropped.append(f"{entry.get('path') or entry['file']}")
+
+    t = _task(doc, task_id)
+    for e in (t.get("context") or {}).get("touch") or []:
+        _repin(e, root)
+    for e in (t.get("context") or {}).get("links") or []:
+        if "sha256" in e and "://" not in e["url"]:
+            _repin({**e, "path": e["url"]}, root)
+    for a in (doc.get("artifacts") or {}).values():
+        if "sha256" in a:
+            _repin(a, pack_path.parent)
+    doc["revision"] = doc.get("revision", 1) + 1
+    return {"task": task_id, "repinned": sorted(repinned), "dropped": sorted(dropped)}
+
+
+def next_task(doc: dict, pack_path: Path | None = None) -> dict:
+    """Resume doing-without-evidence, then ready todo; id order. Deterministic.
+
+    With pack_path, touch digests are pinned at first handout and verified at
+    every handout; drift refuses the handout (status needs_rebase, no state
+    change, no revision bump).
+    """
     tasks = doc["tasks"]
     done = {t["id"] for t in tasks if t["status"] == "done"}
     pick = None
@@ -211,13 +350,67 @@ def next_task(doc: dict) -> dict:
         if all(t["status"] == "done" for t in tasks):
             return {"status": "DONE"}
         return {"status": "WAITING", "reason": "no ready task"}
+    if pack_path is not None:
+        drift = _pin_or_verify(doc, pick["id"], pack_path) + _verify_refs(doc, pick["id"], pack_path)
+        if drift:
+            return {
+                "status": "needs_rebase",
+                "task": pick["id"],
+                "revision": doc.get("revision", 1),
+                "drift": sorted(drift, key=lambda d: (d["path"], d["why"])),
+            }
     pick["status"] = "doing"
     doc["revision"] = doc.get("revision", 1) + 1
     sl = slice_for(doc, pick["id"])
     return {"status": "task", "task": pick["id"], **sl}
 
 
+def _task_body(t: dict) -> dict:
+    """The fields a fresh session needs from a task, full bodies not one-liners."""
+    fields = (
+        "id", "title", "detail", "phase", "needs", "produces", "verify",
+        "status", "evidence", "assignee", "parallel", "context",
+    )
+    return {k: t[k] for k in fields if k in t}
+
+
+def _node_body(doc: dict, id_: str, via: dict) -> dict | None:
+    """Full body for a non-task node, family-tagged; via marks design-served targets."""
+    spec, plan = doc["spec"], doc["plan"]
+    for s in spec.get("stories", []):
+        if s["id"] == id_:
+            return {"family": "US", **s}
+    for r in spec["requirements"]:
+        if r["id"] == id_:
+            extra = {"via": via[id_]} if id_ in via else {}
+            return {"family": "FR", **extra, **r}
+        for s in r.get("scenarios", []):
+            if s["id"] == id_:
+                return {"family": "AC", **s}
+    for c in spec.get("constraints", []):
+        if c["id"] == id_:
+            extra = {"via": via[id_]} if id_ in via else {}
+            return {"family": "CON", **extra, **c}
+    for q in spec.get("clarifications", []):
+        if q["id"] == id_:
+            return {"family": "Q", **q}
+    for d in plan.get("decisions", []):
+        if d["id"] == id_:
+            return {"family": "D", **d}
+    for d in plan.get("designs", []):
+        if d["id"] == id_:
+            return {"family": "DES", **d}
+    return None
+
+
 def slice_for(doc: dict, task_id: str) -> dict:
+    """The frozen handout: full node bodies, not flattened one-liners.
+
+    Closure: the task, its flow and trace links, and the same from prerequisite
+    tasks. Designs in the closure expand one hop through `addresses` (targets
+    gain a `via` marker naming the smallest design id serving them). Every
+    accepted decision rides along. A plan prelude (approach, stack, env) leads.
+    """
     t = _task(doc, task_id)
     keep = {task_id}
     stack = list(t.get("needs", [])) + list(t.get("satisfies", [])) + list(t.get("implements", [])) + list(t.get("accepts", [])) + list(t.get("honors", []))
@@ -234,45 +427,33 @@ def slice_for(doc: dict, task_id: str) -> dict:
             stack.extend(pt.get("satisfies", []))
             stack.extend(pt.get("implements", []))
             stack.extend(pt.get("honors", []))
+    via = {}
+    for d in sorted(doc["plan"].get("designs", []), key=lambda d: d["id"]):
+        if d["id"] not in keep:
+            continue
+        for a in d.get("addresses", []):
+            keep.add(a)
+            via.setdefault(a, d["id"])
+    for d in doc["plan"].get("decisions", []):
+        if d.get("status") == "accepted":
+            keep.add(d["id"])
     items = []
     for k in sorted(keep):
         tt = next((x for x in doc["tasks"] if x["id"] == k), None)
         if tt:
-            items.append({"id": k, "kind": "TASK", "title": tt["title"], "status": tt["status"], "verify": tt["verify"]})
+            items.append({"family": "TASK", **_task_body(tt)})
             continue
-        b = _lookup(doc, k)
-        if b:
-            items.append({"id": k, "kind": b[0], **b[1]})
-        else:
-            items.append({"id": k, "kind": "REF"})
+        b = _node_body(doc, k, via)
+        items.append(b if b is not None else {"id": k, "family": "REF"})
+    prelude = {}
+    for key in ("approach", "stack"):
+        if doc["plan"].get(key):
+            prelude[key] = doc["plan"][key]
+    if doc.get("env"):
+        prelude["env"] = doc["env"]
     omitted = sorted(x["id"] for x in doc["tasks"] if x["id"] not in keep)
-    body = {"task": task_id, "items": items, "omitted_tasks": omitted}
-    return {"items": items, "omitted_tasks": omitted, "slice_digest": _digest(body)}
-
-
-def _lookup(doc: dict, id_: str) -> tuple[str, dict] | None:
-    for s in doc["spec"].get("stories", []):
-        if s["id"] == id_:
-            return "US", {"text": f"{s['as']} wants {s['want']} — so that {s['so']}"}
-    for r in doc["spec"]["requirements"]:
-        if r["id"] == id_:
-            return "FR", {"text": r["text"]}
-        for s in r.get("scenarios", []):
-            if s["id"] == id_:
-                return "AC", {"text": f"Given {s['given']} / When {s['when']} / Then {s['then']}"}
-    for c in doc["spec"].get("constraints", []):
-        if c["id"] == id_:
-            return "CON", {"text": c["text"]}
-    for q in doc["spec"].get("clarifications", []):
-        if q["id"] == id_:
-            return "Q", {"text": q["question"]}
-    for d in doc["plan"].get("decisions", []):
-        if d["id"] == id_:
-            return "D", {"text": f"{d['decision']} — because {d['because']}"}
-    for d in doc["plan"].get("designs", []):
-        if d["id"] == id_:
-            return "DES", {"text": f"{d['title']}: {d.get('detail', '')}"}
-    return None
+    body = {"task": task_id, "items": items, "omitted_tasks": omitted, "prelude": prelude}
+    return {"items": items, "omitted_tasks": omitted, "prelude": prelude, "slice_digest": _digest(body)}
 
 
 def record(doc: dict, task_id: str, result: str, commands: list[dict], expected_revision: int, by: str, notes: str | None = None) -> dict:

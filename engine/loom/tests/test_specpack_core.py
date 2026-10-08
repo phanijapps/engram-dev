@@ -80,8 +80,61 @@ def test_slice_closure_and_determinism():
     b = specpack.slice_for(doc, "T-3")
     assert a["slice_digest"] == b["slice_digest"]
     got = {i["id"] for i in a["items"]}
-    assert got == {"T-3", "T-2", "T-1", "DES-1", "DES-2", "DES-4", "FR-1", "AC-1", "AC-2", "CON-1", "CON-2"}, got
+    # accepted decisions ride along (D-1, D-2); designs expand one hop (DES-2 -> CON-1)
+    assert got == {
+        "T-3", "T-2", "T-1", "DES-1", "DES-2", "DES-4", "FR-1",
+        "AC-1", "AC-2", "CON-1", "CON-2", "D-1", "D-2",
+    }, got
     assert a["omitted_tasks"] == ["T-4"]
+
+
+def test_slice_full_bodies_not_one_liners():
+    """FR-2 of the slice resolver: full node bodies, prereq produces and evidence."""
+    doc = json.loads(EXAMPLE.read_text())
+    sl = specpack.slice_for(doc, "T-3")
+    items = {i["id"]: i for i in sl["items"]}
+    # prereq task carries its full body, not a one-line summary
+    t2 = items["T-2"]
+    assert t2["family"] == "TASK" and t2["detail"] and t2["produces"] and t2["evidence"]
+    # FR carries its own text and priority (full body)
+    fr = items["FR-1"]
+    assert fr["family"] == "FR" and fr["text"] and fr.get("priority")
+    # decisions carry decision + because, not a flattened line
+    d1 = items["D-1"]
+    assert d1["family"] == "D" and d1["decision"] and d1["because"]
+
+
+def test_slice_via_marker_names_the_serving_design():
+    """AC-2: an FR reached through a design's addresses gains via = DES id."""
+    doc = json.loads(EXAMPLE.read_text())
+    sl = specpack.slice_for(doc, "T-3")
+    items = {i["id"]: i for i in sl["items"]}
+    # every design in the closure addresses FR-1; smallest id wins deterministically
+    assert items["FR-1"].get("via") == "DES-1"
+    # DES-2 also addresses CON-1 -> CON-1 carries via too
+    assert items["CON-1"].get("via") == "DES-2"
+
+
+def test_slice_expands_fr_not_directly_satisfied():
+    """A design pulls in an FR the task never linked directly (the G3 fix)."""
+    doc = json.loads(EXAMPLE.read_text())
+    doc["spec"]["requirements"].append({"id": "FR-9", "text": "MUST also stream events", "priority": "P3"})
+    doc["plan"]["designs"][3]["addresses"].append("FR-9")  # DES-4, implemented by T-3
+    sl = specpack.slice_for(doc, "T-3")
+    items = {i["id"]: i for i in sl["items"]}
+    assert items["FR-9"]["text"] == "MUST also stream events"
+    assert items["FR-9"]["via"] == "DES-4"
+
+
+def test_slice_prelude_carries_approach_stack_env():
+    doc = json.loads(EXAMPLE.read_text())
+    sl = specpack.slice_for(doc, "T-3")
+    assert sl["prelude"]["approach"] and sl["prelude"]["stack"]
+    assert "env" not in sl["prelude"]  # example pack predates env
+    doc["env"] = {"build": "mvn -q compile", "test": "mvn -q test"}
+    sl2 = specpack.slice_for(doc, "T-3")
+    assert sl2["prelude"]["env"]["build"] == "mvn -q compile"
+    assert sl["slice_digest"] != sl2["slice_digest"]  # prelude is frozen context
 
 
 def test_record_mrun_m_and_stall(tmp_path):
@@ -117,3 +170,36 @@ def test_done_requires_zero_exit():
 
 def _task_status(doc, tid):
     return next(t for t in doc["tasks"] if t["id"] == tid)["status"]
+
+
+def test_coverage_context_section_reports_not_blocks():
+    """FR-6: context completeness is coverage-tier, sorted, never a violation."""
+    doc = json.loads(EXAMPLE.read_text())
+    errs, cov = specpack.alignment(doc)
+    assert errs == []  # context gaps never become violations
+    assert cov["context"]["env_absent"] is True
+    assert isinstance(cov["context"]["missing_touch"], list)
+
+
+def test_coverage_context_fixture_exact():
+    doc = {
+        "spec": {
+            "why": "f",
+            "requirements": [{"id": "FR-1", "text": "r"}],
+            "clarifications": [{"id": "Q-1", "question": "q", "status": "open"}, {"id": "Q-2", "question": "q", "status": "resolved"}],
+        },
+        "plan": {"decisions": [{"id": "D-1", "decision": "d", "because": "b", "status": "proposed"}]},
+        "tasks": [
+            {"id": "T-1", "title": "a", "verify": {"cmd": "true", "expect": "0"}, "status": "todo", "satisfies": ["FR-1"]},  # no detail, no touch
+            {"id": "T-2", "title": "b", "detail": "d", "verify": {"cmd": "true", "expect": "0"}, "status": "doing", "satisfies": ["FR-1"],
+             "context": {"touch": [{"path": "x"}], "notes": ["x" * 281]}},
+            {"id": "T-3", "title": "c", "detail": "d", "verify": {"cmd": "true", "expect": "0"}, "status": "done", "satisfies": ["FR-1"]},  # done: not reported
+        ],
+    }
+    errs, cov = specpack.alignment(doc)
+    assert errs == []
+    assert cov["context"]["missing_detail"] == ["T-1"]
+    assert cov["context"]["missing_touch"] == ["T-1"]
+    assert cov["context"]["long_notes"] == ["T-2"]
+    assert cov["context"]["open_questions"] == ["Q-1"]  # open while work is active
+    assert cov["context"]["env_absent"] is True

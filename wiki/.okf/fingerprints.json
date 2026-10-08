@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-10-08T13:28:25Z",
+  "generated_at": "2026-10-08T20:31:52Z",
   "workspace": "/home/videogamer/code/memex_beta",
-  "head": "1d1f75f40b8d24f81572a839e29cd2a3ba66123e",
+  "head": "99b359ab99384567ddca0f1dfb7e707d4c672d8b",
   "fingerprints": {
     "engine/loom/src/loom_kit/__init__.py": "4bedd00b79acaa5a9c115f8c8ab77597f46b3f121ac2d68becee60b727c0f682",
-    "engine/loom/src/loom_kit/cli.py": "56b2edbe747dd222edb339ac97d0b9c8ece8c9082f10331f9c59f2f0895b1fa5",
+    "engine/loom/src/loom_kit/cli.py": "a2f9d5e09a139c5e2ec87438bbc1e8481922b9ac297a681eb42e0a3e4e1f6170",
     "engine/loom/src/loom_kit/machine.py": "9c59f30b250ca4d172ce92da488af0e32831d8aa07eff08dedf63b0e8d888d4b",
-    "engine/loom/src/loom_kit/specpack.py": "d7e0f1e0874f9ce7a621621c87e626b8bf2fc7f3e914cd860efb7621201286de",
+    "engine/loom/src/loom_kit/specpack.py": "d8409dcac4e5381aa0cf1c51eed8bc6d1551dbaf2956241fd06ce368b0814980",
     "engine/loom/src/loom_kit/spine.py": "6331aa23041e67a8e8bf42f6c1eefa9d049fcdca28d518f6272ac47a9862b6b3",
     "engine/loom/src/loom_kit/templates.py": "25686b7b5ac426c9e0b55b28c818737d91e3c5309349666b2c0d91ad4ccf033f",
     "engine/okf/okf_kit/__init__.py": "662bef953f1d9a27a6b3f05e108d78e4e0bdb5258cc90a302ff88b99af12d5a2",

@@ -1,12 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.example.org/specpack/0.2.0",
+  "$id": "https://schemas.example.org/specpack/0.3.0",
   "title": "Specpack \u2014 one initiative, one JSON file",
-  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file. Two kinds of links, never mixed: FLOW (task.needs \u2014 execution order) and TRACE (implements/satisfies/accepts/honors \u2014 the alignment between tasks, design, and spec that loom verifies). Artifacts (markdown, docx, xlsx, diagrams) are referenced, never embedded. Any object may carry x-* extension fields.",
+  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file. Two kinds of links, never mixed: FLOW (task.needs \u2014 execution order) and TRACE (implements/satisfies/accepts/honors \u2014 the alignment between tasks, design, and spec that loom verifies). Artifacts (markdown, docx, xlsx, diagrams) are referenced, never embedded. 0.3 adds the handoff layer: per-task context (touch files pinned by sha256, advisory reads, wiki cids, links, plain-text notes, precise commands), verify steps, and a pack env block \u2014 additive; every 0.2 pack remains valid. Any object may carry x-* extension fields.",
   "type": "object",
   "properties": {
     "format": {
-      "const": "specpack/0.2",
+      "enum": [
+        "specpack/0.2",
+        "specpack/0.3"
+      ],
       "title": "Format tag"
     },
     "name": {
@@ -41,6 +44,10 @@
     },
     "review": {
       "$ref": "#/$defs/review"
+    },
+    "env": {
+      "$ref": "#/$defs/envBlock",
+      "title": "Environment contract \u2014 how this pack is built and tested"
     },
     "revision": {
       "type": "integer",
@@ -594,6 +601,10 @@
         },
         "refs": {
           "$ref": "#/$defs/refs"
+        },
+        "context": {
+          "$ref": "#/$defs/contextBlock",
+          "title": "Handoff context \u2014 what a fresh session needs beside the task"
         }
       },
       "required": [
@@ -613,6 +624,13 @@
         "expect": {
           "type": "string",
           "title": "The pass condition"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "title": "Ordered checks \u2014 every step must pass (A6)"
         }
       },
       "required": [
@@ -730,6 +748,176 @@
         "severity",
         "note"
       ],
+      "additionalProperties": false
+    },
+    "contextBlock": {
+      "type": "object",
+      "title": "Handoff context \u2014 pin what you must, advise the rest",
+      "description": "touch paths are relative to the git root containing the pack and are pinned (sha256 written by the machine at handout; drift refuses). read, wiki, and digestless links are advisory. links may be URLs or repo-relative paths. notes are plain strings; provenance is the pack's git history. Promote load-bearing notes to D/CON/Q nodes.",
+      "properties": {
+        "touch": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/touchEntry"
+          },
+          "title": "Scope jail \u2014 the files this task may change, pinned"
+        },
+        "read": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/readEntry"
+          },
+          "title": "Advisory files \u2014 context, never changed"
+        },
+        "wiki": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Local okf bundle concept ids"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/linkEntry"
+          },
+          "title": "External or repo-relative references"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Plain-text context \u2014 promote to a node when load-bearing"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commandCheck"
+          },
+          "title": "Precise commands a worker may rely on"
+        }
+      },
+      "additionalProperties": false
+    },
+    "touchEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "title": "Relative to the git root containing the pack"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Pinned by the machine at handout; drift refuses the handout"
+        },
+        "why": {
+          "type": "string",
+          "title": "Why this file is in scope"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "readEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "why"
+      ],
+      "additionalProperties": false
+    },
+    "linkEntry": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "External URL or repo-relative path"
+        },
+        "why": {
+          "type": "string",
+          "title": "What a worker should extract from this reference"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Optional pin \u2014 verified at handout when present"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "title": "When the pinned content was fetched (ISO-8601)"
+        }
+      },
+      "required": [
+        "url",
+        "why"
+      ],
+      "additionalProperties": false
+    },
+    "commandCheck": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "expect_exit": {
+          "type": "integer",
+          "title": "Expected exit code, default 0"
+        }
+      },
+      "required": [
+        "cmd"
+      ],
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "expect_exit": {
+          "type": "integer",
+          "title": "Expected exit code, default 0"
+        },
+        "expect_contains": {
+          "type": "string",
+          "title": "Substring the output must contain"
+        }
+      },
+      "required": [
+        "run"
+      ],
+      "additionalProperties": false
+    },
+    "envBlock": {
+      "type": "object",
+      "title": "How this pack is built and tested",
+      "properties": {
+        "build": {
+          "type": "string"
+        },
+        "test": {
+          "type": "string"
+        },
+        "lint": {
+          "type": "string"
+        },
+        "toolchain": {
+          "type": "string"
+        }
+      },
       "additionalProperties": false
     }
   }

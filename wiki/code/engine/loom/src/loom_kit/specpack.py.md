@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: d7e0f1e0874f9ce7a621621c87e626b8bf2fc7f3e914cd860efb7621201286de
+source_hash: d8409dcac4e5381aa0cf1c51eed8bc6d1551dbaf2956241fd06ce368b0814980
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T13:28:24Z'
+  at: '2026-10-08T20:31:52Z'
 status: stable
 package: engine/loom
 ---
@@ -32,20 +32,28 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `_now` | 24-25 |
-| function | `_digest` | 28-29 |
-| function | `_vschema` | 32-34 |
-| function | `load_specpack` | 37-53 |
-| function | `validate` | 56-60 |
-| function | `_families` | 63-72 |
-| function | `alignment` | 75-171 |
-| function | `dfs` | 127-134 |
-| function | `_fail_streak` | 174-181 |
-| function | `_task` | 184-188 |
-| function | `next_task` | 191-217 |
-| function | `slice_for` | 220-250 |
-| function | `_lookup` | 253-275 |
-| function | `record` | 278-318 |
+| function | `_now` | 25-26 |
+| function | `_digest` | 29-30 |
+| function | `_vschema` | 33-35 |
+| function | `load_specpack` | 38-57 |
+| function | `validate` | 60-64 |
+| function | `_families` | 67-76 |
+| function | `alignment` | 79-191 |
+| function | `dfs` | 131-138 |
+| function | `_fail_streak` | 194-201 |
+| function | `_task` | 204-208 |
+| function | `_git_root` | 211-216 |
+| function | `_resolve_path` | 219-224 |
+| function | `_pin_or_verify` | 227-256 |
+| function | `_verify_refs` | 259-291 |
+| function | `rebase` | 294-322 |
+| function | `_repin` | 303-310 |
+| function | `next_task` | 325-365 |
+| function | `_task_body` | 368-374 |
+| function | `_node_body` | 377-403 |
+| function | `slice_for` | 406-456 |
+
+1 symbols omitted from compact profile.
 
 # Relationships
 

@@ -59,7 +59,19 @@ def cmd_check(args) -> int:
         for id_, who in cov[fam].items():
             mark = f"covered by {', '.join(who)}" if who else "GAP"
             print(f"  {fam} {id_:12} {mark}")
-    gaps = sum(1 for fam in cov.values() for who in fam.values() if not who)
+    ctx = cov.get("context") or {}
+    for label, key in (
+        ("detail missing", "missing_detail"),
+        ("touch missing", "missing_touch"),
+        ("long notes", "long_notes"),
+        ("open questions", "open_questions"),
+    ):
+        if ctx.get(key):
+            ids = ", ".join(ctx[key])
+            print(f"  context: {label}: {ids}")
+    if ctx.get("env_absent"):
+        print("  context: env block absent")
+    gaps = sum(1 for fam in ("FR", "AC", "DES") for who in cov[fam].values() if not who)
     print(f"alignment: {len(aerrs)} violation(s), {gaps} gap(s) — gaps are reported, never guessed")
     return 1 if aerrs else 0
 
@@ -185,6 +197,21 @@ def cmd_record(args) -> int:
     return 0
 
 
+def cmd_rebase(args) -> int:
+    """specpack-only: re-pin a task's touch digests to current truth (D-7)."""
+    doc, path = specpack.load_specpack(args.directory)
+    if doc.get("revision", 1) != args.expected_revision:
+        print(f"REFUSED: stale writer — file is at revision {doc.get('revision', 1)}, caller expected {args.expected_revision}")
+        return 1
+    out = specpack.rebase(doc, args.task, path)
+    specpack.save(doc, path)
+    if args.json:
+        print(json.dumps(out, indent=2, sort_keys=True))
+    else:
+        print(f"rebased {out['task']}: repinned {', '.join(out['repinned']) or '-'}; dropped {', '.join(out['dropped']) or '-'}")
+    return 0
+
+
 def cmd_status(args) -> int:
     if _mode(args.directory) == "specpack":
         return _status_specpack(args)
@@ -204,8 +231,10 @@ def cmd_status(args) -> int:
 
 def _next_specpack(args) -> int:
     doc, path = specpack.load_specpack(args.directory)
-    out = specpack.next_task(doc)
-    specpack.save(doc, path)
+    out = specpack.next_task(doc, path)
+    # pin only when no drift: a refused handout must not persist new pins
+    if out["status"] != "needs_rebase":
+        specpack.save(doc, path)
     if args.json:
         print(json.dumps(out, indent=2, sort_keys=True))
         return 0 if out["status"] in ("task", "DONE") else 2
@@ -214,11 +243,53 @@ def _next_specpack(args) -> int:
         if out["status"] == "BLOCKED":
             for t in out["tasks"]:
                 print("  blocked:", t)
+        if out["status"] == "needs_rebase":
+            print(
+                f"  task {out['task']} drifted; re-pin with: loom rebase {args.directory} "
+                f"--task {out['task']} --expected-revision {out['revision']}"
+            )
+            for d in out["drift"]:
+                print(f"  drift: {d['path']} ({d['why']})")
         return 0 if out["status"] == "DONE" else 2
     print(f"TASK {out['task']}  slice {out['slice_digest'][:12]}")
+    pre = out.get("prelude") or {}
+    if pre.get("approach"):
+        print(f"  approach: {pre['approach']}")
+    if pre.get("stack"):
+        print(f"  stack: {json.dumps(pre['stack'], sort_keys=True)}")
+    if pre.get("env"):
+        print(f"  env: {json.dumps(pre['env'], sort_keys=True)}")
     for i in out["items"]:
-        body = esc_local(i.get("text") or i.get("title") or "")
-        print(f"  [{i['kind']}] {i['id']} {body}")
+        if i.get("family") == "AC":
+            label = f"Given {i.get('given', '')} / When {i.get('when', '')} / Then {i.get('then', '')}"
+        elif i.get("family") == "US":
+            label = f"{i.get('as', '')} wants {i.get('want', '')}"
+        else:
+            label = i.get("title") or i.get("decision") or i.get("text") or i.get("question") or ""
+        via = f" (via {i['via']})" if i.get("via") else ""
+        print(f"  [{i['family']}] {i['id']}{via} {esc_local(label)}")
+    me = next((i for i in out["items"] if i.get("family") == "TASK" and i["id"] == out["task"]), None)
+    if me:
+        for n, s in enumerate((me.get("verify") or {}).get("steps") or [], 1):
+            line = f"  step {n}: {s['run']}"
+            if "expect_exit" in s:
+                line += f"  [exit {s['expect_exit']}]"
+            if s.get("expect_contains"):
+                line += f"  contains {s['expect_contains']!r}"
+            print(line)
+        ctx = me.get("context") or {}
+        for e in ctx.get("touch") or []:
+            print(f"  touch: {e['path']}" + (" (pinned)" if e.get("sha256") else ""))
+        for e in ctx.get("read") or []:
+            print(f"  read: {e['path']}")
+        for w in ctx.get("wiki") or []:
+            print(f"  wiki: {w}")
+        for e in ctx.get("links") or []:
+            print(f"  link: {e['url']}" + (" (pinned)" if e.get("sha256") else " (advisory)"))
+        for nt in ctx.get("notes") or []:
+            print(f"  note: {esc_local(nt)}")
+        for c in ctx.get("commands") or []:
+            print(f"  cmd: {c['cmd']}")
     print(f"  omitted tasks: {', '.join(out['omitted_tasks']) or '—'}")
     print(f"\nverify with the task's own command, then: loom record {args.directory} --task {out['task']} --result pass --cmd '<command>' --exit 0")
     return 0
@@ -390,6 +461,12 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--json", action="store_true", dest="json")
     sp.set_defaults(fn=cmd_next)
 
+    sp = sub.add_parser("rebase", help="specpack: re-pin a task's touch digests to current truth (after needs_rebase)")
+    sp.add_argument("directory", help="initiative directory (specpack json)")
+    sp.add_argument("--task", required=True)
+    sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
+    sp.add_argument("--json", action="store_true")
+    sp.set_defaults(fn=cmd_rebase)
     sp = sub.add_parser("record", help="record an attempt (pass|fail|unblock|cancel) with evidence")
     d()
     sp.add_argument("--task", required=True)

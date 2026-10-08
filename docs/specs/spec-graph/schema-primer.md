@@ -197,3 +197,75 @@ real `attempt` def; `escalation` → `Blocker`-shaped data in a
 option choice (A/B/C in `schema-brainstorm.md`) decides *how* the
 defds arrive (direct / generated / overlaid) — the *shape* above is
 not in question; it is the schema's own.
+
+## 6. specpack/0.3 — the handoff layer (additive)
+
+0.3 answers one question: can a fresh session act on a pack it did not
+write? The 0.2 handout flattened every node to a one-line `text`;
+0.3 adds the layers that make the handout self-contained. Every 0.2
+pack is a valid 0.3 pack; `format` is now an enum.
+
+### The three layers
+
+1. **TRACE links** (unchanged): implements / satisfies / accepts / honors.
+2. **Slice expansion** (machine): full node bodies at handout; designs
+   expand one hop through `addresses`, so the worker sees the FR behind
+   the DES (`"via": "DES-x"`); every accepted decision rides along;
+   prerequisite tasks contribute detail, produces, evidence; a plan
+   prelude (approach, stack, env) leads.
+3. **The context block** (new, per task):
+
+```json
+"context": {
+  "touch":  [{"path": "src/TodoController.java", "sha256": "…", "why": "new file per DES-6"}],
+  "read":   [{"path": "src/TodoService.java", "why": "T-2 produced this"}],
+  "wiki":   ["systems/loom-engine.md"],
+  "links":  [{"url": "https://example.org/pattern", "why": "the pattern DES-6 follows"}],
+  "notes":  ["MigrationTest is flaky under parallel runners."],
+  "commands": [{"cmd": "mvn -q test -Dtest=TodoControllerTest", "expect_exit": 0}]
+}
+```
+
+### Enforcement levels — one rule per field
+
+| Field | Enforcement |
+|---|---|
+| `touch` | pinned (sha256) by the machine at handout; drift refuses the handout |
+| `read`, `wiki`, digestless `links` | advisory |
+| `links` with `sha256` (local paths), `artifacts` with `sha256` | verified at handout; mismatch refuses |
+| `notes` | none; provenance is the pack's git history |
+
+Paths in `touch` and `read` are relative to the git root containing
+the pack. Links may be URLs (never fetched; the machine cannot verify
+what it cannot read) or repo-relative paths.
+
+### Pin, drift, rebase
+
+- First handout pins digests for files that exist. A file absent at
+  first sighting stays unpinned until it exists (the task's own
+  creation is not drift).
+- Every later handout verifies pins against current bytes. A changed
+  or missing pinned file returns `needs_rebase` with a drift list; no
+  state moves, no revision bumps, nothing persists.
+- `loom rebase <dir> --task T-x --expected-revision N` re-pins to
+  current truth. Git history of the pack records who re-pinned and
+  when; the machine keeps no clock of its own.
+
+### Also in 0.3
+
+- `verify.steps`: ordered checks (`run`, `expect_exit`,
+  `expect_contains`). The record-time rule (A6) is unchanged: every
+  evidence command must exit 0.
+- `env` (pack level): `build`, `test`, `lint`, `toolchain` strings.
+- Coverage (never violations) reports: tasks missing `detail` or
+  `context.touch`, notes over 280 chars, absent `env`, open questions
+  while work is active.
+
+### Authoring rules
+
+- **Promote-to-node**: when a note becomes load-bearing, promote it to
+  a D / CON / Q node and shrink the note to a pointer.
+- **Mirror auth-gated pages**: if a Confluence page matters, export it
+  as a pack artifact with its digest; keep the URL as provenance.
+- **Pin only the scope jail**: `touch` is what the task may change;
+  everything else is `read` or `links`.
