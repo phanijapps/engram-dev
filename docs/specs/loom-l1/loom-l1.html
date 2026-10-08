@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>specpack 0.2 — loom L1, rendered</title>
+<style>
+  :root {
+    --ink: #17202b; --paper: #f6f7f5; --card: #fff; --line: #e2e4de; --muted: #66707d;
+    --accent: #0f6b5f; --accent-soft: #e3f0ed;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--paper); color: var(--ink); }
+  header { background: var(--ink); color: #fff; padding: 20px 24px 14px; }
+  header h1 { margin: 0 0 4px; font-size: 19px; }
+  header p { margin: 0; color: #b9c2c9; font-size: 13px; max-width: 920px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font: 12px/1 ui-monospace, Menlo, monospace; background: #242e33; color: #d8e0dd; padding: 4px 9px; border-radius: 999px; }
+  .chip b { color: #fff; }
+  nav[role="tablist"] { display: flex; gap: 2px; padding: 0 24px; background: var(--ink); flex-wrap: wrap; }
+  nav button { appearance: none; border: 0; background: transparent; color: #9fb0ab; font: 600 13.5px/1 inherit; padding: 11px 14px; cursor: pointer; border-radius: 8px 8px 0 0; }
+  nav button:hover { color: #fff; }
+  nav button[aria-selected="true"] { background: var(--paper); color: var(--ink); }
+  :is(nav button, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  main { padding: 20px 24px 56px; max-width: 1120px; margin: 0 auto; }
+  section[role="tabpanel"] { display: none; }
+  section[role="tabpanel"].active { display: block; }
+  h2 { font-size: 14px; margin: 24px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+  h2:first-child { margin-top: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card h3 { margin: 0 0 6px; font-size: 15px; }
+  .idchip { font: 700 11px/1 ui-monospace, Menlo, monospace; background: var(--accent-soft); color: var(--accent); padding: 3px 7px; border-radius: 4px; margin-right: 8px; }
+  .st, .vt, .tr { font: 700 10.5px/1 ui-monospace, Menlo, monospace; padding: 3px 7px; border-radius: 4px; }
+  .st-todo{background:#e8eaee;color:#525f6f} .st-doing{background:#fdeecd;color:#8a5a06} .st-done{background:#d8efdf;color:#14532d} .st-blocked{background:#fde2e2;color:#8f1d1d}
+  .vt-PASS{background:#d8efdf;color:#14532d} .vt-IMPROVE{background:#fdeecd;color:#8a5a06} .vt-REPLAN{background:#fde2e2;color:#8f1d1d}
+  .qs-open{background:#fde2e2;color:#8f1d1d} .qs-resolved{background:#d8efdf;color:#14532d}
+  .tr-sat{background:#dbeafe;color:#1e3a8a} .tr-imp{background:#cceae6;color:#0f5c52} .tr-hon{background:#fdeecd;color:#8a5a06} .tr-acc{background:#ede4fb;color:#5b2ea6}
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 13px; }
+  th { text-align: left; font: 700 11px/1.4 ui-monospace, monospace; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); background: #edefe9; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  code, .mono { font: 12px/1.55 ui-monospace, Menlo, monospace; }
+  .jump { appearance: none; border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 3px 10px; font: 12px/1.4 ui-monospace, monospace; cursor: pointer; color: var(--ink); }
+  .jump:hover { border-color: var(--accent); color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+  ul.tight { margin: 4px 0 0; padding-left: 18px; }
+  ul.tight li { margin: 3px 0; font-size: 13px; }
+  .tag { font: 700 10px/1 ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; margin-right: 6px; }
+  .t-in { background: #d8efdf; color: #14532d; } .t-out { background: #eceae4; color: #525f6f; }
+  pre.json { background: #101816; color: #d3e0da; padding: 16px 18px; border-radius: 12px; overflow: auto; font: 12px/1.55 ui-monospace, Menlo, monospace; max-height: 70vh; }
+  pre.json .k { color: #7cc4b0; } pre.json .s { color: #c9b98a; } pre.json .n { color: #e09b6a; }
+  .note { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
+  .gap { background: #fde2e2; color: #8f1d1d; font: 700 10.5px/1 ui-monospace, monospace; padding: 3px 7px; border-radius: 4px; }
+  .ok { background: #d8efdf; color: #14532d; font: 700 10.5px/1 ui-monospace, monospace; padding: 3px 7px; border-radius: 4px; }
+  .slice { border-left: 4px solid var(--accent); }
+  .dt { font: 700 11px/1.6 ui-monospace, monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<script type="application/json" id="pack">
+{
+  "artifacts": {
+    "arch": {
+      "description": "L1 architecture: loader \u2192 checker \u2192 next/record over the specpack file",
+      "file": "architecture.md",
+      "type": "text/x-mermaid"
+    },
+    "example": {
+      "description": "The worked example; becomes a test fixture",
+      "file": "../spec-graph/example-add-todo.specpack.json",
+      "type": "application/json"
+    },
+    "schema": {
+      "description": "The specpack 0.2 schema \u2014 vendored into the package with a digest-sync test",
+      "file": "../spec-graph/specpack.schema.json",
+      "type": "application/schema+json"
+    }
+  },
+  "format": "specpack/0.2",
+  "name": "loom-l1",
+  "plan": {
+    "approach": "One new module (specpack.py) carries load/validate/alignment/slice/next/record as pure functions over the json; the CLI grows format detection (sdd.json \u21d2 legacy, else <dirname>.json specpack) and a check command. The vendored schema + real python-jsonschema replace hand validation on this path. The wave dogfoods itself: the final task runs the new commands against this very file.",
+    "data": [],
+    "decisions": [
+      {
+        "because": "The in-session loop proves the protocol with the code we have; subprocess spawning adds surface without new understanding.",
+        "decision": "Defer `loom run` (profiles, captured evidence) to L2",
+        "id": "D-1",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "accepted"
+      },
+      {
+        "because": "A shipped wheel cannot reach docs/; a byte-equality test gives the drift alarm without coupling the engine to a docs folder.",
+        "decision": "Vendor the schema into the package with a digest-sync test instead of referencing the docs path",
+        "id": "D-2",
+        "status": "accepted"
+      },
+      {
+        "because": "The repo standard is python-jsonschema with format checking; the legacy path is scheduled for retirement and not worth a rewrite this wave.",
+        "decision": "specpack path uses real python-jsonschema; MiniValidator stays legacy-only until the spine retires",
+        "id": "D-3",
+        "status": "accepted"
+      }
+    ],
+    "designs": [
+      {
+        "addresses": [
+          "FR-1",
+          "FR-3"
+        ],
+        "detail": "load_specpack(path), validate(doc) via python-jsonschema against the vendored schema; atomic save reusing spine.save; revision defaults to 1 when absent.",
+        "id": "DES-1",
+        "kind": "module",
+        "title": "Specpack loader + validator"
+      },
+      {
+        "addresses": [
+          "FR-1"
+        ],
+        "detail": "alignment(doc) \u2192 sorted violation list for A1\u2013A4 + coverage report (FR/AC/DES reached-by) for A5; evidence rule A6 checked at record time.",
+        "id": "DES-2",
+        "kind": "module",
+        "title": "Alignment checker"
+      },
+      {
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "Format detection by file presence; check is specpack-only; next/record/status branch to the specpack functions; legacy path untouched.",
+        "id": "DES-3",
+        "kind": "interface",
+        "refs": [
+          "arch#cli"
+        ],
+        "title": "CLI integration: check/next/record/status over specpack"
+      },
+      {
+        "addresses": [
+          "FR-2"
+        ],
+        "detail": "slice_for(doc, task_id): transitive closure over needs plus trace targets, canonical sorted render, sha256 digest of the canonical form.",
+        "id": "DES-4",
+        "kind": "module",
+        "refs": [
+          "arch#slice"
+        ],
+        "title": "Slice compiler"
+      }
+    ],
+    "diagrams": [
+      {
+        "artifact": "arch",
+        "caption": "L1 pipeline: specpack.json \u2192 loader (jsonschema) \u2192 alignment checker \u2192 next/record \u2192 specpack.json (atomic, revision-fenced)",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "DES-3",
+          "DES-4"
+        ],
+        "format": "mermaid",
+        "id": "DG-1"
+      }
+    ],
+    "stack": {
+      "deps": "jsonschema>=4 (added to engine/loom)",
+      "language": "Python 3.12",
+      "tests": "pytest"
+    },
+    "structure": [
+      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/tests/test_specpack_core.py",
+      "engine/loom/tests/test_specpack_cli.py"
+    ]
+  },
+  "review": {
+    "checklist": "Alignment rules A1\u2013A6 + red-foreman severities",
+    "verdicts": []
+  },
+  "revision": 14,
+  "spec": {
+    "clarifications": [
+      {
+        "answer": "Deferred \u2014 in-session loop first.",
+        "id": "Q-1",
+        "owner": "human:owner",
+        "question": "Does `loom run` (profile subprocess spawning, captured evidence) land in L1?",
+        "resolved_by": "D-1",
+        "status": "resolved"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Determinism: same file + same command \u21d2 byte-identical selections, ordering, and reports. Sorted ids everywhere; no map-iteration or clock-dependent rendering (clock lives only inside evidence rows the caller supplies)."
+      },
+      {
+        "id": "CON-2",
+        "text": "The legacy sdd.json path stays read-only this wave \u2014 no regression on the 25 existing tests."
+      },
+      {
+        "id": "CON-3",
+        "text": "The specpack schema is vendored into the package; a test asserts the vendored copy's sha256 equals the docs copy (drift alarm, no docs-path coupling)."
+      }
+    ],
+    "out_of_scope": [
+      "loom run + client profiles",
+      "markdown-twin generation",
+      "removing the legacy spine",
+      "MCP surface"
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "the spec-graph example specpack",
+            "id": "AC-1",
+            "then": "exit 0 with FR-2 and DES-3 reported as gaps",
+            "when": "loom check runs against it"
+          },
+          {
+            "given": "a specpack with a dangling needs id",
+            "id": "AC-2",
+            "then": "exit 1 naming the violation",
+            "when": "loom check runs"
+          }
+        ],
+        "text": "`loom check <dir>` MUST load the initiative's specpack, validate it against the vendored schema, run alignment rules A1\u2013A6, and print coverage in canonical (sorted) order. Exit 1 only on rule violations (A1\u2013A4); coverage gaps are reported, never blocking."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "the worked example",
+            "id": "AC-3",
+            "then": "tasks arrive in id order among ready ones and DONE ends the loop",
+            "when": "loom next runs twice recording passes between"
+          }
+        ],
+        "text": "`loom next <dir>` MUST hand out exactly one actionable task \u2014 resumable doing, then ready todo (all needs done), id order \u2014 with its slice (flow + trace closure, sorted, digested); DONE or BLOCKED otherwise."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "a doing task",
+            "id": "AC-4",
+            "then": "REFUSED (M_run = M)",
+            "when": "record pass without a zero-exit command"
+          }
+        ],
+        "text": "`loom record <dir> --task T --result pass|fail|unblock|cancel` MUST append an evidence row, move states (pass\u21d2done on zero-exit evidence, fail\u21d2todo retry, two consecutive fails\u21d2blocked), refuse stale writers by revision, and refuse done without zero-exit evidence."
+      }
+    ],
+    "stories": [
+      {
+        "as": "an operator",
+        "id": "US-1",
+        "so": "the loop runs on the format I actually author",
+        "want": "loom to check, next, and record against a specpack file"
+      }
+    ],
+    "why": "loom's prototype spine was hand-typed slop. The owner codified specpack 0.2; loom must manage context and loop through tasks directly on that format, with alignment verified every pass."
+  },
+  "tasks": [
+    {
+      "accepts": [
+        "AC-2"
+      ],
+      "detail": "specpack.py: load, validate (jsonschema, vendored schema), alignment A1\u2013A4 + coverage, atomic save. Tests: schema digest-sync (CON-3), example validates, one negative fixture per rule A1\u2013A4, coverage gaps sorted.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-3"
+      ],
+      "id": "T-1",
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
+      "needs": [],
+      "parallel": false,
+      "phase": "test-first",
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_core.py"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "done",
+      "title": "Loader + validator + alignment checker",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_core.py",
+        "expect": "exit 0 \u2014 digest-sync, validation, A1\u2013A4 negatives, sorted coverage"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "slice_for: transitive flow closure + trace targets, canonical sorted render, digest. Test: slice(T-3) of the example equals the expected id set; digest stable across calls.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-1"
+      ],
+      "id": "T-2",
+      "implements": [
+        "DES-4"
+      ],
+      "needs": [
+        "T-1"
+      ],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py (slice_for)"
+      ],
+      "satisfies": [
+        "FR-2"
+      ],
+      "status": "done",
+      "title": "Slice compiler",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_core.py",
+        "expect": "exit 0 \u2014 closure correct, digest deterministic"
+      }
+    },
+    {
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4"
+      ],
+      "detail": "Format detection, check command, next/record/status branching; revision fence; M_run = M; two-fail stall; legacy untouched.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_cli.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-3",
+      "implements": [
+        "DES-3"
+      ],
+      "needs": [
+        "T-2"
+      ],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_cli.py"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "status": "done",
+      "title": "CLI: check / next / record / status over specpack",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_cli.py",
+        "expect": "exit 0 \u2014 e2e: check gaps reported, next\u2192record loop to DONE, refusals enforced"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "selftest gains a specpack segment; then the wave runs the new commands against THIS file as its own evidence.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:40Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && uv run loom check docs/specs/loom-l1",
+          "exit": 1
+        },
+        {
+          "at": "2026-10-08T02:50:40Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && uv run loom check docs/specs/loom-l1",
+          "exit": 1
+        },
+        {
+          "at": "2026-10-08T02:51:13Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && cd ../.. && uv run loom check docs/specs/loom-l1",
+          "exit": 0,
+          "notes": "prior fails were a verify-command path bug (relative path from engine/loom), not a code defect; check corrected, fresh run green"
+        }
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-4",
+      "implements": [
+        "DES-3"
+      ],
+      "needs": [
+        "T-3"
+      ],
+      "parallel": false,
+      "phase": "integration",
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py (selftest)"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "done",
+      "title": "Selftest extension + self dogfood",
+      "verify": {
+        "cmd": "cd engine/loom && uv run loom selftest && cd ../.. && uv run loom check docs/specs/loom-l1",
+        "expect": "exit 0 \u2014 selftest green, this file's gaps reported in sorted order"
+      }
+    }
+  ],
+  "title": "Loom L1 \u2014 loom speaks specpack natively"
+}
+</script>
+
+<header>
+  <h1>loom-l1 — the loop engine speaks specpack, rendered</h1>
+  <p><b>needs</b> = flow (what must finish first). <b>implements / satisfies / accepts / honors</b> = trace (the alignment loom verifies). This is the wave where loom acted on its own specgraph — note T-4's evidence: two fails (a broken verify command), then the green pass.</p>
+  <div class="chips" id="headchips"></div>
+</header>
+
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" aria-selected="true" aria-controls="t-spec" id="b-spec">Spec</button>
+  <button role="tab" aria-selected="false" aria-controls="t-plan" id="b-plan">Plan + Design</button>
+  <button role="tab" aria-selected="false" aria-controls="t-tasks" id="b-tasks">Tasks</button>
+  <button role="tab" aria-selected="false" aria-controls="t-align" id="b-align">Alignment</button>
+  <button role="tab" aria-selected="false" aria-controls="t-review" id="b-review">Review</button>
+  <button role="tab" aria-selected="false" aria-controls="t-artifacts" id="b-artifacts">Artifacts</button>
+  <button role="tab" aria-selected="false" aria-controls="t-json" id="b-json">Raw JSON</button>
+</nav>
+
+<main>
+  <section id="t-spec" role="tabpanel" aria-labelledby="b-spec" class="active">
+    <div class="card"><h3>Why</h3><p id="why" style="margin:0"></p></div>
+    <h2>Requirements — one capability each, with scenarios</h2><div id="reqs"></div>
+    <div class="cols">
+      <div><h2>Constraints</h2><div id="cons"></div></div>
+      <div><h2>Clarifications</h2><div id="qs"></div></div>
+    </div>
+    <h2>Out of scope</h2><div class="card"><ul class="tight" id="oos"></ul></div>
+  </section>
+
+  <section id="t-plan" role="tabpanel" aria-labelledby="b-plan">
+    <div class="card"><h3>Approach</h3><p id="approach" style="margin:0"></p></div>
+    <h2>Architecture diagrams — referenced artifacts</h2><div id="diagrams"></div>
+    <h2>Design elements — what tasks implement</h2><div id="designs"></div>
+    <h2>Decisions</h2><div id="decisions"></div>
+    <div class="cols">
+      <div><h2>Data</h2><div id="data"></div></div>
+      <div><h2>Structure</h2><div class="card"><ul class="tight mono" id="structure"></ul></div></div>
+    </div>
+  </section>
+
+  <section id="t-tasks" role="tabpanel" aria-labelledby="b-tasks">
+    <div id="phases"></div>
+    <h2>The slice — what loom hands a subagent</h2>
+    <p class="note">Flow closure (needs, transitively) + trace targets (the requirement, design, constraint, and scenario ids the task names) + their content. Sorted, digested, deterministic. Everything else is omitted on the record.</p>
+    <div id="slice"></div>
+  </section>
+
+  <section id="t-align" role="tabpanel" aria-labelledby="b-align">
+    <h2>Coverage board — computed, sorted, never guessed</h2>
+    <div id="coverage"></div>
+    <h2>Alignment chains — task → design → requirement</h2>
+    <div id="chains"></div>
+    <p class="note">These are the checks loom runs on every loop pass: A1 unique ids · A2 every reference resolves · A3 needs acyclic · A4 every task reaches a requirement (directly or through a design element) · A5 coverage gaps reported in canonical order · A6 done ⇒ evidence with exit 0.</p>
+  </section>
+
+  <section id="t-review" role="tabpanel" aria-labelledby="b-review">
+    <div class="card"><h3>Checklist</h3><p style="margin:0" class="mono" id="checklist"></p></div>
+    <div id="verdicts"></div>
+  </section>
+
+  <section id="t-artifacts" role="tabpanel" aria-labelledby="b-artifacts">
+    <div id="arts"></div>
+    <h2>Citations</h2>
+    <div class="card"><ul class="tight" id="cites"></ul></div>
+  </section>
+
+  <section id="t-json" role="tabpanel" aria-labelledby="b-json">
+    <pre class="json" id="raw"></pre>
+  </section>
+</main>
+
+<script>
+"use strict";
+const P = JSON.parse(document.getElementById("pack").textContent);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const byId = {};
+for (const s of P.spec.stories || []) byId[s.id] = { ...s, _kind: "US" };
+for (const r of P.spec.requirements) { byId[r.id] = { ...r, _kind: "FR" }; for (const s of r.scenarios || []) byId[s.id] = { ...s, _kind: "AC" }; }
+for (const c of P.spec.constraints || []) byId[c.id] = { ...c, _kind: "CON" };
+for (const q of P.spec.clarifications || []) byId[q.id] = { ...q, _kind: "Q" };
+for (const d of P.plan.decisions) byId[d.id] = { ...d, _kind: "D" };
+for (const g of P.plan.diagrams || []) byId[g.id] = { ...g, _kind: "DG" };
+for (const d of P.plan.designs || []) byId[d.id] = { ...d, _kind: "DES" };
+const tasks = Object.fromEntries(P.tasks.map(t => [t.id, t]));
+
+const tabs = [...document.querySelectorAll('nav [role="tab"]')];
+tabs.forEach(t => t.addEventListener("click", () => {
+  tabs.forEach(b => b.setAttribute("aria-selected", b === t ? "true" : "false"));
+  document.querySelectorAll("[role=tabpanel]").forEach(s => s.classList.toggle("active", s.id === t.getAttribute("aria-controls")));
+}));
+
+/* header chips — computed, never hand-counted */
+const nAC = P.spec.requirements.reduce((a, r) => a + (r.scenarios || []).length, 0);
+document.getElementById("headchips").innerHTML = [
+  ["format", P.format], ["name", P.name], ["revision", P.revision ?? 1],
+  ["requirements", P.spec.requirements.length], ["scenarios", nAC],
+  ["designs", (P.plan.designs || []).length], ["decisions", (P.plan.decisions || []).length],
+  ["tasks", P.tasks.length], ["artifacts", Object.keys(P.artifacts).length],
+].map(([k, v]) => `<span class="chip">${k}: <b>${v}</b></span>`).join("");
+
+/* spec */
+document.getElementById("why").textContent = P.spec.why;
+document.getElementById("reqs").innerHTML = P.spec.requirements.map(r => `
+  <div class="card"><h3><span class="idchip">${r.id}</span>${esc(r.text)}</h3>
+  ${(r.scenarios || []).map(s => `<div class="sub" style="margin-top:6px"><b>${s.id}</b> Given ${esc(s.given)} / When ${esc(s.when)} / Then ${esc(s.then)}</div>`).join("") || '<div class="sub">no scenarios yet</div>'}
+  ${(r.refs || []).length ? `<p class="note">from artifact: ${r.refs.map(esc).join(", ")}</p>` : ""}</div>`).join("");
+document.getElementById("cons").innerHTML = (P.spec.constraints || []).map(c => `<div class="card"><span class="idchip">${c.id}</span>${esc(c.text)}</div>`).join("");
+document.getElementById("qs").innerHTML = P.spec.clarifications.map(q => `
+  <div class="card"><h3><span class="idchip">${q.id}</span><span class="st qs-${q.status}">${q.status}</span></h3>
+  <p style="margin:6px 0 0">${esc(q.question)}</p>
+  ${q.status === "resolved" ? `<p class="note">${esc(q.answer || "")} — resolved by <b>${esc(q.resolved_by)}</b></p>` : `<p class="note">owner: ${esc(q.owner)} — recorded, not silently resolved</p>`}</div>`).join("");
+document.getElementById("oos").innerHTML = P.spec.out_of_scope.map(x => `<li>${esc(x)}</li>`).join("");
+
+/* plan */
+document.getElementById("approach").textContent = P.plan.approach;
+document.getElementById("diagrams").innerHTML = (P.plan.diagrams || []).map(g => `
+  <div class="card"><h3><span class="idchip">${g.id}</span>${esc(g.caption)}</h3>
+  <div class="sub">artifact <b>${g.artifact}</b> · format ${g.format} · covers ${(g.covers || []).join(", ")}</div>
+  <p class="note">The diagram is the file <code>${esc(P.artifacts[g.artifact].file)}</code> (${esc(P.artifacts[g.artifact].type)}) — this json points, never embeds.</p></div>`).join("");
+document.getElementById("designs").innerHTML = (P.plan.designs || []).map(d => `
+  <div class="card"><h3><span class="idchip">${d.id}</span>${esc(d.title)} <span class="st st-todo">${d.kind}</span></h3>
+  <p style="margin:6px 0 0;font-size:13.5px">${esc(d.detail || "")}</p>
+  <div class="dt">Addresses</div><div class="links">${(d.addresses || []).map(a => `<span class="tr tr-sat">${a}</span>`).join("") || "—"}</div>
+  ${(d.refs || []).length ? `<div class="dt">Drawn in</div><div class="links">${d.refs.map(r => `<span class="mono">${esc(r)}</span>`).join("")}</div>` : ""}</div>`).join("");
+document.getElementById("decisions").innerHTML = P.plan.decisions.map(d => `
+  <div class="card"><h3><span class="idchip">${d.id}</span>${esc(d.decision)} <span class="st ${d.status === "accepted" ? "st-done" : "st-doing"}">${d.status}</span></h3>
+  <p style="margin:6px 0 0;font-size:13.5px"><b>Because:</b> ${esc(d.because)}</p>
+  ${(d.resolves || []).length ? `<p class="note">resolves ${d.resolves.join(", ")}</p>` : ""}</div>`).join("");
+document.getElementById("data").innerHTML = (P.plan.data || []).map(e => `<div class="card"><h3 class="mono">${esc(e.name)}</h3><ul class="tight">${Object.entries(e.fields || {}).map(([f, t]) => `<li class="mono">${esc(f)}: ${esc(t)}</li>`).join("")}</ul></div>`).join("") || '<div class="card"><p class="note" style="margin:0">No data entities this wave — engine code only.</p></div>';
+document.getElementById("structure").innerHTML = P.plan.structure.map(s => `<li>${esc(s)}</li>`).join("");
+
+/* tasks */
+const phaseOrder = ["setup", "test-first", "core", "integration", "polish"];
+const byPhase = {};
+for (const t of P.tasks) (byPhase[t.phase] ??= []).push(t);
+const tr = (label, cls, arr) => arr.length ? `<div class="dt">${label}</div><div class="links">${arr.map(x => `<span class="tr tr-${cls}">${x}</span>`).join("")}</div>` : "";
+document.getElementById("phases").innerHTML = phaseOrder.filter(p => byPhase[p]).map(p => `
+  <h2>${p}</h2>` + byPhase[p].map(t => `
+  <div class="card">
+    <h3><span class="idchip">${t.id}</span>${esc(t.title)} <span class="st st-${t.status}">${t.status}</span>${t.parallel ? ' <span class="st st-todo">parallel-safe</span>' : ""}</h3>
+    ${t.detail ? `<p style="font-size:13.5px;margin:6px 0 0">${esc(t.detail)}</p>` : ""}
+    <div class="dt">Flow — needs (order only)</div>
+    <div class="links">${(t.needs || []).map(n => `<button class="jump" data-slice="${n}">${n}</button>`).join("") || "—"}</div>
+    ${tr("Trace — satisfies (FR)", "sat", t.satisfies || [])}
+    ${tr("Trace — implements (DES)", "imp", t.implements || [])}
+    ${tr("Trace — accepts (AC)", "acc", t.accepts || [])}
+    ${tr("Trace — honors (CON)", "hon", t.honors || [])}
+    <div class="dt">Verify</div>
+    <dd><code>${esc(t.verify.cmd)}</code><br><span class="note">${esc(t.verify.expect)}</span></dd>
+    ${(t.evidence || []).length ? `<div class="dt">Evidence</div><dd>${t.evidence.map(e => `<span class="st ${e.exit === 0 ? "vt-PASS" : "vt-FAIL"}">exit ${e.exit}</span> <code>${esc(e.cmd)}</code> <span class="note">${esc(e.notes || "")}</span>`).join("<br>")}</dd>` : ""}
+    <button class="jump" data-slice="${t.id}" style="margin-top:10px">show slice + alignment chain →</button>
+  </div>`).join("")).join("");
+
+/* slice + alignment chain */
+function slice(id) {
+  const t = tasks[id];
+  const keep = new Set([id]);
+  const stack = [...(t.needs || []), ...(t.satisfies || []), ...(t.implements || []), ...(t.accepts || []), ...(t.honors || [])];
+  while (stack.length) {
+    const x = stack.pop();
+    if (keep.has(x)) continue;
+    keep.add(x);
+    if (tasks[x]) stack.push(...(tasks[x].needs || []));
+  }
+  const rows = [...keep].sort().map(k => {
+    const tt = tasks[k];
+    if (tt) return `<li><span class="tag t-in">TASK</span><b>${tt.id}</b> ${esc(tt.title)} — <code>${esc(tt.verify.cmd)}</code></li>`;
+    const b = byId[k];
+    if (b) {
+      const txt = b.text || b.question || b.decision || b.detail || b.given && `${b.given} / ${b.when} / ${b.then}` || b.want || b.caption || "";
+      return `<li><span class="tag t-in">${b._kind}</span><b>${k}</b> ${esc(String(txt).slice(0, 110))}</li>`;
+    }
+    return `<li><span class="tag t-in">REF</span><b>${k}</b></li>`;
+  }).join("");
+  const omitted = P.tasks.map(x => x.id).filter(x => !keep.has(x));
+  const chain = [];
+  for (const d of t.implements || []) {
+    const des = byId[d];
+    for (const fr of des.addresses || []) chain.push(`<code>${t.id}</code> implements <code>${d}</code> ${esc(des.title)} → addresses <code>${fr}</code> ${esc(byId[fr].text.slice(0, 70))}…`);
+  }
+  for (const f of t.satisfies || []) chain.push(`<code>${t.id}</code> satisfies <code>${f}</code> ${esc(byId[f].text.slice(0, 80))}…`);
+  document.getElementById("slice").innerHTML = `
+    <div class="card slice">
+      <h3>Slice for ${id} — ${keep.size} items in, ${omitted.length} task${omitted.length === 1 ? "" : "s"} omitted</h3>
+      <ul class="tight">${rows}</ul>
+      <div class="dt">Alignment chain loom verifies on this task</div>
+      ${chain.map(c => `<p style="margin:4px 0 0;font-size:13px">${c}</p>`).join("") || `<p class="note">alignment flows through this task’s design elements</p>`}
+      <p class="note">Deterministic: same ids, same sorted slice, byte for byte, every pass.</p>
+    </div>`;
+  document.getElementById("slice").scrollIntoView({ block: "nearest" });
+}
+document.querySelectorAll("[data-slice]").forEach(b => b.addEventListener("click", () => slice(b.dataset.slice)));
+
+/* alignment board */
+const desAddr = Object.fromEntries((P.plan.designs || []).map(d => [d.id, d.addresses || []]));
+const satBy = {};
+for (const t of P.tasks) {
+  for (const f of t.satisfies || []) (satBy[f] ??= new Set()).add(t.id);
+  for (const d of t.implements || []) for (const f of desAddr[d] || []) (satBy[f] ??= new Set()).add(t.id + " (via " + d + ")");
+}
+const accBy = {};
+for (const t of P.tasks) for (const a of t.accepts || []) (accBy[a] ??= new Set()).add(t.id);
+const impBy = {};
+for (const t of P.tasks) for (const d of t.implements || []) (impBy[d] ??= new Set()).add(t.id);
+const row = (id, who) => `<tr><td class="mono">${id}</td><td>${who && who.size ? `<span class="ok">COVERED</span>` : `<span class="gap">GAP</span>`}</td><td class="mono">${who ? [...who].sort().join(", ") || "—" : "—"}</td></tr>`;
+let cov = "<table><thead><tr><th>Requirement</th><th></th><th>Reached by</th></tr></thead><tbody>";
+for (const r of P.spec.requirements) cov += row(r.id, satBy[r.id]);
+cov += "</tbody></table><h2>Scenarios</h2><table><thead><tr><th>Scenario</th><th></th><th>Accepted by</th></tr></thead><tbody>";
+for (const r of P.spec.requirements) for (const s of r.scenarios || []) cov += row(s.id, accBy[s.id]);
+cov += "</tbody></table><h2>Design elements</h2><table><thead><tr><th>Design</th><th></th><th>Implemented by</th></tr></thead><tbody>";
+for (const d of P.plan.designs || []) cov += row(d.id, impBy[d.id]);
+cov += "</tbody></table>";
+document.getElementById("coverage").innerHTML = cov;
+document.getElementById("chains").innerHTML = P.tasks.map(t => {
+  const parts = [];
+  for (const d of t.implements || []) for (const f of desAddr[d] || []) parts.push(`<code>${t.id}</code> → <code>${d}</code> → <code>${f}</code>`);
+  for (const f of t.satisfies || []) parts.push(`<code>${t.id}</code> → <code>${f}</code>`);
+  return parts.length ? `<div class="card"><h3>${t.id} — ${esc(t.title)}</h3><div class="links">${parts.join(" ")}</div></div>` : "";
+}).join("") || `<div class="card">—</div>`;
+
+/* review, artifacts, raw */
+document.getElementById("checklist").textContent = P.review.checklist;
+document.getElementById("verdicts").innerHTML = (P.review.verdicts || []).map(v => `
+  <div class="card"><h3><span class="st vt-${v.verdict}">${v.verdict}</span> on ${v.on} <span class="note" style="margin-left:8px">by ${esc(v.by)} · ${v.at}</span></h3>
+  ${(v.findings || []).map(f => `<p style="margin:6px 0 0;font-size:13.5px"><span class="tag" style="background:#fde2e2;color:#8f1d1d">${f.severity}</span>${esc(f.note)} <b>Fix:</b> ${esc(f.fix || "—")}</p>`).join("") || '<p class="note">clean — no findings</p>'}</div>`).join("") || '<div class="card"><p class="note" style="margin:0">No verdicts yet — red-foreman rides the next pass.</p></div>';
+document.getElementById("arts").innerHTML = `<table><thead><tr><th>id</th><th>file</th><th>type</th><th>digest</th></tr></thead><tbody>` +
+  Object.entries(P.artifacts).map(([k, a]) => `<tr><td class="mono"><b>${k}</b></td><td class="mono">${esc(a.file)}</td><td class="mono">${esc(a.type)}</td><td class="mono">${a.sha256 ? a.sha256.slice(0, 10) + "…" : "—"}</td></tr>`).join("") + `</tbody></table>`;
+const cites = [];
+for (const r of P.spec.requirements) for (const rf of r.refs || []) cites.push([r.id, rf]);
+for (const d of P.plan.designs || []) for (const rf of d.refs || []) cites.push([d.id, rf]);
+for (const t of P.tasks) for (const rf of t.refs || []) cites.push([t.id, rf]);
+document.getElementById("cites").innerHTML = cites.map(([id, rf]) => `<li><code>${id}</code> cites <code>${esc(rf)}</code></li>`).join("") || "<li>—</li>";
+document.getElementById("raw").innerHTML = esc(JSON.stringify(P, null, 2))
+  .replace(/(&quot;[^&]*?&quot;)(:)/g, '<span class="k">$1</span>$2')
+  .replace(/: (&quot;[^&]*?&quot;)/g, ': <span class="s">$1</span>')
+  .replace(/: (-?\d+\.?\d*)/g, ': <span class="n">$1</span>');
+slice(P.tasks[0].id);
+</script>
+</body>
+</html>
