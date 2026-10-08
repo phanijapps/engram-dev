@@ -88,6 +88,9 @@ def _build_parser() -> argparse.ArgumentParser:
     p_regen = idx_sub.add_parser("regen", help="Regenerate per-directory index.md files.")
     p_regen.add_argument("bundle")
 
+    p_status = sub.add_parser("status", help="One-shot bundle health: freshness, counts, findings, validation.")
+    p_status.add_argument("bundle")
+
     p_findings = sub.add_parser("findings", help="Normative proposal ledger for a bundle.")
     findings_sub = p_findings.add_subparsers(dest="findings_command", required=True)
     p_f_propose = findings_sub.add_parser("propose", help="Add a finding (deduped per source/destination/kind; declined keys are refused).")
@@ -194,6 +197,8 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _cmd_code(args)
     if args.command == "findings":
         return _cmd_findings(args)
+    if args.command == "status":
+        return _cmd_status(args)
     return 2  # unreachable: argparse requires a subcommand
 
 
@@ -288,6 +293,21 @@ def _cmd_findings(args: argparse.Namespace) -> int:
                 f"{finding['id']}\t[{finding['status']}]\t{finding['source']} -> "
                 f"{finding['destination']} ({finding['kind']})"
             )
+    return 0
+
+
+def _cmd_status(args: argparse.Namespace) -> int:
+    from okf_kit.core.status import bundle_status
+
+    s = bundle_status(Path(args.bundle))
+    print(f"bundle: {s['bundle']}")
+    print(f"present: {s['present']}  okf_version: {s['okf_version']}")
+    print(f"freshness: {s['freshness']}  (stamp {s['stamp_head']} vs HEAD {s['head']})")
+    print(f"indexed_at: {s['indexed_at']}  last_index: {s['last_index']}")
+    print(f"concepts: {s['concept_count']}  pending findings: {s['pending_findings']}")
+    print(f"validate: conformant={s['validate']['conformant']} errors={s['validate']['errors']} warnings={s['validate']['warnings']}")
+    if s["freshness"] == "stale":
+        print("refresh recommended: okf code index . <bundle>")
     return 0
 
 
