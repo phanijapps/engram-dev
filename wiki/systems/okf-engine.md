@@ -3,7 +3,7 @@ type: System
 status: stable
 created: 2026-10-08
 updated: 2026-10-08
-title: okf — the engine of the SDD harness
+title: 'okf: the engine of the SDD harness'
 description: 'The knowledge engine: repository in, anchored searchable knowledge out. Internal architecture in two layers, the module call graph, criticality tiers, and the dead code and stale docs found.'
 sources: [{ id: src, resource: engine/okf/okf_kit/cli.py }, { id: indexer, resource: engine/okf/okf_kit/code/indexer.py }]
 tags: [system, okf, engine, architecture, call-graph, criticality]
@@ -20,11 +20,13 @@ and anchor checks.
 `validate`, `search`, `read`, `index`, `code index`, `code rules`,
 `status`, `findings`, `fingerprints`, `anchors`. [^c1]
 
-# Internal architecture — two layers
+# Internal architecture: two layers
 
-The package splits into two layers with one rule between them:
-`core` speaks Markdown bundles. `code` speaks source code. Nothing in
-`core` imports from `code`. [^m1]
+The package splits into two layers. `core` speaks Markdown bundles.
+`code` speaks source code. The rule holds everywhere except one
+deliberate exception: `core/fingerprints.py:44` imports `_SKIP_DIRS`
+from `code.semantic`, so fingerprints and rule candidates share one
+scope rule. [^m1]
 
 ```
 okf_kit/
@@ -39,13 +41,13 @@ okf_kit/
     index.py        per-directory index.md regeneration
     templates.py    init bundle, create concept from type
     findings.py     normative proposal ledger (.okf/findings.toml) CRITICAL
-    fingerprints.py per-file sha256 map
+    fingerprints.py per-file sha256 map (scope shared with code.semantic)
     stamp.py        freshness stamp (.okf/last-index.json)   CRITICAL
     status.py       one screen: fresh, counts, findings, anchors
   code/             EXTRACTION PIPELINE (source in, concepts out)
     discovery.py    walk workspace, map languages to adapters
     treesitter/     parse: runtime + per-language adapters
-    indexer.py      orchestrates extraction + summaries + stamp CRITICAL
+    indexer.py      orchestrates discovery to render        CRITICAL
     render.py       CodeModule and CodeSummary markdown writer
     semantic.py     rule-shaped candidates (guards, enums, TODOs)
     model.py        CodeModule value type
@@ -78,10 +80,12 @@ package. Every module is reachable from the CLI. [^m2]
 validate, search, context, index, templates, and the whole extraction
 pipeline. That is why they are CRITICAL. [^m2]
 
-**The pipeline path** for `okf code index . wiki`:
+**The pipeline path** for `okf code index . wiki --exclude "docs/**"`:
 
-1. `cli._cmd_code_index` calls `index_codebase` (`indexer.py:43`) and
-   then writes the stamp (`stamp.py`). [^c2]
+1. `cli._cmd_code_index` calls `index_codebase` (`indexer.py:43`).
+   When it returns, the CLI writes the stamp (`stamp.py`; called at
+   `cli.py:384` and `cli.py:397`). The indexer itself never touches
+   the stamp. [^c2]
 2. `index_codebase` calls `discovery` to find repositories and map
    languages to adapters.
 3. `treesitter` parses each file. `semantic` scans rule shapes.
@@ -95,7 +99,7 @@ pipeline. That is why they are CRITICAL. [^m2]
 | Module | Tier | Reason |
 |---|---|---|
 | `core.parse`, `core.links`, `core.model` | CRITICAL | Bundle read and write path. Highest fan-in. |
-| `code.indexer` | CRITICAL | Pipeline owner. Writes concepts and triggers the stamp. |
+| `code.indexer` | CRITICAL | Pipeline owner: discovery to render, plus summaries and pruning. |
 | `core.stamp`, `core.findings` | CRITICAL | Trust contract: freshness and normative acceptance. |
 | `core.validate`, `core.search`, `core.context`, `core.fingerprints`, `core.status` | CORE | Health, retrieval, drift detection. |
 | `code.discovery`, `code.render`, `code.semantic`, `code.treesitter.*` | CORE | Pipeline stages. |
@@ -103,12 +107,12 @@ pipeline. That is why they are CRITICAL. [^m2]
 
 # Dead code and stale docs (found 2026-10-08)
 
-1. **DEAD** — `language_help()` at `code/discovery.py:201`. No caller
+1. **DEAD**: `language_help()` at `code/discovery.py:201`. No caller
    in the package, the tests, the skills, or the docs. It was meant
-   for CLI help. the CLI instead hardcodes the language list at
+   for CLI help. The CLI instead hardcodes the language list at
    `cli.py:154`. Two sources of truth: the adapter registry
    (`ADAPTERS`) and the hardcoded string. They can drift. [^d1]
-2. **STALE-DOC** — `okf_kit/__init__.py:1` and `core/__init__.py:4`
+2. **STALE-DOC**: `okf_kit/__init__.py:1-7` and `core/__init__.py:4`
    describe an `okf-mcp` server. `pyproject.toml` defines one script:
    `okf`. No mcp module exists. Same stale claim in `AGENTS.md:32`
    ("MCP and web views included"). [^d2]
@@ -120,16 +124,16 @@ layer on top, never a plane inside. [^n1]
 
 # Relationships
 
-- [SDD harness — the top architecture](/systems/sdd-harness-architecture.md)
-- [loom — the loop engine](/systems/loom-engine.md) — the other plane.
-- [Okf-only engine](/decisions/okf-only-engine.md) — the accepted decision.
-- [The wiki contract](/domain/wiki-contract.md) — bundle rules okf enforces.
+- [SDD harness: the top architecture](/systems/sdd-harness-architecture.md)
+- [loom: the loop engine of the SDD harness](/systems/loom-engine.md): the other plane.
+- [Okf-only engine](/decisions/okf-only-engine.md): the accepted decision.
+- [The wiki contract](/domain/wiki-contract.md): bundle rules okf enforces.
 
 # Evidence
 
 [^c1]: `engine/okf/okf_kit/cli.py` `_dispatch`, `_cmd_*` handlers; `engine/okf/pyproject.toml` `[project.scripts]` (observed).
-[^c2]: `engine/okf/okf_kit/cli.py` `_cmd_code_index` imports `index_codebase` and `write_freshness_stamp` (observed).
-[^m1]: AST import scan, 2026-10-08: no `core.*` module imports `code.*` (observed).
+[^c2]: `engine/okf/okf_kit/cli.py:383-397` `_cmd_code_index` imports `index_codebase` and `write_freshness_stamp`; `grep stamp indexer.py` returns nothing (observed).
+[^m1]: `engine/okf/okf_kit/core/fingerprints.py:44`: `from okf_kit.code.semantic import _SKIP_DIRS` (function-local import, observed). AST import scan, 2026-10-08: this is the only core-to-code edge.
 [^m2]: AST module graph, 2026-10-08: in-degrees and CLI reachability, cross-checked with `wiki/code/**` "Used by" sections (implementation-supported).
 [^d1]: Definition at `engine/okf/okf_kit/code/discovery.py:201`; package-wide and repo-wide grep for `language_help` returns the definition only (observed).
 [^d2]: `engine/okf/okf_kit/__init__.py:1-7`; `engine/okf/okf_kit/core/__init__.py:4`; `engine/okf/pyproject.toml:41-42` (observed).

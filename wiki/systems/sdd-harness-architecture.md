@@ -3,7 +3,7 @@ type: System
 status: stable
 created: 2026-10-08
 updated: 2026-10-08
-title: SDD harness — the top architecture
+title: 'SDD harness: the top architecture'
 description: 'How the parts compose: okf knows, loom does, the five skills integrate, the wiki remembers. Includes the repo criticality map and the dead code register.'
 sources: [{ id: root, resource: pyproject.toml }, { id: okf, resource: engine/okf/okf_kit/cli.py }, { id: loom, resource: engine/loom/src/loom_kit/cli.py }, { id: skills, resource: skills/sdlc/implement/SKILL.md }]
 tags: [system, architecture, criticality, harness, call-graph]
@@ -41,7 +41,7 @@ repository source code                intent, specs, questions
   (systems, domain,                    worker        loom record
    decisions, research)                  |             |
         |                            evidence rows <---+
-  okf status: fresh?                  state moves only here
+  okf status: fresh?                  state moves only in the engines
 ```
 
 **Why the split matters.** Knowledge can be stale and the loop still
@@ -49,7 +49,7 @@ runs. The loop can be mid-task and the wiki can rebuild. No plane
 blocks the other. The only bridge is the worker: the worker reads the
 wiki, then works a loom task, then records evidence. [^p2]
 
-# Composition — and one deliberate gap
+# Composition, and one deliberate gap
 
 The two engines share **no code**. `loom_kit` imports nothing from
 `okf_kit`. `okf_kit` imports nothing from `loom_kit`. The merged code
@@ -82,36 +82,38 @@ be deleted. **STALE-DOC** is a doc that names things that do not exist.
 | Area | Tier | Why |
 |---|---|---|
 | okf `core.parse` + `core.links` | CRITICAL | Every read and write of the bundle passes through them. Parse is imported by 8 modules, links by 9 of 27. [^p6] |
-| okf `code.indexer` | CRITICAL | Owns the whole extraction pipeline and the freshness stamp write. |
+| okf `code.indexer` | CRITICAL | Owns the whole extraction pipeline. The CLI writes the freshness stamp after it returns. |
 | okf `core.stamp` + `core.findings` | CRITICAL | The trust contract: fresh check and the normative ledger. |
-| loom `machine.py` | CRITICAL | The deterministic state machine. Only it moves task states. |
-| loom `spine.py` + both schemas | CRITICAL | Single authority for `sdd.json` and `specpack.json`. Fail-closed validation. |
+| loom `machine.py` | CRITICAL | The deterministic spine-mode state machine. Only it moves spine task states; in specpack mode, `specpack.py` moves them. |
+| loom `spine.py` + `spine.schema.json` | CRITICAL | Single authority for `sdd.json`. Fail-closed load. |
+| loom `specpack.schema.json` | CRITICAL | The native format contract, validated by `specpack.py` at check time, not at load. |
 | okf `core.{validate,search,context,fingerprints,status}` | CORE | Health, retrieval, drift detection. |
 | okf `code.{discovery,render,semantic,treesitter.*}` | CORE | The extraction pipeline stages. |
-| loom `specpack.py` | CORE | The specpack 0.2 native mode and the A1 to A6 checks. |
+| loom `specpack.py` | CORE | The specpack 0.2 native mode: alignment checks and its own state moves. |
 | okf `core.{templates,index}`, `code.{paths,managed}` | PERIPHERAL | Scaffolding and layout helpers. |
 | loom `templates.py` | PERIPHERAL | Used only by `loom init` (three markdown templates). [^p7] |
 | `language_help()` in okf | DEAD | Defined at `code/discovery.py:201`, referenced nowhere. See the okf page. |
 | `persist()` in loom | DEAD | Defined at `machine.py:321`, referenced nowhere. See the loom page. |
-| MCP server mentions | STALE-DOC | `okf_kit/__init__.py:1`, `core/__init__.py:4`, and `AGENTS.md:32` name an `okf-mcp` server. No such module and no such entry point exist. [^p8] |
+| MCP server mentions | STALE-DOC | `okf_kit/__init__.py:1-7`, `core/__init__.py:4`, and `AGENTS.md:32` name an `okf-mcp` server. No such module and no such entry point exist. [^p8] |
+| `loom run` command | STALE-DOC | `AGENTS.md:33` listed a `loom run` command and omitted `check`. No `run` subcommand exists. Fixed with this change. [^p8] |
 
 No dead modules exist. Every module in both engines is reachable from
 its CLI entry point. [^p3]
 
 # Relationships
 
-- [okf — the engine of the SDD harness](/systems/okf-engine.md) — the knowledge engine, internals.
-- [loom — the loop engine](/systems/loom-engine.md) — the execution engine, internals.
-- [The wiki contract](/domain/wiki-contract.md) — bundle rules.
-- [Fast-tracking graph engineering](/decisions/graph-engineering-fast-track.md) — the ratified purpose.
+- [okf: the engine of the SDD harness](/systems/okf-engine.md): the knowledge engine, internals.
+- [loom: the loop engine of the SDD harness](/systems/loom-engine.md): the execution engine, internals.
+- [The wiki contract](/domain/wiki-contract.md): bundle rules.
+- [Fast-tracking graph engineering](/decisions/graph-engineering-fast-track.md): the ratified purpose.
 
 # Evidence
 
 [^p1]: `pyproject.toml` workspace members; `uv run okf --help`; `uv run loom --help` (observed, 2026-10-08).
-[^p2]: `skills/sdlc/implement/SKILL.md` — frozen context from loom, grounding in the wiki (implementation-supported).
+[^p2]: `skills/sdlc/implement/SKILL.md`: frozen context from loom, grounding in the wiki (implementation-supported).
 [^p3]: AST module graph over both packages, 2026-10-08: import edges, reverse edges, CLI reachability. Cross-import grep returned empty both ways (observed). graphify merge: 1756 nodes, 3775 links, no cross-package links (observed).
 [^p4]: `docs/specs/okf-only-engine/design.md`; `wiki/decisions/graph-engineering-fast-track.md` (implementation-supported).
 [^p5]: `engine/okf/pyproject.toml` `[project.scripts]`; `engine/loom/pyproject.toml` `[project.scripts]` (observed).
 [^p6]: AST import counts, 2026-10-08; cross-checked against `wiki/code/**` "Used by" sections (implementation-supported).
-[^p7]: `engine/loom/src/loom_kit/cli.py:85` — templates used in `cmd_init` only (observed).
-[^p8]: `engine/okf/pyproject.toml` defines one script: `okf`. No `mcp` module exists under `okf_kit/` (observed).
+[^p7]: `engine/loom/src/loom_kit/cli.py:85`: templates used in `cmd_init` only (observed).
+[^p8]: `engine/okf/pyproject.toml` defines one script: `okf`. No `mcp` module exists under `okf_kit/`. `engine/loom/src/loom_kit/cli.py` defines 8 subcommands; none is `run` (observed).
