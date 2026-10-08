@@ -249,13 +249,15 @@
         "resolves": [
           "Q-1"
         ],
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-2",
         "decision": "Validation at the controller with bean validation; domain rule re-checked in the service, duplicated nowhere else",
         "because": "400 field errors are an HTTP concern; the service re-check keeps service tests honest.",
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "data": [
@@ -565,6 +567,7 @@ document.getElementById("designs").innerHTML = (P.plan.designs || []).map(d => `
 document.getElementById("decisions").innerHTML = P.plan.decisions.map(d => `
   <div class="card"><h3><span class="idchip">${d.id}</span>${esc(d.decision)} <span class="st ${d.status === "accepted" ? "st-done" : "st-doing"}">${d.status}</span></h3>
   <p style="margin:6px 0 0;font-size:13.5px"><b>Because:</b> ${esc(d.because)}</p>
+  ${d.accepted_by ? `<p class="note">accepted by <b>${esc(d.accepted_by)}</b></p>` : ""}
   ${(d.resolves || []).length ? `<p class="note">resolves ${d.resolves.join(", ")}</p>` : ""}</div>`).join("");
 document.getElementById("data").innerHTML = P.plan.data.map(e => `<div class="card"><h3 class="mono">${esc(e.name)}</h3><ul class="tight">${Object.entries(e.fields || {}).map(([f, t]) => `<li class="mono">${esc(f)}: ${esc(t)}</li>`).join("")}</ul></div>`).join("");
 document.getElementById("structure").innerHTML = P.plan.structure.map(s => `<li>${esc(s)}</li>`).join("");

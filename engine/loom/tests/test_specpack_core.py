@@ -64,6 +64,16 @@ def test_alignment_negatives_a1_to_a4():
         assert any(expect in e for e in errs), f"case {i}: wanted '{expect}' in {errs}"
 
 
+def test_a7_accepted_needs_human():
+    doc = json.loads(EXAMPLE.read_text())
+    doc["plan"]["decisions"][0]["accepted_by"] = "agent:pi"
+    errs, _ = specpack.alignment(doc)
+    assert any("A7 D-1" in e for e in errs), errs
+    doc["plan"]["decisions"][0]["accepted_by"] = "human:owner"
+    errs, _ = specpack.alignment(doc)
+    assert not any("A7" in e for e in errs), errs
+
+
 def test_slice_closure_and_determinism():
     doc = json.loads(EXAMPLE.read_text())
     a = specpack.slice_for(doc, "T-3")

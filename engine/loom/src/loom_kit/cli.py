@@ -333,7 +333,7 @@ def cmd_selftest(args) -> int:
         mini = {
             "format": "specpack/0.2", "name": "mini", "title": "Mini",
             "spec": {"why": "w", "requirements": [{"id": "FR-1", "text": "x", "priority": "P1", "scenarios": []}]},
-            "plan": {"decisions": [{"id": "D-1", "decision": "d", "because": "b", "status": "accepted"}]},
+            "plan": {"decisions": [{"id": "D-1", "decision": "d", "because": "b", "status": "accepted", "accepted_by": "human:owner"}]},
             "tasks": [
                 {"id": "T-1", "title": "one", "phase": "core", "status": "todo", "needs": [],
                  "implements": [], "satisfies": ["FR-1"], "accepts": [], "honors": [],

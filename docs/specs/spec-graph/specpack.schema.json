@@ -458,6 +458,11 @@
             "accepted"
           ],
           "title": "A human accepts decisions"
+        },
+        "accepted_by": {
+          "type": "string",
+          "title": "Who accepted it",
+          "description": "A7: status 'accepted' requires accepted_by starting with 'human:' \u2014 agents may draft decisions, only humans accept them."
         }
       },
       "required": [

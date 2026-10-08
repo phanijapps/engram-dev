@@ -136,6 +136,10 @@ def alignment(doc: dict) -> tuple[list[str], dict]:
     for u in sorted(deps):
         if state.get(u, 0) == 0:
             dfs(u)
+    # A7 accepted decisions need a human in their history
+    for d in doc["plan"].get("decisions", []):
+        if d.get("status") == "accepted" and not str(d.get("accepted_by", "")).startswith("human:"):
+            errs.append(f"A7 {d['id']} accepted without human acceptance (accepted_by missing or not human:)")
     # A4 every task reaches >=1 FR
     for t in doc["tasks"]:
         via = any(fams["FR"] & des_addr.get(x, set()) for x in t.get("implements", []))

@@ -1,6 +1,6 @@
 # specpack proposal — the codified json, ideated per owner direction
 
-- **Status:** APPROVED as direction — owner: "love it" (2026-10-08).
+- **Status:** RATIFIED — golden-path-f57902a6 accepted by owner (2026-10-08). specpack 0.2 is the harness's codified format; loom's spine format from L1 on.
   Defaults on Q1–Q5 in force: format `specpack`, file `<name>.json`, lean statuses,
   x-* convention-only, markdown twins generated-from-json, specpack becomes
   loom's spine format at L1. Ratification pending via findings ledger
@@ -102,6 +102,7 @@ references to mermaid/svg/excalidraw artifacts, with `covers`).
   plan.structure lists TodoRepository.java while no task produces it.
   The machinery works; it found a hole in its own example.)
 - **A6** `done` ⇒ ≥1 evidence row with exit 0.
+- **A7** (ACCEPTED 2026-10-08) `accepted` decisions carry `accepted_by: human:…` — agents draft, humans accept; loom `check` flags the rest.
 
 ### Determinism statement
 

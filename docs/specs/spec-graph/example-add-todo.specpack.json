@@ -186,13 +186,15 @@
         "resolves": [
           "Q-1"
         ],
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-2",
         "decision": "Validation at the controller with bean validation; domain rule re-checked in the service, duplicated nowhere else",
         "because": "400 field errors are an HTTP concern; the service re-check keeps service tests honest.",
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "data": [

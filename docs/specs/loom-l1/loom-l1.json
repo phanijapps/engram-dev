@@ -29,19 +29,22 @@
         "resolves": [
           "Q-1"
         ],
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "because": "A shipped wheel cannot reach docs/; a byte-equality test gives the drift alarm without coupling the engine to a docs folder.",
         "decision": "Vendor the schema into the package with a digest-sync test instead of referencing the docs path",
         "id": "D-2",
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "because": "The repo standard is python-jsonschema with format checking; the legacy path is scheduled for retirement and not worth a rewrite this wave.",
         "decision": "specpack path uses real python-jsonschema; MiniValidator stays legacy-only until the spine retires",
         "id": "D-3",
-        "status": "accepted"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "designs": [
