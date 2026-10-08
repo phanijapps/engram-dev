@@ -16,10 +16,10 @@ sources:
 source_hash: 9c59f30b250ca4d172ce92da488af0e32831d8aa07eff08dedf63b0e8d888d4b
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-08T01:36:35Z'
+created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T01:36:35Z'
+  at: '2026-10-08T02:23:33Z'
 status: stable
 package: engine/loom
 ---

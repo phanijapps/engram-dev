@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/spine.py
-source_hash: b5abacd357eb159c953565807ff6eb5ed29ad1535fade16a75a1a73e53b706f2
+source_hash: 6331aa23041e67a8e8bf42f6c1eefa9d049fcdca28d518f6272ac47a9862b6b3
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-08T01:36:35Z'
+created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T01:36:35Z'
+  at: '2026-10-08T02:23:33Z'
 status: stable
 package: engine/loom
 ---
@@ -32,23 +32,23 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/spine.py`. Purpose: e
 
 | Kind | Name | Lines |
 |---|---|---|
-| class | `LoomError` | 24-25 |
-| function | `_schema` | 28-30 |
-| class | `MiniValidator` | 33-108 |
-| function | `__init__` | 41-42 |
-| function | `_ref` | 44-49 |
-| function | `validate` | 51-108 |
-| function | `validate_schema` | 111-113 |
-| function | `_now` | 116-119 |
-| function | `semantic_errors` | 122-178 |
-| function | `dfs` | 146-153 |
-| function | `load` | 181-196 |
-| function | `save` | 199-203 |
-| function | `bump` | 206-208 |
-| function | `new_spine` | 211-231 |
-| function | `node_ids` | 234-235 |
-| function | `task_state` | 238-242 |
-| function | `requires_of` | 245-250 |
+| class | `LoomError` | 25-26 |
+| function | `_schema` | 29-31 |
+| class | `MiniValidator` | 34-136 |
+| function | `__init__` | 56-57 |
+| function | `_ref` | 59-65 |
+| function | `validate` | 67-136 |
+| function | `validate_schema` | 139-141 |
+| function | `_now` | 144-147 |
+| function | `semantic_errors` | 150-206 |
+| function | `dfs` | 174-181 |
+| function | `load` | 209-224 |
+| function | `save` | 227-244 |
+| function | `bump` | 247-249 |
+| function | `new_spine` | 252-272 |
+| function | `node_ids` | 275-276 |
+| function | `task_state` | 279-283 |
+| function | `requires_of` | 286-291 |
 
 # Relationships
 
@@ -59,6 +59,7 @@ Depends on:
 - `datetime.datetime`
 - `datetime.timezone`
 - `json`
+- `os`
 - `pathlib.Path`
 - `re`
 - `threading`
