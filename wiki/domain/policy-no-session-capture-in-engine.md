@@ -2,9 +2,11 @@
 type: Policy
 title: The engine never captures sessions, transcripts, or tokens
 description: 'Hooks, session capture, and token accounting are a declared non-goal of the okf engine — knowledge comes from repositories, not from surveilling agent runs.'
-status: draft
+status: stable
 created: 2026-10-07
 updated: 2026-10-07
+verified:
+  - { by: human:owner, at: 2026-10-07T23:55:00Z }
 sources: [{ id: src, resource: wiki/decisions/okf-only-engine.md }]
 tags: [policy, non-goal, owner-declared]
 ---
@@ -23,4 +25,4 @@ decision ledger.
 
 # Status
 
-Normative — binding only after acceptance through the findings ledger.
+**ACCEPTED 2026-10-07** (finding `policy-ff546069`, accepted by the owner via the findings ledger). This policy is binding: the engine never captures sessions, transcripts, or tokens.
