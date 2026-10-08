@@ -1,10 +1,10 @@
 [project]
 name = "memex-beta"
 version = "0.1.0"
-description = "memex — okf-only engine: repository knowledge built by the OKF knowledge plane"
+description = "memex — the SDD harness: okf (knowledge) + loom (loop)"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-dependencies = ["okf-kit"]
+dependencies = ["okf-kit", "loom-kit"]
 
 [dependency-groups]
 dev = [
@@ -19,10 +19,11 @@ dev = [
 package = false
 
 [tool.uv.workspace]
-members = ["engine/okf"]
+members = ["engine/okf", "engine/loom"]
 
 [tool.uv.sources]
 okf-kit = { workspace = true }
+loom-kit = { workspace = true }
 
 [tool.ruff]
 line-length = 100

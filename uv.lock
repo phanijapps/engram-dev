@@ -9,6 +9,7 @@ resolution-markers = [
 
 [manifest]
 members = [
+    "loom-kit",
     "memex-beta",
     "okf-kit",
 ]
@@ -305,10 +306,16 @@ wheels = [
 ]
 
 [[package]]
+name = "loom-kit"
+version = "0.1.0"
+source = { editable = "engine/loom" }
+
+[[package]]
 name = "memex-beta"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "loom-kit" },
     { name = "okf-kit" },
 ]
 
@@ -322,7 +329,10 @@ dev = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "okf-kit", editable = "engine/okf" }]
+requires-dist = [
+    { name = "loom-kit", editable = "engine/loom" },
+    { name = "okf-kit", editable = "engine/okf" },
+]
 
 [package.metadata.requires-dev]
 dev = [

@@ -1,0 +1,264 @@
+{
+  "artifacts": {
+    "plan": {
+      "media_type": "text/markdown",
+      "path": "plan.md"
+    },
+    "spec": {
+      "media_type": "text/markdown",
+      "path": "spec.md"
+    }
+  },
+  "created_at": "2026-10-08T01:34:04Z",
+  "created_by": "human:owner",
+  "extensions": {},
+  "nodes": [
+    {
+      "artifact_refs": [
+        {
+          "artifact": "spec",
+          "section": "Constraints and dependencies"
+        }
+      ],
+      "body": {
+        "text": "engine/loom/schemas/spine.schema.json: aligned enums (13 node kinds, 9 relation kinds, 8 task states), Id/Digest/Timestamp formats, namespaced extension envelopes; stdlib mini-validator."
+      },
+      "created_at": "2026-10-08T01:34:04Z",
+      "created_by": "agent",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "kind": "TASK",
+      "node_id": "spine-schema",
+      "provenance_refs": [],
+      "revision": 1,
+      "title": "Spine schema v0.1.0 derived from the VSG harness schema"
+    },
+    {
+      "artifact_refs": [],
+      "body": {
+        "text": "PENDING->READY->RUNNING->SUCCEEDED/FAILED; stall valve blocks after 2 consecutive fails with the upstream chain named; unblock/cancel are human actions; revision-fenced writes."
+      },
+      "created_at": "2026-10-08T01:34:04Z",
+      "created_by": "agent",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "kind": "TASK",
+      "node_id": "state-machine",
+      "provenance_refs": [],
+      "revision": 1,
+      "title": "Deterministic state machine"
+    },
+    {
+      "artifact_refs": [],
+      "body": {
+        "text": "The in-session loop protocol: next hands one frozen digested context; record admits only observed evidence (M_run = M)."
+      },
+      "created_at": "2026-10-08T01:34:04Z",
+      "created_by": "agent",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "kind": "TASK",
+      "node_id": "cli-loop",
+      "provenance_refs": [],
+      "revision": 1,
+      "title": "loom CLI: init/add/validate/next/record/status/selftest"
+    }
+  ],
+  "profile": "pi",
+  "relations": [
+    {
+      "created_at": "2026-10-08T01:34:04Z",
+      "created_by": "agent",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "from_ref": {
+        "node_id": "state-machine",
+        "revision": 1
+      },
+      "kind": "requires",
+      "relation_id": "rel-state-machine-req-0-spine-schema",
+      "revision": 1,
+      "to_ref": {
+        "node_id": "spine-schema",
+        "revision": 1
+      }
+    },
+    {
+      "created_at": "2026-10-08T01:34:04Z",
+      "created_by": "agent",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "from_ref": {
+        "node_id": "cli-loop",
+        "revision": 1
+      },
+      "kind": "requires",
+      "relation_id": "rel-cli-loop-req-0-state-machine",
+      "revision": 1,
+      "to_ref": {
+        "node_id": "state-machine",
+        "revision": 1
+      }
+    }
+  ],
+  "revision": 11,
+  "runtime": {
+    "attempts": [
+      {
+        "attempt_id": "att-spine-schema-1",
+        "commands": [
+          {
+            "command": "cd engine/loom && uv run pytest -q",
+            "evidence_level": "attested",
+            "exit_code": 0
+          }
+        ],
+        "finished_at": "2026-10-08T01:35:18Z",
+        "result": "pass",
+        "started_at": "2026-10-08T01:35:18Z",
+        "task_id": "spine-schema",
+        "worker": "agent:pi (evidence: pytest exit 0)"
+      },
+      {
+        "attempt_id": "att-state-machine-1",
+        "commands": [
+          {
+            "command": "cd engine/loom && uv run pytest -q",
+            "evidence_level": "attested",
+            "exit_code": 0
+          }
+        ],
+        "finished_at": "2026-10-08T01:35:18Z",
+        "result": "pass",
+        "started_at": "2026-10-08T01:35:18Z",
+        "task_id": "state-machine",
+        "worker": "agent:pi (evidence: pytest exit 0)"
+      },
+      {
+        "attempt_id": "att-cli-loop-1",
+        "commands": [
+          {
+            "command": "cd engine/loom && uv run pytest -q",
+            "evidence_level": "attested",
+            "exit_code": 0
+          }
+        ],
+        "finished_at": "2026-10-08T01:35:18Z",
+        "result": "pass",
+        "started_at": "2026-10-08T01:35:18Z",
+        "task_id": "cli-loop",
+        "worker": "agent:pi (evidence: pytest exit 0)"
+      }
+    ],
+    "events": [
+      {
+        "at": "2026-10-08T01:34:04Z",
+        "detail": "TASK spine-schema",
+        "kind": "node.added"
+      },
+      {
+        "at": "2026-10-08T01:34:04Z",
+        "detail": "TASK state-machine",
+        "kind": "node.added"
+      },
+      {
+        "at": "2026-10-08T01:34:04Z",
+        "detail": "TASK cli-loop",
+        "kind": "node.added"
+      },
+      {
+        "at": "2026-10-08T01:34:05Z",
+        "detail": "1",
+        "kind": "tasks.promoted"
+      },
+      {
+        "at": "2026-10-08T01:34:05Z",
+        "detail": "spine-schema ctx=ad503baa792a",
+        "kind": "task.running"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "spine-schema ctx=ad503baa792a",
+        "kind": "task.running"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "spine-schema pass (1 command(s))",
+        "kind": "task.recorded"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "1",
+        "kind": "tasks.promoted"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "state-machine ctx=5fc9ccf85b0d",
+        "kind": "task.running"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "state-machine pass (1 command(s))",
+        "kind": "task.recorded"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "1",
+        "kind": "tasks.promoted"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "cli-loop ctx=8307fd456262",
+        "kind": "task.running"
+      },
+      {
+        "at": "2026-10-08T01:35:18Z",
+        "detail": "cli-loop pass (1 command(s))",
+        "kind": "task.recorded"
+      }
+    ],
+    "task_states": [
+      {
+        "attempts": [
+          "att-spine-schema-1"
+        ],
+        "context": {
+          "context_id": "ad503baa792a",
+          "digest": "272d3e294a54916e4f39305d07a595200a02cb90e9f49659c93a69a60461641d"
+        },
+        "extensions": {},
+        "state": "SUCCEEDED",
+        "state_version": 5,
+        "task_id": "spine-schema"
+      },
+      {
+        "attempts": [
+          "att-state-machine-1"
+        ],
+        "context": {
+          "context_id": "5fc9ccf85b0d",
+          "digest": "4be7763854825b30c8ff9f7632dbf3db3c6854fe6e7d6ef3f229c497061f8d4a"
+        },
+        "extensions": {},
+        "state": "SUCCEEDED",
+        "state_version": 4,
+        "task_id": "state-machine"
+      },
+      {
+        "attempts": [
+          "att-cli-loop-1"
+        ],
+        "context": {
+          "context_id": "8307fd456262",
+          "digest": "9ee478b3ac37e7c8debfaa043783cf888d33f4418d479a508609a74ee7788ae3"
+        },
+        "extensions": {},
+        "state": "SUCCEEDED",
+        "state_version": 4,
+        "task_id": "cli-loop"
+      }
+    ]
+  },
+  "schema_version": "0.1.0",
+  "spine_id": "loom-l0"
+}
