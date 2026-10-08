@@ -31,6 +31,16 @@ proposed_at = "2026-10-08T00:44:43.716209+00:00"
 resolved_at = "2026-10-08T00:48:07.027680+00:00"
 
 [[findings]]
+id = "golden-path-f57902a6"
+source = "docs/specs/spec-graph/specpack-proposal.md"
+destination = "docs/specs/spec-graph/specpack-proposal.md"
+kind = "golden-path"
+status = "pending"
+rationale = "Owner approved specpack 0.2 ('love it', 2026-10-08): the codified format of the harness \u2014 one json per initiative, flow/trace link split, verify-on-task, artifacts by reference. loom adopts specpack as its spine format at L1, replacing the hand-typed spine."
+proposed_at = "2026-10-08T02:38:51.883829+00:00"
+resolved_at = ""
+
+[[findings]]
 id = "policy-ff546069"
 source = "docs/specs/semantic-extraction/design.md"
 destination = "wiki/domain/policy-no-session-capture-in-engine.md"
