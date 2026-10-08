@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.org/specpack/0.1.0",
+  "title": "Specpack — one initiative, one JSON file",
+  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file with explicit, typed dependencies and references to external artifacts (markdown, docx, excel — anything). Readable top to bottom by a human; loadable slice by slice by a machine. Any object may carry extra 'x-*' fields for client-specific needs.",
+  "type": "object",
+  "properties": {
+    "format": { "const": "specpack/0.1", "title": "Format tag" },
+    "name": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "title": "Initiative name (slug)", "description": "Lowercase, hyphenated. The folder name in docs/specs/<name>/." },
+    "title": { "type": "string", "title": "Human title" },
+    "artifacts": {
+      "type": "object",
+      "title": "External artifacts this initiative refers to",
+      "description": "Key = short artifact id used in refs (e.g. 'prd'). Values point at real files OUTSIDE this json — docx, xlsx, md, pdf — with an optional digest.",
+      "additionalProperties": { "$ref": "#/$defs/artifact" }
+    },
+    "spec": { "$ref": "#/$defs/spec" },
+    "plan": { "$ref": "#/$defs/plan" },
+    "tasks": { "type": "array", "items": { "$ref": "#/$defs/task" }, "title": "The work, one task each" },
+    "review": { "$ref": "#/$defs/review" }
+  },
+  "required": ["format", "name", "title", "spec", "plan", "tasks"],
+  "additionalProperties": false,
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "title": "A file outside this json",
+      "properties": {
+        "file": { "type": "string", "title": "Path, relative to this json file" },
+        "type": { "type": "string", "title": "Media type", "examples": ["text/markdown", "application/docx", "application/xlsx", "application/pdf"] },
+        "description": { "type": "string", "title": "What this file is" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$", "title": "Digest of the file bytes (optional but recommended)" }
+      },
+      "required": ["file", "type"],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "title": "SPEC — what and why (Speckit's spec.md, codified)",
+      "properties": {
+        "why": { "type": "string", "title": "The problem, in two sentences" },
+        "stories": { "type": "array", "items": { "$ref": "#/$defs/story" }, "title": "User stories (US-…)" },
+        "requirements": { "type": "array", "items": { "$ref": "#/$defs/requirement" }, "title": "Functional requirements (FR-…), one capability each" },
+        "constraints": { "type": "array", "items": { "$ref": "#/$defs/constraint" }, "title": "Hard limits (CON-…)" },
+        "clarifications": { "type": "array", "items": { "$ref": "#/$defs/clarification" }, "title": "Open questions (Q-…) — uncertainty is a deliverable" },
+        "out_of_scope": { "type": "array", "items": { "type": "string" }, "title": "Explicit exclusions" }
+      },
+      "required": ["why", "requirements"],
+      "additionalProperties": false
+    },
+    "story": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^US-[A-Za-z0-9-]+$", "title": "Story id (US-…)" },
+        "as": { "type": "string", "title": "As a…" },
+        "want": { "type": "string", "title": "I want…" },
+        "so": { "type": "string", "title": "So that…" }
+      },
+      "required": ["id", "as", "want", "so"],
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^FR-[A-Za-z0-9-]+$", "title": "Requirement id (FR-…)" },
+        "text": { "type": "string", "title": "One capability, stated with MUST/SHOULD", "description": "One requirement = one capability. Use MUST (binding), SHOULD (strong preference). Agents treat 'should' as optional — never use it for bindings." },
+        "priority": { "enum": ["P1", "P2", "P3"], "title": "P1 = this slice, P2 = next, P3 = later" },
+        "scenarios": { "type": "array", "items": { "$ref": "#/$defs/scenario" }, "title": "Acceptance scenarios (AC-…)" },
+        "refs": { "$ref": "#/$defs/refs", "title": "Artifacts this requirement came from" }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^AC-[A-Za-z0-9-]+$" },
+        "given": { "type": "string" },
+        "when": { "type": "string" },
+        "then": { "type": "string" }
+      },
+      "required": ["id", "given", "when", "then"],
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^CON-[A-Za-z0-9-]+$" },
+        "text": { "type": "string", "title": "A hard limit the plan and tasks must respect" }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "clarification": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^Q-[A-Za-z0-9-]+$" },
+        "question": { "type": "string" },
+        "status": { "enum": ["open", "resolved"], "title": "Open questions block nothing — they are recorded" },
+        "owner": { "type": "string", "title": "Who answers it" },
+        "answer": { "type": "string" },
+        "resolved_by": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$", "title": "The decision that resolved it" }
+      },
+      "required": ["id", "question", "status"],
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "title": "PLAN — how (Speckit's plan.md, codified)",
+      "properties": {
+        "stack": { "type": "object", "title": "Technical context", "description": "Free-form: language, framework, storage, test runner, versions." },
+        "decisions": { "type": "array", "items": { "$ref": "#/$defs/decision" }, "title": "Design decisions (D-…), each with its because" },
+        "data": { "type": "array", "items": { "$ref": "#/$defs/dataEntity" }, "title": "Entities / schemas the work touches" },
+        "structure": { "type": "array", "items": { "type": "string" }, "title": "Files and folders this initiative creates or touches" },
+        "approach": { "type": "string", "title": "The approach in a paragraph" }
+      },
+      "required": ["decisions"],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" },
+        "decision": { "type": "string", "title": "What was decided" },
+        "because": { "type": "string", "title": "Why — the alternative beaten" },
+        "resolves": { "type": "array", "items": { "type": "string", "pattern": "^Q-[A-Za-z0-9-]+$" }, "title": "Clarifications this decision settles" },
+        "supersedes": { "type": "array", "items": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" }, "title": "Earlier decisions replaced by this one" },
+        "status": { "enum": ["proposed", "accepted"], "title": "A human accepts decisions; proposed is a request" }
+      },
+      "required": ["id", "decision", "because", "status"],
+      "additionalProperties": false
+    },
+    "dataEntity": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "fields": { "type": "object", "description": "field → type/notes", "additionalProperties": { "type": "string" } },
+        "notes": { "type": "string" }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "title": "TASK — the smallest shippable unit",
+      "properties": {
+        "id": { "type": "string", "pattern": "^T-[A-Za-z0-9-]+$", "title": "Task id (T-…)" },
+        "title": { "type": "string" },
+        "detail": { "type": "string", "title": "What to do, for the worker" },
+        "phase": { "enum": ["setup", "test-first", "core", "integration", "polish"], "title": "Speckit's phases" },
+        "needs": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^(T|D|FR|CON|AC)-[A-Za-z0-9-]+$" },
+          "title": "Dependencies by id",
+          "description": "T-ids must be done first; D-ids must be accepted; FR/CON-ids are requirements this task carries; AC-ids are acceptance scenarios this task must satisfy. The engine computes 'who needs me' as the reverse index — never store it twice."
+        },
+        "produces": { "type": "array", "items": { "type": "string" }, "title": "Files this task creates or changes" },
+        "verify": { "$ref": "#/$defs/verify", "title": "The observable check that completes this task" },
+        "parallel": { "type": "boolean", "title": "Safe to run alongside other parallel-marked tasks" },
+        "status": { "enum": ["todo", "doing", "done", "blocked"], "title": "State, moved only with evidence" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "title": "Observed runs: a done task without evidence is a defect" },
+        "assignee": { "type": "string", "title": "Worker or subagent name (pi, claude, codex, …)" },
+        "refs": { "$ref": "#/$defs/refs", "title": "Artifacts to read while working" }
+      },
+      "required": ["id", "title", "verify", "status"],
+      "additionalProperties": false
+    },
+    "verify": {
+      "type": "object",
+      "properties": {
+        "cmd": { "type": "string", "title": "The command that checks this task" },
+        "expect": { "type": "string", "title": "The pass condition (usually 'exit 0' plus what output must show)" }
+      },
+      "required": ["cmd", "expect"],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "cmd": { "type": "string", "title": "The command that ran" },
+        "exit": { "type": "integer", "title": "Its exit code" },
+        "at": { "type": "string", "title": "When (ISO-8601, Z)" },
+        "by": { "type": "string", "title": "Who ran it" },
+        "notes": { "type": "string" }
+      },
+      "required": ["cmd", "exit", "at"],
+      "additionalProperties": false
+    },
+    "refs": {
+      "type": "array",
+      "title": "References into artifacts",
+      "description": "Format: '<artifactKey>#<anchor>' — e.g. 'prd#Refund Rules' or 'pricing!Sheet1' for spreadsheets. The json never embeds the file; it points.",
+      "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*[#!][^#]+$" }
+    },
+    "review": {
+      "type": "object",
+      "title": "REVIEW — verdicts on any id",
+      "properties": {
+        "checklist": { "type": "string", "title": "Named checklist applied (e.g. EPIC)" },
+        "verdicts": { "type": "array", "items": { "$ref": "#/$defs/verdict" } }
+      },
+      "additionalProperties": false
+    },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "on": { "type": "string", "pattern": "^(T|D|FR|CON|Q|US)-[A-Za-z0-9-]+$", "title": "The id under review" },
+        "verdict": { "enum": ["PASS", "IMPROVE", "REPLAN"], "title": "ACCEPT/IMPROVE/REPLAN routing — local fix, regenerate, or re-open the analysis" },
+        "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+        "by": { "type": "string", "title": "Reviewer (e.g. red-foreman)" },
+        "at": { "type": "string" }
+      },
+      "required": ["on", "verdict", "by"],
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "properties": {
+        "severity": { "enum": ["BLOCKER", "DEFECT", "SMELL"] },
+        "note": { "type": "string" },
+        "fix": { "type": "string", "title": "The one-line fix — a finding without a fix is noise" }
+      },
+      "required": ["severity", "note"],
+      "additionalProperties": false
+    }
+  }
+}

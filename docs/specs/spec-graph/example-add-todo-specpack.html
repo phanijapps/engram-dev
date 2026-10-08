@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>specpack — add a todo (Spring Boot), rendered</title>
+<style>
+  :root {
+    --ink: #17202b; --paper: #f6f7f5; --card: #fff; --line: #e2e4de; --muted: #66707d;
+    --accent: #0f6b5f; --accent-soft: #e3f0ed;
+    --todo: #8a93a3; --doing: #b4770a; --done: #177245; --blocked: #b02a2a;
+    --open: #b02a2a; --resolved: #177245;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--paper); color: var(--ink); }
+  header { background: var(--ink); color: #fff; padding: 20px 24px 14px; }
+  header h1 { margin: 0 0 4px; font-size: 19px; }
+  header p { margin: 0; color: #b9c2c9; font-size: 13px; max-width: 900px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font: 12px/1 ui-monospace, Menlo, monospace; background: #242e33; color: #d8e0dd; padding: 4px 9px; border-radius: 999px; }
+  .chip b { color: #fff; }
+  nav[role="tablist"] { display: flex; gap: 2px; padding: 0 24px; background: var(--ink); flex-wrap: wrap; }
+  nav button { appearance: none; border: 0; background: transparent; color: #9fb0ab; font: 600 13.5px/1 inherit; padding: 11px 14px; cursor: pointer; border-radius: 8px 8px 0 0; }
+  nav button:hover { color: #fff; }
+  nav button[aria-selected="true"] { background: var(--paper); color: var(--ink); }
+  :is(nav button, .jump, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  main { padding: 20px 24px 56px; max-width: 1120px; margin: 0 auto; }
+  section[role="tabpanel"] { display: none; }
+  section[role="tabpanel"].active { display: block; }
+  h2 { font-size: 14px; margin: 24px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+  h2:first-child { margin-top: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; }
+  .card h3 { margin: 0 0 6px; font-size: 15px; }
+  .card .sub { font: 11.5px/1.5 ui-monospace, Menlo, monospace; color: var(--muted); }
+  .idchip { font: 700 11px/1 ui-monospace, Menlo, monospace; background: var(--accent-soft); color: var(--accent); padding: 3px 7px; border-radius: 4px; margin-right: 8px; }
+  .st, .vt { font: 700 10.5px/1 ui-monospace, Menlo, monospace; padding: 3px 7px; border-radius: 4px; }
+  .st-todo{background:#e8eaee;color:#525f6f} .st-doing{background:#fdeecd;color:#8a5a06} .st-done{background:#d8efdf;color:#14532d} .st-blocked{background:#fde2e2;color:#8f1d1d}
+  .vt-PASS{background:#d8efdf;color:#14532d} .vt-IMPROVE{background:#fdeecd;color:#8a5a06} .vt-REPLAN{background:#fde2e2;color:#8f1d1d}
+  .qs-open{background:#fde2e2;color:#8f1d1d} .qs-resolved{background:#d8efdf;color:#14532d}
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 13px; }
+  th { text-align: left; font: 700 11px/1.4 ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); background: #edefe9; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  code, .mono { font: 12px/1.55 ui-monospace, Menlo, Consolas, monospace; }
+  .jump { appearance: none; border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 3px 10px; font: 12px/1.4 ui-monospace, Menlo, monospace; cursor: pointer; color: var(--ink); }
+  .jump:hover { border-color: var(--accent); color: var(--accent); }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+  ul.tight { margin: 4px 0 0; padding-left: 18px; }
+  ul.tight li { margin: 3px 0; font-size: 13px; }
+  .tag { font: 700 10px/1 ui-monospace, monospace; padding: 3px 6px; border-radius: 4px; margin-right: 6px; }
+  .t-in { background: #d8efdf; color: #14532d; } .t-out { background: #eceae4; color: #525f6f; }
+  .phase { display: inline-block; font: 700 10px/1 ui-monospace, monospace; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  pre.json { background: #101816; color: #d3e0da; padding: 16px 18px; border-radius: 12px; overflow: auto; font: 12px/1.55 ui-monospace, Menlo, monospace; max-height: 70vh; }
+  pre.json .k { color: #7cc4b0; } pre.json .s { color: #c9b98a; } pre.json .n { color: #e09b6a; }
+  .note { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
+  .dt { font: 700 11px/1.6 ui-monospace, monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 12px; }
+  .slice { border-left: 4px solid var(--accent); }
+</style>
+</head>
+<body>
+
+<script type="application/json" id="pack">
+{
+  "format": "specpack/0.1",
+  "name": "todo-api",
+  "title": "Todo API \u2014 add a todo (Spring Boot)",
+  "artifacts": {
+    "prd": {
+      "file": "../todo-api/prd-v1.docx",
+      "type": "application/docx",
+      "description": "Marketing's product requirements, v1",
+      "sha256": "ed491ad3871e5ab1e73440632ee65d5a1e43e6e9bb52cd0f30e85411bbfe8862"
+    },
+    "pricing": {
+      "file": "../todo-api/limits.xlsx",
+      "type": "application/xlsx",
+      "description": "Rate limits and field caps from ops"
+    },
+    "spec-md": {
+      "file": "spec.md",
+      "type": "text/markdown",
+      "description": "The human prose of this spec \u2014 this json is its twin"
+    }
+  },
+  "spec": {
+    "why": "A single user needs to track tasks. v1 delivers create; list and complete follow.",
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "a single user",
+        "want": "to add a todo with a title",
+        "so": "I remember what to do"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "The API MUST accept POST /todos with {\"title\"} and MUST respond 201 with a Location header naming the new resource.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-1",
+            "given": "an empty list",
+            "when": "POST /todos {\"title\":\"buy milk\"}",
+            "then": "201, body echoes title + id, Location header present"
+          },
+          {
+            "id": "AC-2",
+            "given": "any request",
+            "when": "title is blank or over 200 chars",
+            "then": "400 with a field error naming title"
+          }
+        ],
+        "refs": [
+          "prd#Add Task"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "The API MUST return GET /todos as a JSON array, newest first.",
+        "priority": "P2",
+        "scenarios": []
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "title MUST be 1..200 characters after trim."
+      },
+      {
+        "id": "CON-2",
+        "text": "p95 create latency under 150 ms on the v1 profile."
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Postgres or an H2 file database for v1?",
+        "status": "resolved",
+        "owner": "human:owner",
+        "answer": "H2 file for v1.",
+        "resolved_by": "D-1"
+      },
+      {
+        "id": "Q-2",
+        "question": "Do todos need a done flag in v1?",
+        "status": "open",
+        "owner": "human:owner"
+      }
+    ],
+    "out_of_scope": [
+      "authentication",
+      "multiple users",
+      "list and complete endpoints (FR-2 is recorded but not this slice)"
+    ]
+  },
+  "plan": {
+    "approach": "Plain layered Spring Boot: controller validates and shapes HTTP, service owns the 1..200 rule, repository persists via JPA. H2 file database behind Flyway so v1 runs from a checkout with zero setup.",
+    "stack": {
+      "language": "Java 21",
+      "framework": "Spring Boot 3.x",
+      "storage": "H2 file + Flyway",
+      "tests": "JUnit 5 + MockMvc + Testcontainers-free (H2)"
+    },
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "H2 file database for v1; Postgres deferred",
+        "because": "Zero-setup checkout beats operational realism in a slice; schema is JPA-managed so the swap is a driver + URL.",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "accepted"
+      },
+      {
+        "id": "D-2",
+        "decision": "Validation at the controller with bean validation; domain rule duplicated nowhere",
+        "because": "400 field errors are an HTTP concern; the service re-checks the rule so tests of the service are honest.",
+        "status": "accepted"
+      }
+    ],
+    "data": [
+      {
+        "name": "TodoEntity",
+        "fields": {
+          "id": "UUID, generated",
+          "title": "varchar(200), not null",
+          "createdAt": "instant, generated",
+          "done": "boolean, default false (Q-2 pending)"
+        }
+      }
+    ],
+    "structure": [
+      "src/main/java/demo/TodoController.java",
+      "src/main/java/demo/TodoService.java",
+      "src/main/java/demo/TodoRepository.java",
+      "src/main/java/demo/TodoEntity.java",
+      "src/main/resources/db/migration/V1__todos.sql",
+      "src/test/java/demo/TodoCreateAcceptanceTest.java"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "TodoEntity + Flyway migration",
+      "phase": "setup",
+      "status": "done",
+      "detail": "Entity per plan.data; migration V1__todos.sql creates the todos table.",
+      "needs": [
+        "D-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoEntity.java",
+        "src/main/resources/db/migration/V1__todos.sql"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=MigrationTest",
+        "expect": "exit 0 \u2014 migration applies on empty H2"
+      },
+      "parallel": true,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=MigrationTest",
+          "exit": 0,
+          "at": "2026-10-08T10:05:00Z",
+          "by": "pi"
+        }
+      ],
+      "refs": [
+        "pricing!FieldCaps"
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "TodoService.create() with the 1..200 rule",
+      "phase": "test-first",
+      "status": "done",
+      "detail": "create(title) trims, enforces CON-1, saves, returns the entity.",
+      "needs": [
+        "T-1",
+        "CON-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoService.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=TodoServiceTest",
+        "expect": "exit 0 \u2014 boundaries 1, 200, 201 hold"
+      },
+      "parallel": false,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=TodoServiceTest",
+          "exit": 0,
+          "at": "2026-10-08T10:12:00Z",
+          "by": "pi",
+          "notes": "boundary tests green"
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "POST /todos controller with 201 + Location",
+      "phase": "core",
+      "status": "doing",
+      "detail": "Bean validation for the 400 path (AC-2); 201 + Location for the happy path (AC-1).",
+      "needs": [
+        "T-2",
+        "FR-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoController.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=TodoControllerTest",
+        "expect": "exit 0 \u2014 AC-1 and AC-2 both pass"
+      },
+      "parallel": false,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=TodoControllerTest",
+          "exit": 1,
+          "at": "2026-10-08T10:25:00Z",
+          "by": "pi",
+          "notes": "FAIL: Location header missing \u2014 AC-1 unmet; fixing"
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Acceptance test for the create flow",
+      "phase": "integration",
+      "status": "todo",
+      "detail": "TodoCreateAcceptanceTest walks AC-1 end to end through MockMvc.",
+      "needs": [
+        "T-3",
+        "AC-1"
+      ],
+      "produces": [
+        "src/test/java/demo/TodoCreateAcceptanceTest.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test",
+        "expect": "exit 0 \u2014 the whole suite green"
+      },
+      "parallel": false
+    }
+  ],
+  "review": {
+    "checklist": "EPIC (arXiv 2610.07534) \u2014 E/P/I/C dimensions + red-foreman severities",
+    "verdicts": [
+      {
+        "on": "D-1",
+        "verdict": "PASS",
+        "by": "red-foreman",
+        "at": "2026-10-08T09:41:00Z"
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "red-foreman",
+        "at": "2026-10-08T10:26:00Z",
+        "findings": [
+          {
+            "severity": "BLOCKER",
+            "note": "201 without Location breaks AC-1.",
+            "fix": "return ResponseEntity.created(uri).body(dto)"
+          }
+        ]
+      }
+    ]
+  }
+}
+</script>
+
+<header>
+  <h1>specpack — one initiative, one JSON file</h1>
+  <p>Spec Kit’s shapes — spec, plan, tasks — plus review, codified. Typed ids carry the dependencies (US- FR- CON- Q- D- T- AC-); artifacts (docx, xlsx, md) are pointed at, never embedded. Click a task to see the slice a subagent would receive.</p>
+  <div class="chips">
+    <span class="chip">format: <b>specpack/0.1</b></span>
+    <span class="chip">name: <b>todo-api</b></span>
+    <span class="chip">requirements: <b>2</b></span>
+    <span class="chip">decisions: <b>2</b></span>
+    <span class="chip">tasks: <b>4</b></span>
+    <span class="chip">artifacts: <b>3</b></span>
+  </div>
+</header>
+
+<nav role="tablist" aria-label="Sections">
+  <button role="tab" aria-selected="true" aria-controls="t-spec" id="b-spec">Spec</button>
+  <button role="tab" aria-selected="false" aria-controls="t-plan" id="b-plan">Plan</button>
+  <button role="tab" aria-selected="false" aria-controls="t-tasks" id="b-tasks">Tasks</button>
+  <button role="tab" aria-selected="false" aria-controls="t-review" id="b-review">Review</button>
+  <button role="tab" aria-selected="false" aria-controls="t-artifacts" id="b-artifacts">Artifacts</button>
+  <button role="tab" aria-selected="false" aria-controls="t-json" id="b-json">Raw JSON</button>
+</nav>
+
+<main>
+  <section id="t-spec" role="tabpanel" aria-labelledby="b-spec" class="active">
+    <div class="card"><h3>Why</h3><p id="why" style="margin:0"></p></div>
+    <h2>User stories</h2><div id="stories"></div>
+    <h2>Requirements — one capability each, MUST wording</h2><div id="reqs"></div>
+    <h2>Constraints</h2><div id="cons"></div>
+    <h2>Clarifications — uncertainty on the record</h2><div id="qs"></div>
+    <h2>Out of scope</h2><div class="card"><ul class="tight" id="oos"></ul></div>
+  </section>
+
+  <section id="t-plan" role="tabpanel" aria-labelledby="b-plan">
+    <div class="card"><h3>Approach</h3><p id="approach" style="margin:0"></p></div>
+    <h2>Stack</h2><div id="stack"></div>
+    <h2>Decisions — each with its because</h2><div id="decisions"></div>
+    <h2>Data</h2><div id="data"></div>
+    <h2>Structure</h2><div class="card"><ul class="tight mono" id="structure"></ul></div>
+  </section>
+
+  <section id="t-tasks" role="tabpanel" aria-labelledby="b-tasks">
+    <div id="phases"></div>
+    <h2>The slice — what a subagent receives</h2>
+    <p class="note">Needs closure of the selected task: the task, the things it names, and — walked transitively — everything those need. Everything else is omitted, on the record.</p>
+    <div id="slice"></div>
+  </section>
+
+  <section id="t-review" role="tabpanel" aria-labelledby="b-review">
+    <div class="card"><h3>Checklist</h3><p style="margin:0" class="mono" id="checklist"></p></div>
+    <div id="verdicts"></div>
+  </section>
+
+  <section id="t-artifacts" role="tabpanel" aria-labelledby="b-artifacts">
+    <p class="note">docx and xlsx and md — pointed at by path + type + optional digest. The json never embeds them.</p>
+    <div id="arts"></div>
+    <h2>Where artifacts are cited</h2>
+    <div class="card"><ul class="tight" id="cites"></ul></div>
+  </section>
+
+  <section id="t-json" role="tabpanel" aria-labelledby="b-json">
+    <pre class="json" id="raw"></pre>
+  </section>
+</main>
+
+<script>
+"use strict";
+const P = JSON.parse(document.getElementById("pack").textContent);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* indexes — forward stored once in needs[], backward computed here */
+const byId = {};
+for (const s of P.spec.stories || []) byId[s.id] = { ...s, _kind: "story" };
+for (const r of P.spec.requirements) byId[r.id] = { ...r, _kind: "requirement" };
+for (const c of P.spec.constraints || []) byId[c.id] = { ...c, _kind: "constraint" };
+for (const q of P.spec.clarifications || []) byId[q.id] = { ...q, _kind: "clarification" };
+for (const d of P.plan.decisions) byId[d.id] = { ...d, _kind: "decision" };
+const tasks = Object.fromEntries(P.tasks.map(t => [t.id, t]));
+const bwd = {};
+for (const t of P.tasks) for (const n of t.needs || []) (bwd[n] ??= []).push(t.id);
+
+/* tabs */
+const tabs = [...document.querySelectorAll('nav [role="tab"]')];
+tabs.forEach(t => t.addEventListener("click", () => {
+  tabs.forEach(b => b.setAttribute("aria-selected", b === t ? "true" : "false"));
+  document.querySelectorAll("[role=tabpanel]").forEach(s => s.classList.toggle("active", s.id === t.getAttribute("aria-controls")));
+}));
+
+/* spec */
+document.getElementById("why").textContent = P.spec.why;
+document.getElementById("stories").innerHTML = (P.spec.stories || []).map(s =>
+  `<div class="card"><h3><span class="idchip">${s.id}</span>${esc(s.want)}</h3><p style="margin:0;font-size:13.5px">As ${esc(s.as)} — so that ${esc(s.so)}.</p></div>`).join("");
+document.getElementById("reqs").innerHTML = P.spec.requirements.map(r => `
+  <div class="card"><h3><span class="idchip">${r.id}</span>P${r.priority.slice(1)} ${esc(r.text)}</h3>
+  ${(r.scenarios || []).map(s => `<div class="sub" style="margin-top:6px"><b>${s.id}</b> Given ${esc(s.given)} / When ${esc(s.when)} / Then ${esc(s.then)}</div>`).join("")}
+  ${(r.refs || []).length ? `<p class="note">from artifact: ${r.refs.map(esc).join(", ")}</p>` : ""}</div>`).join("");
+document.getElementById("cons").innerHTML = (P.spec.constraints || []).map(c => `<div class="card"><span class="idchip">${c.id}</span>${esc(c.text)}</div>`).join("");
+document.getElementById("qs").innerHTML = P.spec.clarifications.map(q => `
+  <div class="card"><h3><span class="idchip">${q.id}</span><span class="st qs-${q.status}">${q.status}</span></h3>
+  <p style="margin:6px 0 0">${esc(q.question)}</p>
+  ${q.status === "resolved" ? `<p class="note">Answer: ${esc(q.answer || "")} — by <b>${esc(q.resolved_by)}</b></p>` : `<p class="note">Owner: ${esc(q.owner)} — recorded, not silently resolved.</p>`}</div>`).join("");
+document.getElementById("oos").innerHTML = P.spec.out_of_scope.map(x => `<li>${esc(x)}</li>`).join("");
+
+/* plan */
+document.getElementById("approach").textContent = P.plan.approach;
+document.getElementById("stack").innerHTML = `<table><tbody>` + Object.entries(P.plan.stack).map(([k, v]) => `<tr><th style="width:160px">${esc(k)}</th><td class="mono">${esc(v)}</td></tr>`).join("") + `</tbody></table>`;
+document.getElementById("decisions").innerHTML = P.plan.decisions.map(d => `
+  <div class="card"><h3><span class="idchip">${d.id}</span>${esc(d.decision)} <span class="st ${d.status === "accepted" ? "st-done" : "st-doing"}">${d.status}</span></h3>
+  <p style="margin:6px 0 0;font-size:13.5px"><b>Because:</b> ${esc(d.because)}</p>
+  ${(d.resolves || []).length ? `<p class="note">resolves ${d.resolves.join(", ")}</p>` : ""}</div>`).join("");
+document.getElementById("data").innerHTML = P.plan.data.map(e => `
+  <div class="card"><h3 class="mono">${esc(e.name)}</h3><ul class="tight">${Object.entries(e.fields || {}).map(([f, t]) => `<li class="mono">${esc(f)}: ${esc(t)}</li>`).join("")}</ul></div>`).join("");
+document.getElementById("structure").innerHTML = P.plan.structure.map(s => `<li>${esc(s)}</li>`).join("");
+
+/* tasks grouped by phase */
+const phaseOrder = ["setup", "test-first", "core", "integration", "polish"];
+const byPhase = {};
+for (const t of P.tasks) (byPhase[t.phase] ??= []).push(t);
+document.getElementById("phases").innerHTML = phaseOrder.filter(p => byPhase[p]).map(p => `
+  <h2>${p}</h2>` + byPhase[p].map(t => `
+  <div class="card">
+    <span class="phase">${t.phase}</span>
+    <h3><span class="idchip">${t.id}</span>${esc(t.title)} <span class="st st-${t.status}">${t.status}</span>${t.parallel ? ' <span class="st st-todo">parallel-safe</span>' : ""}</h3>
+    ${t.detail ? `<p style="font-size:13.5px;margin:6px 0 0">${esc(t.detail)}</p>` : ""}
+    <dl style="margin:8px 0 0">
+      <div class="dt">Needs — the typed dependency list</div>
+      <dd class="links">${(t.needs || []).map(n => `<button class="jump" data-need="${n}">${n}</button>`).join("") || "—"}</dd>
+      <div class="dt">Verify — the observable check</div>
+      <dd><code>${esc(t.verify.cmd)}</code><br><span class="note">${esc(t.verify.expect)}</span></dd>
+      ${(t.evidence || []).length ? `<div class="dt">Evidence</div><dd>${t.evidence.map(e => `<span class="st ${e.exit === 0 ? "vt-PASS" : "vt-FAIL"}">exit ${e.exit}</span> <code>${esc(e.cmd)}</code> <span class="note">${esc(e.notes || "")}</span>`).join("<br>")}</dd>` : ""}
+    </dl>
+    <button class="jump" data-slice="${t.id}" style="margin-top:10px">show this task’s slice →</button>
+  </div>`).join("")).join("");
+
+/* slice: transitive needs closure — the progressive-load demo */
+function slice(id) {
+  const keep = new Set([id]);
+  const stack = [...(tasks[id].needs || [])];
+  while (stack.length) {
+    const x = stack.pop();
+    if (keep.has(x)) continue;
+    keep.add(x);
+    if (tasks[x]) stack.push(...(tasks[x].needs || []));
+  }
+  const rows = [...keep].map(k => {
+    const t = tasks[k];
+    if (t) return `<li><span class="tag t-in">TASK</span><b>${t.id}</b> ${esc(t.title)} — ${esc(t.verify.cmd)}</li>`;
+    const b = byId[k];
+    if (b) return `<li><span class="tag t-in">${(b._kind || "item").toUpperCase()}</span><b>${k}</b> ${esc(b.text || b.question || b.decision || b.want || "")}</li>`;
+    return `<li><span class="tag t-in">REF</span><b>${k}</b></li>`;
+  }).join("");
+  const omitted = P.tasks.map(t => t.id).filter(x => !keep.has(x));
+  document.getElementById("slice").innerHTML = `
+    <div class="card slice">
+      <h3>Slice for ${id} — ${keep.size} items in, ${omitted.length} task${omitted.length === 1 ? "" : "s"} omitted</h3>
+      <ul class="tight">${rows}</ul>
+      <p class="note">Omitted from load: ${omitted.map(esc).join(", ") || "nothing"} — recorded, so a reviewer can audit what the worker never saw. Deterministic: same ids, same slice, every time.</p>
+    </div>`;
+  document.getElementById("slice").scrollIntoView({ block: "nearest" });
+}
+document.querySelectorAll("[data-slice]").forEach(b => b.addEventListener("click", () => slice(b.dataset.slice)));
+document.querySelectorAll("[data-need]").forEach(b => b.addEventListener("click", () => slice(tasks[b.dataset.need] ? b.dataset.need : b.dataset.need)));
+
+/* review + artifacts + raw */
+document.getElementById("checklist").textContent = P.review.checklist;
+document.getElementById("verdicts").innerHTML = P.review.verdicts.map(v => `
+  <div class="card"><h3><span class="st vt-${v.verdict}">${v.verdict}</span> on ${v.on} <span class="note" style="margin-left:8px">by ${esc(v.by)} · ${v.at}</span></h3>
+  ${(v.findings || []).map(f => `<p style="margin:6px 0 0;font-size:13.5px"><span class="tag" style="background:#fde2e2;color:#8f1d1d">${f.severity}</span>${esc(f.note)} <b>Fix:</b> ${esc(f.fix || "—")}</p>`).join("")}</div>`).join("");
+
+document.getElementById("arts").innerHTML = `<table><thead><tr><th>id</th><th>file</th><th>type</th><th>digest</th></tr></thead><tbody>` +
+  Object.entries(P.artifacts).map(([k, a]) => `<tr><td class="mono"><b>${k}</b></td><td class="mono">${esc(a.file)}</td><td class="mono">${esc(a.type)}</td><td class="mono">${a.sha256 ? a.sha256.slice(0, 10) + "…" : "—"}</td></tr>`).join("") + `</tbody></table>`;
+const cites = [];
+for (const r of P.spec.requirements) for (const rf of r.refs || []) cites.push([r.id, rf]);
+for (const t of P.tasks) for (const rf of t.refs || []) cites.push([t.id, rf]);
+document.getElementById("cites").innerHTML = cites.map(([id, rf]) => `<li><code>${id}</code> cites <code>${esc(rf)}</code></li>`).join("") || "<li>—</li>";
+
+document.getElementById("raw").innerHTML = esc(JSON.stringify(P, null, 2))
+  .replace(/(&quot;[^&]*?&quot;)(:)/g, '<span class="k">$1</span>$2')
+  .replace(/: (&quot;[^&]*?&quot;)/g, ': <span class="s">$1</span>')
+  .replace(/: (-?\d+\.?\d*)/g, ': <span class="n">$1</span>');
+
+slice("T-3");
+</script>
+</body>
+</html>

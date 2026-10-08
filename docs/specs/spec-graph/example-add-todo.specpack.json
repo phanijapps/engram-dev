@@ -1,0 +1,271 @@
+{
+  "format": "specpack/0.1",
+  "name": "todo-api",
+  "title": "Todo API \u2014 add a todo (Spring Boot)",
+  "artifacts": {
+    "prd": {
+      "file": "../todo-api/prd-v1.docx",
+      "type": "application/docx",
+      "description": "Marketing's product requirements, v1",
+      "sha256": "ed491ad3871e5ab1e73440632ee65d5a1e43e6e9bb52cd0f30e85411bbfe8862"
+    },
+    "pricing": {
+      "file": "../todo-api/limits.xlsx",
+      "type": "application/xlsx",
+      "description": "Rate limits and field caps from ops"
+    },
+    "spec-md": {
+      "file": "spec.md",
+      "type": "text/markdown",
+      "description": "The human prose of this spec \u2014 this json is its twin"
+    }
+  },
+  "spec": {
+    "why": "A single user needs to track tasks. v1 delivers create; list and complete follow.",
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "a single user",
+        "want": "to add a todo with a title",
+        "so": "I remember what to do"
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "The API MUST accept POST /todos with {\"title\"} and MUST respond 201 with a Location header naming the new resource.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-1",
+            "given": "an empty list",
+            "when": "POST /todos {\"title\":\"buy milk\"}",
+            "then": "201, body echoes title + id, Location header present"
+          },
+          {
+            "id": "AC-2",
+            "given": "any request",
+            "when": "title is blank or over 200 chars",
+            "then": "400 with a field error naming title"
+          }
+        ],
+        "refs": [
+          "prd#Add Task"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "The API MUST return GET /todos as a JSON array, newest first.",
+        "priority": "P2",
+        "scenarios": []
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "title MUST be 1..200 characters after trim."
+      },
+      {
+        "id": "CON-2",
+        "text": "p95 create latency under 150 ms on the v1 profile."
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Postgres or an H2 file database for v1?",
+        "status": "resolved",
+        "owner": "human:owner",
+        "answer": "H2 file for v1.",
+        "resolved_by": "D-1"
+      },
+      {
+        "id": "Q-2",
+        "question": "Do todos need a done flag in v1?",
+        "status": "open",
+        "owner": "human:owner"
+      }
+    ],
+    "out_of_scope": [
+      "authentication",
+      "multiple users",
+      "list and complete endpoints (FR-2 is recorded but not this slice)"
+    ]
+  },
+  "plan": {
+    "approach": "Plain layered Spring Boot: controller validates and shapes HTTP, service owns the 1..200 rule, repository persists via JPA. H2 file database behind Flyway so v1 runs from a checkout with zero setup.",
+    "stack": {
+      "language": "Java 21",
+      "framework": "Spring Boot 3.x",
+      "storage": "H2 file + Flyway",
+      "tests": "JUnit 5 + MockMvc + Testcontainers-free (H2)"
+    },
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "H2 file database for v1; Postgres deferred",
+        "because": "Zero-setup checkout beats operational realism in a slice; schema is JPA-managed so the swap is a driver + URL.",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "accepted"
+      },
+      {
+        "id": "D-2",
+        "decision": "Validation at the controller with bean validation; domain rule duplicated nowhere",
+        "because": "400 field errors are an HTTP concern; the service re-checks the rule so tests of the service are honest.",
+        "status": "accepted"
+      }
+    ],
+    "data": [
+      {
+        "name": "TodoEntity",
+        "fields": {
+          "id": "UUID, generated",
+          "title": "varchar(200), not null",
+          "createdAt": "instant, generated",
+          "done": "boolean, default false (Q-2 pending)"
+        }
+      }
+    ],
+    "structure": [
+      "src/main/java/demo/TodoController.java",
+      "src/main/java/demo/TodoService.java",
+      "src/main/java/demo/TodoRepository.java",
+      "src/main/java/demo/TodoEntity.java",
+      "src/main/resources/db/migration/V1__todos.sql",
+      "src/test/java/demo/TodoCreateAcceptanceTest.java"
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "TodoEntity + Flyway migration",
+      "phase": "setup",
+      "status": "done",
+      "detail": "Entity per plan.data; migration V1__todos.sql creates the todos table.",
+      "needs": [
+        "D-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoEntity.java",
+        "src/main/resources/db/migration/V1__todos.sql"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=MigrationTest",
+        "expect": "exit 0 \u2014 migration applies on empty H2"
+      },
+      "parallel": true,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=MigrationTest",
+          "exit": 0,
+          "at": "2026-10-08T10:05:00Z",
+          "by": "pi"
+        }
+      ],
+      "refs": [
+        "pricing!FieldCaps"
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "TodoService.create() with the 1..200 rule",
+      "phase": "test-first",
+      "status": "done",
+      "detail": "create(title) trims, enforces CON-1, saves, returns the entity.",
+      "needs": [
+        "T-1",
+        "CON-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoService.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=TodoServiceTest",
+        "expect": "exit 0 \u2014 boundaries 1, 200, 201 hold"
+      },
+      "parallel": false,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=TodoServiceTest",
+          "exit": 0,
+          "at": "2026-10-08T10:12:00Z",
+          "by": "pi",
+          "notes": "boundary tests green"
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "POST /todos controller with 201 + Location",
+      "phase": "core",
+      "status": "doing",
+      "detail": "Bean validation for the 400 path (AC-2); 201 + Location for the happy path (AC-1).",
+      "needs": [
+        "T-2",
+        "FR-1"
+      ],
+      "produces": [
+        "src/main/java/demo/TodoController.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test -Dtest=TodoControllerTest",
+        "expect": "exit 0 \u2014 AC-1 and AC-2 both pass"
+      },
+      "parallel": false,
+      "evidence": [
+        {
+          "cmd": "mvn -q test -Dtest=TodoControllerTest",
+          "exit": 1,
+          "at": "2026-10-08T10:25:00Z",
+          "by": "pi",
+          "notes": "FAIL: Location header missing \u2014 AC-1 unmet; fixing"
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Acceptance test for the create flow",
+      "phase": "integration",
+      "status": "todo",
+      "detail": "TodoCreateAcceptanceTest walks AC-1 end to end through MockMvc.",
+      "needs": [
+        "T-3",
+        "AC-1"
+      ],
+      "produces": [
+        "src/test/java/demo/TodoCreateAcceptanceTest.java"
+      ],
+      "verify": {
+        "cmd": "mvn -q test",
+        "expect": "exit 0 \u2014 the whole suite green"
+      },
+      "parallel": false
+    }
+  ],
+  "review": {
+    "checklist": "EPIC (arXiv 2610.07534) \u2014 E/P/I/C dimensions + red-foreman severities",
+    "verdicts": [
+      {
+        "on": "D-1",
+        "verdict": "PASS",
+        "by": "red-foreman",
+        "at": "2026-10-08T09:41:00Z"
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "red-foreman",
+        "at": "2026-10-08T10:26:00Z",
+        "findings": [
+          {
+            "severity": "BLOCKER",
+            "note": "201 without Location breaks AC-1.",
+            "fix": "return ResponseEntity.created(uri).body(dto)"
+          }
+        ]
+      }
+    ]
+  }
+}
