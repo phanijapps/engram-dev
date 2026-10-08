@@ -1,98 +1,48 @@
 ---
 type: Domain
 status: stable
-created: 2026-10-06
-updated: 2026-10-07
-title: The wiki contract — bundle layout, freshness stamp, findings ledger
-description: 'The implemented contract the three engine packages exchange: OKF bundle at <repo>/wiki/, .okf/last-index.json freshness semantics, .okf/findings.toml proposal ledger, managed-section markers, and front-matter rules.'
-tags: [contract, okf, freshness, findings, conventions]
+created: 2026-10-08
+updated: 2026-10-08
+title: The wiki contract — bundle rules every harness repo follows
+description: 'The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections.'
+sources: [{ id: src, resource: engine/okf/okf_kit/__init__.py }]
+tags: [contract, okf, conventions]
 ---
 
 # Overview
 
-The wiki's knowledge contract is implemented in **`okf-kit` alone**
-(okf-only engine, 2026-10-07; the former `memex_core` half was removed —
-see [Okf-only engine](/decisions/okf-only-engine.md)):
-
-**Bundle location and shape.** The project wiki is an OKF bundle at
-`<repo>/wiki/` — convention over registry, no mapping table. Root
-`index.md` carries `okf_version`. Concepts are Markdown files whose cid is
-the path relative to the bundle root without `.md`.
+One bundle per repository at `<repo>/wiki/` — convention, no registry.
+Concepts are Markdown with YAML frontmatter; the root `index.md` declares
+`okf_version`.
 
 **State dir.** `wiki/.okf/` holds engine state, never concepts:
-`last-index.json` (the freshness stamp) and `findings.toml` (the proposal
-ledger).
+`last-index.json` (freshness stamp — written by `okf code index`,
+`okf_kit/core/stamp.py`), `findings.toml` (the normative proposal ledger —
+`okf findings`, `okf_kit/core/findings.py`), `fingerprints.json`
+(per-file sha256 for anchor staleness — `okf_kit/core/fingerprints.py`),
+`candidates.json` (semantic rule candidates — `okf code rules`).
 
-**Freshness stamp.** `okf code index` writes `last-index.json`
-(`okf_kit/core/stamp.py`) with `repo_head` and counts
-(`written/updated/skipped`). Consumers compare the stamped `repo_head`
-to `git rev-parse HEAD` and report `fresh | stale | unknown` (plus
-`absent` when no wiki exists). Freshness is the trust contract for
-`wiki/code/**`: a stale stamp means the generated tree may not describe the
-code at HEAD.
+**Freshness.** `okf status wiki` compares the stamp's `repo_head` to
+`git rev-parse HEAD`: equal → `fresh`; anything else → `stale`, refresh
+before trusting `wiki/code/**`.
 
-**Managed vs curated.** Generated concepts under `wiki/code/**` and
-`wiki/code-summaries/**` are managed by `okf-code` — everything between
-`<!-- okf-code:start -->` and `<!-- okf-code:end -->` regenerates; hand
-edits belong only in curated concepts (e.g. `wiki/systems/**`,
-`wiki/domain/**`, `wiki/decisions/**`) or narrative outside the markers.
+**Managed vs curated.** `wiki/code/**` and `wiki/code-summaries/**` are
+machine-managed — everything between `<!-- okf-code:start -->` and
+`<!-- okf-code:end -->` regenerates; hand edits there are lost or brick
+the indexer. Hand-authored knowledge lives in curated concepts
+(`systems/**`, `domain/**`, `decisions/**`).
 
-**Findings ledger.** Normative content (golden paths, constraints,
-standards — "what new code must conform to") is never written directly as
-settled truth: it is authored `status: draft` and routed through
-`okf findings propose`; a human accepts or declines
-(`okf findings resolve <bundle> <id> --decision …`). Declined findings are
-never re-proposed. The ledger lives with the knowledge it governs, in
-`wiki/.okf/findings.toml`.
+**Normative content.** Rules, policies, golden paths never become settled
+truth directly: author `status: draft`, then
+`okf findings propose wiki --source <evidence> --destination
+wiki/<page>.md --kind <kind> --rationale "…"`. A human accepts or
+declines; declined keys are never re-proposed.
 
-**Front matter.** Non-empty `type` is required; `title` and `description`
-recommended; known keys are `type, title, description, resource, tags,
-timestamp, okf_version`; unknown keys are allowed extensions
-(`engine/okf/okf_kit/core/validate.py:25-29`).
-
-# Relationships
-
-- `memex-core resolve/status` read the stamp and ledger;
-  `wiki init/update` write them
-  (`engine/core/src/memex_core/resolve.py`, `knowledge.py`, `findings.py`,
-  `status.py`).
-- `okf-kit` defines the bundle format the contract is written in
-  ([okf-kit](/systems/okf-kit.md)); the memory plane's page codec speaks the
-  same front-matter dialect (`engine/memex/memex/domain/frontmatter.py`).
-- The [one-engine](/systems/one-engine.md) architecture doc references this
-  contract for where wiki state lives.
-
-# Counting rules and coverage
-
-Three different concept counts surface in this repo; each is correct
-under its own rule (implementation-supported: `resolve.py:78-81`,
-`wiki/.okf/last-index.json`, raw file enumeration):
-
-- **83 managed concepts** — what `wiki update` wrote/updated under
-  `wiki/code/**` (the indexer's count).
-- **94 concept_count** — `memex-core resolve`: every `.md` under `wiki/`
-  except `index.md`/`log.md` and anything under `.okf/` (managed +
-  curated + summaries).
-- **95 files** — raw `*.md` count: the 94 plus the root `index.md`.
-
-**Coverage:** the managed tree indexes non-test Python across the three
-packages only (`include_tests=False` default, `knowledge.py`). Not
-indexed: `docs/product/**` (the normative spec corpus), `skills/**`,
-root manifests, `engine/okf/tests/fixtures/wiki/**`, and all test
-modules. `code-summaries/repository.md` is managed (regenerates every
-update) — scope statements live here, not there.
+**Lifecycle fields.** Every concept carries `status`
+(draft/stable/deprecated), `created`, and `generated: {by, at}` — the
+last-meaningful-change instant. Trust tier comes from `verified` events.
 
 # Evidence
 
-- `engine/core/src/memex_core/resolve.py` — `WIKI_DIRNAME`,
-  `OKF_STATE_DIRNAME`, `LAST_INDEX_STAMP` constants; freshness comparison.
-- `wiki/.okf/last-index.json` — the live freshness stamp (repo_head,
-  written/updated/skipped). Values are read from the file, never restated
-  here: restated copies rot — this line previously froze a 39bad0f-era
-  stamp and was falsified within a day (implementation-supported).
-- `engine/core/src/memex_core/findings.py` — `Finding`,
-  `findings_path`, propose/resolve with declined-reproposal guard.
-- `engine/okf/okf_kit/code/managed.py` — the managed-section markers.
-- `engine/okf/okf_kit/core/validate.py:25-29` — front-matter key rules.
-- `docs/product/Memex_Core_Layer.md` — "Conventions" section states the
-  same rules as design intent.
+- `engine/okf/okf_kit/core/stamp.py`, `findings.py`, `fingerprints.py`,
+  `templates.py`; `engine/okf/okf_kit/code/indexer.py` (implementation-supported)

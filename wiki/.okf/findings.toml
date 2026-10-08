@@ -21,6 +21,16 @@ proposed_at = "2026-10-07T23:27:03.308640+00:00"
 resolved_at = "2026-10-07T23:45:22.957749+00:00"
 
 [[findings]]
+id = "golden-path-8481ab73"
+source = "docs/specs/semantic-extraction/plan.md"
+destination = "wiki/decisions/graph-engineering-fast-track.md"
+kind = "golden-path"
+status = "pending"
+rationale = "Owner direction 2026-10-08: the project builds a packagable harness used to fast-track graph engineering without the waterfall trap. Normative acceptance requested for the purpose decision."
+proposed_at = "2026-10-08T00:44:43.716209+00:00"
+resolved_at = ""
+
+[[findings]]
 id = "policy-ff546069"
 source = "docs/specs/semantic-extraction/design.md"
 destination = "wiki/domain/policy-no-session-capture-in-engine.md"

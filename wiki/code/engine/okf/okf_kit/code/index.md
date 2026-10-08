@@ -7,6 +7,7 @@
 * [engine/okf/okf_kit/code/model.py](model.py.md) - Generated code map for engine/okf/okf_kit/code/model.py.
 * [engine/okf/okf_kit/code/paths.py](paths.py.md) - Generated code map for engine/okf/okf_kit/code/paths.py.
 * [engine/okf/okf_kit/code/render.py](render.py.md) - Generated code map for engine/okf/okf_kit/code/render.py.
+* [engine/okf/okf_kit/code/semantic.py](semantic.py.md) - Generated code map for engine/okf/okf_kit/code/semantic.py.
 
 # Subdirectories
 * [treesitter](treesitter/index.md)
