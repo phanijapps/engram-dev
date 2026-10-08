@@ -5,6 +5,7 @@
   templates, roll them into one json file with clearly identifying
   dependencies, and refer to artifacts within the json. Use html as
   the reference to visualize it."
+- **Format version:** 0.2 (flow/trace split, designs, diagrams)
 - **Artifacts of this proposal:**
   - `specpack.schema.json` — the schema (every property titled and
     described; the schema itself must not be cryptic)
@@ -66,6 +67,45 @@ human-authoring format and the VSG stays the authority vocabulary.
 This reframes `schema-brainstorm.md` Q1: the practical answer is
 "specpack front-file + generator", with the VSG defs as target — not
 as the thing humans read.
+
+## v0.2 — flow and trace, separated (owner: "that link has to be established")
+
+The 0.1 `needs[]` mixed two kinds of links. 0.2 splits them:
+
+- **Flow** — `task.needs` holds only `T-` ids: execution order.
+  Loom schedules from it (topological, deterministic tie-break by id).
+- **Trace** — four typed arrays carry the alignment:
+  `implements` (DES-…), `satisfies` (FR-…), `accepts` (AC-…),
+  `honors` (CON-…). This is the task ↔ design ↔ spec link, stated per
+  task, verifiable by machine.
+
+New plan content: `designs[]` (DES-… elements with `addresses` back to
+FR/CON — the indirect half of alignment) and `diagrams[]` (DG-…
+references to mermaid/svg/excalidraw artifacts, with `covers`).
+
+### Alignment rules (loom-enforced, all decidable)
+
+- **A1** ids unique per family.
+- **A2** every reference resolves (needs/implements/satisfies/accepts/
+  honors/addresses/resolves/diagram covers).
+- **A3** `needs` graph is acyclic.
+- **A4** every task reaches ≥1 FR: directly (`satisfies`) or through a
+  design element (`implements` → DES `addresses` an FR).
+- **A5** coverage is computed and reported in canonical (sorted) order:
+  uncovered FRs, uncovered ACs, unimplemented DESes are **reported,
+  never guessed**. (The worked example ships with two honest gaps:
+  FR-2 — P2, not this slice — and DES-3, caught because
+  plan.structure lists TodoRepository.java while no task produces it.
+  The machinery works; it found a hole in its own example.)
+- **A6** `done` ⇒ ≥1 evidence row with exit 0.
+
+### Determinism statement
+
+Same specpack in, same everything out: slices are the transitive
+closure over flow + trace, rendered in sorted-id order; coverage
+reports sort by id; the HTML embed is generated from the json file,
+never hand-synced. No clocks, no randomness, no map iteration order
+anywhere in the render.
 
 ## Open questions (owner)
 

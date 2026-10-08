@@ -1,17 +1,17 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.example.org/specpack/0.1.0",
+  "$id": "https://schemas.example.org/specpack/0.2.0",
   "title": "Specpack — one initiative, one JSON file",
-  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file with explicit, typed dependencies and references to external artifacts (markdown, docx, excel — anything). Readable top to bottom by a human; loadable slice by slice by a machine. Any object may carry extra 'x-*' fields for client-specific needs.",
+  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file. Two kinds of links, never mixed: FLOW (task.needs — execution order) and TRACE (implements/satisfies/accepts/honors — the alignment between tasks, design, and spec that loom verifies). Artifacts (markdown, docx, xlsx, diagrams) are referenced, never embedded. Any object may carry x-* extension fields.",
   "type": "object",
   "properties": {
-    "format": { "const": "specpack/0.1", "title": "Format tag" },
-    "name": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "title": "Initiative name (slug)", "description": "Lowercase, hyphenated. The folder name in docs/specs/<name>/." },
+    "format": { "const": "specpack/0.2", "title": "Format tag" },
+    "name": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "title": "Initiative name (slug)" },
     "title": { "type": "string", "title": "Human title" },
     "artifacts": {
       "type": "object",
-      "title": "External artifacts this initiative refers to",
-      "description": "Key = short artifact id used in refs (e.g. 'prd'). Values point at real files OUTSIDE this json — docx, xlsx, md, pdf — with an optional digest.",
+      "title": "External files this initiative refers to",
+      "description": "Key = short id used in refs (e.g. 'prd', 'arch'). Values point at real files outside this json.",
       "additionalProperties": { "$ref": "#/$defs/artifact" }
     },
     "spec": { "$ref": "#/$defs/spec" },
@@ -27,22 +27,22 @@
       "title": "A file outside this json",
       "properties": {
         "file": { "type": "string", "title": "Path, relative to this json file" },
-        "type": { "type": "string", "title": "Media type", "examples": ["text/markdown", "application/docx", "application/xlsx", "application/pdf"] },
+        "type": { "type": "string", "title": "Media type", "examples": ["text/markdown", "text/x-mermaid", "image/svg+xml", "application/docx", "application/xlsx"] },
         "description": { "type": "string", "title": "What this file is" },
-        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$", "title": "Digest of the file bytes (optional but recommended)" }
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$", "title": "Digest of the file bytes" }
       },
       "required": ["file", "type"],
       "additionalProperties": false
     },
     "spec": {
       "type": "object",
-      "title": "SPEC — what and why (Speckit's spec.md, codified)",
+      "title": "SPEC — what and why",
       "properties": {
         "why": { "type": "string", "title": "The problem, in two sentences" },
         "stories": { "type": "array", "items": { "$ref": "#/$defs/story" }, "title": "User stories (US-…)" },
         "requirements": { "type": "array", "items": { "$ref": "#/$defs/requirement" }, "title": "Functional requirements (FR-…), one capability each" },
         "constraints": { "type": "array", "items": { "$ref": "#/$defs/constraint" }, "title": "Hard limits (CON-…)" },
-        "clarifications": { "type": "array", "items": { "$ref": "#/$defs/clarification" }, "title": "Open questions (Q-…) — uncertainty is a deliverable" },
+        "clarifications": { "type": "array", "items": { "$ref": "#/$defs/clarification" }, "title": "Questions (Q-…)" },
         "out_of_scope": { "type": "array", "items": { "type": "string" }, "title": "Explicit exclusions" }
       },
       "required": ["why", "requirements"],
@@ -51,10 +51,8 @@
     "story": {
       "type": "object",
       "properties": {
-        "id": { "type": "string", "pattern": "^US-[A-Za-z0-9-]+$", "title": "Story id (US-…)" },
-        "as": { "type": "string", "title": "As a…" },
-        "want": { "type": "string", "title": "I want…" },
-        "so": { "type": "string", "title": "So that…" }
+        "id": { "type": "string", "pattern": "^US-[A-Za-z0-9-]+$" },
+        "as": { "type": "string" }, "want": { "type": "string" }, "so": { "type": "string" }
       },
       "required": ["id", "as", "want", "so"],
       "additionalProperties": false
@@ -62,11 +60,11 @@
     "requirement": {
       "type": "object",
       "properties": {
-        "id": { "type": "string", "pattern": "^FR-[A-Za-z0-9-]+$", "title": "Requirement id (FR-…)" },
-        "text": { "type": "string", "title": "One capability, stated with MUST/SHOULD", "description": "One requirement = one capability. Use MUST (binding), SHOULD (strong preference). Agents treat 'should' as optional — never use it for bindings." },
-        "priority": { "enum": ["P1", "P2", "P3"], "title": "P1 = this slice, P2 = next, P3 = later" },
+        "id": { "type": "string", "pattern": "^FR-[A-Za-z0-9-]+$" },
+        "text": { "type": "string", "title": "One capability, MUST/SHOULD wording" },
+        "priority": { "enum": ["P1", "P2", "P3"], "title": "P1 = this slice" },
         "scenarios": { "type": "array", "items": { "$ref": "#/$defs/scenario" }, "title": "Acceptance scenarios (AC-…)" },
-        "refs": { "$ref": "#/$defs/refs", "title": "Artifacts this requirement came from" }
+        "refs": { "$ref": "#/$defs/refs" }
       },
       "required": ["id", "text"],
       "additionalProperties": false
@@ -75,9 +73,7 @@
       "type": "object",
       "properties": {
         "id": { "type": "string", "pattern": "^AC-[A-Za-z0-9-]+$" },
-        "given": { "type": "string" },
-        "when": { "type": "string" },
-        "then": { "type": "string" }
+        "given": { "type": "string" }, "when": { "type": "string" }, "then": { "type": "string" }
       },
       "required": ["id", "given", "when", "then"],
       "additionalProperties": false
@@ -86,7 +82,7 @@
       "type": "object",
       "properties": {
         "id": { "type": "string", "pattern": "^CON-[A-Za-z0-9-]+$" },
-        "text": { "type": "string", "title": "A hard limit the plan and tasks must respect" }
+        "text": { "type": "string" }
       },
       "required": ["id", "text"],
       "additionalProperties": false
@@ -96,36 +92,65 @@
       "properties": {
         "id": { "type": "string", "pattern": "^Q-[A-Za-z0-9-]+$" },
         "question": { "type": "string" },
-        "status": { "enum": ["open", "resolved"], "title": "Open questions block nothing — they are recorded" },
-        "owner": { "type": "string", "title": "Who answers it" },
+        "status": { "enum": ["open", "resolved"] },
+        "owner": { "type": "string" },
         "answer": { "type": "string" },
-        "resolved_by": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$", "title": "The decision that resolved it" }
+        "resolved_by": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" }
       },
       "required": ["id", "question", "status"],
       "additionalProperties": false
     },
     "plan": {
       "type": "object",
-      "title": "PLAN — how (Speckit's plan.md, codified)",
+      "title": "PLAN — how: designs, diagrams, decisions",
       "properties": {
-        "stack": { "type": "object", "title": "Technical context", "description": "Free-form: language, framework, storage, test runner, versions." },
-        "decisions": { "type": "array", "items": { "$ref": "#/$defs/decision" }, "title": "Design decisions (D-…), each with its because" },
-        "data": { "type": "array", "items": { "$ref": "#/$defs/dataEntity" }, "title": "Entities / schemas the work touches" },
-        "structure": { "type": "array", "items": { "type": "string" }, "title": "Files and folders this initiative creates or touches" },
-        "approach": { "type": "string", "title": "The approach in a paragraph" }
+        "approach": { "type": "string", "title": "The approach in a paragraph" },
+        "stack": { "type": "object", "title": "Technical context" },
+        "diagrams": { "type": "array", "items": { "$ref": "#/$defs/diagram" }, "title": "Architecture diagrams (DG-…) — referenced artifacts" },
+        "designs": { "type": "array", "items": { "$ref": "#/$defs/design" }, "title": "Design elements (DES-…) — the parts the tasks implement" },
+        "decisions": { "type": "array", "items": { "$ref": "#/$defs/decision" }, "title": "Decisions (D-…), each with its because" },
+        "data": { "type": "array", "items": { "$ref": "#/$defs/dataEntity" }, "title": "Entities / schemas" },
+        "structure": { "type": "array", "items": { "type": "string" }, "title": "Files and folders touched" }
       },
       "required": ["decisions"],
+      "additionalProperties": false
+    },
+    "diagram": {
+      "type": "object",
+      "title": "An architecture diagram, referenced",
+      "properties": {
+        "id": { "type": "string", "pattern": "^DG-[A-Za-z0-9-]+$" },
+        "artifact": { "type": "string", "title": "Key into artifacts — the diagram file itself" },
+        "caption": { "type": "string", "title": "What the diagram shows" },
+        "format": { "enum": ["mermaid", "svg", "png", "excalidraw", "ascii"], "title": "How a renderer should treat it" },
+        "covers": { "type": "array", "items": { "type": "string", "pattern": "^(DES|FR|CON)-[A-Za-z0-9-]+$" }, "title": "Design elements or requirements the diagram depicts" }
+      },
+      "required": ["id", "artifact", "caption", "format"],
+      "additionalProperties": false
+    },
+    "design": {
+      "type": "object",
+      "title": "A design element — the thing tasks implement",
+      "properties": {
+        "id": { "type": "string", "pattern": "^DES-[A-Za-z0-9-]+$" },
+        "title": { "type": "string" },
+        "kind": { "enum": ["component", "module", "api", "flow", "data", "interface"], "title": "What kind of part this is" },
+        "detail": { "type": "string", "title": "The design in a few sentences" },
+        "addresses": { "type": "array", "items": { "type": "string", "pattern": "^(FR|CON)-[A-Za-z0-9-]+$" }, "title": "Requirements and constraints this element answers" },
+        "refs": { "$ref": "#/$defs/refs", "title": "Diagram and artifact references (e.g. arch#services)" }
+      },
+      "required": ["id", "title", "kind"],
       "additionalProperties": false
     },
     "decision": {
       "type": "object",
       "properties": {
         "id": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" },
-        "decision": { "type": "string", "title": "What was decided" },
+        "decision": { "type": "string" },
         "because": { "type": "string", "title": "Why — the alternative beaten" },
-        "resolves": { "type": "array", "items": { "type": "string", "pattern": "^Q-[A-Za-z0-9-]+$" }, "title": "Clarifications this decision settles" },
-        "supersedes": { "type": "array", "items": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" }, "title": "Earlier decisions replaced by this one" },
-        "status": { "enum": ["proposed", "accepted"], "title": "A human accepts decisions; proposed is a request" }
+        "resolves": { "type": "array", "items": { "type": "string", "pattern": "^Q-[A-Za-z0-9-]+$" } },
+        "supersedes": { "type": "array", "items": { "type": "string", "pattern": "^D-[A-Za-z0-9-]+$" } },
+        "status": { "enum": ["proposed", "accepted"], "title": "A human accepts decisions" }
       },
       "required": ["id", "decision", "because", "status"],
       "additionalProperties": false
@@ -134,7 +159,7 @@
       "type": "object",
       "properties": {
         "name": { "type": "string" },
-        "fields": { "type": "object", "description": "field → type/notes", "additionalProperties": { "type": "string" } },
+        "fields": { "type": "object", "additionalProperties": { "type": "string" } },
         "notes": { "type": "string" }
       },
       "required": ["name"],
@@ -142,25 +167,45 @@
     },
     "task": {
       "type": "object",
-      "title": "TASK — the smallest shippable unit",
+      "title": "TASK — flow links and trace links, never mixed",
       "properties": {
-        "id": { "type": "string", "pattern": "^T-[A-Za-z0-9-]+$", "title": "Task id (T-…)" },
+        "id": { "type": "string", "pattern": "^T-[A-Za-z0-9-]+$" },
         "title": { "type": "string" },
         "detail": { "type": "string", "title": "What to do, for the worker" },
-        "phase": { "enum": ["setup", "test-first", "core", "integration", "polish"], "title": "Speckit's phases" },
+        "phase": { "enum": ["setup", "test-first", "core", "integration", "polish"] },
         "needs": {
           "type": "array",
-          "items": { "type": "string", "pattern": "^(T|D|FR|CON|AC)-[A-Za-z0-9-]+$" },
-          "title": "Dependencies by id",
-          "description": "T-ids must be done first; D-ids must be accepted; FR/CON-ids are requirements this task carries; AC-ids are acceptance scenarios this task must satisfy. The engine computes 'who needs me' as the reverse index — never store it twice."
+          "items": { "type": "string", "pattern": "^T-[A-Za-z0-9-]+$" },
+          "title": "FLOW: tasks that must finish first",
+          "description": "Ordering only. The alignment links live in implements/satisfies/accepts/honors."
+        },
+        "implements": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^DES-[A-Za-z0-9-]+$" },
+          "title": "TRACE: design elements this task realizes"
+        },
+        "satisfies": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^FR-[A-Za-z0-9-]+$" },
+          "title": "TRACE: requirements this task serves directly"
+        },
+        "accepts": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^AC-[A-Za-z0-9-]+$" },
+          "title": "TRACE: acceptance scenarios this task makes pass"
+        },
+        "honors": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^CON-[A-Za-z0-9-]+$" },
+          "title": "TRACE: constraints this task must respect"
         },
         "produces": { "type": "array", "items": { "type": "string" }, "title": "Files this task creates or changes" },
         "verify": { "$ref": "#/$defs/verify", "title": "The observable check that completes this task" },
-        "parallel": { "type": "boolean", "title": "Safe to run alongside other parallel-marked tasks" },
-        "status": { "enum": ["todo", "doing", "done", "blocked"], "title": "State, moved only with evidence" },
-        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "title": "Observed runs: a done task without evidence is a defect" },
-        "assignee": { "type": "string", "title": "Worker or subagent name (pi, claude, codex, …)" },
-        "refs": { "$ref": "#/$defs/refs", "title": "Artifacts to read while working" }
+        "parallel": { "type": "boolean" },
+        "status": { "enum": ["todo", "doing", "done", "blocked"] },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" }, "title": "Observed runs — done without evidence is a defect" },
+        "assignee": { "type": "string", "title": "Worker or subagent (pi, claude, codex, …)" },
+        "refs": { "$ref": "#/$defs/refs" }
       },
       "required": ["id", "title", "verify", "status"],
       "additionalProperties": false
@@ -168,8 +213,8 @@
     "verify": {
       "type": "object",
       "properties": {
-        "cmd": { "type": "string", "title": "The command that checks this task" },
-        "expect": { "type": "string", "title": "The pass condition (usually 'exit 0' plus what output must show)" }
+        "cmd": { "type": "string" },
+        "expect": { "type": "string", "title": "The pass condition" }
       },
       "required": ["cmd", "expect"],
       "additionalProperties": false
@@ -177,10 +222,10 @@
     "evidence": {
       "type": "object",
       "properties": {
-        "cmd": { "type": "string", "title": "The command that ran" },
-        "exit": { "type": "integer", "title": "Its exit code" },
-        "at": { "type": "string", "title": "When (ISO-8601, Z)" },
-        "by": { "type": "string", "title": "Who ran it" },
+        "cmd": { "type": "string" },
+        "exit": { "type": "integer" },
+        "at": { "type": "string", "title": "ISO-8601 with Z" },
+        "by": { "type": "string" },
         "notes": { "type": "string" }
       },
       "required": ["cmd", "exit", "at"],
@@ -188,15 +233,15 @@
     },
     "refs": {
       "type": "array",
-      "title": "References into artifacts",
-      "description": "Format: '<artifactKey>#<anchor>' — e.g. 'prd#Refund Rules' or 'pricing!Sheet1' for spreadsheets. The json never embeds the file; it points.",
+      "title": "References into artifacts and diagrams",
+      "description": "'<artifactKey>#<anchor>' for documents ('prd#Refund Rules', 'arch#services'), '<artifactKey>!<Sheet>' for spreadsheets.",
       "items": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*[#!][^#]+$" }
     },
     "review": {
       "type": "object",
       "title": "REVIEW — verdicts on any id",
       "properties": {
-        "checklist": { "type": "string", "title": "Named checklist applied (e.g. EPIC)" },
+        "checklist": { "type": "string", "title": "Named checklist applied" },
         "verdicts": { "type": "array", "items": { "$ref": "#/$defs/verdict" } }
       },
       "additionalProperties": false
@@ -204,10 +249,10 @@
     "verdict": {
       "type": "object",
       "properties": {
-        "on": { "type": "string", "pattern": "^(T|D|FR|CON|Q|US)-[A-Za-z0-9-]+$", "title": "The id under review" },
-        "verdict": { "enum": ["PASS", "IMPROVE", "REPLAN"], "title": "ACCEPT/IMPROVE/REPLAN routing — local fix, regenerate, or re-open the analysis" },
+        "on": { "type": "string", "pattern": "^(T|D|DES|FR|CON|Q|US|DG)-[A-Za-z0-9-]+$" },
+        "verdict": { "enum": ["PASS", "IMPROVE", "REPLAN"] },
         "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
-        "by": { "type": "string", "title": "Reviewer (e.g. red-foreman)" },
+        "by": { "type": "string" },
         "at": { "type": "string" }
       },
       "required": ["on", "verdict", "by"],
@@ -218,7 +263,7 @@
       "properties": {
         "severity": { "enum": ["BLOCKER", "DEFECT", "SMELL"] },
         "note": { "type": "string" },
-        "fix": { "type": "string", "title": "The one-line fix — a finding without a fix is noise" }
+        "fix": { "type": "string", "title": "The one-line fix" }
       },
       "required": ["severity", "note"],
       "additionalProperties": false

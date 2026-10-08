@@ -1,5 +1,5 @@
 {
-  "format": "specpack/0.1",
+  "format": "specpack/0.2",
   "name": "todo-api",
   "title": "Todo API \u2014 add a todo (Spring Boot)",
   "artifacts": {
@@ -17,7 +17,12 @@
     "spec-md": {
       "file": "spec.md",
       "type": "text/markdown",
-      "description": "The human prose of this spec \u2014 this json is its twin"
+      "description": "The human prose of this spec \u2014 generated from this json"
+    },
+    "arch": {
+      "file": "architecture.md",
+      "type": "text/x-mermaid",
+      "description": "Architecture diagram (mermaid): layers, request flow, where the todo parts sit"
     }
   },
   "spec": {
@@ -89,17 +94,90 @@
     "out_of_scope": [
       "authentication",
       "multiple users",
-      "list and complete endpoints (FR-2 is recorded but not this slice)"
+      "list and complete endpoints (FR-2 is recorded, not this slice)"
     ]
   },
   "plan": {
-    "approach": "Plain layered Spring Boot: controller validates and shapes HTTP, service owns the 1..200 rule, repository persists via JPA. H2 file database behind Flyway so v1 runs from a checkout with zero setup.",
+    "approach": "Plain layered Spring Boot: controller validates and shapes HTTP, service owns the 1..200 rule, repository persists via JPA. H2 file database behind Flyway so v1 runs from a checkout with zero setup. See DG-1 for the layers and DG-2 for the create-request flow.",
     "stack": {
       "language": "Java 21",
       "framework": "Spring Boot 3.x",
       "storage": "H2 file + Flyway",
-      "tests": "JUnit 5 + MockMvc + Testcontainers-free (H2)"
+      "tests": "JUnit 5 + MockMvc"
     },
+    "diagrams": [
+      {
+        "id": "DG-1",
+        "artifact": "arch",
+        "caption": "Layers: controller \u2192 service \u2192 repository over H2; where each DES- part sits",
+        "format": "mermaid",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "DES-3",
+          "DES-4"
+        ]
+      },
+      {
+        "id": "DG-2",
+        "artifact": "arch",
+        "caption": "Create-request sequence: validate \u2192 rule \u2192 persist \u2192 201 + Location",
+        "format": "mermaid",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "FR-1"
+        ]
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "TodoController",
+        "kind": "api",
+        "detail": "Exposes POST /todos. Bean validation draws the 400 path; happy path returns 201 + Location built from the saved id.",
+        "addresses": [
+          "FR-1"
+        ],
+        "refs": [
+          "arch#http"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "TodoService",
+        "kind": "component",
+        "detail": "Owns the create rule: trims, enforces 1..200, delegates persistence. The one place CON-1 lives.",
+        "addresses": [
+          "FR-1",
+          "CON-1"
+        ],
+        "refs": [
+          "arch#services"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "TodoRepository",
+        "kind": "component",
+        "detail": "JPA repository over TodoEntity; nothing but persistence.",
+        "addresses": [
+          "FR-1"
+        ],
+        "refs": [
+          "arch#data"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "TodoEntity + Flyway V1",
+        "kind": "data",
+        "detail": "id UUID, title varchar(200), createdAt instant, done boolean (Q-2 pending). Migration V1__todos.sql.",
+        "addresses": [
+          "FR-1"
+        ]
+      }
+    ],
     "decisions": [
       {
         "id": "D-1",
@@ -112,8 +190,8 @@
       },
       {
         "id": "D-2",
-        "decision": "Validation at the controller with bean validation; domain rule duplicated nowhere",
-        "because": "400 field errors are an HTTP concern; the service re-checks the rule so tests of the service are honest.",
+        "decision": "Validation at the controller with bean validation; domain rule re-checked in the service, duplicated nowhere else",
+        "because": "400 field errors are an HTTP concern; the service re-check keeps service tests honest.",
         "status": "accepted"
       }
     ],
@@ -143,10 +221,14 @@
       "title": "TodoEntity + Flyway migration",
       "phase": "setup",
       "status": "done",
-      "detail": "Entity per plan.data; migration V1__todos.sql creates the todos table.",
-      "needs": [
-        "D-1"
+      "detail": "Entity per DES-4; migration creates the todos table.",
+      "needs": [],
+      "implements": [
+        "DES-4"
       ],
+      "satisfies": [],
+      "accepts": [],
+      "honors": [],
       "produces": [
         "src/main/java/demo/TodoEntity.java",
         "src/main/resources/db/migration/V1__todos.sql"
@@ -175,7 +257,16 @@
       "status": "done",
       "detail": "create(title) trims, enforces CON-1, saves, returns the entity.",
       "needs": [
-        "T-1",
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "accepts": [],
+      "honors": [
         "CON-1"
       ],
       "produces": [
@@ -203,8 +294,20 @@
       "status": "doing",
       "detail": "Bean validation for the 400 path (AC-2); 201 + Location for the happy path (AC-1).",
       "needs": [
-        "T-2",
+        "T-2"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
         "FR-1"
+      ],
+      "accepts": [
+        "AC-1",
+        "AC-2"
+      ],
+      "honors": [
+        "CON-2"
       ],
       "produces": [
         "src/main/java/demo/TodoController.java"
@@ -231,9 +334,16 @@
       "status": "todo",
       "detail": "TodoCreateAcceptanceTest walks AC-1 end to end through MockMvc.",
       "needs": [
-        "T-3",
+        "T-3"
+      ],
+      "implements": [],
+      "satisfies": [
+        "FR-1"
+      ],
+      "accepts": [
         "AC-1"
       ],
+      "honors": [],
       "produces": [
         "src/test/java/demo/TodoCreateAcceptanceTest.java"
       ],
@@ -245,7 +355,7 @@
     }
   ],
   "review": {
-    "checklist": "EPIC (arXiv 2610.07534) \u2014 E/P/I/C dimensions + red-foreman severities",
+    "checklist": "EPIC (arXiv 2610.07534) + red-foreman severities",
     "verdicts": [
       {
         "on": "D-1",
