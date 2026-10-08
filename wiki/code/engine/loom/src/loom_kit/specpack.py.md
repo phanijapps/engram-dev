@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: d8409dcac4e5381aa0cf1c51eed8bc6d1551dbaf2956241fd06ce368b0814980
+source_hash: 9e997d5611c270f25222618d4f0fb33c3236e0327d31c9f5725a2236b600644a
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T20:31:52Z'
+  at: '2026-10-08T21:54:43Z'
 status: stable
 package: engine/loom
 ---
@@ -46,12 +46,12 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose
 | function | `_resolve_path` | 219-224 |
 | function | `_pin_or_verify` | 227-256 |
 | function | `_verify_refs` | 259-291 |
-| function | `rebase` | 294-322 |
-| function | `_repin` | 303-310 |
-| function | `next_task` | 325-365 |
-| function | `_task_body` | 368-374 |
-| function | `_node_body` | 377-403 |
-| function | `slice_for` | 406-456 |
+| function | `rebase` | 294-329 |
+| function | `_repin` | 310-317 |
+| function | `next_task` | 332-372 |
+| function | `_task_body` | 375-381 |
+| function | `_node_body` | 384-410 |
+| function | `slice_for` | 413-463 |
 
 1 symbols omitted from compact profile.
 

@@ -203,7 +203,7 @@ def cmd_rebase(args) -> int:
     if doc.get("revision", 1) != args.expected_revision:
         print(f"REFUSED: stale writer — file is at revision {doc.get('revision', 1)}, caller expected {args.expected_revision}")
         return 1
-    out = specpack.rebase(doc, args.task, path)
+    out = specpack.rebase(doc, args.task, path, approved_by=args.approved_by)
     specpack.save(doc, path)
     if args.json:
         print(json.dumps(out, indent=2, sort_keys=True))
@@ -245,8 +245,9 @@ def _next_specpack(args) -> int:
                 print("  blocked:", t)
         if out["status"] == "needs_rebase":
             print(
-                f"  task {out['task']} drifted; re-pin with: loom rebase {args.directory} "
-                f"--task {out['task']} --expected-revision {out['revision']}"
+                f"  task {out['task']} drifted; show the owner the drift and remedies, then: "
+                f"loom rebase {args.directory} --task {out['task']} "
+                f"--expected-revision {out['revision']} --approved-by human:<owner>"
             )
             for d in out["drift"]:
                 print(f"  drift: {d['path']} ({d['why']})")
@@ -465,6 +466,7 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("directory", help="initiative directory (specpack json)")
     sp.add_argument("--task", required=True)
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
+    sp.add_argument("--approved-by", required=True, help="who approved this re-pin at the drift; must be human:<owner> (D-7)")
     sp.add_argument("--json", action="store_true")
     sp.set_defaults(fn=cmd_rebase)
     sp = sub.add_parser("record", help="record an attempt (pass|fail|unblock|cancel) with evidence")

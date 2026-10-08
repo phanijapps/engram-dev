@@ -171,7 +171,7 @@ def test_rebase_repins_to_current_truth(tmp_path: Path):
     d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope", "sha256": stale}], data)
     doc, path = _load(d)
     rev = doc.get("revision", 1)
-    out = specpack.rebase(doc, "T-1", path)
+    out = specpack.rebase(doc, "T-1", path, approved_by="human:owner")
     assert out == {"task": "T-1", "repinned": ["src/thing.py"], "dropped": []}
     assert doc["tasks"][0]["context"]["touch"][0]["sha256"] == _sha(data)
     assert doc["revision"] == rev + 1
@@ -182,7 +182,7 @@ def test_rebase_drops_pin_for_deleted_file(tmp_path: Path):
     stale = _sha(b"gone")
     d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope", "sha256": stale}], None)
     doc, path = _load(d)
-    out = specpack.rebase(doc, "T-1", path)
+    out = specpack.rebase(doc, "T-1", path, approved_by="human:owner")
     assert out["dropped"] == ["src/thing.py"]
     assert "sha256" not in doc["tasks"][0]["context"]["touch"][0]
 
@@ -203,7 +203,7 @@ def test_cli_rebase_then_next_hands_out(tmp_path: Path, capsys):
     wrong = _sha(b"print('v1')\n")
     d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope", "sha256": wrong}], data)
     assert main(["next", str(d)]) == 2
-    assert main(["rebase", str(d), "--task", "T-1", "--expected-revision", "1"]) == 0
+    assert main(["rebase", str(d), "--task", "T-1", "--expected-revision", "1", "--approved-by", "human:owner"]) == 0
     capsys.readouterr()
     assert main(["next", str(d), "--json"]) == 0
     out = json.loads(capsys.readouterr().out)
@@ -214,7 +214,7 @@ def test_cli_rebase_then_next_hands_out(tmp_path: Path, capsys):
 def test_cli_rebase_stale_writer_refused(tmp_path: Path, capsys):
     data = b"x"
     d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope"}], data)
-    assert main(["rebase", str(d), "--task", "T-1", "--expected-revision", "99"]) == 1
+    assert main(["rebase", str(d), "--task", "T-1", "--expected-revision", "99", "--approved-by", "human:owner"]) == 1
     assert "REFUSED" in capsys.readouterr().out
 
 
@@ -226,7 +226,7 @@ def test_rebase_also_repins_artifact_digests(tmp_path: Path):
     (d / "notes.md").write_bytes(note)
     doc, path = _load(d)
     assert specpack.next_task(doc, path)["status"] == "needs_rebase"
-    out = specpack.rebase(doc, "T-1", path)
+    out = specpack.rebase(doc, "T-1", path, approved_by="human:owner")
     assert out["repinned"] == ["notes.md"]
     assert specpack.next_task(doc, path)["status"] == "task"
 
@@ -255,3 +255,20 @@ def test_loader_refuses_unknown_format(tmp_path: Path):
     pj.write_text(json.dumps(doc))
     with pytest.raises(LoomError, match="unsupported format"):
         specpack.load_specpack(d)
+
+
+def test_rebase_refuses_agent_approval(tmp_path):
+    """D-7: the approval claim must name a human (shape check, A7-style)."""
+    data = b"x"
+    d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope"}], data)
+    doc, path = _load(d)
+    with pytest.raises(LoomError, match="owner approval"):
+        specpack.rebase(doc, "T-1", path, approved_by="agent:pi")
+    specpack.rebase(doc, "T-1", path, approved_by="human:owner")  # passes
+
+def test_cli_rebase_requires_approved_by(tmp_path, capsys):
+    data = b"x"
+    d = _ws(tmp_path, [{"path": "src/thing.py", "why": "in scope"}], data)
+    import pytest as _pytest
+    with _pytest.raises(SystemExit):
+        main(["rebase", str(d), "--task", "T-1", "--expected-revision", "1"])

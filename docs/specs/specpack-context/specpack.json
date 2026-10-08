@@ -58,16 +58,18 @@
         "resolves": [
           "Q-1"
         ],
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
-        "because": "Re-hashing bytes is mechanical; a human gate on re-pinning would convert drift into a queue; git records who and when without adding clock fields.",
-        "decision": "Any agent may re-pin via loom rebase; the pack's git history is the provenance record.",
+        "because": "Re-hashing bytes is mechanical, but a drift is a signal the plan no longer matches the code. The agent proposes the fix; the human accepts it. This is the harness trust rule applied to rebase. The claim is a shape check like A7: git and review carry the truth.",
+        "decision": "An agent may re-pin only with owner approval at the drift: the agent shows the drift (paths, pinned vs current) and the remedies (re-pin and continue, or replan); the owner approves; loom rebase --approved-by human:<owner> records the approval claim. Git history is the provenance record.",
         "id": "D-7",
         "resolves": [
           "Q-2"
         ],
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "designs": [
@@ -215,14 +217,16 @@
         "owner": "human:owner",
         "question": "Pin moment: at loom next (re-pin each handout, refuse drift since the last pin) or at plan acceptance (stricter, explicit rebase wall)?",
         "resolved_by": "D-6",
-        "status": "open"
+        "status": "resolved",
+        "answer": "Pin at loom next (option A). The work session is the fence; the human accepted D-6 on 2026-10-08."
       },
       {
         "id": "Q-2",
         "owner": "human:owner",
         "question": "Who may re-pin drifted digests: any agent (with git as the provenance record) or a human only?",
         "resolved_by": "D-7",
-        "status": "open"
+        "status": "resolved",
+        "answer": "Any agent may re-pin, but only after owner approval at the drift: agent shows guidance, owner approves, rebase records --approved-by human:<owner> (option A with an approval gate, accepted 2026-10-08)."
       }
     ],
     "constraints": [

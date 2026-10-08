@@ -291,12 +291,19 @@ def _verify_refs(doc: dict, task_id: str, pack_path: Path) -> list[dict]:
     return drift
 
 
-def rebase(doc: dict, task_id: str, pack_path: Path) -> dict:
+def rebase(doc: dict, task_id: str, pack_path: Path, approved_by: str) -> dict:
     """Re-pin touch, local-link, and artifact digests to current truth (D-7).
 
+    The re-pin is a proposal the owner approved at the drift: approved_by must
+    claim a human (A7-style shape check; git and review carry the truth).
     Git history of the pack is the provenance record. Remote URLs are never
     fetched; their digests are left untouched.
     """
+    if not str(approved_by).startswith("human:"):
+        raise LoomError(
+            "rebase needs owner approval: pass --approved-by human:<owner> "
+            "(the agent shows the drift and the remedies; the owner approves)"
+        )
     root = _git_root(pack_path)
     repinned, dropped = [], []
 

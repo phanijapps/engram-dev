@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: a2f9d5e09a139c5e2ec87438bbc1e8481922b9ac297a681eb42e0a3e4e1f6170
+source_hash: c0090bb76cdbf701ff3f11b80d615d2121dc6955d0211d2d52fa906e4ca7d72d
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T20:31:52Z'
+  at: '2026-10-08T21:54:43Z'
 status: stable
 package: engine/loom
 ---
@@ -43,13 +43,13 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 | function | `cmd_record` | 173-197 |
 | function | `cmd_rebase` | 200-212 |
 | function | `cmd_status` | 215-229 |
-| function | `_next_specpack` | 232-295 |
-| function | `esc_local` | 298-299 |
-| function | `_record_specpack` | 302-320 |
-| function | `_status_specpack` | 323-335 |
-| function | `cmd_selftest` | 338-425 |
-| function | `main` | 428-498 |
-| function | `d` | 433-434 |
+| function | `_next_specpack` | 232-296 |
+| function | `esc_local` | 299-300 |
+| function | `_record_specpack` | 303-321 |
+| function | `_status_specpack` | 324-336 |
+| function | `cmd_selftest` | 339-426 |
+| function | `main` | 429-500 |
+| function | `d` | 434-435 |
 
 # Relationships
 

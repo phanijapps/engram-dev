@@ -49,6 +49,13 @@ skill's job is faithful execution + honest evidence — not re-deciding.
 8. **Task done ≠ requirement verified.** `done` means *this task's
    expectation was observed*. Requirement-level verification, conformance
    to design, and evidence currency are `review`'s job.
+9. **Stuck states ask the owner (D-7).** `needs_rebase` (drifted digests)
+   and `BLOCKED` (stall limit) are stops, not self-serve fixes. Show the
+   owner: what drifted (paths, pinned vs current) or why it stalled, the
+   remedies (re-pin and continue, replan, or unblock), and the risk of
+   each. Act only on the owner's approval, recorded as `loom rebase
+   --approved-by human:<owner>` (or `loom record --result unblock`). Never
+   re-pin, unblock, or amend the pack silently to keep moving.
 
 ## 1. Select
 
