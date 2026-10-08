@@ -1,15 +1,17 @@
 ---
 type: Decision
-status: draft
+status: stable
 created: 2026-10-08
 updated: 2026-10-08
-title: A packagable harness that fast-tracks graph engineering without the waterfall trap
+verified:
+  - { by: human:owner, at: 2026-10-08T00:50:00Z }
+title: A packagable harness that fast-tracks graph engineering without the waterfall trap (accepted 2026-10-08)
 description: 'DRAFT — acceptance requested. The harness ships as a package other teams install to run graph engineering (spec-driven development over a versioned solution graph) without falling into the waterfall trap: knowledge first, bounded artifacts, uncertainty recorded, humans accepting.'
 sources: [{ id: src, resource: docs/product/Structured_Brief.md }]
 tags: [decision, purpose, graph-engineering, anti-waterfall, draft]
 ---
 
-# Decision (proposed)
+# Decision (ACCEPTED 2026-10-08 — finding `golden-path-8481ab73`)
 
 This project builds a **packagable harness**. Its purpose: **fast-track
 graph engineering** — spec-driven development where intent, requirements,
@@ -28,6 +30,8 @@ the waterfall trap**.
    questions run; sequencing follows the dependency graph, not a calendar.
 5. **Humans accept, tools prove** — nothing normative binds without owner
    acceptance; nothing is "done" without observed evidence.
+
+**This is the ratified purpose of the project.**
 
 ## Packaging
 

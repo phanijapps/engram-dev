@@ -14,10 +14,10 @@ sources:
 source_hash: a6fff1bbc564c9644f3aaa40bd4558f4121a14a6a3435d4857c441b0fdf5313b
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-08T00:43:25Z'
+created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T00:43:25Z'
+  at: '2026-10-08T00:45:16Z'
 status: stable
 package: engine/okf
 ---

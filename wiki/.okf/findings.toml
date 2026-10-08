@@ -25,10 +25,10 @@ id = "golden-path-8481ab73"
 source = "docs/specs/semantic-extraction/plan.md"
 destination = "wiki/decisions/graph-engineering-fast-track.md"
 kind = "golden-path"
-status = "pending"
+status = "accepted"
 rationale = "Owner direction 2026-10-08: the project builds a packagable harness used to fast-track graph engineering without the waterfall trap. Normative acceptance requested for the purpose decision."
 proposed_at = "2026-10-08T00:44:43.716209+00:00"
-resolved_at = ""
+resolved_at = "2026-10-08T00:48:07.027680+00:00"
 
 [[findings]]
 id = "policy-ff546069"
