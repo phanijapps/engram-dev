@@ -1663,3 +1663,28 @@ def test_write_candidates_manifest(tmp_path):
     data = json.loads(path.read_text())
     assert data["count"] >= 2  # schema-validator + assertion
     assert all("path" in c and "start_line" in c and "source_hash" in c for c in data["candidates"])
+
+
+def test_find_candidates_grown_kinds_without_tree_sitter_asserts():
+    from okf_kit.code.semantic import find_candidates_in_source
+
+    src = (
+        "import warnings\n"
+        "\n"
+        "MAX_RETRIES = 5\n"
+        "\n"
+        "def old_api():\n"
+        "    warnings.warn('use new_api', DeprecationWarning)\n"
+        "\n"
+        "def newer():\n"
+        "    pass  # FIXME: wire the retry policy\n"
+    )
+    candidates = find_candidates_in_source("src/api.py", src)
+    kinds = sorted(c.kind for c in candidates)
+    assert kinds == ["deprecation", "module-constant", "todo-marker"]
+    dep = next(c for c in candidates if c.kind == "deprecation")
+    assert dep.symbol == "old_api" and dep.start_line == 6
+    const = next(c for c in candidates if c.kind == "module-constant")
+    assert const.start_line == 3
+    todo = next(c for c in candidates if c.kind == "todo-marker")
+    assert todo.start_line == 9 and "FIXME" in todo.snippet

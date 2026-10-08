@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/cli.py
-source_hash: 77bda708b72f278d174563fc965f761c10938cb89ef78290dc044e336b3d0155
+source_hash: b0369be3bdb996d75fc123a34638e76478a6bf2d239706709ecb84e6eeac015d
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T00:03:19Z'
+  at: '2026-10-08T00:34:14Z'
 status: stable
 package: engine/okf
 ---
@@ -31,21 +31,24 @@ Generated CodeModule concept for `engine/okf/okf_kit/cli.py`. Purpose: engine/ok
 | Kind | Name | Lines |
 |---|---|---|
 | function | `main` | 22-37 |
-| function | `_build_parser` | 40-180 |
-| function | `_dispatch` | 183-202 |
-| function | `_cmd_init` | 205-208 |
-| function | `_cmd_new` | 211-221 |
-| function | `_cmd_validate` | 224-230 |
-| function | `_cmd_search` | 233-246 |
-| function | `_cmd_read` | 249-257 |
-| function | `_cmd_index_regen` | 260-263 |
-| function | `_cmd_findings` | 266-296 |
-| function | `_cmd_status` | 299-311 |
-| function | `_cmd_code` | 314-317 |
-| function | `_cmd_code_index` | 320-347 |
-| function | `_print_report` | 350-359 |
-| function | `_print_hits` | 362-368 |
-| function | `_hit_dict` | 371-378 |
+| function | `_build_parser` | 40-198 |
+| function | `_dispatch` | 201-224 |
+| function | `_cmd_init` | 227-230 |
+| function | `_cmd_new` | 233-243 |
+| function | `_cmd_validate` | 246-252 |
+| function | `_cmd_search` | 255-268 |
+| function | `_cmd_read` | 271-279 |
+| function | `_cmd_index_regen` | 282-285 |
+| function | `_cmd_findings` | 288-318 |
+| function | `_cmd_fingerprints` | 321-329 |
+| function | `_cmd_anchors` | 332-343 |
+| function | `_cmd_status` | 346-360 |
+| function | `_cmd_code` | 363-368 |
+| function | `_cmd_code_rules` | 371-379 |
+| function | `_cmd_code_index` | 382-409 |
+| function | `_print_report` | 412-421 |
+| function | `_print_hits` | 424-430 |
+| function | `_hit_dict` | 433-440 |
 
 # Relationships
 
@@ -53,11 +56,14 @@ Generated CodeModule concept for `engine/okf/okf_kit/cli.py`. Purpose: engine/ok
 - `argparse`
 - `json`
 - `okf_kit.code.indexer.index_codebase`
+- `okf_kit.code.semantic.write_candidates_manifest`
 - `okf_kit.core.context`
 - `okf_kit.core.context.ConceptNotFound`
 - `okf_kit.core.findings.list_findings`
 - `okf_kit.core.findings.propose_finding`
 - `okf_kit.core.findings.resolve_finding`
+- `okf_kit.core.fingerprints.anchor_review`
+- `okf_kit.core.fingerprints.write_fingerprints`
 - `okf_kit.core.index.regenerate_indexes`
 - `okf_kit.core.search.build_index`
 - `okf_kit.core.search.search`
@@ -66,10 +72,7 @@ Generated CodeModule concept for `engine/okf/okf_kit/cli.py`. Purpose: engine/ok
 - `okf_kit.core.templates.TEMPLATE_TYPES`
 - `okf_kit.core.templates.create_concept`
 - `okf_kit.core.templates.init_bundle`
-- `okf_kit.core.validate.Report`
-- `okf_kit.core.validate.validate_bundle`
-- `pathlib.Path`
-- 2 imports omitted from compact profile.
+- 5 imports omitted from compact profile.
 
 # Impact notes
 

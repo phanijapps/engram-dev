@@ -99,6 +99,16 @@ def bundle_status(bundle: Path, repo_root: Path | None = None) -> dict[str, obje
 
     report = validate_bundle(bundle) if present else None
 
+    anchors: dict[str, int] | None = None
+    if present and (bundle / STAMP_DIRNAME / "fingerprints.json").is_file():
+        from okf_kit.core.fingerprints import anchor_review
+
+        entries = anchor_review(bundle, repo_root)
+        anchors = {
+            "checked": len(entries),
+            "stale": sum(1 for e in entries if e["verdict"] in ("changed", "missing-file")),
+        }
+
     return {
         "bundle": str(bundle),
         "present": present,
@@ -115,4 +125,5 @@ def bundle_status(bundle: Path, repo_root: Path | None = None) -> dict[str, obje
             "errors": len(report.errors) if report else 0,
             "warnings": len(report.warnings) if report else 0,
         },
+        "anchors": anchors,
     }

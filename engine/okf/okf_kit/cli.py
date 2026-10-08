@@ -88,8 +88,19 @@ def _build_parser() -> argparse.ArgumentParser:
     p_regen = idx_sub.add_parser("regen", help="Regenerate per-directory index.md files.")
     p_regen.add_argument("bundle")
 
-    p_status = sub.add_parser("status", help="One-shot bundle health: freshness, counts, findings, validation.")
+    p_status = sub.add_parser("status", help="One-shot bundle health: freshness, counts, findings, validation, anchors.")
     p_status.add_argument("bundle")
+
+    p_fp = sub.add_parser("fingerprints", help="Record/refresh the source content hashes backing a bundle.")
+    fp_sub = p_fp.add_subparsers(dest="fingerprints_command", required=True)
+    p_fp_update = fp_sub.add_parser("update", help="Write .okf/fingerprints.json from the workspace.")
+    p_fp_update.add_argument("workspace")
+    p_fp_update.add_argument("bundle")
+
+    p_anchors = sub.add_parser("anchors", help="Per-anchor staleness review (NEEDS_REVIEW report).")
+    p_anchors.add_argument("bundle")
+    p_anchors.add_argument("--workspace", default=None, help="Repo root the anchor paths resolve against (default: bundle parent).")
+
 
     p_findings = sub.add_parser("findings", help="Normative proposal ledger for a bundle.")
     findings_sub = p_findings.add_subparsers(dest="findings_command", required=True)
@@ -206,6 +217,10 @@ def _dispatch(args: argparse.Namespace) -> int:
         return _cmd_findings(args)
     if args.command == "status":
         return _cmd_status(args)
+    if args.command == "fingerprints":
+        return _cmd_fingerprints(args)
+    if args.command == "anchors":
+        return _cmd_anchors(args)
     return 2  # unreachable: argparse requires a subcommand
 
 
@@ -303,6 +318,31 @@ def _cmd_findings(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_fingerprints(args: argparse.Namespace) -> int:
+    from okf_kit.core.fingerprints import write_fingerprints
+
+    path = write_fingerprints(Path(args.workspace), Path(args.bundle))
+    import json
+
+    data = json.loads(path.read_text())
+    print(f"fingerprints: {len(data['fingerprints'])} files → {path}")
+    return 0
+
+
+def _cmd_anchors(args: argparse.Namespace) -> int:
+    from okf_kit.core.fingerprints import anchor_review
+
+    bundle = Path(args.bundle)
+    repo_root = Path(args.workspace) if args.workspace else bundle.parent
+    entries = anchor_review(bundle, repo_root)
+    needs = [e for e in entries if e["verdict"] in ("changed", "missing-file")]
+    for e in entries:
+        mark = "NEEDS_REVIEW" if e["verdict"] in ("changed", "missing-file") else "ok"
+        print(f"{mark}\t{e['verdict']}\t{e['page']}\t{e['resource']}")
+    print(f"anchors: {len(entries)} checked, {len(needs)} need review")
+    return 0
+
+
 def _cmd_status(args: argparse.Namespace) -> int:
     from okf_kit.core.status import bundle_status
 
@@ -312,6 +352,8 @@ def _cmd_status(args: argparse.Namespace) -> int:
     print(f"freshness: {s['freshness']}  (stamp {s['stamp_head']} vs HEAD {s['head']})")
     print(f"indexed_at: {s['indexed_at']}  last_index: {s['last_index']}")
     print(f"concepts: {s['concept_count']}  pending findings: {s['pending_findings']}")
+    if s.get("anchors") is not None:
+        print(f"anchors: {s['anchors']['checked']} checked, {s['anchors']['stale']} stale")
     print(f"validate: conformant={s['validate']['conformant']} errors={s['validate']['errors']} warnings={s['validate']['warnings']}")
     if s["freshness"] == "stale":
         print("refresh recommended: okf code index . <bundle>")

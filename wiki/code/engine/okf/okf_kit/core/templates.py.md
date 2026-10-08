@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/core/templates.py
-source_hash: da938443c583af10390acb1c53d5ebd62c5eb8311525ef747d2d32ee04f28cf6
+source_hash: d1921ce1a93194d7d6d75c8c7863d1291e85f4820c083bafbf78b70e50c1b24e
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-07T23:07:32Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T00:03:19Z'
+  at: '2026-10-08T00:34:14Z'
 status: stable
 package: engine/okf
 ---
@@ -30,9 +30,9 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/templates.py`. Purpose
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `init_bundle` | 29-38 |
-| function | `create_concept` | 41-78 |
-| function | `_render` | 81-83 |
+| function | `init_bundle` | 67-76 |
+| function | `create_concept` | 79-116 |
+| function | `_render` | 119-121 |
 
 # Relationships
 

@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/core/status.py
-source_hash: 712738d9e17d05ef7ae1085da619875e12cf22e0caec7fc317dc515e1d5d1458
+source_hash: bd4b01b060758541e319a56b07a9a8f0d39734c5fe8d1bc2d4b1625f8eff8557
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T00:02:00Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T00:03:19Z'
+  at: '2026-10-08T00:34:14Z'
 status: stable
 package: engine/okf
 ---
@@ -33,13 +33,14 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/status.py`. Purpose: e
 | function | `_git_head` | 18-29 |
 | function | `_concept_count` | 32-37 |
 | function | `_pending_findings` | 40-55 |
-| function | `bundle_status` | 58-118 |
+| function | `bundle_status` | 58-129 |
 
 # Relationships
 
 - `__future__.annotations`
 - `json`
 - `okf_kit.core.findings.findings_path`
+- `okf_kit.core.fingerprints.anchor_review`
 - `okf_kit.core.parse.parse_concept`
 - `okf_kit.core.stamp.STAMP_DIRNAME`
 - `okf_kit.core.stamp.STAMP_FILENAME`

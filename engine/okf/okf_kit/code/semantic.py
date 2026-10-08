@@ -29,6 +29,11 @@ _KIND_ASSERT = "assertion"
 _KIND_PERMISSION = "permission-check"
 _KIND_ENUM = "state-enum"
 _KIND_VALIDATOR = "schema-validator"
+_KIND_DEPRECATION = "deprecation"
+_KIND_CONSTANT = "module-constant"
+_KIND_TODO = "todo-marker"
+_TODO_RE = re.compile(r"#\s*(?:[^\n]*\b)?(TODO|FIXME|HACK)\b")
+_CONST_NAME_RE = re.compile(r"^[A-Z][A-Z0-9_]*$")
 
 
 @dataclass(slots=True)
@@ -153,11 +158,31 @@ def _walk(node: Any, source_bytes: bytes, chain: list[str], out: list[RuleCandid
         ))
         return
 
+    if kind == "assignment" and not chain:
+        # module-level assignment to an ALL_CAPS name = a policy knob
+        targets = runtime.child_by_field_name(node, "left")
+        target_text = runtime.node_text(targets, source_bytes) if targets is not None else ""
+        if _CONST_NAME_RE.match(target_text.strip()):
+            out.append(RuleCandidate(
+                kind=_KIND_CONSTANT, path=rel_path,
+                start_line=runtime.start_line(node), end_line=runtime.end_line(node),
+                symbol=None, snippet=_snippet(node, source_bytes),
+                source_hash=file_hash,
+            ))
+        return
+
     if kind == "call":
         cname = _call_name(node, source_bytes)
         if cname and _CALL_POLICY_RE.search(cname):
             out.append(RuleCandidate(
                 kind=_KIND_PERMISSION, path=rel_path,
+                start_line=runtime.start_line(node), end_line=runtime.end_line(node),
+                symbol=_enclosing(chain), snippet=_snippet(node, source_bytes),
+                source_hash=file_hash,
+            ))
+        if cname == "warn" and "DeprecationWarning" in runtime.node_text(node, source_bytes):
+            out.append(RuleCandidate(
+                kind=_KIND_DEPRECATION, path=rel_path,
                 start_line=runtime.start_line(node), end_line=runtime.end_line(node),
                 symbol=_enclosing(chain), snippet=_snippet(node, source_bytes),
                 source_hash=file_hash,
@@ -175,6 +200,16 @@ def find_candidates_in_source(rel_path: str, source: str) -> list[RuleCandidate]
     out: list[RuleCandidate] = []
     file_hash = hashlib.sha256(source_bytes).hexdigest()
     _walk(runtime.root_node(tree), source_bytes, [], out, rel_path, file_hash)
+    # comment markers are line-level, not syntax nodes
+    for lineno, line in enumerate(source.splitlines(), start=1):
+        m = _TODO_RE.search(line)
+        if m:
+            out.append(RuleCandidate(
+                kind=_KIND_TODO, path=rel_path,
+                start_line=lineno, end_line=lineno,
+                symbol=None, snippet=line.strip()[:118],
+                source_hash=file_hash,
+            ))
     return out
 
 

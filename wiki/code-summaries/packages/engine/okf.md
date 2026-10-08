@@ -12,7 +12,7 @@ managed_by: okf-code
 created: 2026-10-07T23:07:31Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T00:03:18Z'
+  at: '2026-10-08T00:34:14Z'
 status: stable
 package: engine/okf
 ---
@@ -32,6 +32,7 @@ Generated package summary for `repository/engine/okf`. Purpose: provide a low-to
 - [engine/okf/okf_kit/code/model.py](/code/engine/okf/okf_kit/code/model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `DiscoveredSource`, `CodeSymbol`, `CodeRelationship`
 - [engine/okf/okf_kit/code/paths.py](/code/engine/okf/okf_kit/code/paths.py.md) - module; depends on 0; used by 0; high-signal symbols: `concept_id`, `concept_path`, `safe_segment`
 - [engine/okf/okf_kit/code/render.py](/code/engine/okf/okf_kit/code/render.py.md) - module; depends on 0; used by 0; high-signal symbols: `_lifecycle_frontmatter`, `render_concept`, `render_summary_concept`
+- [engine/okf/okf_kit/code/semantic.py](/code/engine/okf/okf_kit/code/semantic.py.md) - model module; depends on 0; used by 0; high-signal symbols: `RuleCandidate`, `_snippet`, `_call_name`
 - [engine/okf/okf_kit/code/treesitter/__init__.py](/code/engine/okf/okf_kit/code/treesitter/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/__init__.py](/code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/base.py](/code/engine/okf/okf_kit/code/treesitter/languages/base.py.md) - model module; depends on 0; used by 0; high-signal symbols: `LanguageAdapter`, `extract`, `_walk`
@@ -39,11 +40,10 @@ Generated package summary for `repository/engine/okf`. Purpose: provide a low-to
 - [engine/okf/okf_kit/core/__init__.py](/code/engine/okf/okf_kit/core/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/core/context.py](/code/engine/okf/okf_kit/core/context.py.md) - model module; depends on 0; used by 0; high-signal symbols: `ConceptNotFound`, `__init__`, `read_concept`
 - [engine/okf/okf_kit/core/findings.py](/code/engine/okf/okf_kit/core/findings.py.md) - model module; depends on 0; used by 0; high-signal symbols: `FindingsError`, `Finding`, `findings_path`
+- [engine/okf/okf_kit/core/fingerprints.py](/code/engine/okf/okf_kit/core/fingerprints.py.md) - module; depends on 0; used by 0; high-signal symbols: `_sha256`, `_git_head`, `compute_fingerprints`
 - [engine/okf/okf_kit/core/index.py](/code/engine/okf/okf_kit/core/index.py.md) - module; depends on 0; used by 0; high-signal symbols: `regenerate_indexes`, `_render_index`, `_str_field`
 - [engine/okf/okf_kit/core/links.py](/code/engine/okf/okf_kit/core/links.py.md) - module; depends on 0; used by 0; high-signal symbols: `is_external_target`, `is_absolute_target`, `cid_segments_valid`
-- [engine/okf/okf_kit/core/model.py](/code/engine/okf/okf_kit/core/model.py.md) - model module; depends on 0; used by 0; high-signal symbols: `Concept`
-- [engine/okf/okf_kit/core/parse.py](/code/engine/okf/okf_kit/core/parse.py.md) - model module; depends on 0; used by 0; high-signal symbols: `FrontmatterResult`, `split_frontmatter`, `parse_concept`
-- 5 modules omitted from compact summary.
+- 7 modules omitted from compact summary.
 
 # Impact map
 
