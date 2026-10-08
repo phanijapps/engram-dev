@@ -112,6 +112,26 @@
       "provenance_refs": [],
       "revision": 1,
       "title": "Phase 4: decision + plan gate"
+    },
+    {
+      "artifact_refs": [
+        {
+          "artifact": "plan",
+          "section": "Tasks"
+        }
+      ],
+      "body": {
+        "text": "Direct iteration with the owner produced the codified format: specpack.schema.json 0.2 + example-add-todo.specpack.json + rendered HTML + proposal. Alignment rules A1-A6 proven by execution; schema validates the example with 0 errors."
+      },
+      "created_at": "2026-10-08T02:37:49Z",
+      "created_by": "human:owner",
+      "epistemic_state": "DECLARED",
+      "extensions": {},
+      "kind": "TASK",
+      "node_id": "synthesis-specpack",
+      "provenance_refs": [],
+      "revision": 1,
+      "title": "Synthesis: specpack 0.2 \u2014 schema, example, rendered reference"
     }
   ],
   "profile": "pi",
@@ -168,9 +188,26 @@
       }
     }
   ],
-  "revision": 6,
+  "revision": 13,
   "runtime": {
-    "attempts": [],
+    "attempts": [
+      {
+        "attempt_id": "att-synthesis-specpack-1",
+        "commands": [
+          {
+            "command": "uv run --with jsonschema python: validate specpack example against schema",
+            "evidence_level": "attested",
+            "exit_code": 0
+          }
+        ],
+        "finished_at": "2026-10-08T02:37:59Z",
+        "notes": "owner-approved ('love it'); defaults in force; ratification via golden-path-f57902a6",
+        "result": "pass",
+        "started_at": "2026-10-08T02:37:59Z",
+        "task_id": "synthesis-specpack",
+        "worker": "agent:pi"
+      }
+    ],
     "events": [
       {
         "at": "2026-10-08T01:50:46Z",
@@ -196,36 +233,89 @@
         "at": "2026-10-08T01:50:47Z",
         "detail": "TASK p4-gate",
         "kind": "node.added"
+      },
+      {
+        "at": "2026-10-08T02:37:49Z",
+        "detail": "p1-archaeology",
+        "kind": "task.cancelled"
+      },
+      {
+        "at": "2026-10-08T02:37:49Z",
+        "detail": "p2-external",
+        "kind": "task.cancelled"
+      },
+      {
+        "at": "2026-10-08T02:37:49Z",
+        "detail": "p4-gate",
+        "kind": "task.cancelled"
+      },
+      {
+        "at": "2026-10-08T02:37:49Z",
+        "detail": "TASK synthesis-specpack",
+        "kind": "node.added"
+      },
+      {
+        "at": "2026-10-08T02:37:58Z",
+        "detail": "1",
+        "kind": "tasks.promoted"
+      },
+      {
+        "at": "2026-10-08T02:37:58Z",
+        "detail": "synthesis-specpack ctx=94c1be3ae00c",
+        "kind": "task.running"
+      },
+      {
+        "at": "2026-10-08T02:37:59Z",
+        "detail": "synthesis-specpack pass (1 command(s))",
+        "kind": "task.recorded"
+      },
+      {
+        "at": "2026-10-08T02:38:11Z",
+        "detail": "p3-synthesis",
+        "kind": "task.cancelled"
       }
     ],
     "task_states": [
       {
         "attempts": [],
         "extensions": {},
-        "state": "PENDING",
-        "state_version": 1,
+        "state": "CANCELLED",
+        "state_version": 2,
         "task_id": "p1-archaeology"
       },
       {
         "attempts": [],
         "extensions": {},
-        "state": "PENDING",
-        "state_version": 1,
+        "state": "CANCELLED",
+        "state_version": 2,
         "task_id": "p2-external"
       },
       {
         "attempts": [],
         "extensions": {},
-        "state": "PENDING",
-        "state_version": 1,
+        "state": "CANCELLED",
+        "state_version": 2,
         "task_id": "p3-synthesis"
       },
       {
         "attempts": [],
         "extensions": {},
-        "state": "PENDING",
-        "state_version": 1,
+        "state": "CANCELLED",
+        "state_version": 2,
         "task_id": "p4-gate"
+      },
+      {
+        "attempts": [
+          "att-synthesis-specpack-1"
+        ],
+        "context": {
+          "context_id": "94c1be3ae00c",
+          "digest": "30be8c670b95457bb3fb8938c3198e53519320f554f12cdeabdee9d2a271316a"
+        },
+        "extensions": {},
+        "state": "SUCCEEDED",
+        "state_version": 4,
+        "task_id": "synthesis-specpack"
       }
     ]
   },

@@ -1,6 +1,10 @@
 # specpack proposal — the codified json, ideated per owner direction
 
-- **Status:** IDEATION — owner reviews before anything binds.
+- **Status:** APPROVED as direction — owner: "love it" (2026-10-08).
+  Defaults on Q1–Q5 in force: format `specpack`, file `<name>.json`, lean statuses,
+  x-* convention-only, markdown twins generated-from-json, specpack becomes
+  loom's spine format at L1. Ratification pending via findings ledger
+  (golden-path, proposed).
 - **Owner directive (2026-10-08):** "Take Spec Kit's spec, plan, task
   templates, roll them into one json file with clearly identifying
   dependencies, and refer to artifacts within the json. Use html as
