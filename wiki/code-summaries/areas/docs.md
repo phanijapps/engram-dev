@@ -9,10 +9,10 @@ tags:
 - area
 summary_level: area
 managed_by: okf-code
-created: '2026-10-08T02:23:33Z'
+created: 2026-10-08T02:23:33Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T02:23:33Z'
+  at: '2026-10-08T02:33:08Z'
 status: stable
 area: docs
 ---
