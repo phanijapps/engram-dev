@@ -71,3 +71,23 @@ def test_create_concept_rejects_symlink_dir_escape(tmp_path: Path):
     finally:
         if escape.is_symlink() or escape.exists():
             escape.unlink()
+
+
+def test_semantic_type_templates_scaffold_conforming_concepts(tmp_path):
+    from okf_kit.core.templates import create_concept, init_bundle
+    from okf_kit.core.validate import validate_bundle
+
+    init_bundle(tmp_path, okf_version="0.2", name="t")
+    for i, type_name in enumerate(
+        ["BusinessRule", "EncapsulatedLogic", "Pattern", "Policy"]
+    ):
+        create_concept(
+            tmp_path,
+            f"docs/{type_name.lower()}",
+            type_name,
+            title=f"{type_name} example",
+            description=f"a {type_name} page",
+        )
+    r = validate_bundle(tmp_path)
+    assert r.conformant
+    assert not r.warnings

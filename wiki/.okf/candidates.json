@@ -1,0 +1,349 @@
+{
+  "generated_at": "2026-10-08T00:25:38Z",
+  "workspace": "/home/videogamer/code/memex_beta",
+  "count": 38,
+  "candidates": [
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 95,
+      "end_line": 95,
+      "symbol": "discover_repositories",
+      "snippet": "raise ValueError(f\"repository does not exist: {workspace}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 110,
+      "end_line": 110,
+      "symbol": "discover_repositories",
+      "snippet": "raise ValueError(f\"repo selection is ambiguous: {selector}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 121,
+      "end_line": 121,
+      "symbol": "discover_repositories",
+      "snippet": "raise ValueError(f\"repo selection escapes workspace: {selector}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 167,
+      "end_line": 167,
+      "symbol": "_validate_scope_patterns",
+      "snippet": "raise ValueError(f\"{label} selection escapes workspace: {value}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 173,
+      "end_line": 173,
+      "symbol": "_validate_scope_patterns",
+      "snippet": "raise ValueError(f\"{label} selection escapes workspace: {value}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 197,
+      "end_line": 197,
+      "symbol": "adapters_for",
+      "snippet": "raise ValueError(f\"unsupported language(s): {', '.join(unknown)} (supported: {supported})\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 259,
+      "end_line": 259,
+      "symbol": "iter_source_files",
+      "snippet": "raise ValueError(f\"source path escapes repository: {path}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/discovery.py",
+      "start_line": 302,
+      "end_line": 302,
+      "symbol": "adapter_for_path",
+      "snippet": "raise ValueError(f\"unsupported source file extension: {path.suffix}\")",
+      "source_hash": "c1d35cbae4b90f99bcb41d17222d90e0e8ed93664cfb73f4e2d2f479df7eff1c"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 78,
+      "end_line": 78,
+      "symbol": "index_codebase",
+      "snippet": "raise ValueError(\"profile must be 'compact' or 'full'\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 83,
+      "end_line": 83,
+      "symbol": "index_codebase",
+      "snippet": "raise ValueError(f\"repository does not exist: {repo_root}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 106,
+      "end_line": 109,
+      "symbol": "index_codebase",
+      "snippet": "raise ValueError(",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 137,
+      "end_line": 137,
+      "symbol": "index_codebase",
+      "snippet": "raise ValueError(f\"concept path escapes bundle: {cid}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 194,
+      "end_line": 196,
+      "symbol": "_preflight_destinations",
+      "snippet": "raise ValueError(",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 198,
+      "end_line": 198,
+      "symbol": "_preflight_destinations",
+      "snippet": "raise ValueError(f\"code concept destination parent is not a directory: {current}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 200,
+      "end_line": 200,
+      "symbol": "_preflight_destinations",
+      "snippet": "raise ValueError(f\"code concept destination is not a file: {dest}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 221,
+      "end_line": 224,
+      "symbol": "_preflight_existing_concepts",
+      "snippet": "raise ValueError(",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 290,
+      "end_line": 290,
+      "symbol": "_preflight_summary",
+      "snippet": "raise ValueError(f\"refusing to index over existing non-okf-code concept: {cid}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 301,
+      "end_line": 303,
+      "symbol": "_preflight_summary_destinations",
+      "snippet": "raise ValueError(",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 305,
+      "end_line": 307,
+      "symbol": "_preflight_summary_destinations",
+      "snippet": "raise ValueError(",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 309,
+      "end_line": 309,
+      "symbol": "_preflight_summary_destinations",
+      "snippet": "raise ValueError(f\"summary concept destination is not a file: {dest}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 318,
+      "end_line": 318,
+      "symbol": "_preflight_managed_roots",
+      "snippet": "raise ValueError(f\"managed root escapes bundle through symlink: {root}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 320,
+      "end_line": 320,
+      "symbol": "_preflight_managed_roots",
+      "snippet": "raise ValueError(f\"managed root is not a directory: {root}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 324,
+      "end_line": 324,
+      "symbol": "_preflight_managed_roots",
+      "snippet": "raise ValueError(f\"managed concept path escapes bundle through symlink: {path}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/indexer.py",
+      "start_line": 327,
+      "end_line": 327,
+      "symbol": "_preflight_managed_roots",
+      "snippet": "raise ValueError(f\"managed concept path escapes bundle: {path}\")",
+      "source_hash": "6ae4320fdbff2f8e96554fbc69bafdd6bdd759f9c5039a41d9d8394b8435c7a4"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/managed.py",
+      "start_line": 27,
+      "end_line": 27,
+      "symbol": "merge_managed",
+      "snippet": "raise ValueError(\"generated concept is missing okf-code markers\")",
+      "source_hash": "ff11647db933c9d0b9e5802eee0d02479b59d10c114ca7e2854dc3d3a114c19d"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/paths.py",
+      "start_line": 29,
+      "end_line": 29,
+      "symbol": "concept_id",
+      "snippet": "raise ValueError(f\"unable to derive valid concept id for source path: {source_path}\")",
+      "source_hash": "798f2ed0d350cd788c0798b374937cb792ff298d329f183393e6f735c04efe7e"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/paths.py",
+      "start_line": 49,
+      "end_line": 49,
+      "symbol": "concept_path",
+      "snippet": "raise ValueError(f\"concept path escapes bundle: {cid}\")",
+      "source_hash": "798f2ed0d350cd788c0798b374937cb792ff298d329f183393e6f735c04efe7e"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/treesitter/languages/base.py",
+      "start_line": 65,
+      "end_line": 65,
+      "symbol": "LanguageAdapter.extract",
+      "snippet": "raise ValueError(f\"source path escapes repository: {path}\")",
+      "source_hash": "676cb2c1cf6fe7f1b6a00f03e3564abb79511cabb348604df394357c7c491b48"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/treesitter/languages/base.py",
+      "start_line": 67,
+      "end_line": 67,
+      "symbol": "LanguageAdapter.extract",
+      "snippet": "raise ValueError(f\"unsupported {self.language} source path: {path}\")",
+      "source_hash": "676cb2c1cf6fe7f1b6a00f03e3564abb79511cabb348604df394357c7c491b48"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/code/treesitter/runtime.py",
+      "start_line": 199,
+      "end_line": 201,
+      "symbol": "_parser",
+      "snippet": "raise ValueError(",
+      "source_hash": "615282db941a4e00ee03159a9b25f596fda8ba819134ef7b62b7a4be44d88b97"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/context.py",
+      "start_line": 42,
+      "end_line": 42,
+      "symbol": "read_concept",
+      "snippet": "raise ConceptNotFound(cid, _suggest(root, cid))",
+      "source_hash": "32fa36dbe665c23e46e9bacbeae4cc91df3d32075d5498532a263ba24e8c82f8"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/findings.py",
+      "start_line": 147,
+      "end_line": 147,
+      "symbol": "resolve_finding",
+      "snippet": "raise FindingsError(\"decision must be accepted or declined\")",
+      "source_hash": "2b8405dedd356340bbf79a3078c21986599bd53a87f16af3a71a5ecb3c21aeb1"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/findings.py",
+      "start_line": 153,
+      "end_line": 153,
+      "symbol": "resolve_finding",
+      "snippet": "raise FindingsError(f\"finding {finding_id} is already {finding.status}\")",
+      "source_hash": "2b8405dedd356340bbf79a3078c21986599bd53a87f16af3a71a5ecb3c21aeb1"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/findings.py",
+      "start_line": 158,
+      "end_line": 158,
+      "symbol": "resolve_finding",
+      "snippet": "raise FindingsError(f\"no finding with id {finding_id}\")",
+      "source_hash": "2b8405dedd356340bbf79a3078c21986599bd53a87f16af3a71a5ecb3c21aeb1"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/findings.py",
+      "start_line": 164,
+      "end_line": 164,
+      "symbol": "list_findings",
+      "snippet": "raise FindingsError(\"status must be pending, accepted, or declined\")",
+      "source_hash": "2b8405dedd356340bbf79a3078c21986599bd53a87f16af3a71a5ecb3c21aeb1"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/templates.py",
+      "start_line": 92,
+      "end_line": 92,
+      "symbol": "create_concept",
+      "snippet": "raise ValueError(f\"invalid concept id: {cid!r}\")",
+      "source_hash": "d1921ce1a93194d7d6d75c8c7863d1291e85f4820c083bafbf78b70e50c1b24e"
+    },
+    {
+      "kind": "raise-guard",
+      "path": "engine/okf/okf_kit/core/templates.py",
+      "start_line": 98,
+      "end_line": 98,
+      "symbol": "create_concept",
+      "snippet": "raise ValueError(f\"concept path escapes bundle: {cid!r}\")",
+      "source_hash": "d1921ce1a93194d7d6d75c8c7863d1291e85f4820c083bafbf78b70e50c1b24e"
+    },
+    {
+      "kind": "schema-validator",
+      "path": "engine/okf/okf_kit/core/validate.py",
+      "start_line": 72,
+      "end_line": 138,
+      "symbol": null,
+      "snippet": "def validate_bundle(root: Path) -> Report:",
+      "source_hash": "57dbdc10c063bcc963ae0c0c645053b5423c703c6b0c328fd9f0678f4da86d7d"
+    }
+  ]
+}

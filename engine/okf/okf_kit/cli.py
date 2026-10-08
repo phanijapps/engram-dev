@@ -123,6 +123,13 @@ def _build_parser() -> argparse.ArgumentParser:
             "okf-kit[treesitter]."
         ),
     )
+    p_code_rules = code_sub.add_parser(
+        "rules",
+        help="Surface rule-shaped code candidates (guards, asserts, permissions, enums, validators).",
+    )
+    p_code_rules.add_argument("workspace", help="Source repository or workspace root to scan.")
+    p_code_rules.add_argument("bundle", help="OKF bundle root to write .okf/candidates.json into.")
+
     p_code_index.add_argument("workspace", help="Source repository or workspace root to index.")
     p_code_index.add_argument(
         "bundle",
@@ -314,7 +321,20 @@ def _cmd_status(args: argparse.Namespace) -> int:
 def _cmd_code(args: argparse.Namespace) -> int:
     if args.code_command == "index":
         return _cmd_code_index(args)
+    if args.code_command == "rules":
+        return _cmd_code_rules(args)
     return 2
+
+
+def _cmd_code_rules(args: argparse.Namespace) -> int:
+    from okf_kit.code.semantic import write_candidates_manifest
+
+    path = write_candidates_manifest(Path(args.workspace), Path(args.bundle))
+    import json
+
+    data = json.loads(path.read_text())
+    print(f"candidates: {data['count']} → {path}")
+    return 0
 
 
 def _cmd_code_index(args: argparse.Namespace) -> int:

@@ -19,3 +19,13 @@ status = "accepted"
 rationale = "Owner-signed direction (round 1): engine is okf only; future memex is a consumer layer. Normative acceptance requested for the new architecture decision page; strangler direction deprecated and its finding declined."
 proposed_at = "2026-10-07T23:27:03.308640+00:00"
 resolved_at = "2026-10-07T23:45:22.957749+00:00"
+
+[[findings]]
+id = "policy-ff546069"
+source = "docs/specs/semantic-extraction/design.md"
+destination = "wiki/domain/policy-no-session-capture-in-engine.md"
+kind = "policy"
+status = "pending"
+rationale = "Wave S dogfood: owner-declared non-goal D5 made normative \u2014 the engine never captures sessions/transcripts/tokens; future memex is a consumer layer."
+proposed_at = "2026-10-08T00:27:06.248790+00:00"
+resolved_at = ""

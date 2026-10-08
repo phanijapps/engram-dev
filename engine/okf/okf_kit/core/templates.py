@@ -14,7 +14,10 @@ import yaml
 
 from okf_kit.core.links import cid_segments_valid, is_within
 
-TEMPLATE_TYPES = ["Table", "Metric", "Runbook", "Playbook", "API"]
+TEMPLATE_TYPES = [
+    "Table", "Metric", "Runbook", "Playbook", "API",
+    "BusinessRule", "EncapsulatedLogic", "Pattern", "Policy",
+]
 
 _BODY_TEMPLATES: dict[str, str] = {
     "Table": "# Schema\n\n| Column | Type | Description |\n|---|---|---|\n\n# Examples\n\n",
@@ -22,6 +25,41 @@ _BODY_TEMPLATES: dict[str, str] = {
     "Runbook": "# Steps\n\n1. \n\n# Examples\n\n",
     "Playbook": "# Steps\n\n1. \n\n# Examples\n\n",
     "API": "# Endpoints\n\n\n# Examples\n\n",
+    # Wave S semantic types: location-anchored, searchable knowledge.
+    "BusinessRule": (
+        "# Rule\n\n"
+        "<the rule, one sentence>\n\n"
+        "# Anchors\n\n"
+        "[^rule-src]: `<path>:<line>-<line>` — <what this location enforces>\n\n"
+        "# Enforcement\n\n<how the code enforces it today>\n\n"
+        "# Examples\n\n"
+    ),
+    "EncapsulatedLogic": (
+        "# Behavior\n\n"
+        "<what this logic guarantees, in one sentence>\n\n"
+        "# Anchors\n\n"
+        "[^logic-src]: `<path>:<line>-<line>` — <where the behavior lives>\n\n"
+        "# Invariants\n\n- <what always holds>\n\n"
+        "# Examples\n\n"
+    ),
+    "Pattern": (
+        "# Pattern\n\n"
+        "<the recurring solution, one sentence>\n\n"
+        "# Anchors\n\n"
+        "[^pat-1]: `<path>:<line>` — instance 1\n"
+        "[^pat-2]: `<path>:<line>` — instance 2\n\n"
+        "# When to apply\n\n\n"
+        "# Examples\n\n"
+    ),
+    "Policy": (
+        "# Policy\n\n"
+        "<what code/contributors must do>\n\n"
+        "# Anchors\n\n"
+        "[^pol-src]: `<path>:<line>-<line>` — <where this is enforced>\n\n"
+        "# Status\n\n"
+        "Normative — binding only after acceptance through the findings ledger.\n\n"
+        "# Examples\n\n"
+    ),
     "_generic": "# Overview\n\n\n# Examples\n\n",
 }
 

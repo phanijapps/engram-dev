@@ -1588,3 +1588,78 @@ def test_reindex_preserves_created_and_advances_generated_without_tree_sitter():
     assert _existing_created(fresh) == "2020-01-01T00:00:00Z"
     fm = yaml.safe_load(fresh.split("\n---\n")[0].removeprefix("---\n"))
     assert fm["status"] == "stable"
+
+
+# --- semantic rule candidates (wave S / S1) ---
+
+
+def test_find_candidates_in_source_pins_all_kinds_without_tree_sitter_asserts():
+    from okf_kit.code.semantic import find_candidates_in_source
+
+    src = (
+        "from enum import Enum\n"
+        "\n"
+        "class OrderState(Enum):\n"
+        "    DRAFT = 1\n"
+        "\n"
+        "def validate_order(order):\n"
+        "    if order.total < 0:\n"
+        "        raise ValueError('negative total')\n"
+        "    assert order.id, 'missing id'\n"
+        "\n"
+        "def place(order, user):\n"
+        "    require_permission(user, 'order.place')\n"
+        "    ensure_budget(order)\n"
+    )
+    candidates = find_candidates_in_source("src/orders.py", src)
+    kinds = sorted(c.kind for c in candidates)
+    assert kinds == [
+        "assertion",
+        "permission-check",
+        "permission-check",
+        "raise-guard",
+        "schema-validator",
+        "state-enum",
+    ]
+    guard = next(c for c in candidates if c.kind == "raise-guard")
+    assert guard.path == "src/orders.py"
+    assert guard.start_line == 8 and guard.end_line == 8
+    assert guard.symbol == "validate_order"
+    assert "negative total" in guard.snippet
+    enum = next(c for c in candidates if c.kind == "state-enum")
+    assert enum.symbol is None and enum.end_line == 4
+    assert len({c.source_hash for c in candidates}) == 1
+
+
+def test_find_candidates_workspace_skips_tests_and_noise(tmp_path):
+    from okf_kit.code.semantic import find_candidates
+
+    src = "def check_x(x):\n    assert x\n"
+    (tmp_path / "pkg").mkdir(parents=True)
+    (tmp_path / "pkg" / "mod.py").write_text(src)
+    tests = tmp_path / "tests"
+    tests.mkdir()
+    (tests / "test_mod.py").write_text(src)
+    (tmp_path / "pkg" / "__pycache__").mkdir()
+    (tmp_path / "pkg" / "__pycache__" / "junk.py").write_text(src)
+
+    candidates = find_candidates(tmp_path)
+    paths = sorted({c.path for c in candidates})
+    assert paths == ["pkg/mod.py"]
+
+
+def test_write_candidates_manifest(tmp_path):
+    import json
+
+    from okf_kit.code.semantic import write_candidates_manifest
+
+    (tmp_path / "pkg").mkdir()
+    (tmp_path / "pkg" / "m.py").write_text("def check_a(a):\n    assert a\n")
+    (tmp_path / "wiki").mkdir()
+
+    path = write_candidates_manifest(tmp_path, tmp_path / "wiki")
+
+    assert path == tmp_path / "wiki" / ".okf" / "candidates.json"
+    data = json.loads(path.read_text())
+    assert data["count"] >= 2  # schema-validator + assertion
+    assert all("path" in c and "start_line" in c and "source_hash" in c for c in data["candidates"])
