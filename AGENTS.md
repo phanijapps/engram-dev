@@ -50,7 +50,7 @@ uv run loom --help                      # loop CLI
 Common operations (from the repo root):
 
 ```bash
-uv run okf code index . wiki            # rebuild wiki code concepts + freshness stamp
+uv run okf code index . wiki --exclude "docs/**"   # rebuild wiki code concepts + freshness stamp (docs/ is SDD artifacts, not source)
 uv run okf fingerprints update . wiki   # record source hashes (staleness baseline)
 uv run okf anchors wiki                 # pages anchored to changed code (NEEDS_REVIEW)
 uv run okf status wiki                  # fresh/stale, counts, findings, validation — one screen

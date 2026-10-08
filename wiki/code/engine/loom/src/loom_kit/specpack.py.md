@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: 5d21db9c020bde8f378ffc2c2378fa6d0b64ddc55307e23c23d56ccabf724128
+source_hash: d7e0f1e0874f9ce7a621621c87e626b8bf2fc7f3e914cd860efb7621201286de
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-08T02:51:49Z'
+created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T02:51:49Z'
+  at: '2026-10-08T13:28:24Z'
 status: stable
 package: engine/loom
 ---
@@ -38,14 +38,14 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose
 | function | `load_specpack` | 37-53 |
 | function | `validate` | 56-60 |
 | function | `_families` | 63-72 |
-| function | `alignment` | 75-167 |
+| function | `alignment` | 75-171 |
 | function | `dfs` | 127-134 |
-| function | `_fail_streak` | 170-177 |
-| function | `_task` | 180-184 |
-| function | `next_task` | 187-213 |
-| function | `slice_for` | 216-246 |
-| function | `_lookup` | 249-271 |
-| function | `record` | 274-314 |
+| function | `_fail_streak` | 174-181 |
+| function | `_task` | 184-188 |
+| function | `next_task` | 191-217 |
+| function | `slice_for` | 220-250 |
+| function | `_lookup` | 253-275 |
+| function | `record` | 278-318 |
 
 # Relationships
 

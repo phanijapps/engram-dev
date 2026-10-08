@@ -16,7 +16,7 @@ managed_by: okf-code
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T02:51:49Z'
+  at: '2026-10-08T13:28:24Z'
 status: stable
 ---
 <!-- okf-code:start -->
@@ -32,8 +32,6 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 - [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md) - module; depends on 2; used by 1; high-signal symbols: `_digest`, `_prereq_states`, `_satisfied`
 - [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `_now`, `_digest`, `_vschema`
 - [engine/loom/src/loom_kit/templates.py](/code/engine/loom/src/loom_kit/templates.py.md) - module; depends on 0; used by 1
-- [docs/specs/spec-graph/example-add-todo-specpack.html](/code/docs/specs/spec-graph/example-add-todo-specpack.html.md) - UI module; depends on 0; used by 0; high-signal symbols: `html`, `head`, `meta`
-- [docs/specs/spec-graph/example-add-todo.html](/code/docs/specs/spec-graph/example-add-todo.html.md) - UI module; depends on 0; used by 0; high-signal symbols: `html`, `head`, `meta`
 - [engine/okf/okf_kit/__init__.py](/code/engine/okf/okf_kit/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/cli.py](/code/engine/okf/okf_kit/cli.py.md) - module; depends on 0; used by 0; high-signal symbols: `main`, `_build_parser`, `_dispatch`
 - [engine/okf/okf_kit/code/__init__.py](/code/engine/okf/okf_kit/code/__init__.py.md) - module; depends on 0; used by 0
@@ -46,7 +44,9 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 - [engine/okf/okf_kit/code/semantic.py](/code/engine/okf/okf_kit/code/semantic.py.md) - model module; depends on 0; used by 0; high-signal symbols: `RuleCandidate`, `_snippet`, `_call_name`
 - [engine/okf/okf_kit/code/treesitter/__init__.py](/code/engine/okf/okf_kit/code/treesitter/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/__init__.py](/code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md) - module; depends on 0; used by 0
-- 15 modules omitted from compact summary.
+- [engine/okf/okf_kit/code/treesitter/languages/base.py](/code/engine/okf/okf_kit/code/treesitter/languages/base.py.md) - model module; depends on 0; used by 0; high-signal symbols: `LanguageAdapter`, `extract`, `_walk`
+- [engine/okf/okf_kit/code/treesitter/runtime.py](/code/engine/okf/okf_kit/code/treesitter/runtime.py.md) - module; depends on 0; used by 0; high-signal symbols: `parse_source`, `root_node`, `node_kind`
+- 13 modules omitted from compact summary.
 
 # Impact map
 

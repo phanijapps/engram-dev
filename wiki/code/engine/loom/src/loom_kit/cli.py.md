@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: c579b1a16580182588a0b6c06edf9924c032737a39d58018fdd8395c86ccb8ee
+source_hash: 56b2edbe747dd222edb339ac97d0b9c8ece8c9082f10331f9c59f2f0895b1fa5
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T02:51:49Z'
+  at: '2026-10-08T13:28:24Z'
 status: stable
 package: engine/loom
 ---
