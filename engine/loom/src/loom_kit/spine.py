@@ -9,13 +9,14 @@ semantic invariants the schema cannot express.
 from __future__ import annotations
 
 import json
+import os
 import re
 import threading
 from pathlib import Path
 
 from . import SCHEMA_VERSION
 
-SCHEMA_PATH = Path(__file__).resolve().parent.parent.parent / "schemas" / "spine.schema.json"
+SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "spine.schema.json"
 SPINE_NAME = "sdd.json"
 
 _LOCK = threading.Lock()
@@ -31,18 +32,33 @@ def _schema() -> dict:
 
 
 class MiniValidator:
-    """A small Draft-2020-12 subset validator: enough for the spine schema.
+    """A small Draft-2020-12 subset validator — FAIL-CLOSED.
 
     Supports: type, const, enum, pattern, required, properties,
-    additionalProperties(false), patternProperties, items, min/maxItems,
-    minLength/maxLength, minimum/maximum, $defs + local $ref.
+    additionalProperties (false AND as-schema), patternProperties,
+    items, min/maxItems, minLength/maxLength, minimum/maximum,
+    maxProperties, $defs + local $ref, and annotation keywords
+    (default/title/description). Any OTHER keyword in a schema is
+    reported as an error instead of being silently ignored, so the
+    validator cannot quietly under-validate.
     """
+
+    ANNOTATIONS = {"$id", "$schema", "title", "description", "default", "$comment", "examples"}
+
+    UNSUPPORTED = {
+        "oneOf", "anyOf", "allOf", "not", "if", "then", "else",
+        "dependentRequired", "dependentSchemas", "prefixItems", "contains",
+        "uniqueItems", "multipleOf", "exclusiveMinimum", "exclusiveMaximum",
+        "minProperties", "propertyNames", "unevaluatedProperties",
+        "unevaluatedItems",
+    }
 
     def __init__(self, schema: dict):
         self.root = schema
 
     def _ref(self, ref: str) -> dict:
-        assert ref.startswith("#/$defs/"), f"unsupported $ref: {ref}"
+        if not ref.startswith("#/$defs/"):
+            raise ValueError(f"validator only resolves local #/$defs refs, got: {ref}")
         node: object = self.root
         for part in ref[2:].split("/"):
             node = node[part]  # type: ignore[index]
@@ -53,6 +69,14 @@ class MiniValidator:
         if "$ref" in s:
             return self.validate(inst, self._ref(s["$ref"]), path)
         errs: list[str] = []
+        for k in sorted(set(s) - self.ANNOTATIONS - {
+            "type", "const", "enum", "pattern", "required", "properties",
+            "additionalProperties", "patternProperties", "items",
+            "minItems", "maxItems", "minLength", "maxLength", "minimum",
+            "maximum", "maxProperties", "$defs", "$ref",
+        }):
+            if k in self.UNSUPPORTED:
+                errs.append(f"{path}: schema keyword '{k}' is not supported by this validator (fail-closed)")
         t = s.get("type")
         if t == "object":
             if not isinstance(inst, dict):
@@ -61,16 +85,20 @@ class MiniValidator:
             for r in s.get("required", []):
                 if r not in inst:
                     errs.append(f"{path}: missing required '{r}'")
-            if s.get("additionalProperties") is False:
-                for k in inst:
-                    if k not in props and not any(re.match(p, k) for p in s.get("patternProperties", {})):
-                        errs.append(f"{path}: unknown key '{k}'")
+            ap = s.get("additionalProperties", True)
+            extra = [k for k in inst if k not in props and not any(re.search(p, k) for p in s.get("patternProperties", {}))]
+            if ap is False:
+                for k in extra:
+                    errs.append(f"{path}: unknown key '{k}'")
+            elif isinstance(ap, dict):
+                for k in extra:
+                    errs += self.validate(inst[k], ap, f"{path}.{k}")
             for k, v in inst.items():
                 if k in props:
                     errs += self.validate(v, props[k], f"{path}.{k}")
                 else:
                     for p, ps in s.get("patternProperties", {}).items():
-                        if re.match(p, k):
+                        if re.search(p, k):
                             errs += self.validate(v, ps, f"{path}.{k}")
         elif t == "array":
             if not isinstance(inst, list):
@@ -197,10 +225,23 @@ def load(directory: str | Path) -> tuple[dict, Path]:
 
 
 def save(doc: dict, path: Path) -> None:
+    """Atomic write: temp file in the same directory, then os.replace.
+
+    A crash mid-write leaves the previous spine intact and removes the
+    temp file — the machine authority is never left torn or littered.
+    """
     with _LOCK:
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(doc, f, indent=2, sort_keys=True)
-            f.write("\n")
+        tmp = path.with_name(path.name + ".tmp")
+        try:
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(doc, f, indent=2, sort_keys=True)
+                f.write("\n")
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, path)
+        except BaseException:
+            tmp.unlink(missing_ok=True)
+            raise
 
 
 def bump(doc: dict) -> dict:

@@ -215,3 +215,84 @@ def test_unblock_round_trips_through_load(tmp_path):
     doc, _ = load(d)  # unblocked state must validate too (escalation fully removed)
     assert doc["runtime"]["task_states"][0]["state"] == "READY"
     assert "escalation" not in doc["runtime"]["task_states"][0]
+
+
+# --- red-foreman findings 1/4/6: validator negative table + fail-closed ---
+
+
+def _mutated(base, fn):
+    import copy
+
+    doc = copy.deepcopy(base)
+    fn(doc)
+    return doc
+
+
+def test_validator_negative_table():
+    """Table-driven invalid documents, each asserting the error appears."""
+    from loom_kit.spine import validate_schema
+
+    base = fresh(1)
+    cases = [
+        # red-foreman BLOCKER 1: artifacts entries must actually validate
+        (lambda d: d["artifacts"].__setitem__("spec", {}), "missing required 'path'"),
+        (lambda d: d["artifacts"]["spec"].__setitem__("path", 42), "expected string"),
+        (lambda d: d["artifacts"]["spec"].__setitem__("hax", True), "unknown key 'hax'"),
+        (lambda d: d.__setitem__("warp", True), "unknown key 'warp'"),
+        (lambda d: d["nodes"][0].__setitem__("kind", "WARP"), "not in enum"),
+        (lambda d: d["nodes"][0].__setitem__("revision", 0), "below minimum"),
+        (lambda d: d["nodes"][0].__setitem__("title", ""), "too short"),
+        (lambda d: d["extensions"].__setitem__("bad", {"version": "0.1.0", "data": {}}), "unknown key"),
+        (lambda d: d["runtime"]["task_states"][0].__setitem__("state", "WARP"), "not in enum"),
+    ]
+    for i, (mutate, expect) in enumerate(cases):
+        errs = validate_schema(_mutated(base, mutate))
+        assert errs, f"case {i}: expected errors, got none"
+        assert any(expect in e for e in errs), f"case {i}: wanted '{expect}' in {errs}"
+
+
+def test_validator_fail_closed_on_unsupported_keyword():
+    """A schema keyword the validator does not implement must error, not silently pass."""
+    from loom_kit.spine import MiniValidator
+
+    v = MiniValidator({"type": "object", "oneOf": []})
+    errs = v.validate({"a": 1})
+    assert any("not supported" in e for e in errs), errs
+
+
+def test_schema_ships_inside_the_package():
+    """red-foreman DEFECT 2: an installed wheel must find the schema."""
+    from loom_kit import spine as sp
+
+    assert sp.SCHEMA_PATH.exists(), sp.SCHEMA_PATH
+    assert "loom_kit" in str(sp.SCHEMA_PATH)
+
+
+def test_save_is_atomic_and_leaves_no_tmp(tmp_path):
+    """red-foreman DEFECT 3: a mid-write crash must not destroy the spine."""
+    import json as _json
+
+    from loom_kit.spine import new_spine, save
+
+    d = tmp_path / "sdd.json"
+    doc = new_spine("atomic", "generic", "test")
+    save(doc, d)
+    good = d.read_text()
+
+    original = _json.dump
+
+    def boom(*a, **k):
+        raise OSError("disk full mid-write")
+
+    import loom_kit.spine as sp
+
+    sp.json.dump = boom
+    try:
+        try:
+            save(doc, d)
+        except OSError:
+            pass
+    finally:
+        sp.json.dump = original
+    assert d.read_text() == good  # original content intact
+    assert not list(d.parent.glob("*.tmp"))
