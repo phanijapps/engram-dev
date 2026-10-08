@@ -2,8 +2,8 @@
 type: CodeSummary
 title: repository/engine
 description: 'Generated area code summary for repository/engine. Top dependencies:
-  .EPISTEMIC, .PROFILES, .__version__, .machine, .spine.LoomError. Top dependents:
-  engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py, engine/loom/src/loom_kit/spine.py.'
+  .EPISTEMIC, .PROFILES, .__version__, .machine, .specpack. Top dependents: engine/loom/src/loom_kit/cli.py,
+  engine/loom/src/loom_kit/machine.py, engine/loom/src/loom_kit/specpack.py, engine/loom/src/loom_kit/spine.py.'
 tags:
 - code
 - summary
@@ -16,7 +16,7 @@ managed_by: okf-code
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T02:38:17Z'
+  at: '2026-10-08T02:51:49Z'
 status: stable
 area: engine
 ---
@@ -27,10 +27,11 @@ Generated area summary for `repository/engine`. Purpose: provide a low-token ent
 
 # Key modules
 
-- [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md) - module; depends on 4; used by 0; high-signal symbols: `_evidence`, `cmd_init`, `cmd_add`
+- [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md) - module; depends on 5; used by 0; high-signal symbols: `_mode`, `_specpack_path`, `cmd_check`
+- [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) - model module; depends on 1; used by 3; high-signal symbols: `LoomError`, `_schema`, `MiniValidator`
 - [engine/loom/src/loom_kit/__init__.py](/code/engine/loom/src/loom_kit/__init__.py.md) - module; depends on 0; used by 3
 - [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md) - module; depends on 2; used by 1; high-signal symbols: `_digest`, `_prereq_states`, `_satisfied`
-- [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) - model module; depends on 1; used by 2; high-signal symbols: `LoomError`, `_schema`, `MiniValidator`
+- [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `_now`, `_digest`, `_vschema`
 - [engine/loom/src/loom_kit/templates.py](/code/engine/loom/src/loom_kit/templates.py.md) - module; depends on 0; used by 1
 - [engine/okf/okf_kit/__init__.py](/code/engine/okf/okf_kit/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/cli.py](/code/engine/okf/okf_kit/cli.py.md) - module; depends on 0; used by 0; high-signal symbols: `main`, `_build_parser`, `_dispatch`
@@ -46,17 +47,17 @@ Generated area summary for `repository/engine`. Purpose: provide a low-token ent
 - [engine/okf/okf_kit/code/treesitter/languages/__init__.py](/code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/code/treesitter/languages/base.py](/code/engine/okf/okf_kit/code/treesitter/languages/base.py.md) - model module; depends on 0; used by 0; high-signal symbols: `LanguageAdapter`, `extract`, `_walk`
 - [engine/okf/okf_kit/code/treesitter/runtime.py](/code/engine/okf/okf_kit/code/treesitter/runtime.py.md) - module; depends on 0; used by 0; high-signal symbols: `parse_source`, `root_node`, `node_kind`
-- [engine/okf/okf_kit/core/__init__.py](/code/engine/okf/okf_kit/core/__init__.py.md) - module; depends on 0; used by 0
-- 12 modules omitted from compact summary.
+- 13 modules omitted from compact summary.
 
 # Impact map
 
 | Module | Depends | Used by | Relationship signals |
 |---|---:|---:|---|
-| [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md) | 4 | 0 | .__version__, .machine, .spine.LoomError |
+| [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md) | 5 | 0 | .__version__, .machine, .specpack |
+| [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) | 1 | 3 | .PROFILES, engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py, engine/loom/src/loom_kit/specpack.py |
 | [engine/loom/src/loom_kit/__init__.py](/code/engine/loom/src/loom_kit/__init__.py.md) | 0 | 3 | engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py, engine/loom/src/loom_kit/spine.py |
 | [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md) | 2 | 1 | .EPISTEMIC, .spine.LoomError, engine/loom/src/loom_kit/cli.py |
-| [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) | 1 | 2 | .PROFILES, engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py |
+| [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) | 1 | 1 | .spine.LoomError, engine/loom/src/loom_kit/cli.py |
 | [engine/loom/src/loom_kit/templates.py](/code/engine/loom/src/loom_kit/templates.py.md) | 0 | 1 | engine/loom/src/loom_kit/cli.py |
 
 # Impact notes
