@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "loom — the loop engine of the SDD harness: schema-backed spec graph, deterministic state machine, evidence-gated execution loop"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-dependencies = []
+dependencies = ["jsonschema>=4"]
 
 [project.scripts]
 loom = "loom_kit.cli:main"

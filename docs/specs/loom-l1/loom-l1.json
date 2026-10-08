@@ -1,0 +1,384 @@
+{
+  "artifacts": {
+    "arch": {
+      "description": "L1 architecture: loader \u2192 checker \u2192 next/record over the specpack file",
+      "file": "architecture.md",
+      "type": "text/x-mermaid"
+    },
+    "example": {
+      "description": "The worked example; becomes a test fixture",
+      "file": "../spec-graph/example-add-todo.specpack.json",
+      "type": "application/json"
+    },
+    "schema": {
+      "description": "The specpack 0.2 schema \u2014 vendored into the package with a digest-sync test",
+      "file": "../spec-graph/specpack.schema.json",
+      "type": "application/schema+json"
+    }
+  },
+  "format": "specpack/0.2",
+  "name": "loom-l1",
+  "plan": {
+    "approach": "One new module (specpack.py) carries load/validate/alignment/slice/next/record as pure functions over the json; the CLI grows format detection (sdd.json \u21d2 legacy, else <dirname>.json specpack) and a check command. The vendored schema + real python-jsonschema replace hand validation on this path. The wave dogfoods itself: the final task runs the new commands against this very file.",
+    "data": [],
+    "decisions": [
+      {
+        "because": "The in-session loop proves the protocol with the code we have; subprocess spawning adds surface without new understanding.",
+        "decision": "Defer `loom run` (profiles, captured evidence) to L2",
+        "id": "D-1",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "accepted"
+      },
+      {
+        "because": "A shipped wheel cannot reach docs/; a byte-equality test gives the drift alarm without coupling the engine to a docs folder.",
+        "decision": "Vendor the schema into the package with a digest-sync test instead of referencing the docs path",
+        "id": "D-2",
+        "status": "accepted"
+      },
+      {
+        "because": "The repo standard is python-jsonschema with format checking; the legacy path is scheduled for retirement and not worth a rewrite this wave.",
+        "decision": "specpack path uses real python-jsonschema; MiniValidator stays legacy-only until the spine retires",
+        "id": "D-3",
+        "status": "accepted"
+      }
+    ],
+    "designs": [
+      {
+        "addresses": [
+          "FR-1",
+          "FR-3"
+        ],
+        "detail": "load_specpack(path), validate(doc) via python-jsonschema against the vendored schema; atomic save reusing spine.save; revision defaults to 1 when absent.",
+        "id": "DES-1",
+        "kind": "module",
+        "title": "Specpack loader + validator"
+      },
+      {
+        "addresses": [
+          "FR-1"
+        ],
+        "detail": "alignment(doc) \u2192 sorted violation list for A1\u2013A4 + coverage report (FR/AC/DES reached-by) for A5; evidence rule A6 checked at record time.",
+        "id": "DES-2",
+        "kind": "module",
+        "title": "Alignment checker"
+      },
+      {
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "Format detection by file presence; check is specpack-only; next/record/status branch to the specpack functions; legacy path untouched.",
+        "id": "DES-3",
+        "kind": "interface",
+        "refs": [
+          "arch#cli"
+        ],
+        "title": "CLI integration: check/next/record/status over specpack"
+      },
+      {
+        "addresses": [
+          "FR-2"
+        ],
+        "detail": "slice_for(doc, task_id): transitive closure over needs plus trace targets, canonical sorted render, sha256 digest of the canonical form.",
+        "id": "DES-4",
+        "kind": "module",
+        "refs": [
+          "arch#slice"
+        ],
+        "title": "Slice compiler"
+      }
+    ],
+    "diagrams": [
+      {
+        "artifact": "arch",
+        "caption": "L1 pipeline: specpack.json \u2192 loader (jsonschema) \u2192 alignment checker \u2192 next/record \u2192 specpack.json (atomic, revision-fenced)",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "DES-3",
+          "DES-4"
+        ],
+        "format": "mermaid",
+        "id": "DG-1"
+      }
+    ],
+    "stack": {
+      "deps": "jsonschema>=4 (added to engine/loom)",
+      "language": "Python 3.12",
+      "tests": "pytest"
+    },
+    "structure": [
+      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/tests/test_specpack_core.py",
+      "engine/loom/tests/test_specpack_cli.py"
+    ]
+  },
+  "review": {
+    "checklist": "Alignment rules A1\u2013A6 + red-foreman severities",
+    "verdicts": []
+  },
+  "revision": 14,
+  "spec": {
+    "clarifications": [
+      {
+        "answer": "Deferred \u2014 in-session loop first.",
+        "id": "Q-1",
+        "owner": "human:owner",
+        "question": "Does `loom run` (profile subprocess spawning, captured evidence) land in L1?",
+        "resolved_by": "D-1",
+        "status": "resolved"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Determinism: same file + same command \u21d2 byte-identical selections, ordering, and reports. Sorted ids everywhere; no map-iteration or clock-dependent rendering (clock lives only inside evidence rows the caller supplies)."
+      },
+      {
+        "id": "CON-2",
+        "text": "The legacy sdd.json path stays read-only this wave \u2014 no regression on the 25 existing tests."
+      },
+      {
+        "id": "CON-3",
+        "text": "The specpack schema is vendored into the package; a test asserts the vendored copy's sha256 equals the docs copy (drift alarm, no docs-path coupling)."
+      }
+    ],
+    "out_of_scope": [
+      "loom run + client profiles",
+      "markdown-twin generation",
+      "removing the legacy spine",
+      "MCP surface"
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "the spec-graph example specpack",
+            "id": "AC-1",
+            "then": "exit 0 with FR-2 and DES-3 reported as gaps",
+            "when": "loom check runs against it"
+          },
+          {
+            "given": "a specpack with a dangling needs id",
+            "id": "AC-2",
+            "then": "exit 1 naming the violation",
+            "when": "loom check runs"
+          }
+        ],
+        "text": "`loom check <dir>` MUST load the initiative's specpack, validate it against the vendored schema, run alignment rules A1\u2013A6, and print coverage in canonical (sorted) order. Exit 1 only on rule violations (A1\u2013A4); coverage gaps are reported, never blocking."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "the worked example",
+            "id": "AC-3",
+            "then": "tasks arrive in id order among ready ones and DONE ends the loop",
+            "when": "loom next runs twice recording passes between"
+          }
+        ],
+        "text": "`loom next <dir>` MUST hand out exactly one actionable task \u2014 resumable doing, then ready todo (all needs done), id order \u2014 with its slice (flow + trace closure, sorted, digested); DONE or BLOCKED otherwise."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "a doing task",
+            "id": "AC-4",
+            "then": "REFUSED (M_run = M)",
+            "when": "record pass without a zero-exit command"
+          }
+        ],
+        "text": "`loom record <dir> --task T --result pass|fail|unblock|cancel` MUST append an evidence row, move states (pass\u21d2done on zero-exit evidence, fail\u21d2todo retry, two consecutive fails\u21d2blocked), refuse stale writers by revision, and refuse done without zero-exit evidence."
+      }
+    ],
+    "stories": [
+      {
+        "as": "an operator",
+        "id": "US-1",
+        "so": "the loop runs on the format I actually author",
+        "want": "loom to check, next, and record against a specpack file"
+      }
+    ],
+    "why": "loom's prototype spine was hand-typed slop. The owner codified specpack 0.2; loom must manage context and loop through tasks directly on that format, with alignment verified every pass."
+  },
+  "tasks": [
+    {
+      "accepts": [
+        "AC-2"
+      ],
+      "detail": "specpack.py: load, validate (jsonschema, vendored schema), alignment A1\u2013A4 + coverage, atomic save. Tests: schema digest-sync (CON-3), example validates, one negative fixture per rule A1\u2013A4, coverage gaps sorted.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-3"
+      ],
+      "id": "T-1",
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
+      "needs": [],
+      "parallel": false,
+      "phase": "test-first",
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_core.py"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "done",
+      "title": "Loader + validator + alignment checker",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_core.py",
+        "expect": "exit 0 \u2014 digest-sync, validation, A1\u2013A4 negatives, sorted coverage"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "slice_for: transitive flow closure + trace targets, canonical sorted render, digest. Test: slice(T-3) of the example equals the expected id set; digest stable across calls.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-1"
+      ],
+      "id": "T-2",
+      "implements": [
+        "DES-4"
+      ],
+      "needs": [
+        "T-1"
+      ],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py (slice_for)"
+      ],
+      "satisfies": [
+        "FR-2"
+      ],
+      "status": "done",
+      "title": "Slice compiler",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_core.py",
+        "expect": "exit 0 \u2014 closure correct, digest deterministic"
+      }
+    },
+    {
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4"
+      ],
+      "detail": "Format detection, check command, next/record/status branching; revision fence; M_run = M; two-fail stall; legacy untouched.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:39Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_cli.py",
+          "exit": 0
+        }
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-3",
+      "implements": [
+        "DES-3"
+      ],
+      "needs": [
+        "T-2"
+      ],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_cli.py"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "status": "done",
+      "title": "CLI: check / next / record / status over specpack",
+      "verify": {
+        "cmd": "uv run pytest -q tests/test_specpack_cli.py",
+        "expect": "exit 0 \u2014 e2e: check gaps reported, next\u2192record loop to DONE, refusals enforced"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "selftest gains a specpack segment; then the wave runs the new commands against THIS file as its own evidence.",
+      "evidence": [
+        {
+          "at": "2026-10-08T02:50:40Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && uv run loom check docs/specs/loom-l1",
+          "exit": 1
+        },
+        {
+          "at": "2026-10-08T02:50:40Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && uv run loom check docs/specs/loom-l1",
+          "exit": 1
+        },
+        {
+          "at": "2026-10-08T02:51:13Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run loom selftest && cd ../.. && uv run loom check docs/specs/loom-l1",
+          "exit": 0,
+          "notes": "prior fails were a verify-command path bug (relative path from engine/loom), not a code defect; check corrected, fresh run green"
+        }
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-4",
+      "implements": [
+        "DES-3"
+      ],
+      "needs": [
+        "T-3"
+      ],
+      "parallel": false,
+      "phase": "integration",
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py (selftest)"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "done",
+      "title": "Selftest extension + self dogfood",
+      "verify": {
+        "cmd": "cd engine/loom && uv run loom selftest && cd ../.. && uv run loom check docs/specs/loom-l1",
+        "expect": "exit 0 \u2014 selftest green, this file's gaps reported in sorted order"
+      }
+    }
+  ],
+  "title": "Loom L1 \u2014 loom speaks specpack natively"
+}

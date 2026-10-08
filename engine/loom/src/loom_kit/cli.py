@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from . import machine
+from . import machine, specpack
 from .spine import (
     LoomError,
     SPINE_NAME,
@@ -19,6 +19,49 @@ from .spine import (
     _now,
 )
 from .templates import PLAN_TMPL, REVIEW_TMPL, SPEC_TMPL
+
+
+def _mode(directory: str) -> str:
+    """sdd.json ⇒ legacy spine; otherwise the dirname-matching specpack json."""
+    d = Path(directory)
+    if (d / "sdd.json").exists():
+        return "legacy"
+    return "specpack"
+
+
+def _specpack_path(directory: str) -> Path:
+    d = Path(directory)
+    preferred = d / (d.resolve().name + ".json")
+    if preferred.exists():
+        return preferred
+    found = sorted(d.glob("*.json"))
+    if not found:
+        raise LoomError(f"{d}: no specpack json (looked for {preferred.name})")
+    return found[0]
+
+
+def cmd_check(args) -> int:
+    """specpack-only: schema + alignment A1-A6 report, canonical order."""
+    path = _specpack_path(args.directory)
+    with open(path, encoding="utf-8") as f:
+        doc = json.load(f)
+    errs = specpack.validate(doc, path)
+    aerrs, cov = specpack.alignment(doc)
+    if errs:
+        print("SCHEMA INVALID:")
+        for e in errs:
+            print("  -", e)
+        return 1
+    print(f"specpack: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)}")
+    for e in aerrs:
+        print("VIOLATION:", e)
+    for fam in ("FR", "AC", "DES"):
+        for id_, who in cov[fam].items():
+            mark = f"covered by {', '.join(who)}" if who else "GAP"
+            print(f"  {fam} {id_:12} {mark}")
+    gaps = sum(1 for fam in cov.values() for who in fam.values() if not who)
+    print(f"alignment: {len(aerrs)} violation(s), {gaps} gap(s) — gaps are reported, never guessed")
+    return 1 if aerrs else 0
 
 
 def _evidence(pairs: list[tuple[str, int]], level: str = "attested") -> list[dict]:
@@ -84,6 +127,8 @@ def cmd_validate(args) -> int:
 
 
 def cmd_next(args) -> int:
+    if _mode(args.directory) == "specpack":
+        return _next_specpack(args)
     doc, path = load(args.directory)
     out = machine.next_task(doc)
     from .spine import save
@@ -114,6 +159,8 @@ def cmd_next(args) -> int:
 
 
 def cmd_record(args) -> int:
+    if _mode(args.directory) == "specpack":
+        return _record_specpack(args)
     doc, path = load(args.directory)
     if args.result in ("pass", "fail") and not args.cmd:
         raise LoomError("pass/fail needs at least one --cmd (evidence or it did not happen)")
@@ -139,6 +186,8 @@ def cmd_record(args) -> int:
 
 
 def cmd_status(args) -> int:
+    if _mode(args.directory) == "specpack":
+        return _status_specpack(args)
     doc, _ = load(args.directory)
     from collections import Counter
 
@@ -150,6 +199,68 @@ def cmd_status(args) -> int:
         if t["state"] == "BLOCKED" and t.get("escalation"):
             mark = f"  <- escalate upstream: {', '.join(t['escalation']['upstream'])}"
         print(f"  {t['task_id']:30} {t['state']}{mark}")
+    return 0
+
+
+def _next_specpack(args) -> int:
+    doc, path = specpack.load_specpack(args.directory)
+    out = specpack.next_task(doc)
+    specpack.save(doc, path)
+    if args.json:
+        print(json.dumps(out, indent=2, sort_keys=True))
+        return 0 if out["status"] in ("task", "DONE") else 2
+    if out["status"] != "task":
+        print(out["status"] + (f" — {out.get('reason', '')}" if out.get("reason") else ""))
+        if out["status"] == "BLOCKED":
+            for t in out["tasks"]:
+                print("  blocked:", t)
+        return 0 if out["status"] == "DONE" else 2
+    print(f"TASK {out['task']}  slice {out['slice_digest'][:12]}")
+    for i in out["items"]:
+        body = esc_local(i.get("text") or i.get("title") or "")
+        print(f"  [{i['kind']}] {i['id']} {body}")
+    print(f"  omitted tasks: {', '.join(out['omitted_tasks']) or '—'}")
+    print(f"\nverify with the task's own command, then: loom record {args.directory} --task {out['task']} --result pass --cmd '<command>' --exit 0")
+    return 0
+
+
+def esc_local(s: str) -> str:
+    return str(s).replace("\n", " ")
+
+
+def _record_specpack(args) -> int:
+    doc, path = specpack.load_specpack(args.directory)
+    if args.result in ("pass", "fail") and not args.cmd:
+        raise LoomError("pass/fail needs at least one --cmd (evidence or it did not happen)")
+    if args.result in ("pass", "fail") and len(args.cmd) != len(args.exit):
+        raise LoomError("each --cmd needs an --exit")
+    commands = [{"command": c, "exit_code": x} for c, x in zip(args.cmd, args.exit)]
+    out = specpack.record(
+        doc,
+        task_id=args.task,
+        result=args.result,
+        commands=commands,
+        expected_revision=args.expected_revision,
+        by=args.by,
+        notes=args.notes,
+    )
+    specpack.save(doc, path)
+    print(json.dumps(out, indent=2, sort_keys=True))
+    return 0
+
+
+def _status_specpack(args) -> int:
+    path = _specpack_path(args.directory)
+    with open(path, encoding="utf-8") as f:
+        doc = json.load(f)
+    errs = specpack.validate(doc, path)
+    print(f"specpack: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)}" + ("  [SCHEMA INVALID]" if errs else ""))
+    for t in doc["tasks"]:
+        streak = specpack._fail_streak(doc, t["id"]) if t["status"] in ("doing", "todo", "blocked") else 0
+        mark = f"  <- {streak} consecutive fail(s)" if streak else ""
+        print(f"  {t['id']:22} {t['status']}{mark}")
+        if t["status"] == "blocked":
+            print(f"    unblock: loom record {args.directory} --task {t['id']} --result unblock --expected-revision {doc.get('revision', 1)}")
     return 0
 
 
@@ -217,6 +328,28 @@ def cmd_selftest(args) -> int:
             raise SystemExit("selftest: dangling requires accepted")
         except LoomError:
             pass
+        # --- specpack segment: the format loom speaks natively ---
+        from loom_kit import specpack as sp
+        mini = {
+            "format": "specpack/0.2", "name": "mini", "title": "Mini",
+            "spec": {"why": "w", "requirements": [{"id": "FR-1", "text": "x", "priority": "P1", "scenarios": []}]},
+            "plan": {"decisions": [{"id": "D-1", "decision": "d", "because": "b", "status": "accepted"}]},
+            "tasks": [
+                {"id": "T-1", "title": "one", "phase": "core", "status": "todo", "needs": [],
+                 "implements": [], "satisfies": ["FR-1"], "accepts": [], "honors": [],
+                 "verify": {"cmd": "true", "expect": "exit 0"}},
+                {"id": "T-2", "title": "two", "phase": "core", "status": "todo", "needs": ["T-1"],
+                 "implements": [], "satisfies": ["FR-1"], "accepts": [], "honors": [],
+                 "verify": {"cmd": "true", "expect": "exit 0"}},
+            ],
+        }
+        errs, cov = sp.alignment(mini)
+        assert errs == [] and cov["FR"]["FR-1"], (errs, cov)
+        assert sp.next_task(mini)["task"] == "T-1"
+        sp.record(mini, "T-1", "pass", [{"command": "true", "exit_code": 0}], mini["revision"], "selftest")
+        assert sp.next_task(mini)["task"] == "T-2"
+        sp.record(mini, "T-2", "pass", [{"command": "true", "exit_code": 0}], mini["revision"], "selftest")
+        assert sp.next_task(mini)["status"] == "DONE"
     print("selftest: all assertions passed")
     return 0
 
@@ -268,6 +401,10 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--notes")
     sp.add_argument("--by", default="agent")
     sp.set_defaults(fn=cmd_record)
+
+    sp = sub.add_parser("check", help="specpack: schema + alignment report (A1-A6), canonical order")
+    d()
+    sp.set_defaults(fn=cmd_check)
 
     sp = sub.add_parser("status", help="one screen: states, escalations")
     d()

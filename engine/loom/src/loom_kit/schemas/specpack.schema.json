@@ -1,0 +1,731 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.org/specpack/0.2.0",
+  "title": "Specpack \u2014 one initiative, one JSON file",
+  "description": "Spec Kit's familiar shapes (spec, plan, tasks) rolled into one codified file. Two kinds of links, never mixed: FLOW (task.needs \u2014 execution order) and TRACE (implements/satisfies/accepts/honors \u2014 the alignment between tasks, design, and spec that loom verifies). Artifacts (markdown, docx, xlsx, diagrams) are referenced, never embedded. Any object may carry x-* extension fields.",
+  "type": "object",
+  "properties": {
+    "format": {
+      "const": "specpack/0.2",
+      "title": "Format tag"
+    },
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "title": "Initiative name (slug)"
+    },
+    "title": {
+      "type": "string",
+      "title": "Human title"
+    },
+    "artifacts": {
+      "type": "object",
+      "title": "External files this initiative refers to",
+      "description": "Key = short id used in refs (e.g. 'prd', 'arch'). Values point at real files outside this json.",
+      "additionalProperties": {
+        "$ref": "#/$defs/artifact"
+      }
+    },
+    "spec": {
+      "$ref": "#/$defs/spec"
+    },
+    "plan": {
+      "$ref": "#/$defs/plan"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/task"
+      },
+      "title": "The work, one task each"
+    },
+    "review": {
+      "$ref": "#/$defs/review"
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991,
+      "title": "Revision \u2014 bumped on every machine mutation",
+      "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
+    }
+  },
+  "required": [
+    "format",
+    "name",
+    "title",
+    "spec",
+    "plan",
+    "tasks"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "title": "A file outside this json",
+      "properties": {
+        "file": {
+          "type": "string",
+          "title": "Path, relative to this json file"
+        },
+        "type": {
+          "type": "string",
+          "title": "Media type",
+          "examples": [
+            "text/markdown",
+            "text/x-mermaid",
+            "image/svg+xml",
+            "application/docx",
+            "application/xlsx"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "title": "What this file is"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Digest of the file bytes"
+        }
+      },
+      "required": [
+        "file",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "title": "SPEC \u2014 what and why",
+      "properties": {
+        "why": {
+          "type": "string",
+          "title": "The problem, in two sentences"
+        },
+        "stories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/story"
+          },
+          "title": "User stories (US-\u2026)"
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/requirement"
+          },
+          "title": "Functional requirements (FR-\u2026), one capability each"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/constraint"
+          },
+          "title": "Hard limits (CON-\u2026)"
+        },
+        "clarifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clarification"
+          },
+          "title": "Questions (Q-\u2026)"
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Explicit exclusions"
+        }
+      },
+      "required": [
+        "why",
+        "requirements"
+      ],
+      "additionalProperties": false
+    },
+    "story": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^US-[A-Za-z0-9-]+$"
+        },
+        "as": {
+          "type": "string"
+        },
+        "want": {
+          "type": "string"
+        },
+        "so": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "as",
+        "want",
+        "so"
+      ],
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^FR-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string",
+          "title": "One capability, MUST/SHOULD wording"
+        },
+        "priority": {
+          "enum": [
+            "P1",
+            "P2",
+            "P3"
+          ],
+          "title": "P1 = this slice"
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "title": "Acceptance scenarios (AC-\u2026)"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^AC-[A-Za-z0-9-]+$"
+        },
+        "given": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string"
+        },
+        "then": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "given",
+        "when",
+        "then"
+      ],
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CON-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "additionalProperties": false
+    },
+    "clarification": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^Q-[A-Za-z0-9-]+$"
+        },
+        "question": {
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "resolved"
+          ]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "string"
+        },
+        "resolved_by": {
+          "type": "string",
+          "pattern": "^D-[A-Za-z0-9-]+$"
+        }
+      },
+      "required": [
+        "id",
+        "question",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "title": "PLAN \u2014 how: designs, diagrams, decisions",
+      "properties": {
+        "approach": {
+          "type": "string",
+          "title": "The approach in a paragraph"
+        },
+        "stack": {
+          "type": "object",
+          "title": "Technical context"
+        },
+        "diagrams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diagram"
+          },
+          "title": "Architecture diagrams (DG-\u2026) \u2014 referenced artifacts"
+        },
+        "designs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/design"
+          },
+          "title": "Design elements (DES-\u2026) \u2014 the parts the tasks implement"
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision"
+          },
+          "title": "Decisions (D-\u2026), each with its because"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dataEntity"
+          },
+          "title": "Entities / schemas"
+        },
+        "structure": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Files and folders touched"
+        }
+      },
+      "required": [
+        "decisions"
+      ],
+      "additionalProperties": false
+    },
+    "diagram": {
+      "type": "object",
+      "title": "An architecture diagram, referenced",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DG-[A-Za-z0-9-]+$"
+        },
+        "artifact": {
+          "type": "string",
+          "title": "Key into artifacts \u2014 the diagram file itself"
+        },
+        "caption": {
+          "type": "string",
+          "title": "What the diagram shows"
+        },
+        "format": {
+          "enum": [
+            "mermaid",
+            "svg",
+            "png",
+            "excalidraw",
+            "ascii"
+          ],
+          "title": "How a renderer should treat it"
+        },
+        "covers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(DES|FR|CON)-[A-Za-z0-9-]+$"
+          },
+          "title": "Design elements or requirements the diagram depicts"
+        }
+      },
+      "required": [
+        "id",
+        "artifact",
+        "caption",
+        "format"
+      ],
+      "additionalProperties": false
+    },
+    "design": {
+      "type": "object",
+      "title": "A design element \u2014 the thing tasks implement",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DES-[A-Za-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "component",
+            "module",
+            "api",
+            "flow",
+            "data",
+            "interface"
+          ],
+          "title": "What kind of part this is"
+        },
+        "detail": {
+          "type": "string",
+          "title": "The design in a few sentences"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(FR|CON)-[A-Za-z0-9-]+$"
+          },
+          "title": "Requirements and constraints this element answers"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs",
+          "title": "Diagram and artifact references (e.g. arch#services)"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^D-[A-Za-z0-9-]+$"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "because": {
+          "type": "string",
+          "title": "Why \u2014 the alternative beaten"
+        },
+        "resolves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^Q-[A-Za-z0-9-]+$"
+          }
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^D-[A-Za-z0-9-]+$"
+          }
+        },
+        "status": {
+          "enum": [
+            "proposed",
+            "accepted"
+          ],
+          "title": "A human accepts decisions"
+        }
+      },
+      "required": [
+        "id",
+        "decision",
+        "because",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "dataEntity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "title": "TASK \u2014 flow links and trace links, never mixed",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^T-[A-Za-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string",
+          "title": "What to do, for the worker"
+        },
+        "phase": {
+          "enum": [
+            "setup",
+            "test-first",
+            "core",
+            "integration",
+            "polish"
+          ]
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^T-[A-Za-z0-9-]+$"
+          },
+          "title": "FLOW: tasks that must finish first",
+          "description": "Ordering only. The alignment links live in implements/satisfies/accepts/honors."
+        },
+        "implements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^DES-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: design elements this task realizes"
+        },
+        "satisfies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^FR-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: requirements this task serves directly"
+        },
+        "accepts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^AC-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: acceptance scenarios this task makes pass"
+        },
+        "honors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CON-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: constraints this task must respect"
+        },
+        "produces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Files this task creates or changes"
+        },
+        "verify": {
+          "$ref": "#/$defs/verify",
+          "title": "The observable check that completes this task"
+        },
+        "parallel": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": [
+            "todo",
+            "doing",
+            "done",
+            "blocked"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "title": "Observed runs \u2014 done without evidence is a defect"
+        },
+        "assignee": {
+          "type": "string",
+          "title": "Worker or subagent (pi, claude, codex, \u2026)"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "verify",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "verify": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "expect": {
+          "type": "string",
+          "title": "The pass condition"
+        }
+      },
+      "required": [
+        "cmd",
+        "expect"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "exit": {
+          "type": "integer"
+        },
+        "at": {
+          "type": "string",
+          "title": "ISO-8601 with Z"
+        },
+        "by": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cmd",
+        "exit",
+        "at"
+      ],
+      "additionalProperties": false
+    },
+    "refs": {
+      "type": "array",
+      "title": "References into artifacts and diagrams",
+      "description": "'<artifactKey>#<anchor>' for documents ('prd#Refund Rules', 'arch#services'), '<artifactKey>!<Sheet>' for spreadsheets.",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*[#!][^#]+$"
+      }
+    },
+    "review": {
+      "type": "object",
+      "title": "REVIEW \u2014 verdicts on any id",
+      "properties": {
+        "checklist": {
+          "type": "string",
+          "title": "Named checklist applied"
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verdict"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "on": {
+          "type": "string",
+          "pattern": "^(T|D|DES|FR|CON|Q|US|DG)-[A-Za-z0-9-]+$"
+        },
+        "verdict": {
+          "enum": [
+            "PASS",
+            "IMPROVE",
+            "REPLAN"
+          ]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/finding"
+          }
+        },
+        "by": {
+          "type": "string"
+        },
+        "at": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "on",
+        "verdict",
+        "by"
+      ],
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "properties": {
+        "severity": {
+          "enum": [
+            "BLOCKER",
+            "DEFECT",
+            "SMELL"
+          ]
+        },
+        "note": {
+          "type": "string"
+        },
+        "fix": {
+          "type": "string",
+          "title": "The one-line fix"
+        }
+      },
+      "required": [
+        "severity",
+        "note"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
