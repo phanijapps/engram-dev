@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Todo API — a Harness package, rendered</title>
+<style>
+  :root {
+    --ink: #1a1d29; --paper: #f7f7f5; --card: #ffffff; --line: #e3e2dd;
+    --accent: #3b4bc8; --accent-ink: #ffffff; --muted: #6b7280;
+    --goal: #7c3aed; --req: #2563eb; --acc: #059669; --con: #b45309;
+    --quest: #db2777; --asm: #6b7280; --design: #0d9488; --task: #d97706;
+    --verif: #dc2626; --src: #475569;
+    --ok: #059669; --bad: #dc2626; --warn: #b45309;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--paper); color: var(--ink); }
+  header { background: var(--ink); color: #fff; padding: 20px 24px 16px; }
+  header h1 { margin: 0 0 4px; font-size: 19px; letter-spacing: .2px; }
+  header p { margin: 0; color: #c7cad6; font-size: 13px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .chip { font: 12px/1 ui-monospace, "SF Mono", Menlo, Consolas, monospace; background: #2a2e40; color: #dfe2ee; padding: 4px 8px; border-radius: 999px; }
+  .chip b { color: #fff; font-weight: 600; }
+  nav[role="tablist"] { display: flex; gap: 2px; padding: 0 24px; background: var(--ink); flex-wrap: wrap; }
+  nav button { appearance: none; border: 0; background: transparent; color: #aeb3c5; font: 600 13.5px/1 inherit; padding: 11px 14px; cursor: pointer; border-radius: 8px 8px 0 0; }
+  nav button:hover { color: #fff; }
+  nav button[aria-selected="true"] { background: var(--paper); color: var(--ink); }
+  nav button:focus-visible, .node:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  main { padding: 20px 24px 48px; max-width: 1180px; margin: 0 auto; }
+  section[role="tabpanel"] { display: none; }
+  section[role="tabpanel"].active { display: block; }
+  h2 { font-size: 15px; margin: 22px 0 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; }
+  h2:first-child { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+  .node { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--muted); border-radius: 10px; padding: 12px 14px; cursor: pointer; text-align: left; width: 100%; font: inherit; color: inherit; }
+  .node:hover { border-color: var(--accent); box-shadow: 0 1px 6px rgba(26,29,41,.08); }
+  .node.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+  .node .kind { font: 700 10.5px/1 ui-monospace, Menlo, monospace; letter-spacing: .8px; padding: 3px 7px; border-radius: 4px; color: #fff; }
+  .node h3 { margin: 8px 0 4px; font-size: 14.5px; }
+  .node .id { font: 11px/1.4 ui-monospace, Menlo, monospace; color: var(--muted); }
+  .node p { margin: 6px 0 0; font-size: 13px; color: #3d4152; }
+  .k-GOAL{background:var(--goal)} .k-REQUIREMENT{background:var(--req)} .k-ACCEPTANCE{background:var(--acc)}
+  .k-CONSTRAINT{background:var(--con)} .k-QUESTION{background:var(--quest)} .k-ASSUMPTION{background:var(--asm)}
+  .k-DESIGN{background:var(--design)} .k-TASK{background:var(--task)} .k-VERIFICATION{background:var(--verif)}
+  .k-SOURCE{background:var(--src)}
+  .st { font: 700 10.5px/1 ui-monospace, Menlo, monospace; padding: 3px 7px; border-radius: 4px; }
+  .st-SUCCEEDED{background:#d1fae5;color:#065f46} .st-RUNNING{background:#fef3c7;color:#92400e}
+  .st-PENDING{background:#e5e7eb;color:#374151} .st-FAILED{background:#fee2e2;color:#991b1b}
+  .vt-PASS{background:#d1fae5;color:#065f46} .vt-FAIL{background:#fee2e2;color:#991b1b}
+  #inspector { position: sticky; top: 12px; }
+  .panel { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 12px; }
+  .panel h3 { margin: 0 0 2px; font-size: 15px; }
+  .panel .sub { font: 11.5px/1.5 ui-monospace, Menlo, monospace; color: var(--muted); }
+  .panel dl { margin: 10px 0 0; }
+  .panel dt { font: 700 11px/1.6 ui-monospace, Menlo, monospace; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-top: 10px; }
+  .panel dd { margin: 2px 0 0; font-size: 13.5px; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .links button { appearance: none; border: 1px solid var(--line); background: var(--paper); border-radius: 999px; padding: 4px 10px; font: 12px/1.3 ui-monospace, Menlo, monospace; cursor: pointer; }
+  .links button:hover { border-color: var(--accent); color: var(--accent); }
+  .arrow { color: var(--muted); font: 12px ui-monospace, Menlo, monospace; }
+  table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; font-size: 13px; }
+  th { text-align: left; font: 700 11px/1.4 ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); background: #efeeea; }
+  th, td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  td code, .mono { font: 12px/1.5 ui-monospace, Menlo, Consolas, monospace; }
+  .bar { height: 8px; background: #e5e7eb; border-radius: 999px; overflow: hidden; margin: 6px 0 2px; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+  ul.tight { margin: 4px 0 0; padding-left: 18px; }
+  ul.tight li { margin: 3px 0; font-size: 13px; }
+  .tag { font: 700 10px/1 ui-monospace, Menlo, monospace; padding: 3px 6px; border-radius: 4px; margin-right: 6px; }
+  .t-in { background: #dcfce7; color: #14532d; } .t-out { background: #fee2e2; color: #7f1d1d; }
+  pre.json { background: #14161f; color: #d6dbea; padding: 16px 18px; border-radius: 12px; overflow: auto; font: 12px/1.55 ui-monospace, Menlo, Consolas, monospace; max-height: 70vh; }
+  pre.json .k { color: #8ab4f8; } pre.json .s { color: #a8d5a2; } pre.json .n { color: #f0b26b; }
+  .note { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; }
+  .flow { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0 14px; }
+  .flow .node { width: auto; flex: 0 1 240px; }
+  .flow .arrow { font-size: 18px; }
+</style>
+</head>
+<body>
+
+<script type="application/json" id="pkg">
+{
+  "schema_version": "1.0.0",
+  "tenant_id": "local",
+  "initiative_id": "todo-api",
+  "title": "Todo API — add a todo (Spring Boot)",
+  "package_revision": 7,
+  "lifecycle": "ACTIVE",
+  "artifacts": [
+    { "artifact_id": "prd-todo-docx", "kind": "DOCUMENT", "media_type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "storage_uri": "artifact://todo-api/prd-v1.docx", "sha256": "9f2c0b1a4e6d70893ac5fbe21cd94a7bb0d3e6f85a42c7d108eb3f6c52d9041e", "size_bytes": 184322, "created_at": "2026-10-08T09:00:00Z", "extensions": {} },
+    { "artifact_id": "spec-todo-md", "kind": "DOCUMENT", "media_type": "text/markdown", "storage_uri": "artifact://todo-api/spec.md", "sha256": "1c9a7e5b3d2f88046ba7cfe512d94a7bb0d3e6f85a42c7d108eb3f6c52d9041e", "size_bytes": 4210, "created_at": "2026-10-08T09:20:00Z", "extensions": {} },
+    { "artifact_id": "patch-controller", "kind": "PATCH", "media_type": "text/x-java-source-diff", "storage_uri": "artifact://todo-api/att-7.patch", "sha256": "4e23680ae0f16330085ce4a03e77dde8f9360f0423450b64e8eb981e265b462b", "size_bytes": 2871, "created_at": "2026-10-08T10:41:00Z", "producer_attempt_id": "att-7", "extensions": {} },
+    { "artifact_id": "test-report-88", "kind": "TEST_REPORT", "media_type": "text/plain", "storage_uri": "artifact://todo-api/surefire-88.txt", "sha256": "d3d84e0c09b49d60b36de9116e74f7f10fbe7f14d25a1bd86e67c6fa95e2fff3", "size_bytes": 9144, "created_at": "2026-10-08T10:12:00Z", "producer_attempt_id": "att-5", "extensions": {} },
+    { "artifact_id": "ctx-brief-0042", "kind": "CONTEXT", "media_type": "text/markdown", "storage_uri": "artifact://todo-api/ctx-0042.md", "sha256": "c9573bffa97981e394bcfb90128896a65c0c929d58362a05f36c098a7a2213eb", "size_bytes": 3960, "created_at": "2026-10-08T10:30:00Z", "extensions": {} }
+  ],
+  "nodes": [
+    { "node_id": "goal-todo", "kind": "GOAL", "title": "A single user can track tasks", "body": { "text": "One user, one list. Create now; list and complete follow." }, "epistemic_state": "DECLARED", "provenance_refs": [], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:05:00Z", "created_by": "human:owner" },
+    { "node_id": "src-prd", "kind": "SOURCE", "title": "Product requirements, v1 (docx)", "body": { "text": "Marketing's PRD. Rich file: lives as artifact prd-todo-docx, referenced — never embedded." }, "epistemic_state": "OBSERVED", "provenance_refs": [], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:02:00Z", "created_by": "human:owner" },
+    { "node_id": "req-create", "kind": "REQUIREMENT", "title": "Create a todo", "body": { "text": "The API MUST accept POST /todos with {\"title\"}; it MUST respond 201 with a Location header. p95 latency under 150 ms on the v1 profile." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "src-prd", "revision": 1 }], "extensions": {}, "revision": 2, "created_at": "2026-10-08T09:10:00Z", "created_by": "human:owner" },
+    { "node_id": "req-list", "kind": "REQUIREMENT", "title": "List todos", "body": { "text": "The API MUST return GET /todos as a JSON array, newest first. NOT in this slice — kept here so the loader can omit it, on the record." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "src-prd", "revision": 1 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:11:00Z", "created_by": "human:owner" },
+    { "node_id": "acc-create", "kind": "ACCEPTANCE", "title": "Create — Given/When/Then", "body": { "text": "Given an empty list, When POST /todos {\"title\":\"buy milk\"}, Then 201, body echoes the title with an id, and Location names the new resource." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "req-create", "revision": 2 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:15:00Z", "created_by": "human:owner" },
+    { "node_id": "con-title", "kind": "CONSTRAINT", "title": "Title length 1..200", "body": { "text": "title MUST be 1..200 characters after trim; blank or overlong MUST fail with 400 and a field error." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "req-create", "revision": 2 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:16:00Z", "created_by": "human:owner" },
+    { "node_id": "q-db", "kind": "QUESTION", "title": "Which database for v1?", "body": { "text": "Postgres or an H2 file database? [NEEDS CLARIFICATION] — RESOLVED by design-v2: H2 file for v1, Postgres deferred." }, "epistemic_state": "DECLARED", "provenance_refs": [], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:18:00Z", "created_by": "human:owner" },
+    { "node_id": "asm-single-user", "kind": "ASSUMPTION", "title": "Single user, no auth in v1", "body": { "text": "One user, no authentication. Blast radius if wrong: every endpoint gains an owner dimension; schema and tests change." }, "epistemic_state": "ASSUMPTION" , "provenance_refs": [], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:19:00Z", "created_by": "human:owner" },
+    { "node_id": "design-v2", "kind": "DESIGN", "title": "Layered: controller → service → repository", "body": { "text": "TodoController (validation, 201 + Location) → TodoService (domain rules) → TodoRepository (JPA). TodoEntity + Flyway migration. H2 file database for v1." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "req-create", "revision": 2 }, { "node_id": "con-title", "revision": 1 }], "extensions": {}, "revision": 2, "created_at": "2026-10-08T09:40:00Z", "created_by": "agent:pi" },
+    { "node_id": "task-entity", "kind": "TASK", "title": "TodoEntity + Flyway migration", "body": { "text": "Produces: TodoEntity (id UUID, title, createdAt, done), Flyway V1__todos.sql. Verified by: migration applies on empty H2." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "design-v2", "revision": 2 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:45:00Z", "created_by": "human:owner" },
+    { "node_id": "task-service", "kind": "TASK", "title": "TodoService.create()", "body": { "text": "Produces: create(title) applying the 1..200 rule, returns the saved entity. Verified by: service unit test, boundary values." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "design-v2", "revision": 2 }, { "node_id": "con-title", "revision": 1 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:46:00Z", "created_by": "human:owner" },
+    { "node_id": "task-controller", "kind": "TASK", "title": "POST /todos controller", "body": { "text": "Produces: TodoController.create with bean validation, 201 + Location. Verified by: MockMvc test exits 0." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "design-v2", "revision": 2 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:47:00Z", "created_by": "human:owner" },
+    { "node_id": "task-tests", "kind": "TASK", "title": "Acceptance tests", "body": { "text": "Produces: TodoCreateAcceptanceTest covering acc-create. Verified by: full mvn test green." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "acc-create", "revision": 1 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:48:00Z", "created_by": "human:owner" },
+    { "node_id": "verif-create", "kind": "VERIFICATION", "title": "Create flow passes its tests", "body": { "text": "Criterion: mvn -q test -Dtest=TodoCreateAcceptanceTest exits 0 on a clean checkout of the pinned commit." }, "epistemic_state": "DECLARED", "provenance_refs": [{ "node_id": "acc-create", "revision": 1 }], "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:50:00Z", "created_by": "human:owner" }
+  ],
+  "relations": [
+    { "relation_id": "rel-01", "kind": "derived_from", "from_ref": { "node_id": "req-create", "revision": 2 }, "to_ref": { "node_id": "src-prd", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:10:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-02", "kind": "addresses", "from_ref": { "node_id": "acc-create", "revision": 1 }, "to_ref": { "node_id": "req-create", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:15:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-03", "kind": "addresses", "from_ref": { "node_id": "design-v2", "revision": 2 }, "to_ref": { "node_id": "req-create", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:40:00Z", "created_by": "agent:pi" },
+    { "relation_id": "rel-04", "kind": "resolves", "from_ref": { "node_id": "design-v2", "revision": 2 }, "to_ref": { "node_id": "q-db", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:40:00Z", "created_by": "agent:pi" },
+    { "relation_id": "rel-05", "kind": "implements", "from_ref": { "node_id": "task-entity", "revision": 1 }, "to_ref": { "node_id": "design-v2", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:45:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-06", "kind": "implements", "from_ref": { "node_id": "task-service", "revision": 1 }, "to_ref": { "node_id": "design-v2", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:46:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-07", "kind": "implements", "from_ref": { "node_id": "task-controller", "revision": 1 }, "to_ref": { "node_id": "design-v2", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:47:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-08", "kind": "requires", "from_ref": { "node_id": "task-service", "revision": 1 }, "to_ref": { "node_id": "task-entity", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:46:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-09", "kind": "requires", "from_ref": { "node_id": "task-controller", "revision": 1 }, "to_ref": { "node_id": "task-service", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:47:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-10", "kind": "requires", "from_ref": { "node_id": "task-tests", "revision": 1 }, "to_ref": { "node_id": "task-controller", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:48:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-11", "kind": "checks", "from_ref": { "node_id": "task-tests", "revision": 1 }, "to_ref": { "node_id": "acc-create", "revision": 1 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:48:00Z", "created_by": "human:owner" },
+    { "relation_id": "rel-12", "kind": "checks", "from_ref": { "node_id": "verif-create", "revision": 1 }, "to_ref": { "node_id": "req-create", "revision": 2 }, "epistemic_state": "DECLARED", "extensions": {}, "revision": 1, "created_at": "2026-10-08T09:50:00Z", "created_by": "human:owner" }
+  ],
+  "node_states": [
+    { "node_ref": { "node_id": "design-v2", "revision": 2 }, "authority_state": "ACCEPTED", "validity": "CURRENT", "extensions": {} },
+    { "node_ref": { "node_id": "req-create", "revision": 2 }, "authority_state": "ACCEPTED", "validity": "CURRENT", "extensions": {} }
+  ],
+  "authority_records": [
+    { "record_id": "ar-1", "subject_ref": { "node_id": "design-v2", "revision": 2 }, "authority": "human:owner", "action": "ACCEPT", "at": "2026-10-08T09:41:00Z", "rationale": "Layering matches the house style; H2 keeps v1 honest.", "extensions": {} }
+  ],
+  "change_dispositions": [
+    { "disposition_id": "cd-1", "old_ref": { "node_id": "design-v1", "revision": 1 }, "new_ref": { "node_id": "design-v2", "revision": 2 }, "disposition": "SUPERSEDED", "reason": "Postgres was premature for v1; resolves q-db.", "at": "2026-10-08T09:40:00Z", "extensions": {} }
+  ],
+  "task_states": [
+    { "task_ref": { "node_id": "task-entity", "revision": 1 }, "state_version": 3, "state": "SUCCEEDED", "attempts": ["att-3"], "blockers": [], "extensions": {} },
+    { "task_ref": { "node_id": "task-service", "revision": 1 }, "state_version": 3, "state": "SUCCEEDED", "attempts": ["att-5"], "blockers": [], "extensions": {} },
+    { "task_ref": { "node_id": "task-controller", "revision": 1 }, "state_version": 2, "state": "RUNNING", "attempts": ["att-6", "att-7"], "blockers": [], "extensions": {} },
+    { "task_ref": { "node_id": "task-tests", "revision": 1 }, "state_version": 1, "state": "PENDING", "attempts": [], "blockers": [], "extensions": {} }
+  ],
+  "contexts": [
+    { "context_id": "ctx-0042", "task_ref": { "node_id": "task-controller", "revision": 1 }, "budget": { "tokens": 4000 }, "used_input_tokens": 3811, "outcome": "COMPILED", "selections": ["task-controller", "design-v2", "con-title", "acc-create", "task-service", "spec-todo-md"], "omissions": ["req-list", "src-prd", "prd-todo-docx", "goal-todo", "task-tests", "att-3", "att-5", "ar-1", "cd-1", "vr-11", "vr-12", "rel-11"], "rendered_artifact_id": "ctx-brief-0042", "created_at": "2026-10-08T10:30:00Z", "extensions": {} }
+  ],
+  "attempts": [
+    { "attempt_id": "att-5", "task_ref": { "node_id": "task-service", "revision": 1 }, "context_id": "ctx-0038", "state": "SUCCEEDED", "fence_token": 9, "worker_ref": "pi", "started_at": "2026-10-08T10:02:00Z", "finished_at": "2026-10-08T10:12:00Z", "repository_pins": [{ "repository_id": "todo-api", "uri": "file:///work/todo-api", "commit": "b41c9e2a7d6c5f4e3b2a1908f7e6d5c4b3a29180" }], "outputs": [{ "output_id": "o2", "description": "service + unit tests", "artifact_kind": "SOURCE" }], "operation_ids": ["op-12"], "verification_result_ids": ["vr-12"], "extensions": {} },
+    { "attempt_id": "att-6", "task_ref": { "node_id": "task-controller", "revision": 1 }, "context_id": "ctx-0041", "state": "FAILED", "fence_token": 10, "worker_ref": "pi", "started_at": "2026-10-08T10:20:00Z", "finished_at": "2026-10-08T10:26:00Z", "repository_pins": [{ "repository_id": "todo-api", "uri": "file:///work/todo-api", "commit": "b41c9e2a7d6c5f4e3b2a1908f7e6d5c4b3a29180" }], "outputs": [{ "output_id": "o3", "description": "first controller cut — missing Location header", "artifact_kind": "SOURCE" }], "operation_ids": ["op-14"], "verification_result_ids": ["vr-11"], "extensions": {} },
+    { "attempt_id": "att-7", "task_ref": { "node_id": "task-controller", "revision": 1 }, "context_id": "ctx-0042", "state": "VERIFYING", "fence_token": 11, "worker_ref": "pi", "started_at": "2026-10-08T10:31:00Z", "finished_at": "2026-10-08T10:41:00Z", "repository_pins": [{ "repository_id": "todo-api", "uri": "file:///work/todo-api", "commit": "d1b58eea1c2b3d4e5f60718293a4b5c6d7e8f90a" }], "outputs": [{ "output_id": "o4", "description": "controller with 201 + Location", "artifact_kind": "PATCH" }], "operation_ids": ["op-16"], "verification_result_ids": [], "extensions": {} }
+  ],
+  "operations": [
+    { "operation_id": "op-16", "attempt_id": "att-7", "adapter_id": "fs-writer", "action": "apply_patch", "idempotency_key": "patch-controller@ctx-0042", "fence_token": 11, "request_sha256": "4e23680ae0f16330085ce4a03e77dde8f9360f0423450b64e8eb981e265b462b", "effect_class": "WRITE", "state": "COMMITTED", "outcome": "OK", "receipt_artifact_id": "patch-controller", "created_at": "2026-10-08T10:41:00Z", "updated_at": "2026-10-08T10:41:05Z", "extensions": {} }
+  ],
+  "verification_results": [
+    { "result_id": "vr-11", "verification_ref": { "node_id": "verif-create", "revision": 1 }, "criterion_refs": [{ "node_id": "acc-create", "revision": 1 }], "attempt_id": "att-6", "result": "FAIL", "implementation_pins": [{ "path": "src/main/java/demo/TodoController.java", "sha256": "94184dc992b05e96ea3415d07e6aaf0d9c9d406a4a83e31f13fcf91891952102" }], "environment_artifact_id": "env-h2-1", "evidence_artifact_ids": [], "executed_at": "2026-10-08T10:25:00Z", "runner_ref": "maven-surefire", "exit_code": 1, "notes": "Location header missing on 201 — acc-create unmet.", "extensions": {} },
+    { "result_id": "vr-12", "verification_ref": { "node_id": "verif-create", "revision": 1 }, "criterion_refs": [{ "node_id": "acc-create", "revision": 1 }], "attempt_id": "att-5", "result": "PASS", "implementation_pins": [{ "path": "src/main/java/demo/TodoService.java", "sha256": "fd0e8c81ecd1b96d4164119d5118110954edcff15ea0b592ea84ae6fa5dfa310" }], "environment_artifact_id": "env-h2-1", "evidence_artifact_ids": ["test-report-88"], "executed_at": "2026-10-08T10:12:00Z", "runner_ref": "maven-surefire", "exit_code": 0, "notes": "Service rules hold at boundaries 1, 200, 201.", "extensions": {} }
+  ],
+  "review_requests": [
+    { "operation_id": "rr-1", "expected_package_revision": 5, "node_refs": [{ "node_id": "design-v2", "revision": 2 }], "decision": "ACCEPT", "rationale": "Layering and H2 choice; requests owner authority.", "evidence_artifact_ids": ["spec-todo-md"] }
+  ],
+  "extensions": {}
+}
+</script>
+
+<header>
+  <h1>Todo API — “add a todo” as a Harness package</h1>
+  <p>One Spring Boot feature, rendered from the five planes of the schema. Click any node; the inspector shows both link directions. The frozen-context card is what a subagent would actually receive — nothing more.</p>
+  <div class="chips" id="chips"></div>
+</header>
+
+<nav role="tablist" aria-label="Planes">
+  <button role="tab" aria-selected="true" aria-controls="tab-content" id="tabbtn-content">Content</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-execution" id="tabbtn-execution">Execution</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-authority" id="tabbtn-authority">Authority</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-evidence" id="tabbtn-evidence">Evidence</button>
+  <button role="tab" aria-selected="false" aria-controls="tab-json" id="tabbtn-json">Raw JSON</button>
+</nav>
+
+<main>
+  <section id="tab-content" role="tabpanel" aria-labelledby="tabbtn-content" class="active">
+    <h2>The build path — content proposes, execution observes</h2>
+    <div class="flow" id="flow"></div>
+    <p class="note">Each arrow is one record in <code>relations[]</code> — stored once, never twice. The controller card carries the “show frozen context” demo.</p>
+    <h2>All nodes</h2>
+    <div class="grid" id="nodes"></div>
+    <div class="cols">
+      <div id="inspector"></div>
+      <div id="ctxcard"></div>
+    </div>
+  </section>
+
+  <section id="tab-execution" role="tabpanel" aria-labelledby="tabbtn-execution">
+    <h2>Task states — what the machine owns</h2>
+    <div id="states"></div>
+    <h2>Attempts — one observed run per worker take</h2>
+    <div id="attempts"></div>
+    <h2>Verification results — criterion vs observation</h2>
+    <div id="verifs"></div>
+    <h2>Frozen context — the progressive-loading record</h2>
+    <div id="contexts"></div>
+  </section>
+
+  <section id="tab-authority" role="tabpanel" aria-labelledby="tabbtn-authority">
+    <h2>Authority records — who accepted what</h2>
+    <div id="auths"></div>
+    <h2>Change dispositions — supersede, never mutate</h2>
+    <div id="dispos"></div>
+    <h2>Review requests</h2>
+    <div id="reviews"></div>
+  </section>
+
+  <section id="tab-evidence" role="tabpanel" aria-labelledby="tabbtn-evidence">
+    <h2>Artifacts — every file, digest-addressed</h2>
+    <p class="note">markdown and docx differ only by <code>media_type</code>. The bytes live at <code>storage_uri</code>; the sha256 here proves they are the bytes that were reviewed.</p>
+    <div id="arts"></div>
+  </section>
+
+  <section id="tab-json" role="tabpanel" aria-labelledby="tabbtn-json">
+    <h2>The whole package — it is just this JSON</h2>
+    <pre class="json" id="rawjson"></pre>
+  </section>
+</main>
+
+<script>
+"use strict";
+const pkg = JSON.parse(document.getElementById("pkg").textContent);
+
+/* ---------- identity chips ---------- */
+document.getElementById("chips").innerHTML = [
+  ["initiative", pkg.initiative_id], ["tenant", pkg.tenant_id], ["revision", pkg.package_revision], ["lifecycle", pkg.lifecycle]
+].map(([k, v]) => `<span class="chip">${k}: <b>${v}</b></span>`).join("");
+
+/* ---------- indexes: the two directions of every edge ---------- */
+const byId = Object.fromEntries(pkg.nodes.map(n => [n.node_id, n]));
+const fwd = {}, bwd = {};
+for (const r of pkg.relations) {
+  (fwd[r.from_ref.node_id] ??= []).push(r);
+  (bwd[r.to_ref.node_id] ??= []).push(r);
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* ---------- tabs ---------- */
+const tabs = [...document.querySelectorAll('nav [role="tab"]')];
+tabs.forEach(t => t.addEventListener("click", () => {
+  tabs.forEach(b => b.setAttribute("aria-selected", b === t ? "true" : "false"));
+  document.querySelectorAll("[role=tabpanel]").forEach(s => s.classList.toggle("active", s.id === t.getAttribute("aria-controls")));
+}));
+
+/* ---------- content: flow line (the build path) ---------- */
+const flowIds = ["goal-todo", "req-create", "design-v2", "task-entity", "task-service", "task-controller", "task-tests", "verif-create"];
+document.getElementById("flow").innerHTML = flowIds.map((id, i) =>
+  `<button class="node" data-id="${id}" style="border-left-color:var(--k)"><span class="kind k-${byId[id].kind}">${byId[id].kind}</span><h3>${esc(byId[id].title)}</h3></button>`
+).join(`<span class="arrow" aria-hidden="true">→</span>`);
+
+/* ---------- content: all node cards ---------- */
+document.getElementById("nodes").innerHTML = pkg.nodes.map(n => `
+  <button class="node" data-id="${n.node_id}">
+    <span class="kind k-${n.kind}">${n.kind}</span>
+    <h3>${esc(n.title)}</h3>
+    <div class="id">${n.node_id} · rev ${n.revision} · ${n.epistemic_state.toLowerCase()}</div>
+    <p>${esc(n.body.text.length > 130 ? n.body.text.slice(0, 130) + "…" : n.body.text)}</p>
+  </button>`).join("");
+
+/* ---------- inspector: both link directions ---------- */
+const ART = Object.fromEntries(pkg.artifacts.map(a => [a.artifact_id, a]));
+function inspector(id) {
+  const n = byId[id];
+  const out = (fwd[id] || []).map(r => `<button class="jump" data-id="${r.to_ref.node_id}">${r.kind} → ${r.to_ref.node_id}</button>`).join("");
+  const inc = (bwd[id] || []).map(r => `<button class="jump" data-id="${r.from_ref.node_id}">${r.kind} ← ${r.from_ref.node_id}</button>`).join("");
+  document.querySelectorAll(".node").forEach(b => b.classList.toggle("sel", b.dataset.id === id));
+  document.getElementById("inspector").innerHTML = `
+    <div class="panel" id="inspanel">
+      <span class="kind k-${n.kind}">${n.kind}</span>
+      <h3 style="margin-top:8px">${esc(n.title)}</h3>
+      <div class="sub">${n.node_id} · revision ${n.revision} · ${n.epistemic_state} · by ${n.created_by}</div>
+      <dl>
+        <dt>Body</dt><dd>${esc(n.body.text)}</dd>
+        ${out ? `<dt>Forward — what this drives</dt><dd class="links">${out}</dd>` : ""}
+        ${inc ? `<dt>Backward — what this hangs on</dt><dd class="links">${inc}</dd>` : ""}
+      </dl>
+      <p class="note">Two directions, one relations array — the doubly-linked view. Click a chip to walk the graph.</p>
+    </div>`;
+  document.querySelectorAll(".jump").forEach(b => b.addEventListener("click", () => {
+    inspector(b.dataset.id);
+    document.getElementById("inspanel").scrollIntoView({ block: "nearest" });
+  }));
+}
+document.querySelectorAll(".node").forEach(b => b.addEventListener("click", () => inspector(b.dataset.id)));
+
+/* ---------- frozen context: what a subagent receives ---------- */
+function ctxcard() {
+  const c = pkg.contexts[0];
+  const pct = Math.round(100 * c.used_input_tokens / c.budget.tokens);
+  const inSel = c.selections.map(s => `<li><span class="tag t-in">IN</span><code>${s}</code></li>`).join("");
+  const outSel = c.omissions.map(s => `<li><span class="tag t-out">OMITTED</span><code>${s}</code></li>`).join("");
+  document.getElementById("ctxcard").innerHTML = `
+    <div class="panel">
+      <h3>Frozen context ${c.context_id}</h3>
+      <div class="sub">for ${c.task_ref.node_id} · outcome ${c.outcome} · rendered as artifact ${c.rendered_artifact_id}</div>
+      <div class="bar" role="img" aria-label="${c.used_input_tokens} of ${c.budget.tokens} tokens used"><span style="width:${pct}%"></span></div>
+      <div class="sub">${c.used_input_tokens} / ${c.budget.tokens} tokens (${pct}%)</div>
+      <div class="cols" style="margin-top:10px">
+        <div><dt style="font:700 11px ui-monospace;color:var(--muted)">SELECTED — loaded into the brief</dt><ul class="tight">${inSel}</ul></div>
+        <div><dt style="font:700 11px ui-monospace;color:var(--muted)">OMITTED — recorded, not loaded</dt><ul class="tight">${outSel}</ul></div>
+      </div>
+      <p class="note">This is “don’t load the entire crap”: ${c.selections.length} items in, ${c.omissions.length} items deliberately out — and the omissions are on the record, so a reviewer can audit what the worker never saw.</p>
+    </div>`;
+}
+ctxcard();
+
+/* ---------- execution plane ---------- */
+const st = s => `<span class="st st-${s}">${s}</span>`;
+document.getElementById("states").innerHTML = `<table><thead><tr><th>Task</th><th>State</th><th>ver</th><th>Attempts</th></tr></thead><tbody>` +
+  pkg.task_states.map(t => `<tr><td class="mono">${t.task_ref.node_id}</td><td>${st(t.state)}</td><td class="mono">${t.state_version}</td><td class="mono">${t.attempts.join(", ") || "—"}</td></tr>`).join("") + "</tbody></table>";
+
+document.getElementById("attempts").innerHTML = pkg.attempts.map(a => `
+  <div class="panel">
+    <h3>${a.attempt_id} — ${a.task_ref.node_id}</h3>
+    <div class="sub">worker ${a.worker_ref} · fence_token <b>${a.fence_token}</b> · ${a.started_at} → ${a.finished_at} · context ${a.context_id}</div>
+    <dl>
+      <dt>Repository pin</dt><dd class="mono">${a.repository_pins[0].commit.slice(0, 12)}… @ ${a.repository_pins[0].repository_id}</dd>
+      <dt>Outputs</dt><dd>${a.outputs.map(o => esc(o.description)).join("; ")}</dd>
+      <dt>Verification</dt><dd class="mono">${a.verification_result_ids.join(", ") || "pending"}</dd>
+    </dl>
+  </div>`).join("");
+
+document.getElementById("verifs").innerHTML = pkg.verification_results.map(v => `
+  <div class="panel">
+    <h3><span class="st vt-${v.result}">${v.result}</span> ${v.result_id} — criterion ${v.verification_ref.node_id}</h3>
+    <div class="sub">attempt ${v.attempt_id} · runner ${v.runner_ref} · exit ${v.exit_code} · ${v.executed_at}</div>
+    <p style="margin:8px 0 0;font-size:13.5px">${esc(v.notes)}</p>
+    <p class="note">Pins: ${v.implementation_pins.map(p => `<code>${p.path}</code>`).join(", ")} — the exact bytes that were verified. Evidence: ${v.evidence_artifact_ids.join(", ") || "none (the FAIL needed none but the run is still on record)"}.</p>
+  </div>`).join("");
+
+document.getElementById("contexts").innerHTML = pkg.contexts.map(c => `
+  <div class="panel">
+    <h3>${c.context_id} — ${c.task_ref.node_id}</h3>
+    <div class="sub">budget ${c.budget.tokens} tokens · used ${c.used_input_tokens} · outcome ${c.outcome}</div>
+    <p class="note">Selected ${c.selections.length}; omitted ${c.omissions.length} — both recorded. A worker that never saw req-list cannot silently implement it; a reviewer can see exactly that.</p>
+  </div>`).join("");
+
+/* ---------- authority plane ---------- */
+document.getElementById("auths").innerHTML = pkg.authority_records.map(a => `
+  <div class="panel"><h3>${a.action} — ${a.subject_ref.node_id} rev ${a.subject_ref.revision}</h3>
+  <div class="sub">by ${a.authority} · ${a.at}</div><p style="font-size:13.5px;margin:8px 0 0">${esc(a.rationale)}</p></div>`).join("");
+
+document.getElementById("dispos").innerHTML = pkg.change_dispositions.map(cD => `
+  <div class="panel"><h3>${cD.disposition}: ${cD.old_ref.node_id} → ${cD.new_ref.node_id}</h3>
+  <div class="sub">${cD.at}</div><p style="font-size:13.5px;margin:8px 0 0">${esc(cD.reason)}</p>
+  <p class="note">History is evidence: design-v1 still exists in the document, superseded — not deleted.</p></div>`).join("");
+
+document.getElementById("reviews").innerHTML = pkg.review_requests.map(r => `
+  <div class="panel"><h3>${r.decision} requested — ${r.node_refs.map(n => n.node_id).join(", ")}</h3>
+  <div class="sub">expected_package_revision ${r.expected_package_revision} · evidence: ${r.evidence_artifact_ids.join(", ")}</div>
+  <p style="font-size:13.5px;margin:8px 0 0">${esc(r.rationale)}</p></div>`).join("");
+
+/* ---------- evidence plane ---------- */
+document.getElementById("arts").innerHTML = `<table><thead><tr><th>artifact_id</th><th>kind</th><th>media_type</th><th>bytes</th><th>sha256</th><th>storage_uri</th></tr></thead><tbody>` +
+  pkg.artifacts.map(a => `<tr><td class="mono">${a.artifact_id}</td><td>${a.kind}</td><td class="mono" style="max-width:220px;overflow-wrap:anywhere">${a.media_type}</td><td class="mono">${a.size_bytes.toLocaleString()}</td><td class="mono">${a.sha256.slice(0, 10)}…</td><td class="mono" style="max-width:200px;overflow-wrap:anywhere">${a.storage_uri}</td></tr>`).join("") + "</tbody></table>";
+
+/* ---------- raw json ---------- */
+const raw = JSON.stringify(pkg, null, 2);
+document.getElementById("rawjson").innerHTML = esc(raw)
+  .replace(/(&quot;[^&]*?&quot;)(:)/g, '<span class="k">$1</span>$2')
+  .replace(/: (&quot;[^&]*?&quot;)/g, ': <span class="s">$1</span>')
+  .replace(/: (\d+\.?\d*)/g, ': <span class="n">$1</span>');
+
+inspector("task-controller");
+</script>
+</body>
+</html>
