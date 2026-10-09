@@ -30,14 +30,7 @@ def _mode(directory: str) -> str:
 
 
 def _specpack_path(directory: str) -> Path:
-    d = Path(directory)
-    preferred = d / (d.resolve().name + ".json")
-    if preferred.exists():
-        return preferred
-    found = sorted(d.glob("*.json"))
-    if not found:
-        raise LoomError(f"{d}: no specpack json (looked for {preferred.name})")
-    return found[0]
+    return specpack.spec_path(directory)
 
 
 def cmd_check(args) -> int:
@@ -52,10 +45,10 @@ def cmd_check(args) -> int:
         for e in errs:
             print("  -", e)
         return 1
-    print(f"specpack: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)}")
+    print(f"spec: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)}")
     for e in aerrs:
         print("VIOLATION:", e)
-    for fam in ("FR", "AC", "DES"):
+    for fam in ("FR", "AC", "DES", "US"):
         for id_, who in cov[fam].items():
             mark = f"covered by {', '.join(who)}" if who else "GAP"
             print(f"  {fam} {id_:12} {mark}")
@@ -69,9 +62,16 @@ def cmd_check(args) -> int:
         if ctx.get(key):
             ids = ", ".join(ctx[key])
             print(f"  context: {label}: {ids}")
+    drift = cov.get("story_drift") or {}
+    if drift.get("requirements_without_stories"):
+        ids = ", ".join(drift["requirements_without_stories"])
+        print(f"  story drift: requirements serving no story: {ids}")
+    if drift.get("stories_unserved"):
+        ids = ", ".join(drift["stories_unserved"])
+        print(f"  story drift: stories served by no requirement: {ids}")
     if ctx.get("env_absent"):
         print("  context: env block absent")
-    gaps = sum(1 for fam in ("FR", "AC", "DES") for who in cov[fam].values() if not who)
+    gaps = sum(1 for fam in ("FR", "AC", "DES", "US") for who in cov[fam].values() if not who)
     print(f"alignment: {len(aerrs)} violation(s), {gaps} gap(s) — gaps are reported, never guessed")
     return 1 if aerrs else 0
 
@@ -283,9 +283,14 @@ def _next_specpack(args) -> int:
     # bytes stay untouched (D-2 of status-vocabulary)
     if out["status"] not in ("needs_rebase", "COMPLETE"):
         specpack.save(doc, path)
+    out["deliverable"] = doc.get("deliverable") or specpack.derive_deliverable(doc)
     if args.json:
         print(json.dumps(out, indent=2, sort_keys=True))
         return 0 if out["status"] in ("task", "DONE", "COMPLETE") else 2
+    n = {}
+    for t in doc["tasks"]:
+        n[t.get("status")] = n.get(t.get("status"), 0) + 1
+    print(f"deliverable: {out['deliverable']} ({n.get('done', 0)} done, {n.get('doing', 0)} doing, {n.get('todo', 0)} todo, {n.get('blocked', 0)} blocked)")
     if out["status"] == "COMPLETE":
         print(f"COMPLETE — closed by {out.get('closed_by', '?')}; the record is frozen")
         return 0
@@ -300,7 +305,7 @@ def _next_specpack(args) -> int:
                 print(f"  decision {did} needs an owner verdict: loom accept {args.directory} --decision {did} --by human:<owner> --expected-revision {rev}")
                 print(f"    or reject it: loom reject {args.directory} --decision {did} --because <why> --by human:<owner> --expected-revision {rev}")
             for qid in out.get("open_questions", []):
-                print(f"  question {qid} is open: resolve it (accept the decision that resolves it, or amend the pack)")
+                print(f"  question {qid} is open: resolve it (accept the decision that resolves it, or amend the spec)")
             return 2
         if out["status"] == "needs_rebase":
             print(
@@ -381,12 +386,16 @@ def _record_specpack(args) -> int:
 
 
 def _status_specpack(args) -> int:
-    path = _specpack_path(args.directory)
-    with open(path, encoding="utf-8") as f:
-        doc = json.load(f)
+    doc, path = specpack.load_specpack(args.directory)
     errs = specpack.validate(doc, path)
     life = doc.get("status") or specpack.PACK_ACTIVE
-    print(f"specpack: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)} [{life}]" + ("  [SCHEMA INVALID]" if errs else ""))
+    counts = {}
+    for t in doc["tasks"]:
+        counts[t.get("status")] = counts.get(t.get("status"), 0) + 1
+    stage = doc.get("deliverable") or specpack.derive_deliverable(doc)
+    n = counts
+    print(f"deliverable: {stage} ({n.get('done', 0)} done, {n.get('doing', 0)} doing, {n.get('todo', 0)} todo, {n.get('blocked', 0)} blocked)")
+    print(f"spec: {doc['name']} ({doc['format']}) revision {doc.get('revision', 1)} [{life}]" + ("  [SCHEMA INVALID]" if errs else ""))
     if life == specpack.PACK_COMPLETE:
         print(f"  closed by {doc.get('closed_by', '?')}; the record is frozen")
         return 0
@@ -531,26 +540,26 @@ def main(argv: list[str] | None = None) -> int:
     sp.set_defaults(fn=cmd_next)
 
     sp = sub.add_parser("accept", help="record owner acceptance of a decision (resolves its questions)")
-    sp.add_argument("directory", help="initiative directory (specpack json)")
+    sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--decision", required=True)
     sp.add_argument("--by", required=True, help="who accepts; must be human:<owner>")
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
     sp.set_defaults(fn=cmd_accept)
     sp = sub.add_parser("reject", help="record owner rejection of a decision (questions stay open)")
-    sp.add_argument("directory", help="initiative directory (specpack json)")
+    sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--decision", required=True)
     sp.add_argument("--by", required=True, help="who rejects; must be human:<owner>")
     sp.add_argument("--because", required=True, help="why the decision was not taken")
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
     sp.set_defaults(fn=cmd_reject)
-    sp = sub.add_parser("close", help="freeze the pack as complete: all tasks done with evidence, decisions dispositioned, questions resolved, review PASS on PACK")
-    sp.add_argument("directory", help="initiative directory (specpack json)")
+    sp = sub.add_parser("close", help="freeze the spec as complete: all tasks done with evidence, decisions dispositioned, questions resolved, review PASS on PACK")
+    sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--by", required=True, help="who closes; must be human:<owner>")
     sp.add_argument("--at", help="optional owner-supplied close time (ISO-8601)")
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
     sp.set_defaults(fn=cmd_close)
     sp = sub.add_parser("rebase", help="specpack: re-pin a task's touch digests to current truth (after needs_rebase)")
-    sp.add_argument("directory", help="initiative directory (specpack json)")
+    sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--task", required=True)
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
     sp.add_argument("--approved-by", required=True, help="who approved this re-pin at the drift; must be human:<owner> (D-7)")

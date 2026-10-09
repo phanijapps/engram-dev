@@ -320,3 +320,42 @@ a status without all three is not a status. Complete packs are
 read-only reference for future loops: query them, never rewrite them.
 Materializing an explicit `active` rides the next substantive save
 and does not bump the revision fence: it governs no content.
+
+## 8. The comfortable terms and the spec anatomy (owner direction, 2026-10-09)
+
+The artifact chain, in the owner's words:
+
+```
+Feature Brief     a markdown file, the input (new; does not exist yet)
+      |  Q&A with the user, based on the brief
+      v
+Spec              the JSON: born from that conversation
+      v
+Design            built from the spec
+      v
+Tasks             built from the design
+      + supplemental work as needed
+```
+
+The word pack is retired in user-facing terms; the stored format tag
+`specpack/0.x` stays so every existing file remains valid.
+
+The spec section anatomy (three primary sources; see
+docs/specs/status-model/spec-shape.md):
+
+| Section | What it holds |
+|---|---|
+| `why` | the problem, two sentences |
+| `stories` | title, as/want/so, priority, independent_test, acceptance (given/when/then) |
+| `edge_cases` | boundary and error conditions |
+| `requirements` | plain MUST statements, `serves` a story, no scenarios |
+| `success_criteria` | measurable outcomes (SC-) |
+| `constraints` | hard limits |
+| `questions` | open, with owners |
+| `assumptions` | beliefs the spec depends on |
+| `out_of_scope` | explicit exclusions |
+
+Rules: acceptance criteria live on the story (the Confirmation); a
+story is done when its ACs are met by done tasks; requirements serve
+stories; priority lives on the story and P1 alone must be a viable
+MVP; success criteria are measurable, not restatements.

@@ -59,6 +59,7 @@ def test_next_record_loop_to_done(ws: Path):
     q2 = next(q for q in doc["spec"]["clarifications"] if q["id"] == "Q-2")
     q2["status"] = "resolved"
     q2["answer"] = "resolved in the follow-up initiative"
+    doc.pop("deliverable", None)  # hand-amend: re-derives on the next save
     p.write_text(json.dumps(doc))
     assert main(["next", str(ws)]) == 0  # DONE once the owner work closes
     doc = json.loads((ws / "todo-api.json").read_text())

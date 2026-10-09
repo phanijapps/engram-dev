@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: 81c78bdb389c570059dd9453c571e957fef59da06633a8aef282d4eec74c3d13
+source_hash: 6e05fa2d2a055e3e9ff3ef4dbc38ded85ed06aeeeac934599474b0ada987d1ee
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T23:21:39Z'
+  at: '2026-10-09T03:37:18Z'
 status: stable
 package: engine/loom
 ---
@@ -33,8 +33,8 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 | Kind | Name | Lines |
 |---|---|---|
 | function | `_mode` | 24-29 |
-| function | `_specpack_path` | 32-40 |
-| function | `cmd_check` | 43-76 |
+| function | `_specpack_path` | 32-33 |
+| function | `cmd_check` | 36-76 |
 | function | `_evidence` | 79-87 |
 | function | `cmd_init` | 90-102 |
 | function | `cmd_add` | 105-126 |
@@ -46,12 +46,12 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 | function | `cmd_reject` | 235-244 |
 | function | `cmd_rebase` | 247-259 |
 | function | `cmd_status` | 262-276 |
-| function | `_next_specpack` | 279-355 |
-| function | `esc_local` | 358-359 |
-| function | `_record_specpack` | 362-380 |
-| function | `_status_specpack` | 383-404 |
-| function | `cmd_selftest` | 407-494 |
-| function | `main` | 497-587 |
+| function | `_next_specpack` | 279-360 |
+| function | `esc_local` | 363-364 |
+| function | `_record_specpack` | 367-385 |
+| function | `_status_specpack` | 388-413 |
+| function | `cmd_selftest` | 416-503 |
+| function | `main` | 506-596 |
 
 1 symbols omitted from compact profile.
 

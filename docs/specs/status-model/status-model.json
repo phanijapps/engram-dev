@@ -25,6 +25,9 @@
       "type": "text/markdown"
     }
   },
+  "closed_at": "2026-10-09T02:15:00Z",
+  "closed_by": "human:owner",
+  "deliverable": "delivered",
   "format": "specpack/0.3",
   "name": "status-model",
   "plan": {
@@ -63,10 +66,11 @@
         "status": "rejected"
       },
       {
+        "accepted_by": "human:owner",
         "because": "An owner-set stage duplicates derived truth and drifts; the two axes (record lifecycle, delivery progress) get two fields: status stays lifecycle, deliverable carries progress.",
         "decision": "The deliverable stage is machine-derived and checksum-verified, never owner-set.",
         "id": "D-5",
-        "status": "proposed"
+        "status": "accepted"
       },
       {
         "accepted_by": "human:owner",
@@ -101,16 +105,18 @@
         "status": "accepted"
       },
       {
+        "accepted_by": "human:owner",
         "because": "Owner direction 2026-10-09: comfortable terms, the chain reads as one sentence. The brief is the Card, the Q&A is the Conversation, the story acceptance criteria are the Confirmation.",
-        "decision": "The artifact chain uses comfortable terms: Feature Brief (a markdown file, the input; new) -> Spec or Research (the JSON, born from Q&A with the user on the brief) -> Design (built from the spec) -> Tasks (built from the design); supplemental work rides along.",
+        "decision": "The artifact chain uses comfortable terms: Feature Brief (a markdown file, the input; new) -> Spec (the JSON, born from Q&A with the user on the brief) -> Design (built from the spec) -> Tasks (built from the design); supplemental work rides along.",
         "id": "D-10",
-        "status": "proposed"
+        "status": "accepted"
       },
       {
+        "accepted_by": "human:owner",
         "because": "Owner, 2026-10-09: pack sounds like animals. Renaming the stored format tag would break every existing artifact; user-facing vocabulary is where comfort matters.",
         "decision": "Retire the word pack in user-facing terms (CLI help, status output, docs, primer); the on-disk format tag specpack/0.x stays for compatibility with every existing file.",
         "id": "D-11",
-        "status": "proposed"
+        "status": "accepted"
       }
     ],
     "designs": [
@@ -118,7 +124,7 @@
         "addresses": [
           "FR-1"
         ],
-        "detail": "A pure function over the pack: delivered (pack complete) > blocked (any task blocked, none doing) > awaiting_owner (all tasks done, decisions pending or questions open) > in_review (all tasks done, owner work clean, no PACK PASS) > in_progress (any task doing) > planning (open questions, no task done or doing) > drafted (tasks exist, none started, no open questions). First match wins; the function is total. The field name is deliverable. The record lifecycle keeps the existing status field: two axes, two fields, both machine-owned.",
+        "detail": "A pure function over the spec, first match wins, total: delivered (spec complete) > blocked (any task blocked, none doing) > awaiting_owner (all tasks done, decisions pending or questions open) > in_review (all tasks done, owner work clean, no PACK PASS) > in_progress (any task doing; or any task done with work remaining; or all tasks done with review PASS, not yet closed: closable) > planning (open questions, no task done or doing) > drafted (tasks exist, none started, no open questions). The field name is deliverable. The record lifecycle keeps the existing status field: two axes, two fields, both deterministic.",
         "id": "DES-1",
         "kind": "flow",
         "title": "The deliverable stage derivation"
@@ -183,10 +189,81 @@
   },
   "review": {
     "checklist": "red-foreman",
-    "verdicts": []
+    "verdicts": [
+      {
+        "at": "2026-10-09T02:00:00Z",
+        "by": "agent:red-forman",
+        "findings": [
+          {
+            "fix": "Read cov directly; CLI test added. Disclosed here per the T-4 precedent.",
+            "note": "story_drift was stored at cov[story_drift] but read from cov[context][story_drift]: the drift lines could never print; the T-5 evidence row 'check shows no drift lines' verified nothing.",
+            "severity": "BLOCKER"
+          },
+          {
+            "fix": "Story ACs report only under US; A1/A2 still see the union.",
+            "note": "Story ACs double-reported (AC and US sections).",
+            "severity": "SMELL"
+          }
+        ],
+        "on": "T-5",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-09T02:00:00Z",
+        "by": "agent:red-forman",
+        "findings": [
+          {
+            "fix": "Any done with work remaining is in_progress; DES-1 documents every branch including the closable state.",
+            "note": "[done, todo] derived drafted, contradicting the counts printed beside it and DES-1 itself.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Dropped; the requirement now names the seven shipped stages.",
+            "note": "FR-1 still listed the rejected superseded stage.",
+            "severity": "DEFECT"
+          }
+        ],
+        "on": "T-1",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-09T02:00:00Z",
+        "by": "agent:red-forman",
+        "findings": [
+          {
+            "fix": "status loads through load_specpack like check and next.",
+            "note": "loom status bypassed the structural gate (raw KeyError on a non-spec).",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "The gate requires dict sections and spec.requirements.",
+            "note": "The gate checked presence, not shape: spec as a list or missing requirements still tracebacked.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Paths updated; strings reworded.",
+            "note": "Dead produces paths after the rename; two pack words remained in help strings.",
+            "severity": "SMELL"
+          }
+        ],
+        "on": "T-8",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-09T02:10:00Z",
+        "by": "agent:red-forman",
+        "findings": [],
+        "on": "PACK",
+        "verdict": "PASS"
+      }
+    ]
   },
-  "revision": 6,
+  "revision": 23,
   "spec": {
+    "assumptions": [
+      "Specs are read more often than they are written.",
+      "The stored format tag specpack/0.x stays for compatibility; user-facing terms say spec."
+    ],
     "clarifications": [
       {
         "answer": "No supersedes link (D-4 rejected as pointless by the owner, 2026-10-09).",
@@ -212,10 +289,11 @@
         "status": "resolved"
       },
       {
+        "answer": "Spec. The JSON artifact is called the spec (owner, 2026-10-09).",
         "id": "Q-4",
         "owner": "human:owner",
         "question": "Name the JSON artifact: Spec or Research?",
-        "status": "open"
+        "status": "resolved"
       }
     ],
     "constraints": [
@@ -227,6 +305,10 @@
         "id": "CON-2",
         "text": "No accepted decisions at authoring: every decision ships proposed; the owner accepts or rejects after reading the research."
       }
+    ],
+    "edge_cases": [
+      "All tasks done but a decision still proposed: the stage is awaiting_owner, not in_review.",
+      "A hand-edited deliverable stage: the load refuses, naming both values."
     ],
     "out_of_scope": [
       "any change to loom commands, schemas, or state machines",
@@ -240,68 +322,106 @@
       {
         "id": "FR-1",
         "priority": "P1",
-        "scenarios": [
-          {
-            "given": "any pack state",
-            "id": "AC-1",
-            "then": "the stage field equals the derivation, and a hand-edited stage is refused",
-            "when": "the machine saves or loads it"
-          }
+        "serves": [
+          "US-1"
         ],
-        "text": "The pack MUST carry one machine-derived deliverable stage (drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded), computed as a total deterministic function of task states, decision states, question states, and review verdicts; written by the machine at every save; re-derived at load, and a mismatch between stored and derived stage MUST refuse the load naming both values."
+        "text": "The pack MUST carry one machine-derived deliverable stage (drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered), computed as a total deterministic function of task states, decision states, question states, and review verdicts; written by the machine at every save; re-derived at load, and a mismatch between stored and derived stage MUST refuse the load naming both values."
       },
       {
         "id": "FR-2",
         "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
         "text": "loom status and loom next MUST report the deliverable stage as the headline line, with task counts (done, doing, todo, blocked) beside it."
       },
       {
         "id": "FR-3",
         "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
         "text": "An exhaustive guard test MUST drive every derivation branch and assert set equality between exercised stages and the documented vocabulary; the schema enum, the code constant, and the derivation must agree."
       },
       {
         "id": "FR-5",
         "priority": "P2",
+        "serves": [
+          "US-1"
+        ],
         "text": "The machine MUST report story drift in the coverage tier: requirements that serve no user story, and stories that no requirement serves. Reported, never blocking. Served means an explicit link (requirement gains an optional serves list of story ids), not a guess."
       },
       {
         "id": "FR-6",
         "priority": "P1",
-        "scenarios": [
-          {
-            "given": "a story with acceptance criteria and a task that accepts one of them",
-            "id": "AC-4",
-            "then": "coverage reports the story AC as met; a story with all ACs met reports done",
-            "when": "that task is done with evidence"
-          }
+        "serves": [
+          "US-1"
         ],
         "text": "Stories MUST support owner-authored acceptance criteria (scenarios, same given/when/then shape and AC- id pattern as requirement scenarios, additive and optional). The machine MUST verify story ACs like all ACs: tasks accept them, A2 resolves them, coverage maps them; a story whose ACs are all met by done tasks is done."
       }
     ],
     "stories": [
       {
-        "as": "the owner reading a generated pack file",
+        "acceptance": [
+          {
+            "given": "any spec state",
+            "id": "AC-1",
+            "then": "the deliverable field equals the derivation",
+            "when": "the machine saves it"
+          },
+          {
+            "given": "a story with acceptance criteria and a task that accepts one",
+            "id": "AC-4",
+            "then": "coverage reports the story AC as met",
+            "when": "that task is done with evidence"
+          }
+        ],
+        "as": "the owner reading a generated spec file",
         "id": "US-1",
+        "independent_test": "Open any spec json; the stage is visible without running a command.",
+        "priority": "P1",
         "so": "I know what is going on without adding up task statuses",
+        "title": "Deliverable status at a glance",
         "want": "one field at the top that says where the overall deliverable stands"
       },
       {
-        "as": "a future loop querying many packs",
+        "as": "a future loop querying many specs",
         "id": "US-2",
+        "independent_test": "Guard test: schema enums equal code constants; hand-edited stages refused at load.",
+        "priority": "P2",
         "so": "I can list deliverables by stage and trust what I read",
-        "want": "a machine-verified deliverable stage on every pack"
+        "title": "Trusted spec vocabulary for future loops",
+        "want": "a machine-verified deliverable stage on every spec"
+      }
+    ],
+    "success_criteria": [
+      {
+        "id": "SC-1",
+        "text": "A fresh session reads the stage from the file alone; no command required."
+      },
+      {
+        "id": "SC-2",
+        "text": "Every stage family equals its schema enum and code constant, guarded by test."
       }
     ],
     "why": "The owner reads the generated pack JSON and cannot see where the overall deliverable stands: node-level statuses are everywhere, but the pack-level status is a near-mute active-or-complete record-lifecycle flag. The concern is the JSON, not the wiki. Two axes were collapsed: record lifecycle (mutable or frozen) and delivery progress (where the work is)."
   },
-  "status": "active",
+  "status": "complete",
   "tasks": [
     {
       "accepts": [
         "AC-1"
       ],
       "detail": "Per DES-1 and DES-2: derive_deliverable(doc) pure function (stages per D-6, superseded omitted until Q-1); every machine save writes it; load_specpack re-derives and refuses on mismatch naming both values; schema gains the optional deliverable enum. Tests: one fixture per branch, mismatch refusal, save-then-load roundtrip.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:20:21Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "107 passed (exit checked directly); every derivation branch, hand-edit refusal, roundtrip via CLI; selftest green"
+        }
+      ],
       "honors": [
         "CON-2"
       ],
@@ -321,7 +441,7 @@
       "satisfies": [
         "FR-1"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Deliverable stage: derivation, field, load refusal",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
@@ -331,6 +451,15 @@
     {
       "accepts": [],
       "detail": "Per DES-3: loom status prints the deliverable stage plus counts as the first line; loom next prints the same line before task output; both --json paths include the field.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:21:26Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "109 passed, exit verified; headline in status + next (human first line, json field); mid-task control-flow defect found by the suite and repaired before record"
+        }
+      ],
       "honors": [
         "CON-2"
       ],
@@ -350,7 +479,7 @@
       "satisfies": [
         "FR-2"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Headline reporting in status and next",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_deliverable.py tests/test_specpack_cli.py",
@@ -360,6 +489,15 @@
     {
       "accepts": [],
       "detail": "Per FR-3: extend the status guard family: schema enum equals the code constant; an exhaustive fixture drives every branch of derive_deliverable and asserts set equality with the documented vocabulary (minus superseded until Q-1).",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:21:41Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_status.py",
+          "exit": 0,
+          "notes": "guard green: schema enum == constant; exhaustive branch set equality (7/7 stages exercised)"
+        }
+      ],
       "honors": [
         "CON-2"
       ],
@@ -376,7 +514,7 @@
       "satisfies": [
         "FR-3"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Exhaustive guard for the stage vocabulary",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_status.py",
@@ -386,6 +524,15 @@
     {
       "accepts": [],
       "detail": "Per DES-4: schema gains requirement.serves (optional, US id pattern); alignment coverage gains story_drift (requirements serving no story, stories served by no requirement); this pack's own FRs gain serves links as the first fixture; loom check prints the lines.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:22:37Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "113 passed; serves link + both-direction story drift coverage; this spec FRs all serve stories (check shows no drift lines)"
+        }
+      ],
       "honors": [
         "CON-2"
       ],
@@ -406,7 +553,7 @@
       "satisfies": [
         "FR-5"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Story drift coverage: serves link and report",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
@@ -418,6 +565,15 @@
         "AC-4"
       ],
       "detail": "Per DES-5 and FR-6: story.scenarios in the schema (optional, additive); A1/A2 treat story ACs as first-class; A5 coverage gains the US section; slice_for includes story ACs when the story is in the closure; this pack's own stories gain ACs as the first fixture (US-1 gets AC-4's parentage fixed accordingly). Tests: story AC accepted by a done task reports met; dangling story AC refused; story with all ACs met reports done.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:23:31Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "115 passed; story ACs first-class: A1/A2/coverage US section/slice (story rides via serves); duplicate id caught"
+        }
+      ],
       "honors": [
         "CON-1"
       ],
@@ -432,12 +588,12 @@
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/src/loom_kit/specpack.py",
         "engine/loom/tests/test_specpack_deliverable.py",
-        "docs/specs/status-model/specpack.json"
+        "docs/specs/status-model/status-model.json"
       ],
       "satisfies": [
         "FR-6"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Story acceptance criteria: schema, checks, coverage, slices",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
@@ -447,6 +603,15 @@
     {
       "accepts": [],
       "detail": "Per DES-6 and D-9: schema additions (story: title, priority, independent_test, acceptance; spec: edge_cases, success_criteria, assumptions; requirement: serves; requirement.scenarios marked legacy in descriptions); A1/A2/A4 and coverage updated for story ACs and story-done; this pack's own spec section is recast into the new shape as the first live fixture (stories gain priority, independent_test, acceptance; FR scenarios move up or are dropped where redundant); spec-shape.json rules quoted into the primer.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:25:01Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q && cd .. && uv run loom check docs/specs/status-model",
+          "exit": 0,
+          "notes": "115 passed + check green; anatomy (title/priority/independent_test/acceptance, edge_cases, success_criteria, assumptions); this spec recast as first fixture (ACs live on stories now); primer s8 comfortable terms; user-facing spec rename"
+        }
+      ],
       "honors": [
         "CON-1"
       ],
@@ -460,13 +625,13 @@
       "produces": [
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/src/loom_kit/specpack.py",
-        "docs/specs/status-model/specpack.json",
+        "docs/specs/status-model/status-model.json",
         "docs/specs/spec-graph/schema-primer.md"
       ],
       "satisfies": [
         "FR-6"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Spec anatomy: schema, checks, coverage, fixture",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q && cd .. && uv run loom check docs/specs/status-model",
@@ -476,6 +641,15 @@
     {
       "accepts": [],
       "detail": "Defect found 2026-10-09: a stray .json in the initiative directory hijacks _specpack_path (alphabetically first wins); _families then crashes with a raw KeyError instead of a REFUSED. Fix: _specpack_path prefers the file named specpack.json when present, else the first json, and refuses with LoomError naming the candidates when a directory holds multiple json files and none is specpack.json; _families and alignment access plan/spec/requirements via .get with a clear LoomError when the shape is not a pack. Tests: stray-json directory, specpack.json-preference, non-pack json refused with REFUSED.",
+      "evidence": [
+        {
+          "at": "2026-10-09T03:25:50Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "118 passed; unified discovery (dirname.json, specpack.json, single-json, else refuse naming candidates); structural gate at load; pack renamed to status-model.json per convention"
+        }
+      ],
       "honors": [
         "CON-2"
       ],
@@ -492,7 +666,7 @@
       "satisfies": [
         "FR-1"
       ],
-      "status": "todo",
+      "status": "done",
       "title": "Harden pack discovery and family access",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",

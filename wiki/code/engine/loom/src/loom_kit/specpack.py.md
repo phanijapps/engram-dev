@@ -13,47 +13,47 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: 1677e00afda97790884a95c242b8bc5a5f9125e9d8d0dac39e538fc6d09cec4a
+source_hash: bfe0cc94be4c61aa08f68702f1ef4cdc014cf46939b86752b1efb7189b4ae9e4
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T23:21:39Z'
+  at: '2026-10-09T03:37:18Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `_now`, `_digest`, `_vschema`, `load_specpack`, `validate`. Dependency context: 1 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `derive_deliverable`, `save`, `_now`, `_digest`, `_vschema`. Dependency context: 1 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `_now` | 35-36 |
-| function | `_digest` | 39-40 |
-| function | `_vschema` | 43-45 |
-| function | `load_specpack` | 48-69 |
-| function | `validate` | 72-76 |
-| function | `_families` | 79-88 |
-| function | `alignment` | 91-203 |
-| function | `dfs` | 143-150 |
-| function | `closure_gaps` | 206-214 |
-| function | `_decision` | 217-221 |
-| function | `_assert_mutable` | 224-226 |
-| function | `accept_decision` | 229-249 |
-| function | `reject_decision` | 252-263 |
-| function | `close` | 266-296 |
-| function | `_fail_streak` | 299-306 |
-| function | `_task` | 309-313 |
-| function | `_git_root` | 316-321 |
-| function | `_resolve_path` | 324-329 |
-| function | `_pin_or_verify` | 332-361 |
-| function | `_verify_refs` | 364-396 |
+| function | `derive_deliverable` | 40-63 |
+| function | `save` | 66-70 |
+| function | `_now` | 73-74 |
+| function | `_digest` | 77-78 |
+| function | `_vschema` | 81-83 |
+| function | `spec_path` | 86-100 |
+| function | `load_specpack` | 103-132 |
+| function | `validate` | 135-139 |
+| function | `_families` | 142-154 |
+| function | `alignment` | 157-289 |
+| function | `dfs` | 210-217 |
+| function | `closure_gaps` | 292-300 |
+| function | `_decision` | 303-307 |
+| function | `_assert_mutable` | 310-312 |
+| function | `accept_decision` | 315-335 |
+| function | `reject_decision` | 338-349 |
+| function | `close` | 352-382 |
+| function | `_fail_streak` | 385-392 |
+| function | `_task` | 395-399 |
+| function | `_git_root` | 402-407 |
 
-7 symbols omitted from compact profile.
+10 symbols omitted from compact profile.
 
 # Relationships
 

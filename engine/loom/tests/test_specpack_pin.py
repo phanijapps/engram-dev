@@ -272,3 +272,29 @@ def test_cli_rebase_requires_approved_by(tmp_path, capsys):
     import pytest as _pytest
     with _pytest.raises(SystemExit):
         main(["rebase", str(d), "--task", "T-1", "--expected-revision", "1"])
+
+
+def test_discovery_prefers_dirname_json(tmp_path: Path):
+    d = tmp_path / "myinit"
+    d.mkdir()
+    (d / "stray.json").write_text("{}")
+    (d / "myinit.json").write_text(json.dumps(_pack([])))
+    doc, path = specpack.load_specpack(d)
+    assert path.name == "myinit.json"
+
+
+def test_discovery_refuses_ambiguity(tmp_path: Path):
+    d = tmp_path / "amb"
+    d.mkdir()
+    (d / "a.json").write_text("{}")
+    (d / "b.json").write_text("{}")
+    with pytest.raises(LoomError, match="several json files"):
+        specpack.load_specpack(d)
+
+
+def test_non_pack_shape_refused_not_keyerror(tmp_path: Path):
+    d = tmp_path / "np"
+    d.mkdir()
+    (d / "np.json").write_text('{"format": "specpack/0.3", "name": "x", "title": "T", "hello": true}')
+    with pytest.raises(LoomError, match="not a spec"):
+        specpack.load_specpack(d)

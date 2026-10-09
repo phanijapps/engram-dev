@@ -71,6 +71,19 @@
     "closed_at": {
       "type": "string",
       "title": "When the pack closed (owner-supplied ISO-8601)"
+    },
+    "deliverable": {
+      "enum": [
+        "drafted",
+        "planning",
+        "in_progress",
+        "blocked",
+        "awaiting_owner",
+        "in_review",
+        "delivered"
+      ],
+      "title": "Deliverable stage",
+      "description": "Machine-derived and checksum-verified: written at every save, re-derived at load, mismatch refuses. Never hand-set."
     }
   },
   "required": [
@@ -160,6 +173,27 @@
             "type": "string"
           },
           "title": "Explicit exclusions"
+        },
+        "edge_cases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Boundary and error conditions"
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/successCriterion"
+          },
+          "title": "Measurable outcomes (SC-...)"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Beliefs the spec depends on"
         }
       },
       "required": [
@@ -183,6 +217,29 @@
         },
         "so": {
           "type": "string"
+        },
+        "acceptance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "title": "Acceptance criteria on the story (the Confirmation): when is this story complete"
+        },
+        "title": {
+          "type": "string",
+          "title": "One line: the story named"
+        },
+        "priority": {
+          "enum": [
+            "P1",
+            "P2",
+            "P3"
+          ],
+          "title": "P1 alone must be a viable MVP (Spec Kit rule)"
+        },
+        "independent_test": {
+          "type": "string",
+          "title": "How to test this story alone"
         }
       },
       "required": [
@@ -221,6 +278,14 @@
         },
         "refs": {
           "$ref": "#/$defs/refs"
+        },
+        "serves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^US-[A-Za-z0-9-]+$"
+          },
+          "title": "Stories this capability serves"
         }
       },
       "required": [
@@ -939,6 +1004,23 @@
           "type": "string"
         }
       },
+      "additionalProperties": false
+    },
+    "successCriterion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^SC-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
       "additionalProperties": false
     }
   }

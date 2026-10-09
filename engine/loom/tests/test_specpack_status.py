@@ -124,3 +124,26 @@ def test_frozen_pack_is_byte_untouched_by_next(tmp_path: Path, capsys):
     assert main(["next", str(d)]) == 0
     assert "COMPLETE" in capsys.readouterr().out
     assert (d / "pack.json").read_bytes() == before  # not even a byte moved
+
+
+def test_deliverable_schema_enum_equals_constant():
+    S = json.loads(Path(specpack.SCHEMA_PATH).read_text())
+    assert tuple(S["properties"]["deliverable"]["enum"]) == specpack.DELIVERABLE_STAGES
+
+
+def test_deliverable_stage_set_equality_exhaustive():
+    """FR-3: drive every branch; the exercised set must equal the vocabulary."""
+    from test_specpack_deliverable import _pack, _t, _done, PASS
+
+    seen = set()
+    seen.add(specpack.derive_deliverable(_pack([_t("done")], status="complete", review=PASS)))
+    seen.add(specpack.derive_deliverable(_pack([_t("blocked")])))
+    seen.add(specpack.derive_deliverable(_pack([_done()], decisions=[
+        {"id": "D-1", "decision": "d", "because": "b", "status": "proposed"}])))
+    seen.add(specpack.derive_deliverable(_pack([_done()])))
+    seen.add(specpack.derive_deliverable(_pack([_done()], review=PASS)))
+    seen.add(specpack.derive_deliverable(_pack([_t("doing")])))
+    seen.add(specpack.derive_deliverable(_pack([_t("todo")], questions=[
+        {"id": "Q-1", "question": "q", "status": "open"}])))
+    seen.add(specpack.derive_deliverable(_pack([_t("todo")])))
+    assert seen == set(specpack.DELIVERABLE_STAGES), (seen, specpack.DELIVERABLE_STAGES)

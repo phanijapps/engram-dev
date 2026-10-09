@@ -16,7 +16,7 @@ managed_by: okf-code
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-08T23:21:39Z'
+  at: '2026-10-09T03:37:18Z'
 status: stable
 ---
 <!-- okf-code:start -->
@@ -30,7 +30,7 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 - [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) - model module; depends on 1; used by 3; high-signal symbols: `LoomError`, `_schema`, `MiniValidator`
 - [engine/loom/src/loom_kit/__init__.py](/code/engine/loom/src/loom_kit/__init__.py.md) - module; depends on 0; used by 3
 - [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md) - module; depends on 2; used by 1; high-signal symbols: `_digest`, `_prereq_states`, `_satisfied`
-- [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `_now`, `_digest`, `_vschema`
+- [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `derive_deliverable`, `save`, `_now`
 - [engine/loom/src/loom_kit/templates.py](/code/engine/loom/src/loom_kit/templates.py.md) - module; depends on 0; used by 1
 - [engine/okf/okf_kit/__init__.py](/code/engine/okf/okf_kit/__init__.py.md) - module; depends on 0; used by 0
 - [engine/okf/okf_kit/cli.py](/code/engine/okf/okf_kit/cli.py.md) - module; depends on 0; used by 0; high-signal symbols: `main`, `_build_parser`, `_dispatch`

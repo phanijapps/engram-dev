@@ -14,7 +14,8 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator
 
-from .spine import LoomError, save
+from .spine import LoomError
+from .spine import save as _spine_save
 
 SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "specpack.schema.json"
 STALL_LIMIT = 2
@@ -30,6 +31,43 @@ QUESTION_STATUSES = ("open", "resolved")
 VERDICTS = ("PASS", "IMPROVE", "REPLAN")
 # Reported (transient) statuses of `loom next` — never stored in a pack.
 HANDOUT_STATUSES = ("task", "DONE", "BLOCKED", "WAITING", "needs_rebase", "needs_closure", "COMPLETE")
+DELIVERABLE_STAGES = (
+    "drafted", "planning", "in_progress", "blocked",
+    "awaiting_owner", "in_review", "delivered",
+)
+
+
+def derive_deliverable(doc: dict) -> str:
+    """The stage of the overall deliverable (D-5). A total deterministic
+    function of task states, decision states, question states, and review.
+    First match wins; never hand-set; verified like a checksum.
+    """
+    tasks = doc.get("tasks") or []
+    statuses = [t.get("status") for t in tasks]
+    if doc.get("status") == PACK_COMPLETE:
+        return "delivered"
+    if "doing" not in statuses and "blocked" in statuses:
+        return "blocked"
+    if tasks and all(st == "done" for st in statuses):
+        gaps = closure_gaps(doc)
+        if gaps["pending_decisions"] or gaps["open_questions"]:
+            return "awaiting_owner"
+        if not gaps["review_pass"]:
+            return "in_review"
+        return "in_progress"  # all done, review passed, not yet closed
+    if "doing" in statuses or "done" in statuses:
+        return "in_progress"  # work underway or partially delivered; done-with-remaining included
+    openq = [q for q in doc["spec"].get("clarifications", []) if q.get("status") == "open"]
+    if openq and "done" not in statuses and "doing" not in statuses:
+        return "planning"
+    return "drafted"
+
+
+def save(doc: dict, path) -> None:
+    """Write the derived deliverable stage, then persist (D-5: the field
+    can never lag the content it summarizes)."""
+    doc["deliverable"] = derive_deliverable(doc)
+    _spine_save(doc, path)
 
 
 def _now() -> str:
@@ -45,19 +83,38 @@ def _vschema() -> dict:
         return json.load(f)
 
 
+def spec_path(directory: str | Path) -> Path:
+    """The spec json: <dirname>.json by convention, specpack.json second,
+    and never a silent guess when several json files compete."""
+    d = Path(directory)
+    for name in (d.resolve().name + ".json", "specpack.json"):
+        preferred = d / name
+        if preferred.exists():
+            return preferred
+    found = sorted(d.glob("*.json"))
+    if len(found) == 1:
+        return found[0]
+    if not found:
+        raise LoomError(f"{d}: no spec json found (looked for {d.resolve().name}.json)")
+    names = ", ".join(f.name for f in found)
+    raise LoomError(f"{d}: several json files and none is {d.resolve().name}.json or specpack.json ({names}); name the spec explicitly")
+
+
 def load_specpack(directory: str | Path) -> tuple[dict, Path]:
     directory = Path(directory)
     if (directory / "sdd.json").exists():
         raise LoomError(f"{directory}: sdd.json present — legacy spine takes precedence; specpack support is for specpack initiatives")
-    candidates = sorted(directory.glob("*.json"))
-    if not candidates:
-        raise LoomError(f"{directory}: no specpack json found")
-    path = candidates[0]
+    path = spec_path(directory)
     with open(path, encoding="utf-8") as f:
         try:
             doc = json.load(f)
         except json.JSONDecodeError as e:
             raise LoomError(f"{path}: invalid JSON: {e}") from e
+    for section in ("spec", "plan", "tasks"):
+        if section not in doc or not isinstance(doc[section], dict if section != "tasks" else list):
+            raise LoomError(f"{path}: not a spec: {section} missing or malformed")
+    if "requirements" not in doc["spec"]:
+        raise LoomError(f"{path}: not a spec: spec.requirements missing")
     if doc.get("format", "") not in KNOWN_FORMATS:
         raise LoomError(
             f"{path}: unsupported format {doc.get('format')!r} "
@@ -65,6 +122,12 @@ def load_specpack(directory: str | Path) -> tuple[dict, Path]:
         )
     if "status" not in doc:
         doc["status"] = PACK_ACTIVE  # explicit from the first machine touch (FR-1)
+    if "deliverable" in doc and doc["deliverable"] != derive_deliverable(doc):
+        raise LoomError(
+            f"{path}: deliverable stage mismatch — stored {doc['deliverable']!r}, "
+            f"derived {derive_deliverable(doc)!r}; the field is machine-derived, "
+            "never hand-set (D-5)"
+        )
     validate(doc, path)
     return doc, path
 
@@ -77,10 +140,13 @@ def validate(doc: dict, path: Path | None = None) -> list[str]:
 
 
 def _families(doc: dict) -> dict[str, set[str]]:
+    if not isinstance(doc, dict) or "spec" not in doc or "plan" not in doc or "tasks" not in doc:
+        raise LoomError("not a spec: missing spec, plan, or tasks sections")
     fams: dict[str, set[str]] = {}
     for key, fam in (("stories", "US"), ("requirements", "FR"), ("constraints", "CON"), ("clarifications", "Q")):
         fams[fam] = {x["id"] for x in doc["spec"].get(key, [])}
     fams["AC"] = {s["id"] for r in doc["spec"]["requirements"] for s in r.get("scenarios", [])}
+    fams["AC"] |= {a["id"] for st in doc["spec"].get("stories", []) for a in st.get("acceptance", [])}
     fams["D"] = {d["id"] for d in doc["plan"].get("decisions", [])}
     fams["DES"] = {d["id"] for d in doc["plan"].get("designs", [])}
     fams["DG"] = {g["id"] for g in doc["plan"].get("diagrams", [])}
@@ -99,6 +165,7 @@ def alignment(doc: dict) -> tuple[list[str], dict]:
         raw.extend(x["id"] for x in doc["spec"].get(key, []))
     for r in doc["spec"]["requirements"]:
         raw.extend(s["id"] for s in r.get("scenarios", []))
+    raw.extend(a["id"] for st in doc["spec"].get("stories", []) for a in st.get("acceptance", []))
     raw.extend(d["id"] for d in doc["plan"].get("decisions", []))
     raw.extend(d["id"] for d in doc["plan"].get("designs", []))
     raw.extend(g["id"] for g in doc["plan"].get("diagrams", []))
@@ -183,6 +250,25 @@ def alignment(doc: dict) -> tuple[list[str], dict]:
             d: sorted({t["id"] for t in doc["tasks"] if d in t.get("implements", [])})
             for d in sorted(fams["DES"])
         },
+    }
+    served = set()
+    for r in doc["spec"]["requirements"]:
+        served.update(r.get("serves") or [])
+    story_ids = {s_["id"] for s_ in doc["spec"].get("stories", [])}
+    story_acs = {a["id"] for st in doc["spec"].get("stories", []) for a in st.get("acceptance", [])}
+    coverage["AC"] = {
+        a: who for a, who in coverage["AC"].items() if a not in story_acs
+    }
+    coverage["US"] = {
+        a["id"]: sorted(t["id"] for t in doc["tasks"] if a["id"] in t.get("accepts", []))
+        for st in doc["spec"].get("stories", [])
+        for a in st.get("acceptance", [])
+    }
+    coverage["story_drift"] = {
+        "requirements_without_stories": sorted(
+            r["id"] for r in doc["spec"]["requirements"] if not (r.get("serves") or [])
+        ),
+        "stories_unserved": sorted(story_ids - served),
     }
     active = [t for t in doc["tasks"] if t.get("status") in ("todo", "doing")]
     coverage["context"] = {
@@ -498,6 +584,9 @@ def _node_body(doc: dict, id_: str, via: dict) -> dict | None:
     for s in spec.get("stories", []):
         if s["id"] == id_:
             return {"family": "US", **s}
+        for a in s.get("acceptance", []):
+            if a["id"] == id_:
+                return {"family": "AC", **a}
     for r in spec["requirements"]:
         if r["id"] == id_:
             extra = {"via": via[id_]} if id_ in via else {}
@@ -552,6 +641,10 @@ def slice_for(doc: dict, task_id: str) -> dict:
         for a in d.get("addresses", []):
             keep.add(a)
             via.setdefault(a, d["id"])
+    for r in doc["spec"]["requirements"]:
+        if r["id"] in keep:
+            for us in r.get("serves", []):
+                keep.add(us)  # the worker sees the story being served (intent altitude)
     for d in doc["plan"].get("decisions", []):
         if d.get("status") == "accepted":
             keep.add(d["id"])
