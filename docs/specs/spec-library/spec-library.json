@@ -3,7 +3,7 @@
   "name": "spec-library",
   "description": "The spec library — every spec, readable by its owner",
   "date": {
-    "updated": "2026-10-09T19:55:43Z",
+    "updated": "2026-10-09T19:58:59Z",
     "approved": {
       "at": "2026-10-09T19:54:14Z",
       "by": "human:owner"
@@ -11,7 +11,7 @@
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "planning"
   },
   "spec": {
     "why": "Packs are JSON for machines. The owner reads them through an agent, one command at a time. The owner's audience — product owners with no technical training — cannot. The record deserves a room anyone can walk into.",
@@ -418,48 +418,130 @@
     ]
   },
   "design": {
-    "approach": "Proposed; firms up after the interview.",
+    "approach": "A second page joins the room: the standing surface for every pack — readable, traceable, and actionable in place. Zero engine changes; the vocabulary stays frozen, the page translates (design.md).",
     "stack": {
       "ui": "vendored page (no framework), marked.min.js for markdown",
       "seam": "specweb-events/0.1 through the harness adapter"
     },
-    "designs": [],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "A page of its own",
+        "kind": "ui",
+        "detail": "library.html + library.js + vendored marked.min.js, served by `loom library` on 127.0.0.1:8788; the interview room untouched; grep-clean.",
+        "addresses": [
+          "FR-3",
+          "FR-11"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "The endpoints",
+        "kind": "api",
+        "detail": "GET / · /app.js · /marked.min.js · /specs (fail-soft per folder, legacy listed) · /spec/<name> · /artifact/<name>/<file> (.md only, path-guarded); POST /event/<name> admission with 400-JSON refusals.",
+        "addresses": [
+          "FR-1",
+          "FR-4",
+          "FR-11",
+          "FR-12"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "The pane",
+        "kind": "ui",
+        "detail": "Three counted groups — Waiting on you / Moving / Done — free-text search, needs-you first, recently-updated within group.",
+        "addresses": [
+          "FR-1",
+          "FR-2"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "The detail",
+        "kind": "ui",
+        "detail": "Hash router #/<name>/<tab>; five tabs; every .md rendered (marked, trusted-on-disk posture); ID tokens jump-link; requirements show covering tasks.",
+        "addresses": [
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-7",
+          "FR-8",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "The words layer",
+        "kind": "ui",
+        "detail": "PO stage words with engineer tooltips; plain dates with ISO tooltips; friendly empty states; legacy read-only.",
+        "addresses": [
+          "FR-10",
+          "FR-11"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "The journey strip",
+        "kind": "ui",
+        "detail": "Five lit nodes (Just started → Being shaped → In progress → In review → Done) with Waiting-on-you and Stuck flags; presentation only, vocabulary untouched.",
+        "addresses": [
+          "FR-13"
+        ]
+      },
+      {
+        "id": "DES-7",
+        "title": "Acting in place",
+        "kind": "ui",
+        "detail": "Open questions get option buttons (default preselected) or textarea + honest unknown; approve appears when legal; refusals surface inline verbatim; stateless re-fetch after every act.",
+        "addresses": [
+          "FR-12"
+        ]
+      }
+    ],
     "decisions": [
       {
         "id": "D-1",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Markdown renders client-side with vendored marked.min.js (MIT, ~39KB verified), no CDN at runtime.",
-        "because": "Tables and links are load-bearing in our briefs; a hand-rolled renderer risks them. The file sits in web/, grep-clean of engine names."
+        "because": "Tables and links are load-bearing in our briefs; a hand-rolled renderer risks them. The file sits in web/, grep-clean of engine names.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-2",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "The owner-words vocabulary map lives in the page; engine stages stay untouched.",
-        "because": "Translation is presentation. The machine keeps its frozen vocabulary (status-vocabulary rev 8)."
+        "because": "Translation is presentation. The machine keeps its frozen vocabulary (status-vocabulary rev 8).",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-3",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Deep links are hash URLs (#spec/name/tab) — shareable, no server routing.",
-        "because": "Cheap, portable, works under any adapter host."
+        "because": "Cheap, portable, works under any adapter host.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-4",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Inline answering AND approving (Q-1: look + answer + approve) reuse specweb-events/0.1 admission — the same seam as the room.",
-        "because": "One admission path, published contract, platform-portable. The room keeps the born-spec interview; the library is the standing surface for both acts."
+        "because": "One admission path, published contract, platform-portable. The room keeps the born-spec interview; the library is the standing surface for both acts.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-5",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "The list endpoint derives from load_specpack per folder, failing soft per folder.",
-        "because": "The loader is the truth of what a pack is; legacy folders must never kill the page."
+        "because": "The loader is the truth of what a pack is; legacy folders must never kill the page.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-6",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "GETs are stateless re-reads; no long-lived pack cache in the server.",
-        "because": "Answers can land elsewhere while browsing; staleness stays one refresh deep."
+        "because": "Answers can land elsewhere while browsing; staleness stays one refresh deep.",
+        "accepted_by": "human:owner"
       }
     ]
   },
@@ -472,7 +554,9 @@
       "satisfies": [
         "FR-4"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2"
+      ],
       "accepts": [
         "AC-4"
       ],
@@ -495,7 +579,10 @@
         "FR-2",
         "FR-11"
       ],
-      "implements": [],
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
       "accepts": [
         "AC-1",
         "AC-2",
@@ -523,7 +610,10 @@
         "FR-8",
         "FR-9"
       ],
-      "implements": [],
+      "implements": [
+        "DES-3",
+        "DES-4"
+      ],
       "accepts": [
         "AC-3",
         "AC-5",
@@ -546,7 +636,9 @@
       "satisfies": [
         "FR-10"
       ],
-      "implements": [],
+      "implements": [
+        "DES-5"
+      ],
       "accepts": [
         "AC-7",
         "AC-8",
@@ -570,7 +662,9 @@
       "satisfies": [
         "FR-12"
       ],
-      "implements": [],
+      "implements": [
+        "DES-7"
+      ],
       "accepts": [
         "AC-10"
       ],
@@ -591,7 +685,9 @@
       "satisfies": [
         "FR-13"
       ],
-      "implements": [],
+      "implements": [
+        "DES-6"
+      ],
       "accepts": [],
       "status": "todo",
       "verify": {
@@ -611,7 +707,10 @@
         "FR-12",
         "FR-13"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2",
+        "DES-7"
+      ],
       "accepts": [],
       "status": "todo",
       "verify": {
@@ -625,5 +724,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 12
+  "revision": 18
 }
