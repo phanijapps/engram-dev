@@ -123,7 +123,8 @@ export function startRoom(packDir: string, port = 0, owner = 'human:owner'): Pro
       );
       return;
     }
-    if (url === '/app.js') return asset(res, 'page.js', 'text/javascript; charset=utf-8');
+    if (url === '/app.js' || url === '/page.js')
+      return asset(res, 'page.js', 'text/javascript; charset=utf-8');
     if (url === '/marked.min.js')
       return asset(res, 'marked.min.js', 'text/javascript; charset=utf-8');
     if (url === '/spec') {
