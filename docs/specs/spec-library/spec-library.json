@@ -3,7 +3,7 @@
   "name": "spec-library",
   "description": "The spec library — every spec, readable by its owner",
   "date": {
-    "updated": "2026-10-09T20:03:16Z",
+    "updated": "2026-10-09T20:06:13Z",
     "approved": {
       "at": "2026-10-09T19:54:14Z",
       "by": "human:owner"
@@ -637,13 +637,22 @@
         "AC-5",
         "AC-6"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_tabs.py -q",
         "expect": "exit 0 — tabs render, ID mentions link"
       },
       "honors": [
         "CON-3"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_tabs.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:06:12Z",
+          "by": "agent:pi",
+          "notes": "197 suite green; exits verified directly"
+        }
       ]
     },
     {
@@ -663,13 +672,22 @@
         "AC-9",
         "AC-11"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_words.py -q",
         "expect": "exit 0 — no untranslated stage leaks"
       },
       "honors": [
         "CON-4"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_words.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:06:12Z",
+          "by": "agent:pi",
+          "notes": "197 suite green; exits verified directly"
+        }
       ]
     },
     {
@@ -686,13 +704,22 @@
       "accepts": [
         "AC-10"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_answer.py -q",
         "expect": "exit 0 — answers land with claim + timestamp, or the read-only refusal holds"
       },
       "honors": [
         "CON-3"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_answer.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:06:13Z",
+          "by": "agent:pi",
+          "notes": "197 suite green; exits verified directly"
+        }
       ]
     },
     {
@@ -707,13 +734,22 @@
         "DES-6"
       ],
       "accepts": [],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — the extra's own tests green"
       },
       "honors": [
         "CON-4"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_journey.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:06:13Z",
+          "by": "agent:pi",
+          "notes": "197 suite green; exits verified directly"
+        }
       ]
     },
     {
@@ -742,5 +778,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 20
+  "revision": 24
 }

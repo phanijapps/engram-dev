@@ -62,6 +62,7 @@ def list_specs(root: Path) -> dict:
             "open_questions": sum(1 for q in qs if q.get("status") == "open"),
             "approved": bool(doc.get("approved_at")),
             "updated": (doc.get("date") or {}).get("updated") or (doc.get("date") or {}).get("created") or "",
+            "docs": sorted(x.name for x in d.glob("*.md")),
         })
     return {"specs": packs, "legacy": legacy, "root": str(root)}
 
