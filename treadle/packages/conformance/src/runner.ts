@@ -10,6 +10,7 @@ import {
   deriveStage,
   emitBytes,
   loadPack,
+  nextTask,
   record,
   type PackDoc,
 } from '@treadle/core';
@@ -51,7 +52,17 @@ function scrub(s: string): string {
   return out;
 }
 
-function applyOp(doc: PackDoc, op: Op): { refused?: Refusal } {
+interface OpOutcome {
+  refused?: Refusal;
+  handout?: unknown;
+}
+
+function applyOp(doc: PackDoc, op: Op): OpOutcome {
+  if (op.op === 'next') {
+    const r = nextTask(doc);
+    if (!r.ok) return { refused: r };
+    return { handout: r.value };
+  }
   const by = op.args.by ?? 'human:owner';
   if (op.op === 'choice') {
     // the seam carries option AND text (the room's page set the shape)
@@ -177,6 +188,7 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
     .filter((l) => l.trim())
     .map((l) => JSON.parse(l) as Ev);
   const doc = loaded.value;
+  let handout: unknown;
   for (const e of events) {
     const ev = e as {
       text?: string;
@@ -199,7 +211,9 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
         expected_revision: ev.expected_revision,
       },
     };
-    const { refused } = applyOp(doc, op);
+    const out = applyOp(doc, op);
+    if (out.handout !== undefined) handout = out.handout;
+    const { refused } = out;
     if (refused) {
       const expected = JSON.parse(read(dir, 'expected.err') ?? '{}') as { message: string };
       return expected.message && refused.message === expected.message
@@ -217,9 +231,44 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
     return { case: tag, layer, ok: false, detail: 'sequence succeeded but expected.err present' };
   const actual = scrub(saveLike(doc));
   const expected = scrub(expectedState);
-  return actual === expected
-    ? { case: tag, layer, ok: true }
-    : { case: tag, layer, ok: false, detail: firstDiff(actual, expected) };
+  if (actual !== expected) {
+    return { case: tag, layer, ok: false, detail: firstDiff(actual, expected) };
+  }
+  const expectedHandout = read(dir, 'expected.handout.json');
+  if (expectedHandout !== null && handout === undefined) {
+    return { case: tag, layer, ok: false, detail: 'expected a handout, none produced' };
+  }
+  if (expectedHandout !== null) {
+    const a = JSON.parse(JSON.stringify(handout));
+    const b = JSON.parse(expectedHandout);
+    return canon(a) === canon(b)
+      ? { case: tag, layer, ok: true }
+      : {
+          case: tag,
+          layer,
+          ok: false,
+          detail:
+            'handout mismatch:\n  ' + canon(a).slice(0, 400) + '\nvs\n  ' + canon(b).slice(0, 400),
+        };
+  }
+  return { case: tag, layer, ok: true };
+}
+
+/** canonical JSON (sorted keys, compact) — value equality, python parity */
+function canon(x: unknown): string {
+  if (Array.isArray(x)) return '[' + x.map(canon).join(',') + ']';
+  if (x && typeof x === 'object') {
+    const o = x as Record<string, unknown>;
+    return (
+      '{' +
+      Object.keys(o)
+        .sort()
+        .map((k) => JSON.stringify(k) + ':' + canon(o[k]))
+        .join(',') +
+      '}'
+    );
+  }
+  return JSON.stringify(x);
 }
 
 function firstDiff(a: string, b: string): string {

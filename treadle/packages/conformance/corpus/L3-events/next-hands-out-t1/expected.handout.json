@@ -1,0 +1,29 @@
+{
+  "items": [
+    {
+      "accepted_by": "human:owner",
+      "because": "b",
+      "decision": "d",
+      "family": "D",
+      "id": "D-1",
+      "status": "accepted"
+    },
+    {
+      "detail": "d",
+      "family": "TASK",
+      "id": "T-1",
+      "phase": "core",
+      "status": "doing",
+      "title": "one",
+      "verify": {
+        "cmd": "true",
+        "expect": "0"
+      }
+    }
+  ],
+  "omitted_tasks": [],
+  "prelude": {},
+  "slice_digest": "c85a13bb02f893a7e7720f3c713cbb1fd8856a632fc2896bc5a6d694decec733",
+  "status": "task",
+  "task": "T-1"
+}

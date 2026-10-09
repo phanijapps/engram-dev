@@ -9,3 +9,4 @@ export { record, failStreak, type ExecutedCommand, type RecordResult } from './r
 export { closePack, type CloseResult } from './close.js';
 export { savePack } from './save.js';
 export { loadPackWithMeta } from './loader.js';
+export { nextTask, sliceFor, type Handout, type Slice } from './next.js';

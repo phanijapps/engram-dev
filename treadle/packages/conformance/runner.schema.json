@@ -4,10 +4,16 @@
   "description": "Twelve operations every implementation must provide against the same corpus. Conformance = corpus green, regardless of runner.",
   "type": "object",
   "properties": {
-    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$",
+      "const": "1.1"
+    },
     "operations": {
       "type": "array",
-      "items": { "$ref": "#/$defs/op" }
+      "items": {
+        "$ref": "#/$defs/op"
+      }
     }
   },
   "required": ["version", "operations"],
@@ -28,10 +34,13 @@
             "close",
             "read-events",
             "artifact",
-            "traverse"
+            "traverse",
+            "next"
           ]
         },
-        "args": { "type": "object" }
+        "args": {
+          "type": "object"
+        }
       },
       "required": ["op"]
     }

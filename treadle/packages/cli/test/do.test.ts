@@ -167,3 +167,13 @@ describe('the do plane (integration, in-process)', () => {
     expect(process.exitCode === 1 || errs.length > 0).toBe(true);
   });
 });
+
+describe('do next (the frozen handout)', () => {
+  it('hands out the task, saves the doing state, then reports closure honestly', () => {
+    const d = bornPack();
+    run(['do', 'next', d]);
+    const loaded = loadPack(d);
+    expect(loaded.ok && loaded.value.tasks[0]?.status).toBe('doing');
+    expect(loaded.ok && loaded.value.revision).toBe(2);
+  });
+});

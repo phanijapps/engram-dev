@@ -10,6 +10,7 @@ import {
   approveSpec,
   closePack,
   loadPackWithMeta,
+  nextTask,
   record,
   savePack,
   type PackDoc,
@@ -82,6 +83,33 @@ export function registerDo(doCmd: Command): void {
         console.log(`approved by ${opts.by} at ${out.value.approved_at}`);
       }),
     );
+
+  doCmd.command('next <packDir>').action(
+    guarded((l) => {
+      const out = nextTask(l.doc);
+      if (!out.ok) return fail(out.message);
+      const h = out.value;
+      if (h.status === 'task') {
+        console.log(
+          `task ${h.task} — ${h.items.length} items in the frozen slice (digest ${h.slice_digest.slice(0, 12)}…)`,
+        );
+        for (const it of h.items) {
+          const fam = String((it as Record<string, unknown>)['family'] ?? '?');
+          const id = String((it as Record<string, unknown>)['id'] ?? '?');
+          const title = String((it as Record<string, unknown>)['title'] ?? '');
+          console.log(`  ${fam.padEnd(4)} ${id}${title ? ' — ' + title : ''}`);
+        }
+      } else if (h.status === 'needs_closure') {
+        console.log(
+          `closure needed: ${h.pending_decisions.length} decisions proposed, ${h.open_questions.length} questions open`,
+        );
+        process.exitCode = 1;
+      } else {
+        console.log(h.status);
+      }
+      savePack(l.doc, l.path, { at: now() }); // handout bumped the revision
+    }),
+  );
 
   doCmd
     .command('record <packDir>')
