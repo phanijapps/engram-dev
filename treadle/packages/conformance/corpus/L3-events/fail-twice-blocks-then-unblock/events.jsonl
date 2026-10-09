@@ -1,0 +1,3 @@
+{"kind": "record", "task": "T-1", "result": "fail", "commands": [{"command": "false", "exit": 1}], "expected_revision": 1, "by": "agent:worker"}
+{"kind": "record", "task": "T-1", "result": "fail", "commands": [{"command": "false", "exit": 1}], "expected_revision": 2, "by": "agent:worker"}
+{"kind": "record", "task": "T-1", "result": "unblock", "expected_revision": 3, "by": "human:owner"}

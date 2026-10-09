@@ -6,6 +6,7 @@
  */
 import { Command } from 'commander';
 import { brand } from '@treadle/brand';
+import { registerDo } from './commands/do.js';
 
 const program = new Command();
 
@@ -21,11 +22,16 @@ program
     console.log(`${brand.name} know — the knowledge plane (scaffold)`);
   });
 
-program
+const doCmd = program
   .command('do')
-  .description('the loop plane: init, next, record, interview, library')
-  .action(() => {
-    console.log(`${brand.name} do — the loop plane (scaffold)`);
-  });
+  .description('the loop plane: answer, approve, record, close, status');
+registerDo(doCmd);
 
-program.parse();
+export function runCli(argv: string[]): void {
+  program.parse(argv);
+}
+
+// direct execution (tsx / bin): only when run as a script
+if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop()! + '')) {
+  program.parse();
+}

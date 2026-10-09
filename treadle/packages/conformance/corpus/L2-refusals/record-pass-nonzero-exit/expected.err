@@ -1,0 +1,4 @@
+{
+  "code": "pass_needs_zero_exits",
+  "message": "M_run = M: a pass needs at least one executed command and every command must exit 0 — a failed step makes the attempt a fail"
+}

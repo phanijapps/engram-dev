@@ -1,0 +1,15 @@
+{
+  "op": "record",
+  "args": {
+    "task": "T-9",
+    "result": "pass",
+    "commands": [
+      {
+        "command": "true",
+        "exit": 0
+      }
+    ],
+    "expected_revision": 1,
+    "by": "agent:worker"
+  }
+}

@@ -1,0 +1,2 @@
+{"kind": "record", "task": "T-1", "result": "pass", "commands": [{"command": "true", "exit": 0}], "expected_revision": 1, "by": "agent:worker"}
+{"kind": "close", "by": "human:owner"}

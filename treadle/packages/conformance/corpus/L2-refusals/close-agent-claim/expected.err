@@ -1,0 +1,4 @@
+{
+  "code": "human_claim_required",
+  "message": "closing needs a human claim: pass --by human:<owner>"
+}

@@ -1,0 +1,4 @@
+{
+  "code": "cannot_close",
+  "message": "cannot close: tasks not done: T-1; questions open: Q-1, Q-2; no PASS verdict on PACK (review.verdicts)"
+}

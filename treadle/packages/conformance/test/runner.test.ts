@@ -8,7 +8,7 @@ describe('the golden corpus', () => {
   const results = runCorpus(CORPUS);
 
   it('executes every case', () => {
-    expect(results.length).toBe(14);
+    expect(results.length).toBe(22);
   });
 
   it('is green — conformance, regardless of runner language', () => {

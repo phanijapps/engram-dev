@@ -76,3 +76,22 @@ function discover(dir: string): Admission<string> {
   }
   return refuse('pack_refused_to_load', `${dir}: several spec jsons compete — name it explicitly`);
 }
+
+/** Load with the discovered path: saves must land where the load read. */
+export function loadPackWithMeta(dir: string): Admission<{ doc: PackDoc; path: string }> {
+  const r = loadPack(dir);
+  if (!r.ok) return r;
+  const path = discoverPath(dir);
+  return path
+    ? { ok: true, value: { doc: r.value, path } }
+    : refuse('pack_refused_to_load', 'path lost');
+}
+
+function discoverPath(dir: string): string | null {
+  const preferred = [join(dir, `${basename(dir)}.json`), join(dir, 'specpack.json')];
+  for (const p of preferred) if (existsSync(p)) return p;
+  const found = readdirSync(dir)
+    .filter((f) => f.endsWith('.json'))
+    .sort();
+  return found.length === 1 ? join(dir, found[0]!) : null;
+}

@@ -1,0 +1,4 @@
+{
+  "code": "stale_writer",
+  "message": "stale writer: file is at revision 1, caller expected 7"
+}

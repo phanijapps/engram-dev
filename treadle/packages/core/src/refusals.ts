@@ -14,6 +14,16 @@ export const REFUSAL_CODES = [
   'pack_refused_to_load',
   'answer_text_empty',
   'human_claim_required',
+  // record / close family
+  'stale_writer',
+  'no_such_task',
+  'unblock_requires_blocked',
+  'cancel_forbidden',
+  'unknown_result',
+  'already_done',
+  'cannot_record_from',
+  'pass_needs_zero_exits',
+  'cannot_close',
 ] as const;
 
 export type RefusalCode = (typeof REFUSAL_CODES)[number];

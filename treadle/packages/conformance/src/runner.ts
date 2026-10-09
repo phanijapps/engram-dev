@@ -6,15 +6,17 @@ import { join } from 'node:path';
 import {
   answerQuestion,
   approveSpec,
+  closePack,
   deriveStage,
   emitBytes,
   loadPack,
+  record,
   type PackDoc,
 } from '@treadle/core';
 import type { Refusal } from '@treadle/core';
 
 const FIXED_AT = '2026-10-10T12:00:00Z';
-const SCRUB = /^(\s*"updated":\s*")[^"]*(")/gm;
+const SCRUB = [/^(\s*"updated":\s*")[^"]*(")/gm, /("exit":\s*\d+,\n\s*"at":\s*")[^"]*(")/gm];
 
 export interface CaseResult {
   case: string;
@@ -30,6 +32,10 @@ interface Op {
     text?: string | undefined;
     option?: string | undefined;
     by?: string | undefined;
+    task?: string | undefined;
+    result?: string | undefined;
+    commands?: { command: string; exit: number }[] | undefined;
+    expected_revision?: number | undefined;
   };
 }
 
@@ -40,7 +46,9 @@ interface Ev {
 }
 
 function scrub(s: string): string {
-  return s.replace(SCRUB, '$1«now»$2');
+  let out = s;
+  for (const re of SCRUB) out = out.replace(re, '$1«now»$2');
+  return out;
 }
 
 function applyOp(doc: PackDoc, op: Op): { refused?: Refusal } {
@@ -60,6 +68,31 @@ function applyOp(doc: PackDoc, op: Op): { refused?: Refusal } {
       unknown: op.op === 'unknown',
       at: FIXED_AT,
     });
+    if (!r.ok) return { refused: r };
+    return {};
+  }
+  if (op.op === 'record') {
+    const a = op.args as {
+      task?: string;
+      result?: string;
+      commands?: { command: string; exit: number }[];
+      expected_revision?: number;
+      by?: string;
+    };
+    const r = record(
+      doc,
+      a.task ?? '',
+      a.result ?? 'pass',
+      a.commands ?? [],
+      a.expected_revision ?? 1,
+      a.by ?? 'agent:worker',
+      { at: FIXED_AT },
+    );
+    if (!r.ok) return { refused: r };
+    return {};
+  }
+  if (op.op === 'close') {
+    const r = closePack(doc, by, { at: FIXED_AT });
     if (!r.ok) return { refused: r };
     return {};
   }
@@ -145,7 +178,14 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
     .map((l) => JSON.parse(l) as Ev);
   const doc = loaded.value;
   for (const e of events) {
-    const ev = e as { text?: string; option?: string };
+    const ev = e as {
+      text?: string;
+      option?: string;
+      task?: string;
+      result?: string;
+      commands?: { command: string; exit: number }[];
+      expected_revision?: number;
+    };
     const op: Op = {
       op: e.kind,
       args: {
@@ -153,6 +193,10 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
         by: e.by,
         text: ev.text,
         option: ev.option,
+        task: ev.task,
+        result: ev.result,
+        commands: ev.commands,
+        expected_revision: ev.expected_revision,
       },
     };
     const { refused } = applyOp(doc, op);
