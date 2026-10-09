@@ -200,7 +200,23 @@ export function registerDo(doCmd: Command): void {
       console.log(`room: ${room.url}  (localhost only, no auth — v1 disclosure)`);
       console.log(`room: serving ${packDir} — Ctrl-C stops`);
       if (opts.open) await openBrowser(room.url);
-      await new Promise<never>(() => void 0); // block like an interrupt
+      // the interrupt completes when the approval act lands — then we stop
+      await new Promise<never>((_, reject) => {
+        const timer = setInterval(() => {
+          const loaded = loadPackWithMeta(packDir);
+          if (loaded.ok && loaded.value.doc.approved_at) {
+            clearInterval(timer);
+            console.log('interview complete: the approval act is recorded; the loop resumes');
+            room.close().finally(() => process.exit(0));
+          }
+        }, 1000);
+        process.on('SIGINT', () => {
+          clearInterval(timer);
+          console.log('\nroom: stopped; every admission is already saved');
+          room.close().finally(() => process.exit(0));
+          void reject;
+        });
+      });
     });
 
   doCmd
