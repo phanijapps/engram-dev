@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "The conformance runner contract (golden suite design, L1-L4)",
+  "description": "Twelve operations every implementation must provide against the same corpus. Conformance = corpus green, regardless of runner.",
+  "type": "object",
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+$" },
+    "operations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/op" }
+    }
+  },
+  "required": ["version", "operations"],
+  "$defs": {
+    "op": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "enum": [
+            "load",
+            "emit",
+            "check",
+            "answer",
+            "unknown",
+            "choice",
+            "approve",
+            "record",
+            "close",
+            "read-events",
+            "artifact",
+            "traverse"
+          ]
+        },
+        "args": { "type": "object" }
+      },
+      "required": ["op"]
+    }
+  }
+}

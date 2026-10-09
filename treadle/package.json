@@ -1,0 +1,25 @@
+{
+  "name": "treadle-root",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "tsc --build && eslint . && prettier --check . && vitest run",
+    "test": "vitest run",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "brand:check": "node scripts/brand-check.mjs",
+    "brand:set": "node scripts/set-brand.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^2.0.0"
+  }
+}

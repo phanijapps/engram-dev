@@ -1,0 +1,13 @@
+{
+  "name": "@treadle/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "treadle": "./src/main.ts"
+  },
+  "dependencies": {
+    "@treadle/brand": "workspace:*",
+    "@treadle/core": "workspace:*",
+    "commander": "^12.0.0"
+  }
+}

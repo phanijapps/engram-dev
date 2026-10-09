@@ -1,0 +1,788 @@
+{
+  "id": "specpack-context",
+  "name": "specpack-context",
+  "description": "Specpack 0.3: handoff-complete tasks",
+  "date": {
+    "closed": {
+      "at": "2026-10-08T17:10:00Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete"
+  },
+  "metadata": {
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "description": "Owner-synced design: three layers, enforcement levels, rejected options, open questions",
+      "sha256": "63a298387a93db6096ef2754f56cfec0844150d1183adb6761eaae8287904c2c"
+    }
+  },
+  "spec": {
+    "clarifications": [
+      {
+        "answer": "Pin at loom next (option A). The work session is the fence; the human accepted D-6 on 2026-10-08.",
+        "id": "Q-1",
+        "owner": "human:owner",
+        "question": "Pin moment: at loom next (re-pin each handout, refuse drift since the last pin) or at plan acceptance (stricter, explicit rebase wall)?",
+        "resolved_by": "D-6",
+        "status": "resolved"
+      },
+      {
+        "answer": "Any agent may re-pin, but only after owner approval at the drift: agent shows guidance, owner approves, rebase records --approved-by human:<owner> (option A with an approval gate, accepted 2026-10-08).",
+        "id": "Q-2",
+        "owner": "human:owner",
+        "question": "Who may re-pin drifted digests: any agent (with git as the provenance record) or a human only?",
+        "resolved_by": "D-7",
+        "status": "resolved"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Additive only: no 0.2 field changes shape, no field moves, no new required fields."
+      },
+      {
+        "id": "CON-2",
+        "text": "No new runtime dependencies and no imports between loom_kit and okf_kit in either direction."
+      },
+      {
+        "id": "CON-3",
+        "text": "A1 to A7 semantics unchanged; all new reporting is coverage-tier (reported, never blocking)."
+      },
+      {
+        "id": "CON-4",
+        "text": "Determinism preserved: sorted lists, canonical digests, no clocks outside evidence rows."
+      }
+    ],
+    "out_of_scope": [
+      "loom L2 (automated wiki retrieval from context.wiki)",
+      "spine mode (sdd.json) changes; specpack only",
+      "mirroring auth-gated URLs into artifacts automatically",
+      "UI or HTML renders of the context block"
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "refs": ["design#design-three-layers", "design#enforcement-levels"],
+        "scenarios": [
+          {
+            "given": "the 0.2 example pack at docs/specs/spec-graph/example-add-todo.specpack.json",
+            "id": "AC-1",
+            "then": "zero validation errors; the 0.3 fixture with a full context block also validates",
+            "when": "it is validated against the updated single schema"
+          }
+        ],
+        "text": "The schema MUST accept specpack/0.3 as an additive extension of 0.2: an optional per-task context block (touch, read, wiki, links, notes, commands), optional verify steps, and a pack-level env block. Every 0.2 pack MUST remain valid."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "refs": ["design#machine-behavior"],
+        "scenarios": [
+          {
+            "given": "a task that implements a design which addresses a requirement",
+            "id": "AC-2",
+            "then": "the slice carries the requirement text with a via marker naming the design, and accepted decisions are present",
+            "when": "loom next hands the task out"
+          }
+        ],
+        "text": "The frozen context at handout MUST carry full node bodies: requirement text behind implemented designs (with a via marker), prerequisite detail, produced files, and evidence, plus every accepted decision and the plan prelude."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "refs": ["design#enforcement-levels"],
+        "scenarios": [
+          {
+            "given": "a todo task with pinned touch digests",
+            "id": "AC-3",
+            "then": "next returns status needs_rebase naming the drift and the task stays todo",
+            "when": "a touch file changes and loom next runs"
+          }
+        ],
+        "text": "loom next MUST pin touch digests at handout and MUST refuse a drifted task with status needs_rebase instead of handing it out; loom rebase MUST re-pin."
+      },
+      {
+        "id": "FR-4",
+        "priority": "P2",
+        "text": "The machine MUST verify sha256 digests on links and artifacts at handout when present; a mismatch MUST refuse the handout."
+      },
+      {
+        "id": "FR-5",
+        "priority": "P2",
+        "text": "loom next MUST render verify steps and the env block in the handout; the record-time A6 rule (every command exit 0) MUST NOT change."
+      },
+      {
+        "id": "FR-6",
+        "priority": "P2",
+        "text": "loom check MUST report context completeness, long notes, env absence, and open questions as coverage-tier output, never as violations; A1 to A7 semantics MUST NOT change."
+      },
+      {
+        "id": "FR-7",
+        "priority": "P2",
+        "text": "The schema primer and the wiki loom page MUST describe 0.3, and the repo MUST end okf-fresh with no stale anchors."
+      },
+      {
+        "id": "FR-8",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "a proposed decision that resolves an open question",
+            "id": "AC-4",
+            "then": "the decision is accepted with accepted_by, and its questions become resolved",
+            "when": "loom accept runs with a human approval claim"
+          }
+        ],
+        "text": "The loop MUST record decision acceptance and rejection as machine commands (loom accept, loom reject), gated by a human approval claim; accepting a decision MUST resolve the questions it lists."
+      },
+      {
+        "id": "FR-9",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "all tasks done but a decision still proposed",
+            "id": "AC-5",
+            "then": "it returns needs_closure naming the decision, and loom close refuses until the gaps close",
+            "when": "loom next runs"
+          }
+        ],
+        "text": "The pack MUST have a final state: loom close sets status complete, refused until every task is done with evidence, no decision is proposed, no question is open, and a review PASS on PACK exists; a complete pack MUST refuse further mutation."
+      },
+      {
+        "id": "FR-10",
+        "priority": "P1",
+        "text": "The primer and wiki MUST describe the lifecycle, and this pack MUST close itself as its own final task."
+      }
+    ],
+    "stories": [
+      {
+        "as": "a fresh worker session",
+        "id": "US-1",
+        "so": "I can act on a spec I did not write, without its authors present",
+        "want": "a self-contained handout with spec, design, rationale, code anchors, and exact checks"
+      }
+    ],
+    "why": "A pack built by one team must be executable by a fresh session. The 0.2 handout flattens nodes to one-liners, never reaches decisions, and pins nothing about the code it targets."
+  },
+  "design": {
+    "approach": "Schema first (additive 0.3 with format enum), then the slice resolver (pure machine behavior), then pinning and rebase, then handout verification for links and artifacts, then coverage reporting, then docs. The spec rides on 0.2 so the loop can run it before 0.3 exists.",
+    "data": [],
+    "decisions": [
+      {
+        "accepted_by": "human:owner",
+        "because": "The links say what a task answers, the slice says what those things say, the context block says what world state it was planned against; one mechanism cannot carry all three without either embedding or losing pinning.",
+        "decision": "Handoff is three layers: TRACE links (declarative), slice expansion (resolution at handout), context block (pinning).",
+        "id": "D-1",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Embedding duplicates reality and drifts silently; pinning everything generates rebase noise that trains workers to ignore rebase.",
+        "decision": "Reference, never embed; pin only touch; read, wiki, and digestless links stay advisory.",
+        "id": "D-2",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Owner direction: context may point at Confluence, blogs, and other URLs, and may carry plain text; pack git history already records authorship.",
+        "decision": "notes are plain strings (provenance via git blame) and links accept external URLs or repo-relative paths with optional sha256 and retrieved_at.",
+        "id": "D-3",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Notes must not become an embedded shadow spec; that is the waterfall trap the harness refuses.",
+        "decision": "Promote-to-node rule: when a note becomes load-bearing it is promoted to a decision, constraint, or clarification, and the note shrinks to a pointer.",
+        "id": "D-4",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Hard checks would block legitimate doc-only tasks and freeze work on open questions that bounded slices can route around.",
+        "decision": "Context completeness, note length, env absence, and open questions are coverage-tier reports, not violations.",
+        "id": "D-5",
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "The worker session is the fence; acceptance-time pinning would wall every pack against normal code motion.",
+        "decision": "Pin at loom next: digests are written at first handout and verified against the current bytes at every handout; drift since the last pin refuses the handout.",
+        "id": "D-6",
+        "resolves": ["Q-1"],
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Re-hashing bytes is mechanical, but a drift is a signal the plan no longer matches the code. The agent proposes the fix; the human accepts it. This is the harness trust rule applied to rebase. The claim is a shape check like A7: git and review carry the truth.",
+        "decision": "An agent may re-pin only with owner approval at the drift: the agent shows the drift (paths, pinned vs current) and the remedies (re-pin and continue, or replan); the owner approves; loom rebase --approved-by human:<owner> records the approval claim. Git history is the provenance record.",
+        "id": "D-7",
+        "resolves": ["Q-2"],
+        "status": "accepted"
+      }
+    ],
+    "designs": [
+      {
+        "addresses": ["FR-1", "FR-5", "CON-1"],
+        "detail": "One schema file: format becomes enum [specpack/0.2, specpack/0.3]; task gains optional context (touch with path/sha256/why, read with path/why, wiki cids, links with url/why/sha256/retrieved_at, notes strings, commands with cmd/expect_exit); verify gains optional steps (run/expect_exit/expect_contains); pack gains optional env (build/test/lint/toolchain). Paths in touch and read are relative to the git root containing the pack; links may be URLs or repo-relative paths.",
+        "id": "DES-1",
+        "kind": "data",
+        "refs": ["design#enforcement-levels"],
+        "title": "Schema 0.3 delta"
+      },
+      {
+        "addresses": ["FR-2", "CON-4"],
+        "detail": "slice_for stops flattening: in-slice nodes render as full objects; designs expand one hop through addresses to their FRs with a via marker; every accepted decision enters the slice; prerequisite tasks contribute detail, produces, and evidence; the handout carries a plan prelude (approach, stack, env when present).",
+        "id": "DES-2",
+        "kind": "flow",
+        "title": "Slice resolver"
+      },
+      {
+        "addresses": ["FR-3", "CON-4"],
+        "detail": "At handout: touch entries without sha256 get pinned (first handout); entries with sha256 are verified against the file bytes; any mismatch returns status needs_rebase with a drift list and the task is not handed out. loom rebase <dir> --task re-pins current digests; git history of the pack is the provenance record (no clock fields).",
+        "id": "DES-3",
+        "kind": "flow",
+        "title": "Pin and rebase flow"
+      },
+      {
+        "addresses": ["FR-4"],
+        "detail": "links carrying sha256 and artifacts carrying sha256 are verified at handout; a mismatch refuses the handout with the offending entries named. Advisory links (no digest) pass through unchecked.",
+        "id": "DES-4",
+        "kind": "flow",
+        "title": "Handout digest verification"
+      },
+      {
+        "addresses": ["FR-6", "CON-3"],
+        "detail": "alignment coverage gains a context section: tasks missing detail, tasks missing touch, notes longer than a threshold, env absence, open questions while tasks are ready. Printed by loom check; never a violation.",
+        "id": "DES-5",
+        "kind": "interface",
+        "title": "Coverage reporter extension"
+      },
+      {
+        "addresses": ["FR-8"],
+        "detail": "loom accept <dir> --decision D-x --by human:<owner> --expected-revision N: proposed to accepted with accepted_by, human-claim gated (A7 shape check), auto-resolves the questions the decision resolves. loom reject records rejected with rejected_because. Both write-fenced; both refuse on a complete pack.",
+        "id": "DES-6",
+        "kind": "interface",
+        "title": "Decision ledger commands"
+      },
+      {
+        "addresses": ["FR-9"],
+        "detail": "Root gains optional status (active, complete), closed_by, closed_at. next returns needs_closure (listing pending decisions and open questions) instead of DONE while owner work remains; DONE when only the review PASS is missing; COMPLETE for a closed pack. loom close verifies: all tasks done with evidence, no proposed decisions, no open questions, a PASS verdict on PACK; then freezes: record, rebase, accept, reject, close, and next-handout all refuse.",
+        "id": "DES-7",
+        "kind": "flow",
+        "title": "Pack lifecycle: needs_closure, close, freeze"
+      }
+    ],
+    "diagrams": [],
+    "stack": {
+      "env": "uv",
+      "language": "Python 3.12+",
+      "schema": "JSON Schema Draft 2020-12 via jsonschema Draft202012Validator",
+      "tests": "pytest"
+    },
+    "structure": [
+      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/src/loom_kit/cli.py",
+      "engine/loom/tests/",
+      "docs/specs/spec-graph/schema-primer.md",
+      "wiki/systems/loom-engine.md"
+    ]
+  },
+  "tasks": [
+    {
+      "accepts": ["AC-1"],
+      "detail": "Extend specpack.schema.json additively per DES-1: format enum [specpack/0.2, specpack/0.3]; $defs for contextEntry-ish shapes (touch {path, sha256, why}, read {path, why}, links {url, why, sha256, retrieved_at}, notes strings, commands {cmd, expect_exit}); task.context; verify.steps {run, expect_exit, expect_contains}; root env {build, test, lint, toolchain} all optional strings. Loader already accepts any specpack/* format tag; validate() uses the one vendored schema so no loader change is needed beyond tests. New tests: a 0.3 fixture with a full context block validates; the 0.2 example pack still validates with zero errors.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:11:49Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_schema03.py tests/test_specpack_core.py::test_examples_validate tests/test_specpack_core.py::test_vendored_schema_matches_docs_copy",
+          "exit": 0,
+          "notes": "11 passed; full suite 49 green; selftest green; docs schema copy synced"
+        }
+      ],
+      "honors": ["CON-1", "CON-2"],
+      "id": "T-1",
+      "implements": ["DES-1"],
+      "needs": [],
+      "parallel": true,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/tests/test_specpack_schema03.py"
+      ],
+      "refs": ["design#compatibility"],
+      "satisfies": ["FR-1"],
+      "status": "done",
+      "title": "Schema 0.3: context block, steps, env, format enum",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_schema03.py tests/test_specpack_core.py::test_examples_validate tests/test_specpack_core.py::test_vendored_schema_matches_docs_copy",
+        "expect": "exit 0 — 0.3 fixture validates, 0.2 example pack still validates, vendored and docs schema copies match"
+      }
+    },
+    {
+      "accepts": ["AC-2"],
+      "detail": "Rewrite slice_for per DES-2: items carry full node objects (not flattened text); FRs reached through a design's addresses carry {\"via\": \"DES-x\"}; every accepted decision (status accepted) enters the slice; prerequisite tasks contribute detail, produces, evidence; the handout gains a plan prelude {approach, stack, env?}. Keep determinism: sorted items, same digest function. Update slice tests; digest values will change by design.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:15:14Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+          "exit": 0,
+          "notes": "full-suite 53 green; selftest green; live T-2 handout shows D family + via DES-2 on FR-2 + prelude"
+        }
+      ],
+      "honors": ["CON-4"],
+      "id": "T-2",
+      "implements": ["DES-2"],
+      "needs": [],
+      "parallel": true,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_core.py"
+      ],
+      "satisfies": ["FR-2"],
+      "status": "done",
+      "title": "Slice resolver: full bodies, via expansion, decisions, prelude",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py",
+        "expect": "exit 0 — slice tests assert full bodies, via marker, accepted decisions, prereq produces, prelude"
+      }
+    },
+    {
+      "accepts": ["AC-3"],
+      "detail": "Per DES-3 and D-6: at next, touch entries without sha256 get pinned; entries with sha256 are verified; mismatch returns {status: needs_rebase, drift: [...]} and does not hand out (status stays todo; revision untouched). New CLI subcommand: loom rebase <dir> --task T-x re-pins current digests. Touch paths resolve against the git root containing the pack (walk up from the pack file to .git). New tests: first handout pins; mutation then next returns needs_rebase and leaves todo; rebase then next hands out.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:17:22Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_pin.py tests/test_specpack_cli.py",
+          "exit": 0,
+          "notes": "62 tests green; selftest green; pin/rebase/needs_rebase asserted incl. CLI exit codes and no-persist-on-refuse"
+        }
+      ],
+      "honors": ["CON-4"],
+      "id": "T-3",
+      "implements": ["DES-3"],
+      "needs": ["T-1"],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_pin.py"
+      ],
+      "satisfies": ["FR-3"],
+      "status": "done",
+      "title": "Pin at handout, needs_rebase, loom rebase",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_pin.py tests/test_specpack_cli.py",
+        "expect": "exit 0 — pin, refuse on drift, rebase, and CLI wiring asserted"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "Per DES-4: at next, links with sha256 and artifacts with sha256 are verified against fetched/read bytes (artifacts relative to the pack file; repo-relative links relative to the git root). Mismatch refuses the handout naming the entries. Advisory entries (no digest) pass. Tests: mismatched artifact digest refuses; matching passes; URL links without sha256 pass.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:18:09Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_pin.py",
+          "exit": 0,
+          "notes": "67 tests green: artifact/link digest verify local only, remote passes; selftest green"
+        }
+      ],
+      "honors": ["CON-4"],
+      "id": "T-4",
+      "implements": ["DES-4"],
+      "needs": ["T-1"],
+      "parallel": true,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_pin.py"
+      ],
+      "satisfies": ["FR-4"],
+      "status": "done",
+      "title": "Verify link and artifact digests at handout",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_pin.py",
+        "expect": "exit 0 — artifact and link digest verification asserted"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "Per DES-1 and FR-5: the JSON handout includes context (touch, read, wiki, links, notes, commands) and verify steps as-is; the human-readable output prints steps as an ordered list and the env line in the prelude. A6 record rule unchanged. Tests: next output carries steps and env; record still enforces every command exit 0.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:19:25Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "full suite 69 green incl. steps/env/context render test; selftest green"
+        }
+      ],
+      "honors": ["CON-3"],
+      "id": "T-5",
+      "implements": ["DES-1"],
+      "needs": ["T-1"],
+      "parallel": true,
+      "phase": "integration",
+      "produces": ["engine/loom/src/loom_kit/cli.py", "engine/loom/tests/test_specpack_cli.py"],
+      "satisfies": ["FR-5"],
+      "status": "done",
+      "title": "Render steps and env in the handout",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_cli.py tests/test_specpack_core.py::test_record_mrun_m_and_stall",
+        "expect": "exit 0 — steps and env rendered; A6 unchanged"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "Per DES-5 and D-5: alignment() coverage gains a context section: missing_detail (ready tasks without detail), missing_touch (ready tasks without context.touch), long_notes (notes over 280 characters), env_absent (bool), open_questions (open Q ids while any task is todo or doing). loom check prints them; no new violations. Tests: fixture with gaps reports them sorted; clean fixture reports none.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:20:46Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "72 tests green; coverage context section (detail/touch/notes/env/open-Q) reported, violations unchanged; selftest green"
+        }
+      ],
+      "honors": ["CON-3"],
+      "id": "T-6",
+      "implements": ["DES-5"],
+      "needs": ["T-1"],
+      "parallel": false,
+      "phase": "integration",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_core.py"
+      ],
+      "satisfies": ["FR-6"],
+      "status": "done",
+      "title": "Coverage: context completeness, notes, env, open questions",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_core.py tests/test_specpack_cli.py",
+        "expect": "exit 0 — coverage section asserted, violation count unchanged"
+      }
+    },
+    {
+      "accepts": [],
+      "context": {
+        "commands": [
+          {
+            "cmd": "uv run okf validate wiki",
+            "expect_exit": 0
+          },
+          {
+            "cmd": "uv run okf anchors wiki",
+            "expect_exit": 0
+          }
+        ],
+        "links": [
+          {
+            "url": "https://json-schema.org/draft/2020-12/schema",
+            "why": "the dialect the vendored schema declares"
+          }
+        ],
+        "notes": [
+          "T-4 evidence row ran the pin tests only; the full-suite breakage it missed was fixed before T-5 and is recorded in the review verdicts."
+        ],
+        "read": [
+          {
+            "path": "engine/loom/src/loom_kit/specpack.py",
+            "why": "the behavior being documented: slice resolver, pin, rebase, coverage"
+          }
+        ],
+        "touch": [
+          {
+            "path": "docs/specs/spec-graph/schema-primer.md",
+            "sha256": "7f2b05428f435655dee2d89c88844bd9d8e29dcb86dfe8ff95abeb0c207b6b38",
+            "why": "section 6 documents the 0.3 handoff layer"
+          },
+          {
+            "path": "wiki/systems/loom-engine.md",
+            "sha256": "0c0146192359927dbc6a54c5319d448438445c6fe5d3998fc9408e71047942f1",
+            "why": "CLI surface, pin flow, LOC, specpack role all moved"
+          },
+          {
+            "path": "AGENTS.md",
+            "sha256": "9fe9a1502ad1ad14dcb13bb46b2df6b07e515d392c4bda1052900bcaab87c446",
+            "why": "loom CLI list gains rebase"
+          }
+        ],
+        "wiki": ["systems/sdd-harness-architecture.md"]
+      },
+      "detail": "Add a 0.3 section to docs/specs/spec-graph/schema-primer.md (context block field contracts, enforcement levels, promote-to-node rule, rebase flow). Update wiki/systems/loom-engine.md (context pinning, needs_rebase, rebase subcommand, coverage additions; adjust the A6/A-check table if anchors moved). Update AGENTS.md loom CLI list with rebase. Run okf code index + fingerprints + anchors + validate; resolve all NEEDS_REVIEW. This specpack's own tasks T-1 to T-6 must be done.",
+      "evidence": [
+        {
+          "at": "2026-10-08T20:22:15Z",
+          "by": "agent:pi",
+          "cmd": "cd /home/videogamer/code/memex_beta && uv run okf validate wiki && uv run okf anchors wiki",
+          "exit": 0,
+          "notes": "validate 0 errors 0 warnings; anchors 54 checked 0 need review; okf fresh at HEAD; primer s6 + wiki loom page + AGENTS updated"
+        }
+      ],
+      "honors": ["CON-2"],
+      "id": "T-7",
+      "implements": [],
+      "needs": ["T-3", "T-4", "T-5", "T-6"],
+      "parallel": false,
+      "phase": "polish",
+      "produces": [
+        "docs/specs/spec-graph/schema-primer.md",
+        "wiki/systems/loom-engine.md",
+        "AGENTS.md"
+      ],
+      "satisfies": ["FR-7"],
+      "status": "done",
+      "title": "Docs and wiki: describe 0.3, end okf-fresh",
+      "verify": {
+        "cmd": "cd /home/videogamer/code/memex_beta && uv run okf validate wiki && uv run okf anchors wiki",
+        "expect": "exit 0 — validate 0 errors 0 warnings; anchors 0 need review",
+        "steps": [
+          {
+            "expect_exit": 0,
+            "run": "uv run okf validate wiki"
+          },
+          {
+            "expect_contains": "0 need review",
+            "run": "uv run okf anchors wiki"
+          }
+        ]
+      }
+    },
+    {
+      "accepts": ["AC-4"],
+      "detail": "Per DES-6 and FR-8: schema gains decision status rejected + optional rejected_because, and verdict.on accepts PACK; specpack.accept_decision / reject_decision (human-claim gated, write-fenced via CLI, auto-resolve Qs listed in resolves, refuse on complete packs); CLI subcommands accept and reject; next returns needs_closure listing pending decisions and open questions instead of DONE; status prints one hint line per pending decision and open question (the runnable commands print from next). Update the example-based CLI test: its open Q-2 now yields needs_closure, then resolve and DONE.",
+      "evidence": [
+        {
+          "at": "2026-10-08T22:14:48Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "86 tests green; accept/reject/auto-resolve/needs_closure asserted; selftest green"
+        }
+      ],
+      "honors": ["CON-3", "CON-4"],
+      "id": "T-8",
+      "implements": ["DES-6"],
+      "needs": [],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_close.py"
+      ],
+      "satisfies": ["FR-8"],
+      "status": "done",
+      "title": "Decision commands: accept, reject, auto-resolve, surfacing",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 — accept/reject/auto-resolve/needs_closure asserted; full suite green"
+      }
+    },
+    {
+      "accepts": ["AC-5"],
+      "detail": "Per DES-7 and FR-9: root status/closed_by/closed_at (optional, additive); loom close <dir> --by human:<owner> --expected-revision N [--at ISO] verifies all tasks done with evidence, no proposed decisions, no open questions, a PASS verdict on PACK; refuses naming each gap; sets complete. A complete pack refuses record, rebase, accept, reject, close, and handouts; next returns COMPLETE (exit 0).",
+      "evidence": [
+        {
+          "at": "2026-10-08T22:16:10Z",
+          "by": "agent:pi",
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "notes": "92 tests green; close preconditions (gaps named), freeze (record/rebase/accept/next refuse), COMPLETE exit 0; selftest green"
+        }
+      ],
+      "honors": ["CON-1", "CON-4"],
+      "id": "T-9",
+      "implements": ["DES-7"],
+      "needs": ["T-8"],
+      "parallel": false,
+      "phase": "core",
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_close.py"
+      ],
+      "satisfies": ["FR-9"],
+      "status": "done",
+      "title": "Pack lifecycle: close preconditions, freeze, COMPLETE",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 — close gaps, freeze, COMPLETE asserted; full suite green"
+      }
+    },
+    {
+      "accepts": [],
+      "detail": "Per FR-10: primer lifecycle section (accept, reject, close, needs_closure, COMPLETE); wiki loom page and harness map updated (12 commands); AGENTS loom list updated. Then close this pack with its own machinery: red-foreman closing review over the wave diff; record its PASS verdict on PACK (or fix first if it finds defects); accept D-4 and D-5 per the owner directive of 2026-10-08 (all decisions recorded, spec to final state); loom close --by human:owner. Verify: status shows COMPLETE and loom check stays 0/0.",
+      "evidence": [
+        {
+          "at": "2026-10-08T22:24:38Z",
+          "by": "agent:pi",
+          "cmd": "cd /home/videogamer/code/memex_beta && uv run loom check docs/specs/specpack-context && uv run okf validate wiki",
+          "exit": 0,
+          "notes": "primer s7 + wiki (12 cmds, lifecycle) + AGENTS; review wave-3 findings all fixed (97 tests, selftest); D-4/D-5 accepted by owner directive 2026-10-08; PACK PASS recorded; close follows this row"
+        }
+      ],
+      "honors": ["CON-2"],
+      "id": "T-10",
+      "implements": [],
+      "needs": ["T-8", "T-9"],
+      "parallel": false,
+      "phase": "polish",
+      "produces": [
+        "docs/specs/spec-graph/schema-primer.md",
+        "wiki/systems/loom-engine.md",
+        "wiki/systems/sdd-harness-architecture.md",
+        "AGENTS.md",
+        "docs/specs/specpack-context/specpack.json"
+      ],
+      "satisfies": ["FR-10"],
+      "status": "done",
+      "title": "Docs, closing review, self-closure",
+      "verify": {
+        "cmd": "cd /home/videogamer/code/memex_beta && uv run loom status docs/specs/specpack-context && uv run loom check docs/specs/specpack-context && uv run okf validate wiki",
+        "expect": "exit 0 — pack COMPLETE, check 0 violations 0 gaps, wiki conformant"
+      }
+    }
+  ],
+  "review": {
+    "checklist": "red-foreman",
+    "verdicts": [
+      {
+        "at": "2026-10-08T15:30:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "All later records cite the full suite; the refusal rule was corrected to mismatch-only (FR-4).",
+            "note": "T-4's evidence row ran only tests/test_specpack_pin.py while the full suite was red (two test_specpack_cli failures from the artifact-missing refusal). Fixed before T-5; recorded here because the ledger must not overclaim.",
+            "severity": "DEFECT"
+          }
+        ],
+        "on": "T-4",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T15:30:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "Print the flag with the pack's current revision.",
+            "note": "needs_rebase remedy printed without the required --expected-revision flag.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "rebase now re-pins touch, local links, and artifacts.",
+            "note": "rebase re-pinned touch only, so artifact-digest drift had no machine remedy.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Compose Given/When/Then and as/wants lines.",
+            "note": "AC and US items rendered as empty labels in the human handout.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Corrected the doc and gated the loader on KNOWN_FORMATS.",
+            "note": "design.md claimed old loom refuses 0.3 packs; old loom accepted any specpack/* tag.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Verdict rows written with this re-check.",
+            "note": "T-7's note cited review verdicts that were empty.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "any() per task.",
+            "note": "long_notes could list a task id twice.",
+            "severity": "SMELL"
+          },
+          {
+            "fix": "_resolve_path rejects them as invalid-path drift.",
+            "note": "Context paths were not normalized; ../ and absolute paths escaped the root.",
+            "severity": "SMELL"
+          },
+          {
+            "fix": "Open: owner acceptance requested (Q-1, Q-2).",
+            "note": "D-6/D-7 shipped proposed while their behavior is implemented.",
+            "severity": "SMELL"
+          }
+        ],
+        "on": "T-7",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T16:45:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "Interpolate the real revision; needs_closure carries revision.",
+            "note": "needs_closure remedy printed a literal <rev>; the revision was never interpolated and the payload lacked it for json consumers.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Resolve the union of both link halves; test added.",
+            "note": "accept auto-resolved only the resolved_by half of the link; a decision listing a question in resolves left it open.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Asserts the real verdict line and the runnable revision.",
+            "note": "One CLI assertion was vacuous (... or True).",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Uses the actual revision and asserts the gap text.",
+            "note": "The close CLI test hit the write fence, not the missing-PASS gap it claimed to test.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Pack detail corrected to what status does.",
+            "note": "T-8 detail overclaimed: status prints hints, not runnable commands.",
+            "severity": "DEFECT"
+          }
+        ],
+        "on": "T-8",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T16:45:00Z",
+        "by": "agent:red-foreman",
+        "findings": [
+          {
+            "fix": "okf code index re-run at the final code state before the closing commit.",
+            "note": "wiki/code pages were regenerated before the wave landed: fresh stamps over stale content.",
+            "severity": "DEFECT"
+          },
+          {
+            "fix": "Lists corrected in primer, DES-7, T-9; --at validated; tests added (97 green).",
+            "note": "Frozen lists omitted close itself; --at accepted non-ISO strings; four coverage holes.",
+            "severity": "SMELL"
+          }
+        ],
+        "on": "T-9",
+        "verdict": "IMPROVE"
+      },
+      {
+        "at": "2026-10-08T17:00:00Z",
+        "by": "agent:red-foreman",
+        "findings": [],
+        "on": "PACK",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "env": {
+    "build": "uv sync",
+    "test": "cd engine/loom && uv run pytest -q",
+    "toolchain": "Python 3.12+, uv; jsonschema for specpack validation"
+  },
+  "format": "specpack/0.3",
+  "revision": 24
+}
