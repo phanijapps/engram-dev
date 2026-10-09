@@ -14,10 +14,10 @@ sources:
 source_hash: d1c1f42539a455cd900cc393929f504c492f5a891310040d8b521a4505d30fb1
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-09T20:22:36Z'
+created: 2026-10-09T20:22:36Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T20:22:36Z'
+  at: '2026-10-09T20:22:42Z'
 status: stable
 package: engine/loom
 ---
