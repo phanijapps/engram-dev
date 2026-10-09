@@ -160,6 +160,8 @@ Order chosen so every step lands behind the existing contract with a kill switch
 
 ## 9. Naming the harness
 
+> **Superseded 2026-10-10** — the owner chose a fresh name. See `harness-naming.md` (candidates, live registry evidence, recommendation: **treadle**). This section stands as the original analysis; `loom` retires with honor into lineage and ADRs.
+
 Measured this session (`npm view`, PyPI JSON API, 2026-10-09):
 
 | Candidate | npm | PyPI | Read |
@@ -204,6 +206,22 @@ The honest one-liner: **the merge is a yes; the port is a maybe that earns its a
 
 ## 11. Open questions for the owner
 
+> **Resolved 2026-10-10** — answers below changed this analysis's assumptions; see §12.
+
 1. Is the harness's future public OSS (then §7's governance items schedule now), or in-house (then CI + conformance suffice)?
 2. Do you feel the `loom` name for the merged whole, or does a fresh name (selvage) pull at you?
 3. Should the golden-file conformance suite become the next wave (small, Python, high leverage)?
+
+## 12. Addendum — the owner's answers, and what they change (2026-10-10)
+
+Three inputs from the owner reshape the analysis. None is a migration decision; all strengthen one side honestly.
+
+**A. Code intelligence moves out of the engine.** The new-world knowledge engine owns the bundle — pages, links, search, freshness, findings, anchors, fingerprints — and *delegates code indexing to external tools* (graphify-class) behind the same seam philosophy the adapter contract already publishes. Consequence: **C3 (tree-sitter) stops being a port risk at all.** The one `unknown` in §4 dissolves; the confined subpackage (§1) becomes a delegation boundary instead of a port boundary. The Node case loses its weakest leg and gains one: the remaining engine surface (schema, admission, canonical writing, localhost web) is exactly the shape TypeScript is best at (§4's C1/C2 gains now stand unopposed by C3).
+
+**B. The harness will be OSS.** The full governance baseline (standards doc R28–R34, R40) schedules now, not "later if public." That raises the port's fixed cost slightly (provenance, matrix CI, policy docs) but is language-neutral — and npm-native distribution (C4) becomes first-class rather than incidental.
+
+**C. Fresh name chosen in direction.** `harness-naming.md` carries the evidence; recommendation **treadle** (free on npm and PyPI, measured). Naming is no longer a blocker for either language.
+
+**Revised verdict:** the two-step recommendation of §10 stands, with the trigger condition softened. Merge in Python → build the golden conformance suite (`golden-conformance-suite.md`) → then the port decision no longer waits on a WASM benchmark; it waits only on the owner's word and the conformance corpus being green. The engineering rules for the port, when it comes, are written: `nodejs-engineering-standards.md` (forty checkable rules).
+
+**Still open, honestly:** timing (nothing in this addendum commits a date); whether the conformance corpus is built as a Python wave (recommended) or inside a Node pilot; trademark check on `treadle` before any public use (`unknown`).
