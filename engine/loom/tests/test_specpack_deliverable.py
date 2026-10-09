@@ -76,7 +76,7 @@ def test_save_writes_the_derivation(tmp_path: Path):
     doc, path = specpack.load_specpack(d)
     specpack.save(doc, path)
     on_disk = json.loads(path.read_text())
-    assert on_disk["deliverable"] == "drafted"
+    assert on_disk["status"]["deliverable"] == "drafted"
 
 
 def test_load_refuses_hand_edited_stage(tmp_path: Path):
@@ -97,7 +97,7 @@ def test_load_accepts_absent_stage(tmp_path: Path):
     doc, path = specpack.load_specpack(d)
     assert "deliverable" not in doc  # materialized only on save
     specpack.save(doc, path)
-    assert "deliverable" in json.loads(path.read_text())
+    assert "deliverable" in json.loads(path.read_text())["status"]
 
 
 def test_roundtrip_via_cli_next(tmp_path: Path, capsys):
@@ -108,7 +108,7 @@ def test_roundtrip_via_cli_next(tmp_path: Path, capsys):
     out = json.loads(capsys.readouterr().out)
     assert out["status"] == "task"
     doc = json.loads((d / "pack.json").read_text())
-    assert doc["deliverable"] == "in_progress"  # doing after handout
+    assert doc["status"]["deliverable"] == "in_progress"  # doing after handout
     # and the next load agrees
     doc2, _ = specpack.load_specpack(d)
     assert doc2["deliverable"] == "in_progress"

@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
+import threading
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -20,6 +22,15 @@ from .spine import save as _spine_save
 SCHEMA_PATH = Path(__file__).resolve().parent / "schemas" / "specpack.schema.json"
 STALL_LIMIT = 2
 KNOWN_FORMATS = ("specpack/0.2", "specpack/0.3")
+
+# The canonical reading order (D-1 of spec-layout): the writer emits exactly
+# this; nothing else in the ecosystem reads member order (RFC 8259).
+CANONICAL_ORDER = (
+    "id", "name", "description", "date", "status", "metadata",
+    "spec", "design", "tasks", "review", "env", "format", "revision",
+)
+
+_LAYOUT_LOCK = threading.Lock()
 
 # The status vocabulary — one source of truth (FR-2 of status-vocabulary).
 # The vendored schema enums must equal these tuples; a guard test enforces it.
@@ -63,11 +74,116 @@ def derive_deliverable(doc: dict) -> str:
     return "drafted"
 
 
+def _normalize(doc: dict) -> dict:
+    """Dual-read (D-2 of spec-layout): old flat layouts normalize to the
+    canonical internal model. In place. The on-disk file never changes here.
+    """
+    if "design" in doc:  # new layout
+        doc["plan"] = doc.pop("design")
+        doc["title"] = doc.pop("description", doc.get("title", ""))
+        md = doc.pop("metadata", None)
+        if isinstance(md, dict):
+            arts = {}
+            for k, v in md.items():
+                if isinstance(v, dict):
+                    e = {"file": v.get("ref", "")}
+                    if v.get("type") is not None:
+                        e["type"] = v["type"]
+                    if v.get("description") is not None:
+                        e["description"] = v["description"]
+                    if v.get("sha256"):
+                        e["sha256"] = v["sha256"]
+                    arts[k] = e
+            doc["artifacts"] = arts
+        date = doc.pop("date", None)
+        if isinstance(date, dict):
+            if date.get("created"):
+                doc["created"] = date["created"]
+            if date.get("updated"):
+                doc["updated"] = date["updated"]
+            closed = date.get("closed")
+            if isinstance(closed, dict):
+                if closed.get("at"):
+                    doc["closed_at"] = closed["at"]
+                if closed.get("by"):
+                    doc["closed_by"] = closed["by"]
+        st = doc.pop("status", None)
+        if isinstance(st, dict):
+            if st.get("lifecycle"):
+                doc["status"] = st["lifecycle"]
+            if st.get("deliverable") is not None:
+                doc["deliverable"] = st["deliverable"]
+    return doc
+
+
+def _emit(doc: dict) -> dict:
+    """Build the on-disk dict in the canonical reading order (D-1)."""
+    out: dict = {}
+    out["id"] = doc.get("id", doc.get("name"))
+    out["name"] = doc["name"]
+    out["description"] = doc.get("title", "")
+    date = {}
+    if doc.get("created"):
+        date["created"] = doc["created"]
+    if doc.get("updated"):
+        date["updated"] = doc["updated"]
+    if doc.get("closed_at"):
+        date["closed"] = {"at": doc["closed_at"], **({"by": doc["closed_by"]} if doc.get("closed_by") else {})}
+    if date:
+        out["date"] = date
+    st = {}
+    if doc.get("status"):
+        st["lifecycle"] = doc["status"]
+    if doc.get("deliverable"):
+        st["deliverable"] = doc["deliverable"]
+    if st:
+        out["status"] = st
+    if doc.get("artifacts"):
+        md = {}
+        for k, v in doc["artifacts"].items():
+            e = {"ref": v.get("file", "")}
+            if v.get("type") is not None:
+                e["type"] = v["type"]
+            if v.get("description") is not None:
+                e["description"] = v["description"]
+            if v.get("sha256"):
+                e["sha256"] = v["sha256"]
+            md[k] = e
+        out["metadata"] = md
+    out["spec"] = doc["spec"]
+    out["design"] = doc["plan"]
+    out["tasks"] = doc["tasks"]
+    if doc.get("review"):
+        out["review"] = doc["review"]
+    if doc.get("env"):
+        out["env"] = doc["env"]
+    out["format"] = doc["format"]
+    out["revision"] = doc.get("revision", 1)
+    return {k: out[k] for k in CANONICAL_ORDER if k in out}
+
+
 def save(doc: dict, path) -> None:
-    """Write the derived deliverable stage, then persist (D-5: the field
-    can never lag the content it summarizes)."""
+    """Derive the stage, stamp date.updated, write in canonical order.
+
+    Atomic write with the same crash discipline as the spine: temp file in
+    the same directory, then os.replace. The internal model keeps its
+    historical field names; the FILE carries the contract (D-1, D-5).
+    """
     doc["deliverable"] = derive_deliverable(doc)
-    _spine_save(doc, path)
+    doc["updated"] = _now()
+    emitted = _emit(doc)
+    with _LAYOUT_LOCK:
+        tmp = path.with_name(path.name + ".tmp")
+        try:
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(emitted, f, indent=2, sort_keys=False, ensure_ascii=False)
+                f.write("\n")
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, path)
+        finally:
+            if tmp.exists():
+                tmp.unlink()
 
 
 def _now() -> str:
@@ -110,6 +226,7 @@ def load_specpack(directory: str | Path) -> tuple[dict, Path]:
             doc = json.load(f)
         except json.JSONDecodeError as e:
             raise LoomError(f"{path}: invalid JSON: {e}") from e
+    _normalize(doc)
     for section in ("spec", "plan", "tasks"):
         if section not in doc or not isinstance(doc[section], dict if section != "tasks" else list):
             raise LoomError(f"{path}: not a spec: {section} missing or malformed")

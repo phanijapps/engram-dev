@@ -34,10 +34,8 @@ def _specpack_path(directory: str) -> Path:
 
 
 def cmd_check(args) -> int:
-    """specpack-only: schema + alignment A1-A6 report, canonical order."""
-    path = _specpack_path(args.directory)
-    with open(path, encoding="utf-8") as f:
-        doc = json.load(f)
+    """specpack: schema + alignment report; reads through the normalizer."""
+    doc, path = specpack.load_specpack(args.directory)
     errs = specpack.validate(doc, path)
     aerrs, cov = specpack.alignment(doc)
     if errs:

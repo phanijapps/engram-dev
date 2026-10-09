@@ -19,7 +19,8 @@ SCHEMA = json.loads((Path(specpack.SCHEMA_PATH)).read_text())
 
 def test_schema_enums_equal_the_code_constants():
     """AC-3: the schema is the truth; the constants must match it exactly."""
-    assert tuple(SCHEMA["properties"]["status"]["enum"]) == specpack.PACK_STATUSES
+    assert tuple(SCHEMA["$defs"]["oldRoot"]["properties"]["status"]["enum"]) == specpack.PACK_STATUSES
+    assert tuple(SCHEMA["$defs"]["statusGroup"]["properties"]["lifecycle"]["enum"]) == specpack.PACK_STATUSES
     assert tuple(SCHEMA["$defs"]["task"]["properties"]["status"]["enum"]) == specpack.TASK_STATUSES
     assert tuple(SCHEMA["$defs"]["decision"]["properties"]["status"]["enum"]) == specpack.DECISION_STATUSES
     assert tuple(SCHEMA["$defs"]["clarification"]["properties"]["status"]["enum"]) == specpack.QUESTION_STATUSES
@@ -98,7 +99,7 @@ def test_load_materializes_explicit_active(tmp_path: Path):
     # persisted by the machine save that follows (a task handout saves)
     assert main(["next", str(d)]) == 0
     on_disk = json.loads((d / "pack.json").read_text())
-    assert on_disk["status"] == "active"
+    assert on_disk["status"]["lifecycle"] == "active"
 
 
 def test_frozen_pack_is_byte_untouched_by_next(tmp_path: Path, capsys):
@@ -128,7 +129,8 @@ def test_frozen_pack_is_byte_untouched_by_next(tmp_path: Path, capsys):
 
 def test_deliverable_schema_enum_equals_constant():
     S = json.loads(Path(specpack.SCHEMA_PATH).read_text())
-    assert tuple(S["properties"]["deliverable"]["enum"]) == specpack.DELIVERABLE_STAGES
+    assert tuple(S["$defs"]["oldRoot"]["properties"]["deliverable"]["enum"]) == specpack.DELIVERABLE_STAGES
+    assert tuple(S["$defs"]["statusGroup"]["properties"]["deliverable"]["enum"]) == specpack.DELIVERABLE_STAGES
 
 
 def test_deliverable_stage_set_equality_exhaustive():

@@ -359,3 +359,30 @@ Rules: acceptance criteria live on the story (the Confirmation); a
 story is done when its ACs are met by done tasks; requirements serve
 stories; priority lives on the story and P1 alone must be a viable
 MVP; success criteria are measurable, not restatements.
+
+## 9. The canonical layout (spec-layout): the file reads chronologically
+
+The spec file opens like a dossier, in this exact order, emitted by
+the writer at every save:
+
+```
+id            the slug
+name          the name
+description   one line: what this is
+date          {created author-supplied, updated machine-stamped, closed {at, by}}
+status        {lifecycle: active|complete, deliverable: the derived stage}
+metadata      external references: keyed {ref (URL or path), type, description, sha256?}
+              Jira issues, Confluence pages, tickets, files, the Feature Brief
+spec          what and why (stories with their acceptance criteria)
+design        how (designs, decisions)
+tasks         the work
+review        verdicts
+env, format, revision   the machine tail, last
+```
+
+Two rules carry the design. First, two orders, two jobs (RFC 8785):
+the file keeps the authored reading order; digests hash the sorted
+canonical copy, so determinism is untouched. Second, dual-read: old
+flat layouts (title, plan, artifacts) normalize in memory at load;
+the writer emits only the canonical layout; frozen old files never
+rewrite and load forever.

@@ -16,7 +16,7 @@ managed_by: okf-code
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T03:37:20Z'
+  at: '2026-10-09T14:19:03Z'
 status: stable
 package: engine/loom
 ---
@@ -31,7 +31,7 @@ Generated package summary for `repository/engine/loom`. Purpose: provide a low-t
 - [engine/loom/src/loom_kit/spine.py](/code/engine/loom/src/loom_kit/spine.py.md) - model module; depends on 1; used by 3; high-signal symbols: `LoomError`, `_schema`, `MiniValidator`
 - [engine/loom/src/loom_kit/__init__.py](/code/engine/loom/src/loom_kit/__init__.py.md) - module; depends on 0; used by 3
 - [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md) - module; depends on 2; used by 1; high-signal symbols: `_digest`, `_prereq_states`, `_satisfied`
-- [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `derive_deliverable`, `save`, `_now`
+- [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md) - module; depends on 1; used by 1; high-signal symbols: `derive_deliverable`, `_normalize`, `_emit`
 - [engine/loom/src/loom_kit/templates.py](/code/engine/loom/src/loom_kit/templates.py.md) - module; depends on 0; used by 1
 
 # Impact map

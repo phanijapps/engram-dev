@@ -119,7 +119,7 @@ def test_cli_accept_then_done_flow(tmp_path: Path, capsys):
     doc = json.loads(p.read_text())
     doc["spec"]["clarifications"][1]["status"] = "resolved"
     doc["spec"]["clarifications"][1]["answer"] = "dropped"
-    doc.pop("deliverable", None)  # hand-amend: the derived field re-derives on the next save
+    doc.get("status", {}).pop("deliverable", None)  # hand-amend: the derived field re-derives on the next save
     p.write_text(json.dumps(doc))
     assert main(["next", str(d)]) == 0  # DONE
 

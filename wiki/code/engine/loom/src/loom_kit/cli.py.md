@@ -13,13 +13,13 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: 6e05fa2d2a055e3e9ff3ef4dbc38ded85ed06aeeeac934599474b0ada987d1ee
+source_hash: dc62f5bd9ef71b42f9225aa00cb831fd5f16e74b474e158385a0a756a7be525a
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T03:37:20Z'
+  at: '2026-10-09T14:19:03Z'
 status: stable
 package: engine/loom
 ---
@@ -34,24 +34,24 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 |---|---|---|
 | function | `_mode` | 24-29 |
 | function | `_specpack_path` | 32-33 |
-| function | `cmd_check` | 36-76 |
-| function | `_evidence` | 79-87 |
-| function | `cmd_init` | 90-102 |
-| function | `cmd_add` | 105-126 |
-| function | `cmd_validate` | 129-138 |
-| function | `cmd_next` | 141-170 |
-| function | `cmd_record` | 173-197 |
-| function | `cmd_accept` | 200-212 |
-| function | `cmd_close` | 215-232 |
-| function | `cmd_reject` | 235-244 |
-| function | `cmd_rebase` | 247-259 |
-| function | `cmd_status` | 262-276 |
-| function | `_next_specpack` | 279-360 |
-| function | `esc_local` | 363-364 |
-| function | `_record_specpack` | 367-385 |
-| function | `_status_specpack` | 388-413 |
-| function | `cmd_selftest` | 416-503 |
-| function | `main` | 506-596 |
+| function | `cmd_check` | 36-74 |
+| function | `_evidence` | 77-85 |
+| function | `cmd_init` | 88-100 |
+| function | `cmd_add` | 103-124 |
+| function | `cmd_validate` | 127-136 |
+| function | `cmd_next` | 139-168 |
+| function | `cmd_record` | 171-195 |
+| function | `cmd_accept` | 198-210 |
+| function | `cmd_close` | 213-230 |
+| function | `cmd_reject` | 233-242 |
+| function | `cmd_rebase` | 245-257 |
+| function | `cmd_status` | 260-274 |
+| function | `_next_specpack` | 277-358 |
+| function | `esc_local` | 361-362 |
+| function | `_record_specpack` | 365-383 |
+| function | `_status_specpack` | 386-411 |
+| function | `cmd_selftest` | 414-501 |
+| function | `main` | 504-594 |
 
 1 symbols omitted from compact profile.
 
