@@ -237,6 +237,7 @@ def cmd_answer(args) -> int:
         print(f"REFUSED: stale writer — file is at revision {doc.get('revision', 1)}, caller expected {args.expected_revision}")
         return 1
     q = specpack.answer_question(doc, args.q, args.by, text=args.text, unknown=args.unknown, at=args.at)
+    doc["revision"] = doc.get("revision", 1) + 1
     specpack.save(doc, path)
     print(f"answered {q['id']} by {args.by}" + (" (unknown — still open, still gating)" if q.get("unknown") else ""))
     return 0
