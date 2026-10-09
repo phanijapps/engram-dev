@@ -27,9 +27,15 @@
     "stories": [
       {
         "id": "US-1",
-        "as": "a reader with GitHub Spec Kit experience",
-        "want": "a bridge from the field's words (memory bank, constitution, spec, plan, tasks) to ours (wiki, pack, pack sections, node kinds)",
-        "so": "I can map every term I know onto this system in one look"
+        "as": "the owner reading a generated pack file",
+        "want": "one field at the top that says where the overall deliverable stands",
+        "so": "I know what is going on without adding up task statuses"
+      },
+      {
+        "id": "US-2",
+        "as": "a future loop querying many packs",
+        "want": "a machine-verified deliverable stage on every pack",
+        "so": "I can list deliverables by stage and trust what I read"
       }
     ],
     "requirements": [
@@ -59,6 +65,11 @@
       {
         "id": "FR-4",
         "text": "The superseded stage requires the supersedes link (Q-1). Until the owner decides, the stage exists in the vocabulary and the derivation omits it; the decision MUST be recorded before any implementation task for it runs.",
+        "priority": "P2"
+      },
+      {
+        "id": "FR-5",
+        "text": "The machine MUST report story drift in the coverage tier: requirements that serve no user story, and stories that no requirement serves. Reported, never blocking. Served means an explicit link (requirement gains an optional serves list of story ids), not a guess.",
         "priority": "P2"
       }
     ],
@@ -129,6 +140,15 @@
         "detail": "loom status first line: the deliverable stage plus counts, for example 'deliverable: in_progress (3 done, 1 doing, 2 todo, 0 blocked)'. loom next prints the same line before any task output. The wiki page gains one row for the new family only if the owner asks for page work later.",
         "addresses": [
           "FR-2"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "Story coverage: the served link and the drift report",
+        "kind": "data",
+        "detail": "Requirement gains an optional serves list (US id pattern). The coverage section gains story_drift: requirements with empty or missing serves, and stories named by no requirement. Reported, never blocking, consistent with the coverage-tier rule. Found by: the owner, 2026-10-09, after a re-scope left a stale story in a green-checked pack.",
+        "addresses": [
+          "FR-5"
         ]
       }
     ],
@@ -298,6 +318,36 @@
       },
       "parallel": false,
       "status": "blocked"
+    },
+    {
+      "id": "T-5",
+      "title": "Story drift coverage: serves link and report",
+      "detail": "Per DES-4: schema gains requirement.serves (optional, US id pattern); alignment coverage gains story_drift (requirements serving no story, stories served by no requirement); this pack's own FRs gain serves links as the first fixture; loom check prints the lines.",
+      "phase": "integration",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "accepts": [],
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/cli.py"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 drift reported both directions, never a violation; suite green"
+      },
+      "parallel": false,
+      "status": "todo"
     }
   ],
   "review": {
