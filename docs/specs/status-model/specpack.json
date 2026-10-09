@@ -96,6 +96,13 @@
         "question": "Should user-facing output adopt the field's words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system's vocabulary alone?",
         "status": "open",
         "owner": "human:owner"
+      },
+      {
+        "id": "Q-3",
+        "question": "Should stories carry a machine-derived satisfaction status (every served FR's acceptance criteria met by done tasks), reported in status and check output \u2014 with ACs staying on requirements?",
+        "status": "open",
+        "owner": "human:owner",
+        "resolved_by": "D-7"
       }
     ],
     "out_of_scope": [
@@ -192,6 +199,15 @@
         "id": "D-6",
         "decision": "Stage vocabulary: drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded.",
         "because": "One word one meaning; each stage is separable by action: blocked needs a re-plan or unblock, awaiting_owner needs verdicts, in_review needs the closing PASS.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-7",
+        "decision": "Stories gain a derived satisfaction status, reported not authored; acceptance criteria stay on requirements (single-parent chain: task accepts AC, AC belongs to one FR, FR serves a US).",
+        "because": "A story is satisfied when every FR it serves has its ACs met by done tasks \u2014 computable, so it must not be hand-set (the Fowler evidence against interpreted statuses). Putting ACs on stories would blur what an AC verifies. The third instance of the rollup disease (deliverable stage, orphaned stories, story satisfaction) closes the class.",
+        "resolves": [
+          "Q-3"
+        ],
         "status": "proposed"
       }
     ],
