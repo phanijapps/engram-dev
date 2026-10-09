@@ -71,6 +71,19 @@
         "id": "FR-5",
         "text": "The machine MUST report story drift in the coverage tier: requirements that serve no user story, and stories that no requirement serves. Reported, never blocking. Served means an explicit link (requirement gains an optional serves list of story ids), not a guess.",
         "priority": "P2"
+      },
+      {
+        "id": "FR-6",
+        "text": "Stories MUST support owner-authored acceptance criteria (scenarios, same given/when/then shape and AC- id pattern as requirement scenarios, additive and optional). The machine MUST verify story ACs like all ACs: tasks accept them, A2 resolves them, coverage maps them; a story whose ACs are all met by done tasks is done.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-4",
+            "given": "a story with acceptance criteria and a task that accepts one of them",
+            "when": "that task is done with evidence",
+            "then": "coverage reports the story AC as met; a story with all ACs met reports done"
+          }
+        ]
       }
     ],
     "constraints": [
@@ -100,9 +113,10 @@
       {
         "id": "Q-3",
         "question": "Should stories carry a machine-derived satisfaction status (every served FR's acceptance criteria met by done tasks), reported in status and check output \u2014 with ACs staying on requirements?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "resolved_by": "D-7"
+        "resolved_by": "D-7",
+        "answer": "Stories get owner-authored acceptance criteria directly (D-8). Derivation through FRs rejected (D-7)."
       }
     ],
     "out_of_scope": [
@@ -157,6 +171,15 @@
         "addresses": [
           "FR-5"
         ]
+      },
+      {
+        "id": "DES-5",
+        "title": "Story acceptance criteria",
+        "kind": "data",
+        "detail": "Schema: story gains optional scenarios ($ref scenario, same def). alignment: A1 counts story ACs; A2 resolves accepts against the union of story and requirement scenarios; A5 coverage gains a US section mapping each story AC to the tasks that accept it. slices: story ACs ride along when the story is in the closure. Authoring rule: story ACs are few and intent-level; requirement scenarios verify the chosen solution.",
+        "addresses": [
+          "FR-6"
+        ]
       }
     ],
     "decisions": [
@@ -208,6 +231,14 @@
         "resolves": [
           "Q-3"
         ],
+        "status": "rejected",
+        "rejected_because": "Wrong altitude: deriving story-done from served FRs reads the solution, not the intent. A story can be done with a requirement descoped; derivation cannot express that. Atlassian's 3 C's put the Confirmation on the story (owner direction, 2026-10-09, with source)."
+      },
+      {
+        "id": "D-8",
+        "decision": "Stories gain acceptance criteria (given/when/then scenarios, AC- ids, same shape as requirement scenarios). Story done is its ACs met by done tasks: direct, owner-authored, machine-verified. Requirement scenarios stay for capability verification. Tasks accept ACs wherever they live; each AC keeps exactly one parent.",
+        "because": "Atlassian 3 C's: Confirmation (the AC) defines when the story is complete; the story and its AC are one unit. ACs are intent-altitude, requirement scenarios are solution-altitude. Owner direction with source, 2026-10-09.",
+        "resolves": [],
         "status": "proposed"
       }
     ],
@@ -363,6 +394,37 @@
         "expect": "exit 0 \u2014 drift reported both directions, never a violation; suite green"
       },
       "parallel": false,
+      "status": "todo"
+    },
+    {
+      "id": "T-6",
+      "title": "Story acceptance criteria: schema, checks, coverage, slices",
+      "detail": "Per DES-5 and FR-6: story.scenarios in the schema (optional, additive); A1/A2 treat story ACs as first-class; A5 coverage gains the US section; slice_for includes story ACs when the story is in the closure; this pack's own stories gain ACs as the first fixture (US-1 gets AC-4's parentage fixed accordingly). Tests: story AC accepted by a done task reports met; dangling story AC refused; story with all ACs met reports done.",
+      "phase": "core",
+      "needs": [],
+      "implements": [
+        "DES-5"
+      ],
+      "satisfies": [
+        "FR-6"
+      ],
+      "accepts": [
+        "AC-4"
+      ],
+      "honors": [
+        "CON-1"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_deliverable.py",
+        "docs/specs/status-model/specpack.json"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 story ACs first-class in A1/A2/A5 and slices; suite green"
+      },
+      "parallel": true,
       "status": "todo"
     }
   ],
