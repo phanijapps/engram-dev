@@ -4,11 +4,11 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:01:48Z"
+    "updated": "2026-10-09T17:04:42Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "drafted"
   },
   "metadata": {
     "brief": {
@@ -255,7 +255,7 @@
         "serves": [
           "US-1"
         ],
-        "text": "The interview SHOULD be keyboard-first (navigate, answer, finish without a mouse) and SHOULD show a progress ring for the derived deliverable stage."
+        "text": "The interview SHOULD be keyboard-first (navigate, answer, and finish without a mouse) AND pointer-complete (every act also reachable by mouse: click options, click through the wizard, click approve); a progress ring shows the derived deliverable stage."
       },
       {
         "id": "FR-9",
@@ -303,27 +303,31 @@
     "clarifications": [
       {
         "id": "Q-A",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "How does spec approval live in the vocabulary? An additive lifecycle value, a sub-state, or a first-class accepted_by field? This touches the frozen status model (one-way door)."
+        "question": "How does spec approval live in the vocabulary? An additive lifecycle value, a sub-state, or a first-class accepted_by field? This touches the frozen status model (one-way door).",
+        "answer": "Accepted as D-11 by human:owner"
       },
       {
         "id": "Q-B",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "Event file shape and home: name, format tag, per-initiative or per-session, JSON lines or array?"
+        "question": "Event file shape and home: name, format tag, per-initiative or per-session, JSON lines or array?",
+        "answer": "Accepted as D-12 by human:owner"
       },
       {
         "id": "Q-C",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "Interrupt semantics for the waiting command: block until complete, timeout, or detach-and-resume?"
+        "question": "Interrupt semantics for the waiting command: block until complete, timeout, or detach-and-resume?",
+        "answer": "Accepted as D-13 by human:owner"
       },
       {
         "id": "Q-D",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "Question kinds in v1: strictly open and choice, or also yes/no, number, date?"
+        "question": "Question kinds in v1: strictly open and choice, or also yes/no, number, date?",
+        "answer": "Accepted as D-14 by human:owner"
       }
     ],
     "out_of_scope": [
@@ -340,63 +344,113 @@
     "decisions": [
       {
         "id": "D-1",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Full chain scope: a finalized Feature Brief (markdown) is the input; analyze births the spec; the interview page carries the Conversation.",
-        "because": "Owner Q-1a: the journey starts at the brief. Authoring UI stays out (bounded)."
+        "because": "Owner Q-1a: the journey starts at the brief. Authoring UI stays out (bounded).",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-2",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "The command is loom interview; the surface (page, events, adapter) must survive extraction from the harness into an agentic platform.",
-        "because": "Owner Q-2: accepts the name, conditions it on portability to LangChain/LangGraph/custom platforms."
+        "because": "Owner Q-2: accepts the name, conditions it on portability to LangChain/LangGraph/custom platforms.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-3",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Adapter architecture: the page emits events (answer, unknown, choice, approve); v1 ships the harness adapter; the platform adapter is a published contract, not code.",
-        "because": "Owner Q-3: hook/interrupt locally, open adapter for platforms; do not solve the platform interrupt."
+        "because": "Owner Q-3: hook/interrupt locally, open adapter for platforms; do not solve the platform interrupt.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-4",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "loom answer is the admission command for questions, mirroring loom accept: human claim required, at stamped, machine rules only.",
-        "because": "Owner Q-4: questions finally get the path decisions already have."
+        "because": "Owner Q-4: questions finally get the path decisions already have.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-5",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Question vocabulary grows additively: kind (open|choice), options, default, and the honest unknown that keeps blocking.",
-        "because": "Owner Q-5; frozen packs stay valid (CON-2)."
+        "because": "Owner Q-5; frozen packs stay valid (CON-2).",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-6",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Phase model: derived deliverable stages stay machine-owned; one new normative act is added, spec approval, offered when no open questions remain.",
-        "because": "Owner Q-6c: the owner's gate is the approval moment, not hand-set stages."
+        "because": "Owner Q-6c: the owner's gate is the approval moment, not hand-set stages.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-7",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Rounds: the page shows what changed since the owner's last visit, drawn from revision history.",
-        "because": "Owner Q-7: rounds are first-class (crit.md lesson)."
+        "because": "Owner Q-7: rounds are first-class (crit.md lesson).",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-8",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "v1 surface is local only: localhost bind, single owner, no auth, disclosed; auth becomes a platform-adapter concern.",
-        "because": "Owner Q-8."
+        "because": "Owner Q-8.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-9",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "v1 creative cuts: keyboard-first wizard and the progress ring; point-at-line comments are the v2 headline.",
-        "because": "Owner Q-9: my picks accepted."
+        "because": "Owner Q-9: my picks accepted.",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-10",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Lifespan: v1 is the spec ceremony (render, interview, approval); the page architecture leaves room for design, tasks, and close later.",
-        "because": "Owner Q-10: rec accepted, pluggable for the platform future."
+        "because": "Owner Q-10: rec accepted, pluggable for the platform future.",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-11",
+        "status": "accepted",
+        "resolves": [
+          "Q-A"
+        ],
+        "decision": "Spec approval lives as a first-class header group, date.approved {at, by}, the twin of date.closed. The lifecycle enum (active, complete) is untouched; the representation is additive to the schema; the derived stage reads it and is never hand-set.",
+        "because": "Owner accepted the recommendation (2026-10-09): zero state-machine change against the frozen vocabulary, reads chronologically in the header, mirrors the close ceremony exactly.",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-12",
+        "status": "accepted",
+        "resolves": [
+          "Q-B"
+        ],
+        "decision": "The event file is docs/specs/<slug>/interview.jsonl: append-only JSON Lines. First line is a header {\"format\": \"specweb-events/0.1\"}; every following line is one event carrying kind, q (where scoped), by, at.",
+        "because": "Owner accepted the recommendation (2026-10-09): JSONL appends without re-reading, replays line by line, tails well for agents.",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-13",
+        "status": "accepted",
+        "resolves": [
+          "Q-C"
+        ],
+        "decision": "The waiting command blocks until the interview completes; Ctrl-C (SIGINT) escapes cleanly. Every admission persists on the spot, so an escape loses nothing. No timeout, no detach: those are platform-adapter territory.",
+        "because": "Owner accepted the recommendation (2026-10-09): simplest honest v1; the machine never holds unsaved state.",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-14",
+        "status": "accepted",
+        "resolves": [
+          "Q-D"
+        ],
+        "decision": "Question kinds in v1: open and choice only. Yes/no is a two-option choice; number and date wait until asked for.",
+        "because": "Owner accepted the recommendation (2026-10-09): smallest vocabulary that carries the interview.",
+        "accepted_by": "human:owner"
       }
     ],
     "designs": [
@@ -681,5 +735,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 1
+  "revision": 15
 }
