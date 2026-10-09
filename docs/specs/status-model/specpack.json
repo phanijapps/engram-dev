@@ -20,6 +20,12 @@
       "type": "text/markdown",
       "description": "Reviewer brief: martinfowler.com, Kiro, spec-kit, and Tessl",
       "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"
+    },
+    "shape": {
+      "file": "spec-shape.json",
+      "type": "application/json",
+      "description": "The codified spec-section shape with sources and rules",
+      "sha256": "a699dfc0d5945b500beb56e4a8057c569a361467037e0e1312ae5aefe9484091"
     }
   },
   "spec": {
@@ -180,6 +186,15 @@
         "addresses": [
           "FR-6"
         ]
+      },
+      {
+        "id": "DES-6",
+        "title": "The spec anatomy in schema and checks",
+        "kind": "data",
+        "detail": "Additive schema: story gains title, priority, independent_test, acceptance (scenario shape, AC- ids); spec gains edge_cases, success_criteria (SC- id pattern), assumptions. Requirement gains serves (US ids) and scenarios becomes legacy-optional. Checks: A1 counts story ACs; A2 resolves task.accepts against story ACs and legacy FR scenarios; A4 alignment gains the story route (task accepts AC of US that FR serves); coverage maps story ACs and story done (all ACs met by done tasks).",
+        "addresses": [
+          "FR-6"
+        ]
       }
     ],
     "decisions": [
@@ -239,6 +254,12 @@
         "decision": "Stories gain acceptance criteria (given/when/then scenarios, AC- ids, same shape as requirement scenarios). Story done is its ACs met by done tasks: direct, owner-authored, machine-verified. Requirement scenarios stay for capability verification. Tasks accept ACs wherever they live; each AC keeps exactly one parent.",
         "because": "Atlassian 3 C's: Confirmation (the AC) defines when the story is complete; the story and its AC are one unit. ACs are intent-altitude, requirement scenarios are solution-altitude. Owner direction with source, 2026-10-09.",
         "resolves": [],
+        "status": "proposed"
+      },
+      {
+        "id": "D-9",
+        "decision": "The spec section anatomy is: why, stories (title, as/want/so, priority, independent_test, acceptance as given/when/then), edge_cases, requirements (plain MUST, serves a story, no scenarios), success_criteria, constraints, questions, assumptions, out_of_scope. Story done = its ACs met by done tasks.",
+        "because": "Three primary sources agree on the load-bearing parts: ACs live on the story (Atlassian 3 C's Confirmation; Spec Kit Acceptance Scenarios verbatim in templates/spec-template.md), priority and independent testability live on the story with the P1-alone-is-MVP rule (Spec Kit), requirements are plain MUST statements (Spec Kit FR-NNN, Kiro EARS), and success criteria and assumptions are spec-level sections we lack. Owner directive 2026-10-09: the spec, high level, codified.",
         "status": "proposed"
       }
     ],
@@ -425,6 +446,35 @@
         "expect": "exit 0 \u2014 story ACs first-class in A1/A2/A5 and slices; suite green"
       },
       "parallel": true,
+      "status": "todo"
+    },
+    {
+      "id": "T-7",
+      "title": "Spec anatomy: schema, checks, coverage, fixture",
+      "detail": "Per DES-6 and D-9: schema additions (story: title, priority, independent_test, acceptance; spec: edge_cases, success_criteria, assumptions; requirement: serves; requirement.scenarios marked legacy in descriptions); A1/A2/A4 and coverage updated for story ACs and story-done; this pack's own spec section is recast into the new shape as the first live fixture (stories gain priority, independent_test, acceptance; FR scenarios move up or are dropped where redundant); spec-shape.json rules quoted into the primer.",
+      "phase": "core",
+      "needs": [],
+      "implements": [
+        "DES-6"
+      ],
+      "satisfies": [
+        "FR-6"
+      ],
+      "accepts": [],
+      "honors": [
+        "CON-1"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/src/loom_kit/specpack.py",
+        "docs/specs/status-model/specpack.json",
+        "docs/specs/spec-graph/schema-primer.md"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q && cd .. && uv run loom check docs/specs/status-model",
+        "expect": "exit 0 \u2014 new anatomy validates, story ACs first-class, this pack green in the new shape"
+      },
+      "parallel": false,
       "status": "todo"
     }
   ],
