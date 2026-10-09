@@ -68,3 +68,28 @@ append-only (D-12).
   `test_web_page.py::test_page_never_binds_the_engine`).
 - The order, kinds, and stages the page renders are contract-tested
   against the engine constants — one vocabulary, two sides.
+
+## The library read model + the standing acts (spec-library, 2026-10-09)
+
+The library (`loom library`, default 127.0.0.1:8788) is a second harness
+adapter over the same seam — the standing surface where the interview
+room is the born-spec ceremony:
+
+- `GET /specs` — every folder under the root: loadable packs (name,
+  title, stage, revision, open-question count, updated, discovered
+  `.md` docs) and legacy folders (name, `.md` files), fail-soft per
+  folder. A platform adapter can serve its own equivalent list.
+- `GET /spec/<name>` — the pack, canonical layout (same as the room's
+  `/spec`).
+- `GET /artifact/<name>/<file>` — one `.md` document from that spec's
+  folder, path-guarded. The input is trusted-on-disk (owner-authored
+  repo files); markdown renders client-side.
+- `POST /event/<name>` — the same admission contract as the room:
+  `{kind, q?, text?, option?, by}` for `answer` / `unknown` / `choice`
+  / `approve`. Refusals arrive as 400 JSON carrying the message; the
+  page surfaces it verbatim. Choice events carry both `option` and
+  `text` (the room's page set this shape; it is the contract).
+
+The page knows no engine names and performs no writes outside the
+seam — a platform adapter hosts it by serving the reads and
+implementing the one admission endpoint.
