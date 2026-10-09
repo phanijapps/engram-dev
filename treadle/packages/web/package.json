@@ -1,0 +1,9 @@
+{
+  "name": "@treadle/web",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@treadle/brand": "workspace:*",
+    "@treadle/core": "workspace:*"
+  }
+}

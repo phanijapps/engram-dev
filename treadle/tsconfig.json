@@ -5,6 +5,7 @@
     { "path": "packages/core" },
     { "path": "packages/conformance" },
     { "path": "packages/knowledge" },
+    { "path": "packages/web" },
     { "path": "packages/cli" }
   ]
 }
