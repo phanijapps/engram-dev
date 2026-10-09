@@ -17,7 +17,7 @@ managed_by: okf-code
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T20:36:06Z'
+  at: '2026-10-09T21:44:45Z'
 status: stable
 ---
 <!-- okf-code:start -->
@@ -47,7 +47,7 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 - [engine/okf/okf_kit/code/discovery.py](/code/engine/okf/okf_kit/code/discovery.py.md) - model module; depends on 0; used by 0; high-signal symbols: `WorkspaceRepo`, `discover_repositories`, `_all_repositories`
 - [engine/okf/okf_kit/code/indexer.py](/code/engine/okf/okf_kit/code/indexer.py.md) - module; depends on 0; used by 0; high-signal symbols: `extract_module`, `index_codebase`, `_has_explicit_scope`
 - [engine/okf/okf_kit/code/managed.py](/code/engine/okf/okf_kit/code/managed.py.md) - module; depends on 0; used by 0; high-signal symbols: `merge_managed`, `split_generated`
-- 21 modules omitted from compact summary.
+- 34 modules omitted from compact summary.
 
 # Impact map
 
