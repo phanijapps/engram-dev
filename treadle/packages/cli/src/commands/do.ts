@@ -189,6 +189,34 @@ export function registerDo(doCmd: Command): void {
     }),
   );
 
+  doCmd
+    .command('interview <packDir>')
+    .description('the room: serve the born-spec ceremony, block until approved (Ctrl-C escapes)')
+    .option('--port <n>', 'port (default 8765)', (v) => parseInt(v), 8765)
+    .option('--no-open', 'do not open the browser')
+    .action(async (packDir: string, opts: { port: number; open: boolean }) => {
+      const { startRoom } = await import('@treadle/web');
+      const room = await startRoom(packDir, opts.port);
+      console.log(`room: ${room.url}  (localhost only, no auth — v1 disclosure)`);
+      console.log(`room: serving ${packDir} — Ctrl-C stops`);
+      if (opts.open) await openBrowser(room.url);
+      await new Promise<never>(() => void 0); // block like an interrupt
+    });
+
+  doCmd
+    .command('library <specsRoot>')
+    .description('the standing surface: every pack, readable and actionable')
+    .option('--port <n>', 'port (default 8788)', (v) => parseInt(v), 8788)
+    .option('--no-open', 'do not open the browser')
+    .action(async (specsRoot: string, opts: { port: number; open: boolean }) => {
+      const { startLibrary } = await import('@treadle/web');
+      const lib = await startLibrary(specsRoot, opts.port);
+      console.log(`library: ${lib.url}  (localhost only, no auth — v1 disclosure)`);
+      console.log(`library: serving ${specsRoot} — Ctrl-C stops`);
+      if (opts.open) await openBrowser(lib.url);
+      await new Promise<never>(() => void 0); // standing surface
+    });
+
   doCmd.command('status <packDir>').action(
     guarded((l) => {
       const d = l.doc;
@@ -203,4 +231,11 @@ export function registerDo(doCmd: Command): void {
 function fail(message: string): void {
   console.error(`REFUSED: ${message}`);
   process.exitCode = 1;
+}
+
+/** best-effort browser open: the platform owns the how; failure is quiet */
+async function openBrowser(url: string): Promise<void> {
+  const { exec } = await import('node:child_process');
+  const cmd = process.platform === 'darwin' ? 'open' : 'xdg-open';
+  exec(`${cmd} ${JSON.stringify(url)}`, () => void 0);
 }

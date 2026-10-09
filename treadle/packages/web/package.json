@@ -5,5 +5,9 @@
   "dependencies": {
     "@treadle/brand": "workspace:*",
     "@treadle/core": "workspace:*"
-  }
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "main": "./src/index.ts"
 }
