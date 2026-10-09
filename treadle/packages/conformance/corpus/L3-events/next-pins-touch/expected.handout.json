@@ -1,0 +1,37 @@
+{
+  "items": [
+    {
+      "accepted_by": "human:owner",
+      "because": "b",
+      "decision": "d",
+      "family": "D",
+      "id": "D-1",
+      "status": "accepted"
+    },
+    {
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/conformance/corpus/L3-events/next-pins-touch/input/notes.md",
+            "sha256": "43c076c153771f2ca60c5d9447b23676f3ff16fe3e8f1a62507b5dbf5d240ed1"
+          }
+        ]
+      },
+      "detail": "d",
+      "family": "TASK",
+      "id": "T-1",
+      "phase": "core",
+      "status": "doing",
+      "title": "one",
+      "verify": {
+        "cmd": "true",
+        "expect": "0"
+      }
+    }
+  ],
+  "omitted_tasks": [],
+  "prelude": {},
+  "slice_digest": "fce7ed578ed1e6a48fd3b19a23ff1ff5fd537cd5fe007b34e9f67fb6fac947b0",
+  "status": "task",
+  "task": "T-1"
+}

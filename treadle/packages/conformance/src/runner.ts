@@ -11,6 +11,7 @@ import {
   emitBytes,
   loadPack,
   nextTask,
+  readEvents,
   alignment,
   record,
   type PackDoc,
@@ -58,11 +59,17 @@ interface OpOutcome {
   handout?: unknown;
 }
 
-function applyOp(doc: PackDoc, op: Op): OpOutcome {
+function applyOp(doc: PackDoc, op: Op, realInput: string): OpOutcome {
   if (op.op === 'next') {
-    const r = nextTask(doc);
+    // packPath = the case's real input dir — touch/link digests resolve from
+    // the git root exactly as the engine does (corpus paths are repo-relative)
+    const r = nextTask(doc, { packPath: realInput });
     if (!r.ok) return { refused: r };
     return { handout: r.value };
+  }
+  if (op.op === 'read-events') {
+    const evs = readEvents(realInput + '/interview.jsonl');
+    return { handout: evs };
   }
   const by = op.args.by ?? 'human:owner';
   if (op.op === 'choice') {
@@ -187,7 +194,7 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
       message: string;
     };
     const doc = loaded.value;
-    const { refused } = applyOp(doc, op);
+    const { refused } = applyOp(doc, op, dir + '/input');
     if (!refused) return { case: tag, layer, ok: false, detail: 'expected a refusal, got success' };
     const ok = refused.code === expected.code && refused.message === expected.message;
     return ok
@@ -229,7 +236,7 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
         expected_revision: ev.expected_revision,
       },
     };
-    const out = applyOp(doc, op);
+    const out = applyOp(doc, op, dir + '/input');
     if (out.handout !== undefined) handout = out.handout;
     const { refused } = out;
     if (refused) {
@@ -245,6 +252,10 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
     }
   }
   const expectedState = read(dir, 'expected.state.json');
+  // journal-read cases carry no state expectation — the op never mutates
+  if (!expectedState && read(dir, 'expected.events.json') !== null) {
+    return { case: tag, layer, ok: true };
+  }
   if (!expectedState)
     return { case: tag, layer, ok: false, detail: 'sequence succeeded but expected.err present' };
   const actual = scrub(saveLike(doc));
@@ -252,7 +263,7 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
   if (actual !== expected) {
     return { case: tag, layer, ok: false, detail: firstDiff(actual, expected) };
   }
-  const expectedHandout = read(dir, 'expected.handout.json');
+  const expectedHandout = read(dir, 'expected.handout.json') ?? read(dir, 'expected.events.json');
   if (expectedHandout !== null && handout === undefined) {
     return { case: tag, layer, ok: false, detail: 'expected a handout, none produced' };
   }

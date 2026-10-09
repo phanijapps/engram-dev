@@ -1,0 +1,75 @@
+{
+  "id": "p",
+  "name": "p",
+  "description": "The born fixture",
+  "date": {
+    "updated": "2026-10-09T22:44:31Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "spec": {
+    "why": "w",
+    "requirements": [],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "pick one",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "a",
+          "b"
+        ],
+        "default": "a"
+      },
+      {
+        "id": "Q-2",
+        "question": "say something",
+        "status": "open",
+        "owner": "human:owner"
+      }
+    ],
+    "out_of_scope": []
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "d",
+        "because": "b",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "one",
+      "detail": "d",
+      "satisfies": [],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "doing",
+      "phase": "core",
+      "verify": {
+        "cmd": "true",
+        "expect": "0"
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/conformance/corpus/L3-events/next-pins-touch/input/notes.md",
+            "sha256": "43c076c153771f2ca60c5d9447b23676f3ff16fe3e8f1a62507b5dbf5d240ed1"
+          }
+        ]
+      }
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 2
+}

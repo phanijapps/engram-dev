@@ -12,6 +12,8 @@ import {
   closePack,
   gapCount,
   loadPackWithMeta,
+  eventsPath,
+  readEvents,
   nextTask,
   record,
   savePack,
@@ -88,7 +90,7 @@ export function registerDo(doCmd: Command): void {
 
   doCmd.command('next <packDir>').action(
     guarded((l) => {
-      const out = nextTask(l.doc);
+      const out = nextTask(l.doc, { packPath: l.path });
       if (!out.ok) return fail(out.message);
       const h = out.value;
       if (h.status === 'task') {
@@ -173,6 +175,17 @@ export function registerDo(doCmd: Command): void {
         `alignment: ${a.value.violations.length} violation(s), ${gapCount(a.value)} gap(s) — gaps are reported, never guessed`,
       );
       if (a.value.violations.length) process.exitCode = 1;
+    }),
+  );
+
+  doCmd.command('events <packDir>').action(
+    guarded((l) => {
+      const evs = readEvents(eventsPath(l.path.slice(0, l.path.lastIndexOf('/'))));
+      if (!evs.length) return console.log('no events recorded');
+      for (const e of evs) {
+        const q = 'q' in e ? String(e.q).padEnd(5) + ' ' : '';
+        console.log(`${e.kind.padEnd(8)} ${q}${e.by} ${e.at}`);
+      }
     }),
   );
 

@@ -3,15 +3,14 @@
  * doing-without-evidence first, then ready todo in id order. The handout
  * carries full node bodies across the task's closure — not one-liners.
  *
- * Scope, honestly: the disk-level pin-or-verify digests (context.touch
- * sha256 pinning, artifact digest verification) are NOT in this port yet —
- * they land with the know plane's file layer. The doc-level contract —
- * selection, closure, slice, revision discipline — is complete and
- * golden-tested.
+ * The handout is drift-gated when a pack path is given: touch digests pin
+ * at first sighting and verify at every handout; drift refuses (needs_rebase
+ * — no state change, no revision bump).
  */
 import { createHash } from 'node:crypto';
 import type { Admission } from '../refusals.js';
 import { closureGaps } from './derive.js';
+import { pinOrVerify, verifyRefs } from './pins.js';
 import type { PackDoc, Task } from './model.js';
 
 type Raw = Record<string, unknown>;
@@ -35,9 +34,18 @@ export type Handout =
       readonly review_pass: boolean;
     }
   | { readonly status: 'DONE' }
-  | { readonly status: 'WAITING'; readonly reason: string };
+  | { readonly status: 'WAITING'; readonly reason: string }
+  | {
+      readonly status: 'needs_rebase';
+      readonly task: string;
+      readonly revision: number;
+      readonly drift: readonly { path: string; why: string; pinned?: string; current?: string }[];
+    };
 
-export function nextTask(doc: PackDoc): Admission<Handout> {
+export function nextTask(
+  doc: PackDoc,
+  opts: { packPath?: string | undefined } = {},
+): Admission<Handout> {
   if (doc.status === 'complete') {
     return {
       ok: true,
@@ -70,6 +78,23 @@ export function nextTask(doc: PackDoc): Admission<Handout> {
       return { ok: true, value: { status: 'DONE' } };
     }
     return { ok: true, value: { status: 'WAITING', reason: 'no ready task' } };
+  }
+  if (opts.packPath !== undefined) {
+    const drift = [
+      ...pinOrVerify(doc, pick.id, opts.packPath),
+      ...verifyRefs(doc, pick.id, opts.packPath),
+    ];
+    if (drift.length) {
+      return {
+        ok: true,
+        value: {
+          status: 'needs_rebase',
+          task: pick.id,
+          revision: doc.revision ?? 1,
+          drift: [...drift].sort((a, b) => `${a.path}${a.why}`.localeCompare(`${b.path}${b.why}`)),
+        },
+      };
+    }
   }
   pick.status = 'doing';
   doc.revision = (doc.revision ?? 1) + 1;

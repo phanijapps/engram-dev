@@ -1,0 +1,13 @@
+{
+  "drift": [
+    {
+      "current": "43c076c153771f2ca60c5d9447b23676f3ff16fe3e8f1a62507b5dbf5d240ed1",
+      "path": "treadle/packages/conformance/corpus/L3-events/next-pins-touch/input/notes.md",
+      "pinned": "0000000000000000000000000000000000000000000000000000000000000000",
+      "why": "changed"
+    }
+  ],
+  "revision": 1,
+  "status": "needs_rebase",
+  "task": "T-1"
+}

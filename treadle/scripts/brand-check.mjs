@@ -17,6 +17,7 @@ const ALLOW_CONTAINS = [
   /\.github\/.*\.yml$/,
   /README\.md$/,
   /scripts\/set-brand\.mjs$/,
+  /corpus\//, // golden data: repo-relative fixture paths, not source
 ];
 
 function walk(dir, files = []) {

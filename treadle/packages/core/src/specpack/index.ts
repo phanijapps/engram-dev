@@ -11,3 +11,12 @@ export { savePack } from './save.js';
 export { loadPackWithMeta } from './loader.js';
 export { nextTask, sliceFor, type Handout, type Slice } from './next.js';
 export { alignment, gapCount, type Alignment } from './alignment.js';
+export { pinOrVerify, verifyRefs, gitRoot, resolvePath, type Drift } from './pins.js';
+export {
+  EVENT_FORMAT,
+  eventsPath,
+  writeEvent,
+  readEvents,
+  validateEvent,
+  type JournalEvent,
+} from './events.js';
