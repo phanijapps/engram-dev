@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>spec-web — the interview page (design mockup)</title>
+<style>
+  :root {
+    --ink: #17202b; --paper: #f6f7f5; --card: #fff; --line: #e2e4de; --muted: #66707d;
+    --accent: #0f6b5f; --accent-soft: #e3f0ed; --warn: #8a5a06; --bad: #8f1d1d; --good: #14532d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--paper); color: var(--ink); }
+  header { background: var(--ink); color: #fff; padding: 14px 22px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 17px; font-weight: 650; }
+  header .sub { color: #b9c2c9; font-size: 12.5px; }
+  .chip { font: 700 11px/1 ui-monospace, Menlo, monospace; padding: 4px 9px; border-radius: 999px; background: #242e33; color: #d8e0dd; }
+  .chip.on { background: #1d3a34; color: #9fe0d0; }
+  .mock { position: fixed; bottom: 0; left: 0; right: 0; background: #6b5407; color: #fff7dd; font: 600 11.5px/1.4 ui-monospace, monospace; padding: 6px 14px; z-index: 9; }
+  main { display: grid; grid-template-columns: minmax(300px, 5fr) minmax(380px, 7fr); gap: 18px; padding: 18px 22px 52px; max-width: 1280px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  h2 { font-size: 12px; margin: 18px 0 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; }
+  h2:first-child { margin-top: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+  .card h3 { margin: 0 0 4px; font-size: 14px; }
+  .idchip { font: 700 10.5px/1 ui-monospace, monospace; background: var(--accent-soft); color: var(--accent); padding: 3px 7px; border-radius: 4px; margin-right: 7px; }
+  .st { font: 700 10px/1 ui-monospace, monospace; padding: 3px 7px; border-radius: 4px; }
+  .st-open { background: #fde2e2; color: var(--bad); } .st-res { background: #d8efdf; color: var(--good); }
+  .st-todo { background: #e8eaee; color: #525f6f; } .st-unk { background: #fdeecd; color: var(--warn); }
+  .note { font-size: 12.5px; color: var(--muted); margin: 4px 0 0; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .links a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); font-size: 12.5px; margin-right: 10px; }
+
+  /* ring */
+  .ring { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; }
+  .ring svg { display: block; }
+  .ring .stage { font: 700 12px/1.3 ui-monospace, monospace; }
+  .ring .stage small { display: block; font-weight: 400; color: var(--muted); font-size: 10.5px; }
+
+  /* interview pane */
+  .pane { position: sticky; top: 14px; align-self: start; }
+  .qhead { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+  .count { font: 700 11px/1 ui-monospace, monospace; color: var(--muted); letter-spacing: .5px; }
+  .qcard { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 12px; padding: 18px 20px; }
+  .qcard.done { border-left-color: #b7c4bd; }
+  .qtext { font-size: 18px; line-height: 1.45; margin: 6px 0 6px; font-weight: 560; }
+  .blocks { font-size: 12.5px; color: var(--muted); margin-bottom: 12px; }
+  .opt { display: flex; gap: 10px; align-items: flex-start; border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 13px; margin: 8px 0; cursor: pointer; background: var(--paper); }
+  .opt:hover { border-color: var(--accent); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .opt .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--line); margin-top: 2px; flex: none; }
+  .opt.sel .dot { border-color: var(--accent); background: var(--accent); }
+  .opt .lbl { font-size: 14.5px; }
+  .opt .lbl small { display: block; color: var(--muted); font-size: 12px; }
+  textarea { width: 100%; min-height: 92px; border: 1.5px solid var(--line); border-radius: 10px; padding: 11px 13px; font: 14.5px/1.5 inherit; background: var(--paper); resize: vertical; }
+  textarea:focus, .opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .qnav { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+  button.act { appearance: none; border: 0; border-radius: 999px; padding: 9px 18px; font: 650 13.5px/1 inherit; cursor: pointer; }
+  .b-next { background: var(--ink); color: #fff; }
+  .b-back { background: transparent; border: 1.5px solid var(--line); color: var(--ink); }
+  .b-idk { background: transparent; border: 1.5px dashed #c9b98a; color: var(--warn); }
+  .b-approve { background: var(--accent); color: #fff; font-size: 15px; padding: 12px 26px; }
+  .kbd { font: 600 11px/1 ui-monospace, monospace; color: var(--muted); background: #eef0ec; border: 1px solid var(--line); border-radius: 5px; padding: 3px 6px; }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 12px; }
+  .ansline { font-size: 13.5px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+  .approve-card { text-align: center; padding: 30px 24px; }
+  .approve-card .qtext { margin-bottom: 4px; }
+  .summary { text-align: left; margin: 14px auto; max-width: 430px; }
+  .summary .row { display: flex; gap: 8px; align-items: baseline; padding: 6px 2px; border-bottom: 1px solid #eef0ec; font-size: 13px; }
+  .rounds { font: 600 12px/1.5 ui-monospace, monospace; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; margin-top: 14px; }
+  .rounds b { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="h-name">spec-web</h1>
+  <span class="sub" id="h-desc"></span>
+  <span style="flex:1"></span>
+  <span class="chip on" id="h-life">active</span>
+  <span class="chip" id="h-rev">rev 15</span>
+</header>
+<div class="mock">STATIC MOCKUP — design artifact for DES-5. The real page (T-4) serves live data from loom interview. Everything here is clickable and keyboardable.</div>
+
+<main>
+  <!-- ══════════ LEFT: THE DOSSIER ══════════ -->
+  <section>
+    <div class="card">
+      <div class="ring">
+        <svg width="52" height="52" viewBox="0 0 52 52" aria-hidden="true">
+          <g id="ringSegs"></g>
+        </svg>
+        <div class="stage" id="ringStage">planning<small>derived · never hand-set</small></div>
+      </div>
+      <div class="links"><a href="#">brief.md</a><a href="#">research.md</a><a href="#">interview.md</a></div>
+      <p class="note">metadata: pinned external references (sha256)</p>
+    </div>
+
+    <h2>Why</h2>
+    <div class="card"><p style="margin:0">The Conversation has no room. Questions gate the loop but no command answers them; the owner never gets a <i>the spec is good, proceed</i> moment.</p></div>
+
+    <h2>Stories</h2>
+    <div class="card"><h3><span class="idchip">US-1</span>The owner interviews</h3><p class="note">answer open questions myself; keyboard-only possible, mouse everywhere</p></div>
+    <div class="card"><h3><span class="idchip">US-2</span>The owner approves</h3><p class="note">one moment that says the spec is good</p></div>
+    <div class="card"><h3><span class="idchip">US-3</span>The harness resumes</h3><p class="note">the interview is an interrupt in my loop</p></div>
+    <div class="card"><h3><span class="idchip">US-4</span>The platform builder adapts</h3><p class="note">host the same page on my own interrupt</p></div>
+
+    <h2>Requirements</h2>
+    <div class="card"><h3><span class="idchip">FR-1</span>dossier in canonical order</h3></div>
+    <div class="card"><h3><span class="idchip">FR-2</span>question vocabulary: open | choice + honest unknown</h3></div>
+    <div class="card"><h3><span class="idchip">FR-3</span>loom answer: admission with a human claim</h3></div>
+    <div class="card"><h3><span class="idchip">FR-4</span>the approval act</h3></div>
+    <div class="card"><h3><span class="idchip">FR-5</span>rounds: what changed since your last visit</h3></div>
+    <div class="card"><h3><span class="idchip">FR-6</span>events follow one schema; durable file</h3></div>
+    <div class="card"><h3><span class="idchip">FR-7</span>harness adapter: localhost, interrupt-wait</h3></div>
+    <div class="card"><h3><span class="idchip">FR-8</span>keyboard-first AND pointer-complete + progress ring</h3></div>
+    <div class="card"><h3><span class="idchip">FR-9</span>adapter contract published; page never binds loom</h3></div>
+
+    <h2>Tasks</h2>
+    <div class="card"><h3><span class="idchip">T-1</span>question vocabulary + loom answer <span class="st st-todo">todo</span></h3></div>
+    <div class="card"><h3><span class="idchip">T-2</span>the approval act <span class="st st-todo">todo</span></h3></div>
+    <div class="card"><h3><span class="idchip">T-3</span>event schema + file <span class="st st-todo">todo</span></h3></div>
+    <div class="card"><h3><span class="idchip">T-4</span>the page <span class="st st-todo">todo</span></h3></div>
+    <div class="card"><h3><span class="idchip">T-5</span>server + interrupt <span class="st st-todo">todo</span></h3></div>
+    <div class="card"><h3><span class="idchip">T-6</span>contract, review, close <span class="st st-todo">todo</span></h3></div>
+
+    <div class="rounds">ROUND 2 — since your last visit:<br><b>3 answers</b> recorded · revision 9 → 15 · <b>D-11..D-14</b> accepted</div>
+  </section>
+
+  <!-- ══════════ RIGHT: THE INTERVIEW ══════════ -->
+  <section class="pane">
+    <div class="qhead">
+      <span class="count" id="qcount"></span>
+      <span style="flex:1"></span>
+      <span class="chip">the interview</span>
+    </div>
+    <div id="qhost"></div>
+    <p class="hint">
+      <span class="kbd">j</span>/<span class="kbd">k</span> or <span class="kbd">←</span>/<span class="kbd">→</span> move ·
+      <span class="kbd">Enter</span> submit · <span class="kbd">1</span>-<span class="kbd">9</span> pick an option ·
+      <span class="kbd">?</span> shortcuts — or click anything: every act is pointer-complete
+    </p>
+  </section>
+</main>
+
+<script>
+// ── demo state: the real spec's questions, mid-interview ──
+const STAGES = ["drafted","planning","in_progress","blocked","awaiting_owner","in_review","delivered"];
+const QS = [
+  { id:"Q-A", kind:"choice", text:"How does spec approval live in the vocabulary?",
+    blocks:"blocks: T-2 (the approval act)",
+    options:[["date.approved {at, by} — twin of closed","additive; lifecycle untouched"],["a new lifecycle value","touches the frozen enum"],["a sub-state","new machinery"]],
+    answer:"date.approved {at, by} — twin of closed", by:"accepted as D-11", state:"resolved" },
+  { id:"Q-B", kind:"choice", text:"Event file shape and home?",
+    blocks:"blocks: T-3 (event schema + file)",
+    options:[["interview.jsonl — append-only JSON Lines","first line is the format header"],["a JSON array in one file","rewrite to append"],["per-session files","one file per open of the page"]],
+    answer:null, state:"open" },
+  { id:"Q-C", kind:"choice", text:"Interrupt semantics for the waiting command?",
+    blocks:"blocks: T-5 (server + interrupt)",
+    options:[["block until complete; Ctrl-C escapes","every admission persists on the spot"],["timeout after N minutes","who picks N?"],["detach and resume later","platform territory"]],
+    answer:null, state:"open" },
+  { id:"Q-D", kind:"open", text:"Question kinds in v1: strictly open and choice, or more?",
+    blocks:"blocks: T-1 (vocabulary)",
+    options:[], answer:null, state:"open" },
+];
+let i = 1, sel = 0, typed = "", idk = false, approved = false;
+
+// ring: 7 segments, fill up to current stage
+(function ring(){
+  const g = document.getElementById("ringSegs"); const cx=26, cy=26, r=20, cur=1; // planning
+  for (let s=0; s<7; s++){
+    const a0 = -90 + s*(360/7) + 3, a1 = -90 + (s+1)*(360/7) - 3;
+    const p = (a)=>{const t=(a*Math.PI)/180;return [cx+r*Math.cos(t), cy+r*Math.sin(t)];};
+    const [x0,y0]=p(a0),[x1,y1]=p(a1);
+    const col = s<=cur ? "#0f6b5f" : "#dfe3de";
+    g.insertAdjacentHTML("beforeend",
+      `<path d="M ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}" stroke="${col}" stroke-width="6" fill="none" stroke-linecap="round"/>`);
+  }
+})();
+
+function render(){
+  const q = QS[i];
+  document.getElementById("qcount").textContent = `QUESTION ${i+1} OF ${QS.length}`;
+  const host = document.getElementById("qhost");
+  if (approved){
+    host.innerHTML = `<div class="qcard approve-card">
+      <div><span class="idchip">date.approved</span></div>
+      <div class="qtext">The spec is approved.</div>
+      <p class="muted">recorded by <b>human:owner</b> at 2026-10-09T17:42:00Z<br>the deliverable stage re-derives; nothing was hand-set</p>
+      <div class="summary">${QS.map(x=>`<div class="row"><span class="idchip">${x.id}</span><span>${x.state==="resolved"?esc(x.answer):"<i>unknown — recorded honestly</i>"}</span></div>`).join("")}</div>
+    </div>`;
+    return;
+  }
+  const opts = q.kind==="choice"
+    ? q.options.map((o,n)=>`<div class="opt ${n===sel?"sel":""}" data-n="${n}" tabindex="0" role="radio" aria-checked="${n===sel}">
+        <span class="dot"></span><span class="lbl">${esc(o[0])}<small>${esc(o[1])}</small></span></div>`).join("")
+    : `<textarea id="open" placeholder="type your answer (Enter to submit, Shift+Enter for a new line)...">${esc(typed)}</textarea>`;
+  const answered = q.state==="resolved";
+  const idkShown = idk ? `<div class="ansline"><span class="st st-unk">unknown</span> <span class="muted">I don't know — recorded honestly; the question still gates closure</span></div>` : "";
+  const ansLine = answered ? `<div class="ansline"><span class="st st-res">resolved</span> ${esc(q.answer)} <span class="muted">· ${esc(q.by)}</span></div>` : idkShown;
+  host.innerHTML = `<div class="qcard ${answered?"done":""}">
+    <div><span class="idchip">${q.id}</span><span class="st ${answered?"st-res":"st-open"}">${answered?"resolved":(idk?"unknown":"open")}</span></div>
+    <div class="qtext">${esc(q.text)}</div>
+    <div class="blocks">${esc(q.blocks)} · owner: human:owner</div>
+    ${answered?"":opts}
+    ${ansLine}
+    <div class="qnav">
+      <button class="act b-back" id="bBack">← back</button>
+      ${answered || idk ? `<button class="act b-next" id="bNext">next →</button>` : `<button class="act b-next" id="bSubmit">submit</button>`}
+      ${answered ? "" : `<button class="act b-idk" id="bIdk">I don't know</button>`}
+      ${i===QS.length-1 && (answered||idk) ? `<button class="act b-approve" id="bApprove" style="margin-left:auto">approve this spec ⏎</button>` : ""}
+    </div>
+  </div>`;
+
+  const wire = (id, fn) => { const el = document.getElementById(id); if (el) el.addEventListener("click", fn); };
+  document.querySelectorAll(".opt").forEach(o => o.addEventListener("click", () => { sel = +o.dataset.n; render(); }));
+  const ta = document.getElementById("open");
+  if (ta){ ta.addEventListener("input", () => typed = ta.value); }
+  wire("bBack", () => { if (i>0){ i--; sel=0; idk=QS[i].state!=="resolved" && idk && false; render(); } });
+  wire("bSubmit", () => { commit(q); });
+  wire("bNext", () => { if (i<QS.length-1){ i++; sel=0; idk=false; render(); } else { approved=true; render(); } });
+  wire("bIdk", () => { idk=true; render(); });
+  wire("bApprove", () => { approved=true; render(); });
+}
+function commit(q){
+  if (q.kind==="choice"){ q.answer = q.options[sel][0]; q.by = "answered here"; }
+  else { q.answer = typed || "(kept open)"; q.by = "answered here"; }
+  q.state = "resolved"; idk=false;
+  const allRes = QS.every(x=>x.state==="resolved");
+  if (allRes || i===QS.length-1){ /* stay; approve button appears */ }
+  render();
+}
+document.addEventListener("keydown", (e) => {
+  if (e.key==="?" ) { return; }
+  const q = QS[i];
+  if (approved) return;
+  if (e.key==="ArrowRight"||e.key==="k"){ if (i<QS.length-1){i++;sel=0;idk=false;render();} e.preventDefault(); }
+  else if (e.key==="ArrowLeft"||e.key==="j"){ if (i>0){i--;sel=0;idk=false;render();} e.preventDefault(); }
+  else if (e.key==="Enter"){
+    if (q.state==="resolved"){ if (i===QS.length-1){approved=true;} else {i++;sel=0;idk=false;} render(); e.preventDefault(); }
+    else if (q.kind==="choice"){ commit(q); e.preventDefault(); }
+  }
+  else if (/^[1-9]$/.test(e.key) && q.kind==="choice" && q.state!=="resolved"){
+    const n = +e.key - 1; if (n < q.options.length){ sel = n; render(); }
+  }
+});
+function esc(s){ return String(s??"").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+render();
+</script>
+</body>
+</html>
