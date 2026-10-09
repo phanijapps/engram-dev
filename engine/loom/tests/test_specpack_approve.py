@@ -94,3 +94,22 @@ def test_answered_unknown_still_blocks_approval(tmp_path: Path):
     specpack.answer_question(doc, "Q-1", "human:owner", unknown=True)
     with pytest.raises(LoomError, match="open questions remain"):
         specpack.approve_spec(doc, "human:owner")
+
+
+def test_derivation_reads_approval(tmp_path: Path):
+    """AC-6: the derived stage reflects the approval act, never hand-set."""
+    doc, path = _load(tmp_path, open_q=False)
+    doc["plan"]["decisions"] = [{"id": "D-1", "decision": "d", "because": "b", "status": "accepted", "accepted_by": "human:owner"}]
+    specpack.save(doc, path)  # ceremony settled, approval pending
+    on_disk = json.loads(path.read_text())
+    assert on_disk["status"]["deliverable"] == "awaiting_owner"
+    specpack.approve_spec(doc, "human:owner")
+    specpack.save(doc, path)
+    on_disk = json.loads(path.read_text())
+    assert on_disk["status"]["deliverable"] == "planning"  # released to proceed
+    # a newborn pack with nothing settled stays drafted
+    (tmp_path / "fresh").mkdir()
+    doc2, path2 = _load(tmp_path / "fresh", open_q=False)
+    doc2["plan"]["decisions"] = [{"id": "D-1", "decision": "d", "because": "b", "status": "proposed"}]
+    specpack.save(doc2, path2)
+    assert json.loads(path2.read_text())["status"]["deliverable"] == "drafted"

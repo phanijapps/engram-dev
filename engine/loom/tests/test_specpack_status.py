@@ -147,5 +147,6 @@ def test_deliverable_stage_set_equality_exhaustive():
     seen.add(specpack.derive_deliverable(_pack([_t("doing")])))
     seen.add(specpack.derive_deliverable(_pack([_t("todo")], questions=[
         {"id": "Q-1", "question": "q", "status": "open"}])))
-    seen.add(specpack.derive_deliverable(_pack([_t("todo")])))
+    seen.add(specpack.derive_deliverable(_pack([_t("todo")])))  # awaiting_owner: the owner's gate
+    seen.add(specpack.derive_deliverable(_pack([], decisions=[], questions=[])))  # drafted: nothing settled
     assert seen == set(specpack.DELIVERABLE_STAGES), (seen, specpack.DELIVERABLE_STAGES)

@@ -54,15 +54,16 @@ def test_owner_injection_seam():
 
 
 def test_page_consumes_emitted_layout_keys():
-    for key in ("date.approved", "status", "metadata", "clarifications", "revision"):
-        assert key.split(".")[0] in JS
-    assert "approved" in JS  # date.approved drives the ceremony view
-    assert "deliverable" in JS  # the ring reads the derived stage
+    """Anchored to the member expressions the render actually evaluates."""
+    for expr in ("S.date.approved", "S.status", "S.metadata", "S.spec.clarifications", "S.revision"):
+        assert expr in JS, expr
+    assert "S.design" in JS and "S.tasks" in JS and "S.review" in JS
 
 
 def test_question_vocabulary_consumed():
-    for field in ("kind", "options", "unknown", "answered_by"):
-        assert field in JS
+    for field in ("q.kind", "q.options", "q.unknown", "q.answered_by", "q.default"):
+        assert field in JS, field
+    assert "indexOf(q.default)" in JS  # AC-13: the default is preselected
 
 
 def test_rounds_strip_present():

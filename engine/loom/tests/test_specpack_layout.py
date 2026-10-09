@@ -45,7 +45,7 @@ def test_save_writes_header_groups(tmp_path: Path):
     assert on_disk["description"] == "Layout"
     assert on_disk["date"]["updated"]  # machine-stamped (D-3)
     assert on_disk["status"]["lifecycle"] == "active"
-    assert on_disk["status"]["deliverable"] == "drafted"
+    assert on_disk["status"]["deliverable"] == "awaiting_owner"
     assert on_disk["metadata"]["research"]["ref"] == "r.md"  # artifacts generalized (D-5)
     assert on_disk["metadata"]["research"]["sha256"] == "a" * 64
     assert on_disk["design"]["decisions"]  # plan renamed
@@ -71,7 +71,7 @@ def test_new_layout_loads_through_normalizer(tmp_path: Path):
     again, _ = specpack.load_specpack(d)
     assert again["plan"]["decisions"]
     assert again["artifacts"]["research"]["file"] == "r.md"
-    assert again["deliverable"] == "drafted"
+    assert again["deliverable"] == "awaiting_owner"
 
 
 def test_deliverable_checksum_through_status_group(tmp_path: Path):

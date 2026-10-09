@@ -20,7 +20,7 @@ def _pack(tasks, *, decisions=None, questions=None, review=None, status=None):
             "requirements": [{"id": "FR-1", "text": "r", "priority": "P1"}],
             "clarifications": questions or [],
         },
-        "plan": {"decisions": decisions or [
+        "plan": {"decisions": decisions if decisions is not None else [
             {"id": "D-1", "decision": "d", "because": "b", "status": "accepted", "accepted_by": "human:owner"}
         ]},
         "tasks": tasks,
@@ -60,8 +60,14 @@ def test_every_stage_branch():
     assert specpack.derive_deliverable(_pack([_t("doing")])) == "in_progress"
     assert specpack.derive_deliverable(_pack([_t("todo")], questions=[
         {"id": "Q-1", "question": "q", "status": "open"}])) == "planning"
-    assert specpack.derive_deliverable(_pack([_t("todo")])) == "drafted"
-    assert specpack.derive_deliverable(_pack([])) == "drafted"  # total: empty is drafted
+    # D-11 (spec-web): settled ceremony without the approval act sits at the owner's gate
+    assert specpack.derive_deliverable(_pack([_t("todo")])) == "awaiting_owner"
+    assert specpack.derive_deliverable(_pack([])) == "awaiting_owner"
+    approved = _pack([_t("todo")]); approved["approved_at"] = "t"; approved["approved_by"] = "human:owner"
+    assert specpack.derive_deliverable(approved) == "planning"  # released to proceed
+    assert specpack.derive_deliverable(_pack([], decisions=[], questions=[])) == "drafted"  # nothing settled: drafted
+    assert specpack.derive_deliverable(_pack([_t("todo")], decisions=[
+        {"id": "D-1", "decision": "d", "because": "b", "status": "proposed"}])) == "drafted"  # born: proposals pending
 
 
 def test_doing_beats_blocked():
@@ -76,7 +82,7 @@ def test_save_writes_the_derivation(tmp_path: Path):
     doc, path = specpack.load_specpack(d)
     specpack.save(doc, path)
     on_disk = json.loads(path.read_text())
-    assert on_disk["status"]["deliverable"] == "drafted"
+    assert on_disk["status"]["deliverable"] == "awaiting_owner"
 
 
 def test_load_refuses_hand_edited_stage(tmp_path: Path):
@@ -121,7 +127,7 @@ def test_status_headline(tmp_path: Path, capsys):
     (d / "pack.json").write_text(json.dumps(_pack([_t("todo")])))
     assert m(["status", str(d)]) == 0
     out = capsys.readouterr().out
-    assert out.splitlines()[0] == "deliverable: drafted (0 done, 0 doing, 1 todo, 0 blocked)"
+    assert out.splitlines()[0] == "deliverable: awaiting_owner (0 done, 0 doing, 1 todo, 0 blocked)"
 
 
 def test_next_headline_human_and_json(tmp_path: Path, capsys):

@@ -35,8 +35,11 @@ def _srv(tmp_path: Path):
 
 
 def _get(url: str):
-    with urllib.request.urlopen(url) as r:
-        return r.status, r.read()
+    try:
+        with urllib.request.urlopen(url) as r:
+            return r.status, r.read()
+    except urllib.error.HTTPError as e:
+        return e.code, e.read()
 
 
 def _post(url: str, body: dict):
@@ -133,7 +136,7 @@ def test_full_ceremony_to_approval_and_completion(tmp_path: Path):
         assert code == 200
         on = _ondisk(d)
         assert on["date"]["approved"]["by"] == "human:owner"
-        assert on["status"]["deliverable"] == "drafted"  # derived, never hand-set
+        assert on["status"]["deliverable"] == "planning"  # the gate read the approval, never hand-set
         assert interview_complete(d)
         evs = events.read_events(d / "interview.jsonl")
         assert [e["kind"] for e in evs] == ["choice", "answer", "approve"]
@@ -146,5 +149,21 @@ def test_localhost_bind_only(tmp_path: Path):
     _, srv = _srv(tmp_path)
     try:
         assert srv.httpd.server_address[0] == "127.0.0.1"
+    finally:
+        srv.shutdown()
+
+
+def test_broken_pack_is_400_json_not_500(tmp_path: Path):
+    """DEFECT 3 fix: admission refusals and load failures stay 400 JSON."""
+    d = tmp_path / "p"
+    d.mkdir()
+    (d / "p.json").write_text(json.dumps({**_pack(), "deliverable": "in_review"}))  # hand-edited lie
+    srv = InterviewServer(d).start()
+    try:
+        code, out = _post(srv.url + "event", {"kind": "answer", "q": "Q-1", "text": "x", "by": "human:owner"})
+        assert code == 400 and out["ok"] is False and "error" in out
+        code, body = _get(srv.url + "spec")
+        doc = json.loads(body)
+        assert code == 400 and doc["ok"] is False
     finally:
         srv.shutdown()

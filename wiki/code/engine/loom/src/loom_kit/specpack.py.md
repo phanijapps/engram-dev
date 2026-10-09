@@ -13,47 +13,47 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/specpack.py
-source_hash: 5703698d09e16ef60711b7bcb779ec34724c2bf73831c999e61427c160fce202
+source_hash: af98134aec0827bb8cfdcdc2357cc9be478a46ef5b95c6142cab9d92d46fe5fa
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T14:19:04Z'
+  at: '2026-10-09T17:45:20Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `derive_deliverable`, `_normalize`, `_emit`, `save`, `_now`. Dependency context: 1 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `derive_deliverable`, `_normalize`, `_emit`, `save`, `_now`. Dependency context: 1 local dependencies and 2 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `derive_deliverable` | 51-74 |
-| function | `_normalize` | 77-116 |
-| function | `_emit` | 119-162 |
-| function | `save` | 165-186 |
-| function | `_now` | 189-190 |
-| function | `_digest` | 193-194 |
-| function | `_vschema` | 197-199 |
-| function | `spec_path` | 202-216 |
-| function | `load_specpack` | 219-249 |
-| function | `validate` | 252-256 |
-| function | `_families` | 259-271 |
-| function | `alignment` | 274-406 |
-| function | `dfs` | 327-334 |
-| function | `closure_gaps` | 409-417 |
-| function | `_decision` | 420-424 |
-| function | `_assert_mutable` | 427-429 |
-| function | `accept_decision` | 432-452 |
-| function | `reject_decision` | 455-466 |
-| function | `close` | 469-499 |
-| function | `_fail_streak` | 502-509 |
+| function | `derive_deliverable` | 51-82 |
+| function | `_normalize` | 85-130 |
+| function | `_emit` | 133-178 |
+| function | `save` | 181-202 |
+| function | `_now` | 205-206 |
+| function | `_digest` | 209-210 |
+| function | `_vschema` | 213-215 |
+| function | `spec_path` | 218-232 |
+| function | `load_specpack` | 235-265 |
+| function | `validate` | 268-272 |
+| function | `_families` | 275-287 |
+| function | `alignment` | 290-422 |
+| function | `dfs` | 343-350 |
+| function | `closure_gaps` | 425-433 |
+| function | `answer_question` | 436-465 |
+| function | `_decision` | 468-472 |
+| function | `_assert_mutable` | 475-477 |
+| function | `accept_decision` | 480-500 |
+| function | `approve_spec` | 503-516 |
+| function | `reject_decision` | 519-530 |
 
-12 symbols omitted from compact profile.
+14 symbols omitted from compact profile.
 
 # Relationships
 
@@ -72,6 +72,7 @@ Depends on:
 
 Used by:
 - [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md)
+- [engine/loom/src/loom_kit/web/server.py](/code/engine/loom/src/loom_kit/web/server.py.md)
 
 # Impact notes
 

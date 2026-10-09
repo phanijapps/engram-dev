@@ -37,7 +37,10 @@ def _admit(pack_dir: Path, body: dict, lock: threading.Lock) -> dict:
     except ValueError as e:
         raise _Denied(str(e))
     with lock:
-        doc, path = specpack.load_specpack(pack_dir)
+        try:
+            doc, path = specpack.load_specpack(pack_dir)
+        except LoomError as e:
+            raise _Denied(f"the pack refused to load: {e}")
         try:
             if kind in ("answer", "unknown", "choice"):
                 specpack.answer_question(doc, ev["q"], by, text=ev.get("text"), unknown=(kind == "unknown"))
@@ -76,12 +79,16 @@ class _Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/":
             html = (_WEB / "page.html").read_text(encoding="utf-8")
-            inject = f'<script>window.INTERVIEW_CONFIG = {{by: "{self.owner}"}};</script>\n</head>'
+            inject = f"<script>window.INTERVIEW_CONFIG = {json.dumps({'by': self.owner})};</script>\n</head>"
             self._send(200, html.replace("</head>", inject, 1).encode(), "text/html; charset=utf-8")
         elif self.path == "/page.js":
             self._send(200, (_WEB / "page.js").read_text(encoding="utf-8").encode(), "application/javascript")
         elif self.path == "/spec":
-            doc, _ = specpack.load_specpack(self.pack_dir)
+            try:
+                doc, _ = specpack.load_specpack(self.pack_dir)
+            except LoomError as e:
+                self._send(400, (json.dumps({"ok": False, "error": str(e)}) + "\n").encode(), "application/json")
+                return
             self._send(200, (json.dumps(specpack._emit(doc), ensure_ascii=False) + "\n").encode(), "application/json")
         else:
             self._send(404, b"not found", "text/plain")

@@ -78,7 +78,7 @@ def test_unknown_then_real_answer_lands(tmp_path: Path):
     specpack.answer_question(doc, "Q-2", "human:owner", unknown=True)
     q = specpack.answer_question(doc, "Q-2", "human:owner", text="now I know")
     assert q["status"] == "resolved"
-    assert q["unknown"] is True  # history preserved: was unknown once
+    assert "unknown" not in q  # SMELL 14 fix: a real answer clears the flag
     assert q["answer"] == "now I know"
 
 
@@ -106,3 +106,21 @@ def test_vocabulary_validates_both_ways(tmp_path: Path):
     specpack.answer_question(doc, "Q-2", "human:owner", unknown=True)
     specpack.save(doc, path)
     assert specpack.validate(json.loads(path.read_text()), path) == []
+
+
+def test_choice_admission_enforces_options(tmp_path: Path):
+    """DEFECT 9 fix: the machine guards the vocabulary it grew."""
+    doc, _ = _load(tmp_path)
+    with pytest.raises(LoomError, match="not one of the options"):
+        specpack.answer_question(doc, "Q-1", "human:owner", text="banana")
+    q = specpack.answer_question(doc, "Q-1", "human:owner", text="open text")
+    assert q["status"] == "resolved"
+
+
+def test_repeated_unknown_refused_and_real_answer_clears_flag(tmp_path: Path):
+    doc, _ = _load(tmp_path)
+    specpack.answer_question(doc, "Q-2", "human:owner", unknown=True)
+    with pytest.raises(LoomError, match="already recorded unknown"):
+        specpack.answer_question(doc, "Q-2", "human:owner", unknown=True)
+    q = specpack.answer_question(doc, "Q-2", "human:owner", text="the real answer")
+    assert q["status"] == "resolved" and "unknown" not in q

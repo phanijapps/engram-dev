@@ -10,7 +10,12 @@ const STAGES = ["drafted","planning","in_progress","blocked","awaiting_owner","i
 
 const BY = (window.INTERVIEW_CONFIG && window.INTERVIEW_CONFIG.by) || "human:owner";
 let S = null;            // the spec, emitted layout
-let i = 0, sel = 0;      // wizard cursor, selected option
+let i = 0, sel = 0, curQid = "";  // wizard cursor, selected option, question-change guard
+
+function selFor(q) {
+  /* AC-13: the declared default is preselected */
+  return Math.max(0, (q.options || []).indexOf(q.default));
+}
 
 /* ── data ── */
 async function loadSpec() {
@@ -22,6 +27,7 @@ async function emit(ev) {
   const r = await fetch("/event", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ev) });
   if (!r.ok) { const t = await r.text(); throw new Error(t || ("POST /event " + r.status)); }
   await loadSpec();
+  renderAll();  /* DEFECT 7 fix: dossier, header, ring stay current after every admission */
 }
 
 /* ── derived views ── */
@@ -167,6 +173,7 @@ function paintInterview(err) {
   }
   if (i >= qs.length) i = qs.length - 1;
   const q = qs[i];
+  if (q.id !== curQid) { sel = selFor(q); curQid = q.id; }
   count.textContent = `QUESTION ${i + 1} OF ${qs.length}`;
   const opts = (q.kind === "choice" && q.options)
     ? q.options.map((o, n) => `<div class="opt ${n === sel ? "sel" : ""}" data-n="${n}" tabindex="0" role="radio" aria-checked="${n === sel}">
@@ -224,15 +231,18 @@ document.addEventListener("keydown", e => {
   const inTa = document.activeElement && document.activeElement.tagName === "TEXTAREA";
   if (approved()) return;
   if (!qs.length && e.key === "Enter") { doApprove(); e.preventDefault(); return; }
-  if (!qs.length || inTa && e.key !== "Enter" && !e.shiftKey && e.key !== "Escape") return;
-  const q = qs[Math.min(i, qs.length - 1)];
-  if (e.key === "ArrowRight" || e.key === "k") { if (i < qs.length - 1) { i++; sel = 0; paintInterview(); } e.preventDefault(); }
-  else if (e.key === "ArrowLeft" || e.key === "j") { if (i > 0) { i--; sel = 0; paintInterview(); } e.preventDefault(); }
-  else if (e.key === "Escape" && inTa) { document.activeElement.blur(); }
-  else if (e.key === "Enter" && (!inTa || e.ctrlKey || e.metaKey)) {
-    if (inTa && !e.ctrlKey && !e.metaKey && !e.shiftKey) { submit(document.activeElement.value); e.preventDefault(); }
-    else if (!inTa) { submit(null); e.preventDefault(); }
+  if (!qs.length) return;
+  /* Enter submits — from the textarea (Shift+Enter makes a newline) or anywhere */
+  if (e.key === "Enter") {
+    if (inTa && e.shiftKey) return;  // newline
+    submit(inTa ? document.activeElement.value : null);
+    e.preventDefault();
+    return;
   }
+  if (inTa) return;  // typing: arrows and digits belong to the text
+  const q = qs[Math.min(i, qs.length - 1)];
+  if (e.key === "ArrowRight" || e.key === "k") { if (i < qs.length - 1) { i++; paintInterview(); } e.preventDefault(); }
+  else if (e.key === "ArrowLeft" || e.key === "j") { if (i > 0) { i--; paintInterview(); } e.preventDefault(); }
   else if (/^[1-9]$/.test(e.key) && q && q.kind === "choice") {
     const n = +e.key - 1;
     if (n < q.options.length) { sel = n; paintInterview(); }
@@ -240,13 +250,18 @@ document.addEventListener("keydown", e => {
 });
 
 /* ── boot ── */
+function renderAll() {
+  paintHeader();
+  document.getElementById("dossier").innerHTML = dossierHTML();
+  paintInterview();
+}
+
 (async function boot() {
   try {
     await loadSpec();
-    paintHeader();
-    document.getElementById("dossier").innerHTML = dossierHTML();
-    paintInterview();
+    renderAll();
   } catch (e) {
-    document.getElementById("qhost").innerHTML = `<div class="qcard"><div class="err">${String(e)}</div></div>`;
+    const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    document.getElementById("qhost").innerHTML = `<div class="qcard"><div class="err">${esc(String(e))}</div></div>`;
   }
 })();

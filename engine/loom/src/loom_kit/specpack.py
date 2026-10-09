@@ -71,7 +71,15 @@ def derive_deliverable(doc: dict) -> str:
     openq = [q for q in doc["spec"].get("clarifications", []) if q.get("status") == "open"]
     if openq and "done" not in statuses and "doing" not in statuses:
         return "planning"
-    return "drafted"
+    pending = [d for d in doc["plan"].get("decisions", []) if d.get("status") == "proposed"]
+    if pending:
+        return "drafted"
+    # the owner's gate (D-6/D-11): the ceremony content is settled but the
+    # approval act is not — the pack sits at the owner, then proceeds
+    ceremony = doc["spec"].get("clarifications") or doc["plan"].get("decisions")
+    if ceremony and not doc.get("approved_at"):
+        return "awaiting_owner"
+    return "planning" if doc.get("approved_at") else "drafted"
 
 
 def _normalize(doc: dict) -> dict:
@@ -438,14 +446,20 @@ def answer_question(doc: dict, question_id: str, by: str, *, text: str | None = 
         raise LoomError(f"{question_id}: already resolved ({q.get('resolved_by') or q.get('answer', 'answered')})")
     stamp = at or _now()
     if unknown:
+        if q.get("unknown"):
+            raise LoomError(f"{question_id}: already recorded unknown — answer for real or leave it")
         q["answer"] = "(unknown)"
         q["unknown"] = True
         # status stays open: the honest unknown still gates closure
     else:
         if not (text or "").strip():
             raise LoomError("answer text is empty: pass --text or --unknown")
-        q["answer"] = text.strip()
+        text = text.strip()
+        if q.get("kind") == "choice" and q.get("options") and text not in q["options"]:
+            raise LoomError(f"{question_id}: {text!r} is not one of the options ({', '.join(q['options'])})")
+        q["answer"] = text
         q["status"] = "resolved"
+        q.pop("unknown", None)  # a real answer clears the earlier honest unknown
     q["answered_by"] = by
     q["answered_at"] = stamp
     return q

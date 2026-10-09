@@ -7,6 +7,7 @@ the page emits and any adapter consumes (crit.md's file-protocol lesson).
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -74,6 +75,8 @@ def write_event(path: Path, ev: dict) -> None:
         if new:
             f.write(json.dumps(header()) + "\n")
         f.write(json.dumps(ev) + "\n")
+        f.flush()
+        os.fsync(f.fileno())
 
 
 def read_events(path: Path) -> list[dict]:
