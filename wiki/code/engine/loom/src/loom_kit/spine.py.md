@@ -19,14 +19,14 @@ generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T19:33:51Z'
+  at: '2026-10-09T20:22:36Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/spine.py`. Purpose: engine/loom/src/loom_kit/spine.py is a `python` model module in package `engine/loom`. Role: model module. high-signal symbols: `LoomError`, `_schema`, `MiniValidator`, `__init__`, `_ref`. Dependency context: 1 local dependencies and 4 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/spine.py`. Purpose: engine/loom/src/loom_kit/spine.py is a `python` model module in package `engine/loom`. Role: model module. high-signal symbols: `LoomError`, `_schema`, `MiniValidator`, `__init__`, `_ref`. Dependency context: 1 local dependencies and 5 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -68,6 +68,7 @@ Used by:
 - [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md)
 - [engine/loom/src/loom_kit/machine.py](/code/engine/loom/src/loom_kit/machine.py.md)
 - [engine/loom/src/loom_kit/specpack.py](/code/engine/loom/src/loom_kit/specpack.py.md)
+- [engine/loom/src/loom_kit/web/library.py](/code/engine/loom/src/loom_kit/web/library.py.md)
 - [engine/loom/src/loom_kit/web/server.py](/code/engine/loom/src/loom_kit/web/server.py.md)
 
 # Impact notes

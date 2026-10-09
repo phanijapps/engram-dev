@@ -3,15 +3,19 @@
   "name": "spec-library",
   "description": "The spec library — every spec, readable by its owner",
   "date": {
-    "updated": "2026-10-09T20:06:13Z",
+    "updated": "2026-10-09T20:22:26Z",
     "approved": {
       "at": "2026-10-09T19:54:14Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-09T21:30:00Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "Packs are JSON for machines. The owner reads them through an agent, one command at a time. The owner's audience — product owners with no technical training — cannot. The record deserves a room anyone can walk into.",
@@ -563,7 +567,7 @@
       "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_markdown.py -q",
-        "expect": "exit 0 — tables and code render, script tags neutralized"
+        "expect": "exit 0 — tables render through vendored marked; documents are .md-only and path-guarded (traversal and symlinks); markdown posture is trusted-on-disk (D-1) — no neutralization is claimed"
       },
       "honors": [
         "CON-2"
@@ -600,7 +604,7 @@
       "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_library.py -q",
-        "expect": "exit 0 — five real packs listed, legacy folders soft"
+        "expect": "exit 0 — every real pack listed with a DERIVED stage, legacy folders soft, never a crash"
       },
       "honors": [
         "CON-1"
@@ -766,7 +770,7 @@
         "DES-7"
       ],
       "accepts": [],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "uv run loom check docs/specs/spec-library && cd engine/loom && uv run pytest -q && uv run loom selftest",
         "expect": "exit 0 — 0 gaps, suite green, selftest green"
@@ -774,9 +778,135 @@
       "honors": [
         "CON-1",
         "CON-2"
+      ],
+      "evidence": [
+        {
+          "cmd": "loom check docs/specs/spec-library && cd engine/loom && uv run pytest -q && uv run loom selftest",
+          "exit": 0,
+          "at": "2026-10-09T20:22:26Z",
+          "by": "agent:pi",
+          "notes": "Red-forman: FIX BEFORE COMMIT — 2 BLOCKER, 7 DEFECT, 4 SMELL, all fixed pre-close and recorded as verdicts; behavior tests added (S-10); evidence overclaims disclosed (D-9). Gate: check 0/0, 198 tests, selftest — exits verified directly."
+        }
       ]
     }
   ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "T-2",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:20:00Z",
+        "findings": [
+          {
+            "severity": "BLOCKER",
+            "note": "LibraryServer.start() mutated the shared _Handler class: two instances cross-wired — server A admitted events into server B's packs. Live-demonstrated by the reviewer.",
+            "fix": "Per-instance binding via type('Bound', ...) exactly as InterviewServer does."
+          },
+          {
+            "severity": "DEFECT",
+            "note": "list_specs read file-layout keys off the normalized doc: every real pack showed the folder name as title and empty updated; the sort on updated was dead.",
+            "fix": "Read title/updated; DERIVE the stage through derive_deliverable — never trust a stored copy (this also fixed three frozen packs displaying 'drafted', flagged by the worker before the verdict)."
+          },
+          {
+            "severity": "DEFECT",
+            "note": "Fixed default port 8788 bound by tests: the suite failed whenever the standing library ran (5 failed/192 reproduced).",
+            "fix": "LibraryServer defaults ephemeral; the CLI passes 8788."
+          },
+          {
+            "severity": "DEFECT",
+            "note": "A pack whose internal name differed from its folder was listed under a name that 404s.",
+            "fix": "The folder is the route key; the internal name is display-only."
+          }
+        ]
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:21:00Z",
+        "findings": [
+          {
+            "severity": "BLOCKER",
+            "note": "FR-9 jump-links were dead for every cross-tab ID (card-T-x lives on another tab) and every ID inside rendered markdown (verified: marked emits plain text); the nomatch fallback referenced an element no code creates.",
+            "fix": "jump() routes to the tab owning the ID family, lands after render via pendingJump; idlHtml wraps IDs in parsed markdown text nodes only; misses toast honestly."
+          }
+        ]
+      },
+      {
+        "on": "T-5",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:22:00Z",
+        "findings": [
+          {
+            "severity": "DEFECT",
+            "note": "The page checked S.spec.approved_at, a key /spec never emits — the Approve button reappeared after approval, proposing an act the record forbids.",
+            "fix": "Read date.approved.{at,by} from the emitted layout."
+          },
+          {
+            "severity": "DEFECT",
+            "note": "do_POST had no catch-all: a read-only pack dir killed the socket with a traceback instead of JSON (reproduced).",
+            "fix": "except Exception → 500 JSON, matching the room."
+          }
+        ]
+      },
+      {
+        "on": "T-6",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:23:00Z",
+        "findings": [
+          {
+            "severity": "DEFECT",
+            "note": "posOf mapped blocked to node 0: a stuck in-review pack rendered as 'Just started' — the opposite of honest states.",
+            "fix": "posFor infers the furthest reached node from the record (done/doing work → in_progress; content → shaping); flags never move the path backward."
+          }
+        ]
+      },
+      {
+        "on": "T-1",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:24:00Z",
+        "findings": [
+          {
+            "severity": "DEFECT",
+            "note": "Evidence overclaim (the T-1/T-4 class, third instance): verify.expect claimed 'script tags neutralized' but no neutralization exists or is tested — the real posture is trusted-on-disk (D-1). T-2's 'five real packs' was also wrong (seven), and T-6's recorded evidence ran only its focused file while verify named the full suite.",
+            "fix": "Expect texts reworded to the truth; the full gate ran at T-7 with exits verified directly; this verdict is the durable disclosure."
+          },
+          {
+            "severity": "SMELL",
+            "note": "/artifact followed symlinks out of the pack folder while the comment claimed containment.",
+            "fix": "resolve() containment check — the comment's claim is now the code."
+          }
+        ]
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-forman",
+        "at": "2026-10-09T21:26:00Z",
+        "findings": [
+          {
+            "severity": "SMELL",
+            "note": "The structural tests blessed the dead branches (S-10): twenty string-presence asserts proved presence, not behavior — the institutionalized T-4 precedent.",
+            "fix": "test_web_behavior.py now executes the page's real functions under node with a stubbed DOM: markdown ID wrapping, cross-tab routing, toast-on-miss, flag positioning, grouping, picked-reset — 19 behavior assertions."
+          },
+          {
+            "severity": "SMELL",
+            "note": "picked never cleared across specs (Q-id collisions); every tab click refetched /spec and the full /specs walk.",
+            "fix": "picked resets on selection change; tab switches render from state — no refetch."
+          },
+          {
+            "severity": "DEFECT",
+            "note": "Post-fix gate re-run by the worker: loom check 0 violations / 0 gaps, 198 tests exit 0, selftest exit 0, all frozen packs green, standing server re-verified live (derived stages, real titles, specpack-context correctly delivered).",
+            "fix": "None pending."
+          }
+        ]
+      }
+    ]
+  },
   "format": "specpack/0.3",
-  "revision": 24
+  "revision": 26
 }

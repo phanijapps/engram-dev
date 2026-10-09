@@ -13,20 +13,20 @@ language: python
 sources:
 - id: src
   resource: engine/loom/src/loom_kit/cli.py
-source_hash: 6d12ff70e15bd11495534d7c56ae4803e882e771b374d34ac61b299268e228cb
+source_hash: 94e8106fbb33e77c5d8b1f0f729ccfc50e2c20a2e8b3752363817e750bc95ed3
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T01:36:35Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T19:33:51Z'
+  at: '2026-10-09T20:22:36Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: engine/loom/src/loom_kit/cli.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `_mode`, `_specpack_path`, `cmd_check`, `_evidence`, `cmd_init`. Dependency context: 6 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: engine/loom/src/loom_kit/cli.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `_mode`, `_specpack_path`, `cmd_check`, `_evidence`, `cmd_init`. Dependency context: 7 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -53,7 +53,7 @@ Generated CodeModule concept for `engine/loom/src/loom_kit/cli.py`. Purpose: eng
 | function | `_record_specpack` | 391-409 |
 | function | `_status_specpack` | 412-437 |
 
-4 symbols omitted from compact profile.
+5 symbols omitted from compact profile.
 
 # Relationships
 
@@ -63,6 +63,7 @@ Depends on:
 - [.specpack](/code/engine/loom/src/loom_kit/specpack.py.md)
 - [.spine.LoomError](/code/engine/loom/src/loom_kit/spine.py.md)
 - [.templates.PLAN_TMPL](/code/engine/loom/src/loom_kit/templates.py.md)
+- [.web.library](/code/engine/loom/src/loom_kit/web/library.html.md)
 - [.web.server](/code/engine/loom/src/loom_kit/web/server.py.md)
 - `.spine.SPINE_NAME`
 - `.spine._now`
@@ -77,8 +78,7 @@ Depends on:
 - `argparse`
 - `collections.Counter`
 - `datetime.datetime`
-- `json`
-- 4 imports omitted from compact profile.
+- 5 imports omitted from compact profile.
 
 # Impact notes
 

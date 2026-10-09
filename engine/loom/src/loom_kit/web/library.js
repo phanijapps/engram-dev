@@ -1,7 +1,7 @@
 /* The spec library page (spec-library T-3..T-6; DES-3..DES-7).
    Consumes GETs and emits events at the seam — nothing else. */
 
-const S = { specs: [], legacy: [], sel: null, spec: null, tab: "overview", docs: [] };
+var S = { specs: [], legacy: [], sel: null, spec: null, tab: "overview", docs: [] };
 const $ = (id) => document.getElementById(id);
 
 /* ── DES-5: the words layer (Q-3) ─────────────────────────────────── */
@@ -11,7 +11,7 @@ const WORDS = {
 };
 const TASK_WORDS = { todo: "Not started", doing: "In progress", done: "Done", blocked: "Stuck" };
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const stageWord = (st) => WORDS[st] || st;
+function stageWord(st) { return WORDS[st] || st; }
 const stageChip = (st, extra = "") =>
   `<span class="chip ${st === "awaiting_owner" ? "you" : st === "delivered" ? "go" : st === "blocked" ? "stuck" : ""}" title="${esc(st)}">${esc(stageWord(st))}${extra}</span>`;
 
@@ -77,23 +77,56 @@ const IDRE = /\b(US|AC|FR|CON|Q|D|DES|T)-\d+[A-Za-z0-9-]*\b/g;
 function idl(text) {
   return esc(text).replace(IDRE, (m) => `<span class="idl" data-jump="${m}">${m}</span>`);
 }
-function jump(id) {
+function idlHtml(html) {
+  /* wrap IDs in rendered markdown — text nodes only, never inside tags */
+  return html.replace(/>([^<]+)</g, (m, txt) => ">" + txt.replace(IDRE, (id) => `<span class="idl" data-jump="${id}">${id}</span>`) + "<");
+}
+let pendingJump = null;
+const FAMILIES = { T: "tasks", DES: "design", D: "design", US: "spec", AC: "spec", FR: "spec", CON: "spec", Q: "spec" };
+function tabFor(id) { return FAMILIES[id.split("-")[0]] || null; }
+
+function jump(id, second = false) {
   const el = document.getElementById("card-" + id);
   if (el) {
     el.scrollIntoView({ behavior: "smooth", block: "center" });
     el.classList.add("flash");
     setTimeout(() => el.classList.remove("flash"), 1600);
-  } else {
-    const hint = document.getElementById("nomatch-" + id);
-    if (hint) { hint.scrollIntoView({ behavior: "smooth" }); hint.classList.add("flash"); setTimeout(() => hint.classList.remove("flash"), 1600); }
+    return;
   }
+  const tab = tabFor(id);
+  if (tab && S.tab !== tab && !second) {  /* cross-tab: route, then land after render */
+    pendingJump = id;
+    location.hash = "#/" + S.sel + "/" + tab;
+    return;
+  }
+  toast(`${id}: not in this spec`);
+}
+
+function toast(msg) {
+  let t = document.getElementById("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.style.cssText = "position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 16px;color:var(--dim);z-index:9";
+  clearTimeout(t._h);
+  t._h = setTimeout(() => (t.textContent = ""), 2200);
 }
 
 /* ── DES-6: the journey strip (Q-5) ──────────────────────────────── */
 const PATH = ["drafted", "planning", "in_progress", "in_review", "delivered"];
 function posOf(stage) { return Math.max(0, PATH.indexOf(stage)); }
-function journey(stage) {
-  const now = posOf(stage);
+function posFor(stage, spec) {
+  const p = posOf(stage);
+  if (p > 0 || (stage !== "blocked" && stage !== "awaiting_owner")) return p;
+  /* flags are not nodes: infer the furthest reached stage from the record */
+  const ts = (spec && spec.tasks) || [];
+  if (ts.some((t) => t.status === "done")) return 2;
+  if (ts.some((t) => t.status === "doing" || t.status === "blocked")) return 2;
+  const has = (spec && spec.spec && spec.spec.clarifications) || (spec && spec.design && spec.design.decisions);
+  if (ts.length || has) return 1;
+  return 0;
+}
+function journey(stage, spec) {
+  const now = posFor(stage, spec);
   const nodes = PATH.map((st, i) =>
     `<div class="jnode ${i < now ? "lit" : ""} ${i === now ? "now" : ""}" title="${esc(st)}"><div class="jdot"></div><span>${esc(stageWord(st))}</span></div>`);
   const bars = PATH.slice(1).map((_, i) => `<div class="jbar ${i < now ? "lit" : ""}"></div>`);
@@ -119,9 +152,9 @@ function tabOverview() {
     <summary style="cursor:pointer;color:var(--rev)">${esc(doc.file)}</summary>
     <div class="md" data-doc="${esc(doc.file)}"></div></details>`).join("");
   const leg = S.sel && S.sel.startsWith("legacy:");
-  return `${leg ? "" : journey(d.status?.deliverable || "drafted")}
+  return `${leg ? "" : journey(d.status?.deliverable || "drafted", d)}
     <div class="item"><h4>${esc(d.description || d.title || d.name)}</h4>
-      <div class="meta">${stageChip(d.status?.deliverable)} <span title="revision">changed ${d.revision}×</span> ${d.approved_at ? `<span class="chip go" title="${esc(d.approved_at.at)}">approved by ${esc(d.approved_at.by)}</span>` : ""}</div>
+      <div class="meta">${stageChip(d.status?.deliverable)} <span title="revision">changed ${d.revision}×</span> ${(d.date || {}).approved ? `<span class="chip go" title="${esc(d.date.approved.at)}">approved by ${esc(d.date.approved.by)}</span>` : ""}</div>
       <div class="meta" style="margin-top:6px">${dates}</div></div>
     ${docs || `<div class="empty">No documents yet.</div>`}
     ${leg ? "" : `<div id="approve-host" style="margin:8px 0"></div>`}`;
@@ -198,14 +231,14 @@ async function renderDocs() {
       const r = await fetch(`/artifact/${encodeURIComponent(name)}/${encodeURIComponent(file)}`);
       if (!r.ok) { el.innerHTML = `<div class="empty">Could not load ${esc(file)}.</div>`; return; }
       const md = await r.text();
-      el.innerHTML = marked.parse(md);
-      el.querySelectorAll("[data-jump], .idl").forEach((x) => (x.onclick = () => jump(x.dataset.jump)));
+      el.innerHTML = idlHtml(marked.parse(md));
+      el.querySelectorAll("[data-jump]").forEach((x) => (x.onclick = () => jump(x.dataset.jump)));
     } catch (e) { el.innerHTML = `<div class="empty">${esc(String(e))}</div>`; }
   });
 }
 
 /* ── DES-7: the acts (Q-1: look + answer + approve) ──────────────── */
-let picked = {};
+var picked = {};
 function qCard(q) {
   const mine = S.spec.spec.clarifications.find((x) => x.id === q.id) || {};
   if (mine.status !== "open") return ""; /* re-rendered away after landing */
@@ -250,7 +283,8 @@ function paintActs() {
     await act(q, { kind: "choice", q, option, text: option });  /* the seam carries both */
   }));
   /* approve: legal when nothing is open and it never landed (DES-7) */
-  const legal = !qs.length && !S.spec.approved_at && S.spec.status?.lifecycle !== "complete";
+  const approved = ((S.spec.date || {}).approved || {}).at;
+  const legal = !qs.length && !approved && S.spec.status?.lifecycle !== "complete";
   const host = document.getElementById("approve-host");
   if (host) host.innerHTML = legal
     ? `<button class="btn go" id="do-approve">✓ Approve this spec</button><span class="err" id="approve-err"></span>` : "";
@@ -274,13 +308,18 @@ async function act(q, body) {
 }
 
 /* ── the router (D-3) + boot ─────────────────────────────────────── */
+let lastSel = null;
 function route() {
   const parts = location.hash.replace(/^#\//, "").split("/").filter(Boolean);
+  if (S.sel && S.sel !== lastSel) picked = {};  /* S-11: Q-ids collide across packs */
   if (parts[0] === "legacy") { S.sel = "legacy:" + (parts[1] || ""); S.tab = "overview"; }
   else if (parts[0]) { S.sel = parts[0]; S.tab = TABS.some(([t]) => t === parts[1]) ? parts[1] : "overview"; }
   else S.sel = null;
+  const onlyTab = S.sel === lastSel && S.spec;  /* S-12: a tab switch never refetches */
   paintPane();
-  paintDetail();
+  if (onlyTab) paintTabs(); else paintDetail();
+  lastSel = S.sel;
+  if (pendingJump) { const id = pendingJump; pendingJump = null; requestAnimationFrame(() => jump(id, true)); }
 }
 
 async function loadSpec(name) {
@@ -298,9 +337,8 @@ async function paintDetail() {
       S.spec = { name: l.name, description: l.title || l.name, status: {}, spec: {}, design: {}, tasks: [], date: {} };
     } else {
       await loadSpec(S.sel);
-      /* Q-7: every .md in the folder, discovered not assumed */
-      const r = await fetch("/specs"); const out = await r.json();
-      const files = (out.specs.find((p) => p.name === S.sel) || {}).docs || [];
+      /* Q-7: every .md in the folder — carried from the pane state (S-12: no refetch) */
+      const files = (S.specs.find((p) => p.name === S.sel) || {}).docs || [];
       S.docs = files.map((f) => ({ file: f }));
     }
     paintTabs();

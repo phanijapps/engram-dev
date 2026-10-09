@@ -19,14 +19,14 @@ generated_profile: compact
 created: 2026-10-09T17:45:20Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T19:33:51Z'
+  at: '2026-10-09T20:22:36Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/web/server.py`. Purpose: engine/loom/src/loom_kit/web/server.py is a `python` model module in package `engine/loom`. Role: model module. high-signal symbols: `_Denied`, `_admit`, `interview_complete`, `_Handler`, `log_message`. Dependency context: 3 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/web/server.py`. Purpose: engine/loom/src/loom_kit/web/server.py is a `python` model module in package `engine/loom`. Role: model module. high-signal symbols: `_Denied`, `_admit`, `interview_complete`, `_Handler`, `log_message`. Dependency context: 3 local dependencies and 2 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -64,6 +64,7 @@ Depends on:
 
 Used by:
 - [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md)
+- [engine/loom/src/loom_kit/web/library.py](/code/engine/loom/src/loom_kit/web/library.py.md)
 
 # Impact notes
 

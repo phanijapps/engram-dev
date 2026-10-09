@@ -17,7 +17,7 @@ generated_profile: compact
 created: 2026-10-09T17:45:20Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T19:33:51Z'
+  at: '2026-10-09T20:22:36Z'
 status: stable
 package: engine/loom
 ---

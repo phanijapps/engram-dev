@@ -54,14 +54,14 @@ def list_specs(root: Path) -> dict:
             continue
         qs = doc.get("spec", {}).get("clarifications", [])
         packs.append({
-            "name": doc.get("name", d.name),
-            "title": doc.get("description", d.name).split(".")[0][:100],
-            "stage": doc.get("deliverable", "drafted"),
+            "name": d.name,  # D-7 fix: the folder is the route key; the internal name is display-only
+            "title": (doc.get("title") or d.name).split(".")[0][:100],
+            "stage": specpack.derive_deliverable(doc),  # never trust a stored copy: the machine derives
             "revision": doc.get("revision", 1),
             "lifecycle": doc.get("status", "active"),
             "open_questions": sum(1 for q in qs if q.get("status") == "open"),
             "approved": bool(doc.get("approved_at")),
-            "updated": (doc.get("date") or {}).get("updated") or (doc.get("date") or {}).get("created") or "",
+            "updated": doc.get("updated") or doc.get("created") or "",
             "docs": sorted(x.name for x in d.glob("*.md")),
         })
     return {"specs": packs, "legacy": legacy, "root": str(root)}
@@ -123,7 +123,8 @@ class _Handler(BaseHTTPRequestHandler):
                     self._json(404, {"ok": False, "error": "no such document"})
                     return
                 f = d / file
-                if not f.is_file():  # includes traversal: resolved inside d only
+                contained = f.is_file() and f.resolve().parent == d.resolve()
+                if not contained:  # traversal AND symlinks: resolved inside d only, or nothing
                     self._json(404, {"ok": False, "error": "no such document"})
                     return
                 self._send(200, f.read_bytes(), "text/markdown; charset=utf-8")
@@ -153,22 +154,24 @@ class _Handler(BaseHTTPRequestHandler):
         except _Denied as e:
             self._json(400, {"ok": False, "error": str(e)})
             return
+        except Exception as e:  # disk faults, locks, anything: honest JSON, not a dead socket
+            self._json(500, {"ok": False, "error": f"internal: {e}"})
+            return
         self._json(200, out)
 
 
 class LibraryServer:
     """Test-friendly handle: start(), url, shutdown()."""
 
-    def __init__(self, root: Path, port: int = 8788, owner: str = "human:owner"):
+    def __init__(self, root: Path, port: int = 0, owner: str = "human:owner"):
         self.root = Path(root)
         self.port = port
         self.owner = owner
         self.lock = threading.Lock()
 
     def start(self) -> "LibraryServer":
-        h = _Handler
-        h.root, h.lock, h.owner = self.root, self.lock, self.owner
-        self._httpd = ThreadingHTTPServer(("127.0.0.1", self.port), h)
+        handler = type("Bound", (_Handler,), {"root": self.root, "lock": self.lock, "owner": self.owner})
+        self._httpd = ThreadingHTTPServer(("127.0.0.1", self.port), handler)
         self.port = self._httpd.server_address[1]
         self._t = threading.Thread(target=self._httpd.serve_forever, daemon=True)
         self._t.start()
