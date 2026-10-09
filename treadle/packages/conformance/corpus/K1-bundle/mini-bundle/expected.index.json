@@ -1,0 +1,40 @@
+[
+  {
+    "cid": "domain/broken",
+    "tags": [],
+    "title": "",
+    "type": ""
+  },
+  {
+    "cid": "domain/trust-rules",
+    "tags": [
+      "policy"
+    ],
+    "title": "Trust rules",
+    "type": "pattern"
+  },
+  {
+    "cid": "plain",
+    "tags": [],
+    "title": "",
+    "type": ""
+  },
+  {
+    "cid": "systems/loom",
+    "tags": [
+      "engine",
+      "loop"
+    ],
+    "title": "The loom engine",
+    "type": "system"
+  },
+  {
+    "cid": "systems/okf",
+    "tags": [
+      "engine",
+      "knowledge"
+    ],
+    "title": "The knowledge engine",
+    "type": "system"
+  }
+]

@@ -1,0 +1,162 @@
+[
+  {
+    "hits": [
+      {
+        "cid": "systems/loom",
+        "score": 9.0,
+        "snippet": "The loom hands out one frozen task at a time…",
+        "title": "The loom engine",
+        "type": "system"
+      },
+      {
+        "cid": "plain",
+        "score": 1.0,
+        "snippet": "… It is still indexed by body words like loom.",
+        "title": "plain",
+        "type": ""
+      }
+    ],
+    "query": {
+      "q": "loom"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "systems/loom",
+        "score": 145.0,
+        "snippet": "The loom hands out one frozen task at a …",
+        "title": "The loom engine",
+        "type": "system"
+      },
+      {
+        "cid": "systems/okf",
+        "score": 25.0,
+        "snippet": "…to path:line. Freshness stamps say when the wiki is stale. Findings go through t…",
+        "title": "The knowledge engine",
+        "type": "system"
+      },
+      {
+        "cid": "domain/broken",
+        "score": 1.0,
+        "snippet": "This block is invalid frontmatter and the validator will say so.",
+        "title": "domain/broken",
+        "type": ""
+      },
+      {
+        "cid": "plain",
+        "score": 1.0,
+        "snippet": "… It is still indexed by body words like loom.",
+        "title": "plain",
+        "type": ""
+      }
+    ],
+    "query": {
+      "q": "the loom engine"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "systems/okf",
+        "score": 20.0,
+        "snippet": "Every page anchors to path:line. Freshness stamps say when the wiki is stale. Fi…",
+        "title": "The knowledge engine",
+        "type": "system"
+      }
+    ],
+    "query": {
+      "q": "knowledge"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "domain/trust-rules",
+        "score": 1.0,
+        "snippet": "Deterministic tools find and anchor. Agents propose; humans accept. E…",
+        "title": "Trust rules",
+        "type": "pattern"
+      }
+    ],
+    "query": {
+      "q": "anchor"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "systems/okf",
+        "score": 15.0,
+        "snippet": "Every page anchors to path:line. Freshness stamps say when the wiki is stale. Fi…",
+        "title": "The knowledge engine",
+        "type": "system"
+      }
+    ],
+    "query": {
+      "q": "engine",
+      "tag": [
+        "knowledge"
+      ]
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "domain/trust-rules",
+        "score": 8.0,
+        "snippet": "Deterministic tools find and anchor. Agents propose; humans accept. Evidence or …",
+        "title": "Trust rules",
+        "type": "pattern"
+      }
+    ],
+    "query": {
+      "q": "trust",
+      "type": [
+        "pattern"
+      ]
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "domain/broken",
+        "score": 0.0,
+        "snippet": "This block is invalid frontmatter and the validator will say so.",
+        "title": "domain/broken",
+        "type": ""
+      },
+      {
+        "cid": "domain/trust-rules",
+        "score": 0.0,
+        "snippet": "Deterministic tools find and anchor. Agents propose; humans accept. Evidence or …",
+        "title": "Trust rules",
+        "type": "pattern"
+      },
+      {
+        "cid": "plain",
+        "score": 0.0,
+        "snippet": "A page with no frontmatter. It is still indexed by body words like loom.",
+        "title": "plain",
+        "type": ""
+      },
+      {
+        "cid": "systems/loom",
+        "score": 0.0,
+        "snippet": "The loom hands out one frozen task at a time. Evidence only; the machine owns th…",
+        "title": "The loom engine",
+        "type": "system"
+      },
+      {
+        "cid": "systems/okf",
+        "score": 0.0,
+        "snippet": "Every page anchors to path:line. Freshness stamps say when the wiki is stale. Fi…",
+        "title": "The knowledge engine",
+        "type": "system"
+      }
+    ],
+    "query": {
+      "q": ""
+    }
+  }
+]

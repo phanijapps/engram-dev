@@ -137,7 +137,7 @@ function read(dir: string, file: string): string | null {
 
 export function runCorpus(root: string): CaseResult[] {
   const results: CaseResult[] = [];
-  for (const layer of ['L1-canonical', 'L2-refusals', 'L3-events']) {
+  for (const layer of ['L1-canonical', 'L2-refusals', 'L3-events', 'K1-bundle']) {
     const layerDir = join(root, layer);
     if (!existsSync(layerDir)) continue;
     for (const c of caseDirs(layerDir)) {
@@ -158,6 +158,9 @@ function caseDirs(layerDir: string): string[] {
 function runCase(layer: string, name: string, dir: string): CaseResult {
   const tag = `${layer}/${name}`;
   const input = join(dir, 'input');
+  if (layer === 'K1-bundle') {
+    return runKnowledge(layer, name, dir, input); // a bundle, not a pack — no spec json
+  }
   const loaded = loadPack(input);
   if (!loaded.ok) return { case: tag, layer, ok: false, detail: loaded.message };
 
@@ -309,4 +312,46 @@ function firstDiff(a: string, b: string): string {
     }
   }
   return a.length === b.length ? 'equal' : `length differs: ${a.length} vs ${b.length}`;
+}
+
+/* ── K1: the knowledge plane (bundle parse + search), golden like the rest ── */
+import { buildIndex, search as kbSearch, toDict } from '@treadle/knowledge';
+
+function runKnowledge(layer: string, name: string, dir: string, input: string): CaseResult {
+  const tag = `${layer}/${name}`;
+  const idx = buildIndex(input);
+  const expIndex = read(dir, 'expected.index.json');
+  if (expIndex !== null && canon(toDict(idx)) !== canon(JSON.parse(expIndex))) {
+    return { case: tag, layer, ok: false, detail: 'index mismatch' };
+  }
+  const expConcepts = read(dir, 'expected.concepts.json');
+  if (expConcepts !== null) {
+    const expected = JSON.parse(expConcepts) as {
+      cid: string;
+      frontmatter_error: string | null;
+      frontmatter_present: boolean;
+    }[];
+    for (const e of expected) {
+      void e; // concept-level compare lands with the validate port; index+search carry today's contract
+    }
+  }
+  const expSearch = read(dir, 'expected.search.json');
+  if (expSearch !== null) {
+    const cases = JSON.parse(expSearch) as {
+      query: { q: string; type?: string[]; tag?: string[] };
+      hits: unknown[];
+    }[];
+    for (const c of cases) {
+      const hits = kbSearch(idx, c.query.q, { type: c.query.type, tag: c.query.tag });
+      if (canon(hits) !== canon(c.hits)) {
+        return {
+          case: tag,
+          layer,
+          ok: false,
+          detail: `search mismatch for ${JSON.stringify(c.query)}:\n  ${canon(hits).slice(0, 300)}\nvs\n  ${canon(c.hits).slice(0, 300)}`,
+        };
+      }
+    }
+  }
+  return { case: tag, layer, ok: true };
 }

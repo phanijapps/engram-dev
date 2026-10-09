@@ -1,0 +1,75 @@
+[
+  {
+    "body_startswith": "This block is invalid frontmatter and th",
+    "cid": "domain/broken",
+    "frontmatter": {},
+    "frontmatter_error": "frontmatter must be a YAML mapping, got list",
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
+    "body_startswith": "Deterministic tools find and anchor. Age",
+    "cid": "domain/trust-rules",
+    "frontmatter": {
+      "description": "Deterministic anchors, agent proposals, human acceptance.",
+      "tags": [
+        "policy"
+      ],
+      "title": "Trust rules",
+      "type": "pattern"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
+    "body_startswith": "bundle root, reserved\n",
+    "cid": "index",
+    "frontmatter": {
+      "title": "The wiki"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": "index"
+  },
+  {
+    "body_startswith": "A page with no frontmatter. It is still ",
+    "cid": "plain",
+    "frontmatter": {},
+    "frontmatter_error": null,
+    "frontmatter_present": false,
+    "reserved": null
+  },
+  {
+    "body_startswith": "The loom hands out one frozen task at a ",
+    "cid": "systems/loom",
+    "frontmatter": {
+      "description": "The loop that does the work.",
+      "tags": [
+        "engine",
+        "loop"
+      ],
+      "title": "The loom engine",
+      "type": "system"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
+    "body_startswith": "Every page anchors to path:line. Freshne",
+    "cid": "systems/okf",
+    "frontmatter": {
+      "description": "Anchored knowledge.",
+      "tags": [
+        "engine",
+        "knowledge"
+      ],
+      "title": "The knowledge engine",
+      "type": "system"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  }
+]

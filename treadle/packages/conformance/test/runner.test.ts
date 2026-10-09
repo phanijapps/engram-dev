@@ -8,7 +8,7 @@ describe('the golden corpus', () => {
   const results = runCorpus(CORPUS);
 
   it('executes every case', () => {
-    expect(results.length).toBe(29);
+    expect(results.length).toBe(30);
   });
 
   it('is green — conformance, regardless of runner language', () => {
@@ -21,5 +21,6 @@ describe('the golden corpus', () => {
     expect(layers.has('L1-canonical')).toBe(true);
     expect(layers.has('L2-refusals')).toBe(true);
     expect(layers.has('L3-events')).toBe(true);
+    expect(layers.has('K1-bundle')).toBe(true);
   });
 });
