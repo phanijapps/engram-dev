@@ -4,7 +4,7 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:27:34Z"
+    "updated": "2026-10-09T17:28:22Z"
   },
   "status": {
     "lifecycle": "active",
@@ -639,7 +639,16 @@
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — events validate, file durable and replayable"
       },
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "at": "2026-10-09T17:28:22Z",
+          "by": "agent:pi",
+          "notes": "151 passed, exit verified directly: event()/validate_event shapes (human claims, scoped kinds), interview.jsonl header+append+replay, bad header and malformed events refused, module imports nothing from the engine (AST check). One test fixed pre-record: portability check moved from string grep to AST imports."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -753,5 +762,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 19
+  "revision": 21
 }
