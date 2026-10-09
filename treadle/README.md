@@ -37,6 +37,7 @@ pnpm check     # tsc --build → eslint → prettier → vitest
 pnpm brand:check
 ```
 
-Node >= 22. Strict TypeScript (see `tsconfig.base.json`). Known scaffold
-trade-off, honest: test files are not yet in the composite typecheck — the
-upgrade path is a per-package test tsconfig; tracked as debt, not hidden.
+Node >= 22, pnpm 9 (pinned via `packageManager` — corepack handles it).
+Strict TypeScript (see `tsconfig.base.json`). Known scaffold trade-off,
+honest: test files are not yet in the composite typecheck — the upgrade path
+is a per-package test tsconfig; tracked as debt, not hidden.
