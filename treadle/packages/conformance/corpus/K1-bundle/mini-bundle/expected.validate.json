@@ -1,0 +1,45 @@
+{
+  "conformant": false,
+  "errors": [
+    {
+      "cid": "domain/broken",
+      "code": "frontmatter-invalid",
+      "message": "frontmatter must be a YAML mapping, got list",
+      "severity": "error"
+    },
+    {
+      "cid": "plain",
+      "code": "frontmatter-missing",
+      "message": "missing frontmatter block",
+      "severity": "error"
+    }
+  ],
+  "info": [
+    {
+      "cid": null,
+      "code": "index-extra-key",
+      "message": "root index.md has unexpected frontmatter key 'title'",
+      "severity": "info"
+    },
+    {
+      "cid": null,
+      "code": "okf-version-missing",
+      "message": "root index.md missing okf_version",
+      "severity": "info"
+    }
+  ],
+  "warnings": [
+    {
+      "cid": "legacy",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
+      "cid": "systems/loom",
+      "code": "broken-link",
+      "message": "broken internal link 'ghost.md'",
+      "severity": "warning"
+    }
+  ]
+}

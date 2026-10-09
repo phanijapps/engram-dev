@@ -315,7 +315,18 @@ function firstDiff(a: string, b: string): string {
 }
 
 /* ── K1: the knowledge plane (bundle parse + search), golden like the rest ── */
-import { buildIndex, search as kbSearch, toDict } from '@treadle/knowledge';
+import {
+  buildIndex,
+  search as kbSearch,
+  toDict,
+  iterConceptFiles,
+  parseConcept,
+  buildAdjacency,
+  buildBacklinks,
+  brokenLinks,
+  validateBundle,
+  readConcept,
+} from '@treadle/knowledge';
 
 function runKnowledge(layer: string, name: string, dir: string, input: string): CaseResult {
   const tag = `${layer}/${name}`;
@@ -326,13 +337,73 @@ function runKnowledge(layer: string, name: string, dir: string, input: string): 
   }
   const expConcepts = read(dir, 'expected.concepts.json');
   if (expConcepts !== null) {
-    const expected = JSON.parse(expConcepts) as {
-      cid: string;
-      frontmatter_error: string | null;
-      frontmatter_present: boolean;
-    }[];
-    for (const e of expected) {
-      void e; // concept-level compare lands with the validate port; index+search carry today's contract
+    const expected = JSON.parse(expConcepts) as unknown[];
+    const actual = iterConceptFiles(input).map((md) => {
+      const c = parseConcept(md, input);
+      return {
+        cid: c.cid,
+        reserved: c.reserved,
+        frontmatter_present: c.frontmatter_present,
+        frontmatter_error: c.frontmatter_error,
+        frontmatter: JSON.parse(
+          JSON.stringify(c.frontmatter, (_k, v) =>
+            v instanceof Date ? v.toISOString().slice(0, 10) : v,
+          ),
+        ),
+        body_startswith: c.body.slice(0, 40),
+      };
+    });
+    if (canon(actual) !== canon(expected)) {
+      return {
+        case: tag,
+        layer,
+        ok: false,
+        detail: 'concepts mismatch: ' + canon(actual).slice(0, 200),
+      };
+    }
+  }
+  const expLinks = read(dir, 'expected.links.json');
+  if (expLinks !== null) {
+    const concepts = iterConceptFiles(input).map((md) => parseConcept(md, input));
+    const adj = buildAdjacency(input, concepts);
+    const broken: Record<string, string[]> = {};
+    for (const c of concepts) {
+      const b = brokenLinks(input, c.path, c.body);
+      if (b.length) broken[c.cid] = b;
+    }
+    const actual = { adjacency: adj, backlinks: buildBacklinks(adj), broken };
+    if (canon(actual) !== canon(JSON.parse(expLinks))) {
+      return {
+        case: tag,
+        layer,
+        ok: false,
+        detail: 'links mismatch: ' + canon(actual).slice(0, 200),
+      };
+    }
+  }
+  const expValidate = read(dir, 'expected.validate.json');
+  if (expValidate !== null) {
+    const rep = validateBundle(input);
+    if (canon(rep) !== canon(JSON.parse(expValidate))) {
+      return {
+        case: tag,
+        layer,
+        ok: false,
+        detail:
+          'validate mismatch:\n  ' +
+          canon(rep).slice(0, 400) +
+          '\nvs\n  ' +
+          canon(JSON.parse(expValidate)).slice(0, 400),
+      };
+    }
+  }
+  const expRead = read(dir, 'expected.read.json');
+  if (expRead !== null) {
+    const expected = JSON.parse(expRead) as { seed_depth0: string; seed_depth1: string };
+    const d0 = readConcept(input, 'systems/loom');
+    const d1 = readConcept(input, 'systems/loom', 1);
+    if (d0 !== expected.seed_depth0 || d1 !== expected.seed_depth1) {
+      return { case: tag, layer, ok: false, detail: 'read mismatch' };
     }
   }
   const expSearch = read(dir, 'expected.search.json');

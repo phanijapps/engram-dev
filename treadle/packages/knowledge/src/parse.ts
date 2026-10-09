@@ -13,6 +13,7 @@ const MAX_CONCEPT_BYTES = 8 * 1024 * 1024; // belt-and-suspenders, same as the e
 
 export interface Concept {
   readonly cid: string;
+  readonly path: string;
   readonly frontmatter: Record<string, unknown>;
   readonly body: string;
   readonly reserved: string | null;
@@ -43,7 +44,7 @@ export function splitFrontmatter(text: string): {
         data: {},
         body: bodyText,
         present: true,
-        error: `frontmatter must be a YAML mapping, got ${Array.isArray(data) ? 'Array' : typeof data}`,
+        error: `frontmatter must be a YAML mapping, got ${pyTypeName(data)}`,
       };
     }
     return { data: data as Record<string, unknown>, body: bodyText, present: true, error: null };
@@ -73,6 +74,7 @@ export function parseConcept(absPath: string, root: string): Concept {
   const r = splitFrontmatter(readFileSync(absPath, 'utf8'));
   return {
     cid,
+    path: absPath,
     frontmatter: r.data,
     body: r.body,
     reserved,
@@ -81,9 +83,19 @@ export function parseConcept(absPath: string, root: string): Concept {
   };
 }
 
+/** python-parity type names in the error vocabulary (list, not Array). */
+function pyTypeName(v: unknown): string {
+  if (Array.isArray(v)) return 'list';
+  if (v === null) return 'NoneType';
+  if (typeof v === 'number') return Number.isInteger(v) ? 'int' : 'float';
+  if (typeof v === 'boolean') return 'bool';
+  return typeof v;
+}
+
 function errConcept(cid: string, reserved: string | null, error: string): Concept {
   return {
     cid,
+    path: '',
     frontmatter: {},
     body: '',
     reserved,

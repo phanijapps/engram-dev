@@ -1,0 +1,30 @@
+{
+  "adjacency": {
+    "domain/broken": [],
+    "domain/trust-rules": [],
+    "legacy": [],
+    "plain": [],
+    "systems/loom": [
+      "domain/trust-rules",
+      "systems/okf"
+    ],
+    "systems/okf": []
+  },
+  "backlinks": {
+    "domain/broken": [],
+    "domain/trust-rules": [
+      "systems/loom"
+    ],
+    "legacy": [],
+    "plain": [],
+    "systems/loom": [],
+    "systems/okf": [
+      "systems/loom"
+    ]
+  },
+  "broken": {
+    "systems/loom": [
+      "ghost.md"
+    ]
+  }
+}

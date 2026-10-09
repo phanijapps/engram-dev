@@ -33,6 +33,19 @@
     "reserved": "index"
   },
   {
+    "body_startswith": "Old shape kept for the validator's warni",
+    "cid": "legacy",
+    "frontmatter": {
+      "status": "maybe",
+      "timestamp": "2026-01-01",
+      "title": "Legacy page",
+      "type": "note"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
     "body_startswith": "A page with no frontmatter. It is still ",
     "cid": "plain",
     "frontmatter": {},

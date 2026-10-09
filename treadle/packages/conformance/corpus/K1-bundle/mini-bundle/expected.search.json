@@ -24,7 +24,7 @@
     "hits": [
       {
         "cid": "systems/loom",
-        "score": 145.0,
+        "score": 147.0,
         "snippet": "The loom hands out one frozen task at a …",
         "title": "The loom engine",
         "type": "system"
@@ -42,6 +42,13 @@
         "snippet": "This block is invalid frontmatter and the validator will say so.",
         "title": "domain/broken",
         "type": ""
+      },
+      {
+        "cid": "legacy",
+        "score": 1.0,
+        "snippet": "Old shape kept for the validator's warnings.",
+        "title": "Legacy page",
+        "type": "note"
       },
       {
         "cid": "plain",
@@ -62,6 +69,13 @@
         "score": 20.0,
         "snippet": "Every page anchors to path:line. Freshness stamps say when the wiki is stale. Fi…",
         "title": "The knowledge engine",
+        "type": "system"
+      },
+      {
+        "cid": "systems/loom",
+        "score": 1.0,
+        "snippet": "… admission with human claims.\n\nSee [the knowledge engine](okf.md) and [trust rul…",
+        "title": "The loom engine",
         "type": "system"
       }
     ],
@@ -132,6 +146,13 @@
         "snippet": "Deterministic tools find and anchor. Agents propose; humans accept. Evidence or …",
         "title": "Trust rules",
         "type": "pattern"
+      },
+      {
+        "cid": "legacy",
+        "score": 0.0,
+        "snippet": "Old shape kept for the validator's warnings.",
+        "title": "Legacy page",
+        "type": "note"
       },
       {
         "cid": "plain",
