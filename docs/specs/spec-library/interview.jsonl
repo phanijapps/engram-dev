@@ -1,0 +1,12 @@
+{"format": "specweb-events/0.1"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:52:33Z", "q": "Q-1", "text": "look + answer + approve", "option": "look + answer + approve"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:52:47Z", "q": "Q-2", "text": "needs you first", "option": "needs you first"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:52:53Z", "q": "Q-3", "text": "plain words + tooltips", "option": "plain words + tooltips"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:53:02Z", "q": "Q-4", "text": "yes, it is the landing", "option": "yes, it is the landing"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:53:19Z", "q": "Q-5", "text": "stage journey strip", "option": "stage journey strip"}
+{"kind": "answer", "by": "human:owner", "at": "2026-10-09T19:53:26Z", "q": "Q-6", "text": "non"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:53:35Z", "q": "Q-7", "text": "every document", "option": "every document"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:53:42Z", "q": "Q-8", "text": "show it, friendly", "option": "show it, friendly"}
+{"kind": "choice", "by": "human:owner", "at": "2026-10-09T19:53:51Z", "q": "Q-9", "text": "list them read-only", "option": "list them read-only"}
+{"kind": "answer", "by": "human:owner", "at": "2026-10-09T19:54:13Z", "q": "Q-10", "text": "POs first, next technical teams"}
+{"kind": "approve", "by": "human:owner", "at": "2026-10-09T19:54:14Z"}

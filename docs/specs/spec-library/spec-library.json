@@ -3,11 +3,15 @@
   "name": "spec-library",
   "description": "The spec library — every spec, readable by its owner",
   "date": {
-    "updated": "2026-10-09T19:33:32Z"
+    "updated": "2026-10-09T19:55:43Z",
+    "approved": {
+      "at": "2026-10-09T19:54:14Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "drafted"
   },
   "spec": {
     "why": "Packs are JSON for machines. The owner reads them through an agent, one command at a time. The owner's audience — product owners with no technical training — cannot. The record deserves a room anyone can walk into.",
@@ -112,8 +116,8 @@
         "acceptance": [
           {
             "id": "AC-10",
-            "given": "Q-1 allows answering",
-            "when": "I answer or mark unknown inline",
+            "given": "Q-1 chose answer + approve",
+            "when": "I answer, mark unknown, or approve inline",
             "then": "it lands through machine admission with my claim and timestamp"
           }
         ]
@@ -245,7 +249,7 @@
     "clarifications": [
       {
         "id": "Q-1",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "look + answer",
@@ -254,11 +258,14 @@
           "look only",
           "look + answer",
           "look + answer + approve"
-        ]
+        ],
+        "answer": "look + answer + approve",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:52:33Z"
       },
       {
         "id": "Q-2",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "needs you first",
@@ -267,11 +274,14 @@
           "needs you first",
           "newest first",
           "A to Z"
-        ]
+        ],
+        "answer": "needs you first",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:52:47Z"
       },
       {
         "id": "Q-3",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "plain words + tooltips",
@@ -280,11 +290,14 @@
           "plain words + tooltips",
           "engineer terms only",
           "both, with a toggle"
-        ]
+        ],
+        "answer": "plain words + tooltips",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:52:53Z"
       },
       {
         "id": "Q-4",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "yes, it is the landing",
@@ -293,11 +306,14 @@
           "yes, it is the landing",
           "yes, but as a second view",
           "no"
-        ]
+        ],
+        "answer": "yes, it is the landing",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:02Z"
       },
       {
         "id": "Q-5",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "question": "Pick ONE extra for v1 (my ranking is in the research):",
@@ -307,17 +323,23 @@
           "print/PDF digest",
           "revision diff",
           "search across all specs"
-        ]
+        ],
+        "answer": "stage journey strip",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:19Z"
       },
       {
         "id": "Q-6",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "Anything else you want in v1? Write it, or answer 'none'."
+        "question": "Anything else you want in v1? Write it, or answer 'none'.",
+        "answer": "non",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:26Z"
       },
       {
         "id": "Q-7",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "every document",
@@ -325,11 +347,14 @@
         "options": [
           "every document",
           "the brief only"
-        ]
+        ],
+        "answer": "every document",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:35Z"
       },
       {
         "id": "Q-8",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "show it, friendly",
@@ -337,11 +362,14 @@
         "options": [
           "show it, friendly",
           "hide it"
-        ]
+        ],
+        "answer": "show it, friendly",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:42Z"
       },
       {
         "id": "Q-9",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "default": "list them read-only",
@@ -349,13 +377,19 @@
         "options": [
           "list them read-only",
           "hide them"
-        ]
+        ],
+        "answer": "list them read-only",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:53:51Z"
       },
       {
         "id": "Q-10",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
-        "question": "Who besides you will read this screen, and what will they want from it?"
+        "question": "Who besides you will read this screen, and what will they want from it?",
+        "answer": "POs first, next technical teams",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-09T19:54:13Z"
       }
     ],
     "out_of_scope": [
@@ -412,8 +446,8 @@
       {
         "id": "D-4",
         "status": "proposed",
-        "decision": "Inline answers (if Q-1 allows) reuse specweb-events/0.1 admission — the same seam as the room.",
-        "because": "One admission path, published contract, platform-portable."
+        "decision": "Inline answering AND approving (Q-1: look + answer + approve) reuse specweb-events/0.1 admission — the same seam as the room.",
+        "because": "One admission path, published contract, platform-portable. The room keeps the born-spec interview; the library is the standing surface for both acts."
       },
       {
         "id": "D-5",
@@ -591,5 +625,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 1
+  "revision": 12
 }
