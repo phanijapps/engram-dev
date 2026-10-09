@@ -1,0 +1,595 @@
+{
+  "id": "spec-library",
+  "name": "spec-library",
+  "description": "The spec library — every spec, readable by its owner",
+  "date": {
+    "updated": "2026-10-09T19:33:32Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "spec": {
+    "why": "Packs are JSON for machines. The owner reads them through an agent, one command at a time. The owner's audience — product owners with no technical training — cannot. The record deserves a room anyone can walk into.",
+    "stories": [
+      {
+        "id": "US-1",
+        "title": "Find the spec that needs me",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "to see every spec in one list with what needs me first",
+        "so": "I never lose track of my own record",
+        "acceptance": [
+          {
+            "id": "AC-1",
+            "given": "the library page",
+            "when": "it loads",
+            "then": "every loadable pack is listed with its stage word and revision"
+          },
+          {
+            "id": "AC-2",
+            "given": "the list",
+            "when": "I filter by group or type in search",
+            "then": "only matching specs remain, counts stay true"
+          }
+        ]
+      },
+      {
+        "id": "US-2",
+        "title": "Read a spec end to end",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "the whole spec in organized tabs with its documents rendered",
+        "so": "I understand it without asking an engineer",
+        "acceptance": [
+          {
+            "id": "AC-3",
+            "given": "a selected spec",
+            "when": "I open it",
+            "then": "overview, spec, design, tasks, review tabs are present"
+          },
+          {
+            "id": "AC-4",
+            "given": "the overview tab",
+            "when": "a brief or research doc exists",
+            "then": "it renders as readable markdown, tables included"
+          },
+          {
+            "id": "AC-5",
+            "given": "any tab",
+            "when": "an ID like FR-1 or D-3 appears",
+            "then": "it is a link that jumps to its card"
+          },
+          {
+            "id": "AC-6",
+            "given": "any spec tab",
+            "when": "I copy the URL",
+            "then": "it reopens that exact spec and tab"
+          }
+        ]
+      },
+      {
+        "id": "US-3",
+        "title": "Understand where things stand",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "plain words, plain dates, honest states",
+        "so": "nothing feels like an insider code",
+        "acceptance": [
+          {
+            "id": "AC-7",
+            "given": "any stage",
+            "when": "it is shown",
+            "then": "it uses the owner-words set with the engineer term one hover away"
+          },
+          {
+            "id": "AC-8",
+            "given": "any date",
+            "when": "it is shown",
+            "then": "it reads as a plain phrase, precise on hover"
+          },
+          {
+            "id": "AC-9",
+            "given": "an empty tab (no design yet)",
+            "when": "I open it",
+            "then": "a friendly 'not written yet' state appears (per Q-8)"
+          },
+          {
+            "id": "AC-11",
+            "given": "the list",
+            "when": "I look",
+            "then": "counts per group show the library's health at a glance"
+          }
+        ]
+      },
+      {
+        "id": "US-4",
+        "title": "Answer where I read",
+        "priority": "P2",
+        "as": "a product owner",
+        "want": "open questions answerable right in the library",
+        "so": "reading and deciding happen in one place",
+        "acceptance": [
+          {
+            "id": "AC-10",
+            "given": "Q-1 allows answering",
+            "when": "I answer or mark unknown inline",
+            "then": "it lands through machine admission with my claim and timestamp"
+          }
+        ]
+      },
+      {
+        "id": "US-5",
+        "title": "Nothing crashes the room",
+        "priority": "P1",
+        "as": "the owner",
+        "want": "old spec folders handled with grace",
+        "so": "the page never dies on history",
+        "acceptance": [
+          {
+            "id": "AC-12",
+            "given": "legacy non-pack folders exist",
+            "when": "the library loads",
+            "then": "they are listed read-only or hidden per Q-9, never a crash"
+          }
+        ]
+      }
+    ],
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "text": "The library MUST list every loadable pack with stage word, revision, and title."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "text": "The list MUST filter by need-group and free-text search."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "Selecting a pack MUST present overview, spec, design, tasks, review tabs, deep-linkable."
+      },
+      {
+        "id": "FR-4",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The overview tab MUST render every adjacent .md artifact as markdown (tables included), discovered not assumed."
+      },
+      {
+        "id": "FR-5",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The spec tab MUST show stories with acceptance, requirements, and questions with honest statuses."
+      },
+      {
+        "id": "FR-6",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The design tab MUST show approach, stack, and decisions with reasoning and status."
+      },
+      {
+        "id": "FR-7",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The tasks tab MUST show status, verification expectation, and evidence receipts."
+      },
+      {
+        "id": "FR-8",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The review tab MUST show verdicts with severities."
+      },
+      {
+        "id": "FR-9",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "Every ID mention MUST link to its card; every requirement MUST show its covering tasks."
+      },
+      {
+        "id": "FR-10",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "text": "Stage words, dates, tooltips, and empty states MUST speak the owner-words set (per Q-3, Q-8)."
+      },
+      {
+        "id": "FR-11",
+        "priority": "P1",
+        "serves": [
+          "US-5"
+        ],
+        "text": "Legacy folders MUST fail soft — listed read-only or hidden per Q-9, never a crash."
+      },
+      {
+        "id": "FR-12",
+        "priority": "P2",
+        "serves": [
+          "US-4"
+        ],
+        "text": "If Q-1 allows, open questions MUST be answerable inline through specweb-events admission."
+      },
+      {
+        "id": "FR-13",
+        "priority": "P2",
+        "serves": [
+          "US-2",
+          "US-3"
+        ],
+        "text": "The owner's chosen creative extra (Q-5) MUST ship in v1."
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "look + answer",
+        "question": "May the library only look, or also let you answer open questions right there?",
+        "options": [
+          "look only",
+          "look + answer",
+          "look + answer + approve"
+        ]
+      },
+      {
+        "id": "Q-2",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "needs you first",
+        "question": "How should the spec list be ordered?",
+        "options": [
+          "needs you first",
+          "newest first",
+          "A to Z"
+        ]
+      },
+      {
+        "id": "Q-3",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "plain words + tooltips",
+        "question": "Which words for the stages?",
+        "options": [
+          "plain words + tooltips",
+          "engineer terms only",
+          "both, with a toggle"
+        ]
+      },
+      {
+        "id": "Q-4",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "yes, it is the landing",
+        "question": "Should 'Waiting on you' (everything needing your answer or approval) be the first screen?",
+        "options": [
+          "yes, it is the landing",
+          "yes, but as a second view",
+          "no"
+        ]
+      },
+      {
+        "id": "Q-5",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "question": "Pick ONE extra for v1 (my ranking is in the research):",
+        "options": [
+          "traceability matrix",
+          "stage journey strip",
+          "print/PDF digest",
+          "revision diff",
+          "search across all specs"
+        ]
+      },
+      {
+        "id": "Q-6",
+        "status": "open",
+        "owner": "human:owner",
+        "question": "Anything else you want in v1? Write it, or answer 'none'."
+      },
+      {
+        "id": "Q-7",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "every document",
+        "question": "What should the Overview tab show?",
+        "options": [
+          "every document",
+          "the brief only"
+        ]
+      },
+      {
+        "id": "Q-8",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "show it, friendly",
+        "question": "When a tab has nothing yet (no design written):",
+        "options": [
+          "show it, friendly",
+          "hide it"
+        ]
+      },
+      {
+        "id": "Q-9",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "default": "list them read-only",
+        "question": "Eight old spec folders predate the pack format. In v1:",
+        "options": [
+          "list them read-only",
+          "hide them"
+        ]
+      },
+      {
+        "id": "Q-10",
+        "status": "open",
+        "owner": "human:owner",
+        "question": "Who besides you will read this screen, and what will they want from it?"
+      }
+    ],
+    "out_of_scope": [
+      "editing beyond answering questions",
+      "auth (platform concern)",
+      "multi-repo roots",
+      "history diffing (unless Q-5 picks it)"
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "The page serves on localhost with no auth in v1; authentication is a platform-adapter concern."
+      },
+      {
+        "id": "CON-2",
+        "text": "No CDN at runtime: every asset is vendored into the engine's web directory."
+      },
+      {
+        "id": "CON-3",
+        "text": "The page stays engine-name-free (grep-clean) and portable: events only at the seam, so a platform adapter can host it."
+      },
+      {
+        "id": "CON-4",
+        "text": "Pointer-first for the product-owner audience; keyboard stays complete for power users."
+      }
+    ]
+  },
+  "design": {
+    "approach": "Proposed; firms up after the interview.",
+    "stack": {
+      "ui": "vendored page (no framework), marked.min.js for markdown",
+      "seam": "specweb-events/0.1 through the harness adapter"
+    },
+    "designs": [],
+    "decisions": [
+      {
+        "id": "D-1",
+        "status": "proposed",
+        "decision": "Markdown renders client-side with vendored marked.min.js (MIT, ~39KB verified), no CDN at runtime.",
+        "because": "Tables and links are load-bearing in our briefs; a hand-rolled renderer risks them. The file sits in web/, grep-clean of engine names."
+      },
+      {
+        "id": "D-2",
+        "status": "proposed",
+        "decision": "The owner-words vocabulary map lives in the page; engine stages stay untouched.",
+        "because": "Translation is presentation. The machine keeps its frozen vocabulary (status-vocabulary rev 8)."
+      },
+      {
+        "id": "D-3",
+        "status": "proposed",
+        "decision": "Deep links are hash URLs (#spec/name/tab) — shareable, no server routing.",
+        "because": "Cheap, portable, works under any adapter host."
+      },
+      {
+        "id": "D-4",
+        "status": "proposed",
+        "decision": "Inline answers (if Q-1 allows) reuse specweb-events/0.1 admission — the same seam as the room.",
+        "because": "One admission path, published contract, platform-portable."
+      },
+      {
+        "id": "D-5",
+        "status": "proposed",
+        "decision": "The list endpoint derives from load_specpack per folder, failing soft per folder.",
+        "because": "The loader is the truth of what a pack is; legacy folders must never kill the page."
+      },
+      {
+        "id": "D-6",
+        "status": "proposed",
+        "decision": "GETs are stateless re-reads; no long-lived pack cache in the server.",
+        "because": "Answers can land elsewhere while browsing; staleness stays one refresh deep."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Markdown pipeline",
+      "detail": "vendor marked.min.js; artifact discovery; render + escape posture tests",
+      "phase": "setup",
+      "satisfies": [
+        "FR-4"
+      ],
+      "implements": [],
+      "accepts": [
+        "AC-4"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest tests/test_web_markdown.py -q",
+        "expect": "exit 0 — tables and code render, script tags neutralized"
+      },
+      "honors": [
+        "CON-2"
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "List pane + filters",
+      "detail": "/specs endpoint (fail-soft per folder), pane, groups, search, counts",
+      "phase": "core",
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-11"
+      ],
+      "implements": [],
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-12"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest tests/test_web_library.py -q",
+        "expect": "exit 0 — five real packs listed, legacy folders soft"
+      },
+      "honors": [
+        "CON-1"
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Detail tabs + traceability",
+      "detail": "five tabs, artifact fetch, ID chips that jump, coverage per requirement",
+      "phase": "core",
+      "satisfies": [
+        "FR-3",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [],
+      "accepts": [
+        "AC-3",
+        "AC-5",
+        "AC-6"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest tests/test_web_tabs.py -q",
+        "expect": "exit 0 — tabs render, ID mentions link"
+      },
+      "honors": [
+        "CON-3"
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Owner-words layer",
+      "detail": "stage map, tooltips, plain dates, friendly empties, counts",
+      "phase": "core",
+      "satisfies": [
+        "FR-10"
+      ],
+      "implements": [],
+      "accepts": [
+        "AC-7",
+        "AC-8",
+        "AC-9",
+        "AC-11"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest tests/test_web_words.py -q",
+        "expect": "exit 0 — no untranslated stage leaks"
+      },
+      "honors": [
+        "CON-4"
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "Answering in place (per Q-1)",
+      "detail": "inline answer/unknown through the event seam, or read-only posture locked",
+      "phase": "integration",
+      "satisfies": [
+        "FR-12"
+      ],
+      "implements": [],
+      "accepts": [
+        "AC-10"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest tests/test_web_answer.py -q",
+        "expect": "exit 0 — answers land with claim + timestamp, or the read-only refusal holds"
+      },
+      "honors": [
+        "CON-3"
+      ]
+    },
+    {
+      "id": "T-6",
+      "title": "The owner's extra (per Q-5/Q-6)",
+      "detail": "the chosen creative extra + any Q-6 additions",
+      "phase": "integration",
+      "satisfies": [
+        "FR-13"
+      ],
+      "implements": [],
+      "accepts": [],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 — the extra's own tests green"
+      },
+      "honors": [
+        "CON-4"
+      ]
+    },
+    {
+      "id": "T-7",
+      "title": "Contract + red-forman + close",
+      "detail": "adapter contract updated; adversarial review; verdicts; freeze",
+      "phase": "polish",
+      "satisfies": [
+        "FR-12",
+        "FR-13"
+      ],
+      "implements": [],
+      "accepts": [],
+      "status": "todo",
+      "verify": {
+        "cmd": "uv run loom check docs/specs/spec-library && cd engine/loom && uv run pytest -q && uv run loom selftest",
+        "expect": "exit 0 — 0 gaps, suite green, selftest green"
+      },
+      "honors": [
+        "CON-1",
+        "CON-2"
+      ]
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 1
+}
