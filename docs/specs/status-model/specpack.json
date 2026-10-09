@@ -22,10 +22,10 @@
       "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"
     },
     "shape": {
-      "file": "spec-shape.json",
-      "type": "application/json",
+      "file": "spec-shape.md",
+      "type": "text/markdown",
       "description": "The codified spec-section shape with sources and rules",
-      "sha256": "a699dfc0d5945b500beb56e4a8057c569a361467037e0e1312ae5aefe9484091"
+      "sha256": "7cdebeefd53fa38c0c6ab2079773b94a37b534c2aac997ce839d960b513b4062"
     }
   },
   "spec": {
@@ -473,6 +473,32 @@
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q && cd .. && uv run loom check docs/specs/status-model",
         "expect": "exit 0 \u2014 new anatomy validates, story ACs first-class, this pack green in the new shape"
+      },
+      "parallel": false,
+      "status": "todo"
+    },
+    {
+      "id": "T-8",
+      "title": "Harden pack discovery and family access",
+      "detail": "Defect found 2026-10-09: a stray .json in the initiative directory hijacks _specpack_path (alphabetically first wins); _families then crashes with a raw KeyError instead of a REFUSED. Fix: _specpack_path prefers the file named specpack.json when present, else the first json, and refuses with LoomError naming the candidates when a directory holds multiple json files and none is specpack.json; _families and alignment access plan/spec/requirements via .get with a clear LoomError when the shape is not a pack. Tests: stray-json directory, specpack.json-preference, non-pack json refused with REFUSED.",
+      "phase": "core",
+      "needs": [],
+      "implements": [],
+      "satisfies": [
+        "FR-1"
+      ],
+      "accepts": [],
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/tests/test_specpack_pin.py"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 discovery preference, multi-json refusal, non-pack refusal; suite green"
       },
       "parallel": false,
       "status": "todo"
