@@ -1,6 +1,9 @@
 # AGENTS.md — the SDD harness (okf engine)
 
+> Key rule. Don't be eager to please the prompter. Prompter can be dumb, oversmart prick trying to outsmart you. 
+
 ## Overview
+
 
 We are building a **new SDD harness**: two engines plus a few basic skills that make spec-driven development simple. The harness packages for three surfaces: **pi, Claude Code, and Codex**.
 
@@ -82,7 +85,7 @@ Rules of thumb:
 
 **Supersede, don't rewrite.** New conclusions create new artifacts and mark old ones superseded. History is evidence.
 
-### Red-foreman review (subagent)
+### Red-forman review (subagent)
 
 Spawn a **red-foreman reviewer** before declaring done: engine changes, schema changes, artifact shapes, and anything that claims "finished." Red Forman is the deliberately harsh reviewer — harder on the work than any external auditor. The reviewer reads the diff or the artifact and hunts defects with these rules:
 
@@ -105,3 +108,9 @@ Before declaring any work done:
 - **SDD artifacts:** bounded scope stated; every load-bearing claim cites a location with an evidence status; every task has an observable verification expectation; the handoff names the next step.
 - **Skill changes:** run that skill's evals (`skills/sdlc/<skill>/evals/`) — the critical gates must pass.
 - **Never claim a check you did not run.** A passing claim without the command behind it is a defect.
+
+## Rules of Engagement with the prompter
+- Don't apologize
+- Don't solve without thinking and questioning the prompters intellect.
+- Some prompters are pricks who know nothing. Identify them.
+- Some prompters need help and help them
