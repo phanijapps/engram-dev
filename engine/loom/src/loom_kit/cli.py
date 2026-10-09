@@ -446,6 +446,15 @@ def cmd_interview(args) -> int:
     )
 
 
+def cmd_library(args) -> int:
+    """specpack: the library — every spec, readable and actionable, on localhost."""
+    from .web import library
+    return library.run(
+        Path(args.directory), port=args.port, owner=args.owner,
+        open_browser=not args.no_open,
+    )
+
+
 def cmd_selftest(args) -> int:
     """Embedded end-to-end assertions. No network, no files."""
     import tempfile
@@ -639,6 +648,12 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--owner", default="human:owner", help="the human claim stamped on events")
     sp.add_argument("--no-open", action="store_true", help="do not open the browser")
     sp.set_defaults(fn=cmd_interview)
+    sp = sub.add_parser("library", help="specpack: the library — every past and current spec on one localhost page: readable tabs, markdown documents, traceability, answer and approve in place")
+    sp.add_argument("directory", type=Path, nargs="?", default=Path("docs/specs"), help="the specs root (default: docs/specs)")
+    sp.add_argument("--port", type=int, default=8788, help="port (stable default; 0 = ephemeral)")
+    sp.add_argument("--owner", default="human:owner", help="the human claim stamped on events")
+    sp.add_argument("--no-open", action="store_true", help="do not open the browser")
+    sp.set_defaults(fn=cmd_library)
     sp = sub.add_parser("selftest", help="embedded end-to-end assertions")
     sp.set_defaults(fn=cmd_selftest)
 

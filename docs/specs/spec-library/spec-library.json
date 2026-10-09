@@ -3,7 +3,7 @@
   "name": "spec-library",
   "description": "The spec library — every spec, readable by its owner",
   "date": {
-    "updated": "2026-10-09T19:58:59Z",
+    "updated": "2026-10-09T20:03:16Z",
     "approved": {
       "at": "2026-10-09T19:54:14Z",
       "by": "human:owner"
@@ -11,7 +11,7 @@
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "in_progress"
   },
   "spec": {
     "why": "Packs are JSON for machines. The owner reads them through an agent, one command at a time. The owner's audience — product owners with no technical training — cannot. The record deserves a room anyone can walk into.",
@@ -427,7 +427,7 @@
       {
         "id": "DES-1",
         "title": "A page of its own",
-        "kind": "ui",
+        "kind": "component",
         "detail": "library.html + library.js + vendored marked.min.js, served by `loom library` on 127.0.0.1:8788; the interview room untouched; grep-clean.",
         "addresses": [
           "FR-3",
@@ -449,7 +449,7 @@
       {
         "id": "DES-3",
         "title": "The pane",
-        "kind": "ui",
+        "kind": "component",
         "detail": "Three counted groups — Waiting on you / Moving / Done — free-text search, needs-you first, recently-updated within group.",
         "addresses": [
           "FR-1",
@@ -459,7 +459,7 @@
       {
         "id": "DES-4",
         "title": "The detail",
-        "kind": "ui",
+        "kind": "interface",
         "detail": "Hash router #/<name>/<tab>; five tabs; every .md rendered (marked, trusted-on-disk posture); ID tokens jump-link; requirements show covering tasks.",
         "addresses": [
           "FR-3",
@@ -474,7 +474,7 @@
       {
         "id": "DES-5",
         "title": "The words layer",
-        "kind": "ui",
+        "kind": "interface",
         "detail": "PO stage words with engineer tooltips; plain dates with ISO tooltips; friendly empty states; legacy read-only.",
         "addresses": [
           "FR-10",
@@ -484,7 +484,7 @@
       {
         "id": "DES-6",
         "title": "The journey strip",
-        "kind": "ui",
+        "kind": "component",
         "detail": "Five lit nodes (Just started → Being shaped → In progress → In review → Done) with Waiting-on-you and Stuck flags; presentation only, vocabulary untouched.",
         "addresses": [
           "FR-13"
@@ -493,7 +493,7 @@
       {
         "id": "DES-7",
         "title": "Acting in place",
-        "kind": "ui",
+        "kind": "flow",
         "detail": "Open questions get option buttons (default preselected) or textarea + honest unknown; approve appears when legal; refusals surface inline verbatim; stateless re-fetch after every act.",
         "addresses": [
           "FR-12"
@@ -560,13 +560,22 @@
       "accepts": [
         "AC-4"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_markdown.py -q",
         "expect": "exit 0 — tables and code render, script tags neutralized"
       },
       "honors": [
         "CON-2"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_markdown.py tests/test_web_library.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:03:15Z",
+          "by": "agent:pi",
+          "notes": "exits verified directly; T-1 per design DES-2"
+        }
       ]
     },
     {
@@ -588,13 +597,22 @@
         "AC-2",
         "AC-12"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest tests/test_web_library.py -q",
         "expect": "exit 0 — five real packs listed, legacy folders soft"
       },
       "honors": [
         "CON-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest tests/test_web_markdown.py tests/test_web_library.py -q",
+          "exit": 0,
+          "at": "2026-10-09T20:03:16Z",
+          "by": "agent:pi",
+          "notes": "exits verified directly; T-2 per design DES-2"
+        }
       ]
     },
     {
@@ -724,5 +742,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 18
+  "revision": 20
 }
