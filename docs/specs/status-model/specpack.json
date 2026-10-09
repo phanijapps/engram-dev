@@ -1,95 +1,221 @@
 {
-  "format": "specpack/0.3",
-  "name": "status-model",
-  "title": "The deliverable status: one machine-derived stage for the whole pack",
   "artifacts": {
-    "research": {
-      "file": "research.md",
-      "type": "text/markdown",
-      "description": "Synthesis and devil's advocate over both briefs",
-      "sha256": "b388c1b61cb21c3273194a1636c137f3ccb02ef83c1a59e822cdf0d4a24c663e"
+    "fowler": {
+      "description": "Reviewer brief: martinfowler.com, Kiro, spec-kit, and Tessl",
+      "file": "brief-fowler.md",
+      "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa",
+      "type": "text/markdown"
     },
     "msft": {
-      "file": "brief-microsoft.md",
-      "type": "text/markdown",
       "description": "Reviewer brief: Microsoft, Extending GitHub Spec Kit",
-      "sha256": "51bb9536cb108d11e5ae1cb81d240130c7e8ccf933f5c8656e7029698972a5ec"
+      "file": "brief-microsoft.md",
+      "sha256": "51bb9536cb108d11e5ae1cb81d240130c7e8ccf933f5c8656e7029698972a5ec",
+      "type": "text/markdown"
     },
-    "fowler": {
-      "file": "brief-fowler.md",
-      "type": "text/markdown",
-      "description": "Reviewer brief: martinfowler.com, Kiro, spec-kit, and Tessl",
-      "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"
+    "research": {
+      "description": "Synthesis and devil's advocate over both briefs",
+      "file": "research.md",
+      "sha256": "b388c1b61cb21c3273194a1636c137f3ccb02ef83c1a59e822cdf0d4a24c663e",
+      "type": "text/markdown"
     },
     "shape": {
-      "file": "spec-shape.md",
-      "type": "text/markdown",
       "description": "The codified spec-section shape with sources and rules",
-      "sha256": "7cdebeefd53fa38c0c6ab2079773b94a37b534c2aac997ce839d960b513b4062"
+      "file": "spec-shape.md",
+      "sha256": "7cdebeefd53fa38c0c6ab2079773b94a37b534c2aac997ce839d960b513b4062",
+      "type": "text/markdown"
     }
   },
-  "spec": {
-    "why": "The owner reads the generated pack JSON and cannot see where the overall deliverable stands: node-level statuses are everywhere, but the pack-level status is a near-mute active-or-complete record-lifecycle flag. The concern is the JSON, not the wiki. Two axes were collapsed: record lifecycle (mutable or frozen) and delivery progress (where the work is).",
-    "stories": [
+  "format": "specpack/0.3",
+  "name": "status-model",
+  "plan": {
+    "approach": "One derived field, verified like a checksum: derive, write on save, refuse on load mismatch. Headline reporting. Exhaustive branch guard. Supersedes stays gated on the owner.",
+    "data": [],
+    "decisions": [
       {
-        "id": "US-1",
-        "as": "the owner reading a generated pack file",
-        "want": "one field at the top that says where the overall deliverable stands",
-        "so": "I know what is going on without adding up task statuses"
+        "because": "The one-table page mixed kinds.",
+        "decision": "Rebuild the vocabulary page as three tables.",
+        "id": "D-1",
+        "rejected_because": "Owner, 2026-10-09: the wiki is fine; the concern is the pack JSON.",
+        "status": "rejected"
       },
       {
-        "id": "US-2",
-        "as": "a future loop querying many packs",
-        "want": "a machine-verified deliverable stage on every pack",
-        "so": "I can list deliverables by stage and trust what I read"
+        "because": "Readers arrive with Spec Kit priors.",
+        "decision": "The page carries a bridge from the field vocabulary.",
+        "id": "D-2",
+        "rejected_because": "Owner, 2026-10-09: same directive; the wiki is not the concern.",
+        "status": "rejected"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Fowler documents AI-interpreted checklist failure; transitions move only through loom commands. Owner amendment 2026-10-09: call them deterministic states, not machine-owned; the enum values must be a clear list, well defined.",
+        "decision": "Deterministic states: every state family is a clear, well-defined enum list, moved only by loom commands, with field evidence as justification.",
+        "id": "D-3",
+        "status": "accepted"
+      },
+      {
+        "because": "Complete packs are frozen reference; today a new pack points at nothing, so lineage dies.",
+        "decision": "Packs gain a supersedes link; the superseded stage rides it.",
+        "id": "D-4",
+        "rejected_because": "Pointless per owner 2026-10-09; the term pack also reads badly (see D-11)",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "rejected"
+      },
+      {
+        "because": "An owner-set stage duplicates derived truth and drifts; the two axes (record lifecycle, delivery progress) get two fields: status stays lifecycle, deliverable carries progress.",
+        "decision": "The deliverable stage is machine-derived and checksum-verified, never owner-set.",
+        "id": "D-5",
+        "status": "proposed"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "One word one meaning; each stage is separable by action: blocked needs a re-plan or unblock, awaiting_owner needs verdicts, in_review needs the closing PASS.",
+        "decision": "Stage vocabulary: drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered. (superseded removed with the D-4 rejection, 2026-10-09.)",
+        "id": "D-6",
+        "status": "accepted"
+      },
+      {
+        "because": "A story is satisfied when every FR it serves has its ACs met by done tasks \u2014 computable, so it must not be hand-set (the Fowler evidence against interpreted statuses). Putting ACs on stories would blur what an AC verifies. The third instance of the rollup disease (deliverable stage, orphaned stories, story satisfaction) closes the class.",
+        "decision": "Stories gain a derived satisfaction status, reported not authored; acceptance criteria stay on requirements (single-parent chain: task accepts AC, AC belongs to one FR, FR serves a US).",
+        "id": "D-7",
+        "rejected_because": "Wrong altitude: deriving story-done from served FRs reads the solution, not the intent. A story can be done with a requirement descoped; derivation cannot express that. Atlassian's 3 C's put the Confirmation on the story (owner direction, 2026-10-09, with source).",
+        "resolves": [
+          "Q-3"
+        ],
+        "status": "rejected"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Atlassian 3 C's: Confirmation (the AC) defines when the story is complete; the story and its AC are one unit. ACs are intent-altitude, requirement scenarios are solution-altitude. Owner direction with source, 2026-10-09.",
+        "decision": "Stories gain acceptance criteria (given/when/then scenarios, AC- ids, same shape as requirement scenarios). Story done is its ACs met by done tasks: direct, owner-authored, machine-verified. Requirement scenarios stay for capability verification. Tasks accept ACs wherever they live; each AC keeps exactly one parent.",
+        "id": "D-8",
+        "resolves": [],
+        "status": "accepted"
+      },
+      {
+        "accepted_by": "human:owner",
+        "because": "Three primary sources agree on the load-bearing parts: ACs live on the story (Atlassian 3 C's Confirmation; Spec Kit Acceptance Scenarios verbatim in templates/spec-template.md), priority and independent testability live on the story with the P1-alone-is-MVP rule (Spec Kit), requirements are plain MUST statements (Spec Kit FR-NNN, Kiro EARS), and success criteria and assumptions are spec-level sections we lack. Owner directive 2026-10-09: the spec, high level, codified.",
+        "decision": "The spec section anatomy is: why, stories (title, as/want/so, priority, independent_test, acceptance as given/when/then), edge_cases, requirements (plain MUST, serves a story, no scenarios), success_criteria, constraints, questions, assumptions, out_of_scope. Story done = its ACs met by done tasks.",
+        "id": "D-9",
+        "status": "accepted"
+      },
+      {
+        "because": "Owner direction 2026-10-09: comfortable terms, the chain reads as one sentence. The brief is the Card, the Q&A is the Conversation, the story acceptance criteria are the Confirmation.",
+        "decision": "The artifact chain uses comfortable terms: Feature Brief (a markdown file, the input; new) -> Spec or Research (the JSON, born from Q&A with the user on the brief) -> Design (built from the spec) -> Tasks (built from the design); supplemental work rides along.",
+        "id": "D-10",
+        "status": "proposed"
+      },
+      {
+        "because": "Owner, 2026-10-09: pack sounds like animals. Renaming the stored format tag would break every existing artifact; user-facing vocabulary is where comfort matters.",
+        "decision": "Retire the word pack in user-facing terms (CLI help, status output, docs, primer); the on-disk format tag specpack/0.x stays for compatibility with every existing file.",
+        "id": "D-11",
+        "status": "proposed"
       }
     ],
-    "requirements": [
+    "designs": [
       {
-        "id": "FR-1",
-        "text": "The pack MUST carry one machine-derived deliverable stage (drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded), computed as a total deterministic function of task states, decision states, question states, and review verdicts; written by the machine at every save; re-derived at load, and a mismatch between stored and derived stage MUST refuse the load naming both values.",
-        "priority": "P1",
-        "scenarios": [
-          {
-            "id": "AC-1",
-            "given": "any pack state",
-            "when": "the machine saves or loads it",
-            "then": "the stage field equals the derivation, and a hand-edited stage is refused"
-          }
-        ]
+        "addresses": [
+          "FR-1"
+        ],
+        "detail": "A pure function over the pack: delivered (pack complete) > blocked (any task blocked, none doing) > awaiting_owner (all tasks done, decisions pending or questions open) > in_review (all tasks done, owner work clean, no PACK PASS) > in_progress (any task doing) > planning (open questions, no task done or doing) > drafted (tasks exist, none started, no open questions). First match wins; the function is total. The field name is deliverable. The record lifecycle keeps the existing status field: two axes, two fields, both machine-owned.",
+        "id": "DES-1",
+        "kind": "flow",
+        "title": "The deliverable stage derivation"
       },
       {
-        "id": "FR-2",
-        "text": "loom status and loom next MUST report the deliverable stage as the headline line, with task counts (done, doing, todo, blocked) beside it.",
-        "priority": "P1"
+        "addresses": [
+          "FR-1"
+        ],
+        "detail": "load_specpack re-derives the stage and compares with the stored value. A mismatch raises with both values: a hand-edited stage is corruption, and the machine fails closed. Saves always write the derivation, so the field can never lag the content it summarizes.",
+        "id": "DES-2",
+        "kind": "flow",
+        "title": "Checksum discipline"
       },
       {
-        "id": "FR-3",
-        "text": "An exhaustive guard test MUST drive every derivation branch and assert set equality between exercised stages and the documented vocabulary; the schema enum, the code constant, and the derivation must agree.",
-        "priority": "P1"
+        "addresses": [
+          "FR-2"
+        ],
+        "detail": "loom status first line: the deliverable stage plus counts, for example 'deliverable: in_progress (3 done, 1 doing, 2 todo, 0 blocked)'. loom next prints the same line before any task output. The wiki page gains one row for the new family only if the owner asks for page work later.",
+        "id": "DES-3",
+        "kind": "interface",
+        "title": "Headline reporting"
       },
       {
-        "id": "FR-4",
-        "text": "The superseded stage requires the supersedes link (Q-1). Until the owner decides, the stage exists in the vocabulary and the derivation omits it; the decision MUST be recorded before any implementation task for it runs.",
-        "priority": "P2"
+        "addresses": [
+          "FR-5"
+        ],
+        "detail": "Requirement gains an optional serves list (US id pattern). The coverage section gains story_drift: requirements with empty or missing serves, and stories named by no requirement. Reported, never blocking, consistent with the coverage-tier rule. Found by: the owner, 2026-10-09, after a re-scope left a stale story in a green-checked pack.",
+        "id": "DES-4",
+        "kind": "data",
+        "title": "Story coverage: the served link and the drift report"
       },
       {
-        "id": "FR-5",
-        "text": "The machine MUST report story drift in the coverage tier: requirements that serve no user story, and stories that no requirement serves. Reported, never blocking. Served means an explicit link (requirement gains an optional serves list of story ids), not a guess.",
-        "priority": "P2"
+        "addresses": [
+          "FR-6"
+        ],
+        "detail": "Schema: story gains optional scenarios ($ref scenario, same def). alignment: A1 counts story ACs; A2 resolves accepts against the union of story and requirement scenarios; A5 coverage gains a US section mapping each story AC to the tasks that accept it. slices: story ACs ride along when the story is in the closure. Authoring rule: story ACs are few and intent-level; requirement scenarios verify the chosen solution.",
+        "id": "DES-5",
+        "kind": "data",
+        "title": "Story acceptance criteria"
       },
       {
-        "id": "FR-6",
-        "text": "Stories MUST support owner-authored acceptance criteria (scenarios, same given/when/then shape and AC- id pattern as requirement scenarios, additive and optional). The machine MUST verify story ACs like all ACs: tasks accept them, A2 resolves them, coverage maps them; a story whose ACs are all met by done tasks is done.",
-        "priority": "P1",
-        "scenarios": [
-          {
-            "id": "AC-4",
-            "given": "a story with acceptance criteria and a task that accepts one of them",
-            "when": "that task is done with evidence",
-            "then": "coverage reports the story AC as met; a story with all ACs met reports done"
-          }
-        ]
+        "addresses": [
+          "FR-6"
+        ],
+        "detail": "Additive schema: story gains title, priority, independent_test, acceptance (scenario shape, AC- ids); spec gains edge_cases, success_criteria (SC- id pattern), assumptions. Requirement gains serves (US ids) and scenarios becomes legacy-optional. Checks: A1 counts story ACs; A2 resolves task.accepts against story ACs and legacy FR scenarios; A4 alignment gains the story route (task accepts AC of US that FR serves); coverage maps story ACs and story done (all ACs met by done tasks).",
+        "id": "DES-6",
+        "kind": "data",
+        "title": "The spec anatomy in schema and checks"
+      }
+    ],
+    "diagrams": [],
+    "stack": {
+      "docs": "OKF wiki (curated concepts)",
+      "guards": "pytest reading the schema and the page"
+    },
+    "structure": [
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/src/loom_kit/cli.py",
+      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+      "engine/loom/tests/test_specpack_deliverable.py"
+    ]
+  },
+  "review": {
+    "checklist": "red-foreman",
+    "verdicts": []
+  },
+  "revision": 6,
+  "spec": {
+    "clarifications": [
+      {
+        "answer": "No supersedes link (D-4 rejected as pointless by the owner, 2026-10-09).",
+        "id": "Q-1",
+        "owner": "human:owner",
+        "question": "Should packs carry a supersedes link to the pack they replace, making the spec-anchored chain of custody explicit and queryable?",
+        "resolved_by": "D-4",
+        "status": "resolved"
+      },
+      {
+        "answer": "Yes, comfortable terms: Feature Brief (markdown input) -> Spec or Research (the JSON, born from Q&A on the brief; name pending Q-4) -> Design (from the spec) -> Tasks (from the design), plus supplemental work as needed.",
+        "id": "Q-2",
+        "owner": "human:owner",
+        "question": "Should user-facing output adopt the field's words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system's vocabulary alone?",
+        "status": "resolved"
+      },
+      {
+        "answer": "Stories get owner-authored acceptance criteria directly (D-8). Derivation through FRs rejected (D-7).",
+        "id": "Q-3",
+        "owner": "human:owner",
+        "question": "Should stories carry a machine-derived satisfaction status (every served FR's acceptance criteria met by done tasks), reported in status and check output \u2014 with ACs staying on requirements?",
+        "resolved_by": "D-7",
+        "status": "resolved"
+      },
+      {
+        "id": "Q-4",
+        "owner": "human:owner",
+        "question": "Name the JSON artifact: Spec or Research?",
+        "status": "open"
       }
     ],
     "constraints": [
@@ -102,410 +228,277 @@
         "text": "No accepted decisions at authoring: every decision ships proposed; the owner accepts or rejects after reading the research."
       }
     ],
-    "clarifications": [
-      {
-        "id": "Q-1",
-        "question": "Should packs carry a supersedes link to the pack they replace, making the spec-anchored chain of custody explicit and queryable?",
-        "status": "open",
-        "owner": "human:owner",
-        "resolved_by": "D-4"
-      },
-      {
-        "id": "Q-2",
-        "question": "Should user-facing output adopt the field's words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system's vocabulary alone?",
-        "status": "open",
-        "owner": "human:owner"
-      },
-      {
-        "id": "Q-3",
-        "question": "Should stories carry a machine-derived satisfaction status (every served FR's acceptance criteria met by done tasks), reported in status and check output \u2014 with ACs staying on requirements?",
-        "status": "resolved",
-        "owner": "human:owner",
-        "resolved_by": "D-7",
-        "answer": "Stories get owner-authored acceptance criteria directly (D-8). Derivation through FRs rejected (D-7)."
-      }
-    ],
     "out_of_scope": [
       "any change to loom commands, schemas, or state machines",
       "semantic search over complete packs (a future consumer)",
       "spine mode",
       "rebuilding the wiki status vocabulary page: the owner states the wiki is fine (2026-10-09); D-1 and D-2 are rejected for this reason",
-      "the bridge table to field vocabulary (may return if the owner asks)"
-    ]
-  },
-  "plan": {
-    "approach": "One derived field, verified like a checksum: derive, write on save, refuse on load mismatch. Headline reporting. Exhaustive branch guard. Supersedes stays gated on the owner.",
-    "stack": {
-      "docs": "OKF wiki (curated concepts)",
-      "guards": "pytest reading the schema and the page"
-    },
-    "diagrams": [],
-    "designs": [
+      "the bridge table to field vocabulary (may return if the owner asks)",
+      "supersedes link between artifacts: rejected (D-4, owner 2026-10-09)"
+    ],
+    "requirements": [
       {
-        "id": "DES-1",
-        "title": "The deliverable stage derivation",
-        "kind": "flow",
-        "detail": "A pure function over the pack: delivered (pack complete) > superseded (a supersedes link names this pack; gated on Q-1) > blocked (any task blocked, none doing) > awaiting_owner (all tasks done, decisions pending or questions open) > in_review (all tasks done, owner work clean, no PACK PASS) > in_progress (any task doing) > planning (open questions, no task done or doing) > drafted (tasks exist, none started, no open questions). First match wins; the function is total. The field name is deliverable. The record lifecycle keeps the existing status field: two axes, two fields, both machine-owned.",
-        "addresses": [
-          "FR-1",
-          "FR-4"
-        ]
+        "id": "FR-1",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "any pack state",
+            "id": "AC-1",
+            "then": "the stage field equals the derivation, and a hand-edited stage is refused",
+            "when": "the machine saves or loads it"
+          }
+        ],
+        "text": "The pack MUST carry one machine-derived deliverable stage (drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded), computed as a total deterministic function of task states, decision states, question states, and review verdicts; written by the machine at every save; re-derived at load, and a mismatch between stored and derived stage MUST refuse the load naming both values."
       },
       {
-        "id": "DES-2",
-        "title": "Checksum discipline",
-        "kind": "flow",
-        "detail": "load_specpack re-derives the stage and compares with the stored value. A mismatch raises with both values: a hand-edited stage is corruption, and the machine fails closed. Saves always write the derivation, so the field can never lag the content it summarizes.",
-        "addresses": [
-          "FR-1"
-        ]
+        "id": "FR-2",
+        "priority": "P1",
+        "text": "loom status and loom next MUST report the deliverable stage as the headline line, with task counts (done, doing, todo, blocked) beside it."
       },
       {
-        "id": "DES-3",
-        "title": "Headline reporting",
-        "kind": "interface",
-        "detail": "loom status first line: the deliverable stage plus counts, for example 'deliverable: in_progress (3 done, 1 doing, 2 todo, 0 blocked)'. loom next prints the same line before any task output. The wiki page gains one row for the new family only if the owner asks for page work later.",
-        "addresses": [
-          "FR-2"
-        ]
+        "id": "FR-3",
+        "priority": "P1",
+        "text": "An exhaustive guard test MUST drive every derivation branch and assert set equality between exercised stages and the documented vocabulary; the schema enum, the code constant, and the derivation must agree."
       },
       {
-        "id": "DES-4",
-        "title": "Story coverage: the served link and the drift report",
-        "kind": "data",
-        "detail": "Requirement gains an optional serves list (US id pattern). The coverage section gains story_drift: requirements with empty or missing serves, and stories named by no requirement. Reported, never blocking, consistent with the coverage-tier rule. Found by: the owner, 2026-10-09, after a re-scope left a stale story in a green-checked pack.",
-        "addresses": [
-          "FR-5"
-        ]
+        "id": "FR-5",
+        "priority": "P2",
+        "text": "The machine MUST report story drift in the coverage tier: requirements that serve no user story, and stories that no requirement serves. Reported, never blocking. Served means an explicit link (requirement gains an optional serves list of story ids), not a guess."
       },
       {
-        "id": "DES-5",
-        "title": "Story acceptance criteria",
-        "kind": "data",
-        "detail": "Schema: story gains optional scenarios ($ref scenario, same def). alignment: A1 counts story ACs; A2 resolves accepts against the union of story and requirement scenarios; A5 coverage gains a US section mapping each story AC to the tasks that accept it. slices: story ACs ride along when the story is in the closure. Authoring rule: story ACs are few and intent-level; requirement scenarios verify the chosen solution.",
-        "addresses": [
-          "FR-6"
-        ]
-      },
-      {
-        "id": "DES-6",
-        "title": "The spec anatomy in schema and checks",
-        "kind": "data",
-        "detail": "Additive schema: story gains title, priority, independent_test, acceptance (scenario shape, AC- ids); spec gains edge_cases, success_criteria (SC- id pattern), assumptions. Requirement gains serves (US ids) and scenarios becomes legacy-optional. Checks: A1 counts story ACs; A2 resolves task.accepts against story ACs and legacy FR scenarios; A4 alignment gains the story route (task accepts AC of US that FR serves); coverage maps story ACs and story done (all ACs met by done tasks).",
-        "addresses": [
-          "FR-6"
-        ]
+        "id": "FR-6",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "given": "a story with acceptance criteria and a task that accepts one of them",
+            "id": "AC-4",
+            "then": "coverage reports the story AC as met; a story with all ACs met reports done",
+            "when": "that task is done with evidence"
+          }
+        ],
+        "text": "Stories MUST support owner-authored acceptance criteria (scenarios, same given/when/then shape and AC- id pattern as requirement scenarios, additive and optional). The machine MUST verify story ACs like all ACs: tasks accept them, A2 resolves them, coverage maps them; a story whose ACs are all met by done tasks is done."
       }
     ],
-    "decisions": [
+    "stories": [
       {
-        "id": "D-1",
-        "decision": "Rebuild the vocabulary page as three tables.",
-        "because": "The one-table page mixed kinds.",
-        "status": "rejected",
-        "rejected_because": "Owner, 2026-10-09: the wiki is fine; the concern is the pack JSON."
+        "as": "the owner reading a generated pack file",
+        "id": "US-1",
+        "so": "I know what is going on without adding up task statuses",
+        "want": "one field at the top that says where the overall deliverable stands"
       },
       {
-        "id": "D-2",
-        "decision": "The page carries a bridge from the field vocabulary.",
-        "because": "Readers arrive with Spec Kit priors.",
-        "status": "rejected",
-        "rejected_because": "Owner, 2026-10-09: same directive; the wiki is not the concern."
-      },
-      {
-        "id": "D-3",
-        "decision": "Machine-owned states stay, with field evidence as justification.",
-        "because": "Fowler documents AI-interpreted checklist failure; transitions move only through loom commands.",
-        "status": "proposed"
-      },
-      {
-        "id": "D-4",
-        "decision": "Packs gain a supersedes link; the superseded stage rides it.",
-        "because": "Complete packs are frozen reference; today a new pack points at nothing, so lineage dies.",
-        "resolves": [
-          "Q-1"
-        ],
-        "status": "proposed"
-      },
-      {
-        "id": "D-5",
-        "decision": "The deliverable stage is machine-derived and checksum-verified, never owner-set.",
-        "because": "An owner-set stage duplicates derived truth and drifts; the two axes (record lifecycle, delivery progress) get two fields: status stays lifecycle, deliverable carries progress.",
-        "status": "proposed"
-      },
-      {
-        "id": "D-6",
-        "decision": "Stage vocabulary: drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded.",
-        "because": "One word one meaning; each stage is separable by action: blocked needs a re-plan or unblock, awaiting_owner needs verdicts, in_review needs the closing PASS.",
-        "status": "proposed"
-      },
-      {
-        "id": "D-7",
-        "decision": "Stories gain a derived satisfaction status, reported not authored; acceptance criteria stay on requirements (single-parent chain: task accepts AC, AC belongs to one FR, FR serves a US).",
-        "because": "A story is satisfied when every FR it serves has its ACs met by done tasks \u2014 computable, so it must not be hand-set (the Fowler evidence against interpreted statuses). Putting ACs on stories would blur what an AC verifies. The third instance of the rollup disease (deliverable stage, orphaned stories, story satisfaction) closes the class.",
-        "resolves": [
-          "Q-3"
-        ],
-        "status": "rejected",
-        "rejected_because": "Wrong altitude: deriving story-done from served FRs reads the solution, not the intent. A story can be done with a requirement descoped; derivation cannot express that. Atlassian's 3 C's put the Confirmation on the story (owner direction, 2026-10-09, with source)."
-      },
-      {
-        "id": "D-8",
-        "decision": "Stories gain acceptance criteria (given/when/then scenarios, AC- ids, same shape as requirement scenarios). Story done is its ACs met by done tasks: direct, owner-authored, machine-verified. Requirement scenarios stay for capability verification. Tasks accept ACs wherever they live; each AC keeps exactly one parent.",
-        "because": "Atlassian 3 C's: Confirmation (the AC) defines when the story is complete; the story and its AC are one unit. ACs are intent-altitude, requirement scenarios are solution-altitude. Owner direction with source, 2026-10-09.",
-        "resolves": [],
-        "status": "proposed"
-      },
-      {
-        "id": "D-9",
-        "decision": "The spec section anatomy is: why, stories (title, as/want/so, priority, independent_test, acceptance as given/when/then), edge_cases, requirements (plain MUST, serves a story, no scenarios), success_criteria, constraints, questions, assumptions, out_of_scope. Story done = its ACs met by done tasks.",
-        "because": "Three primary sources agree on the load-bearing parts: ACs live on the story (Atlassian 3 C's Confirmation; Spec Kit Acceptance Scenarios verbatim in templates/spec-template.md), priority and independent testability live on the story with the P1-alone-is-MVP rule (Spec Kit), requirements are plain MUST statements (Spec Kit FR-NNN, Kiro EARS), and success criteria and assumptions are spec-level sections we lack. Owner directive 2026-10-09: the spec, high level, codified.",
-        "status": "proposed"
+        "as": "a future loop querying many packs",
+        "id": "US-2",
+        "so": "I can list deliverables by stage and trust what I read",
+        "want": "a machine-verified deliverable stage on every pack"
       }
     ],
-    "data": [],
-    "structure": [
-      "engine/loom/src/loom_kit/specpack.py",
-      "engine/loom/src/loom_kit/cli.py",
-      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
-      "engine/loom/tests/test_specpack_deliverable.py"
-    ]
+    "why": "The owner reads the generated pack JSON and cannot see where the overall deliverable stands: node-level statuses are everywhere, but the pack-level status is a near-mute active-or-complete record-lifecycle flag. The concern is the JSON, not the wiki. Two axes were collapsed: record lifecycle (mutable or frozen) and delivery progress (where the work is)."
   },
+  "status": "active",
   "tasks": [
     {
-      "id": "T-1",
-      "title": "Deliverable stage: derivation, field, load refusal",
+      "accepts": [
+        "AC-1"
+      ],
       "detail": "Per DES-1 and DES-2: derive_deliverable(doc) pure function (stages per D-6, superseded omitted until Q-1); every machine save writes it; load_specpack re-derives and refuses on mismatch naming both values; schema gains the optional deliverable enum. Tests: one fixture per branch, mismatch refusal, save-then-load roundtrip.",
-      "phase": "core",
-      "needs": [],
+      "honors": [
+        "CON-2"
+      ],
+      "id": "T-1",
       "implements": [
         "DES-1",
         "DES-2"
       ],
-      "satisfies": [
-        "FR-1"
-      ],
-      "accepts": [
-        "AC-1"
-      ],
-      "honors": [
-        "CON-2"
-      ],
+      "needs": [],
+      "parallel": false,
+      "phase": "core",
       "produces": [
         "engine/loom/src/loom_kit/specpack.py",
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/tests/test_specpack_deliverable.py"
       ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "todo",
+      "title": "Deliverable stage: derivation, field, load refusal",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 \u2014 every derivation branch, mismatch refusal, roundtrip; suite green"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     },
     {
-      "id": "T-2",
-      "title": "Headline reporting in status and next",
-      "detail": "Per DES-3: loom status prints the deliverable stage plus counts as the first line; loom next prints the same line before task output; both --json paths include the field.",
-      "phase": "integration",
-      "needs": [
-        "T-1"
-      ],
-      "implements": [
-        "DES-3"
-      ],
-      "satisfies": [
-        "FR-2"
-      ],
       "accepts": [],
+      "detail": "Per DES-3: loom status prints the deliverable stage plus counts as the first line; loom next prints the same line before task output; both --json paths include the field.",
       "honors": [
         "CON-2"
       ],
+      "id": "T-2",
+      "implements": [
+        "DES-3"
+      ],
+      "needs": [
+        "T-1"
+      ],
+      "parallel": false,
+      "phase": "integration",
       "produces": [
         "engine/loom/src/loom_kit/cli.py",
         "engine/loom/tests/test_specpack_deliverable.py"
       ],
+      "satisfies": [
+        "FR-2"
+      ],
+      "status": "todo",
+      "title": "Headline reporting in status and next",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_deliverable.py tests/test_specpack_cli.py",
         "expect": "exit 0 \u2014 headline asserted in human and json paths"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     },
     {
-      "id": "T-3",
-      "title": "Exhaustive guard for the stage vocabulary",
-      "detail": "Per FR-3: extend the status guard family: schema enum equals the code constant; an exhaustive fixture drives every branch of derive_deliverable and asserts set equality with the documented vocabulary (minus superseded until Q-1).",
-      "phase": "integration",
-      "needs": [
-        "T-1"
-      ],
-      "implements": [],
-      "satisfies": [
-        "FR-3"
-      ],
       "accepts": [],
+      "detail": "Per FR-3: extend the status guard family: schema enum equals the code constant; an exhaustive fixture drives every branch of derive_deliverable and asserts set equality with the documented vocabulary (minus superseded until Q-1).",
       "honors": [
         "CON-2"
       ],
+      "id": "T-3",
+      "implements": [],
+      "needs": [
+        "T-1"
+      ],
+      "parallel": false,
+      "phase": "integration",
       "produces": [
         "engine/loom/tests/test_specpack_status.py"
       ],
+      "satisfies": [
+        "FR-3"
+      ],
+      "status": "todo",
+      "title": "Exhaustive guard for the stage vocabulary",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_status.py",
         "expect": "exit 0 \u2014 set equality, guard can fail"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     },
     {
-      "id": "T-4",
-      "title": "superseded stage and the supersedes link",
-      "detail": "GATED on Q-1 (stays blocked until the owner decides D-4). If accepted: schema gains supersedes (pack name reference), derivation adds the superseded stage (checked when another pack names this one), status shows it. If rejected: record the rejection, keep the stage out of the vocabulary, cancel with the recorded reason.",
-      "phase": "integration",
-      "needs": [
-        "T-1"
-      ],
-      "implements": [
-        "DES-1"
-      ],
-      "satisfies": [
-        "FR-4"
-      ],
       "accepts": [],
+      "detail": "Per DES-4: schema gains requirement.serves (optional, US id pattern); alignment coverage gains story_drift (requirements serving no story, stories served by no requirement); this pack's own FRs gain serves links as the first fixture; loom check prints the lines.",
       "honors": [
         "CON-2"
       ],
-      "produces": [
-        "engine/loom/src/loom_kit/specpack.py",
-        "engine/loom/src/loom_kit/schemas/specpack.schema.json"
-      ],
-      "verify": {
-        "cmd": "cd engine/loom && uv run pytest -q",
-        "expect": "exit 0 \u2014 per the owner verdict on Q-1"
-      },
-      "parallel": false,
-      "status": "blocked"
-    },
-    {
       "id": "T-5",
-      "title": "Story drift coverage: serves link and report",
-      "detail": "Per DES-4: schema gains requirement.serves (optional, US id pattern); alignment coverage gains story_drift (requirements serving no story, stories served by no requirement); this pack's own FRs gain serves links as the first fixture; loom check prints the lines.",
-      "phase": "integration",
-      "needs": [
-        "T-1"
-      ],
       "implements": [
         "DES-4"
       ],
-      "satisfies": [
-        "FR-5"
+      "needs": [
+        "T-1"
       ],
-      "accepts": [],
-      "honors": [
-        "CON-2"
-      ],
+      "parallel": false,
+      "phase": "integration",
       "produces": [
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/src/loom_kit/specpack.py",
         "engine/loom/src/loom_kit/cli.py"
       ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "status": "todo",
+      "title": "Story drift coverage: serves link and report",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 \u2014 drift reported both directions, never a violation; suite green"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     },
     {
-      "id": "T-6",
-      "title": "Story acceptance criteria: schema, checks, coverage, slices",
-      "detail": "Per DES-5 and FR-6: story.scenarios in the schema (optional, additive); A1/A2 treat story ACs as first-class; A5 coverage gains the US section; slice_for includes story ACs when the story is in the closure; this pack's own stories gain ACs as the first fixture (US-1 gets AC-4's parentage fixed accordingly). Tests: story AC accepted by a done task reports met; dangling story AC refused; story with all ACs met reports done.",
-      "phase": "core",
-      "needs": [],
-      "implements": [
-        "DES-5"
-      ],
-      "satisfies": [
-        "FR-6"
-      ],
       "accepts": [
         "AC-4"
       ],
+      "detail": "Per DES-5 and FR-6: story.scenarios in the schema (optional, additive); A1/A2 treat story ACs as first-class; A5 coverage gains the US section; slice_for includes story ACs when the story is in the closure; this pack's own stories gain ACs as the first fixture (US-1 gets AC-4's parentage fixed accordingly). Tests: story AC accepted by a done task reports met; dangling story AC refused; story with all ACs met reports done.",
       "honors": [
         "CON-1"
       ],
+      "id": "T-6",
+      "implements": [
+        "DES-5"
+      ],
+      "needs": [],
+      "parallel": true,
+      "phase": "core",
       "produces": [
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/src/loom_kit/specpack.py",
         "engine/loom/tests/test_specpack_deliverable.py",
         "docs/specs/status-model/specpack.json"
       ],
-      "verify": {
-        "cmd": "cd engine/loom && uv run pytest -q",
-        "expect": "exit 0 \u2014 story ACs first-class in A1/A2/A5 and slices; suite green"
-      },
-      "parallel": true,
-      "status": "todo"
-    },
-    {
-      "id": "T-7",
-      "title": "Spec anatomy: schema, checks, coverage, fixture",
-      "detail": "Per DES-6 and D-9: schema additions (story: title, priority, independent_test, acceptance; spec: edge_cases, success_criteria, assumptions; requirement: serves; requirement.scenarios marked legacy in descriptions); A1/A2/A4 and coverage updated for story ACs and story-done; this pack's own spec section is recast into the new shape as the first live fixture (stories gain priority, independent_test, acceptance; FR scenarios move up or are dropped where redundant); spec-shape.json rules quoted into the primer.",
-      "phase": "core",
-      "needs": [],
-      "implements": [
-        "DES-6"
-      ],
       "satisfies": [
         "FR-6"
       ],
+      "status": "todo",
+      "title": "Story acceptance criteria: schema, checks, coverage, slices",
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 story ACs first-class in A1/A2/A5 and slices; suite green"
+      }
+    },
+    {
       "accepts": [],
+      "detail": "Per DES-6 and D-9: schema additions (story: title, priority, independent_test, acceptance; spec: edge_cases, success_criteria, assumptions; requirement: serves; requirement.scenarios marked legacy in descriptions); A1/A2/A4 and coverage updated for story ACs and story-done; this pack's own spec section is recast into the new shape as the first live fixture (stories gain priority, independent_test, acceptance; FR scenarios move up or are dropped where redundant); spec-shape.json rules quoted into the primer.",
       "honors": [
         "CON-1"
       ],
+      "id": "T-7",
+      "implements": [
+        "DES-6"
+      ],
+      "needs": [],
+      "parallel": false,
+      "phase": "core",
       "produces": [
         "engine/loom/src/loom_kit/schemas/specpack.schema.json",
         "engine/loom/src/loom_kit/specpack.py",
         "docs/specs/status-model/specpack.json",
         "docs/specs/spec-graph/schema-primer.md"
       ],
+      "satisfies": [
+        "FR-6"
+      ],
+      "status": "todo",
+      "title": "Spec anatomy: schema, checks, coverage, fixture",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q && cd .. && uv run loom check docs/specs/status-model",
         "expect": "exit 0 \u2014 new anatomy validates, story ACs first-class, this pack green in the new shape"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     },
     {
-      "id": "T-8",
-      "title": "Harden pack discovery and family access",
-      "detail": "Defect found 2026-10-09: a stray .json in the initiative directory hijacks _specpack_path (alphabetically first wins); _families then crashes with a raw KeyError instead of a REFUSED. Fix: _specpack_path prefers the file named specpack.json when present, else the first json, and refuses with LoomError naming the candidates when a directory holds multiple json files and none is specpack.json; _families and alignment access plan/spec/requirements via .get with a clear LoomError when the shape is not a pack. Tests: stray-json directory, specpack.json-preference, non-pack json refused with REFUSED.",
-      "phase": "core",
-      "needs": [],
-      "implements": [],
-      "satisfies": [
-        "FR-1"
-      ],
       "accepts": [],
+      "detail": "Defect found 2026-10-09: a stray .json in the initiative directory hijacks _specpack_path (alphabetically first wins); _families then crashes with a raw KeyError instead of a REFUSED. Fix: _specpack_path prefers the file named specpack.json when present, else the first json, and refuses with LoomError naming the candidates when a directory holds multiple json files and none is specpack.json; _families and alignment access plan/spec/requirements via .get with a clear LoomError when the shape is not a pack. Tests: stray-json directory, specpack.json-preference, non-pack json refused with REFUSED.",
       "honors": [
         "CON-2"
       ],
+      "id": "T-8",
+      "implements": [],
+      "needs": [],
+      "parallel": false,
+      "phase": "core",
       "produces": [
         "engine/loom/src/loom_kit/cli.py",
         "engine/loom/src/loom_kit/specpack.py",
         "engine/loom/tests/test_specpack_pin.py"
       ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "status": "todo",
+      "title": "Harden pack discovery and family access",
       "verify": {
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 \u2014 discovery preference, multi-json refusal, non-pack refusal; suite green"
-      },
-      "parallel": false,
-      "status": "todo"
+      }
     }
   ],
-  "review": {
-    "checklist": "red-foreman",
-    "verdicts": []
-  }
+  "title": "The deliverable status: one machine-derived stage for the whole pack"
 }
