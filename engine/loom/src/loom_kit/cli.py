@@ -437,6 +437,15 @@ def _status_specpack(args) -> int:
     return 0
 
 
+def cmd_interview(args) -> int:
+    """specpack: the interview — serve the page, block like an interrupt (D-13)."""
+    from .web import server as webserver
+    return webserver.run(
+        Path(args.directory), port=args.port, owner=args.owner,
+        open_browser=not args.no_open,
+    )
+
+
 def cmd_selftest(args) -> int:
     """Embedded end-to-end assertions. No network, no files."""
     import tempfile
@@ -624,6 +633,12 @@ def main(argv: list[str] | None = None) -> int:
     d()
     sp.set_defaults(fn=cmd_status)
 
+    sp = sub.add_parser("interview", help="specpack: the interview — serve the spec page on localhost, collect answers and approval through admission, block until done (Ctrl-C escapes)")
+    sp.add_argument("directory", type=Path)
+    sp.add_argument("--port", type=int, default=0, help="port (0 = ephemeral)")
+    sp.add_argument("--owner", default="human:owner", help="the human claim stamped on events")
+    sp.add_argument("--no-open", action="store_true", help="do not open the browser")
+    sp.set_defaults(fn=cmd_interview)
     sp = sub.add_parser("selftest", help="embedded end-to-end assertions")
     sp.set_defaults(fn=cmd_selftest)
 

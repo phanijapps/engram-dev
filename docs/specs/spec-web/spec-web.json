@@ -4,7 +4,7 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:30:03Z"
+    "updated": "2026-10-09T17:31:57Z"
   },
   "status": {
     "lifecycle": "active",
@@ -725,7 +725,16 @@
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — events admitted, file written, wait semantics honored"
       },
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "at": "2026-10-09T17:31:57Z",
+          "by": "agent:pi",
+          "notes": "167 passed, exit verified directly: harness adapter — 127.0.0.1 bind, owner seam injected, /spec emits canonical subsequence, POST /event through admission only (400s for bad claims, open-question approval), interview.jsonl header+events, full ceremony to date.approved trips the wait condition. Two test repairs pre-record: fixture born through save (date honesty), order check as canonical subsequence."
+        }
+      ]
     },
     {
       "id": "T-6",
@@ -771,5 +780,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 23
+  "revision": 25
 }
