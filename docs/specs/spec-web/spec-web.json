@@ -4,7 +4,7 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:28:22Z"
+    "updated": "2026-10-09T17:30:03Z"
   },
   "status": {
     "lifecycle": "active",
@@ -683,7 +683,16 @@
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — render order canonical, keyboard flow, grep-clean of loom"
       },
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "at": "2026-10-09T17:30:03Z",
+          "by": "agent:pi",
+          "notes": "160 passed, exit verified directly: page.html+page.js — dossier walks CANONICAL_ORDER exactly (contract test vs the engine constant), ring reads derived stage, wizard over open questions with kind/options/unknown, rounds strip from revision memory, keyboard j/k + 1-9 + Enter and full pointer paths, INTERVIEW_CONFIG owner seam, engine-name grep clean. Browser feel disclosed as manual: exercised through the adapter in T-5."
+        }
+      ]
     },
     {
       "id": "T-5",
@@ -762,5 +771,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 21
+  "revision": 23
 }
