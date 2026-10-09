@@ -101,6 +101,12 @@ def _normalize(doc: dict) -> dict:
                 doc["created"] = date["created"]
             if date.get("updated"):
                 doc["updated"] = date["updated"]
+            approved = date.get("approved")
+            if isinstance(approved, dict):
+                if approved.get("at"):
+                    doc["approved_at"] = approved["at"]
+                if approved.get("by"):
+                    doc["approved_by"] = approved["by"]
             closed = date.get("closed")
             if isinstance(closed, dict):
                 if closed.get("at"):
@@ -127,6 +133,8 @@ def _emit(doc: dict) -> dict:
         date["created"] = doc["created"]
     if doc.get("updated"):
         date["updated"] = doc["updated"]
+    if doc.get("approved_at"):
+        date["approved"] = {"at": doc["approved_at"], **({"by": doc["approved_by"]} if doc.get("approved_by") else {})}
     if doc.get("closed_at"):
         date["closed"] = {"at": doc["closed_at"], **({"by": doc["closed_by"]} if doc.get("closed_by") else {})}
     if date:
@@ -476,6 +484,22 @@ def accept_decision(doc: dict, decision_id: str, by: str) -> dict:
             resolved.append(q["id"])
     doc["revision"] = doc.get("revision", 1) + 1
     return {"decision": decision_id, "status": "accepted", "accepted_by": by, "resolved_questions": sorted(resolved)}
+
+
+def approve_spec(doc: dict, by: str, at: str | None = None) -> dict:
+    """The approval act (FR-4, D-11): one normative owner acceptance of the
+    spec as a whole. Offered only when no open questions remain."""
+    _assert_mutable(doc)
+    if not str(by).startswith("human:"):
+        raise LoomError("approval needs a human claim: pass --by human:<owner> (A7 shape check)")
+    if doc.get("approved_at"):
+        raise LoomError(f"already approved by {doc.get('approved_by')} at {doc.get('approved_at')}")
+    openq = [q["id"] for q in doc["spec"].get("clarifications", []) if q.get("status") == "open"]
+    if openq:
+        raise LoomError("approval refused: open questions remain — " + ", ".join(sorted(openq)))
+    doc["approved_at"] = at or _now()
+    doc["approved_by"] = by
+    return {"name": doc["name"], "approved_by": by, "approved_at": doc["approved_at"]}
 
 
 def reject_decision(doc: dict, decision_id: str, by: str, because: str) -> dict:

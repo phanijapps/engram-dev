@@ -4,7 +4,7 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:25:42Z"
+    "updated": "2026-10-09T17:27:34Z"
   },
   "status": {
     "lifecycle": "active",
@@ -602,7 +602,16 @@
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — approval refuses open questions and non-human claims; representation additive"
       },
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "at": "2026-10-09T17:27:34Z",
+          "by": "agent:pi",
+          "notes": "144 passed, exit verified directly: approve_spec (zero-open-questions gate, human claim, at stamp, repeat refused), loom approve with house revision bump, date.approved {at,by} group emitted and dual-read, honest unknown blocks approval"
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -744,5 +753,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 17
+  "revision": 19
 }

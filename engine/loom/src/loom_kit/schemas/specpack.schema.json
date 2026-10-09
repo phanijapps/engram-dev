@@ -1058,6 +1058,12 @@
         "updated": {
           "type": "string",
           "title": "Machine-stamped at save (spec-layout D-3)"
+        },
+        "approved_at": {
+          "type": "string"
+        },
+        "approved_by": {
+          "type": "string"
         }
       },
       "required": [
@@ -1120,6 +1126,19 @@
             }
           },
           "additionalProperties": false
+        },
+        "approved": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "type": "string"
+            },
+            "by": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "title": "The approval act (spec-web D-11): the twin of closed"
         }
       },
       "additionalProperties": false

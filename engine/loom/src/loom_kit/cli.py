@@ -243,6 +243,19 @@ def cmd_answer(args) -> int:
     return 0
 
 
+def cmd_approve(args) -> int:
+    """specpack: the approval act — one normative owner acceptance of the spec."""
+    doc, path = specpack.load_specpack(args.directory)
+    if doc.get("revision", 1) != args.expected_revision:
+        print(f"REFUSED: stale writer — file is at revision {doc.get('revision', 1)}, caller expected {args.expected_revision}")
+        return 1
+    out = specpack.approve_spec(doc, args.by, at=args.at)
+    doc["revision"] = doc.get("revision", 1) + 1
+    specpack.save(doc, path)
+    print(f"approved {out['name']} by {out['approved_by']} at {out['approved_at']}")
+    return 0
+
+
 def cmd_reject(args) -> int:
     """Record owner rejection of a decision; the questions stay open (FR-8)."""
     doc, path = specpack.load_specpack(args.directory)
@@ -565,6 +578,12 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--at", help="override the timestamp (caller clock)")
     sp.add_argument("--expected-revision", type=int, default=None)
     sp.set_defaults(fn=cmd_answer)
+    sp = sub.add_parser("approve", help="specpack: the approval act — one normative owner acceptance of the spec (needs zero open questions)")
+    sp.add_argument("directory", type=Path)
+    sp.add_argument("--by", required=True, help="who approves (human:<owner>)")
+    sp.add_argument("--at", help="override the timestamp (caller clock)")
+    sp.add_argument("--expected-revision", type=int, default=None)
+    sp.set_defaults(fn=cmd_approve)
     sp = sub.add_parser("reject", help="record owner rejection of a decision (questions stay open)")
     sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--decision", required=True)
