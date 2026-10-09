@@ -1,159 +1,307 @@
 {
   "format": "specpack/0.3",
   "name": "status-model",
-  "title": "The status model and the entity levels: three tables, a bridge, a chain of custody",
+  "title": "The deliverable status: one machine-derived stage for the whole pack",
   "artifacts": {
-    "research": {"file": "research.md", "type": "text/markdown", "description": "Synthesis and devil's advocate over both briefs", "sha256": "b388c1b61cb21c3273194a1636c137f3ccb02ef83c1a59e822cdf0d4a24c663e"},
-    "msft": {"file": "brief-microsoft.md", "type": "text/markdown", "description": "Reviewer brief: Microsoft, Extending GitHub Spec Kit", "sha256": "51bb9536cb108d11e5ae1cb81d240130c7e8ccf933f5c8656e7029698972a5ec"},
-    "fowler": {"file": "brief-fowler.md", "type": "text/markdown", "description": "Reviewer brief: martinfowler.com, Kiro, spec-kit, and Tessl", "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"}
+    "research": {
+      "file": "research.md",
+      "type": "text/markdown",
+      "description": "Synthesis and devil's advocate over both briefs",
+      "sha256": "b388c1b61cb21c3273194a1636c137f3ccb02ef83c1a59e822cdf0d4a24c663e"
+    },
+    "msft": {
+      "file": "brief-microsoft.md",
+      "type": "text/markdown",
+      "description": "Reviewer brief: Microsoft, Extending GitHub Spec Kit",
+      "sha256": "51bb9536cb108d11e5ae1cb81d240130c7e8ccf933f5c8656e7029698972a5ec"
+    },
+    "fowler": {
+      "file": "brief-fowler.md",
+      "type": "text/markdown",
+      "description": "Reviewer brief: martinfowler.com, Kiro, spec-kit, and Tessl",
+      "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"
+    }
   },
   "spec": {
-    "why": "The owner could not read the status vocabulary page: one table mixed containers, node kinds, records, and reports. Field research shows the whole SDD tool landscape leaves statuses implicit; our machine-owned states are the differentiator, but the model under the page was never articulated. This initiative articulates it and rebuilds the page on it.",
+    "why": "The owner reads the generated pack JSON and cannot see where the overall deliverable stands: node-level statuses are everywhere, but the pack-level status is a near-mute active-or-complete record-lifecycle flag. The concern is the JSON, not the wiki. Two axes were collapsed: record lifecycle (mutable or frozen) and delivery progress (where the work is).",
     "stories": [
-      {"id": "US-1", "as": "a reader with GitHub Spec Kit experience", "want": "a bridge from the field's words (memory bank, constitution, spec, plan, tasks) to ours (wiki, pack, pack sections, node kinds)", "so": "I can map every term I know onto this system in one look"}
+      {
+        "id": "US-1",
+        "as": "a reader with GitHub Spec Kit experience",
+        "want": "a bridge from the field's words (memory bank, constitution, spec, plan, tasks) to ours (wiki, pack, pack sections, node kinds)",
+        "so": "I can map every term I know onto this system in one look"
+      }
     ],
     "requirements": [
       {
         "id": "FR-1",
-        "text": "The vocabulary page MUST be rebuilt as three tables that never mix kinds: entity kinds (what exists, what contains what), state machines (which kinds have states, who moves them), and reports (transient machine output). The word 'family' MUST NOT appear as a contract term.",
+        "text": "The pack MUST carry one machine-derived deliverable stage (drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded), computed as a total deterministic function of task states, decision states, question states, and review verdicts; written by the machine at every save; re-derived at load, and a mismatch between stored and derived stage MUST refuse the load naming both values.",
         "priority": "P1",
         "scenarios": [
-          {"id": "AC-1", "given": "the rebuilt page", "when": "a reader checks any table row", "then": "the row names one kind of thing only: a container, a node kind, a record, or a report; no table mixes them"}
+          {
+            "id": "AC-1",
+            "given": "any pack state",
+            "when": "the machine saves or loads it",
+            "then": "the stage field equals the derivation, and a hand-edited stage is refused"
+          }
         ]
       },
       {
         "id": "FR-2",
-        "text": "The page MUST carry a bridge table mapping the field vocabulary (memory bank, constitution, spec, plan, tasks, checklist) to this system's artifacts (wiki, AGENTS.md, pack, pack.spec, pack.plan, pack.tasks, coverage report), citing the research briefs.",
-        "priority": "P1",
-        "scenarios": [
-          {"id": "AC-2", "given": "the bridge table", "when": "a reader knows only the field words", "then": "every field word maps to a named artifact here or is marked absent with a reason"}
-        ]
+        "text": "loom status and loom next MUST report the deliverable stage as the headline line, with task counts (done, doing, todo, blocked) beside it.",
+        "priority": "P1"
       },
       {
         "id": "FR-3",
-        "text": "The guard MUST extend to the new tables: every state machine row equals the schema enums and the code constants, and every entity-kind row names a real schema definition or a real report path.",
+        "text": "An exhaustive guard test MUST drive every derivation branch and assert set equality between exercised stages and the documented vocabulary; the schema enum, the code constant, and the derivation must agree.",
         "priority": "P1"
       },
       {
         "id": "FR-4",
-        "text": "The chain of custody between packs MUST be decided by the owner: either packs gain a supersedes link (spec-anchored chain of custody, queryable reference lineage) or the absence is documented as a deliberate spec-first choice. The decision MUST be recorded before any implementation task runs.",
+        "text": "The superseded stage requires the supersedes link (Q-1). Until the owner decides, the stage exists in the vocabulary and the derivation omits it; the decision MUST be recorded before any implementation task for it runs.",
         "priority": "P2"
       }
     ],
     "constraints": [
-      {"id": "CON-1", "text": "No engine behavior changes: this wave is the model, the page, the bridge, and the guards. The frozen status-vocabulary pack is reference only."},
-      {"id": "CON-2", "text": "No accepted decisions at authoring: every decision ships proposed; the owner accepts or rejects after reading the research."}
+      {
+        "id": "CON-1",
+        "text": "No engine behavior changes: this wave is the model, the page, the bridge, and the guards. The frozen status-vocabulary pack is reference only."
+      },
+      {
+        "id": "CON-2",
+        "text": "No accepted decisions at authoring: every decision ships proposed; the owner accepts or rejects after reading the research."
+      }
     ],
     "clarifications": [
-      {"id": "Q-1", "question": "Should packs carry a supersedes link to the pack they replace, making the spec-anchored chain of custody explicit and queryable?", "status": "open", "owner": "human:owner", "resolved_by": "D-4"},
-      {"id": "Q-2", "question": "Should user-facing output adopt the field's words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system's vocabulary alone?", "status": "open", "owner": "human:owner"}
+      {
+        "id": "Q-1",
+        "question": "Should packs carry a supersedes link to the pack they replace, making the spec-anchored chain of custody explicit and queryable?",
+        "status": "open",
+        "owner": "human:owner",
+        "resolved_by": "D-4"
+      },
+      {
+        "id": "Q-2",
+        "question": "Should user-facing output adopt the field's words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system's vocabulary alone?",
+        "status": "open",
+        "owner": "human:owner"
+      }
     ],
     "out_of_scope": [
       "any change to loom commands, schemas, or state machines",
       "semantic search over complete packs (a future consumer)",
-      "spine mode"
+      "spine mode",
+      "rebuilding the wiki status vocabulary page: the owner states the wiki is fine (2026-10-09); D-1 and D-2 are rejected for this reason",
+      "the bridge table to field vocabulary (may return if the owner asks)"
     ]
   },
   "plan": {
-    "approach": "Rebuild the page on the three-table model, add the bridge with citations, extend the guards, and leave the supersedes question to the owner before T-3 runs.",
-    "stack": {"docs": "OKF wiki (curated concepts)", "guards": "pytest reading the schema and the page"},
+    "approach": "One derived field, verified like a checksum: derive, write on save, refuse on load mismatch. Headline reporting. Exhaustive branch guard. Supersedes stays gated on the owner.",
+    "stack": {
+      "docs": "OKF wiki (curated concepts)",
+      "guards": "pytest reading the schema and the page"
+    },
     "diagrams": [],
     "designs": [
       {
         "id": "DES-1",
-        "title": "Three tables: entity kinds, state machines, reports",
-        "kind": "data",
-        "detail": "Table 1 entity kinds: pack (container), node kinds US, FR, CON, Q, D, DES, T, DG (graph nodes), evidence (record on a task), verdict (record in review). Containment stated: the pack contains nodes; nodes carry records. Table 2 state machines: pack, task, decision, question; one row each with states, mover, terminality. Table 3 reports: the seven handout statuses, transient by construction. The DONE/complete layering is explained in prose: task done is an observed fact, pack complete is an owner verdict, handout statuses are per-run output.",
-        "addresses": ["FR-1"]
+        "title": "The deliverable stage derivation",
+        "kind": "flow",
+        "detail": "A pure function over the pack: delivered (pack complete) > superseded (a supersedes link names this pack; gated on Q-1) > blocked (any task blocked, none doing) > awaiting_owner (all tasks done, decisions pending or questions open) > in_review (all tasks done, owner work clean, no PACK PASS) > in_progress (any task doing) > planning (open questions, no task done or doing) > drafted (tasks exist, none started, no open questions). First match wins; the function is total. The field name is deliverable. The record lifecycle keeps the existing status field: two axes, two fields, both machine-owned.",
+        "addresses": [
+          "FR-1",
+          "FR-4"
+        ]
       },
       {
         "id": "DES-2",
-        "title": "The bridge table",
-        "kind": "interface",
-        "detail": "One table, one row per field word: memory bank -> wiki plus AGENTS.md; constitution -> AGENTS.md rules plus wiki domain pages; spec -> the pack (one file where the field uses many); plan -> pack.plan; tasks -> pack.tasks; checklist -> the coverage report and the A checks; branch-per-spec -> absent (packs are initiative-scoped and frozen, not branch-scoped). Absent entries say so and why. Citations to brief-fowler.md and brief-microsoft.md.",
-        "addresses": ["FR-2"]
+        "title": "Checksum discipline",
+        "kind": "flow",
+        "detail": "load_specpack re-derives the stage and compares with the stored value. A mismatch raises with both values: a hand-edited stage is corruption, and the machine fails closed. Saves always write the derivation, so the field can never lag the content it summarizes.",
+        "addresses": [
+          "FR-1"
+        ]
       },
       {
         "id": "DES-3",
-        "title": "Guards over the new tables",
-        "kind": "data",
-        "detail": "The existing schema-equality guard keeps covering table 2. A new page guard parses the wiki page and asserts: every state machine row's status set equals its constant; every entity-kind row names a schema definition (or a documented report path); the word 'family' does not occur as a contract term.",
-        "addresses": ["FR-3"]
+        "title": "Headline reporting",
+        "kind": "interface",
+        "detail": "loom status first line: the deliverable stage plus counts, for example 'deliverable: in_progress (3 done, 1 doing, 2 todo, 0 blocked)'. loom next prints the same line before any task output. The wiki page gains one row for the new family only if the owner asks for page work later.",
+        "addresses": [
+          "FR-2"
+        ]
       }
     ],
     "decisions": [
-      {"id": "D-1", "decision": "The status model is three tables (entity kinds, state machines, reports), never one mixed list.", "because": "The one-table page committed a category error: containers, node kinds, records, and reports presented as parallel 'families'. The owner's confusion was the correct review finding.", "status": "proposed"},
-      {"id": "D-2", "decision": "The page carries a bridge from the field's vocabulary, with absences marked and reasoned.", "because": "The field's words (spec, plan, tasks, constitution) are the priors most readers arrive with; Fowler and the Microsoft article both use them. A contract page that cannot be entered from the field's vocabulary excludes its own audience.", "status": "proposed"},
-      {"id": "D-3", "decision": "Machine-owned states stay, now with field evidence as the justification.", "because": "Fowler documents the failure of AI-interpreted checklists ('no 100% guarantee', duplicate generation). Our transitions move only through loom commands. This is the differentiator, restated on evidence.", "status": "proposed"},
-      {"id": "D-4", "decision": "Packs gain a supersedes link to the pack they replace, making the chain of custody queryable (spec-anchored).", "because": "Complete packs are frozen reference; evolution opens a new pack. Today the new pack points at nothing, so lineage dies at exactly the point the field says matters over time. Fowler's spec-anchored level is this, named.", "resolves": ["Q-1"], "status": "proposed"}
+      {
+        "id": "D-1",
+        "decision": "Rebuild the vocabulary page as three tables.",
+        "because": "The one-table page mixed kinds.",
+        "status": "rejected",
+        "rejected_because": "Owner, 2026-10-09: the wiki is fine; the concern is the pack JSON."
+      },
+      {
+        "id": "D-2",
+        "decision": "The page carries a bridge from the field vocabulary.",
+        "because": "Readers arrive with Spec Kit priors.",
+        "status": "rejected",
+        "rejected_because": "Owner, 2026-10-09: same directive; the wiki is not the concern."
+      },
+      {
+        "id": "D-3",
+        "decision": "Machine-owned states stay, with field evidence as justification.",
+        "because": "Fowler documents AI-interpreted checklist failure; transitions move only through loom commands.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-4",
+        "decision": "Packs gain a supersedes link; the superseded stage rides it.",
+        "because": "Complete packs are frozen reference; today a new pack points at nothing, so lineage dies.",
+        "resolves": [
+          "Q-1"
+        ],
+        "status": "proposed"
+      },
+      {
+        "id": "D-5",
+        "decision": "The deliverable stage is machine-derived and checksum-verified, never owner-set.",
+        "because": "An owner-set stage duplicates derived truth and drifts; the two axes (record lifecycle, delivery progress) get two fields: status stays lifecycle, deliverable carries progress.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-6",
+        "decision": "Stage vocabulary: drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded.",
+        "because": "One word one meaning; each stage is separable by action: blocked needs a re-plan or unblock, awaiting_owner needs verdicts, in_review needs the closing PASS.",
+        "status": "proposed"
+      }
     ],
     "data": [],
     "structure": [
-      "wiki/domain/specpack-status-vocabulary.md",
-      "engine/loom/tests/test_specpack_status.py"
+      "engine/loom/src/loom_kit/specpack.py",
+      "engine/loom/src/loom_kit/cli.py",
+      "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+      "engine/loom/tests/test_specpack_deliverable.py"
     ]
   },
   "tasks": [
     {
       "id": "T-1",
-      "title": "Rebuild the vocabulary page as three tables",
-      "detail": "Per DES-1: replace the one-family table with entity kinds (with containment), state machines (with movers and terminality), and reports (transient). Explain done versus DONE versus complete in prose under the tables. Remove 'family' as a contract term. Keep the extension rule (schema enum, constant plus guard, table row).",
+      "title": "Deliverable stage: derivation, field, load refusal",
+      "detail": "Per DES-1 and DES-2: derive_deliverable(doc) pure function (stages per D-6, superseded omitted until Q-1); every machine save writes it; load_specpack re-derives and refuses on mismatch naming both values; schema gains the optional deliverable enum. Tests: one fixture per branch, mismatch refusal, save-then-load roundtrip.",
       "phase": "core",
       "needs": [],
-      "implements": ["DES-1"],
-      "satisfies": ["FR-1"],
-      "accepts": ["AC-1"],
-      "honors": ["CON-1"],
-      "produces": ["wiki/domain/specpack-status-vocabulary.md"],
-      "verify": {"cmd": "cd /home/videogamer/code/memex_beta && uv run okf validate wiki && uv run okf anchors wiki", "expect": "exit 0 — conformant, anchors resolve, no NEEDS_REVIEW"},
-      "parallel": true,
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-1"
+      ],
+      "accepts": [
+        "AC-1"
+      ],
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json",
+        "engine/loom/tests/test_specpack_deliverable.py"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 every derivation branch, mismatch refusal, roundtrip; suite green"
+      },
+      "parallel": false,
       "status": "todo"
     },
     {
       "id": "T-2",
-      "title": "Add the bridge table and cross-links",
-      "detail": "Per DES-2: the bridge table with one row per field word, absences marked and reasoned, citations to the two briefs. Cross-link from the page to wiki-contract (memory bank seat) and from the loom engine page to the bridge.",
-      "phase": "core",
-      "needs": [],
-      "implements": ["DES-2"],
-      "satisfies": ["FR-2"],
-      "accepts": ["AC-2"],
-      "honors": ["CON-1"],
-      "produces": ["wiki/domain/specpack-status-vocabulary.md", "wiki/systems/loom-engine.md"],
-      "verify": {"cmd": "cd /home/videogamer/code/memex_beta && uv run okf validate wiki", "expect": "exit 0 — links resolve, conformant"},
-      "parallel": true,
+      "title": "Headline reporting in status and next",
+      "detail": "Per DES-3: loom status prints the deliverable stage plus counts as the first line; loom next prints the same line before task output; both --json paths include the field.",
+      "phase": "integration",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-2"
+      ],
+      "accepts": [],
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/cli.py",
+        "engine/loom/tests/test_specpack_deliverable.py"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_deliverable.py tests/test_specpack_cli.py",
+        "expect": "exit 0 \u2014 headline asserted in human and json paths"
+      },
+      "parallel": false,
       "status": "todo"
     },
     {
       "id": "T-3",
-      "title": "Extend the guards to the new tables",
-      "detail": "Per DES-3: page guard in test_specpack_status.py that parses the wiki page: every state-machine row equals its constant tuple; every entity-kind row names a schema definition or a documented report path; 'family' absent as a contract term. Schema-equality guard keeps covering the state machines.",
+      "title": "Exhaustive guard for the stage vocabulary",
+      "detail": "Per FR-3: extend the status guard family: schema enum equals the code constant; an exhaustive fixture drives every branch of derive_deliverable and asserts set equality with the documented vocabulary (minus superseded until Q-1).",
       "phase": "integration",
-      "needs": ["T-1", "T-2"],
-      "implements": ["DES-3"],
-      "satisfies": ["FR-3"],
+      "needs": [
+        "T-1"
+      ],
+      "implements": [],
+      "satisfies": [
+        "FR-3"
+      ],
       "accepts": [],
-      "honors": ["CON-1"],
-      "produces": ["engine/loom/tests/test_specpack_status.py"],
-      "verify": {"cmd": "cd engine/loom && uv run pytest -q", "expect": "exit 0 — page guard green, suite green"},
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/tests/test_specpack_status.py"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q tests/test_specpack_status.py",
+        "expect": "exit 0 \u2014 set equality, guard can fail"
+      },
       "parallel": false,
       "status": "todo"
     },
     {
       "id": "T-4",
-      "title": "Record the owner verdict on supersedes; act or close it out",
-      "detail": "GATED on Q-1: this task stays blocked until the owner accepts or rejects D-4. If accepted, record the decision and open a new engine pack for the supersedes field (schema enum-adjacent addition, loader, status output, guards); if rejected, record the rejection with the spec-first rationale on this page's bridge table and cancel this task with that reason.",
+      "title": "superseded stage and the supersedes link",
+      "detail": "GATED on Q-1 (stays blocked until the owner decides D-4). If accepted: schema gains supersedes (pack name reference), derivation adds the superseded stage (checked when another pack names this one), status shows it. If rejected: record the rejection, keep the stage out of the vocabulary, cancel with the recorded reason.",
       "phase": "integration",
-      "needs": ["T-1", "T-2"],
-      "implements": [],
-      "satisfies": ["FR-4"],
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
+        "FR-4"
+      ],
       "accepts": [],
-      "honors": ["CON-2"],
-      "produces": ["docs/specs/status-model/specpack.json"],
-      "verify": {"cmd": "cd /home/videogamer/code/memex_beta && uv run loom status docs/specs/status-model && uv run loom check docs/specs/status-model", "expect": "exit 0 — Q-1 resolved, D-4 dispositioned, no dangling task"},
+      "honors": [
+        "CON-2"
+      ],
+      "produces": [
+        "engine/loom/src/loom_kit/specpack.py",
+        "engine/loom/src/loom_kit/schemas/specpack.schema.json"
+      ],
+      "verify": {
+        "cmd": "cd engine/loom && uv run pytest -q",
+        "expect": "exit 0 \u2014 per the owner verdict on Q-1"
+      },
       "parallel": false,
       "status": "blocked"
     }
   ],
-  "review": {"checklist": "red-foreman", "verdicts": []}
+  "review": {
+    "checklist": "red-foreman",
+    "verdicts": []
+  }
 }
