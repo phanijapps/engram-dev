@@ -230,6 +230,18 @@ def cmd_close(args) -> int:
     return 0
 
 
+def cmd_answer(args) -> int:
+    """specpack: land a question's answer (or honest unknown) with a human claim."""
+    doc, path = specpack.load_specpack(args.directory)
+    if doc.get("revision", 1) != args.expected_revision:
+        print(f"REFUSED: stale writer — file is at revision {doc.get('revision', 1)}, caller expected {args.expected_revision}")
+        return 1
+    q = specpack.answer_question(doc, args.q, args.by, text=args.text, unknown=args.unknown, at=args.at)
+    specpack.save(doc, path)
+    print(f"answered {q['id']} by {args.by}" + (" (unknown — still open, still gating)" if q.get("unknown") else ""))
+    return 0
+
+
 def cmd_reject(args) -> int:
     """Record owner rejection of a decision; the questions stay open (FR-8)."""
     doc, path = specpack.load_specpack(args.directory)
@@ -543,6 +555,15 @@ def main(argv: list[str] | None = None) -> int:
     sp.add_argument("--by", required=True, help="who accepts; must be human:<owner>")
     sp.add_argument("--expected-revision", type=int, required=True, help="write fence: the revision you last saw")
     sp.set_defaults(fn=cmd_accept)
+    sp = sub.add_parser("answer", help="specpack: land a question's answer (or honest unknown) with a human claim")
+    sp.add_argument("directory", type=Path)
+    sp.add_argument("--q", required=True, help="question id (Q-...)")
+    sp.add_argument("--text", help="the answer text")
+    sp.add_argument("--unknown", action="store_true", help="record an honest unknown; the question stays open")
+    sp.add_argument("--by", required=True, help="who answers (human:<owner>)")
+    sp.add_argument("--at", help="override the timestamp (caller clock)")
+    sp.add_argument("--expected-revision", type=int, default=None)
+    sp.set_defaults(fn=cmd_answer)
     sp = sub.add_parser("reject", help="record owner rejection of a decision (questions stay open)")
     sp.add_argument("directory", help="initiative directory (the spec json)")
     sp.add_argument("--decision", required=True)

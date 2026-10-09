@@ -5,6 +5,8 @@ description: Build and maintain a project knowledge base (wiki) from an existing
 
 # build-kb — build the project knowledge base
 
+> use `writer` skill for compiling text.
+
 The project wiki is an **OKF bundle at `<repo>/wiki/`** — concepts as
 Markdown, git-versioned with the code. All engine operations go through
 the **`okf` CLI** (run from the repo root; `uv run okf …`). Never hand-edit generated sections inside `wiki/code/**`.

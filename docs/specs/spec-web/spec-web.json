@@ -4,11 +4,11 @@
   "description": "The spec interview page: loom interview renders the spec and collects the owner's answers",
   "date": {
     "created": "2026-10-09",
-    "updated": "2026-10-09T17:04:42Z"
+    "updated": "2026-10-09T17:25:42Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "in_progress"
   },
   "metadata": {
     "brief": {
@@ -561,7 +561,16 @@
         "cmd": "cd engine/loom && uv run pytest -q",
         "expect": "exit 0 — vocabulary additive, answer admits with human claims, suite green"
       },
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd engine/loom && uv run pytest -q",
+          "exit": 0,
+          "at": "2026-10-09T17:25:42Z",
+          "by": "agent:pi",
+          "notes": "137 passed: answer_question admission (human claim, at stamp, honest unknown keeps gating), loom answer CLI with revision fence, clarification schema additive (kind/options/default/answered_by/answered_at/unknown). One authoring slip fixed pre-record: parser key fn not func."
+        }
+      ]
     },
     {
       "id": "T-2",
@@ -735,5 +744,5 @@
     "toolchain": "uv + Python 3.12+"
   },
   "format": "specpack/0.3",
-  "revision": 15
+  "revision": 17
 }

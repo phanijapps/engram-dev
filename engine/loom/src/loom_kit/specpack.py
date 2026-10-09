@@ -417,6 +417,32 @@ def closure_gaps(doc: dict) -> dict:
     return {"pending_decisions": pending, "open_questions": openq, "review_pass": review_pass}
 
 
+def answer_question(doc: dict, question_id: str, by: str, *, text: str | None = None, unknown: bool = False, at: str | None = None) -> dict:
+    """Land a question's answer (FR-3): the admission path questions never
+    had. A human claim is required; the honest unknown keeps blocking."""
+    _assert_mutable(doc)
+    if not str(by).startswith("human:"):
+        raise LoomError("an answer needs a human claim: pass --by human:<owner> (A7 shape check)")
+    q = next((c for c in doc["spec"].get("clarifications", []) if c["id"] == question_id), None)
+    if q is None:
+        raise LoomError(f"{question_id}: no such question")
+    if q.get("status") == "resolved":
+        raise LoomError(f"{question_id}: already resolved ({q.get('resolved_by') or q.get('answer', 'answered')})")
+    stamp = at or _now()
+    if unknown:
+        q["answer"] = "(unknown)"
+        q["unknown"] = True
+        # status stays open: the honest unknown still gates closure
+    else:
+        if not (text or "").strip():
+            raise LoomError("answer text is empty: pass --text or --unknown")
+        q["answer"] = text.strip()
+        q["status"] = "resolved"
+    q["answered_by"] = by
+    q["answered_at"] = stamp
+    return q
+
+
 def _decision(doc: dict, decision_id: str) -> dict:
     for d in doc["plan"].get("decisions", []):
         if d["id"] == decision_id:

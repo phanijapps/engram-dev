@@ -271,6 +271,37 @@
         "resolved_by": {
           "type": "string",
           "pattern": "^D-[A-Za-z0-9-]+$"
+        },
+        "kind": {
+          "enum": [
+            "open",
+            "choice"
+          ],
+          "title": "v1 kinds (D-14): open text or choice"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Choice options (kind=choice)"
+        },
+        "default": {
+          "type": "string",
+          "title": "Preselected option"
+        },
+        "answered_by": {
+          "type": "string",
+          "title": "Who answered (human claim)"
+        },
+        "answered_at": {
+          "type": "string",
+          "title": "When the answer landed"
+        },
+        "unknown": {
+          "type": "boolean",
+          "title": "The honest unknown: answered, still blocking"
         }
       },
       "required": [
