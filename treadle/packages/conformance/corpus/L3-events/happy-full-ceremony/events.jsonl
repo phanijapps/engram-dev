@@ -1,0 +1,3 @@
+{"kind": "choice", "q": "Q-1", "option": "b", "text": "b", "by": "human:owner"}
+{"kind": "answer", "q": "Q-2", "text": "because I said so", "by": "human:owner"}
+{"kind": "approve", "by": "human:owner"}

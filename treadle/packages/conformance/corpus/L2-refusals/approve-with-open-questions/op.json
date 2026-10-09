@@ -1,0 +1,6 @@
+{
+  "op": "approve",
+  "args": {
+    "by": "human:owner"
+  }
+}

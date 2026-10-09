@@ -37,12 +37,12 @@ ways, all verified in source:
 
 ## Enforcement levels
 
-| Field                                    | Enforcement                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------ |
-| touch                                    | pinned by machine at handout; drift refuses handout (needs_rebase) |
-| read, wiki, links without sha256         | advisory                                                           |
-| links with sha256, artifacts with sha256 | verified at handout; mismatch refuses                              |
-| notes                                    | none; promote-to-node rule when load-bearing                       |
+| Field | Enforcement |
+|---|---|
+| touch | pinned by machine at handout; drift refuses handout (needs_rebase) |
+| read, wiki, links without sha256 | advisory |
+| links with sha256, artifacts with sha256 | verified at handout; mismatch refuses |
+| notes | none; promote-to-node rule when load-bearing |
 
 Paths in touch/read are relative to the git root containing the pack.
 Artifact paths stay relative to the pack file (0.2 rule).

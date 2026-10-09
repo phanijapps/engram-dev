@@ -29,3 +29,22 @@ export {
   type Admitted,
   type Admission,
 } from './refusals.js';
+
+export {
+  normalize,
+  emit,
+  emitBytes,
+  CANONICAL_ORDER,
+  deriveStage,
+  closureGaps,
+  answerQuestion,
+  approveSpec,
+  loadPack,
+  type PackDoc,
+  type Question,
+  type Decision,
+  type Task,
+  type ClosureGaps,
+  type AnswerStamp,
+  type ApproveStamp,
+} from './specpack/index.js';
