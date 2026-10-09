@@ -1,7 +1,7 @@
 # Feature Brief — the Spec interview page (`loom interview`)
 
-Status: brief accepted input (Q&A resolved 2026-10-10)
-Date: 2026-10-10
+Status: brief accepted input (Q&A resolved 2026-10-09)
+Date: 2026-10-09
 Chain position: Feature Brief (this file, markdown) -> Spec (JSON, born
 next from this brief) -> Design -> Tasks.
 

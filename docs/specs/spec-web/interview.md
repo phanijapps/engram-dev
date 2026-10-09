@@ -1,7 +1,7 @@
 # Interview register — spec-web brief (pre-brief Q&A)
 
-Status: resolved (one batched round, 2026-10-10)
-Date: 2026-10-10
+Status: resolved (one batched round, 2026-10-09)
+Date: 2026-10-09
 
 Rules: each question is decision-shaped. Options carry a recommendation
 and a door rating (one-way doors need more care than two-way). Answers
@@ -20,7 +20,7 @@ land in the brief as accepted input, quoted with owner attribution.
 | Q-9 | Creative cuts for v1 (ranked list) | v1 size | two-way |
 | Q-10 | Surface lifespan: spec ceremony only, or whole initiative | scope | two-way |
 
-## Answers (owner, 2026-10-10)
+## Answers (owner, 2026-10-09)
 
 - Q-1: **a** — full chain; the brief is a finalized markdown input in v1.
 - Q-2: **accepts `loom interview`**, with a condition: the surface must

@@ -1,11 +1,11 @@
 # Research — presenting the Spec on the web (pre-brief)
 
 Status: analysis (evidence-grounded, read-only)
-Date: 2026-10-10
+Date: 2026-10-09
 Initiative: spec-web (slug provisional, see Q-1)
 repo_head pinned at commit time (see git log).
 
-## 1. What crit.md does and how (fetched 2026-10-10)
+## 1. What crit.md does and how (fetched 2026-10-09)
 
 Source: https://crit.md/ (landing page, fetched via curl, 107 KB HTML).
 Evidence status: implementation-supported (their public description; their
