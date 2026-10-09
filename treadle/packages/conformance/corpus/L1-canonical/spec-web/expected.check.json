@@ -1,0 +1,132 @@
+{
+  "coverage": {
+    "AC": {
+      "AC-12": [
+        "T-4"
+      ],
+      "AC-13": [
+        "T-4"
+      ],
+      "AC-14": [
+        "T-1"
+      ],
+      "AC-15": [
+        "T-1"
+      ],
+      "AC-16": [
+        "T-2"
+      ],
+      "AC-17": [
+        "T-3"
+      ],
+      "AC-18": [
+        "T-6"
+      ]
+    },
+    "DES": {
+      "DES-1": [
+        "T-3"
+      ],
+      "DES-2": [
+        "T-5"
+      ],
+      "DES-3": [
+        "T-6"
+      ],
+      "DES-4": [
+        "T-2"
+      ],
+      "DES-5": [
+        "T-4"
+      ],
+      "DES-6": [
+        "T-1"
+      ]
+    },
+    "FR": {
+      "FR-1": [
+        "T-4",
+        "T-4 (via DES-5)"
+      ],
+      "FR-2": [
+        "T-1",
+        "T-1 (via DES-6)"
+      ],
+      "FR-3": [
+        "T-1",
+        "T-1 (via DES-6)"
+      ],
+      "FR-4": [
+        "T-2",
+        "T-2 (via DES-4)"
+      ],
+      "FR-5": [
+        "T-4",
+        "T-4 (via DES-5)"
+      ],
+      "FR-6": [
+        "T-3",
+        "T-3 (via DES-1)"
+      ],
+      "FR-7": [
+        "T-5",
+        "T-5 (via DES-2)"
+      ],
+      "FR-8": [
+        "T-4",
+        "T-4 (via DES-5)"
+      ],
+      "FR-9": [
+        "T-6",
+        "T-6 (via DES-3)"
+      ]
+    },
+    "US": {
+      "AC-1": [
+        "T-4"
+      ],
+      "AC-10": [
+        "T-6"
+      ],
+      "AC-11": [
+        "T-6"
+      ],
+      "AC-2": [
+        "T-1"
+      ],
+      "AC-3": [
+        "T-4"
+      ],
+      "AC-4": [
+        "T-2"
+      ],
+      "AC-5": [
+        "T-2"
+      ],
+      "AC-6": [
+        "T-2"
+      ],
+      "AC-7": [
+        "T-5"
+      ],
+      "AC-8": [
+        "T-3"
+      ],
+      "AC-9": [
+        "T-5"
+      ]
+    },
+    "context": {
+      "env_absent": false,
+      "long_notes": [],
+      "missing_detail": [],
+      "missing_touch": [],
+      "open_questions": []
+    },
+    "story_drift": {
+      "requirements_without_stories": [],
+      "stories_unserved": []
+    }
+  },
+  "violations": []
+}

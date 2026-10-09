@@ -11,6 +11,7 @@ import {
   emitBytes,
   loadPack,
   nextTask,
+  alignment,
   record,
   type PackDoc,
 } from '@treadle/core';
@@ -157,9 +158,26 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
     const expected = read(dir, 'expected.emit.json');
     if (!expected) return { case: tag, layer, ok: false, detail: 'missing expected.emit.json' };
     const actual = emitBytes(loaded.value); // emit-only: no stamp, byte-faithful
-    return actual === expected
-      ? { case: tag, layer, ok: true }
-      : { case: tag, layer, ok: false, detail: firstDiff(actual, expected) };
+    if (actual !== expected) {
+      return { case: tag, layer, ok: false, detail: firstDiff(actual, expected) };
+    }
+    const expectedCheck = read(dir, 'expected.check.json');
+    if (expectedCheck !== null) {
+      const a = alignment(loaded.value);
+      if (!a.ok) return { case: tag, layer, ok: false, detail: a.message };
+      const b = JSON.parse(expectedCheck);
+      const av = canon({ violations: a.value.violations, coverage: a.value.coverage });
+      const bv = canon(b);
+      return av === bv
+        ? { case: tag, layer, ok: true }
+        : {
+            case: tag,
+            layer,
+            ok: false,
+            detail: 'check mismatch:\n  ' + av.slice(0, 500) + '\nvs\n  ' + bv.slice(0, 500),
+          };
+    }
+    return { case: tag, layer, ok: true };
   }
 
   if (layer === 'L2-refusals') {

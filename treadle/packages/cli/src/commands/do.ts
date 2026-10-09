@@ -6,9 +6,11 @@
  */
 import type { Command } from 'commander';
 import {
+  alignment,
   answerQuestion,
   approveSpec,
   closePack,
+  gapCount,
   loadPackWithMeta,
   nextTask,
   record,
@@ -161,6 +163,18 @@ export function registerDo(doCmd: Command): void {
         console.log(`closed by ${opts.by}: the record is frozen`);
       }),
     );
+
+  doCmd.command('check <packDir>').action(
+    guarded((l) => {
+      const a = alignment(l.doc);
+      if (!a.ok) return fail(a.message);
+      for (const v of a.value.violations) console.log(`VIOLATION: ${v}`);
+      console.log(
+        `alignment: ${a.value.violations.length} violation(s), ${gapCount(a.value)} gap(s) — gaps are reported, never guessed`,
+      );
+      if (a.value.violations.length) process.exitCode = 1;
+    }),
+  );
 
   doCmd.command('status <packDir>').action(
     guarded((l) => {

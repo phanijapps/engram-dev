@@ -1,0 +1,113 @@
+{
+  "coverage": {
+    "AC": {
+      "AC-1": [
+        "T-1"
+      ],
+      "AC-2": [
+        "T-2"
+      ],
+      "AC-3": [
+        "T-3"
+      ],
+      "AC-4": [
+        "T-8"
+      ],
+      "AC-5": [
+        "T-9"
+      ]
+    },
+    "DES": {
+      "DES-1": [
+        "T-1",
+        "T-5"
+      ],
+      "DES-2": [
+        "T-2"
+      ],
+      "DES-3": [
+        "T-3"
+      ],
+      "DES-4": [
+        "T-4"
+      ],
+      "DES-5": [
+        "T-6"
+      ],
+      "DES-6": [
+        "T-8"
+      ],
+      "DES-7": [
+        "T-9"
+      ]
+    },
+    "FR": {
+      "FR-1": [
+        "T-1",
+        "T-1 (via DES-1)",
+        "T-5 (via DES-1)"
+      ],
+      "FR-10": [
+        "T-10"
+      ],
+      "FR-2": [
+        "T-2",
+        "T-2 (via DES-2)"
+      ],
+      "FR-3": [
+        "T-3",
+        "T-3 (via DES-3)"
+      ],
+      "FR-4": [
+        "T-4",
+        "T-4 (via DES-4)"
+      ],
+      "FR-5": [
+        "T-1 (via DES-1)",
+        "T-5",
+        "T-5 (via DES-1)"
+      ],
+      "FR-6": [
+        "T-6",
+        "T-6 (via DES-5)"
+      ],
+      "FR-7": [
+        "T-7"
+      ],
+      "FR-8": [
+        "T-8",
+        "T-8 (via DES-6)"
+      ],
+      "FR-9": [
+        "T-9",
+        "T-9 (via DES-7)"
+      ]
+    },
+    "US": {},
+    "context": {
+      "env_absent": false,
+      "long_notes": [],
+      "missing_detail": [],
+      "missing_touch": [],
+      "open_questions": []
+    },
+    "story_drift": {
+      "requirements_without_stories": [
+        "FR-1",
+        "FR-10",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9"
+      ],
+      "stories_unserved": [
+        "US-1"
+      ]
+    }
+  },
+  "violations": []
+}

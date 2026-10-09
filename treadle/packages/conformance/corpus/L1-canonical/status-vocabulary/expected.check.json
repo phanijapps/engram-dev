@@ -1,0 +1,54 @@
+{
+  "coverage": {
+    "AC": {
+      "AC-1": [
+        "T-1"
+      ],
+      "AC-2": [
+        "T-1"
+      ],
+      "AC-3": [
+        "T-1"
+      ]
+    },
+    "DES": {
+      "DES-1": [
+        "T-1"
+      ],
+      "DES-2": [
+        "T-1"
+      ]
+    },
+    "FR": {
+      "FR-1": [
+        "T-1",
+        "T-1 (via DES-1)"
+      ],
+      "FR-2": [
+        "T-1",
+        "T-1 (via DES-2)"
+      ],
+      "FR-3": [
+        "T-1 (via DES-2)",
+        "T-2"
+      ]
+    },
+    "US": {},
+    "context": {
+      "env_absent": true,
+      "long_notes": [],
+      "missing_detail": [],
+      "missing_touch": [],
+      "open_questions": []
+    },
+    "story_drift": {
+      "requirements_without_stories": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "stories_unserved": []
+    }
+  },
+  "violations": []
+}

@@ -177,3 +177,18 @@ describe('do next (the frozen handout)', () => {
     expect(loaded.ok && loaded.value.revision).toBe(2);
   });
 });
+
+describe('do check', () => {
+  it('reports the house sentence and exits clean on a conforming pack', () => {
+    const d = bornPack();
+    const lines: string[] = [];
+    const orig = console.log;
+    console.log = (m: string) => lines.push(m);
+    try {
+      run(['do', 'check', d]);
+    } finally {
+      console.log = orig;
+    }
+    expect(lines.some((l) => l.startsWith('alignment:'))).toBe(true);
+  });
+});
