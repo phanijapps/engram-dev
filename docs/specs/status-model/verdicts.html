@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<title>status-model: your verdicts</title>
+<style>
+ body { font-family: system-ui, sans-serif; max-width: 780px; margin: 2rem auto; padding: 0 1rem; color: #1a1a1a; }
+ h1 { font-size: 1.4rem; }
+ .card { border: 1px solid #ccc; border-radius: 8px; padding: 1rem 1.2rem; margin: 1rem 0; }
+ h3 { margin: 0 0 .5rem; font-size: 1.05rem; }
+ .q, .dec { font-size: 1rem; }
+ .because { color: #555; font-size: .9rem; }
+ .meta { color: #777; font-size: .85rem; }
+ .rec { color: #047857; font-size: .85rem; }
+ label { display: block; margin-top: .6rem; font-size: .9rem; color: #444; }
+ textarea { width: 100%; box-sizing: border-box; font: inherit; margin-top: .3rem; }
+ .choice label { display: inline-block; margin-right: 1.5rem; font-size: 1rem; color: #1a1a1a; }
+ button { font-size: 1rem; padding: .6rem 1.2rem; margin: 1rem 0; cursor: pointer; }
+ #out { width: 100%; box-sizing: border-box; height: 14rem; font-family: ui-monospace, monospace; font-size: .85rem; }
+ .hint { background: #f3f4f6; padding: .6rem .9rem; border-radius: 6px; font-size: .9rem; }
+</style></head><body>
+<h1>Your verdicts: status-model pack</h1>
+<p class="hint">Fill in, click <b>Build reply</b>, copy the block, and paste it back into the chat.
+The machine applies exactly what the block says. Empty answers mean "no answer yet" and stay open.</p>
+<h2>Open questions</h2>
+
+    <section class="card">
+      <h3>Question Q-1</h3>
+      <p class="q">Should packs carry a supersedes link to the pack they replace, making the spec-anchored chain of custody explicit and queryable?</p>
+      <p class="meta">Owner: human:owner · related decision: D-4</p>
+      <label>Your answer <textarea name="answer-Q-1" rows="3" placeholder="Your answer in your words"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Question Q-2</h3>
+      <p class="q">Should user-facing output adopt the field&#x27;s words (spec, plan, tasks) alongside ours (pack, pack sections), or keep this system&#x27;s vocabulary alone?</p>
+      <p class="meta">Owner: human:owner</p>
+      <label>Your answer <textarea name="answer-Q-2" rows="3" placeholder="Your answer in your words"></textarea></label>
+    </section>
+<h2>Proposed decisions</h2>
+
+    <section class="card">
+      <h3>Decision D-3 <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">Machine-owned states stay, with field evidence as justification.</p>
+      <p class="because">Because: Fowler documents AI-interpreted checklist failure; transitions move only through loom commands.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-3" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-3" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-3" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Decision D-4 <span class="meta">resolves Q-1</span> <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">Packs gain a supersedes link; the superseded stage rides it.</p>
+      <p class="because">Because: Complete packs are frozen reference; today a new pack points at nothing, so lineage dies.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-4" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-4" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-4" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Decision D-5 <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">The deliverable stage is machine-derived and checksum-verified, never owner-set.</p>
+      <p class="because">Because: An owner-set stage duplicates derived truth and drifts; the two axes (record lifecycle, delivery progress) get two fields: status stays lifecycle, deliverable carries progress.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-5" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-5" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-5" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Decision D-6 <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">Stage vocabulary: drafted, planning, in_progress, blocked, awaiting_owner, in_review, delivered, superseded.</p>
+      <p class="because">Because: One word one meaning; each stage is separable by action: blocked needs a re-plan or unblock, awaiting_owner needs verdicts, in_review needs the closing PASS.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-6" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-6" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-6" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Decision D-8 <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">Stories gain acceptance criteria (given/when/then scenarios, AC- ids, same shape as requirement scenarios). Story done is its ACs met by done tasks: direct, owner-authored, machine-verified. Requirement scenarios stay for capability verification. Tasks accept ACs wherever they live; each AC keeps exactly one parent.</p>
+      <p class="because">Because: Atlassian 3 C&#x27;s: Confirmation (the AC) defines when the story is complete; the story and its AC are one unit. ACs are intent-altitude, requirement scenarios are solution-altitude. Owner direction with source, 2026-10-09.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-8" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-8" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-8" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+    <section class="card">
+      <h3>Decision D-9 <span class="rec">agent recommendation: accept</span></h3>
+      <p class="dec">The spec section anatomy is: why, stories (title, as/want/so, priority, independent_test, acceptance as given/when/then), edge_cases, requirements (plain MUST, serves a story, no scenarios), success_criteria, constraints, questions, assumptions, out_of_scope. Story done = its ACs met by done tasks.</p>
+      <p class="because">Because: Three primary sources agree on the load-bearing parts: ACs live on the story (Atlassian 3 C&#x27;s Confirmation; Spec Kit Acceptance Scenarios verbatim in templates/spec-template.md), priority and independent testability live on the story with the P1-alone-is-MVP rule (Spec Kit), requirements are plain MUST statements (Spec Kit FR-NNN, Kiro EARS), and success criteria and assumptions are spec-level sections we lack. Owner directive 2026-10-09: the spec, high level, codified.</p>
+      <div class="choice">
+        <label><input type="radio" name="d-D-9" value="accept" checked> accept</label>
+        <label><input type="radio" name="d-D-9" value="reject"> reject</label>
+      </div>
+      <label>If reject, or conditions on accept <textarea name="because-D-9" rows="2" placeholder="Why rejected, or any condition on the acceptance"></textarea></label>
+    </section>
+<button onclick="build()">Build reply</button>
+<textarea id="out" placeholder="The reply block appears here"></textarea>
+<script>
+function build() {
+  const out = [];
+  document.querySelectorAll('.card').forEach(c => {
+    const h = c.querySelector('h3').textContent.trim();
+    const t = [...c.querySelectorAll('textarea')].map(ta => ta.value.trim()).filter(Boolean);
+    const radios = [...c.querySelectorAll('input[type=radio]')].filter(r => r.checked);
+    const verdict = radios.length ? radios[0].value : '';
+    let line = h;
+    if (verdict) line += ' -> ' + verdict;
+    if (t.length) line += '\n  ' + t.map(x => 'note: ' + x).join('\n  ');
+    out.push(line);
+  });
+  document.getElementById('out').value = 'VERDICTS status-model\n\n' + out.join('\n\n');
+}
+</script>
+</body></html>
