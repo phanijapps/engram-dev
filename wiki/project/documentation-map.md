@@ -10,21 +10,27 @@ sources:
   - {"id": "s2", "resource": "treadle/packages/cli/src/harness/where.ts"}
   - {"id": "s3", "resource": "treadle/packages/knowledge/src/links.ts"}
   - {"id": "s4", "resource": "treadle/packages/knowledge/src/validate.ts"}
+  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Authority map — 2026-10-10
+
+The owner rejected D-2, the two-location research arrangement, and D-3,
+the historical retrospective backfills. The initial map below now carries
+these corrections. Research consolidation still needs a replacement design.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`.
 
 | Location | Authority | Wiki entry |
 | --- | --- | --- |
 | `wiki/systems`, `wiki/domain` | Current architecture and domain explanations | Section indexes |
 | `wiki/decisions` | Recorded decisions, alternatives, consequences, and supersession | Decisions index |
-| `wiki/research` | Interpretation and relevance of retained research inputs | Research index |
+| `wiki/research` | Current research reading home; full consolidation remains open | Research index |
 | `wiki/project` | Project overview, documentation boundaries, controls, and open gaps | Project index |
 | `wiki/initiatives` | Dated navigation to canonical work records | Initiatives index |
-| `wiki/retrospectives` | Dated outcome reports and proposed lessons | Retrospectives index |
+| `wiki/retrospectives` | The observed-session report and withdrawal notices for unavailable historical retrospectives | Retrospectives index |
 | `docs/specs/<slug>/` | Canonical analysis/design and executable specpack records | Initiative concepts |
 | `docs/product/` | Vendored OKF specification and specpack schema | Wiki contract and status pages |
-| `docs/research/` | Original dated research; retained for provenance and pinned references | Current wiki research interpretations |
+| `docs/research/` | Transitional source files; their duplication was rejected under D-2 | Research consolidation follow-up |
 | `docs/archive/` | Historical evidence and superseded text | Relevant concept history/source sections |
 | `docs/replays/` | Dated HTML replay and its captured verification | Documentation initiative and retrospective |
 | `docs/guide/index.html` | Installation walkthrough | Repository README |
@@ -32,8 +38,8 @@ sources:
 
 The complete file-level `docs/` disposition inventory is
 `docs/specs/documentation-consolidation/baseline.json`.
-It does not claim that every archived initiative has a new retrospective.
-This repair covers the four active-root completed packs.
+The four completed packs have factual initiative snapshots. Their generated
+retrospectives are withdrawn because the agent did not observe those sessions.
 
 # How to find evidence
 
@@ -52,3 +58,5 @@ No executable pack, frozen research, replay evidence, schema, or skill moved.
 Previously published explanations are preserved under
 `docs/archive/documentation/2026-10-10/`. Their links are period-correct history.
 A future root migration needs its own analysis and compatibility plan.
+The unchanged research paths describe current disk state, not an accepted
+research arrangement. One wiki research home is the consolidation objective.

@@ -12,9 +12,16 @@ sources:
   - {"id": "s4", "resource": "docs/specs/documentation-consolidation/baseline.json"}
   - {"id": "s5", "resource": "docs/replays/2026-10-10/index.html"}
   - {"id": "machine", "resource": "docs/specs/documentation-consolidation/documentation-consolidation.json"}
+  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Intent and artifacts
+
+The owner rejected D-2 and D-3 after review. D-4 is accepted; D-1 remains
+proposed. Historical retrospective interpretations are withdrawn. Research
+consolidation needs a replacement design. The initial repair below describes
+the earlier state, not acceptance of those rejected choices.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`.
 
 The owner requested current knowledge consolidated into the workspace wiki,
 easier spec tracking, and saved retrospectives. The analysis recommends retaining

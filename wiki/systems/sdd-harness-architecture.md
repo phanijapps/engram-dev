@@ -12,6 +12,7 @@ sources:
   - {"id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts"}
   - {"id": "s5", "resource": "treadle/packages/cli/src/harness/where.ts"}
   - {"id": "s6", "resource": "treadle/packages/knowledge/src/parse.ts"}
+  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Purpose and flow
@@ -23,10 +24,12 @@ Package membership is declared in `treadle/pnpm-workspace.yaml:1`.
 ```text
 repository → wiki sources → know search/read → bounded analysis
 analysis → design/task plan → specpack admission → evidence → review
-completed initiative → dated wiki retrospective → proposed lessons
+observed session → wiki retrospective → proposed lessons
+historical specpack → factual initiative snapshot
 ```
 
-The last arrow is the documentation arrangement of this repair.
+The owner rejected retrospective reconstruction from historical specpacks.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
 Automatic retrospective capture is not implemented.
 See [the lifecycle proposal](/project/documentation-lifecycle.md).
 

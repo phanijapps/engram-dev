@@ -1,5 +1,10 @@
 # Concepts
 
+Read current research through the pages below. The owner rejected the duplicate
+research locations under D-2. Standalone research files still exist; full
+consolidation into this wiki needs a replacement design.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`.
+
 - [EPIC — 40 practices for specification-driven development artifacts (arXiv 2610.07534)](epic-framework.md)
 - [Golden conformance: design lineage and current witness](golden-conformance-suite.md)
 - [Harness naming: dated research and the brand fence](harness-naming.md)

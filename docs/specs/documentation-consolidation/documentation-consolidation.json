@@ -4,7 +4,7 @@
   "description": "Consolidate workspace knowledge and preserve retrospectives",
   "date": {
     "created": "2026-10-10T20:28:49.896Z",
-    "updated": "2026-10-10T20:40:25Z",
+    "updated": "2026-10-10T20:51:56.686Z",
     "approved": {
       "at": "2026-10-10T20:40:25Z",
       "by": "human:owner"
@@ -49,6 +49,16 @@
       "ref": "machine-handoff-review.md",
       "type": "text/markdown",
       "description": "Independent review of the missing machine handoff correction"
+    },
+    "owner-decision-revision": {
+      "ref": "owner-decision-revision.md",
+      "type": "text/markdown",
+      "description": "Owner direction superseding the initial research and historical retrospective recommendations"
+    },
+    "owner-correction-review": {
+      "ref": "owner-correction-review.md",
+      "type": "text/markdown",
+      "description": "Actual independent review and current verification of owner-directed withdrawal"
     }
   },
   "spec": {
@@ -102,6 +112,20 @@
         "serves": [
           "US-1"
         ]
+      },
+      {
+        "id": "FR-8",
+        "text": "Supersede the retrospective portion of FR-3 and FR-4: withdraw the four historical retrospective interpretations, preserve rejected artifacts outside the wiki, and retain factual initiative snapshots.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-9",
+        "text": "Record the rejected two-location research arrangement and the unresolved replacement consolidation design; do not claim physical consolidation complete.",
+        "serves": [
+          "US-1"
+        ]
       }
     ],
     "clarifications": [],
@@ -142,19 +166,22 @@
         "id": "D-2",
         "decision": "Preserve research originals and consolidate current interpretation",
         "because": "Frozen source paths and historical evidence remain stable.",
-        "status": "proposed"
+        "status": "rejected",
+        "rejected_because": "The owner rejects two active research locations because they confuse readers. A replacement must provide one clear reading home."
       },
       {
         "id": "D-3",
         "decision": "Backfill dated retrospective reports; keep maintenance enforcement proposed",
         "because": "Record-based reports do not establish owner feedback or new normative acceptance.",
-        "status": "proposed"
+        "status": "rejected",
+        "rejected_because": "The owner rejects retrospective backfills: the agent has no knowledge of the past sessions. Pack records cannot substitute for session evidence."
       },
       {
         "id": "D-4",
         "decision": "Qualify freshness with independent documentation audit",
         "because": "The fingerprint scanner remains Python-only; runtime fixes are deferred.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "designs": [
@@ -171,6 +198,16 @@
           "FR-5",
           "FR-6",
           "FR-7"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Owner-directed withdrawal of unsupported historical retrospectives",
+        "kind": "mechanism",
+        "detail": "See owner-decision-revision.md. Archive rejected generated texts and leave withdrawal notices, preserve initiative record snapshots, and expose research consolidation as unresolved.",
+        "addresses": [
+          "FR-8",
+          "FR-9"
         ]
       }
     ],
@@ -374,6 +411,54 @@
           "notes": "Verified populated machine plan, zero alignment violations, discovery, owner fields unset, and Pi/Codex skill convergence. This is a workflow correction; it does not prove autonomous skill behavior or a green full-workspace gate."
         }
       ]
+    },
+    {
+      "id": "T-6",
+      "title": "Withdraw rejected historical retrospective interpretations and record research consolidation gap",
+      "detail": "Owner-directed correction; original tasks and verification remain historical observations.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-5"
+      ],
+      "satisfies": [
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-owner-correction.mjs",
+        "expect": "Owner dispositions match, withdrawn texts retain exact bytes, four current notices contain no session lessons, closed packs remain unchanged, and wiki sources/navigation/conformance pass."
+      },
+      "context": {
+        "touch": [
+          "wiki/retrospectives",
+          "wiki/initiatives",
+          "wiki/project/documentation-map.md",
+          "wiki/project/documentation-lifecycle.md",
+          "wiki/project/open-work.md",
+          "wiki/research/index.md",
+          "wiki/systems/sdd-harness-architecture.md",
+          "docs/archive/documentation/2026-10-10/withdrawn-retrospectives",
+          "docs/specs/documentation-consolidation"
+        ],
+        "notes": [
+          "Follow owner-decision-revision.md. D-1 stays proposed; D-2/D-3 stay rejected; D-4 stays accepted. No physical research migration or closure."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-owner-correction.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:49:43Z",
+          "by": "agent:codex",
+          "notes": "Withdrawn four unsupported historical retrospective interpretations; preserved rejected text bytes outside the live wiki; verified owner dispositions and 30 unchanged historical files. Research migration remains an unresolved replacement design."
+        }
+      ]
     }
   ],
   "review": {
@@ -383,6 +468,12 @@
         "verdict": "PASS",
         "by": "agent:replay_review",
         "note": "Independent red-foreman review of the bounded documentation and missing-machine-handoff correction: actual verdict PASS. Re-ran do check, verify-docs, and verify-machine-handoff with exit 0; checked final positional findings syntax against the CLI. See machine-handoff-review.md. Full check/coverage still fail the existing install-paths assumption; no full-workspace green, owner approval, decision acceptance, or closure is claimed."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Independent red-foreman review of owner-directed T-6 correction returned PASS; reran verify-owner-correction and do check with exit 0. See owner-correction-review.md. Four historical retrospective interpretations are withdrawn; D-2/D-3 rejected, D-4 accepted, D-1 remains proposed. Research consolidation is unresolved; full check/coverage retain the existing install-paths test failure. No closure is inferred."
       }
     ]
   },
@@ -393,5 +484,5 @@
     "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
   },
   "format": "specpack/0.3",
-  "revision": 15
+  "revision": 22
 }

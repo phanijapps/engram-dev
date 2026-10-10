@@ -11,9 +11,15 @@ sources:
   - { id: baseline, resource: docs/specs/documentation-consolidation/baseline.json }
   - { id: evidence, resource: docs/specs/documentation-consolidation/evidence.md }
   - { id: machine, resource: docs/specs/documentation-consolidation/documentation-consolidation.json }
+  - { id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md }
 ---
 
 # Intent and provenance
+
+This report covers the current observed session. The owner later rejected the
+historical retrospective backfills described in the initial repair below.
+Their interpretations are withdrawn; they cannot supply past session knowledge.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
 
 The owner wanted current workspace knowledge in the wiki, linked specs, and saved
 retrospectives. Author: `agent:codex`; observation date: 2026-10-10.
@@ -85,3 +91,13 @@ The browser recorded approval by `human:owner` at `2026-10-10T20:40:25Z`.
 Approval did not accept the four proposed decisions or close the pack.
 Source: `docs/specs/documentation-consolidation/documentation-consolidation.json:8`,
 `date.approved`, `design.decisions`, and `status`.
+
+# Owner correction — 2026-10-10
+
+The owner rejected D-2 because two research locations confuse readers.
+The owner rejected D-3 because the agent did not observe the past sessions.
+The earlier review's PASS did not establish the suitability of either choice.
+The agent withdrew four generated retrospective interpretations from current guidance.
+One research home in the wiki remains the objective; physical consolidation is still open.
+D-4, the independent audit, is accepted. D-1 remains proposed.
+Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`.

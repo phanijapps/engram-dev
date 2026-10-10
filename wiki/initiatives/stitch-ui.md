@@ -29,6 +29,7 @@ Canonical stage and evidence remain in the pack; this page is a dated projection
 
 # Connected knowledge
 
-Read [the dated retrospective](/retrospectives/2026-10-10-stitch-ui.md) for outcomes, corrections, and limits.
+A past session retrospective is [unavailable](/retrospectives/2026-10-10-stitch-ui.md).
+The generated interpretation was withdrawn after owner rejection; this page remains a factual record snapshot.
 The [status contract](/domain/specpack-status-vocabulary.md) explains derivation.
 The [open-work register](/project/open-work.md) holds current proposed follow-ups.

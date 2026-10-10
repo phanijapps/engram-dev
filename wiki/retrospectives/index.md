@@ -1,7 +1,7 @@
-# Concepts
+# Retrospectives
 
-- [Documentation consolidation retrospective — 2026-10-10](2026-10-10-documentation-consolidation.md)
-- [fresh-harness: retrospective backfilled on 2026-10-10](2026-10-10-fresh-harness.md)
-- [guided-loop: retrospective backfilled on 2026-10-10](2026-10-10-guided-loop.md)
-- [install-paths: retrospective backfilled on 2026-10-10](2026-10-10-install-paths.md)
-- [stitch-ui: retrospective backfilled on 2026-10-10](2026-10-10-stitch-ui.md)
+- [Documentation consolidation: observed session retrospective](2026-10-10-documentation-consolidation.md)
+
+No retrospective is available for the four earlier initiatives. Their generated
+interpretations were withdrawn after owner rejection. Factual snapshots remain
+in [initiatives](/initiatives/index.md).

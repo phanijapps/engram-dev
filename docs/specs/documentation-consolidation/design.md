@@ -12,6 +12,10 @@ related: [plan.md, baseline.json]
 
 # Technical design — connected documentation
 
+Owner correction: D-2 and D-3 are rejected. Their recommendations below are
+superseded by `owner-decision-revision.md`. D-4 is accepted; D-1 remains proposed.
+The historical retrospective portion of this initial design is withdrawn.
+
 ## Approach
 
 Use the existing spec root and wiki bundle. Create wiki concepts for current

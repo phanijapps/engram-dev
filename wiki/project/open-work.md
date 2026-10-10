@@ -13,6 +13,7 @@ sources:
   - {"id": "s5", "resource": "treadle/packages/cli/src/commands/do.ts"}
   - {"id": "s6", "resource": "docs/specs/fresh-harness/fresh-harness.json"}
   - {"id": "s7", "resource": "docs/archive/documentation/2026-10-10/treadle/DEBT.md"}
+  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Gap register — 2026-10-10
@@ -32,6 +33,8 @@ unassigned unless the retained record names them.
 | G8 | Attested computation execution was deferred after format admission work. | Preserved `treadle/DEBT.md` in the documentation archive | Reopen at the first real receipt consumer; do not call admission support an executor. |
 | G9 | Legacy MCP, templates, and old spine parity were not established by the port. | Preserved `treadle/DEBT.md` in the documentation archive | Decide port or drop based on an actual consumer; delegated code indexing remains outside the engine. |
 | G10 | Retrospectives and initiative snapshots have no automatic generation or closure hook. | `docs/specs/documentation-consolidation/feature.md:1` | Use the draft practice first; decide enforcement separately through Q1. |
+| G11 | The owner rejected the two-location research arrangement; standalone sources still exist. | `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-2 | Design one wiki research home and handle pinned original paths before physical consolidation. |
+| G12 | Past session evidence is unavailable for the four completed initiatives. | `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-3 | Retain factual pack snapshots. Do not reconstruct retrospectives from them. |
 
 # Resolved historical claims
 

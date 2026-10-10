@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "observed_at": "2026-10-10T20:49:43.497Z",
+  "revision": 20,
+  "dispositions": {
+    "D-1": "proposed",
+    "D-2": "rejected",
+    "D-3": "rejected",
+    "D-4": "accepted"
+  },
+  "withdrawn_artifacts_preserved": 4,
+  "historical_session_retrospectives_available": 0,
+  "research_consolidation": "replacement design still open",
+  "protected_files": 30,
+  "concepts": 37,
+  "reachable_concepts": 37,
+  "errors": 0,
+  "warnings": 0
+}

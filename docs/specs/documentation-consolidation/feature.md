@@ -11,6 +11,10 @@ related: [design.md, plan.md, baseline.json]
 
 # Feature analysis — one project knowledge home
 
+Owner correction: D-2 and D-3 are rejected. The historical retrospective
+requirements and assumption A2 below are superseded by
+`owner-decision-revision.md`. D-4 is accepted; D-1 remains proposed.
+
 ## Problem & evidence
 
 **Declared:** The owner wants current workspace knowledge in the wiki,

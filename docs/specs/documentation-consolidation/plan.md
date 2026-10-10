@@ -13,6 +13,11 @@ rationale_for_depth: Several documentation surfaces share authority and navigati
 
 # Plan — repair and connect documentation
 
+Owner correction: D-2 and D-3 are rejected. Historical retrospective work below
+records the initial implementation, which is now withdrawn. T-6 supersedes that
+portion under FR-8 and FR-9; see `owner-decision-revision.md` and the JSON task.
+D-4 is accepted; D-1 remains proposed. Research physical consolidation is still open.
+
 ## Task DAG
 
 | ID | Task | Implements | Prereqs | Verification expectation | Size | Initial status |
