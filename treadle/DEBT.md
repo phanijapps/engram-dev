@@ -1,15 +1,32 @@
-# Recorded debt (honest, owned, not hidden)
+# DEBT — what is owed, what is paid
 
-## SPEC-level (both engines, decided together — red-forman conformance table)
+## SPEC debts (all five PAID — guided-loop T-3, 2026-10-10)
 
-1. §5.3 trust tiers derived from `verified` — derivation helper missing in
-   both engines. Owner decision pending on tier semantics.
-2. §9 log format (ISO date headings) — unchecked in both validators.
-3. §10 Attested Computation (`runtime`/`parameters`/`executor`/`attester`) —
-   no `runtime`-required rule; keys surface as extension-key info only.
-4. §8 index structure as a conformance condition (§11.3) — partial.
-5. `stale_after` staleness comparison (now >= stale_after) with injectable
-   clock — the shape check exists; the freshness comparison does not.
+1. §5.3 trust tiers — PAID: `trustTier()` helper (unverified /
+   machine-confirmed / human-reviewed from `verified` actors);
+   advisory info in validate + a header line in read; consumers never
+   reject. Witness: corpus debt-witness + okf02-advisory golden.
+2. §9 log format — PAID as §11.3 conformance (D-6: one clause with
+   §8): ISO `YYYY-MM-DD` date headings, newest first; violations are
+   errors. Witness: debt-witness log.md (period-correct).
+3. §10 Attested Computation — ADMISSION PAID: `runtime` REQUIRED,
+   `parameters` entries `{name, type}`, `executor`/`attester` carry
+   `resource`, executor declares `receipt` (§10.2). EXECUTION
+   machinery (the runtime, executor runners, attesters) — deferred;
+   trigger: the first real consumer of a receipt.
+4. §8 index structure — PAID as §11.3 conformance (D-6): sections of
+   bullet links; violations are errors.
+5. `stale_after` staleness comparison — PAID: `now >= stale_after`
+   with the injectable clock (`validateBundle(root, { now })`);
+   surfaced as a warning. Witness: debt-witness broken.md.
+
+## Standing debts
+
+- `do library` multi-root/worktree parity with `do where` — the
+  standing single-root surface; own wave when the surfaces converge.
+- Freshness stamp is stale-by-construction at committed HEAD (the
+  stamp records its parent commit) — mechanism debt; fresh at session
+  close is the honest claim until the stamp compares source hashes.
 
 ## Port surface (not yet in TS)
 

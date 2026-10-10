@@ -3,7 +3,7 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T18:05:38Z",
+    "updated": "2026-10-10T18:05:54Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
       "by": "human:owner"
@@ -553,12 +553,21 @@
       "satisfies": [
         "FR-11"
       ],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-5"
       ],
       "honors": [],
-      "accepts": []
+      "accepts": [],
+      "evidence": [
+        {
+          "cmd": "grep -c \"PAID\" ../treadle/DEBT.md",
+          "exit": 0,
+          "at": "2026-10-10T18:05:54Z",
+          "by": "agent:pi",
+          "notes": "DEBT.md: all five SPEC debts closed with evidence (each names its paying mechanism + corpus witness); exactly one deferred row remains — §10 EXECUTION machinery with its trigger (the first real receipt consumer); the stale port-surface list replaced by two standing debts (do library parity; the freshness-stamp mechanism). No debt re-opens."
+        }
+      ]
     },
     {
       "id": "T-6",
@@ -603,5 +612,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 18
+  "revision": 19
 }
