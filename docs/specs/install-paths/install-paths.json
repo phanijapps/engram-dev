@@ -3,11 +3,15 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T18:57:04Z"
+    "updated": "2026-10-10T19:22:43Z",
+    "approved": {
+      "at": "2026-10-10T19:21:30Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "in_progress"
   },
   "spec": {
     "why": "Installation is the first touch. Today it takes a clone, a launcher symlink, and faith. Two paths must be true and documented: a dev link in one command (pnpm link) and a global install straight from the git main branch — both verified on the Node floor the docs claim.",
@@ -15,42 +19,59 @@
       {
         "id": "FR-1",
         "text": "EVERY workspace package points its entry at compiled dist: packages/cli bin → dist/src/main.js AND brand/core/web/knowledge main/exports → dist/src/index.js (tsc emits them); the whole chain runs on Node 22 and 24 — proven by running the dist bin under BOTH node binaries on this machine, not by a PATH that might hold an old launcher; bin/treadle.mjs retires (file AND the treadle/package.json bin field).",
-        "serves": ["US-1"]
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-2",
         "text": "Dev link: from a fresh clone — pnpm install, pnpm build, pnpm link --global (from packages/cli, or one documented chain); the linked treadle passes --help + do where + a know command from an arbitrary directory.",
-        "serves": ["US-1"]
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-3",
         "text": "Git install: the repo root IS the orchestrator — package.json named engram-dev (private, packageManager pinned, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build) AND the four @treadle/* siblings declared as file:treadle/packages/* dependencies so the global tree actually resolves them (workspaces alone ship nothing); npm i -g --allow-scripts=engram-dev github:phanijapps/engram-dev#main delivers a working treadle; the flag is documented as npm security default.",
-        "serves": ["US-2"]
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-4",
         "text": "Clean-room verification: every documented path proves itself in a fresh temp clone on BOTH node floors (22.14, 24.19 present locally); a windows note records the CI-matrix check.",
-        "serves": ["US-1", "US-2"]
+        "serves": [
+          "US-1",
+          "US-2"
+        ]
       },
       {
         "id": "FR-5",
         "text": "The pnpm git-workspace syntax is recorded broken (observed crash) unless a clean-room test passes in-wave; the guide names npm for git installs, pnpm for the dev link.",
-        "serves": ["US-2"]
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-6",
         "text": "Guide section 03 + README rewritten to the two one-command paths; the launcher-symlink dance removed; install verified literally (AC-3).",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       },
       {
         "id": "FR-7",
         "text": "Gates stay green UNCHANGED (check, corpus, brand, links) — stated truthfully: the brand fence and links gate walk treadle/ and markdown only, so the new repo-root package.json sits outside their scope by construction (like ci.yml); no allowance changes, no hole claimed as coverage.",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       },
       {
         "id": "FR-8",
         "text": "The wave closes through its own loop: evidence rows, review rounds, frozen by human:owner.",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       }
     ],
     "clarifications": [
@@ -60,7 +81,10 @@
         "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": ["this repo, root orchestrates", "wait for engram-dev root"],
+        "options": [
+          "this repo, root orchestrates",
+          "wait for engram-dev root"
+        ],
         "default": "this repo, root orchestrates",
         "answer": "this repo, root orchestrates",
         "answered_by": "human:owner",
@@ -72,7 +96,10 @@
         "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": ["hold 22+, bin to dist", "raise to 24"],
+        "options": [
+          "hold 22+, bin to dist",
+          "raise to 24"
+        ],
         "default": "hold 22+, bin to dist",
         "answer": "hold 22+, bin to dist",
         "answered_by": "human:owner",
@@ -171,11 +198,22 @@
         "cmd": "cd treadle && pnpm build && grep -q \"dist/src/main.js\" packages/cli/package.json && test ! -f bin/treadle.mjs && ! grep -q \"bin/treadle.mjs\" package.json && /usr/local/bin/node packages/cli/dist/src/main.js --help > /dev/null && node packages/cli/dist/src/main.js --help > /dev/null && for p in brand core knowledge web; do grep -q \"dist/src/index.js\" packages/$p/package.json || exit 1; done",
         "expect": "bin field → dist; launcher file AND root-workspace bin field gone; the dist bin speaks usage under node 22.14 AND 24.19 explicitly (no PATH ambiguity); every sibling entry points at dist"
       },
-      "satisfies": ["FR-1"],
+      "satisfies": [
+        "FR-1"
+      ],
       "implements": [],
       "honors": [],
       "accepts": [],
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm build && /usr/local/bin/node packages/cli/dist/src/main.js --help && node packages/cli/dist/src/main.js --help",
+          "exit": 0,
+          "at": "2026-10-10T19:22:43Z",
+          "by": "agent:pi",
+          "notes": "Every workspace entry points at compiled dist: cli bin → dist/src/main.js; brand/core/web/knowledge main+exports → dist/src/index.js. The launcher retired (file AND the workspace bin field). THE REAL PROOF, no PATH between claim and truth: /usr/local/bin/node (22.14) and node (24.19) each invoked the dist file directly — both exit 0 (the R1 lesson lived: the earlier green was the old launcher answering). Relinked globally from packages/cli; the full surface green from /tmp. The where self-witness re-pointed at the live wave (guided-loop closed — the test had hard-coded its own era). 111 tests, corpus byte-stable, brand clean."
+        }
+      ]
     },
     {
       "id": "T-1",
@@ -186,11 +224,18 @@
         "cmd": "bash treadle/scripts/cleanroom-link.sh",
         "expect": "all commands green from an arbitrary directory on a fresh clone; transcript recorded; no launcher file touched"
       },
-      "satisfies": ["FR-2", "FR-4"],
-      "needs": ["T-0"],
+      "satisfies": [
+        "FR-2",
+        "FR-4"
+      ],
+      "needs": [
+        "T-0"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-1"],
+      "accepts": [
+        "AC-1"
+      ],
       "status": "todo"
     },
     {
@@ -202,11 +247,19 @@
         "cmd": "bash treadle/scripts/cleanroom-git.sh",
         "expect": "the committed script installs from the REAL git main and asserts treadle works from /tmp on both node binaries; the transcript path is recorded in the evidence row (falsifiable: anyone re-runs the script)"
       },
-      "satisfies": ["FR-3", "FR-4", "FR-5"],
-      "needs": ["T-0"],
+      "satisfies": [
+        "FR-3",
+        "FR-4",
+        "FR-5"
+      ],
+      "needs": [
+        "T-0"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-2"],
+      "accepts": [
+        "AC-2"
+      ],
       "status": "todo"
     },
     {
@@ -218,11 +271,18 @@
         "cmd": "cd treadle && node scripts/link-check.mjs && ! grep -il launcher ../docs/guide/index.html && ! grep -q \"treadle.mjs\" ../README.md",
         "expect": "links green; zero launcher mentions in the guide; README clean; the literal runs recorded"
       },
-      "satisfies": ["FR-6"],
-      "needs": ["T-1", "T-2"],
+      "satisfies": [
+        "FR-6"
+      ],
+      "needs": [
+        "T-1",
+        "T-2"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-3"],
+      "accepts": [
+        "AC-3"
+      ],
       "status": "todo"
     },
     {
@@ -234,8 +294,13 @@
         "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
         "expect": "gates green; rounds recorded; closed by owner"
       },
-      "satisfies": ["FR-7", "FR-8"],
-      "needs": ["T-3"],
+      "satisfies": [
+        "FR-7",
+        "FR-8"
+      ],
+      "needs": [
+        "T-3"
+      ],
       "implements": [],
       "honors": [],
       "accepts": [],
@@ -253,5 +318,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 5
+  "revision": 7
 }

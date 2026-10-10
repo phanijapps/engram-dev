@@ -172,11 +172,12 @@ describe('do where (T-0)', () => {
     }
   });
 
-  it('the real workspace sees guided-loop in flight (the self-witness)', () => {
+  it('the real workspace sees the live wave in flight (the self-witness)', () => {
     const WORKSPACE = join(REPO, '..');
     const r = where(WORKSPACE);
-    const gl = r.packs.find((p) => p.name === 'guided-loop');
-    expect(gl).toBeDefined();
-    expect(gl?.stage).not.toBe('delivered');
+    // the wave that owns this test run is in flight while it runs
+    const open = r.packs.filter((p) => p.stage !== 'delivered');
+    expect(open.length).toBeGreaterThan(0);
+    expect(open.some((p) => p.name === 'install-paths')).toBe(true);
   });
 });

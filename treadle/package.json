@@ -36,9 +36,6 @@
       "esbuild"
     ]
   },
-  "bin": {
-    "treadle": "./bin/treadle.mjs"
-  },
   "dependencies": {
     "@clack/prompts": "1"
   }

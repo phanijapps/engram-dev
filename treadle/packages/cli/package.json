@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "treadle": "./src/main.ts"
+    "treadle": "./dist/src/main.js"
   },
   "dependencies": {
     "@treadle/brand": "workspace:*",
