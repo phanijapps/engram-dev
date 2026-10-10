@@ -78,3 +78,18 @@ The full gate passed 146 tests after the repair.
 These checks supplement the prior task evidence.
 Independent review and owner closure remain separate.
 Source: `specs/spec-completion-handoff/execution-log.md:1`.
+
+
+# Independent review passed
+
+The second independent review passed with no findings.
+The reviewer reran all implementation checks and the schema and HTML checks.
+The final handoff check passed and all 7 tasks are done.
+The first failed review remains part of the evidence.
+Sources: `specs/spec-completion-handoff/delivery-review.md:1`;
+`specs/spec-completion-handoff/T-7-verification.log:1`.
+
+At canonical revision 40, the owner completion action remains pending.
+The engine now offers Finish spec as a separate action.
+The canonical pack records the owner's later act.
+Source: `specs/spec-completion-handoff/spec-completion-handoff.json:1`.

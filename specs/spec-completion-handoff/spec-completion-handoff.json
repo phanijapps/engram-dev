@@ -3,7 +3,7 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:37:26.093Z"
+    "updated": "2026-10-10T22:55:57Z"
   },
   "status": {
     "lifecycle": "active",
@@ -111,6 +111,11 @@
     "execution-log": {
       "ref": "execution-log.md",
       "type": "text/markdown"
+    },
+    "delivery_review": {
+      "ref": "delivery-review.md",
+      "type": "text/markdown",
+      "sha256": "4b1b4c9e16c641447a0af72b092b3145841ceecd04df5f51cc376f2dca3f7757"
     }
   },
   "spec": {
@@ -768,7 +773,7 @@
       "title": "Run independent red-foreman review and record the PACK verdict",
       "detail": "Implement plan.md T-7 only after owner decision acceptance and exact-plan start consent. An independent reviewer reruns task expectations, records real severity findings or PACK PASS for the current plan scope, and the verifier reads that actual artifact. The implementer cannot write its own independent verdict; owner closure remains separate.",
       "phase": "review",
-      "status": "doing",
+      "status": "done",
       "needs": [
         "T-6"
       ],
@@ -805,7 +810,16 @@
         "notes": [
           "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-7; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/spec-completion-handoff/verify-review.mjs",
+          "exit": 0,
+          "at": "2026-10-10T22:55:57Z",
+          "by": "agent:codex",
+          "notes": "Actual declared expectation passed. See T-7-verification.log. Independent delivery review remains separate."
+        }
+      ]
     }
   ],
   "workflow": {
@@ -851,6 +865,16 @@
         "verdict": "PASS",
         "by": "agent:replay_review",
         "note": "Actual independent PLAN verdict and follow-up: PASS — nothing to fix. See plan-review.md. Planning quality only, no owner acceptance, start permission or delivery PACK review."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "at": "2026-10-10T22:55:23Z",
+        "findings": [],
+        "plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3",
+        "evidence_digest": "ac322feed5f56d90716c181646212390c2250c6e05fdfdb88ef334d2b5d6105b",
+        "note": "Actual independent report in delivery-review.md; reviewed source 24438ac0597f3580cfd9b48fa0b0dc96b3e63d37"
       }
     ]
   },
@@ -861,5 +885,5 @@
     "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
   "format": "specpack/0.4",
-  "revision": 38
+  "revision": 40
 }

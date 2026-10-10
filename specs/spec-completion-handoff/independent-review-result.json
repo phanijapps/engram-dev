@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS",
+  "by": "agent:replay_review",
+  "at": "2026-10-10T22:55:23Z",
+  "reviewed_head": "24438ac0597f3580cfd9b48fa0b0dc96b3e63d37",
+  "plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3",
+  "evidence_digest": "ac322feed5f56d90716c181646212390c2250c6e05fdfdb88ef334d2b5d6105b",
+  "findings": [],
+  "commands": {
+    "T-1": 0,
+    "T-2": 0,
+    "T-3": 0,
+    "T-4": 0,
+    "T-5": 0,
+    "T-6": 0,
+    "do check": 0,
+    "verify-contract.mjs": 0,
+    "HTML validation": 0
+  },
+  "rerun_logs": "The read-only reviewer wrote no new rerun log files. Command outcomes come from the actual reviewer result."
+}

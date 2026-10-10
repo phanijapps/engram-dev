@@ -147,3 +147,20 @@ Coverage is 85.92 percent lines and 75.78 percent branches in this run.
 The plain schema command and exact T-5 command also passed: exit 0.
 The completed task evidence remains unchanged. These are supplemental checks.
 A second independent review must pass before the owner completion handoff.
+
+
+## T-7 and owner handoff
+
+The actual independent reviewer returned PASS with no findings.
+The review completed at 2026-10-10T22:55:23Z for source HEAD 24438ac.
+The reviewer reran the exact T-1 through T-6 checks, schema check and HTML check.
+The report remains in delivery-review.md and independent-review-result.json.
+The first failed review remains in delivery-review-1.md.
+The PACK verdict uses the actual reviewer identity, plan digest and evidence digest.
+It includes the observed hash of the review artifact.
+
+The exact T-7 command passed. The engine recorded its real check.
+All 7 tasks are done. Canonical revision 40 is ready for owner closure.
+The browser workflow reports can_close true and no pending audit acts.
+Implementation and independent review do not grant owner completion consent.
+The owner must use Finish spec in the library.

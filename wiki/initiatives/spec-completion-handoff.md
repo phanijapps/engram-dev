@@ -57,3 +57,20 @@ The new flow is documented in [owner workflow](/systems/owner-workflow.md).
 Read [status rules](/domain/specpack-status-vocabulary.md),
 [the affected migration](/initiatives/docs-root-migration.md), and
 [open work](/project/open-work.md).
+
+
+# Delivery review and owner handoff
+
+All 7 approved tasks now have passing evidence.
+The independent delivery review passed with no findings after the first review repairs.
+The report records the real reviewer, source revision and digest checks.
+Source: `specs/spec-completion-handoff/delivery-review.md:1`.
+
+At revision 40, the canonical pack awaits the owner's separate Finish spec action.
+The engine does not infer final consent from task completion or review.
+The canonical pack records any later owner action.
+Sources: `specs/spec-completion-handoff/T-7-verification.log:1`;
+`specs/spec-completion-handoff/spec-completion-handoff.json:1`.
+
+The current-session [retrospective](/retrospectives/2026-10-10-owner-gates.md)
+records the observed failure, repair, review and remaining completion step.
