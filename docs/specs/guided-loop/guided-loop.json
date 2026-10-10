@@ -1,0 +1,398 @@
+{
+  "id": "guided-loop",
+  "name": "guided-loop",
+  "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
+  "date": {
+    "updated": "2026-10-10T16:42:34Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "spec": {
+    "why": "The harness installs everywhere now; the loop must orient itself. A fresh session saying continue should be TOLD where work dangles (open specs, worktrees) and pause to ask which one. Skills still speak the retired CLI. Five spec debts are recorded. This wave pays them.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "do where <workspace>: scans live specs roots (archive excluded) + git worktrees; per pack: name, stage, open questions, next ready task, revision, evidence age; --json machine form; exit 0 always.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "The recall block: engine-quoted lines only (paths, stages, counts), worktree rows labeled with their tree, ends with the ask-which-one sentence when more than one is open.",
+        "serves": [
+          "US-1",
+          "US-2"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "session-recall payload (dual entry): script mode prints the block; pi extension mode injects via session_start + sendMessage; claude SessionStart wiring verified against current docs (refuses what it cannot verify); codex honest subset per Q-3.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "The guard hook and the recall hook both ship through the manifest wirings; copilot stays the honest null.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Skills refreshed: zero retired-engine references in sdlc live text; current commands and paths; evals pass; pause-and-ask discipline in analyze/plan/implement.",
+        "serves": [
+          "US-3"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "Brand-in-skills per Q-2: if bin tokens, brand:set rewrites harness/skills together with the fence; white-label proof: brand:check green after a set/set-back cycle.",
+        "serves": [
+          "US-3"
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "§5.3 trust tier helper (advisory: unverified / machine-confirmed / human-reviewed) surfaced in know read + validate info; consumers never reject (§11).",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-8",
+        "text": "§9 log-format check in know validate (ISO date headings; warnings never block).",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-9",
+        "text": "stale_after freshness comparison with the injectable clock; status reports stale honestly.",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-10",
+        "text": "Corpus goldens regenerate ONLY where debt fixes change output; diff reviewed in the commit (contract change on record).",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-11",
+        "text": "§10 + §8 recorded-deferred in DEBT.md with owners and triggers.",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-12",
+        "text": "The wave closes through its own loop: evidence rows machine-checked, review rounds recorded, corpus byte-stable at close, closed by human:owner.",
+        "serves": [
+          "US-2",
+          "US-4"
+        ]
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Spec debt §5.3 trust tiers: implement the spec's exact derivation (unverified / machine-confirmed / human-reviewed from  actors) as an ADVISORY helper surfaced in know read + validate info, consumers never reject?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "spec-faithful advisory helper",
+          "decline and record"
+        ],
+        "default": "spec-faithful advisory helper"
+      },
+      {
+        "id": "Q-2",
+        "question": "Skills and the brand: skills speak the bin name (treadle today) and brand:set rewrites harness/skills together with the fence (white-label stays true), or skills use neutral phrasing (the harness CLI) with no bin names?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "bin tokens brand:set rewrites",
+          "neutral phrasing"
+        ],
+        "default": "bin tokens brand:set rewrites"
+      },
+      {
+        "id": "Q-3",
+        "question": "Codex recall: session-start injection is not a codex mechanism — ship the honest subset (a recall prompt-file + notify) and say so in the plan, or defer codex entirely?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "honest subset now",
+          "defer codex"
+        ],
+        "default": "honest subset now"
+      },
+      {
+        "id": "Q-4",
+        "question": "The pause-and-ask: soft discipline (the recall block instructs: more than one open spec → ask which one; skills reinforce) or a hard gate (the extension blocks continue-style first messages until a choice is made)?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "soft discipline",
+          "hard gate"
+        ],
+        "default": "soft discipline"
+      },
+      {
+        "id": "Q-5",
+        "question": "Spec-debt scope: pay the recall-serving subset this wave (§5.3 helper, §9 log-format validation, stale_after comparison) and record §10 Attested Computation + §8 index-structure as deferred debts, or pay all five now?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "subset now, defer two",
+          "all five now"
+        ],
+        "default": "subset now, defer two"
+      }
+    ],
+    "out_of_scope": [
+      "§10 Attested Computation (a wave of its own)",
+      "§8 index structure conformance condition",
+      "hard gates on user messages (Q-4 default: soft)",
+      "recall on copilot (no mechanism — stays the honest null)"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "title": "A fresh session orients",
+        "priority": "P1",
+        "as": "an agent starting cold",
+        "want": "the workspace recall block injected at session start",
+        "so": "I know where work dangles without hunting",
+        "acceptance": [
+          {
+            "id": "AC-1",
+            "given": "a workspace with two open packs (one in a worktree)",
+            "when": "the session starts",
+            "then": "the recall block lists both with stages and open counts, and ends with the ask-which-one sentence"
+          }
+        ]
+      },
+      {
+        "id": "US-2",
+        "title": "Continue means one thing",
+        "priority": "P1",
+        "as": "the owner saying continue",
+        "want": "the agent to pause and ask when several specs are open",
+        "so": "the loop never guesses my intent",
+        "acceptance": [
+          {
+            "id": "AC-2",
+            "given": "more than one open spec",
+            "when": "the agent receives continue",
+            "then": "it asks which one (soft discipline, stated in the recall block and the skills)"
+          }
+        ]
+      },
+      {
+        "id": "US-3",
+        "title": "Skills speak today",
+        "priority": "P1",
+        "as": "a worker invoking a skill",
+        "want": "commands and paths that exist",
+        "so": "no retired-CLI hallucinations",
+        "acceptance": [
+          {
+            "id": "AC-3",
+            "given": "the refreshed sdlc skills",
+            "when": "grepped for retired engine references",
+            "then": "zero hits in live skill text; evals pass"
+          }
+        ]
+      },
+      {
+        "id": "US-4",
+        "title": "Trust and freshness are real",
+        "priority": "P2",
+        "as": "a knowledge consumer",
+        "want": "trust tiers surfaced and staleness compared",
+        "so": "advisory signals are honest",
+        "acceptance": [
+          {
+            "id": "AC-4",
+            "given": "the knowledge engine with the debt fixes",
+            "when": "validate + status run on fixtures",
+            "then": "tiers surface as info, log-format issues warn, stale_after compares; goldens regenerated deliberately with a reviewed diff"
+          }
+        ]
+      }
+    ]
+  },
+  "design": {
+    "decisions": [],
+    "designs": []
+  },
+  "tasks": [
+    {
+      "id": "T-0",
+      "title": "do where: the recall core",
+      "phase": "core",
+      "detail": "core/next or cli: scan live roots + git worktree list; per-pack stage/questions/next/rev/evidence age; --json; unit tests incl. a two-pack fixture (one in a temp worktree); exit 0 always.",
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+        "expect": "two-pack fixture: both listed with correct stages; worktree row labeled; archive excluded; --json shape asserted"
+      },
+      "satisfies": [
+        "FR-1",
+        "FR-2"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-1",
+      "title": "session-recall payload + three wirings",
+      "phase": "core",
+      "detail": "harness/hooks/session-recall.js dual entry (script prints block; pi extension session_start→sendMessage); claude SessionStart wiring keys verified against current docs; codex honest subset (recall prompt-file + notify); manifest rows; tests.",
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts && node harness/hooks/session-recall.js .. | head -3",
+        "expect": "payload proven both entries; wirings land on pi/claude/codex; the block prints from the script"
+      },
+      "satisfies": [
+        "FR-3",
+        "FR-4"
+      ],
+      "needs": [
+        "T-0"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-1"
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "skill refresh + pause discipline",
+      "phase": "core",
+      "detail": "sdlc skills walk current commands/paths; zero retired references; pause-and-ask in analyze/plan/implement; evals run; Q-2 brand mechanics (brand:set rewrites harness/skills; set/set-back proof).",
+      "verify": {
+        "cmd": "grep -rE \"okf|loom|uv run\" ../treadle/harness/skills/sdlc --include=\"SKILL.md\" | wc -l",
+        "expect": "0 retired references; evals pass; brand:check green after set/set-back"
+      },
+      "satisfies": [
+        "FR-5",
+        "FR-6"
+      ],
+      "needs": [
+        "T-0"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-2",
+        "AC-3"
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "spec debts paid: §5.3 + §9 + stale_after",
+      "phase": "core",
+      "detail": "knowledge engine: trustTier helper (advisory) surfaced in read/validate; §9 ISO-date log headings warn; stale_after compares with injectable clock; corpus regen where output changes, diff reviewed.",
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check",
+        "expect": "tests green; corpus diff = exactly the debt-fix output changes, reviewed in the commit"
+      },
+      "satisfies": [
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-10"
+      ],
+      "needs": [
+        "T-2"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-4"
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "dogfood: recall live in this repo",
+      "phase": "integration",
+      "detail": "install the new payload through the installer (pi + claude); a real session-start shows the block; guided-loop itself appears as in-flight in its own recall; evidence recorded.",
+      "verify": {
+        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --root .. --force --yes && node harness/hooks/session-recall.js ..",
+        "expect": "installer ships both hooks; the recall block lists guided-loop as in flight"
+      },
+      "satisfies": [
+        "FR-2",
+        "FR-3"
+      ],
+      "needs": [
+        "T-1"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": []
+    },
+    {
+      "id": "T-5",
+      "title": "DEBT.md updated: §10/§8 deferred with owners",
+      "phase": "polish",
+      "detail": "record the two deferred debts with trigger conditions; close the three paid ones.",
+      "verify": {
+        "cmd": "grep -c \"deferred\" ../treadle/DEBT.md",
+        "expect": "§10 and §8 recorded deferred with triggers; §5.3/§9/stale_after marked paid"
+      },
+      "satisfies": [
+        "FR-11"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": []
+    },
+    {
+      "id": "T-6",
+      "title": "close: evidence, rounds, freeze",
+      "phase": "polish",
+      "detail": "every task evidence-rows machine-checked; artifact round + closing round recorded; corpus byte-stable; PACK verdict; close by human:owner.",
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+        "expect": "gates green; rounds ≥2; closed by owner"
+      },
+      "satisfies": [
+        "FR-12"
+      ],
+      "needs": [
+        "T-1",
+        "T-3",
+        "T-4",
+        "T-5"
+      ],
+      "status": "todo",
+      "implements": [],
+      "honors": [],
+      "accepts": []
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 6
+}
