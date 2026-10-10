@@ -3,11 +3,11 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T16:46:46Z"
+    "updated": "2026-10-10T16:56:53Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "awaiting_owner"
+    "deliverable": "drafted"
   },
   "spec": {
     "why": "The harness installs everywhere now; the loop must orient itself. A fresh session saying continue should be TOLD where work dangles (open specs, worktrees) and pause to ask which one. Skills still speak the retired CLI. Five spec debts are recorded. This wave pays them.",
@@ -64,7 +64,7 @@
       },
       {
         "id": "FR-8",
-        "text": "§9 log-format check in know validate (ISO date headings; warnings never block).",
+        "text": "§9 log STRUCTURE joins §8 as the one §11.3 conformance clause (D-6): malformed log.md is an error, not a warning; other §11 checks stay warnings.",
         "serves": [
           "US-4"
         ]
@@ -186,7 +186,8 @@
     "out_of_scope": [
       "§10 EXECUTION machinery (executor/attester runtimes) — this wave pays the ADMISSION contract only",
       "recall on copilot (no mechanism — the honest null)",
-      "hard gate on codex (no mechanism — honestly stated)"
+      "hard gate on codex (no mechanism — honestly stated)",
+      "do library multi-root/worktree parity (the standing single-root surface) — DEBT row, own wave"
     ],
     "stories": [
       {
@@ -217,7 +218,7 @@
             "id": "AC-2",
             "given": "more than one open spec",
             "when": "the agent receives continue",
-            "then": "it asks which one (soft discipline, stated in the recall block and the skills)"
+            "then": "the continue-shaped first message is intercepted and the loop asks before acting (pi: message_end replacement + guideline injection; claude: UserPromptSubmit block); codex honestly states the gate is pi+claude"
           }
         ]
       },
@@ -291,26 +292,95 @@
         "because": "No session-start mechanism exists on codex; a printed no beats a fake yes.",
         "status": "accepted",
         "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-6",
+        "decision": "§8 and §9 structure enforce as ONE §11.3 conformance clause (both error-level); \"warnings never block\" applies to the other §11 checks",
+        "because": "R1 #6: the vendored spec makes index.md and log.md structure a single conformance condition — enforcing §8 but not §9 hands consumers a false conformant. Spec-faithful reading, mirroring the owner Q-1 pattern; surfaced for the owner at approval.",
+        "status": "proposed"
       }
     ],
-    "designs": []
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "do where scanner",
+        "kind": "mechanism",
+        "detail": "live-roots scan + git worktree cross-ref; per-pack stage/questions/next/rev/evidence age; --json; no-git degrades to unavailable, exit 0 always",
+        "addresses": [
+          "FR-1",
+          "FR-2"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "session-recall payload",
+        "kind": "interface",
+        "detail": "dual entry (script prints block; pi session_start→sendMessage); engine-quoted lines only; worktree rows labeled",
+        "addresses": [
+          "FR-3"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "the hard gate",
+        "kind": "mechanism",
+        "detail": "continue-shaped FIRST user message (no prior user entry in the transcript, resumed included) + >1 open → ask, enforced: pi message_end replacement + before_agent_start guideline; claude UserPromptSubmit block (keys verified or refused); codex honestly pi+claude; never fires when ≤1 open",
+        "addresses": [
+          "FR-13",
+          "FR-4"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "neutral skills",
+        "kind": "interface",
+        "detail": "zero brand strings, bare subcommands, \"the harness CLI\"; ask-first taught in analyze/plan/implement; evals pass",
+        "addresses": [
+          "FR-5",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "the five debt rules",
+        "kind": "mechanism",
+        "detail": "§5.3 advisory tiers; §9 + §8 structure as ONE §11.3 conformance clause (D-6); §10 admission rules (runtime required, executor/attester shapes); stale_after with injectable clock",
+        "addresses": [
+          "FR-7",
+          "FR-8",
+          "FR-9",
+          "FR-11"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "corpus witness",
+        "kind": "mechanism",
+        "detail": "generator gains log.md, Attested Computation (runtime present + missing), staleness cases; goldens move only where output changes; diff reviewed in the commit",
+        "addresses": [
+          "FR-10"
+        ]
+      }
+    ]
   },
   "tasks": [
     {
       "id": "T-0",
       "title": "do where: the recall core",
       "phase": "core",
-      "detail": "core/next or cli: scan live roots + git worktree list; per-pack stage/questions/next/rev/evidence age; --json; unit tests incl. a two-pack fixture (one in a temp worktree); exit 0 always.",
+      "detail": "core/next or cli: scan live roots + git worktree list; per-pack stage/questions/next/rev/evidence age; --json; unit tests incl. a two-pack fixture (one in a temp worktree) AND a no-git fixture (worktree section reports unavailable, scan still exits 0).",
       "verify": {
         "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
-        "expect": "two-pack fixture: both listed with correct stages; worktree row labeled; archive excluded; --json shape asserted"
+        "expect": "two-pack fixture: both listed with correct stages; worktree row labeled; archive excluded; no-git fixture: worktrees unavailable, exit 0; --json shape asserted"
       },
       "satisfies": [
         "FR-1",
         "FR-2"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-1"
+      ],
       "honors": [],
       "accepts": [
         "AC-1"
@@ -322,8 +392,8 @@
       "phase": "core",
       "detail": "harness/hooks/session-recall.js dual entry (script prints block; pi extension session_start→sendMessage); THE HARD GATE (Q-4) in the same extension: message_end replaces continue-shaped FIRST user messages when >1 open (role preserved), before_agent_start injects the ask-first guideline; claude SessionStart + UserPromptSubmit wiring keys verified against current docs (refuse unverifiable); codex honest subset (recall prompt-file + notify, gate honestly pi+claude); manifest rows; tests.",
       "verify": {
-        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts && node harness/hooks/session-recall.js .. | head -3",
-        "expect": "payload proven both entries; wirings land on pi/claude/codex; the block prints from the script"
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts && node harness/hooks/session-recall.js ..",
+        "expect": "payload proven both entries (tests); the script prints the block INCLUDING the ask-which-one line and exits 0 — unpiped, exit code verified"
       },
       "satisfies": [
         "FR-3",
@@ -334,7 +404,10 @@
         "T-0"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-2",
+        "DES-3"
+      ],
       "honors": [],
       "accepts": [
         "AC-1"
@@ -346,8 +419,8 @@
       "phase": "core",
       "detail": "sdlc skills walk current commands/paths in NEUTRAL phrasing (bare subcommands, \"the harness CLI\" — zero brand strings, Q-2); zero retired references; ask-first discipline in analyze/plan/implement (teaching what the gate enforces); evals run.",
       "verify": {
-        "cmd": "grep -rEi \"okf|loom|uv run|treadle\" ../treadle/harness/skills/sdlc --include=\"SKILL.md\" | wc -l",
-        "expect": "0 retired AND 0 brand references in sdlc SKILL.md text; evals pass"
+        "cmd": "cd treadle && grep -rEi \"okf|loom|uv run|treadle\" harness/skills/sdlc | wc -l",
+        "expect": "0 — zero retired-engine AND zero brand references across ALL sdlc skill files (SKILL.md, resources, assets, evals); evals pass"
       },
       "satisfies": [
         "FR-5",
@@ -357,7 +430,9 @@
         "T-0"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-4"
+      ],
       "honors": [],
       "accepts": [
         "AC-2",
@@ -368,7 +443,7 @@
       "id": "T-3",
       "title": "Spec debts paid: ALL FIVE (Q-5)",
       "phase": "core",
-      "detail": "knowledge engine: trustTier helper (advisory) in read/validate; §9 ISO-date log headings warn; §10 Attested Computation admission rules (runtime REQUIRED, executor/attester shapes per §10.2 — no execution machinery); §8 index structure enforced per §11.3; stale_after compares with injectable clock; corpus regen wherever output changes, every diff reviewed in the commit.",
+      "detail": "knowledge engine: trustTier helper (advisory) in read/validate; §9 ISO-date log headings warn; §10 Attested Computation admission rules (runtime REQUIRED, executor/attester shapes per §10.2 — no execution machinery); §8 index structure enforced per §11.3; stale_after compares with injectable clock; corpus regen wherever output changes, every diff reviewed in the commit. Corpus witness extended: the generator gains a log.md-bearing bundle, an Attested Computation bundle (runtime present + a missing-runtime refusal), and a staleness/status case — §9/§10/stale_after goldens exist to move; every diff reviewed in the commit.",
       "verify": {
         "cmd": "cd treadle && pnpm check && pnpm corpus:check",
         "expect": "tests green; the corpus diff contains exactly the debt-fix output changes (§5.3 info lines, §9 warnings, §10 rules, §8 conformance, stale_after) — reviewed line by line in the commit"
@@ -380,11 +455,12 @@
         "FR-10",
         "FR-11"
       ],
-      "needs": [
-        "T-2"
-      ],
+      "needs": [],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-5",
+        "DES-6"
+      ],
       "honors": [],
       "accepts": [
         "AC-4"
@@ -396,8 +472,8 @@
       "phase": "integration",
       "detail": "install the new payload through the installer (pi + claude); a real session-start shows the block; guided-loop itself appears as in-flight in its own recall; evidence recorded.",
       "verify": {
-        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --root .. --force --yes && node harness/hooks/session-recall.js ..",
-        "expect": "installer ships both hooks; the recall block lists guided-loop as in flight"
+        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --root .. --force --yes && test -f ../.pi/extensions/session-recall.js && test -f ../.harness/hooks/session-recall.js && node ../.harness/hooks/session-recall.js ..",
+        "expect": "installer ships BOTH hooks (installed artifacts exist); the installed payload prints the recall block listing guided-loop as in flight — the source alone proves nothing"
       },
       "satisfies": [
         "FR-2",
@@ -407,24 +483,29 @@
         "T-1"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
       "honors": [],
       "accepts": []
     },
     {
       "id": "T-5",
-      "title": "DEBT.md updated: §10/§8 deferred with owners",
+      "title": "DEBT.md: all five SPEC debts closed with evidence",
       "phase": "polish",
-      "detail": "record the two deferred debts with trigger conditions; close the three paid ones.",
+      "detail": "All five debts close with evidence links to the paying tasks (§5.3/§9/§10-admission/§8/stale_after → T-3). The ONLY deferred row is §10 EXECUTION machinery (the runtime, out of this wave by scope) with its trigger. No debt re-opens.",
       "verify": {
-        "cmd": "grep -c \"deferred\" ../treadle/DEBT.md",
-        "expect": "§10 and §8 recorded deferred with triggers; §5.3/§9/stale_after marked paid"
+        "cmd": "grep -c \"paid\\|closed\" ../treadle/DEBT.md",
+        "expect": "five debts closed with evidence; exactly one deferred row (§10 execution machinery) with a trigger; no re-opened debts"
       },
       "satisfies": [
         "FR-11"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-5"
+      ],
       "honors": [],
       "accepts": []
     },
@@ -447,11 +528,23 @@
         "T-5"
       ],
       "status": "todo",
-      "implements": [],
+      "implements": [
+        "DES-3"
+      ],
       "honors": [],
       "accepts": []
     }
   ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "R1",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "Artifact round: 3 BLOCKER + 6 DEFECT + 5 SMELL, all folded. The blockers were A2 fold gaps: AC-2 still tested the OVERRULED soft discipline (now the enforced gate, falsifiable); T-5 re-defered debts Q-5 ordered paid (now closes all five, only §10 execution machinery deferred with trigger); T-2 verify was a double false-green (unanchored cwd + SKILL.md-only filter that skips 21 live references in resources/assets/evals — now anchored, unfiltered, expect 0). Defects: design soft-line fixed; T-3 corpus promise made fulfillable (generator gains log.md + Attested Computation + staleness cases so the biggest debt fixes have goldens to move); §11.3 single-clause decision recorded as D-6 (proposed, surfaced); diagram names all five; T-4 asserts INSTALLED artifacts; T-1 unpiped. Smells: false T-3→T-2 dependency cut; \"first user message\" operationally defined (no prior user entry, resumed included); no-git fixture; DES entries landed (stale closing line struck); do library divergence recorded. The reviewer confirmed both pi hard-gate mechanisms against pi docs + types.d.ts and found no invented spec rules."
+      }
+    ]
+  },
   "format": "specpack/0.3",
   "revision": 11
 }
