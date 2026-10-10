@@ -3,11 +3,15 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T14:53:50Z"
+    "updated": "2026-10-10T15:03:46Z",
+    "approved": {
+      "at": "2026-10-10T15:01:44Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "in_progress"
   },
   "spec": {
     "why": "The harness must ship as a product: agents and skills packaged under treadle/harness behind an interactive installer (treadle init harness) like speckkit's specify CLI. The repo must read as new: no dead engine links in live surfaces.",
@@ -321,7 +325,9 @@
         "id": "D-4",
         "decision": "Adapters are manifest rows plus two tiny transforms (identity; skill-to-prompt)",
         "because": "A new surface is a manifest row; a new transform is one registry function. Per-surface script directories are the sprawl we came to escape.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       },
       {
         "id": "D-5",
@@ -335,7 +341,9 @@
         "id": "D-6",
         "decision": "Idempotency by normalized content hash (LF + one trailing newline; .gitattributes pins eol=lf); never delete unknown files; applied plans recorded for --remove",
         "because": "Destinations are shared (.claude/, ~/.codex); a mirror would destroy foreign content. Re-run = same; --force is explicit.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       },
       {
         "id": "D-7",
@@ -363,9 +371,11 @@
       },
       {
         "id": "D-10",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Reversibility: every apply records its write list; --remove deletes exactly it",
-        "because": "R1 DEFECT 9: an installer product with no reversal contradicts the pack reversibility posture; the state file is the contract between apply and remove."
+        "because": "R1 DEFECT 9: an installer product with no reversal contradicts the pack reversibility posture; the state file is the contract between apply and remove.",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       }
     ],
     "designs": [
@@ -464,7 +474,7 @@
       "id": "T-0",
       "title": "Move the harness content home",
       "detail": "git mv agents/ and skills/ to treadle/harness/; author harness.json (format harness/0.1): component rows carry explicit destination paths per surface; hook rows carry file + wiring (pi extension, claude settings-hooks, codex config-notify, copilot null); harness/hooks/ dir born with the contract (payload authored in T-3); pre-clean legacy drift in .pi (typo copy red-forman.md, stale build-kb resources) so T-6 convergence is achievable; add .gitattributes (* text=auto eol=lf); update every path reference (AGENTS.md repo map, .pi sync note); pnpm check + brand:check green.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-1"
@@ -477,7 +487,16 @@
       "verify": {
         "cmd": "cd treadle && test -f harness/harness.json && node -e 'const m=require(\"./harness/harness.json\"); if(m.format!==\"harness/0.1\")process.exit(1); for(const h of m.hooks??[]) if(!h.file) process.exit(1)' && test ! -d ../agents && test ! -d ../skills && pnpm check && pnpm brand:check",
         "expect": "harness/harness.json exists, format harness/0.1, every hook row names its JS file; agents/ and skills/ gone from root; gates green"
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "harness.json contract + gates",
+          "exit": 0,
+          "at": "2026-10-10T15:03:46Z",
+          "by": "agent:pi",
+          "notes": "Content home: agents+skills git-mv to treadle/harness; harness.json born (harness/0.1, 12 components with explicit per-surface destinations, hook row with payload file + wiring incl. copilot null); hooks/README contract; .pi legacy drift pre-cleaned (typo red-forman.md removed, build-kb synced); .gitattributes eol=lf at root; AGENTS.md repo map + build/verification speak treadle (okf/loom/uv swept); runtime dir brand-neutral (.harness/ — brand fence caught the first attempt). check 71 green, brand clean. Known debt recorded for T-6: sdlc skills still speak the retired okf CLI (52 mentions) — promotion refreshes them brand-neutral (do/know)."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -506,7 +525,7 @@
       "id": "T-1",
       "title": "The installer engine: manifest to plan to apply (flags only)",
       "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse — refuse = destination holds foreign content without --force; apply exits 3 listing the row), apply (normalized-hash idempotent: LF + single trailing newline; never deletes; --force overrides), the applied plan recorded to a state file (.treadle/harness-install.json at the destination root) so `init harness --remove` can delete exactly those paths and nothing else; flags command init harness with --agent --scope --skills --no-agents --no-hooks --remove --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
-      "status": "todo",
+      "status": "doing",
       "phase": "core",
       "satisfies": [
         "FR-2",
@@ -665,5 +684,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 28
+  "revision": 31
 }
