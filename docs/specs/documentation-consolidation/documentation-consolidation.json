@@ -1,0 +1,393 @@
+{
+  "id": "documentation-consolidation",
+  "name": "documentation-consolidation",
+  "description": "Consolidate workspace knowledge and preserve retrospectives",
+  "date": {
+    "created": "2026-10-10T20:28:49.896Z",
+    "updated": "2026-10-10T20:36:01.662Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "awaiting_owner"
+  },
+  "metadata": {
+    "feature": {
+      "ref": "feature.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "bug-missing-specpack": {
+      "ref": "bug-missing-specpack.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "evidence": {
+      "ref": "evidence.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "review": {
+      "ref": "review.md",
+      "type": "text/markdown",
+      "description": "Initiative reasoning or observed evidence"
+    },
+    "machine-review": {
+      "ref": "machine-handoff-review.md",
+      "type": "text/markdown",
+      "description": "Independent review of the missing machine handoff correction"
+    }
+  },
+  "spec": {
+    "why": "The owner wants current knowledge in the workspace wiki, connected initiative tracking, and dated retrospectives; this record backfills the missing machine handoff for the already documented repair.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Current system and domain pages cite existing TypeScript sources; historical decisions retain their records.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Each existing documentation category has a disposition; current knowledge is reachable through wiki navigation.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Each of the four previously completed packs has a wiki initiative page and dated retrospective with source revision and hash.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Retrospectives distinguish intent, recorded outcomes, problems, inferred lessons, follow-ups, and unknown feedback.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Documentation audit, wiki ritual, and repository gates run; exact failures and limitations remain disclosed; read-only review is recorded.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "The maintenance lifecycle remains draft and its normative proposal stays pending in the findings ledger.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "An admitted JSON pack carries the machine plan and actual evidence; SDD skill handoffs register and use that pack on Pi and Codex.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Freshness engine changes",
+      "Fixing the workspace-dependent install-paths test",
+      "Rewriting closed packs or original research",
+      "Automatic retrospective closure enforcement",
+      "Human approval or closure on the owner’s behalf"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "the project owner",
+        "want": "current wiki knowledge connected to machine work records and dated retrospectives",
+        "so": "I can track work and retain lessons without duplicating executable state"
+      }
+    ],
+    "assumptions": [
+      {
+        "id": "A-1",
+        "text": "The first four documentation tasks were implemented before this pack existed; evidence admitted now is current re-verification, not historical machine execution."
+      }
+    ],
+    "edge_cases": [
+      "Q1 future closure enforcement, Q2 follow-up ownership, and Q3 historical owner feedback remain outside this repair; see feature.md."
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Retain docs/specs and add wiki projections",
+        "because": "Current discovery and bundle formats support this reversible arrangement.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-2",
+        "decision": "Preserve research originals and consolidate current interpretation",
+        "because": "Frozen source paths and historical evidence remain stable.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Backfill dated retrospective reports; keep maintenance enforcement proposed",
+        "because": "Record-based reports do not establish owner feedback or new normative acceptance.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-4",
+        "decision": "Qualify freshness with independent documentation audit",
+        "because": "The fingerprint scanner remains Python-only; runtime fixes are deferred.",
+        "status": "proposed"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Connected documentation and explicit machine handoff",
+        "kind": "mechanism",
+        "detail": "See design.md and bug-missing-specpack.md. Markdown explains; the canonical JSON holds work state.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-7"
+        ]
+      }
+    ],
+    "approach": "Retain docs/specs as canonical machine records; connect wiki initiative projections and dated retrospectives. Backfill the omitted machine record and explicit skill handoffs."
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Preserve prior prose and repair current architecture/domain descriptions",
+      "detail": "Backfilled from plan.md T1; original tasks were not handed out through the engine. Current verification will be admitted now.",
+      "phase": "core",
+      "status": "done",
+      "needs": [],
+      "satisfies": [
+        "FR-1"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+        "expect": "Documentation audit exits 0; historical artifacts and prose snapshots retain their hashes. This does not require or claim a green full-workspace test gate."
+      },
+      "context": {
+        "touch": [
+          "wiki/index.md"
+        ],
+        "notes": [
+          "Reasoning and original frozen context are in plan.md. Current handouts are re-verification of an already implemented repair."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:30:40Z",
+          "by": "agent:codex",
+          "notes": "Current re-verification backfilled after the owner identified the missing JSON. Original repair commit 88bd171 did not have machine handouts. Full check/coverage failure remains disclosed in historical evidence; this pass is the bounded documentation audit."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Consolidate project/research knowledge and redirect entry documents",
+      "detail": "Backfilled from plan.md T2; original tasks were not handed out through the engine. Current verification will be admitted now.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-6"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+        "expect": "Documentation audit exits 0; historical artifacts and prose snapshots retain their hashes. This does not require or claim a green full-workspace test gate."
+      },
+      "context": {
+        "touch": [
+          "wiki/index.md"
+        ],
+        "notes": [
+          "Reasoning and original frozen context are in plan.md. Current handouts are re-verification of an already implemented repair."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:30:42Z",
+          "by": "agent:codex",
+          "notes": "Current re-verification backfilled after the owner identified the missing JSON. Original repair commit 88bd171 did not have machine handouts. Full check/coverage failure remains disclosed in historical evidence; this pass is the bounded documentation audit."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Backfill four initiative pages and dated retrospectives",
+      "detail": "Backfilled from plan.md T3; original tasks were not handed out through the engine. Current verification will be admitted now.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-4"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+        "expect": "Documentation audit exits 0; historical artifacts and prose snapshots retain their hashes. This does not require or claim a green full-workspace test gate."
+      },
+      "context": {
+        "touch": [
+          "wiki/index.md"
+        ],
+        "notes": [
+          "Reasoning and original frozen context are in plan.md. Current handouts are re-verification of an already implemented repair."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:30:43Z",
+          "by": "agent:codex",
+          "notes": "Current re-verification backfilled after the owner identified the missing JSON. Original repair commit 88bd171 did not have machine handouts. Full check/coverage failure remains disclosed in historical evidence; this pass is the bounded documentation audit."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Audit navigation, sources, gates, and documentation review",
+      "detail": "Backfilled from plan.md T4; original tasks were not handed out through the engine. Current verification will be admitted now.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-3"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+        "expect": "Documentation audit exits 0; historical artifacts and prose snapshots retain their hashes. This does not require or claim a green full-workspace test gate."
+      },
+      "context": {
+        "touch": [
+          "wiki/index.md"
+        ],
+        "notes": [
+          "Reasoning and original frozen context are in plan.md. Current handouts are re-verification of an already implemented repair."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:30:44Z",
+          "by": "agent:codex",
+          "notes": "Current re-verification backfilled after the owner identified the missing JSON. Original repair commit 88bd171 did not have machine handouts. Full check/coverage failure remains disclosed in historical evidence; this pass is the bounded documentation audit."
+        }
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "Correct the omitted machine record and four SDD skill handoffs",
+      "detail": "New correction task registered before its machine handout: backfill the omitted JSON plan and make machine registration explicit in the four SDD skills.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-4"
+      ],
+      "satisfies": [
+        "FR-7"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-machine-handoff.mjs",
+        "expect": "The pack loads with zero alignment violations, is discovered, preserves unset owner approval/closure, and installed Pi/Codex skills match the shipped files."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md",
+          "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md",
+          "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md",
+          "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+        ],
+        "notes": [
+          "R7 is defined in bug-missing-specpack.md. No owner approval or closure is inferred from creating the record."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-machine-handoff.mjs",
+          "exit": 0,
+          "at": "2026-10-10T20:30:46Z",
+          "by": "agent:codex",
+          "notes": "Verified populated machine plan, zero alignment violations, discovery, owner fields unset, and Pi/Codex skill convergence. This is a workflow correction; it does not prove autonomous skill behavior or a green full-workspace gate."
+        }
+      ]
+    }
+  ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Independent red-foreman review of the bounded documentation and missing-machine-handoff correction: actual verdict PASS. Re-ran do check, verify-docs, and verify-machine-handoff with exit 0; checked final positional findings syntax against the CLI. See machine-handoff-review.md. Full check/coverage still fail the existing install-paths assumption; no full-workspace green, owner approval, decision acceptance, or closure is claimed."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "../../..",
+    "verification_cwd": "repository root",
+    "source_head": "88bd171",
+    "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
+  },
+  "format": "specpack/0.3",
+  "revision": 14
+}

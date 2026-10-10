@@ -1,6 +1,6 @@
 ---
 name: review
-description: Adversarially verify landed work against the plan's contracts — the verification stage of the SDD loop. Re-runs every done task's verification expectation now (never trusts the ledger), cross-checks evidence against git, audits scope jail and traceability (R→D→T→V), checks design-decision conformance and evidence currency (code moved after evidence = re-run; historical success cannot satisfy changed scope), then issues a read-only verdict — fixes become new tasks, never silent self-fixes. Produces review-<n>.md in the initiative folder. Triggers are "review the work", "verify T1-T5", "is this actually done", "check the landed diff against the plan". Not for implementing fixes (implement), planning (plan), or producing analysis (analyze).
+description: Independently verify registered specpack tasks against their plan, source changes, and current evidence. Re-run task verification and record findings without applying implementation fixes. Use for reviewing landed SDD work or checking completion claims.
 ---
 
 # review — re-run, don't trust
@@ -48,6 +48,11 @@ does not certify it).
 
 ## 1. Load
 
+Load the JSON pack and run `do check <packDir>` before reviewing the prose.
+A missing pack, an empty machine plan, or Markdown-only completion is a finding.
+Use machine task states and evidence as the review input; Markdown explains the
+scope and decisions. A PACK PASS review does not create human approval or closure.
+
 1. Freshness gate: stamp `repo_head` vs `git rev-parse HEAD`.
 2. Read the initiative folder: plan.md (DAG, ledger, frozen contexts),
    design.md (decisions), analysis artifacts (registers, matrix).
@@ -75,12 +80,18 @@ discipline for normative writes.
 
 ## 4. Verdict & close
 
+Persist the actual verdict in the pack's `review.verdicts` through the core
+loader/writer API, alongside the Markdown review artifact. A machine PACK PASS
+must cite the independent review and current re-verification; never infer it
+from task completion or owner intent. This record does not accept decisions,
+approve the spec, or close the pack. Keep any failed repository gates explicit.
+
 1. Write `docs/specs/<slug>/review-<n>.md` from the template: per-task
    verdicts, findings with severity + route, re-run log (verbatim).
 2. Append routed fixes as tasks in plan.md (T-next rows, prereqs set) —
    status `todo`, owned by the next `implement` pass.
 3. Milestone note in the plan ledger + commit — the review artifact is
-   the durable record (project memory back-burnered, okf-only D5).
+   the durable record (project memory back-burnered, knowledge-engine D5).
 4. Commit review artifact + plan update. Handoff: all-pass → slice
    complete, evidence current (say until which commit); else → next
    ready set after routed tasks.

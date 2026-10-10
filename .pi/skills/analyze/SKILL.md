@@ -1,6 +1,6 @@
 ---
 name: analyze
-description: Analysis-stage skill of the SDD loop — turn a change request, defect, uncertainty, impact question, or knowledge gap into ONE bounded, evidence-grounded artifact before implementation. Grounds in the project wiki via the harness CLI (know) before any question reaches the user; records open questions and assumptions as first-class outputs; hands off to plan/implement with explicit blockers. Six modes — feature brief, testable spec, bug hypothesis ledger, timeboxed spike, impact dispositions, gap register. Triggers are "analyze/spec this feature", "write the spec for X", "investigate this bug", "run a spike on X", "what breaks if we change X", "what are we missing here", "gap analysis". Not for building the knowledge base (build-kb), greenfield scaffolding (new-project), roadmaps (roadmap), task planning (plan), or writing code (implement).
+description: Create bounded, evidence-grounded SDD analysis for a feature, spec, defect, spike, impact question, or knowledge gap. Register the initiative specpack before planning handoff; keep uncertainty explicit. Use for analyzing proposed or broken work, not implementation or review.
 ---
 
 # analyze — bounded analysis for spec-driven delivery
@@ -63,6 +63,21 @@ analysis, not a style choice.
 
 ## 2. Route the mode
 
+### Register the initiative
+
+For an SDD initiative that will hand off to planning or implementation, create
+`docs/specs/<slug>/<slug>.json` with `do init <packDir> --title "…" --why "…"`
+if it does not exist. Load and reuse an existing active pack. A completed pack
+is frozen; a new change needs a new initiative. Ordinary repository questions
+do not require creating work records.
+
+The JSON pack is the machine work record; the mode's Markdown artifact supplies
+its reasoning. Reference that artifact in the pack. Carry candidate requirements,
+questions, and proposed decisions into the pack before the planning handoff.
+Creation does not authorize implementation, accept decisions, or approve the spec.
+Use the installed harness CLI or the documented direct CLI invocation.
+Never invent human approval or closure fields.
+
 | The ask is…                                  | Mode        | Artifact (under `docs/specs/<slug>/`) | Question it answers                                          |
 | -------------------------------------------- | ----------- | ------------------------------------- | ------------------------------------------------------------ |
 | "add / change a capability" — what & why     | **feature** | `feature.md`                          | What should change, and why is that justified?               |
@@ -119,14 +134,17 @@ Every artifact ends with a **Handoff** block:
 - **Blocked on** — question IDs, spikes, decisions (each with owner/path).
 - **Next step** — the single next skill invocation and its input.
 
+Include the pack path and revision in a planning handoff. A prose-only
+initiative is not a machine handoff.
+
 Then:
 
 1. Note the milestone in the initiative folder and commit — the git
    history is the durable record (project memory is back-burnered;
    knowledge-engine decision D5).
 2. Normative claims discovered along the way → `know findings propose
-wiki --source <evidence> --destination wiki/<concept>.md --kind
-<kind> --rationale "…"`. Never written directly as settled truth.
+wiki <evidence> wiki/<concept>.md <kind> --rationale "…"`.
+   Never written directly as settled truth.
 3. Commit the artifact (with any wiki changes) — analysis travels with
    the repo.
 

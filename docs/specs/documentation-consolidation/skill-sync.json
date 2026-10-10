@@ -1,0 +1,14 @@
+[
+  {
+    "agent": "pi",
+    "exit": 0,
+    "output": "installed: 21 file(s) written, 0 same, 0 skipped \u2014 plan recorded\n",
+    "prior_install_ownership_preserved": true
+  },
+  {
+    "agent": "codex",
+    "exit": 0,
+    "output": "installed: 21 file(s) written, 0 same, 0 skipped \u2014 plan recorded\n",
+    "prior_install_ownership_preserved": true
+  }
+]

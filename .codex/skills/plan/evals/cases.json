@@ -58,7 +58,7 @@
       "expectations": [
         "Each task lists compile query, wiki cids, exact spec/design refs, key files",
         "No task says 'explore the codebase' as context",
-        "okf grounding ran before design choices were made"
+        "know grounding ran before design choices were made"
       ]
     },
     {
@@ -79,6 +79,17 @@
         "Refuses to plan from nothing; offers to run analyze first",
         "Micro-plan path only claimed for genuinely trivial work, with stated rationale",
         "No fabricated R/Q ids"
+      ]
+    },
+    {
+      "id": "machine-handoff-from-markdown-only-analysis",
+      "fixture_recipe": "An existing initiative with feature.md and no <slug>.json. Planning is authorized; implementation and human approval are not. The design needs two tasks with a real prerequisite.",
+      "prompt": "Plan this initiative for the next implementation session.",
+      "expectations": [
+        "Creates the canonical pack through do init without inventing owner approval",
+        "Registers requirements, decisions, two tasks, their real dependency, verification, and frozen context; documents any ID mapping",
+        "do check succeeds and do where discovers the populated pack",
+        "Returns the pack revision and machine ready set with Markdown rationale; performs no implementation"
       ]
     }
   ]

@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Turn an analysis (from the analyze skill) into a technical design and an executable task plan — the design/planning stage of the SDD loop. Reads docs/specs/<slug>/ analysis artifacts, respects their Handoff (plans only Ready-now slices), grounds in the wiki before designing, produces design.md (approach, contracts, decisions with alternatives and reversibility) and plan.md (a task DAG where every task has an observable verification expectation, frozen context pointers, and real prerequisites), then hands the ready set to implement. Triggers are "plan the implementation", "technical design for X", "turn this spec into tasks", "break this down into a plan", "design the fix". Not for producing analysis artifacts (analyze), writing code (implement), or reviewing landed work (review).
+description: Turn SDD analysis into a technical design, a populated JSON specpack, and an executable task DAG. Register requirements, dependencies, verification expectations, and frozen context before implementation handoff. Use for planning an analyzed change, not investigation or execution.
 ---
 
 # plan — technical design + task DAG from analysis
@@ -61,8 +61,8 @@ id>` — never designed around with invented answers.
 2. Extract: Ready-now slices, Blocked-on register (Q/A/D ids), route
    hints (needs impact? needs spike?).
 3. **Ground:** freshness check (stamp `repo_head` vs `git rev-parse
-HEAD`; `okf code index . wiki` or stale-pin) → `okf search "<design
-question>"` + `okf read <cid> --depth 1` per affected surface → open
+HEAD`; fingerprints + stamp, or stale-pin) → `know search "<design
+question>"` + `know read <cid>` per affected surface → open
    the cited wiki concepts and source files
    for anything load-bearing. Residual unknowns → ONE batched question
    round, recorded as new Q-ids in the artifact they belong to.
@@ -92,6 +92,25 @@ acceptance until the owner signs.
 
 ## 4. Author the task DAG (assets/plan.tmpl.md)
 
+### Persist the machine plan
+
+Load `docs/specs/<slug>/<slug>.json`; create it through `do init` if a legacy
+analysis lacks a pack. Keep Markdown as the design rationale and readable plan.
+The JSON pack owns executable requirements, decisions, designs, task dependencies,
+verification expectations, and frozen context. Register these before handoff.
+
+Use `do add decision` and `do add task` for the fields those commands expose.
+For remaining authored fields, use the existing core loader/writer API and check
+alignment with `do check`. Do not hand-set derived stages, evidence-driven task
+states, or human acceptance. Map prose IDs to canonical IDs explicitly when needed
+(for example, R1 → FR-1 and T1 → T-1).
+
+Before returning the ready set, `do check <packDir>` must succeed and
+`do where <workspace>` must discover the pack. An empty shell pack is not a
+completed plan: its tasks, dependencies, verification, and context must be present.
+Future questions outside the current slice remain follow-ups, rather than
+invented answers or unrelated closure blockers.
+
 Per task: goal (one line, slice-shaped) · implements (R/D refs) ·
 prereqs (task ids) · verification expectation (command/observation) ·
 size (S/M/L) · status (todo). Frozen context per task listed in its own
@@ -108,9 +127,9 @@ block. Then:
 ## 5. Close: record, hand off
 
 1. Commit the artifacts — the git history is the durable record
-   (project memory back-burnered, okf-only-engine D5).
-2. Normative discoveries ("new code in X must…") → `okf findings
-propose wiki --source … --destination wiki/<concept>.md --kind …`,
+   (project memory back-burnered, knowledge-engine decision D5).
+2. Normative discoveries ("new code in X must…") → `know findings
+propose wiki <evidence> wiki/<concept>.md <kind> --rationale "…"`,
    never written as settled truth.
 3. Commit both artifacts. **Handoff**: ready set with per-task frozen
    context → `implement`; blocked set with owners → the analysis's
@@ -125,3 +144,12 @@ propose wiki --source … --destination wiki/<concept>.md --kind …`,
 - Plan revisions: new slice statuses supersede old ones; the design is
   amended via new dated decision entries, never rewritten history.
 - Statuses move only on evidence (output refs, commits, review artifacts).
+
+## The ask-first rule (the hard gate's human contract)
+
+When the session opens with a recall block showing MORE THAN ONE spec
+in flight, and the user says "continue" (or go on / resume / pick up),
+you do not choose. You list the open specs and ask which one. The
+recall block is the source of truth (`do where <workspace>`); never
+memory. On pi and Claude Code a hard gate enforces this; on you it is
+discipline — the same rule either way.

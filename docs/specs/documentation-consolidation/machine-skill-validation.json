@@ -1,0 +1,22 @@
+[
+  {
+    "skill": "analyze",
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "plan",
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "implement",
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  {
+    "skill": "review",
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  }
+]

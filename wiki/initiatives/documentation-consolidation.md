@@ -11,6 +11,7 @@ sources:
   - {"id": "s3", "resource": "docs/specs/documentation-consolidation/plan.md"}
   - {"id": "s4", "resource": "docs/specs/documentation-consolidation/baseline.json"}
   - {"id": "s5", "resource": "docs/replays/2026-10-10/index.html"}
+  - {"id": "machine", "resource": "docs/specs/documentation-consolidation/documentation-consolidation.json"}
 ---
 
 # Intent and artifacts
@@ -21,8 +22,8 @@ easier spec tracking, and saved retrospectives. The analysis recommends retainin
 Source: `docs/specs/documentation-consolidation/feature.md:1`.
 
 The design and task plan live beside that analysis. Their exact evidence and
-status ledger remain there. This initiative currently has prose artifacts and
-no admitted executable specpack. `do where` does not list prose-only analyses.
+status ledger remain there. The initial repair had prose artifacts and
+no executable specpack. That omission was corrected on 2026-10-10; see below.
 Source: `treadle/packages/cli/src/harness/where.ts:109`.
 
 # What the repair connects
@@ -42,3 +43,14 @@ The future maintenance practice remains a [draft](/project/documentation-lifecyc
 The earlier HTML repository replay remains at `docs/replays/2026-10-10/index.html`.
 Its source snapshot predates this repair and is historical evidence, not a live
 view of the rewritten wiki. Its recorded browser checks remain unchanged.
+
+# Machine handoff correction — 2026-10-10
+
+The missing JSON was an agent workflow error. The corrected
+[canonical pack](../../docs/specs/documentation-consolidation/documentation-consolidation.json)
+now carries requirements, proposed decisions, task dependencies, and evidence.
+Source: `docs/specs/documentation-consolidation/bug-missing-specpack.md:1`.
+
+Its engine-derived stage is authoritative. Human approval and closure remain
+unset. New evidence is current re-verification, not a fabricated historical
+handout. The earlier snapshot and retrospective remain dated observations.

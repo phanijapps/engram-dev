@@ -1,0 +1,121 @@
+{
+  "observed_at": "2026-10-10T20:30:40.452Z",
+  "repo_head": "88bd171b8a46b9365054b24a1689bbd8669e018e",
+  "working_tree": "M .codex/skills/analyze/SKILL.md\n M .codex/skills/analyze/assets/gapanalysis.tmpl.md\n M .codex/skills/analyze/evals/cases.json\n M .codex/skills/analyze/evals/rubric.md\n M .codex/skills/implement/SKILL.md\n M .codex/skills/implement/evals/cases.json\n M .codex/skills/plan/SKILL.md\n M .codex/skills/plan/assets/plan.tmpl.md\n M .codex/skills/plan/evals/cases.json\n M .codex/skills/plan/evals/rubric.md\n M .codex/skills/review/SKILL.md\n M .pi/skills/analyze/SKILL.md\n M .pi/skills/implement/SKILL.md\n M .pi/skills/plan/SKILL.md\n M .pi/skills/plan/evals/cases.json\n M .pi/skills/review/SKILL.md\n M docs/specs/documentation-consolidation/plan.md\n M treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md\n M treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md\n M treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md\n M treadle/packages/cli/harness/skills/sdlc/plan/evals/cases.json\n M treadle/packages/cli/harness/skills/sdlc/review/SKILL.md\n M wiki/.okf/fingerprints.json\n M wiki/.okf/last-index.json\n M wiki/initiatives/documentation-consolidation.md\n M wiki/retrospectives/2026-10-10-documentation-consolidation.md\n?? docs/specs/documentation-consolidation/bug-missing-specpack.md\n?? docs/specs/documentation-consolidation/documentation-consolidation.json\n?? docs/specs/documentation-consolidation/machine-handoff-evidence.md\n?? docs/specs/documentation-consolidation/skill-sync.json\n?? docs/specs/documentation-consolidation/verify-machine-handoff.mjs",
+  "scope": "Artifact immutability, preserved prose, wiki reachability, source presence, line bounds, pack coverage, pending proposal, OKF validation. Not semantic proof or engine freshness.",
+  "concepts": 37,
+  "reachable_concepts": 37,
+  "line_references": 128,
+  "protected_files": 30,
+  "preserved_documents": 27,
+  "inventory_entries": 234,
+  "pack_snapshots": [
+    {
+      "path": "docs/specs/fresh-harness/fresh-harness.json",
+      "revision": 40,
+      "sha256": "8edc7c9a61eaef47694a16ca6af81ca0b4e67dcba18fd433537ba3ce65c941f3",
+      "status": {
+        "lifecycle": "complete",
+        "deliverable": "delivered"
+      }
+    },
+    {
+      "path": "docs/specs/guided-loop/guided-loop.json",
+      "revision": 21,
+      "sha256": "c431fe358d97b85f66e1d29e6dc5b9336e84b8998966d4100d654454e5e528a4",
+      "status": {
+        "lifecycle": "complete",
+        "deliverable": "delivered"
+      }
+    },
+    {
+      "path": "docs/specs/install-paths/install-paths.json",
+      "revision": 12,
+      "sha256": "cbbf1406e12113669ba792e5b4658e37b39f87f854a711db9353cb8c17b26f62",
+      "status": {
+        "lifecycle": "complete",
+        "deliverable": "delivered"
+      }
+    },
+    {
+      "path": "docs/specs/stitch-ui/stitch-ui.json",
+      "revision": 37,
+      "sha256": "3ddc26351d12562771de908f36dbad68e16a7b00b1442729e938cb46128fd3b7",
+      "status": {
+        "lifecycle": "complete",
+        "deliverable": "delivered"
+      }
+    }
+  ],
+  "lifecycle_finding": {
+    "id": "policy-1662c471",
+    "source": "docs/specs/documentation-consolidation/feature.md",
+    "destination": "wiki/project/documentation-lifecycle.md",
+    "kind": "policy",
+    "status": "pending",
+    "rationale": "Proposed wiki authority, dated initiative projections, retrospective fields, and lesson promotion; no new closure enforcement or owner acceptance is asserted.",
+    "proposed_at": "2026-10-10T20:16:46.491000+00:00",
+    "resolved_at": ""
+  },
+  "source_hashes": {
+    "treadle/conformance/generators/gen_corpus.ts": "5b36aa9245e7b374272dbe056a4dcc59c2fb937913b1401c623223b7eb56b171",
+    "treadle/scripts/corpus-check.mjs": "dbbf0963020724b6d07d2312efeb3f8f74ace789ded07e95427faee763d8de66",
+    "docs/archive/product/Structured_Brief.md": "9c9ebd030934a6d5b9e8ed02bd1aa1f6af9e09f7ccacf67874f9bcaa8e9bae5c",
+    "docs/archive/specs/okf-only-engine/design.md": "c09128ca9545cdef848cf41ee97292da1f4ef82e364bd3c88060958b46528d1c",
+    "docs/research/python-vs-node-the-harness.md": "50b18abe1428993a6061afa2f148447bb111a9e3c2026259d886c0753c011869",
+    "docs/research/harness-naming.md": "29bb3fc775eaa44f88c090a9ee5167782b9c6ebbe9008e12ee64406a5cc59fa8",
+    "docs/research/nodejs-engineering-standards.md": "796edabb9fac15797298a6ab0f54e7c5aae9abdf68ea788b87b67b772c86ed93",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md": "50b685030d2d0cf590d1fb757b1c9d455f54c48da9dd1ae67e752e1c89b9be6d",
+    "treadle/packages/core/src/specpack/pins.ts": "a43979b25f3389f4019b146d7d5625662d6189b51b240aae5f294ccc82c41e8b",
+    "treadle/packages/knowledge/src/fingerprints.ts": "a4b5df51e80b3d96f6f93f60f681cd47667c5fd0b8ab4c052c003b59267ddaee",
+    "treadle/packages/knowledge/src/stamp.ts": "a5261d8288d743f64e5741b0fe8fb2c6f0314cf6d27756891fac611fa5bc1e47",
+    "treadle/packages/cli/src/commands/know.ts": "e47aceae4e7e0e93cdb53ae988f2e6744eb874ca4e26afad3a4f1b68a432dc57",
+    "wiki/decisions/okf-only-engine.md": "d0c7f7da58678b3aea1f71388e56156f1b9a13438b77a16f2dc9cd5f56b38f6b",
+    "treadle/packages/knowledge/src/links.ts": "23f0df950bf6f70a4a46d26a2d80efb68943768ff311938e0c9f029585aa2972",
+    "treadle/packages/knowledge/src/parse.ts": "f068b95d43927f8e1a696d578525e013939461f037ddb615f514b8dd97548f0e",
+    "treadle/packages/knowledge/src/findings.ts": "596aeff6fefea1e33279ccc77ffe83b7a7e39b1322c0e1c8563fa8968f32451e",
+    "treadle/packages/core/src/stages.ts": "ca0ca03f329df14d0e02ca5fd7224730a0ecac891ef149908e730d01736f560c",
+    "treadle/packages/core/src/specpack/derive.ts": "ee722e2fcfa766c478850c9974cc0005586c5e273553248b666d06eac95929e9",
+    "treadle/packages/core/src/specpack/record.ts": "687a6717feffec0f713849b9c6fbaf081b5af21cebfde0840ebe12b7b0b6e4cc",
+    "treadle/packages/core/src/specpack/normalize.ts": "5baae47206286aee94c71be2b5fa6b0b933e39871b0dc8d2bb319720577b54f0",
+    "treadle/packages/cli/src/harness/where.ts": "2dae0cdc859633cde7bb65d20d88e8726ae651c16a39d36d7343f5559266e01b",
+    "treadle/packages/knowledge/src/validate.ts": "2d0cf6864d81f052582d8c97f943517f6b3b02acd04bc7e4e6dd4e10b6886995",
+    "AGENTS.md": "01d3a361330aba65bf48d54353362b85ac50882533e98de1b0444256976d8019",
+    "docs/specs/documentation-consolidation/feature.md": "257e0d823fc7093619306887cee36fdc976010ab0fc446f8552ec7a27affd9b1",
+    "docs/specs/documentation-consolidation/design.md": "87675fbc35def7f3184394b71fb6a46519a2b030a8f684cbdd3d6ee087ee6f73",
+    "docs/specs/documentation-consolidation/plan.md": "28837dce775cfd8ecdd3f93ebb6d3c2f22ed5ed474ec2a0359593d27a15cae73",
+    "docs/specs/documentation-consolidation/baseline.json": "595c2b61385cac5c8017a1c4c045c47997ae6d9c0b6e98c7abbdaf45dcf4d316",
+    "docs/replays/2026-10-10/index.html": "4309b115bdf77e579317dc6f14d74aa9fa5b66b3f1caa517cd00153ba4d930cc",
+    "docs/specs/documentation-consolidation/documentation-consolidation.json": "d7dcb3c42c20177abe815d782852d19cfb236adf333cd6d11da8f901b1b98bd0",
+    "docs/specs/fresh-harness/fresh-harness.json": "8edc7c9a61eaef47694a16ca6af81ca0b4e67dcba18fd433537ba3ce65c941f3",
+    "docs/specs/guided-loop/guided-loop.json": "c431fe358d97b85f66e1d29e6dc5b9336e84b8998966d4100d654454e5e528a4",
+    "docs/specs/install-paths/install-paths.json": "cbbf1406e12113669ba792e5b4658e37b39f87f854a711db9353cb8c17b26f62",
+    "docs/specs/stitch-ui/stitch-ui.json": "3ddc26351d12562771de908f36dbad68e16a7b00b1442729e938cb46128fd3b7",
+    "treadle/package.json": "923fcacd0bbeab2e1b80772fd9c5ea1ce90f7f6eef9d22b0a85b1963dac7c332",
+    "treadle/tsconfig.base.json": "9e4cfb0356b14ffd866f5d41673729a3e738352fc5563b1d9df6a2a6e8f3fe50",
+    "treadle/eslint.config.mjs": "d55e03e66bc1a69a9899fc02152d83d13f64f244c80e67fc8ad8786ea377c7a1",
+    "treadle/vitest.config.ts": "97597bda1cde9a1b8aa36e2787a64278d1df7e66597a56f7b93a5c5af9341e3c",
+    ".github/workflows/ci.yml": "dc60b8cdc206362ff248cd0a258da19b9ac18063f94563d7b999f0ce233600f5",
+    "treadle/packages/knowledge/package.json": "1537e5c22a4db9c28991b8067d9425c997ee29f700f458634af5d20975b5fa83",
+    "treadle/packages/cli/test/where.test.ts": "edb4749ca3109fb5934af5107994ce54d7d05f72131f993ea8f7f544421960bc",
+    "treadle/packages/cli/src/commands/do.ts": "f14aaa41322c5f6477c8a3358c196f0e57cb3e23a21c37434b719a29f2dee6d6",
+    "docs/archive/documentation/2026-10-10/treadle/DEBT.md": "bf90b1414804a535403550a799d8ed8fa0242297db2aa816f8512f4b23edae80",
+    "SECURITY.md": "2bea5e88ea504a8add231e76644c8fbfd9fb9b438ea7f8761064a23b8aecfac6",
+    "treadle/packages/web/src/servers.ts": "be8ef5a8d8797b3a054114443e00326b2881e00fc1db198d96e051ebd374fc1c",
+    "treadle/packages/core/src/specpack/admission.ts": "78a20d864a29916b9769a4efc1170da9d9620ab3d28543b508b10ac5938fb6be",
+    "docs/archive/specs/sdd-research/analysis.md": "99c9d01f24e068c2568ce92f593016404fe53a66f28102e5194136fcb44592f1",
+    "docs/research/golden-conformance-suite.md": "aaa40066ae4636fee53f01aed85fdd5ba3fe7eb28c3bfe3981f296c01079aff0",
+    "wiki/decisions/corpus-self-hosting.md": "d11e1418b9a2b73d2babe03bad55a24dd68f9c77bc0f60e2e7abf2e08c6343d9",
+    "treadle/packages/brand/src/brand.ts": "031054e8a8b8ac494af9a6a48bd9193c0c9d87750b4c42ac19f4ec2b3492e214",
+    "treadle/scripts/brand-check.mjs": "a9da24dd83936710617010adba3116b9224a44f368c782a38f1f3f97e85555fc",
+    "wiki/decisions/port-to-typescript.md": "3f07102bd926b8a5a8e23d3faa6358ceef050f39a4b32a207cdb81c820c8947b",
+    "docs/specs/documentation-consolidation/evidence.md": "7967630da592bf9e2b55c38493ff8a0b842d830eb2300f512007bdb058a4210f",
+    "treadle/pnpm-workspace.yaml": "477e6c5f8b033a1ecb7f8919ad2726e4328c7893c4ad6228d62471425b22dbe7",
+    "treadle/packages/core/src/index.ts": "6fd9de33f29edce19d5760ae94c9247a3b9053274153cd45297020313a23fe0c",
+    "treadle/packages/knowledge/src/index.ts": "3a5b91fd313c62991de29c2a2c33fb54d3c7a19217d172c6cdeea85660b72904",
+    "treadle/packages/cli/src/main.ts": "d71bd4666d09dcdc38e4f4f3963d02dbfce52e978d35c4318980f2a79f15bc36"
+  },
+  "errors": 0,
+  "warnings": 0,
+  "failures": []
+}

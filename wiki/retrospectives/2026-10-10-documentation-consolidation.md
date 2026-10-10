@@ -65,3 +65,15 @@ The maintenance practice remains [draft](/project/documentation-lifecycle.md).
 Q1 asks about future closure enforcement. Q2 asks about priorities and owners.
 Historical outcome gaps need dated supplements. No human acceptance is invented.
 See [the initiative](/initiatives/documentation-consolidation.md).
+
+# Follow-up observation — missing machine record
+
+The owner identified a gap after the repair: no JSON specpack had been created.
+The agent had treated the Markdown handoff as sufficient. The four SDD skills
+also omitted explicit machine registration. The documentation review did not
+catch that omission. Source: `docs/specs/documentation-consolidation/bug-missing-specpack.md:1`.
+
+A canonical pack now backfills the plan through the engine. Current verification
+is recorded with the actual agent and execution time; earlier approval and
+closure are not invented. Skill handoffs now explicitly register and use the
+machine record. Source: `docs/specs/documentation-consolidation/machine-handoff-evidence.md:1`.

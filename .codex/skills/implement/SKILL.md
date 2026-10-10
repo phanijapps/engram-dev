@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute one planned task's slice against its frozen context — the implementation stage of the SDD loop. Takes a T-id from a plan.md ready set, loads exactly the frozen context (compile query, wiki cids, exact refs — insufficient context stops and routes back instead of browsing), works inside the scope jail (no drive-by refactors), treats the task's verification expectation as the exit criterion (runs it, records verbatim evidence in the status ledger, never writes done without the observation), and closes with ledger update + commit + memory. Micro-decisions are allowed (two-way, recorded); requirement-level surprises route back to analyze/plan. Triggers are "implement T1", "do the next task", "execute this slice", "work the ready set". Not for planning (plan), analyzing (analyze), or verifying landed work (review).
+description: Execute one registered specpack task from its machine handout and frozen context. Run verification and admit actual evidence through do record. Use for implementing the next planned task, not analysis, planning, or independent review.
 ---
 
 # implement — one task, frozen context, observed evidence
@@ -43,7 +43,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    resumes from the ledger's evidence, never from memory.
 7. **Close per task:** ledger update (evidence-cited) → commit (message
    carries `<slug> T<n>: <goal>`); milestone notes live in the plan's
-   ledger (project memory back-burnered, okf-only-engine D5). If the change invalidates wiki content, note
+   ledger (project memory back-burnered, knowledge-engine decision D5). If the change invalidates wiki content, note
    the staleness in the ledger entry (wiki update is a task or review
    follow-up — never skipped silently).
 8. **Task done ≠ requirement verified.** `done` means _this task's
@@ -53,11 +53,15 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    and `BLOCKED` (stall limit) are stops, not self-serve fixes. Show the
    owner: what drifted (paths, pinned vs current) or why it stalled, the
    remedies (re-pin and continue, replan, or unblock), and the risk of
-   each. Act only on the owner's approval, recorded as `loom rebase
---approved-by human:<owner>` (or `loom record --result unblock`). Never
+   each. Act only on the owner's approval, recorded as `do approve --by human:<owner>` (or `do record --result unblock`). Never
    re-pin, unblock, or amend the pack silently to keep moving.
 
 ## 1. Select
+
+Load the initiative's JSON pack first. Missing pack or unregistered tasks route
+back to `plan`; do not begin implementation from Markdown alone. Use
+`do next <packDir>` to obtain the machine handout and revision. Match that
+task to the explanatory Markdown plan instead of maintaining a second ready set.
 
 Read `docs/specs/<slug>/plan.md`: ready set, status ledger. Pick the
 topologically first executable task. No ready tasks → stop and report
@@ -66,7 +70,7 @@ the first unblock move (which Q/D/task gates it).
 ## 2. Load
 
 1. Freshness gate: stamp `repo_head` vs `git rev-parse HEAD`
-   (`okf code index . wiki` or stale-pin, same rule as always).
+   (fingerprints + stamp, or stale-pin, same rule as always).
 2. Run the task's frozen-context compile query; open the listed wiki
    cids and key files. Read the design sections the task implements.
 3. Insufficient → STOP (rule 2). Sufficient → state `doing` in the
@@ -80,6 +84,14 @@ surprise. For spikes' follow-up tasks: probe code stays out or clearly
 marked throwaway — a spike that ships feature code failed.
 
 ## 4. Verify & close
+
+Record each executed expectation through `do record <packDir> --task <id>
+--result pass|fail --cmd "<executed command>" --exit <actual exit>
+--expected-revision <held revision> --by agent:<name>`. Re-read the pack after
+admission; the engine owns the resulting task state. Markdown observations
+reference this evidence. An agent may record its own execution but cannot invent
+owner approval or close the pack. Disclose failed repository gates even when a
+bounded task's distinct verification expectation passes.
 
 1. Run the verification expectation **as written**. Record the evidence
    row: command, outcome (verbatim/pinned), commit ref.
@@ -107,3 +119,12 @@ cannot observe.
 - Creep becomes a task candidate, not a diff.
 - Route-backs carry the T-id, the surprise, and the proposed destination
   (analyze/plan) — a routed task must never half-land as a "small fix".
+
+## The ask-first rule (the hard gate's human contract)
+
+When the session opens with a recall block showing MORE THAN ONE spec
+in flight, and the user says "continue" (or go on / resume / pick up),
+you do not choose. You list the open specs and ask which one. The
+recall block is the source of truth (`do where <workspace>`); never
+memory. On pi and Claude Code a hard gate enforces this; on you it is
+discipline — the same rule either way.

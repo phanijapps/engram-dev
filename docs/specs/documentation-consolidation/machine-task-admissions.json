@@ -1,0 +1,52 @@
+[
+  {
+    "task": "T-1",
+    "command": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+    "exit": 0,
+    "admission": {
+      "task": "T-1",
+      "status": "done",
+      "fail_streak": 0
+    }
+  },
+  {
+    "task": "T-2",
+    "command": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+    "exit": 0,
+    "admission": {
+      "task": "T-2",
+      "status": "done",
+      "fail_streak": 0
+    }
+  },
+  {
+    "task": "T-3",
+    "command": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+    "exit": 0,
+    "admission": {
+      "task": "T-3",
+      "status": "done",
+      "fail_streak": 0
+    }
+  },
+  {
+    "task": "T-4",
+    "command": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+    "exit": 0,
+    "admission": {
+      "task": "T-4",
+      "status": "done",
+      "fail_streak": 0
+    }
+  },
+  {
+    "task": "T-5",
+    "command": "cd treadle && pnpm exec tsx ../docs/specs/documentation-consolidation/verify-machine-handoff.mjs",
+    "exit": 0,
+    "admission": {
+      "task": "T-5",
+      "status": "done",
+      "fail_streak": 0
+    }
+  }
+]

@@ -100,3 +100,24 @@ T4's documentation verification is complete: the independent reviewer reran the
 audit with exit 0 and returned PASS. `review.md` preserves both earlier finding
 sets and their corrections. Full workspace check and coverage still fail G3;
 this observation does not mark those runtime gates green.
+
+### Correction task — missing machine handoff
+
+T5 implements R7 from `bug-missing-specpack.md`. Register the five-task machine
+record and update the four shipped SDD skill handoffs. Sync the Pi/Codex copies
+through the installer. Verify loader admission, zero alignment violations, work
+discovery, current evidence, unset human approval/closure, original-record hashes,
+skill validity, and byte equality between shipped and installed skill files.
+
+Machine IDs map R1–R7 to FR-1–FR-7, D1–D4 to D-1–D-4, and T1–T5 to T-1–T-5.
+The original repair was implemented before a pack existed; its re-verification
+evidence is a backfill dated now, not a fabricated earlier machine handout.
+
+### Machine correction observation — 2026-10-10
+
+T5 is recorded as T-5 in the canonical JSON. The machine now holds the task
+DAG and evidence; prose supplies context and historical observations. All five
+registered tasks have admitted current verification evidence. The correction's
+independent reviewer returned PASS after re-running alignment and both verifiers.
+See `machine-handoff-evidence.md` and `machine-handoff-review.md`. Human approval,
+decision acceptance, and closure remain unset; engine stage is authoritative.
