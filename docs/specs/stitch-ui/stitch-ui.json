@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T11:02:11Z",
+    "updated": "2026-10-10T11:02:42Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -454,7 +454,8 @@
       ],
       "implements": [
         "DES-2",
-        "DES-3"
+        "DES-3",
+        "DES-4"
       ],
       "honors": [],
       "accepts": [
@@ -477,7 +478,8 @@
         "FR-4"
       ],
       "implements": [
-        "DES-1"
+        "DES-1",
+        "DES-4"
       ],
       "honors": [],
       "accepts": [
@@ -499,7 +501,7 @@
         "FR-9"
       ],
       "implements": [
-        "DES-1"
+        "DES-6"
       ],
       "honors": [],
       "accepts": [
@@ -521,7 +523,8 @@
         "FR-6"
       ],
       "implements": [
-        "DES-1"
+        "DES-5",
+        "DES-7"
       ],
       "honors": [],
       "accepts": [
@@ -545,7 +548,7 @@
         "FR-8"
       ],
       "implements": [
-        "DES-2"
+        "DES-8"
       ],
       "honors": [],
       "accepts": [
