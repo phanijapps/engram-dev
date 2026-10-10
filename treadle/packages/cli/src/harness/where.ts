@@ -108,7 +108,7 @@ function lastEvidenceAt(doc: { tasks?: { evidence?: { at?: string }[] }[] }): st
 
 export function where(workspace: string): WhereReport {
   const root = resolve(workspace); // git prints absolute paths — compare like for like (R2 #5)
-  const packs = scanSpecsDir(join(root, 'docs', 'specs'), '');
+  const packs = scanSpecsDir(specsRoot(root), '');
   const report: WhereReport = { root, packs, worktrees: [] };
   try {
     const out = execSync('git worktree list --porcelain', { cwd: root, encoding: 'utf8' });
@@ -118,13 +118,20 @@ export function where(workspace: string): WhereReport {
       .map((l) => l.slice('worktree '.length))
       .filter((p) => p !== root);
     for (const p of trees) {
-      const treePacks = scanSpecsDir(join(p, 'docs', 'specs'), p);
+      const treePacks = scanSpecsDir(specsRoot(p), p);
       report.worktrees.push({ path: p, packs: treePacks });
     }
   } catch {
     report.worktreesUnavailable = 'no git — worktree scan unavailable';
   }
   return report;
+}
+
+/** Canonical-empty is intentional: never merge it with a second work root.
+ * Legacy-only external checkouts remain readable during their migration. */
+function specsRoot(workspace: string): string {
+  const canonical = join(workspace, 'specs');
+  return existsSync(canonical) ? canonical : join(workspace, 'docs', 'specs');
 }
 
 const OPEN_STAGES = new Set([

@@ -4,7 +4,7 @@
   "description": "Consolidate workspace knowledge and preserve retrospectives",
   "date": {
     "created": "2026-10-10T20:28:49.896Z",
-    "updated": "2026-10-10T20:51:56.686Z",
+    "updated": "2026-10-10T21:01:01Z",
     "approved": {
       "at": "2026-10-10T20:40:25Z",
       "by": "human:owner"
@@ -12,7 +12,7 @@
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "awaiting_owner"
+    "deliverable": "in_progress"
   },
   "metadata": {
     "feature": {
@@ -160,7 +160,8 @@
         "id": "D-1",
         "decision": "Retain docs/specs and add wiki projections",
         "because": "Current discovery and bundle formats support this reversible arrangement.",
-        "status": "proposed"
+        "status": "rejected",
+        "rejected_because": "The owner now requests removing docs completely and moving the active work root to ./specs; the retained docs/specs proposal is superseded."
       },
       {
         "id": "D-2",
@@ -484,5 +485,5 @@
     "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
   },
   "format": "specpack/0.3",
-  "revision": 22
+  "revision": 23
 }

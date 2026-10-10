@@ -1,0 +1,255 @@
+{
+  "id": "docs-root-migration",
+  "name": "docs-root-migration",
+  "description": "Move work to root specs and remove docs",
+  "date": {
+    "updated": "2026-10-10T21:02:12Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "metadata": {
+    "feature": {
+      "ref": "feature.md",
+      "type": "text/markdown"
+    },
+    "impact-roots": {
+      "ref": "impact-roots.md",
+      "type": "text/markdown"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown"
+    }
+  },
+  "spec": {
+    "why": "The owner wants docs removed completely, root ./specs for executable work, and one current documentation home in the wiki.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Discover canonical root specs in workspace/worktrees with canonical precedence and legacy-only read fallback.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Remove docs without a symlink; retain relocated evidence and closed pack bytes through a complete path/hash map.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Consolidate all four full research sources into their current wiki concepts; retain originals only as archived provenance.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Retarget current wiki sources, entry documents, and shipped/installed skills while preserving historical artifact bytes and corpus.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Serve current work from specs in the local library, open owner review, and record actual checks and independent review.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "Keep historical retrospective interpretations withdrawn; do not invent human approval or closure.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Freshness engine redesign",
+      "Historical retrospective reconstruction",
+      "Schema or corpus contract changes",
+      "Discarding preserved evidence"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "the project owner",
+        "want": "root specs and one current wiki documentation home with no docs directory",
+        "so": "work is easy to track and readers see one current knowledge home"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use root ./specs and remove docs from the workspace",
+        "because": "Explicit owner instruction supersedes the old root-retention proposal.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Place historical raw artifacts under specs/archive and non-concept documentation under wiki/assets",
+        "because": "History stays outside active discovery; raw Markdown does not violate wiki concept/link rules.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Prefer root specs exclusively; use legacy discovery only when the canonical root is absent",
+        "because": "Untouched external projects remain readable without merging duplicate roots.",
+        "status": "proposed"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Root work records and consolidated wiki documentation",
+        "kind": "mechanism",
+        "detail": "See design.md and impact-roots.md; use relocations.json for historical source resolution.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6"
+        ]
+      }
+    ],
+    "approach": "Use root specs for work, specs/archive for history, and wiki concepts/assets for documentation. Keep a complete relocation map and frozen closed bytes."
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Replatform discovery and path regression tests",
+      "detail": "Implement plan.md T-1 within its frozen context.",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "satisfies": [
+        "FR-1"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+        "expect": "All discovery regression fixtures and immutable closed-record witness pass."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/src/harness/where.ts",
+          "treadle/packages/cli/test/where.test.ts"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T21:02:12Z",
+          "by": "agent:codex",
+          "notes": "Seven discovery tests pass: canonical precedence, legacy-only fallback, empty canonical root, mixed worktree roots, archive exclusion, and the immutable delivered install-paths record."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Relocate docs, consolidate research, and retarget current sources",
+      "detail": "Implement plan.md T-2 within its frozen context.",
+      "status": "todo",
+      "phase": "core",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-6"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --files",
+        "expect": "Mapped bytes, wiki sources/navigation/conformance, root discovery, and selected handoff checks pass with no docs directory."
+      },
+      "context": {
+        "touch": [
+          "docs",
+          "specs",
+          "wiki",
+          "README.md",
+          "AGENTS.md",
+          "install.sh",
+          "treadle/DEBT.md",
+          "treadle/scripts/link-check.mjs"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      }
+    },
+    {
+      "id": "T-3",
+      "title": "Sync harness skills, verify gates, and open current library",
+      "detail": "Implement plan.md T-3 within its frozen context.",
+      "status": "todo",
+      "phase": "core",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --handoff",
+        "expect": "Mapped bytes, wiki sources/navigation/conformance, root discovery, and selected handoff checks pass with no docs directory."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/harness/skills",
+          "treadle/scripts/link-check.mjs",
+          ".pi/skills",
+          ".codex/skills",
+          ".claude/skills",
+          "wiki",
+          "specs/docs-root-migration"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      }
+    }
+  ],
+  "env": {
+    "workspace": "../..",
+    "source_head": "a14ae28",
+    "verification_cwd": "repository root"
+  },
+  "format": "specpack/0.3",
+  "revision": 5
+}

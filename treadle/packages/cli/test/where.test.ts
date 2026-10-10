@@ -2,7 +2,7 @@
  *  worktree), no-git degradation, --json shape, archive exclusion. */
 import { describe, expect, it } from 'vitest';
 import { execSync } from 'node:child_process';
-import { cpSync, existsSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { recallBlock, where, isOpen } from '../src/harness/where.js';
@@ -15,7 +15,7 @@ function fixturePack(
   stage: string,
   over: Record<string, unknown> = {},
 ): void {
-  const dir = join(root, 'docs', 'specs', name);
+  const dir = join(root, 'specs', name);
   mkdirSync(dir, { recursive: true });
   const doc = {
     id: name,
@@ -79,7 +79,7 @@ describe('do where (T-0)', () => {
       fixturePack(root, 'beta', 'delivered');
       fixturePack(root, 'gamma', 'awaiting_owner');
       // the archive is frozen history — a pack inside it must never be listed
-      const arch = join(root, 'docs', 'specs', 'archive', 'old-one');
+      const arch = join(root, 'specs', 'archive', 'old-one');
       mkdirSync(arch, { recursive: true });
       writeFileSync(
         join(arch, 'old-one.json'),
@@ -139,6 +139,8 @@ describe('do where (T-0)', () => {
       // each side writes ONLY its own pack (both untracked in their trees)
       fixturePack(root, 'main-pack', 'in_progress');
       fixturePack(wt, 'side-pack', 'in_review');
+      mkdirSync(join(wt, 'docs'));
+      renameSync(join(wt, 'specs'), join(wt, 'docs', 'specs'));
       const r = where(root);
       expect(r.packs.map((p) => p.name)).toEqual(['main-pack']);
       expect(r.worktrees).toHaveLength(1);
@@ -172,12 +174,38 @@ describe('do where (T-0)', () => {
     }
   });
 
-  it('the real workspace sees the live wave in flight (the self-witness)', () => {
+  it('prefers canonical work without merging duplicate legacy packs', () => {
+    const root = mkdtempSync(join(tmpdir(), 'where-canonical-'));
+    try {
+      fixturePack(root, 'legacy', 'in_progress');
+      mkdirSync(join(root, 'docs'));
+      renameSync(join(root, 'specs'), join(root, 'docs', 'specs'));
+      fixturePack(root, 'current', 'planning');
+      expect(where(root).packs.map((pack) => pack.name)).toEqual(['current']);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('reads legacy-only projects but respects an intentionally empty canonical root', () => {
+    const root = mkdtempSync(join(tmpdir(), 'where-legacy-'));
+    try {
+      fixturePack(root, 'legacy', 'in_progress');
+      mkdirSync(join(root, 'docs'));
+      renameSync(join(root, 'specs'), join(root, 'docs', 'specs'));
+      expect(where(root).packs.map((pack) => pack.name)).toEqual(['legacy']);
+      mkdirSync(join(root, 'specs'));
+      expect(where(root).packs).toEqual([]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('discovers the immutable closed install-paths witness independently of an open wave', () => {
     const WORKSPACE = join(REPO, '..');
     const r = where(WORKSPACE);
-    // the wave that owns this test run is in flight while it runs
-    const open = r.packs.filter((p) => p.stage !== 'delivered');
-    expect(open.length).toBeGreaterThan(0);
-    expect(open.some((p) => p.name === 'install-paths')).toBe(true);
+    const witness = r.packs.find((pack) => pack.name === 'install-paths');
+    expect(witness).toBeDefined();
+    expect(witness?.stage).toBe('delivered');
   });
 });

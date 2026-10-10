@@ -1,0 +1,1290 @@
+{
+  "source_head": "a14ae282b6327f6f5cd2eb2f5cdbd0b48316207e",
+  "note": "Pre-move bytes after the owner superseded D-1. Old paths inside historical artifacts are resolved through this map; their content is retained.",
+  "files": {
+    "docs/archive/documentation/2026-10-10/AGENTS.md": {
+      "destination": "specs/archive/documentation/2026-10-10/AGENTS.md",
+      "sha256": "c1d3b645757b937f460ea5a1f2e5b04e5813aa47b2914025e51edb9419f751d8"
+    },
+    "docs/archive/documentation/2026-10-10/CONTRIBUTING.md": {
+      "destination": "specs/archive/documentation/2026-10-10/CONTRIBUTING.md",
+      "sha256": "19eb882429568f23602d34c1e9361e5e418d0f7473fa1d72cf1b9c2a7dd48876"
+    },
+    "docs/archive/documentation/2026-10-10/README.md": {
+      "destination": "specs/archive/documentation/2026-10-10/README.md",
+      "sha256": "2d64d306af55f9d68404c71ace48429e3956affe0727863a3146b9cfbdb0274b"
+    },
+    "docs/archive/documentation/2026-10-10/treadle/DEBT.md": {
+      "destination": "specs/archive/documentation/2026-10-10/treadle/DEBT.md",
+      "sha256": "bf90b1414804a535403550a799d8ed8fa0242297db2aa816f8512f4b23edae80"
+    },
+    "docs/archive/documentation/2026-10-10/treadle/README.md": {
+      "destination": "specs/archive/documentation/2026-10-10/treadle/README.md",
+      "sha256": "90cf5bb23457fe1087dec121be0cab6a275346684c87eadc1eb3f582554aa8c3"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/decisions/corpus-self-hosting.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/decisions/corpus-self-hosting.md",
+      "sha256": "fca91fc4292b1379cabe729ff64be7ccbf87876cb15be7306b0180869709e329"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/decisions/graph-engineering-fast-track.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/decisions/graph-engineering-fast-track.md",
+      "sha256": "6d83bd30e4659e78279df2e543469524f40f0d59aa8ae40e509adfe85bfab990"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/decisions/index.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/decisions/index.md",
+      "sha256": "9a9791e5efe179a192a7d98f1db40ba47febf42267bb7584e0d4eef7d12b5c65"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/decisions/okf-only-engine.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/decisions/okf-only-engine.md",
+      "sha256": "8161aceacb593a91609e555b5ad6ced6d9074013ce779c53a72907eba777b2ff"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/decisions/port-to-typescript.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/decisions/port-to-typescript.md",
+      "sha256": "3f07102bd926b8a5a8e23d3faa6358ceef050f39a4b32a207cdb81c820c8947b"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/index.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/index.md",
+      "sha256": "be4faf4743dcd0a506ee9cab76090a9da192597ccf9d338a0fcb56306b1c4c49"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/pattern-anti-waterfall-loop.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/pattern-anti-waterfall-loop.md",
+      "sha256": "59f7bde2149642e7dec57a7af639ac070b8c8983a8087bf7281abd58a067bfeb"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/pattern-content-hash-change-detection.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/pattern-content-hash-change-detection.md",
+      "sha256": "9042c8af971a53d660d6b6b66a7a20114e942e266ffec05c898bb60a77c39b1c"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/policy-no-session-capture-in-engine.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/policy-no-session-capture-in-engine.md",
+      "sha256": "6c1aa2efab8df7dfff4a6788ea0161712fcc407189d83c493d138ef7399ecd20"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/rule-concept-paths-stay-in-bundle.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/rule-concept-paths-stay-in-bundle.md",
+      "sha256": "bb5e01945ad3cfd562e49d42b29809b7b2eb4a9120308d262eaa5f34b864e074"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/rule-declined-findings-immutable.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/rule-declined-findings-immutable.md",
+      "sha256": "c41745490f8a31ca056a25c9f291c8f9e1d93d1c0e639b6db73aa5f38e1e3739"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/specpack-status-vocabulary.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/specpack-status-vocabulary.md",
+      "sha256": "50d6415c47bf7a22cf49852f1fb233efdbc473598205d9ae899400aa3634555f"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/domain/wiki-contract.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/domain/wiki-contract.md",
+      "sha256": "a0b395d1b0537fb4e923bf28d92d039f7d7d19cfaabf4905c05e63bc85e3d1c7"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/index.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/index.md",
+      "sha256": "bf7031f39cd00adbf610d720afff5e614908d48ef6b989e400e690b0f20e0f6d"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/research/epic-framework.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/research/epic-framework.md",
+      "sha256": "b3f05c8785dcb70f6355c3eb45e18ecbc59558f132125f5819910c57dcb0ba5a"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/research/index.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/research/index.md",
+      "sha256": "a961fea2163534c2d46becfbf2b93355e7aed6e478ad2fe51698c9cd31b12a88"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/research/misfit-governed-development.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/research/misfit-governed-development.md",
+      "sha256": "2c3e35057e860638f5f451954d8c2ffb01af5bd24f186b5ac95455e189440356"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/research/sdd-loop-synthesis.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/research/sdd-loop-synthesis.md",
+      "sha256": "9e9bf3436e0dc65fa187bc14e9d6ec9ca718a47cb615b2a2458449d2e50878fb"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/research/specagent.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/research/specagent.md",
+      "sha256": "2a45f7c9458a2b95854031226922f11981dcc26119ad2d48a8bc0049f4b50e8d"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/systems/index.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/systems/index.md",
+      "sha256": "ea31af7fabdd660674cbd2ebdea406a685820490737a82d7ef68adb1a2283522"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/systems/sdd-harness-architecture.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/systems/sdd-harness-architecture.md",
+      "sha256": "cfe10467ade41f0da06b68fa231eff35cb072199a145a67a57285775f7c65d35"
+    },
+    "docs/archive/documentation/2026-10-10/wiki/systems/treadle.md": {
+      "destination": "specs/archive/documentation/2026-10-10/wiki/systems/treadle.md",
+      "sha256": "94ba51990138dde5e52be0295d801060fd601d8748f6935c7e7b689767731feb"
+    },
+    "docs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-fresh-harness.md": {
+      "destination": "specs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-fresh-harness.md",
+      "sha256": "1fb931d814b8605b83f708456d94c33d3fc5ac8a22953fab4890f3e2650eb3c5"
+    },
+    "docs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-guided-loop.md": {
+      "destination": "specs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-guided-loop.md",
+      "sha256": "e3e2d7e201aa678fd4ea62383c1b002adf002a8f3dcd44ec4aa6c35cdb8888ab"
+    },
+    "docs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-install-paths.md": {
+      "destination": "specs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-install-paths.md",
+      "sha256": "e56ad1f9ece8aea8ef0af208229fc374b528fff54f2aaba60753fa33d8b974c2"
+    },
+    "docs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-stitch-ui.md": {
+      "destination": "specs/archive/documentation/2026-10-10/withdrawn-retrospectives/2026-10-10-stitch-ui.md",
+      "sha256": "c53e56dfdd46901fdf1adda987f9d751f069e99400c0cc701079365df1624214"
+    },
+    "docs/archive/documentation/2026-10-10/withdrawn-retrospectives/README.md": {
+      "destination": "specs/archive/documentation/2026-10-10/withdrawn-retrospectives/README.md",
+      "sha256": "6377f8dc6010ccd998b91fe3cf1c4c7d287af070291ad9d5d4e3c69e2be9ef8f"
+    },
+    "docs/archive/history/memex-CHARTER.md": {
+      "destination": "specs/archive/history/memex-CHARTER.md",
+      "sha256": "7d71762a6dd5207cc505e18f9f604d977ccfd8f9122e211efdfc634551a05083"
+    },
+    "docs/archive/history/memex-adr/0001-use-markdown-pages-as-memory-source-of-truth.md": {
+      "destination": "specs/archive/history/memex-adr/0001-use-markdown-pages-as-memory-source-of-truth.md",
+      "sha256": "6a16510f12202f0fb84e237cfd2b0cfe10861d6b378203c275d246b16240f747"
+    },
+    "docs/archive/history/memex-adr/0002-use-layered-package-and-shared-adapter-contracts.md": {
+      "destination": "specs/archive/history/memex-adr/0002-use-layered-package-and-shared-adapter-contracts.md",
+      "sha256": "e73a09fc6c42648d941576de349b8f06546fc7aaaea73830c6f65050464e7bbd"
+    },
+    "docs/archive/history/memex-adr/0003-use-one-llm-port-with-api-and-harness-providers.md": {
+      "destination": "specs/archive/history/memex-adr/0003-use-one-llm-port-with-api-and-harness-providers.md",
+      "sha256": "0bff50a7b78993c145a63d4b6a5db4b09cd7602e47048e3b5ed679a55ca9b854"
+    },
+    "docs/archive/history/memex-adr/0004-require-user-scope-enablement.md": {
+      "destination": "specs/archive/history/memex-adr/0004-require-user-scope-enablement.md",
+      "sha256": "4d840a18443a064279c89e87605da0fa76aba38efe721b703787146d466e2714"
+    },
+    "docs/archive/history/memex-adr/0005-adopt-okf-v02-page-front-matter.md": {
+      "destination": "specs/archive/history/memex-adr/0005-adopt-okf-v02-page-front-matter.md",
+      "sha256": "0b5f83e22baed6a24c929d6d9897b41738ee0735a16c2d87dee855b9a95e3a2d"
+    },
+    "docs/archive/history/memex-adr/0006-three-kinds-of-concept-type.md": {
+      "destination": "specs/archive/history/memex-adr/0006-three-kinds-of-concept-type.md",
+      "sha256": "ad5acffc7c805b8839642cdd42708067c303a651c8ebb68ed1724091e52857b9"
+    },
+    "docs/archive/history/memex-adr/0007-shelves-with-explicit-contracts.md": {
+      "destination": "specs/archive/history/memex-adr/0007-shelves-with-explicit-contracts.md",
+      "sha256": "d9f42921abdf125438996595ba87e75efe318de29935f34d7dfcc8a1a6f0ee8a"
+    },
+    "docs/archive/history/memex-adr/README.md": {
+      "destination": "specs/archive/history/memex-adr/README.md",
+      "sha256": "f8f9d1b418304817f7eda3979cc34b5cea0dc4b010fbd66c1473b88b0cb1138d"
+    },
+    "docs/archive/history/memex-architecture/README.md": {
+      "destination": "specs/archive/history/memex-architecture/README.md",
+      "sha256": "980247206ad092de58ec66379cef49cc93e0a274b7ba220228526b5d31d7c444"
+    },
+    "docs/archive/history/memex-architecture/overview.md": {
+      "destination": "specs/archive/history/memex-architecture/overview.md",
+      "sha256": "7d3a934a8a578ba481a22fb4073d9c73c913ada4c0d3a033787c7c1770e46eee"
+    },
+    "docs/archive/history/memex-architecture/security.md": {
+      "destination": "specs/archive/history/memex-architecture/security.md",
+      "sha256": "02709273da49249a9703e80ae1d817fb4d51d30f2174944e47d8efb091087929"
+    },
+    "docs/archive/product/Engine_Conformance_Strategy.md": {
+      "destination": "specs/archive/product/Engine_Conformance_Strategy.md",
+      "sha256": "5c7d2b61d4eb36624a663b686072e5fbce722674fc136038c61cde739137762a"
+    },
+    "docs/archive/product/Harness.schema.json": {
+      "destination": "specs/archive/product/Harness.schema.json",
+      "sha256": "3fa5269390149fadc277633cdec9efb1a81c946de838f1f9ac4b000fbc93677c"
+    },
+    "docs/archive/product/Kit_Wiki_Engine_Plan.md": {
+      "destination": "specs/archive/product/Kit_Wiki_Engine_Plan.md",
+      "sha256": "2131e88a27b60e4c279f23a3483a2aa3aba239cad0c2e5335e2317f1e73e53cc"
+    },
+    "docs/archive/product/Lean_Control_Plane_Review.md": {
+      "destination": "specs/archive/product/Lean_Control_Plane_Review.md",
+      "sha256": "4a195d3a073e7605215c3e15e13670c90fb04038bdb3f7c8f2d1e7164fdd9e48"
+    },
+    "docs/archive/product/Memex_Core_Layer.md": {
+      "destination": "specs/archive/product/Memex_Core_Layer.md",
+      "sha256": "bbfcdde9666f7eccd69c2a7bfc5e45d39216bef35f66c6700ce1e11816de9d3b"
+    },
+    "docs/archive/product/Merger_Brief.md": {
+      "destination": "specs/archive/product/Merger_Brief.md",
+      "sha256": "ef5449ceb32c24adbb78875180fb1820c66139e9a527fbad08b9e11b9388b19c"
+    },
+    "docs/archive/product/Repo_Knowledge_Skill.md": {
+      "destination": "specs/archive/product/Repo_Knowledge_Skill.md",
+      "sha256": "e1e33a2408f062f7608ab5da923db0a052f3f3424f1d1271cafcdb261c80ca5a"
+    },
+    "docs/archive/product/Structured_Brief.md": {
+      "destination": "specs/archive/product/Structured_Brief.md",
+      "sha256": "9c9ebd030934a6d5b9e8ed02bd1aa1f6af9e09f7ccacf67874f9bcaa8e9bae5c"
+    },
+    "docs/archive/product/Technical_Spec.md": {
+      "destination": "specs/archive/product/Technical_Spec.md",
+      "sha256": "7047732b4461550303d6363e15e4b142a86ff3eec5c3936aba4944f6bcd50518"
+    },
+    "docs/archive/product/build-repo-knowledge.zip": {
+      "destination": "specs/archive/product/build-repo-knowledge.zip",
+      "sha256": "cbb7d5cc224b119e59a87ed7bc09c442f1b7f4150a55ee2b0771a775262d5770"
+    },
+    "docs/archive/reviews/lane1-app-services.md": {
+      "destination": "specs/archive/reviews/lane1-app-services.md",
+      "sha256": "1138ce2e7c8bbebadecde3392ecc6e2f683407c41a88f54d37b06b8ddd1d150a"
+    },
+    "docs/archive/reviews/lane2-surface-trim.md": {
+      "destination": "specs/archive/reviews/lane2-surface-trim.md",
+      "sha256": "be7cde18ba545a5e85e420296912b52c465d06fa35badd3557986d21bae3562f"
+    },
+    "docs/archive/reviews/lane3-plane-contract.md": {
+      "destination": "specs/archive/reviews/lane3-plane-contract.md",
+      "sha256": "27fa3cce682e6663d36235eaa3a270b3d530b23dc433671ef378303ea6679c21"
+    },
+    "docs/archive/specs/loom/design.md": {
+      "destination": "specs/archive/specs/loom/design.md",
+      "sha256": "4c28b0048ae6f577b549cb991f954a48dea05c755bd1fb6bc524c80162ed7771"
+    },
+    "docs/archive/specs/loom-engine/plan.md": {
+      "destination": "specs/archive/specs/loom-engine/plan.md",
+      "sha256": "5e600b976eac8e9e0f29b7b36c560570658720d4b8be0fff98744fec34fab970"
+    },
+    "docs/archive/specs/loom-engine/review-red-foreman-1.md": {
+      "destination": "specs/archive/specs/loom-engine/review-red-foreman-1.md",
+      "sha256": "f6a150f20c05a30ff5be294b15c1fb4cf4510eb2dde8928006f604ed6598dc1e"
+    },
+    "docs/archive/specs/loom-engine/review.md": {
+      "destination": "specs/archive/specs/loom-engine/review.md",
+      "sha256": "dd2c234de7d1212685a40c441907fe97c1d95a61387a8c825eea2645b847046e"
+    },
+    "docs/archive/specs/loom-engine/schema-brainstorm.md": {
+      "destination": "specs/archive/specs/loom-engine/schema-brainstorm.md",
+      "sha256": "d9efd135e5a1c48d9e6185d00ae6ffd08248d303099c9f84030aca376d5521f5"
+    },
+    "docs/archive/specs/loom-engine/sdd.json": {
+      "destination": "specs/archive/specs/loom-engine/sdd.json",
+      "sha256": "3ac70b0f4dcc81b256de98255dec851de2ff3c6027b92fe6e3a4f40be0450aba"
+    },
+    "docs/archive/specs/loom-engine/spec.md": {
+      "destination": "specs/archive/specs/loom-engine/spec.md",
+      "sha256": "604441d9cb015bd934005f1df2c24a154dce7503556495fe07ab33de90eb1a3a"
+    },
+    "docs/archive/specs/loom-l1/architecture.md": {
+      "destination": "specs/archive/specs/loom-l1/architecture.md",
+      "sha256": "32351729129118554b9543d4539ef4746cd793121deba7c2ff78e052cae2b407"
+    },
+    "docs/archive/specs/loom-l1/loom-l1.html": {
+      "destination": "specs/archive/specs/loom-l1/loom-l1.html",
+      "sha256": "ac03561cfae25e107ba7f87cf8dd077ffe4186aeab3a3308695c06de7323d5cb"
+    },
+    "docs/archive/specs/loom-l1/loom-l1.json": {
+      "destination": "specs/archive/specs/loom-l1/loom-l1.json",
+      "sha256": "12945f17ce4b22e71c2a67abce12c6e75fcb218e176519663613ce57e46bc639"
+    },
+    "docs/archive/specs/okf-only-engine/design.md": {
+      "destination": "specs/archive/specs/okf-only-engine/design.md",
+      "sha256": "c09128ca9545cdef848cf41ee97292da1f4ef82e364bd3c88060958b46528d1c"
+    },
+    "docs/archive/specs/okf-only-engine/feature.md": {
+      "destination": "specs/archive/specs/okf-only-engine/feature.md",
+      "sha256": "b7f76f7cf19a40687eb06e5575bbf07511df01f856d190b029e30f084ffeae8e"
+    },
+    "docs/archive/specs/okf-only-engine/impact-okf-only.md": {
+      "destination": "specs/archive/specs/okf-only-engine/impact-okf-only.md",
+      "sha256": "b47c6155bddac707cc730723e42130886a9f7971483f1b6791a5adf922c61ee2"
+    },
+    "docs/archive/specs/okf-only-engine/plan.md": {
+      "destination": "specs/archive/specs/okf-only-engine/plan.md",
+      "sha256": "501991bbcfe9e69148cbd2f4367ac4ace2230a890ec1366df9041cda819ccb2b"
+    },
+    "docs/archive/specs/okf-wiki-audit/design.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/design.md",
+      "sha256": "e2a6968ec913896d6c32d331fc8cd0853b16dfc3a02722da950d88cdb7962976"
+    },
+    "docs/archive/specs/okf-wiki-audit/gap-1.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/gap-1.md",
+      "sha256": "cf46a77ef847c3363401a2f29c1991ba3fdacdbdfcd280fa21c180005d1342bc"
+    },
+    "docs/archive/specs/okf-wiki-audit/plan.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/plan.md",
+      "sha256": "229025ef4a63f87dff83009c0ea807942b2cb73a615ff1b8adb3c49e3dba77ff"
+    },
+    "docs/archive/specs/okf-wiki-audit/review-1.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/review-1.md",
+      "sha256": "fda130ae92e92c0c29c5065422a3a9b33e4fb8f0f847f761b4e089f97e418cf8"
+    },
+    "docs/archive/specs/okf-wiki-audit/reviews/l1-conformance.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/reviews/l1-conformance.md",
+      "sha256": "dafd621745948829a6c85a4514185fa99967c00903227252366d521ace4b9ea5"
+    },
+    "docs/archive/specs/okf-wiki-audit/reviews/l2-semantic-evidence.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/reviews/l2-semantic-evidence.md",
+      "sha256": "7a812761be8c9104e5d701fcb103d0e56d3ff95124844d9647ef329d3e9a6997"
+    },
+    "docs/archive/specs/okf-wiki-audit/reviews/l3-spec-systemic.md": {
+      "destination": "specs/archive/specs/okf-wiki-audit/reviews/l3-spec-systemic.md",
+      "sha256": "8ece041d02fd3e808d3029bcca83a94d3b68b7000b6adf771a0f46d11b5a9cc3"
+    },
+    "docs/archive/specs/sdd-research/analysis.md": {
+      "destination": "specs/archive/specs/sdd-research/analysis.md",
+      "sha256": "99c9d01f24e068c2568ce92f593016404fe53a66f28102e5194136fcb44592f1"
+    },
+    "docs/archive/specs/semantic-extraction/design.md": {
+      "destination": "specs/archive/specs/semantic-extraction/design.md",
+      "sha256": "fb429d41e6c46927ae20529544506aa99bb0bcd7e8c9c7efb6f94e83eeea5d75"
+    },
+    "docs/archive/specs/semantic-extraction/plan.md": {
+      "destination": "specs/archive/specs/semantic-extraction/plan.md",
+      "sha256": "7f8d2d373fa3bea9a8981d05ccf50b583a455c16c86b34d5eb19eb8af94bc5f0"
+    },
+    "docs/archive/specs/spec-graph/analysis.md": {
+      "destination": "specs/archive/specs/spec-graph/analysis.md",
+      "sha256": "6b5bc44cf3770f1f060d0056bd3c0285ee8b834153a11b5db441a74365815175"
+    },
+    "docs/archive/specs/spec-graph/example-add-todo-specpack.html": {
+      "destination": "specs/archive/specs/spec-graph/example-add-todo-specpack.html",
+      "sha256": "78ac4374994750f75064c210ad44bfbdc785b0d5ea885207954c9d84ccf64bb7"
+    },
+    "docs/archive/specs/spec-graph/example-add-todo.html": {
+      "destination": "specs/archive/specs/spec-graph/example-add-todo.html",
+      "sha256": "4657eef9d1b435bdfd789e3aa49691887723acba3e71f87a9d5ecaacf9f8bee3"
+    },
+    "docs/archive/specs/spec-graph/example-add-todo.specpack.json": {
+      "destination": "specs/archive/specs/spec-graph/example-add-todo.specpack.json",
+      "sha256": "0eed6ff471dd2ba730731bb604db8157d40c5e57d3ccabbeb3fc26d4a2b36b8d"
+    },
+    "docs/archive/specs/spec-graph/plan.md": {
+      "destination": "specs/archive/specs/spec-graph/plan.md",
+      "sha256": "b0f8fd09a8cc863aa0120b647ceae8e1e5cb6f045bd974f919c2a4cda0867a89"
+    },
+    "docs/archive/specs/spec-graph/review.md": {
+      "destination": "specs/archive/specs/spec-graph/review.md",
+      "sha256": "d305855375513aae8d22ebcec513d99a8fa40bb0f7d617d19c698fb08949e688"
+    },
+    "docs/archive/specs/spec-graph/schema-primer.md": {
+      "destination": "specs/archive/specs/spec-graph/schema-primer.md",
+      "sha256": "9f625facd3e14e035452b32ae0f8aabddae32bb36a2565f0b5f3d498db4cc59d"
+    },
+    "docs/archive/specs/spec-graph/sdd.json": {
+      "destination": "specs/archive/specs/spec-graph/sdd.json",
+      "sha256": "e7e2246c54af0eb01d3409fc225b6380fa46c9a9ac8938f38a4d1f6a501bd0ec"
+    },
+    "docs/archive/specs/spec-graph/spec.md": {
+      "destination": "specs/archive/specs/spec-graph/spec.md",
+      "sha256": "992d1f8084ec4caeaa58efab84b0fbb421c7607898d91814bc8a613227569d8a"
+    },
+    "docs/archive/specs/spec-graph/specpack-proposal.md": {
+      "destination": "specs/archive/specs/spec-graph/specpack-proposal.md",
+      "sha256": "07e8bb5827a5507d249459bccf5ef9fb4c736e90cee757752d9e93b511f5bd1c"
+    },
+    "docs/archive/specs/spec-layout/research.md": {
+      "destination": "specs/archive/specs/spec-layout/research.md",
+      "sha256": "4509f4bf1b1d650e63c34aaa537e389e4a0dfd0a1f0fa8e8496471912329073c"
+    },
+    "docs/archive/specs/spec-layout/spec-layout.json": {
+      "destination": "specs/archive/specs/spec-layout/spec-layout.json",
+      "sha256": "726987a18f8aa62fec8b0c11ca6ff0566a10fad727eb310345d2ae1cd7f8bee2"
+    },
+    "docs/archive/specs/spec-library/brief.md": {
+      "destination": "specs/archive/specs/spec-library/brief.md",
+      "sha256": "da2d3421cf36750610f126548812a3b26c7dad2ea21e423af976b64641288758"
+    },
+    "docs/archive/specs/spec-library/design.md": {
+      "destination": "specs/archive/specs/spec-library/design.md",
+      "sha256": "1ce994aeaaf0a7cc389be00f0292e1803cb87b52b4e01dbf43a05d203b59ea4f"
+    },
+    "docs/archive/specs/spec-library/interview.jsonl": {
+      "destination": "specs/archive/specs/spec-library/interview.jsonl",
+      "sha256": "ccf1592fe712f030175ab091b137d029d6540ee6384cfd30f1cfbf55747eb6fd"
+    },
+    "docs/archive/specs/spec-library/interview.md": {
+      "destination": "specs/archive/specs/spec-library/interview.md",
+      "sha256": "cec3fc4b9708838153c0154edf52a75a5a07aca20061d67622fbc307616b559b"
+    },
+    "docs/archive/specs/spec-library/research.md": {
+      "destination": "specs/archive/specs/spec-library/research.md",
+      "sha256": "c5a53d81b543d542564e09ecb7d60b254fc2ad9138dd27304a3b84354a2017a2"
+    },
+    "docs/archive/specs/spec-library/spec-library.json": {
+      "destination": "specs/archive/specs/spec-library/spec-library.json",
+      "sha256": "515c17eb3aa0058268eca3b0b1aae4a5d38103e3bca98b7c606cfb397d129d6d"
+    },
+    "docs/archive/specs/spec-web/adapter-contract.md": {
+      "destination": "specs/archive/specs/spec-web/adapter-contract.md",
+      "sha256": "871598ddf3d1e9f104960d95bc45912af93a5f8ba66c852aa248471a25b2f776"
+    },
+    "docs/archive/specs/spec-web/brief.md": {
+      "destination": "specs/archive/specs/spec-web/brief.md",
+      "sha256": "ba80f07cbde0d332f54fbf16f0098a132cb9764d962379d2d86928e6bc465451"
+    },
+    "docs/archive/specs/spec-web/interview.md": {
+      "destination": "specs/archive/specs/spec-web/interview.md",
+      "sha256": "f791028a0a141cec29b7122d6f28fd60b9d3d616d4c3c2f075eed0d21a16c607"
+    },
+    "docs/archive/specs/spec-web/research.md": {
+      "destination": "specs/archive/specs/spec-web/research.md",
+      "sha256": "7f13dcc185d55351fb31ee7cf79f3ea293b4e78067503d374160ecb0fe9fdff6"
+    },
+    "docs/archive/specs/spec-web/spec-web.json": {
+      "destination": "specs/archive/specs/spec-web/spec-web.json",
+      "sha256": "fd1b0bc6bc19b2bb716c9591c6078c8f54b32c315b7570e5d5c8a703894fb1d1"
+    },
+    "docs/archive/specs/spec-web/ui-preview.html": {
+      "destination": "specs/archive/specs/spec-web/ui-preview.html",
+      "sha256": "9265dc34d59f0a46340dbc2551b3cf377e9e494b620a61cc1c606851397d3b8f"
+    },
+    "docs/archive/specs/specpack-context/design.md": {
+      "destination": "specs/archive/specs/specpack-context/design.md",
+      "sha256": "63a298387a93db6096ef2754f56cfec0844150d1183adb6761eaae8287904c2c"
+    },
+    "docs/archive/specs/specpack-context/specpack.json": {
+      "destination": "specs/archive/specs/specpack-context/specpack.json",
+      "sha256": "24798467f1f191e25af6f53a57109bea464b32d136e4c2e01170b0b0df115dae"
+    },
+    "docs/archive/specs/status-model/brief-fowler.md": {
+      "destination": "specs/archive/specs/status-model/brief-fowler.md",
+      "sha256": "03bc7ac29c358a8e1e4950c26f3f6e0c35a56fad2339248dd78a3fd5a9d8e0aa"
+    },
+    "docs/archive/specs/status-model/brief-microsoft.md": {
+      "destination": "specs/archive/specs/status-model/brief-microsoft.md",
+      "sha256": "51bb9536cb108d11e5ae1cb81d240130c7e8ccf933f5c8656e7029698972a5ec"
+    },
+    "docs/archive/specs/status-model/research.md": {
+      "destination": "specs/archive/specs/status-model/research.md",
+      "sha256": "b388c1b61cb21c3273194a1636c137f3ccb02ef83c1a59e822cdf0d4a24c663e"
+    },
+    "docs/archive/specs/status-model/spec-shape.md": {
+      "destination": "specs/archive/specs/status-model/spec-shape.md",
+      "sha256": "7cdebeefd53fa38c0c6ab2079773b94a37b534c2aac997ce839d960b513b4062"
+    },
+    "docs/archive/specs/status-model/status-model.json": {
+      "destination": "specs/archive/specs/status-model/status-model.json",
+      "sha256": "b84100defe41de386b867b40097818dbc368fedd49d2c54d69542803092f0bdb"
+    },
+    "docs/archive/specs/status-model/verdicts.html": {
+      "destination": "specs/archive/specs/status-model/verdicts.html",
+      "sha256": "7e2f0840f14d1eb00803a38e0816c7e66ce6f66d528811fe5d5ce016a140cc8d"
+    },
+    "docs/archive/specs/status-vocabulary/specpack.json": {
+      "destination": "specs/archive/specs/status-vocabulary/specpack.json",
+      "sha256": "44ab7e5d506fcda75a54aa1af24506e735335b40426311b1fdadb7a5092a72fe"
+    },
+    "docs/archive/wiki-code-index-code/engine/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/index.md",
+      "sha256": "fb6a28fd384c43932f419750daffcf0957efc27c202c2d08530f84d7af5f7b15"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/index.md",
+      "sha256": "acabe493d0b46898789275c765afac2fb219d82ceb7567e1a765a65603abf319"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/index.md",
+      "sha256": "b2ea36687e111074cca73bde4737ed9dfbffe3c72e6edf3b2076554dac18fab9"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/__init__.py.md",
+      "sha256": "01041870ef1cbdc939952a3ed2247dab630ca8bc68dff407ce93cb197230a936"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/cli.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/cli.py.md",
+      "sha256": "64e921e8e28cb298c921f99ce441938fc7ee19306fdc78dcd1a605fd6408b98b"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/events.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/events.py.md",
+      "sha256": "e686c5e154edcaef1985eb0e55aebfea4da8c6fd8fe2f1ff909f1b5990b992e6"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/index.md",
+      "sha256": "0f378b601e7eb75967940f179d5e0611bdafa238a30f52d366b89c345e4cd6e1"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/machine.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/machine.py.md",
+      "sha256": "125365b0ad624078e617fdb815fcba0a354713bc0611c80bc7741cbb0e206f26"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/specpack.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/specpack.py.md",
+      "sha256": "0b3094adbac91f21b2ef9b8b675543f7962179a706aec97b3022dce42a7b7e46"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/spine.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/spine.py.md",
+      "sha256": "c81ca0bafe6f383e9dcd6384997e0fbbe0118a21e5730f6d2f8fd4c70bcf3393"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/templates.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/templates.py.md",
+      "sha256": "cce70ac9f3e36cf1a3a6ea100535c3aeefae51404d9702354e26510c42392a4c"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/__init__.py.md",
+      "sha256": "a3a11d5451713e4d7998ab6d4c0aec6d28b5757d30e9c64b15f5ebe26bb9e994"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.html.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.html.md",
+      "sha256": "ec2827e0bd5a6dd60116bf66a97d48327ff3568ecd0a41e00dbba56d2dba7f35"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.js.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.js.md",
+      "sha256": "90f1d220d48d9e2ca7f80224c0c49e1a08d2c8a0511ad770cbe56802a9fc9739"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/library.py.md",
+      "sha256": "06f8754234b28e82fdc312c892da69610952e7db2090121275acbfbdb79cde3e"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/page.html.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/page.html.md",
+      "sha256": "7f40984a8ad45ed29103cb0730faa4d9aacbc4879692828b585a968c33073c4c"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/page.js.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/page.js.md",
+      "sha256": "0e6b474458412a1971ffec691e598b92c124b9474607f4cac7924c97a642a15a"
+    },
+    "docs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/server.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/loom/src/loom_kit/web/server.py.md",
+      "sha256": "507c9f3cb26c6ecc905df12179262ead1d6f2c16e5ecdd276a10f0b7dcad3236"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/index.md",
+      "sha256": "ccaa98c28f5f4a02b029e9b3c2645c7c3b8a6b4cd214d8ec1410514e2b450950"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/__init__.py.md",
+      "sha256": "74df34d5167515ab4f40d382eb7d56060634a771d6f2105b95686cc8f7856135"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/cli.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/cli.py.md",
+      "sha256": "2e653c972b946baf27e9e4412e63c845ccf6ab7637a02a2711bab7c4876c2e7c"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/__init__.py.md",
+      "sha256": "0dd3a2375519bf9e7ded5b86a078e7d0af809c43e4c93730aa381e2beab6b53d"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/discovery.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/discovery.py.md",
+      "sha256": "94618f91ef3c53e62de202d6dc6dbe64bdd1749c221ed712ebacb891604b154b"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/index.md",
+      "sha256": "b78228f11625bac7f41dcf6c73af136508a2d4db0a3aaae5f68a793fbde2fb39"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/indexer.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/indexer.py.md",
+      "sha256": "8c8a1e5987936c53797f36f4dc5baa5a3c893400adb18cf906115444a1c0c962"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/managed.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/managed.py.md",
+      "sha256": "72a1ae54b27368e562ff6fe5cee781c7547a0a142352f1c7ea6818b086b527a5"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/model.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/model.py.md",
+      "sha256": "767bfeb612a1ce221cc6a2d9c09a642f47722c765dee81834129772c6e2be3c6"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/paths.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/paths.py.md",
+      "sha256": "bda1f72c8479c393a3efff280b21f23b57f65a69ca85356016797ae3b2507e52"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/render.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/render.py.md",
+      "sha256": "80b71bbe743233917ccbdaa5073188a28b52a6f74f6927f5400f08bebc147ac7"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/semantic.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/semantic.py.md",
+      "sha256": "ae42cfd202777faf6f7d894e9176e1b9e63ae06973fe046f80837335de96b3ab"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/__init__.py.md",
+      "sha256": "2da62a6285bf8e6d31dc6c11f5212b24b8ba2cde436b1a19ff2b593ad3f6d460"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/index.md",
+      "sha256": "77569c8ba8de1e06616d8b3edbd89128345477873175ac51bc9d5fe4dbd50702"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/__init__.py.md",
+      "sha256": "090819cae2de7e4a1df5c1b9071c2a9fc963b6434f6e497d3abe5d05b32883a8"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/base.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/base.py.md",
+      "sha256": "399969146c93e07b44702884a290825a1fc2d5d34b14444903380728f16dc6c8"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/languages/index.md",
+      "sha256": "528d588ea0ef85775ac7c7c4c75403a1dbedd0efbf6a9839acc9e0554b47b99e"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/runtime.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/code/treesitter/runtime.py.md",
+      "sha256": "fb31226234a53173d75c7b28d527c0b0358a7c7da93caf1a900d0fb0118fa8b2"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/__init__.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/__init__.py.md",
+      "sha256": "3111fad2709e2e44d1f3f428912da6d30f10701b2df12917cf2a6f65060b8907"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/context.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/context.py.md",
+      "sha256": "cae85d324712f7d2115225fd321ac4d866bb7de39ce4c9666b7aba7667b91d00"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/findings.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/findings.py.md",
+      "sha256": "ec35e59e839bb10278dc1598b4d10208b24851949b13414164eed1ae92c5652e"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/fingerprints.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/fingerprints.py.md",
+      "sha256": "b49162f8d136136ddb9f040dade32fb0e192813fedcb237252a729f625de6e98"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/index.md",
+      "sha256": "669c91852440f432d3cf8512e0bc521b4ea48c8a8f2d09c18b4002849718cef3"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/index.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/index.py.md",
+      "sha256": "1fc1809c095e66c99e3972869456b062a411649e78398c5469fbb64a0c7e00db"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/links.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/links.py.md",
+      "sha256": "a06ce0724d73cb071418ce587e1c826a524d3bc1f7cecf0817b8918d2604d955"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/model.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/model.py.md",
+      "sha256": "67cc536ca2384b6f99ff735b42805439bb36aae89c4566b62db572d1e248bb3f"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/parse.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/parse.py.md",
+      "sha256": "6dd12aaa8dd731e0863a20fbaed46c6237b5cb13a87ac13935cf19adc29fa418"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/search.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/search.py.md",
+      "sha256": "4aa894e19e4e8a76bd56a957cb5edbdb50487f461ca5fc1035ce2caf02c68222"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/stamp.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/stamp.py.md",
+      "sha256": "65e7b6d1b704bd54ec1cd4447594201a8d3b8d6cd6f0079ecec8131f5d02cc2e"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/status.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/status.py.md",
+      "sha256": "7ed60a9721b4b3ff9b94f301e8a004217ecb02d0a6518ef6833a29a922e5b8a4"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/templates.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/templates.py.md",
+      "sha256": "4f2ef082657c8b91366288f3c9ebfc2fb137be440272e500bcae5cfe1bf6101f"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/core/validate.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/core/validate.py.md",
+      "sha256": "f488bb90ad2bcb3a5e39dd3937a6f000de101711fe749b55a76005b67ab334a5"
+    },
+    "docs/archive/wiki-code-index-code/engine/okf/okf_kit/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/engine/okf/okf_kit/index.md",
+      "sha256": "5c69327b2276ecc362cd53167fb02f9dce1e499bd2df24c0bfa2fb8aadaa2b53"
+    },
+    "docs/archive/wiki-code-index-code/index.md": {
+      "destination": "specs/archive/wiki-code-index-code/index.md",
+      "sha256": "d22780935028b41f111a7c04dd157bea751ee2a7c17f75bf147a2facd4852dcf"
+    },
+    "docs/archive/wiki-code-index-code/treadle/conformance/generators/gen_corpus.py.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/conformance/generators/gen_corpus.py.md",
+      "sha256": "062449e0931440ded7bc0c324b9de1eb65651a719182cf9c6666ee659299c25d"
+    },
+    "docs/archive/wiki-code-index-code/treadle/conformance/generators/gen_corpus.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/conformance/generators/gen_corpus.ts.md",
+      "sha256": "55f023b5c89aa39ab16c880ebfb7bcac1737d1b783eecdeb3d33a179b207d5df"
+    },
+    "docs/archive/wiki-code-index-code/treadle/eslint.config.mjs.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/eslint.config.mjs.md",
+      "sha256": "ece3b6d404244ab03d5b2338d8cb968cc912e16e383edbe6aa88e8dac88243f9"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/brand/src/brand.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/brand/src/brand.ts.md",
+      "sha256": "0985988343806a52304ee48ba7bdbc532ee4f44bf6dfd7352751d577a9d3c740"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/brand/src/index.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/brand/src/index.ts.md",
+      "sha256": "5f42605dde954dd8100c2ccb44ec14adc0a32336fb3b29884942d83787d5bec5"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/cli/src/commands/do.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/cli/src/commands/do.ts.md",
+      "sha256": "2d535a63f3d93be98e953a42fd1391520a3aba2fc3ce9705919b8494c05f05ec"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/cli/src/commands/know.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/cli/src/commands/know.ts.md",
+      "sha256": "e130ebb7ca841ed2501d29f93a4a534dbfca017742debcd46fe103e87c9f482f"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/cli/src/main.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/cli/src/main.ts.md",
+      "sha256": "5a07dc0d0816a39b189e1eb52453e55a3693de3e45782d49c75ce9f9c3e51b7a"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/conformance/src/corpus.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/conformance/src/corpus.ts.md",
+      "sha256": "45835fab2cb3da3831192ea540043bdfdbfc1cee875d8c271d257196ce5dae0c"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/conformance/src/runner.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/conformance/src/runner.ts.md",
+      "sha256": "138399c9978d04a62c1dfd35858b537520d55e420d153afc20d896947f1636e1"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/assert.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/assert.ts.md",
+      "sha256": "dd22cac263297ed320952c0065c7d781c17d86cae79bac942753c4b66b037579"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/events.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/events.ts.md",
+      "sha256": "fd490bba9156300804650d3745736328ac0efc3d0eb3e965c56318aafe202ae5"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/ids.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/ids.ts.md",
+      "sha256": "188072838c8c0611732571fb365f8e545c5b88b856766ffc1a96e87b4ab571f6"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/index.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/index.ts.md",
+      "sha256": "53a159ccf09a2b0f610adb01481cf97ff355226efe43404bc38177984102e1d6"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/refusals.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/refusals.ts.md",
+      "sha256": "29a6fbb2df6da32b4a57b303636c68815b4dadce722315593f94701b65bd9bf1"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/admission.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/admission.ts.md",
+      "sha256": "2c5552b092d63608ca67f755c8e4c9600cd76625455e69cd226bff3f096c015e"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/alignment.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/alignment.ts.md",
+      "sha256": "46797dbbec3458380f9851615cd4cdd082e51552735a2bf8c1b4d9139b2d12c4"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/close.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/close.ts.md",
+      "sha256": "9dd6989691385780726ce9bb114b39e7f4ed170445b9bd4d682ba573ce11e821"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/derive.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/derive.ts.md",
+      "sha256": "39a0f21a26f8147a92b3e323a528c1bc30a59407ac257a69d1fe11c7749bf4dd"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/emit.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/emit.ts.md",
+      "sha256": "31586550d764eba403bb78c79eadd6f826fb913a6e393c53ab98487353767053"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/events.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/events.ts.md",
+      "sha256": "7dc5591472b4eb4b5e4d8479e3ec1087e25a1f5f50084a97807901cad1e7430e"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/index.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/index.ts.md",
+      "sha256": "75fafa5702751f98a7f89bcb5daddd4bb0eb8eab3bdf0825b07e5f1e1d3ec534"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/loader.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/loader.ts.md",
+      "sha256": "e50a215bda1f43dce8c6bda3e868f63fe0995ef7f027c4c827decc5a1856c35b"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/model.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/model.ts.md",
+      "sha256": "13c592f927d0c09aa784ef2b59d5a9687f2ff7288a8b824d3b682b51776f628b"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/next.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/next.ts.md",
+      "sha256": "3205d6853ba90ec1a3553a71c9c78a13288d7f7f971643f2a2f4abcaf4e96f3e"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/normalize.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/normalize.ts.md",
+      "sha256": "51cbc7c51f04806f47764279089b624d7f5fbe3c69d7dc31088df803427eaf12"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/pins.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/pins.ts.md",
+      "sha256": "a51f0bbc8d4b1d3c50491c338a61bbd2041f8f9f6de90b791d2fbfa6ac92b3fc"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/record.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/record.ts.md",
+      "sha256": "71597c9cf09b6bb0d91b8f0d33e319b6714d85b7e672e6e59b78bb19d6c9d53d"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/save.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/specpack/save.ts.md",
+      "sha256": "4af40e19ec43255a91f89afc62090a01b31d47bbcbe363ad83dedde12ccdc7d2"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/core/src/stages.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/core/src/stages.ts.md",
+      "sha256": "5f50f66b71a215337dadb48780245fd34dacd98bd337e1824a10dce23d5da4b7"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/findings.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/findings.ts.md",
+      "sha256": "69ce6789cff1ae415827700c31de49a6b10609d9e6e2f95a06eb10c395a45464"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/fingerprints.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/fingerprints.ts.md",
+      "sha256": "ea5c86fe42f4ae562036ec05013a8f648cfb940a473b195b5dd96a2aa7cc42bb"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/index.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/index.ts.md",
+      "sha256": "09a272be8d3f03ee92929a89e8d269bd6adfe3b7f6a8b0b749d83bdb2173afae"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/links.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/links.ts.md",
+      "sha256": "73ef875714bf96ea715d47c4361fd6ab605b87be203cd808e3e7962e124b0517"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/parse.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/parse.ts.md",
+      "sha256": "8a1267341b81c499bbd62808172f9b26cca0debdd541ac65327d96a25c27476a"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/read.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/read.ts.md",
+      "sha256": "40487d3cb28e2fb0ca95e7d92612cb0704d319c50d02053d53b5aa252eef3216"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/search.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/search.ts.md",
+      "sha256": "13a67fb77b3629a0da0bad3ea40c2ec34f03c63ef43742257da7bc75d047ee02"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/stamp.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/stamp.ts.md",
+      "sha256": "ddaa6fdccc6dd65301dacc5597549457d2069c6a11e72dfcb9ad83cd70a9e058"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/knowledge/src/validate.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/knowledge/src/validate.ts.md",
+      "sha256": "f66e86a65f8d34e983c94c9f1685507fe4448ba34d530c5d0de6104548b3e83c"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/index.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/index.ts.md",
+      "sha256": "54116fae98dbc0f22f261eafadfbee014ef9ed5e81e7340ddb46014d1c0c4e83"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/library.html.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/library.html.md",
+      "sha256": "a4550e323372e90dde93e727163d12cb1e95d5d7d6179b667e556e62f1a65f85"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/library.js.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/library.js.md",
+      "sha256": "0e7c92f893fc34a8712dab2f3c4f8ffd831c5aebc842bd109132e37e0205e967"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/page.html.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/page.html.md",
+      "sha256": "d3c04a29e3273ee3ed8e888ecdb055c610eab07147651f487caa3d538e111deb"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/page.js.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/page.js.md",
+      "sha256": "4472b64ab088e3856ae70472b35305b8df6fe9d588cd04527106f785c242b277"
+    },
+    "docs/archive/wiki-code-index-code/treadle/packages/web/src/servers.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/packages/web/src/servers.ts.md",
+      "sha256": "e7baa061d1148856cc7b4dfafd9f3f87aeaf05d556d90c6dbf0412c81e7ef213"
+    },
+    "docs/archive/wiki-code-index-code/treadle/scripts/brand-check.mjs.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/scripts/brand-check.mjs.md",
+      "sha256": "84a3e7b9e17d42f392fa436181a3309e3cbc194b50d81f882d0fbf13f4a93cbf"
+    },
+    "docs/archive/wiki-code-index-code/treadle/scripts/corpus-check.mjs.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/scripts/corpus-check.mjs.md",
+      "sha256": "60e15710df140d3e20c396cdccb10205476de5fa9c100e67f6e9e75f020aa25c"
+    },
+    "docs/archive/wiki-code-index-code/treadle/scripts/set-brand.mjs.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/scripts/set-brand.mjs.md",
+      "sha256": "a377956f3b9219722725fd6b4897562664c41d117b4aa31a9a56c4cafe0974d0"
+    },
+    "docs/archive/wiki-code-index-code/treadle/vitest.config.ts.md": {
+      "destination": "specs/archive/wiki-code-index-code/treadle/vitest.config.ts.md",
+      "sha256": "667c42af32152eb898b80f730a6790fdc391e6df48ce745877a748a72adef9d7"
+    },
+    "docs/archive/wiki-code-index-summaries/areas/engine.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/areas/engine.md",
+      "sha256": "adae2db4c2829f35055a6ffb2568d683fe5e2c78b0a607877d98ba9b948ad7f1"
+    },
+    "docs/archive/wiki-code-index-summaries/areas/index.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/areas/index.md",
+      "sha256": "947a2e0e40846a515b2077731cb75ccb6bd3ebf2cbb66b50901ae3cad2addefd"
+    },
+    "docs/archive/wiki-code-index-summaries/areas/treadle.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/areas/treadle.md",
+      "sha256": "7274cd1eff3f6dd75f7fa436e1afe76224b9c9ed540abaaade0f550786044c81"
+    },
+    "docs/archive/wiki-code-index-summaries/index.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/index.md",
+      "sha256": "41846ee23fba41174e4734dbcc0a29f9e02fc04d6ac14f24728fb0adcb1ea076"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/engine/index.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/engine/index.md",
+      "sha256": "c1df742284dcf5298e79f2f68e53f3905f7164dd8c310966c09d382b9dc02840"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/engine/loom.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/engine/loom.md",
+      "sha256": "558c60d22a4b9daa71748c9c3f159dc4e3dda15665a90a95c46e8e1f2bcc62da"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/engine/okf.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/engine/okf.md",
+      "sha256": "c7c256459effd04b213d3969b67f1c4ed420d668b39f777712429cd02cd72205"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/index.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/index.md",
+      "sha256": "d22780935028b41f111a7c04dd157bea751ee2a7c17f75bf147a2facd4852dcf"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/brand.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/brand.md",
+      "sha256": "bf645773aef855ed2189411452af79c1f8895bcac2080ad9fcd4b4cdaa69452e"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/cli.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/cli.md",
+      "sha256": "a3466f6b0cbe64b10784a5f2d037b23260d1081cdab74f0a5248c29a82bb0901"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/conformance.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/conformance.md",
+      "sha256": "1605ebf99994a7e093589f33cc0fa21f83efddba04a8fe0f82aed984f45aec32"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/core.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/core.md",
+      "sha256": "653034f4ff4eab5e893e47ad6f9d994171deaf0c414f51166771c89290ede7f9"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/knowledge.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/knowledge.md",
+      "sha256": "e6f9c17650f79b603cf8c11574d17de93e94f2a9d78ddc58f9b385752a7641d4"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle/packages/web.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle/packages/web.md",
+      "sha256": "07db9b99ea9a9eac8189b5112b867ecc4684a25b2fe0e9cd36bae7a824a6d84e"
+    },
+    "docs/archive/wiki-code-index-summaries/packages/treadle.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/packages/treadle.md",
+      "sha256": "c6b730c1e959f8bac704d147f90ef88d7972adda39a29242893927f3dfa60ce3"
+    },
+    "docs/archive/wiki-code-index-summaries/repository.md": {
+      "destination": "specs/archive/wiki-code-index-summaries/repository.md",
+      "sha256": "9d21b1f1501be7d7bf355376e67a90a80f7f3582333a76d2dc6b084f2a28fa3d"
+    },
+    "docs/archive/wiki-systems/loom-engine.md": {
+      "destination": "specs/archive/wiki-systems/loom-engine.md",
+      "sha256": "53eace46aef0a0b88cf49eb446279ca755fa5cde00c3e8b161dc3af7a2d845df"
+    },
+    "docs/archive/wiki-systems/okf-engine.md": {
+      "destination": "specs/archive/wiki-systems/okf-engine.md",
+      "sha256": "19e7937d1287b3c105a77d8a6c8b211a42262e4f57521c8bc6f039b581ee4d7f"
+    },
+    "docs/guide/index.html": {
+      "destination": "wiki/assets/guide/index.html",
+      "sha256": "64611b25163f5a4ebdee081f05271e1b20415b7db0e8af647d96a0a407659931"
+    },
+    "docs/product/OKF_SPEC_v0.2.md": {
+      "destination": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+      "sha256": "891404d16789d87e98bc26a77468c6b7df52dbee88b880c2bfcadff6a4b44299"
+    },
+    "docs/product/specpack.schema.json": {
+      "destination": "wiki/assets/contracts/specpack.schema.json",
+      "sha256": "59d43a06b2c5cc32f6d43f1e6c3e9176a00187019e991b35dd8aa76761578625"
+    },
+    "docs/replays/2026-10-10/browser-verification.json": {
+      "destination": "wiki/assets/replays/2026-10-10/browser-verification.json",
+      "sha256": "23eb403cb60a3c61c4aa2ac70d3b2dc7fbb3446ee20a5ba7988547fb7e8c81a1"
+    },
+    "docs/replays/2026-10-10/evidence.md": {
+      "destination": "wiki/assets/replays/2026-10-10/evidence.txt",
+      "sha256": "937117a42c8891cc6d6e27c1ee576de893c239313d1990f04f816b3832cf8baa"
+    },
+    "docs/replays/2026-10-10/index.html": {
+      "destination": "wiki/assets/replays/2026-10-10/index.html",
+      "sha256": "4309b115bdf77e579317dc6f14d74aa9fa5b66b3f1caa517cd00153ba4d930cc"
+    },
+    "docs/replays/2026-10-10/screenshots/desktop-slide-1.png": {
+      "destination": "wiki/assets/replays/2026-10-10/screenshots/desktop-slide-1.png",
+      "sha256": "5435cfff7a0fc455bb1c5f905a2e3cba91c739789a07478f365a32b22424f332"
+    },
+    "docs/replays/2026-10-10/screenshots/desktop-slide-10.png": {
+      "destination": "wiki/assets/replays/2026-10-10/screenshots/desktop-slide-10.png",
+      "sha256": "3704e89986d2a79d58ab2e422c6b3cd3579e73a7dedebb5e7907a7c6a0baf00a"
+    },
+    "docs/replays/2026-10-10/screenshots/desktop-slide-11.png": {
+      "destination": "wiki/assets/replays/2026-10-10/screenshots/desktop-slide-11.png",
+      "sha256": "a9d70a2763c5c94f2946b247c11a8c28a5dab3483b3cebc487fbed12a2172cbf"
+    },
+    "docs/replays/2026-10-10/screenshots/desktop-slide-3.png": {
+      "destination": "wiki/assets/replays/2026-10-10/screenshots/desktop-slide-3.png",
+      "sha256": "2e60d7497725eee59a64f1812837d381a576c52f7c802d76f6b126aa6c599e6d"
+    },
+    "docs/replays/2026-10-10/screenshots/mobile-slide-11.png": {
+      "destination": "wiki/assets/replays/2026-10-10/screenshots/mobile-slide-11.png",
+      "sha256": "20508fea9aa3e2f7d3ae86e94147d3cc285789fe3ffe92f7eb099d7f00c4633c"
+    },
+    "docs/replays/2026-10-10/sources.json": {
+      "destination": "wiki/assets/replays/2026-10-10/sources.json",
+      "sha256": "1f70c4d0d2671f4cb5ac2802612780097b974c2a25289e21ce9bb57332bb5a0c"
+    },
+    "docs/research/golden-conformance-suite.md": {
+      "destination": "specs/archive/research/golden-conformance-suite.md",
+      "sha256": "aaa40066ae4636fee53f01aed85fdd5ba3fe7eb28c3bfe3981f296c01079aff0"
+    },
+    "docs/research/harness-naming.md": {
+      "destination": "specs/archive/research/harness-naming.md",
+      "sha256": "29bb3fc775eaa44f88c090a9ee5167782b9c6ebbe9008e12ee64406a5cc59fa8"
+    },
+    "docs/research/nodejs-engineering-standards.md": {
+      "destination": "specs/archive/research/nodejs-engineering-standards.md",
+      "sha256": "796edabb9fac15797298a6ab0f54e7c5aae9abdf68ea788b87b67b772c86ed93"
+    },
+    "docs/research/python-vs-node-the-harness.md": {
+      "destination": "specs/archive/research/python-vs-node-the-harness.md",
+      "sha256": "50b18abe1428993a6061afa2f148447bb111a9e3c2026259d886c0753c011869"
+    },
+    "docs/specs/documentation-consolidation/anchors.log": {
+      "destination": "specs/documentation-consolidation/anchors.log",
+      "sha256": "8370091f9e177cf83ce44ef7f184b0d61e034a8a0efce36bc2c692b9dcb92846"
+    },
+    "docs/specs/documentation-consolidation/baseline.json": {
+      "destination": "specs/documentation-consolidation/baseline.json",
+      "sha256": "595c2b61385cac5c8017a1c4c045c47997ae6d9c0b6e98c7abbdaf45dcf4d316"
+    },
+    "docs/specs/documentation-consolidation/brand.log": {
+      "destination": "specs/documentation-consolidation/brand.log",
+      "sha256": "4c3e04e094957fafe746bdeab506edb277a859a9a012130d87c6f53bf4a1dffd"
+    },
+    "docs/specs/documentation-consolidation/bug-missing-specpack.md": {
+      "destination": "specs/documentation-consolidation/bug-missing-specpack.md",
+      "sha256": "6dd7bb66fbd9c01cff98a1d13d5f866c7e3959e73dca053c113c292513f91e16"
+    },
+    "docs/specs/documentation-consolidation/check.log": {
+      "destination": "specs/documentation-consolidation/check.log",
+      "sha256": "0e74d13a23de4ed551922ae327d54eb3d27b8c929d327cb4ed37ad0dac5c2657"
+    },
+    "docs/specs/documentation-consolidation/corpus.log": {
+      "destination": "specs/documentation-consolidation/corpus.log",
+      "sha256": "24e6addf364ed51fe27593d5f8f5f0e3b8cefe9991fdb81114d05b55c6304545"
+    },
+    "docs/specs/documentation-consolidation/coverage.log": {
+      "destination": "specs/documentation-consolidation/coverage.log",
+      "sha256": "5d9bcb8e262a20ab2b175a0cb7ccea2c1b0ae4dcab3a57b610bf2f520e76ec6b"
+    },
+    "docs/specs/documentation-consolidation/design.md": {
+      "destination": "specs/documentation-consolidation/design.md",
+      "sha256": "eea788d17f3ce9325af9965e780e3b67214e13cbfca5c98d2023533a46da2085"
+    },
+    "docs/specs/documentation-consolidation/documentation-consolidation.json": {
+      "destination": "specs/documentation-consolidation/documentation-consolidation.json",
+      "sha256": "a66ffc74c3279010b9644e1ce89117a6e4e7e751b3558117cbf8151dd2220d6f"
+    },
+    "docs/specs/documentation-consolidation/evidence.md": {
+      "destination": "specs/documentation-consolidation/evidence.md",
+      "sha256": "7967630da592bf9e2b55c38493ff8a0b842d830eb2300f512007bdb058a4210f"
+    },
+    "docs/specs/documentation-consolidation/feature.md": {
+      "destination": "specs/documentation-consolidation/feature.md",
+      "sha256": "1ee9cf4e93f7d7b918c030c7f6469e9b7b1de338a47e9bbfb556f45bc679b682"
+    },
+    "docs/specs/documentation-consolidation/fingerprints.log": {
+      "destination": "specs/documentation-consolidation/fingerprints.log",
+      "sha256": "ff80ff400f28f189be79d6817232654fa07b33511e7374a2ad363176f08aea41"
+    },
+    "docs/specs/documentation-consolidation/gates.json": {
+      "destination": "specs/documentation-consolidation/gates.json",
+      "sha256": "25194774aae8a29bb763f10ba60f24273cd5b8ef63c407a611b95a05a949c276"
+    },
+    "docs/specs/documentation-consolidation/interview.jsonl": {
+      "destination": "specs/documentation-consolidation/interview.jsonl",
+      "sha256": "d09c1aa711094ced36fe30b9730186fd9a8b87d69903a9833cd934fa7deddb18"
+    },
+    "docs/specs/documentation-consolidation/links.log": {
+      "destination": "specs/documentation-consolidation/links.log",
+      "sha256": "69f661784bf7d250156e35b41b38d5b01c445dc067c3591c84d4be01b36afa3e"
+    },
+    "docs/specs/documentation-consolidation/machine-T-1-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-T-1-verification.json",
+      "sha256": "09ffc1ce430c62cba8e7afff8fc3ab2df2f7b6a7f4233e7165cb4483d9075e10"
+    },
+    "docs/specs/documentation-consolidation/machine-T-2-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-T-2-verification.json",
+      "sha256": "162a85ae8b30d4cccda87c2ef978adbed77d2fd687192bdc8731bb5089ba33d0"
+    },
+    "docs/specs/documentation-consolidation/machine-T-3-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-T-3-verification.json",
+      "sha256": "f4913b715b642de6ac7b4cd7a6e27fd07e43107cd4a66db837628fe638a23348"
+    },
+    "docs/specs/documentation-consolidation/machine-T-4-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-T-4-verification.json",
+      "sha256": "a1cdf298ce77c862d77d9d95962dad758054aa7151bbb47829a4938222c0fa66"
+    },
+    "docs/specs/documentation-consolidation/machine-T-5-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-T-5-verification.json",
+      "sha256": "f13d5e10bee2d19aa87214e1309010f24fbf48bd2fb437d77331c2e164f4822b"
+    },
+    "docs/specs/documentation-consolidation/machine-alignment.log": {
+      "destination": "specs/documentation-consolidation/machine-alignment.log",
+      "sha256": "2798381039db495d4f56dd7f4a51837745bfabc4665096cb4665dee38fdd752b"
+    },
+    "docs/specs/documentation-consolidation/machine-brand.log": {
+      "destination": "specs/documentation-consolidation/machine-brand.log",
+      "sha256": "4c3e04e094957fafe746bdeab506edb277a859a9a012130d87c6f53bf4a1dffd"
+    },
+    "docs/specs/documentation-consolidation/machine-check.log": {
+      "destination": "specs/documentation-consolidation/machine-check.log",
+      "sha256": "e000e361ea394b2bdc6d187018b86f94f129ee39a9a62e83117ca0553b3cc89d"
+    },
+    "docs/specs/documentation-consolidation/machine-corpus.log": {
+      "destination": "specs/documentation-consolidation/machine-corpus.log",
+      "sha256": "24e6addf364ed51fe27593d5f8f5f0e3b8cefe9991fdb81114d05b55c6304545"
+    },
+    "docs/specs/documentation-consolidation/machine-coverage.log": {
+      "destination": "specs/documentation-consolidation/machine-coverage.log",
+      "sha256": "b8dbaffba54e592e6cfcb0cf865c5ce9c199e83bec57e117be488da248ae8f78"
+    },
+    "docs/specs/documentation-consolidation/machine-discovery.log": {
+      "destination": "specs/documentation-consolidation/machine-discovery.log",
+      "sha256": "579d69945662ae29a50f9f264dcbb462352ec6ed889301ec0a4334e8e3f7a06a"
+    },
+    "docs/specs/documentation-consolidation/machine-final-verification.json": {
+      "destination": "specs/documentation-consolidation/machine-final-verification.json",
+      "sha256": "2307631c5830783161247bb91970ba1a36aaca76e16a65710f8ead0bc743584b"
+    },
+    "docs/specs/documentation-consolidation/machine-handoff-evidence.md": {
+      "destination": "specs/documentation-consolidation/machine-handoff-evidence.md",
+      "sha256": "f58ce829e5ed1ae306a8919f7d5f6e3431cd7bbf94f67e53fe830620b2a80755"
+    },
+    "docs/specs/documentation-consolidation/machine-handoff-review.md": {
+      "destination": "specs/documentation-consolidation/machine-handoff-review.md",
+      "sha256": "1ad161cef4b9cfbb2f1624391a5147ec40eb179f16c196d2dbb9b74e4d516349"
+    },
+    "docs/specs/documentation-consolidation/machine-links.log": {
+      "destination": "specs/documentation-consolidation/machine-links.log",
+      "sha256": "69f661784bf7d250156e35b41b38d5b01c445dc067c3591c84d4be01b36afa3e"
+    },
+    "docs/specs/documentation-consolidation/machine-skill-validation.json": {
+      "destination": "specs/documentation-consolidation/machine-skill-validation.json",
+      "sha256": "8a300a2356e700ebdde59e726898538967bdcc5872e9979a08976adcd5450884"
+    },
+    "docs/specs/documentation-consolidation/machine-task-admissions.json": {
+      "destination": "specs/documentation-consolidation/machine-task-admissions.json",
+      "sha256": "5cb8b5592296216c0c0c6384d56b9838284df70b9353953c0cf0bf339bb34efe"
+    },
+    "docs/specs/documentation-consolidation/owner-approval-observation.md": {
+      "destination": "specs/documentation-consolidation/owner-approval-observation.md",
+      "sha256": "2aa7ecd670c1598623eabe7347b5757f6724c865b08bb027f7192d7b59d8a7a6"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-brand-check.log": {
+      "destination": "specs/documentation-consolidation/owner-correction-brand-check.log",
+      "sha256": "4c3e04e094957fafe746bdeab506edb277a859a9a012130d87c6f53bf4a1dffd"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-check.log": {
+      "destination": "specs/documentation-consolidation/owner-correction-check.log",
+      "sha256": "2498bee2c2371876600a45c9cb213299b10cf67fc1b70a157f4c48ef0cd8a2d6"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-corpus-check.log": {
+      "destination": "specs/documentation-consolidation/owner-correction-corpus-check.log",
+      "sha256": "24e6addf364ed51fe27593d5f8f5f0e3b8cefe9991fdb81114d05b55c6304545"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-coverage.log": {
+      "destination": "specs/documentation-consolidation/owner-correction-coverage.log",
+      "sha256": "750fc55a45976641bdf4cdd2cff8164d51df5d97021d15c4c84554513c5147be"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-final-verification.json": {
+      "destination": "specs/documentation-consolidation/owner-correction-final-verification.json",
+      "sha256": "d429b13423bb951c2a99a281923b32a8d9abed0e5b5351b56ea937ac4be8af6f"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-review.md": {
+      "destination": "specs/documentation-consolidation/owner-correction-review.md",
+      "sha256": "6c80848ccc8a7f05205542e595c9e62ed79bab22623eb768b5c7fb5640033794"
+    },
+    "docs/specs/documentation-consolidation/owner-correction-verification.json": {
+      "destination": "specs/documentation-consolidation/owner-correction-verification.json",
+      "sha256": "f7748fedf1476a2de6fdc25a62a98ba6dd0621cac6e35f619c4cbec60db1f5d7"
+    },
+    "docs/specs/documentation-consolidation/owner-decision-revision.md": {
+      "destination": "specs/documentation-consolidation/owner-decision-revision.md",
+      "sha256": "725c1597852b18603c86f6e4bb473237e96240c3bae23cfd2ee55e13da1f5413"
+    },
+    "docs/specs/documentation-consolidation/plan.md": {
+      "destination": "specs/documentation-consolidation/plan.md",
+      "sha256": "6893d41c933bbbc92a18efa90a293d4bc062dfe5405f8c832b26fc3d0eca62c5"
+    },
+    "docs/specs/documentation-consolidation/review.md": {
+      "destination": "specs/documentation-consolidation/review.md",
+      "sha256": "15a0c43fd6a3e68058e8f0c12412a1fa21cece70c7b19d3b46c420ea900befe7"
+    },
+    "docs/specs/documentation-consolidation/search.log": {
+      "destination": "specs/documentation-consolidation/search.log",
+      "sha256": "de840e8ffc8d6b06056be4b9714c1ec0f78d5dd050c2a3dd35ca0171b2314bb1"
+    },
+    "docs/specs/documentation-consolidation/skill-sync.json": {
+      "destination": "specs/documentation-consolidation/skill-sync.json",
+      "sha256": "103c99c0cdc7e134ce39f7c3ab166bc9218b620085a578d0b224b7f84e1f1071"
+    },
+    "docs/specs/documentation-consolidation/stamp.log": {
+      "destination": "specs/documentation-consolidation/stamp.log",
+      "sha256": "5691e029395e4e1ad8e29277d42c584e7921cbfff363611d50168e77411c6b59"
+    },
+    "docs/specs/documentation-consolidation/status.log": {
+      "destination": "specs/documentation-consolidation/status.log",
+      "sha256": "8968e700b64ce073fcfe8924a61f097b16e0a9a99a78c4d94f694c266c20f0c5"
+    },
+    "docs/specs/documentation-consolidation/validate.log": {
+      "destination": "specs/documentation-consolidation/validate.log",
+      "sha256": "a9798314f54c413510723ae8d60bac2018987e69cd5fc7912c596a4bc4d5d647"
+    },
+    "docs/specs/documentation-consolidation/verification.json": {
+      "destination": "specs/documentation-consolidation/verification.json",
+      "sha256": "3a5fb374c4daf84606a2db9ff5d02c5c1fc0690d14b60ef68419ce4f96a5ab54"
+    },
+    "docs/specs/documentation-consolidation/verify-docs.mjs": {
+      "destination": "specs/documentation-consolidation/verify-docs.mjs",
+      "sha256": "908b9395fc5209d49126c1d88e0f3d0eac3acadb4fe398d4770678f0478c1a7d"
+    },
+    "docs/specs/documentation-consolidation/verify-machine-handoff.mjs": {
+      "destination": "specs/documentation-consolidation/verify-machine-handoff.mjs",
+      "sha256": "11055c671567e42b36ff6734ce50055d56eac8e70de16c6c76fa27dd0a465338"
+    },
+    "docs/specs/documentation-consolidation/verify-owner-correction.mjs": {
+      "destination": "specs/documentation-consolidation/verify-owner-correction.mjs",
+      "sha256": "e30baf53e28ef7f7de6391e7bd59ab627452fd957a59464c1b6dc5ff5a05380e"
+    },
+    "docs/specs/documentation-consolidation/where.log": {
+      "destination": "specs/documentation-consolidation/where.log",
+      "sha256": "a98b1e51336cea73c8ab517e08cbc6e3a65e11fac68d6c99d7f3f3a8adbb195a"
+    },
+    "docs/specs/documentation-consolidation/wiki-commands.json": {
+      "destination": "specs/documentation-consolidation/wiki-commands.json",
+      "sha256": "d872482faeb72e0eb64f788b874fd6d8f6fc8890c7aa5eb10852438b7ec1927d"
+    },
+    "docs/specs/documentation-consolidation/withdrawn-retrospective-hashes.json": {
+      "destination": "specs/documentation-consolidation/withdrawn-retrospective-hashes.json",
+      "sha256": "728531712b0c161e246afefdf1ee6b89d5de350e38318360c0c3b5af87b8fd86"
+    },
+    "docs/specs/fresh-harness/design.md": {
+      "destination": "specs/fresh-harness/design.md",
+      "sha256": "57660859d3eefa289ecd3af91548bb70ec41eb74f819c4f1d23a3201e3110872"
+    },
+    "docs/specs/fresh-harness/fresh-harness.json": {
+      "destination": "specs/fresh-harness/fresh-harness.json",
+      "sha256": "8edc7c9a61eaef47694a16ca6af81ca0b4e67dcba18fd433537ba3ce65c941f3"
+    },
+    "docs/specs/fresh-harness/research.md": {
+      "destination": "specs/fresh-harness/research.md",
+      "sha256": "a39e1f5177c517566363873f6a04e13ae7eacc50937cf663184d83196338454b"
+    },
+    "docs/specs/guided-loop/design.md": {
+      "destination": "specs/guided-loop/design.md",
+      "sha256": "62fbdfefa98231c14d0aa0ef9610c21f586392ed14fab47928c09cb5d9654abf"
+    },
+    "docs/specs/guided-loop/guided-loop.json": {
+      "destination": "specs/guided-loop/guided-loop.json",
+      "sha256": "c431fe358d97b85f66e1d29e6dc5b9336e84b8998966d4100d654454e5e528a4"
+    },
+    "docs/specs/guided-loop/interview.jsonl": {
+      "destination": "specs/guided-loop/interview.jsonl",
+      "sha256": "3a5114623443aacfeabd5eab929dd477f56ea2f3c02d81b53526f29545ed5765"
+    },
+    "docs/specs/guided-loop/research.md": {
+      "destination": "specs/guided-loop/research.md",
+      "sha256": "ceeeaa995493b3c7d070c3e722dd671a5515ff26933657e48a391efd4e6823f6"
+    },
+    "docs/specs/install-paths/install-paths.json": {
+      "destination": "specs/install-paths/install-paths.json",
+      "sha256": "cbbf1406e12113669ba792e5b4658e37b39f87f854a711db9353cb8c17b26f62"
+    },
+    "docs/specs/install-paths/interview.jsonl": {
+      "destination": "specs/install-paths/interview.jsonl",
+      "sha256": "ee31031ec9b0a1efccd5bc784187336bd8c0ee91e56205163246a0dbc1693170"
+    },
+    "docs/specs/install-paths/research.md": {
+      "destination": "specs/install-paths/research.md",
+      "sha256": "14a4048a0dfd788d401381e7dcb28971e12538e508a082940e9981f28b643e0c"
+    },
+    "docs/specs/stitch-ui/design.md": {
+      "destination": "specs/stitch-ui/design.md",
+      "sha256": "15624a64ecac68b668e82ec706ce328ebab59e981bb4efda0a2cf1450a8c1817"
+    },
+    "docs/specs/stitch-ui/designs/decision-studio.html": {
+      "destination": "specs/stitch-ui/designs/decision-studio.html",
+      "sha256": "d5c455d7314ed13d6e8228a8b8ef44cc924d88bfc58060b38a036faee68c48c7"
+    },
+    "docs/specs/stitch-ui/designs/library-inspector.html": {
+      "destination": "specs/stitch-ui/designs/library-inspector.html",
+      "sha256": "f50169c3f8fb35c9cf7fd1d1e61880c3525b23cee97e8189879b870b5a309fbd"
+    },
+    "docs/specs/stitch-ui/designs/library-review.html": {
+      "destination": "specs/stitch-ui/designs/library-review.html",
+      "sha256": "79b0f9610dac417798a198c66d11c3df75e25e5930d560a2fc412d993bb61d05"
+    },
+    "docs/specs/stitch-ui/interview.jsonl": {
+      "destination": "specs/stitch-ui/interview.jsonl",
+      "sha256": "abcb1b19fe60d52aef5d4608ad2b4ff2b12f9d8fbf89b29f43e27797e7a64629"
+    },
+    "docs/specs/stitch-ui/research.md": {
+      "destination": "specs/stitch-ui/research.md",
+      "sha256": "4585a36541f9496651b4107f9b7bc4b043bd91d4de47e2afff1d0bba04e3ca24"
+    },
+    "docs/specs/stitch-ui/stitch-ui.json": {
+      "destination": "specs/stitch-ui/stitch-ui.json",
+      "sha256": "3ddc26351d12562771de908f36dbad68e16a7b00b1442729e938cb46128fd3b7"
+    }
+  }
+}
