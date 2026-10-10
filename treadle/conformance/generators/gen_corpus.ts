@@ -34,6 +34,9 @@ import {
   readEvents,
   writeEvent,
   type PackDoc,
+  workflowGate,
+  planDigest,
+  evidenceDigest,
 } from '../../packages/core/src/index.js';
 import {
   buildIndex,
@@ -927,11 +930,96 @@ function genK1(): void {
   k1Goldens(c3, [{ q: 'attested' }]);
 }
 
+function genOwnerWorkflow(): void {
+  for (const phase of ['decisions', 'start', 'implementation', 'review', 'closure', 'delivered']) {
+    const dir = join(ROOT, 'L4-owner-workflow', phase);
+    const input = join(dir, 'input');
+    mkdirSync(input, { recursive: true });
+    const doc: PackDoc = {
+      name: 'p',
+      title: 'Owner gates',
+      format: 'specpack/0.4',
+      revision: 1,
+      status: 'active',
+      spec: { why: 'Keep owner acts separate', requirements: [], clarifications: [] },
+      plan: {
+        decisions: [
+          {
+            id: 'D-1',
+            decision: 'Use owner gates',
+            because: 'Owner authority must remain explicit',
+            status: phase === 'decisions' ? 'proposed' : 'accepted',
+            ...(phase === 'decisions' ? {} : { accepted_by: 'human:owner' }),
+          },
+        ],
+      },
+      artifacts: {},
+      tasks: [
+        {
+          id: 'T-1',
+          title: 'Work',
+          status: 'todo',
+          requires_decisions: ['D-1'],
+          verify: { cmd: 'true', expect: 'exit 0' },
+          context: { touch: [] },
+        },
+      ],
+      workflow: {
+        policy: 'owner-gated/1',
+        plan: 1,
+        phase_questions: { spec: [] },
+        acts: [],
+        pending_audit: [],
+      },
+    };
+    for (const id of ['brief', 'spec', 'design', 'plan']) {
+      W(join(input, id + '.md'), '# Owner gates\n\nThis is a deterministic conformance fixture.\n');
+      doc.artifacts![id] = { file: id + '.md', type: 'text/markdown' };
+    }
+    const path = join(input, 'p.json');
+    if (!['decisions', 'start'].includes(phase)) {
+      const digest = planDigest(doc, path);
+      if (!digest.ok) throw new Error(digest.message);
+      doc.workflow!.start_receipt = { by: 'human:owner', at: FIXED, plan_digest: digest.value };
+    }
+    if (['review', 'closure', 'delivered'].includes(phase)) {
+      doc.tasks[0]!.status = 'done';
+      doc.tasks[0]!['evidence'] = [{ cmd: 'true', exit: 0, at: FIXED, by: 'agent:builder' }];
+    }
+    if (['closure', 'delivered'].includes(phase)) {
+      const digest = planDigest(doc, path);
+      if (!digest.ok) throw new Error(digest.message);
+      doc.review = {
+        verdicts: [
+          {
+            on: 'PACK',
+            verdict: 'PASS',
+            by: 'agent:reviewer',
+            at: FIXED,
+            findings: [],
+            plan_digest: digest.value,
+            evidence_digest: evidenceDigest(doc),
+          },
+        ],
+      };
+    }
+    if (phase === 'delivered') {
+      doc.status = 'complete';
+      doc.closed_by = 'human:owner';
+      doc.closed_at = FIXED;
+    }
+    savePack(doc, path, { at: FIXED });
+    W(join(dir, 'expected.emit.json'), emitBytes(doc));
+    W(join(dir, 'expected.workflow.json'), JSON.stringify(workflowGate(doc, path), null, 2) + '\n');
+  }
+}
+
 if (process.argv[1]?.endsWith('gen_corpus.ts')) {
   genL1();
   genL2();
   genL3();
   genK1();
+  genOwnerWorkflow();
   let count = 0;
   const walk = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {

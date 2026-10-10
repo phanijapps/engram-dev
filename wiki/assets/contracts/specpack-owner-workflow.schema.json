@@ -35,12 +35,15 @@
           "title": "Digest of the file bytes"
         }
       },
-      "required": ["file", "type"],
+      "required": [
+        "file",
+        "type"
+      ],
       "additionalProperties": false
     },
     "spec": {
       "type": "object",
-      "title": "SPEC — what and why",
+      "title": "SPEC \u2014 what and why",
       "properties": {
         "why": {
           "type": "string",
@@ -51,28 +54,28 @@
           "items": {
             "$ref": "#/$defs/story"
           },
-          "title": "User stories (US-…)"
+          "title": "User stories (US-\u2026)"
         },
         "requirements": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/requirement"
           },
-          "title": "Functional requirements (FR-…), one capability each"
+          "title": "Functional requirements (FR-\u2026), one capability each"
         },
         "constraints": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/constraint"
           },
-          "title": "Hard limits (CON-…)"
+          "title": "Hard limits (CON-\u2026)"
         },
         "clarifications": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/clarification"
           },
-          "title": "Questions (Q-…)"
+          "title": "Questions (Q-\u2026)"
         },
         "out_of_scope": {
           "type": "array",
@@ -103,7 +106,10 @@
           "title": "Beliefs the spec depends on"
         }
       },
-      "required": ["why", "requirements"],
+      "required": [
+        "why",
+        "requirements"
+      ],
       "additionalProperties": false
     },
     "story": {
@@ -134,7 +140,11 @@
           "title": "One line: the story named"
         },
         "priority": {
-          "enum": ["P1", "P2", "P3"],
+          "enum": [
+            "P1",
+            "P2",
+            "P3"
+          ],
           "title": "P1 alone must be a viable MVP (Spec Kit rule)"
         },
         "independent_test": {
@@ -142,7 +152,12 @@
           "title": "How to test this story alone"
         }
       },
-      "required": ["id", "as", "want", "so"],
+      "required": [
+        "id",
+        "as",
+        "want",
+        "so"
+      ],
       "additionalProperties": false
     },
     "requirement": {
@@ -157,7 +172,11 @@
           "title": "One capability, MUST/SHOULD wording"
         },
         "priority": {
-          "enum": ["P1", "P2", "P3"],
+          "enum": [
+            "P1",
+            "P2",
+            "P3"
+          ],
           "title": "P1 = this slice"
         },
         "scenarios": {
@@ -165,7 +184,7 @@
           "items": {
             "$ref": "#/$defs/scenario"
           },
-          "title": "Acceptance scenarios (AC-…)"
+          "title": "Acceptance scenarios (AC-\u2026)"
         },
         "refs": {
           "$ref": "#/$defs/refs"
@@ -179,7 +198,10 @@
           "title": "Stories this capability serves"
         }
       },
-      "required": ["id", "text"],
+      "required": [
+        "id",
+        "text"
+      ],
       "additionalProperties": false
     },
     "scenario": {
@@ -199,7 +221,12 @@
           "type": "string"
         }
       },
-      "required": ["id", "given", "when", "then"],
+      "required": [
+        "id",
+        "given",
+        "when",
+        "then"
+      ],
       "additionalProperties": false
     },
     "constraint": {
@@ -213,7 +240,10 @@
           "type": "string"
         }
       },
-      "required": ["id", "text"],
+      "required": [
+        "id",
+        "text"
+      ],
       "additionalProperties": false
     },
     "clarification": {
@@ -227,7 +257,10 @@
           "type": "string"
         },
         "status": {
-          "enum": ["open", "resolved"]
+          "enum": [
+            "open",
+            "resolved"
+          ]
         },
         "owner": {
           "type": "string"
@@ -240,7 +273,10 @@
           "pattern": "^D-[A-Za-z0-9-]+$"
         },
         "kind": {
-          "enum": ["open", "choice"],
+          "enum": [
+            "open",
+            "choice"
+          ],
           "title": "v1 kinds (D-14): open text or choice"
         },
         "options": {
@@ -266,14 +302,21 @@
         "unknown": {
           "type": "boolean",
           "title": "The honest unknown: answered, still blocking"
+        },
+        "notes": {
+          "type": "string"
         }
       },
-      "required": ["id", "question", "status"],
+      "required": [
+        "id",
+        "question",
+        "status"
+      ],
       "additionalProperties": false
     },
     "plan": {
       "type": "object",
-      "title": "PLAN — how: designs, diagrams, decisions",
+      "title": "PLAN \u2014 how: designs, diagrams, decisions",
       "properties": {
         "approach": {
           "type": "string",
@@ -288,21 +331,21 @@
           "items": {
             "$ref": "#/$defs/diagram"
           },
-          "title": "Architecture diagrams (DG-…) — referenced artifacts"
+          "title": "Architecture diagrams (DG-\u2026) \u2014 referenced artifacts"
         },
         "designs": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/design"
           },
-          "title": "Design elements (DES-…) — the parts the tasks implement"
+          "title": "Design elements (DES-\u2026) \u2014 the parts the tasks implement"
         },
         "decisions": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/decision"
           },
-          "title": "Decisions (D-…), each with its because"
+          "title": "Decisions (D-\u2026), each with its because"
         },
         "data": {
           "type": "array",
@@ -319,7 +362,9 @@
           "title": "Files and folders touched"
         }
       },
-      "required": ["decisions"],
+      "required": [
+        "decisions"
+      ],
       "additionalProperties": false
     },
     "diagram": {
@@ -332,14 +377,20 @@
         },
         "artifact": {
           "type": "string",
-          "title": "Key into artifacts — the diagram file itself"
+          "title": "Key into artifacts \u2014 the diagram file itself"
         },
         "caption": {
           "type": "string",
           "title": "What the diagram shows"
         },
         "format": {
-          "enum": ["mermaid", "svg", "png", "excalidraw", "ascii"],
+          "enum": [
+            "mermaid",
+            "svg",
+            "png",
+            "excalidraw",
+            "ascii"
+          ],
           "title": "How a renderer should treat it"
         },
         "covers": {
@@ -351,12 +402,17 @@
           "title": "Design elements or requirements the diagram depicts"
         }
       },
-      "required": ["id", "artifact", "caption", "format"],
+      "required": [
+        "id",
+        "artifact",
+        "caption",
+        "format"
+      ],
       "additionalProperties": false
     },
     "design": {
       "type": "object",
-      "title": "A design element — the thing tasks implement",
+      "title": "A design element \u2014 the thing tasks implement",
       "properties": {
         "id": {
           "type": "string",
@@ -366,7 +422,15 @@
           "type": "string"
         },
         "kind": {
-          "enum": ["component", "module", "api", "flow", "data", "interface"],
+          "enum": [
+            "component",
+            "module",
+            "api",
+            "flow",
+            "data",
+            "interface",
+            "mechanism"
+          ],
           "title": "What kind of part this is"
         },
         "detail": {
@@ -386,7 +450,11 @@
           "title": "Diagram and artifact references (e.g. arch#services)"
         }
       },
-      "required": ["id", "title", "kind"],
+      "required": [
+        "id",
+        "title",
+        "kind"
+      ],
       "additionalProperties": false
     },
     "decision": {
@@ -401,7 +469,7 @@
         },
         "because": {
           "type": "string",
-          "title": "Why — the alternative beaten"
+          "title": "Why \u2014 the alternative beaten"
         },
         "resolves": {
           "type": "array",
@@ -418,20 +486,29 @@
           }
         },
         "status": {
-          "enum": ["proposed", "accepted", "rejected"],
+          "enum": [
+            "proposed",
+            "accepted",
+            "rejected"
+          ],
           "title": "A human accepts decisions"
         },
         "accepted_by": {
           "type": "string",
           "title": "Who accepted it",
-          "description": "A7: status 'accepted' requires accepted_by starting with 'human:' — agents may draft decisions, only humans accept them."
+          "description": "A7: status 'accepted' requires accepted_by starting with 'human:' \u2014 agents may draft decisions, only humans accept them."
         },
         "rejected_because": {
           "type": "string",
           "title": "Why the decision was not taken (owner-supplied on rejection)"
         }
       },
-      "required": ["id", "decision", "because", "status"],
+      "required": [
+        "id",
+        "decision",
+        "because",
+        "status"
+      ],
       "additionalProperties": false
     },
     "dataEntity": {
@@ -450,12 +527,14 @@
           "type": "string"
         }
       },
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "additionalProperties": false
     },
     "task": {
       "type": "object",
-      "title": "TASK — flow links and trace links, never mixed",
+      "title": "TASK \u2014 flow links and trace links, never mixed",
       "properties": {
         "id": {
           "type": "string",
@@ -534,25 +613,30 @@
           "type": "boolean"
         },
         "status": {
-          "enum": ["todo", "doing", "done", "blocked"]
+          "enum": [
+            "todo",
+            "doing",
+            "done",
+            "blocked"
+          ]
         },
         "evidence": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/evidence"
           },
-          "title": "Observed runs — done without evidence is a defect"
+          "title": "Observed runs \u2014 done without evidence is a defect"
         },
         "assignee": {
           "type": "string",
-          "title": "Worker or subagent (pi, claude, codex, …)"
+          "title": "Worker or subagent (pi, claude, codex, \u2026)"
         },
         "refs": {
           "$ref": "#/$defs/refs"
         },
         "context": {
           "$ref": "#/$defs/contextBlock",
-          "title": "Handoff context — what a fresh session needs beside the task"
+          "title": "Handoff context \u2014 what a fresh session needs beside the task"
         },
         "requires_decisions": {
           "type": "array",
@@ -563,7 +647,12 @@
           "uniqueItems": true
         }
       },
-      "required": ["id", "title", "verify", "status"],
+      "required": [
+        "id",
+        "title",
+        "verify",
+        "status"
+      ],
       "additionalProperties": false
     },
     "verify": {
@@ -581,10 +670,13 @@
           "items": {
             "$ref": "#/$defs/step"
           },
-          "title": "Ordered checks — every step must pass (A6)"
+          "title": "Ordered checks \u2014 every step must pass (A6)"
         }
       },
-      "required": ["cmd", "expect"],
+      "required": [
+        "cmd",
+        "expect"
+      ],
       "additionalProperties": false
     },
     "evidence": {
@@ -607,7 +699,11 @@
           "type": "string"
         }
       },
-      "required": ["cmd", "exit", "at"],
+      "required": [
+        "cmd",
+        "exit",
+        "at"
+      ],
       "additionalProperties": false
     },
     "refs": {
@@ -621,7 +717,7 @@
     },
     "review": {
       "type": "object",
-      "title": "REVIEW — verdicts on any id",
+      "title": "REVIEW \u2014 verdicts on any id",
       "properties": {
         "checklist": {
           "type": "string",
@@ -643,7 +739,11 @@
           "type": "string"
         },
         "verdict": {
-          "enum": ["PASS", "IMPROVE", "REPLAN"]
+          "enum": [
+            "PASS",
+            "IMPROVE",
+            "REPLAN"
+          ]
         },
         "findings": {
           "type": "array",
@@ -667,14 +767,22 @@
           "type": "string"
         }
       },
-      "required": ["on", "verdict", "by"],
+      "required": [
+        "on",
+        "verdict",
+        "by"
+      ],
       "additionalProperties": false
     },
     "finding": {
       "type": "object",
       "properties": {
         "severity": {
-          "enum": ["BLOCKER", "DEFECT", "SMELL"]
+          "enum": [
+            "BLOCKER",
+            "DEFECT",
+            "SMELL"
+          ]
         },
         "note": {
           "type": "string"
@@ -684,12 +792,15 @@
           "title": "The one-line fix"
         }
       },
-      "required": ["severity", "note"],
+      "required": [
+        "severity",
+        "note"
+      ],
       "additionalProperties": false
     },
     "contextBlock": {
       "type": "object",
-      "title": "Handoff context — pin what you must, advise the rest",
+      "title": "Handoff context \u2014 pin what you must, advise the rest",
       "description": "touch paths are relative to the git root containing the pack and are pinned (sha256 written by the machine at handout; drift refuses). read, wiki, and digestless links are advisory. links may be URLs or repo-relative paths. notes are plain strings; provenance is the pack's git history. Promote load-bearing notes to D/CON/Q nodes.",
       "properties": {
         "touch": {
@@ -697,14 +808,14 @@
           "items": {
             "$ref": "#/$defs/touchEntry"
           },
-          "title": "Scope jail — the files this task may change, pinned"
+          "title": "Scope jail \u2014 the files this task may change, pinned"
         },
         "read": {
           "type": "array",
           "items": {
             "$ref": "#/$defs/readEntry"
           },
-          "title": "Advisory files — context, never changed"
+          "title": "Advisory files \u2014 context, never changed"
         },
         "wiki": {
           "type": "array",
@@ -725,7 +836,7 @@
           "items": {
             "type": "string"
           },
-          "title": "Plain-text context — promote to a node when load-bearing"
+          "title": "Plain-text context \u2014 promote to a node when load-bearing"
         },
         "commands": {
           "type": "array",
@@ -754,7 +865,9 @@
           "title": "Why this file is in scope"
         }
       },
-      "required": ["path"],
+      "required": [
+        "path"
+      ],
       "additionalProperties": false
     },
     "readEntry": {
@@ -767,7 +880,10 @@
           "type": "string"
         }
       },
-      "required": ["path", "why"],
+      "required": [
+        "path",
+        "why"
+      ],
       "additionalProperties": false
     },
     "linkEntry": {
@@ -784,14 +900,17 @@
         "sha256": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$",
-          "title": "Optional pin — verified at handout when present"
+          "title": "Optional pin \u2014 verified at handout when present"
         },
         "retrieved_at": {
           "type": "string",
           "title": "When the pinned content was fetched (ISO-8601)"
         }
       },
-      "required": ["url", "why"],
+      "required": [
+        "url",
+        "why"
+      ],
       "additionalProperties": false
     },
     "commandCheck": {
@@ -805,7 +924,9 @@
           "title": "Expected exit code, default 0"
         }
       },
-      "required": ["cmd"],
+      "required": [
+        "cmd"
+      ],
       "additionalProperties": false
     },
     "step": {
@@ -823,7 +944,9 @@
           "title": "Substring the output must contain"
         }
       },
-      "required": ["run"],
+      "required": [
+        "run"
+      ],
       "additionalProperties": false
     },
     "envBlock": {
@@ -841,6 +964,18 @@
         },
         "toolchain": {
           "type": "string"
+        },
+        "workspace": {
+          "type": "string"
+        },
+        "source_head": {
+          "type": "string"
+        },
+        "mode": {
+          "type": "string"
+        },
+        "source_state": {
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -856,14 +991,20 @@
           "type": "string"
         }
       },
-      "required": ["id", "text"],
+      "required": [
+        "id",
+        "text"
+      ],
       "additionalProperties": false
     },
     "oldRoot": {
       "title": "Legacy flat layout (pre spec-layout)",
       "properties": {
         "format": {
-          "enum": ["specpack/0.2", "specpack/0.3"],
+          "enum": [
+            "specpack/0.2",
+            "specpack/0.3"
+          ],
           "title": "Format tag"
         },
         "name": {
@@ -901,17 +1042,20 @@
         },
         "env": {
           "$ref": "#/$defs/envBlock",
-          "title": "Environment contract — how this pack is built and tested"
+          "title": "Environment contract \u2014 how this pack is built and tested"
         },
         "revision": {
           "type": "integer",
           "minimum": 1,
           "maximum": 9007199254740991,
-          "title": "Revision — bumped on every machine mutation",
+          "title": "Revision \u2014 bumped on every machine mutation",
           "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
         },
         "status": {
-          "enum": ["active", "complete"],
+          "enum": [
+            "active",
+            "complete"
+          ],
           "title": "Pack lifecycle",
           "description": "Absent means active. complete is the final state: set by loom close, frozen afterwards."
         },
@@ -955,7 +1099,14 @@
           "type": "string"
         }
       },
-      "required": ["format", "name", "title", "spec", "plan", "tasks"],
+      "required": [
+        "format",
+        "name",
+        "title",
+        "spec",
+        "plan",
+        "tasks"
+      ],
       "additionalProperties": false
     },
     "metadataEntry": {
@@ -979,7 +1130,10 @@
           "title": "Optional pin, verified at handout"
         }
       },
-      "required": ["ref", "type"],
+      "required": [
+        "ref",
+        "type"
+      ],
       "additionalProperties": false
     },
     "dateGroup": {
@@ -1027,7 +1181,10 @@
       "title": "Where the deliverable stands",
       "properties": {
         "lifecycle": {
-          "enum": ["active", "complete"],
+          "enum": [
+            "active",
+            "complete"
+          ],
           "title": "Record lifecycle"
         },
         "deliverable": {
@@ -1100,8 +1257,8 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 9007199254740991,
-          "title": "Revision — bumped on every machine mutation",
-          "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
+          "title": "Revision \u2014 bumped on every machine mutation",
+          "description": "Every owner mutation and task record checks the held revision."
         },
         "workflow": {
           "$ref": "#/$defs/workflow"
@@ -1138,7 +1295,11 @@
           "$ref": "#/$defs/hash"
         }
       },
-      "required": ["by", "at", "plan_digest"],
+      "required": [
+        "by",
+        "at",
+        "plan_digest"
+      ],
       "additionalProperties": false
     },
     "ownerAct": {
@@ -1149,7 +1310,14 @@
           "minLength": 1
         },
         "kind": {
-          "enum": ["accept", "reject", "approve", "start", "close", "adopt"]
+          "enum": [
+            "accept",
+            "reject",
+            "approve",
+            "start",
+            "close",
+            "adopt"
+          ]
         },
         "by": {
           "type": "string",
@@ -1173,7 +1341,13 @@
           "$ref": "#/$defs/hash"
         }
       },
-      "required": ["id", "kind", "by", "at", "revision"],
+      "required": [
+        "id",
+        "kind",
+        "by",
+        "at",
+        "revision"
+      ],
       "additionalProperties": false
     },
     "workflow": {
@@ -1197,7 +1371,9 @@
               "uniqueItems": true
             }
           },
-          "required": ["spec"],
+          "required": [
+            "spec"
+          ],
           "additionalProperties": false
         },
         "start_receipt": {

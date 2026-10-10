@@ -3,7 +3,7 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:31:35Z"
+    "updated": "2026-10-10T22:36:07Z"
   },
   "status": {
     "lifecycle": "active",
@@ -701,7 +701,7 @@
       "title": "Verify full owner-flow integration and new conformance cases",
       "detail": "Implement plan.md T-6 only after owner decision acceptance and exact-plan start consent. All gates pass; new owner-flow fixtures are reviewed deliberately and original golden bytes remain equal. End-to-end owner actors can progress through start, tasks, review and explicit completion; legacy approved documentation fixtures can use explicit decision/close controls without inferred consent.",
       "phase": "core",
-      "status": "blocked",
+      "status": "done",
       "needs": [
         "T-4",
         "T-5"
@@ -741,16 +741,27 @@
             "path": "specs/spec-completion-handoff/verify-review.mjs"
           },
           {
-            "path": "wiki/initiatives/spec-completion-handoff.md"
+            "path": "wiki/initiatives/spec-completion-handoff.md",
+            "sha256": "7dd89a9b6394a3a31ec0c62c498fc213b3aa36109ce71761d3c9099fa10d84d0"
           },
           {
-            "path": "wiki/domain/specpack-status-vocabulary.md"
+            "path": "wiki/domain/specpack-status-vocabulary.md",
+            "sha256": "9e83ff386c66744dbd74c55895d2b7d4e955bf5e5a4f642d842cbeb089f8224b"
           }
         ],
         "notes": [
           "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-6; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm coverage && pnpm corpus:check && pnpm brand:check && pnpm links",
+          "exit": 0,
+          "at": "2026-10-10T22:36:07Z",
+          "by": "agent:codex",
+          "notes": "Actual declared expectation passed. See T-6-verification.log. Independent delivery review remains separate."
+        }
+      ]
     },
     {
       "id": "T-7",
@@ -849,5 +860,5 @@
     "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
   "format": "specpack/0.4",
-  "revision": 33
+  "revision": 36
 }

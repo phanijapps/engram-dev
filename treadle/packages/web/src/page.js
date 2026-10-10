@@ -14,6 +14,7 @@ const SECTIONS = [
   'spec',
   'design',
   'tasks',
+  'workflow',
   'review',
   'env',
   'format',

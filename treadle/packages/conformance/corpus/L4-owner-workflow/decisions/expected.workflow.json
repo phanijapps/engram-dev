@@ -1,0 +1,7 @@
+{
+  "phase": "decisions",
+  "reasons": [
+    "D-1",
+    "T-1 needs D-1"
+  ]
+}

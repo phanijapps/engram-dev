@@ -87,3 +87,23 @@ The exact check compares their complete inventories and bytes.
 It also runs the real engine and CLI approval scenarios: 16 tests passed.
 The skill frontmatter validator passed for all four skills.
 See T-5-verification.log. Independent review still checks the model behavior cases.
+
+## T-6
+
+The integration test executes two dependent tasks through the CLI under one browser start receipt.
+Independent review and owner closure remain separate in that disposable fixture.
+The corpus adds six owner phase cases. All 78 old goldens remain unchanged.
+The separate schema validates this adopted pack and the six new inputs.
+It refuses wrong versions, policies and agent approval claims.
+The wiki now explains the implemented flow, accepted contract change and this observed repair.
+It preserves the prior analysis and avoids historical retrospective backfill.
+
+The exact command passed all repository gates: check, coverage, corpus, brand and links.
+There are 144 passing tests. Coverage is 85.92 percent lines and 75.82 percent branches.
+See T-6-verification.log and T-6-contract-verification.json.
+A later rerun confirms the final fixture metadata correction.
+The engine refused a duplicate done record; no second completion state was invented.
+T-6-first-verification.log preserves the first run.
+The room dossier's section list now includes the additive workflow section.
+Wiki validation has zero errors and warnings. Anchors need no review.
+The freshness tool still leaves TypeScript sources unbaselined; this is recorded as a limit.

@@ -1,0 +1,8 @@
+{
+  "newCanonicalPack": "valid",
+  "ownerPhaseFixtures": 6,
+  "invalidShapesRefused": 4,
+  "legacyCorpus": "unchanged from approved plan base",
+  "originalSchema": "unchanged",
+  "dateFormats": "Not independently checked by this schema run; runtime tests validate receipt dates"
+}

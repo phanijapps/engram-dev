@@ -42,6 +42,17 @@ A passing record needs commands with zero exits. Repeated failures can block a t
 Source: `treadle/packages/core/src/specpack/record.ts:19`.
 A complete pack refuses further task recording; open a new initiative.
 
+# Owner workflow in format 0.4
+
+The frozen deliverable stages above remain unchanged.
+The new workflow reports a separate phase: plan, spec, decisions, start,
+implementation, review, closure or delivered.
+The library uses this phase to explain the actual owner wait state.
+Current independent review makes closure available. It does not close the pack.
+Sources: `treadle/packages/core/src/specpack/workflow.ts:1`;
+`treadle/packages/web/src/library.js:1`.
+See [owner workflow](/systems/owner-workflow.md).
+
 # Wiki projection
 
 The canonical pack owns mutable work state. Wiki initiative pages carry dated

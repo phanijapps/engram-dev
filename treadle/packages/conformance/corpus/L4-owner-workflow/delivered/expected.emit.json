@@ -1,0 +1,104 @@
+{
+  "id": "p",
+  "name": "p",
+  "description": "Owner gates",
+  "date": {
+    "updated": "2026-10-10T12:00:00Z",
+    "closed": {
+      "at": "2026-10-10T12:00:00Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete",
+    "deliverable": "delivered"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown"
+    }
+  },
+  "spec": {
+    "why": "Keep owner acts separate",
+    "requirements": [],
+    "clarifications": []
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use owner gates",
+        "because": "Owner authority must remain explicit",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Work",
+      "status": "done",
+      "requires_decisions": [
+        "D-1"
+      ],
+      "verify": {
+        "cmd": "true",
+        "expect": "exit 0"
+      },
+      "context": {
+        "touch": []
+      },
+      "evidence": [
+        {
+          "cmd": "true",
+          "exit": 0,
+          "at": "2026-10-10T12:00:00Z",
+          "by": "agent:builder"
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-10T12:00:00Z",
+      "plan_digest": "6345dfee6e13be1a3dc51ea05144a495e8c60028d139e2998deea41f9249a600"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:reviewer",
+        "at": "2026-10-10T12:00:00Z",
+        "findings": [],
+        "plan_digest": "6345dfee6e13be1a3dc51ea05144a495e8c60028d139e2998deea41f9249a600",
+        "evidence_digest": "72dd77ebfa717da5d8a9ce84b12f17e15e9573795ec6c7df9f01c3210ae77fcc"
+      }
+    ]
+  },
+  "format": "specpack/0.4",
+  "revision": 1
+}

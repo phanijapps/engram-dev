@@ -17,6 +17,7 @@ import {
   record,
   rejectDecision,
   type PackDoc,
+  workflowGate,
 } from '@treadle/core';
 import type { Refusal } from '@treadle/core';
 
@@ -153,7 +154,13 @@ function read(dir: string, file: string): string | null {
 
 export function runCorpus(root: string): CaseResult[] {
   const results: CaseResult[] = [];
-  for (const layer of ['L1-canonical', 'L2-refusals', 'L3-events', 'K1-bundle']) {
+  for (const layer of [
+    'L1-canonical',
+    'L2-refusals',
+    'L3-events',
+    'L4-owner-workflow',
+    'K1-bundle',
+  ]) {
     const layerDir = join(root, layer);
     if (!existsSync(layerDir)) continue;
     for (const c of caseDirs(layerDir)) {
@@ -179,6 +186,21 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
   }
   const loaded = loadPack(input);
   if (!loaded.ok) return { case: tag, layer, ok: false, detail: loaded.message };
+
+  if (layer === 'L4-owner-workflow') {
+    const actual =
+      JSON.stringify(workflowGate(loaded.value, join(input, 'p.json')), null, 2) + '\n';
+    const expected = read(dir, 'expected.workflow.json');
+    const canonical = emitBytes(loaded.value) === read(dir, 'expected.emit.json');
+    return {
+      case: tag,
+      layer,
+      ok: actual === expected && canonical,
+      ...(actual === expected && canonical
+        ? {}
+        : { detail: 'Owner gate or canonical bytes differ' }),
+    };
+  }
 
   if (layer === 'L1-canonical') {
     const expected = read(dir, 'expected.emit.json');

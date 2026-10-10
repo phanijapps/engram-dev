@@ -1,7 +1,7 @@
 ---
-title: "Owner decision gates and completion: analysis and proposed plan"
+title: "Owner decision gates and completion: approved implementation"
 type: Initiative
-description: "Observed execution before decision acceptance, recorded approval without closure, and owner-directed flow and a proposed implementation plan awaiting consent."
+description: "Observed execution before decision acceptance, recorded approval without closure, and the approved versioned implementation and owner completion handoff."
 status: draft
 created: 2026-10-10
 updated: 2026-10-10
@@ -29,36 +29,30 @@ proposed decisions still block closure. Browser events expose approval without
 decision resolution or final closure.
 Source: `specs/spec-completion-handoff/probe.json:1`.
 
-# Dated analysis and owner-directed plan
+# Approved implementation
 
-The analysis records candidate requirements and proposed correction options.
-It implements no runtime fix, accepts no decision, and closes no prior pack.
-The owner subsequently answered Q-1 with the required workflow. The concrete
-brief, spec, design and seven-task plan now follow that answer. Four design
-decisions remain proposed; all tasks are blocked until decision acceptance and
-separate permission to start the exact plan.
-Source: `specs/spec-completion-handoff/spec-completion-handoff.json:1`.
+The owner accepted D-1 through D-4 and separately authorized Plan 1.
+The actual browser answers and dates remain preserved.
+The start receipt binds the approved scope and keeps the original owner date.
+Sources: `specs/spec-completion-handoff/interview.jsonl:1`;
+`specs/spec-completion-handoff/bootstrap-authorization.json:1`.
 
-The proposed flow is requirement → brief → spec question gate → design decision
-gate → tasks and start gate → approved implementation sequence → independent
-review. A separate final owner closure is still a proposed decision.
-Sources: `specs/spec-completion-handoff/owner-flow.md:1`;
-`specs/spec-completion-handoff/design.md:1`; `specs/spec-completion-handoff/plan.md:1`.
+The implementation adds the versioned engine gates, command-line actions,
+browser admission and UI, and aligned SDD skills.
+Task evidence resides in the canonical JSON. Progress resides in execution-log.md.
+Approved brief, spec, design and plan artifacts remain unchanged.
+Sources: `specs/spec-completion-handoff/execution-log.md:1`;
+`specs/spec-completion-handoff/spec-completion-handoff.json:1`.
 
-Independent PLAN review passed. The exact proposed scope is captured separately;
-Q-2 through Q-5 request decision consent and Q-6 requests permission to start
-that scope. These are still pending owner acts. Planning verification confirms
-an empty ready set, and is not implementation evidence or a PACK verdict.
+The dated analysis, plan review and planning checks remain historical evidence.
+Their original pending state is not the current execution state.
+No previous initiative was closed through this change.
+No past-session retrospective was reconstructed.
 Sources: `specs/spec-completion-handoff/plan-review.md:1`;
-`specs/spec-completion-handoff/plan-scope.json:1`;
-`specs/spec-completion-handoff/plan-verification.json:1`.
+`specs/spec-completion-handoff/plan-verification.json:1`;
+`specs/spec-completion-handoff/design.md:1`.
 
-The owner asked for simpler questions. The current questions describe each
-choice and its effect in plain language. The plan scope, original owner answer,
-proposed decisions and blocked tasks remain unchanged.
-Sources: `specs/spec-completion-handoff/spec-completion-handoff.json:1`;
-`specs/spec-completion-handoff/question-wording-revision-6.json:1`.
-
+The new flow is documented in [owner workflow](/systems/owner-workflow.md).
 Read [status rules](/domain/specpack-status-vocabulary.md),
 [the affected migration](/initiatives/docs-root-migration.md), and
 [open work](/project/open-work.md).

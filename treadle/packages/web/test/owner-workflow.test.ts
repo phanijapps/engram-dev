@@ -10,6 +10,8 @@ import {
 } from 'node:fs';
 import { tmpdir, hostname } from 'node:os';
 import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { startLibrary, startRoom } from '../src/servers.js';
 import {
   savePack,
@@ -84,6 +86,112 @@ async function post(url: string, body: unknown, headers = {}) {
   });
   return { status: r.status, body: (await r.json()) as Record<string, unknown> };
 }
+
+describe('owner sequence across CLI and browser', () => {
+  it('executes two checked tasks under one start receipt, then requires independent review and human closure', async () => {
+    const f = fixture();
+    const cmd = 'node -e "process.exit(0)"';
+    f.doc.tasks[0]!.verify = { cmd, expect: 'exit 0' };
+    f.doc.tasks.push({
+      id: 'T-2',
+      title: 'Dependent work',
+      status: 'todo',
+      needs: ['T-1'],
+      requires_decisions: ['D-1'],
+      verify: { cmd, expect: 'exit 0' },
+      context: { touch: [] },
+    });
+    savePack(f.doc, f.path, { at });
+    const lib = await startLibrary(f.root);
+    const workspace = fileURLToPath(new URL('../../..', import.meta.url));
+    const cli = (args: string[]) =>
+      spawnSync(
+        join(workspace, 'node_modules/.bin/tsx'),
+        ['packages/cli/src/main.ts', 'do', ...args],
+        { cwd: workspace, encoding: 'utf8' },
+      );
+    try {
+      expect(cli(['next', f.dir, '--expected-revision', '1']).status).toBe(1);
+      expect(
+        (
+          await post(lib.url + 'workflow/p', {
+            kind: 'accept',
+            decision: 'D-1',
+            expected_revision: 1,
+          })
+        ).status,
+      ).toBe(200);
+      expect(cli(['next', f.dir, '--expected-revision', '2']).status).toBe(1);
+      expect(
+        (await post(lib.url + 'workflow/p', { kind: 'start', expected_revision: 2 })).status,
+      ).toBe(200);
+      const start = loaded(f.dir).doc.workflow!.start_receipt;
+      for (const task of ['T-1', 'T-2']) {
+        expect(
+          cli(['next', f.dir, '--expected-revision', String(loaded(f.dir).doc.revision)]).status,
+        ).toBe(0);
+        const verified = spawnSync('bash', ['-lc', cmd], { encoding: 'utf8' });
+        expect(verified.status).toBe(0);
+        const result = cli([
+          'record',
+          f.dir,
+          '--task',
+          task,
+          '--result',
+          'pass',
+          '--cmd',
+          cmd,
+          '--exit',
+          String(verified.status),
+          '--expected-revision',
+          String(loaded(f.dir).doc.revision),
+          '--by',
+          'agent:builder',
+        ]);
+        expect(result.status, result.stderr).toBe(0);
+        expect(loaded(f.dir).doc.workflow!.start_receipt).toEqual(start);
+      }
+      const pending = await (await fetch(lib.url + 'workflow/p')).json();
+      expect(pending.phase).toBe('review');
+      expect(pending.can_close).toBe(false);
+      const l = loaded(f.dir);
+      const digest = planDigest(l.doc, l.path);
+      if (!digest.ok) throw new Error(digest.message);
+      l.doc.review = {
+        verdicts: [
+          {
+            on: 'PACK',
+            verdict: 'PASS',
+            by: 'agent:independent-fixture-reviewer',
+            at,
+            findings: [],
+            plan_digest: digest.value,
+            evidence_digest: evidenceDigest(l.doc),
+          },
+        ],
+      };
+      l.doc.revision!++;
+      savePack(l.doc, l.path, { at });
+      expect(loaded(f.dir).doc.status).toBe('active');
+      expect((await (await fetch(lib.url + 'workflow/p')).json()).can_close).toBe(true);
+      expect(
+        (
+          await post(lib.url + 'workflow/p', {
+            kind: 'close',
+            expected_revision: loaded(f.dir).doc.revision,
+          })
+        ).status,
+      ).toBe(200);
+      expect(loaded(f.dir).doc.status).toBe('complete');
+      expect(
+        readOwnerEvents(ownerEventsPath(f.dir)).filter((e) => e.kind === 'start'),
+      ).toHaveLength(1);
+      expect(readOwnerEvents(ownerEventsPath(f.dir)).at(-1)?.kind).toBe('close');
+    } finally {
+      await lib.close();
+    }
+  });
+});
 function action(d: PackDoc, kind: 'accept' | 'start', path: string) {
   const a = ownerAction(
     d,

@@ -1,0 +1,73 @@
+{
+  "id": "p",
+  "name": "p",
+  "description": "Owner gates",
+  "date": {
+    "updated": "2026-10-10T12:00:00Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "drafted"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown"
+    }
+  },
+  "spec": {
+    "why": "Keep owner acts separate",
+    "requirements": [],
+    "clarifications": []
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use owner gates",
+        "because": "Owner authority must remain explicit",
+        "status": "proposed"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Work",
+      "status": "todo",
+      "requires_decisions": [
+        "D-1"
+      ],
+      "verify": {
+        "cmd": "true",
+        "expect": "exit 0"
+      },
+      "context": {
+        "touch": []
+      }
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [],
+    "pending_audit": []
+  },
+  "format": "specpack/0.4",
+  "revision": 1
+}
