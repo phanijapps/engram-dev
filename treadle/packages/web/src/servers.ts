@@ -7,7 +7,9 @@
  */
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { join, resolve, dirname } from 'node:path';
 import {
   alignment,
   gapCount,
@@ -21,7 +23,20 @@ import {
   type PackDoc,
 } from '@treadle/core';
 
-const WEB = new URL('.', import.meta.url).pathname;
+/** the asset root: import.meta.url is rewritten under some runners (vitest
+ *  resolves src modules to graph URLs), so verify the candidate and fall
+ *  back to the workspace-relative path — both hosts serve the same files. */
+function assetRoot(): string {
+  const candidates = [
+    join(dirname(fileURLToPath(import.meta.url))),
+    join(process.cwd(), 'packages', 'web', 'src'),
+  ];
+  for (const c of candidates) {
+    if (existsSync(join(c, 'page.html'))) return c;
+  }
+  return candidates[0]!;
+}
+const WEB = assetRoot();
 const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const FILE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*\.md$/;
 
