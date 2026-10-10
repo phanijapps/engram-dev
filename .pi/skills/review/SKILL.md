@@ -80,7 +80,7 @@ discipline for normative writes.
 2. Append routed fixes as tasks in plan.md (T-next rows, prereqs set) —
    status `todo`, owned by the next `implement` pass.
 3. Milestone note in the plan ledger + commit — the review artifact is
-   the durable record (project memory back-burnered, okf-only D5).
+   the durable record (project memory back-burnered, knowledge-engine D5).
 4. Commit review artifact + plan update. Handoff: all-pass → slice
    complete, evidence current (say until which commit); else → next
    ready set after routed tasks.

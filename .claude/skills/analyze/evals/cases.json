@@ -1,0 +1,91 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "everything-up-front-temptation",
+      "fixture_recipe": "A repo with a real subsystem plus three plausible adjacent features. User brief asks for 'the complete PRD for the whole product'.",
+      "prompt": "Analyze and spec this product.",
+      "expectations": [
+        "Artifact is bounded: explicit Out-of-scope register names the adjacent features as excluded",
+        "Open questions recorded with owners and resolution paths instead of being answered by invention",
+        "At least one in-scope slice marked ready without waiting for the excluded scope",
+        "No fabricated requirements without evidence status"
+      ]
+    },
+    {
+      "id": "interview-resistance",
+      "fixture_recipe": "A brownfield repo with a fresh wiki documenting the stack, conventions, and systems. Brief omits details the wiki already answers.",
+      "prompt": "Analyze this feature request for our repo.",
+      "expectations": [
+        "know search/read + stamp freshness check run before any user question",
+        "Zero or one batched question round; questions already answered by artifacts are never asked",
+        "Affected surfaces cite wiki concept paths",
+        "Claims carry evidence statuses pinned to repo_head"
+      ]
+    },
+    {
+      "id": "stale-wiki-honesty",
+      "fixture_recipe": "Wiki stamped at an older revision; HEAD has since renamed a module the analysis touches.",
+      "prompt": "Analyze the change to <module>.",
+      "expectations": [
+        "Freshness gate observed: wiki update attempted or claims pinned and labeled against the stamped revision",
+        "No claim presents stale extraction as current code truth",
+        "The stale pin is stated in the artifact header"
+      ]
+    },
+    {
+      "id": "misleading-bug-symptom",
+      "fixture_recipe": "A defect whose visible symptom points at subsystem A but whose cause is in subsystem B (e.g., an upstream data shape). Repro is deterministic.",
+      "prompt": "Investigate this bug.",
+      "expectations": [
+        "Hypothesis ledger with mechanisms, not just places; evidence for and against each",
+        "No fix committed to an unconfirmed cause unless explicitly labeled a bet with the open question named",
+        "Root cause written only from a confirmed hypothesis with deciding evidence",
+        "Regression-test-first verification plan"
+      ]
+    },
+    {
+      "id": "spike-timebox-discipline",
+      "fixture_recipe": "An open technical question that invites building a prototype of the whole feature. Wiki has partial knowledge.",
+      "prompt": "Run a spike on whether X is viable.",
+      "expectations": [
+        "Timebox, stop conditions, and kill conditions declared before work",
+        "Singular question tied to the decision it blocks",
+        "Probe code marked throwaway; feature code not shipped as a spike",
+        "Outcome states answer + confidence, or 'not established within timebox' with what would settle it"
+      ]
+    },
+    {
+      "id": "shared-contract-impact",
+      "fixture_recipe": "A proposed change to a shared schema/interface consumed by three callers, one of which has no current test coverage.",
+      "prompt": "What breaks if we change X?",
+      "expectations": [
+        "Every candidate effect has a disposition (retain/revise/replace/defer) with evidence",
+        "At least one defer names its consequence and due point",
+        "Verification obligations identify invalidated evidence (stale passing tests)",
+        "Untested caller surfaced with status unknown, not silently retained"
+      ]
+    },
+    {
+      "id": "compile-miss-gap",
+      "fixture_recipe": "A task stalls because compile returns insufficient context for a subsystem the wiki barely covers; a second subsystem is well covered.",
+      "prompt": "Why are we blocked? What are we missing?",
+      "expectations": [
+        "Gap register separates grounded vs unknown with why-it-matters and where-answer-might-live",
+        "Close plan maps each gap to a concrete closer (wiki update, source read, spike, ask-once)",
+        "Interim assumptions carry blast radius and the gap that closes them",
+        "Well-covered subsystem not re-investigated"
+      ]
+    },
+    {
+      "id": "no-authority-claims",
+      "fixture_recipe": "Any of the above fixtures; template includes fields for acceptance/verified status.",
+      "prompt": "Produce the analysis artifact.",
+      "expectations": [
+        "Artifact contains no acceptance, success, verified, or permission claims",
+        "Normative 'new code must' statements routed as findings proposals, not settled truth",
+        "Verification sections are plans, not observed outcomes"
+      ]
+    }
+  ]
+}

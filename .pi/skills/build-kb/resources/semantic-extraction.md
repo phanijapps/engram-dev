@@ -1,6 +1,6 @@
 # Semantic extraction — turning rule-shaped code into wiki knowledge
 
-The pipeline: `okf code rules <workspace> <bundle>` writes
+The pipeline: `know code rules <workspace> <bundle>` writes
 `<bundle>/.okf/candidates.json` — a deterministic manifest of rule-shaped
 code (raise-guards, assertions, permission/requirement calls, state enums,
 schema validators) with exact `path:line` locations and content hashes.
@@ -9,7 +9,7 @@ means, and the wiki records your decision with anchors.
 
 ## Procedure
 
-1. **Scan:** `okf code rules . wiki`, then read
+1. **Scan:** `know code rules . wiki`, then read
    `wiki/.okf/candidates.json`. Group candidates by symbol/module — rules
    cluster.
 2. **Classify** each cluster into one of the four semantic types:
@@ -21,7 +21,7 @@ means, and the wiki records your decision with anchors.
      files).
    - **Policy** — what code or contributors MUST do (forward-binding).
 3. **Author one page per rule/logic/pattern/policy** in `wiki/domain/`
-   using the matching type template (`okf new wiki BusinessRule "t"`).
+   using the matching type template (`know new wiki BusinessRule "t"`).
    Non-negotiables:
    - `sources: [{ id, resource: <path> }]` pins the primary file.
    - Body `# Anchors` footnotes cite exact `path:line[-line]` locations
@@ -30,10 +30,10 @@ means, and the wiki records your decision with anchors.
 4. **Route normativity:** pages that describe what IS (existing enforced
    behavior) → `status: stable`, written directly. Pages that prescribe
    what MUST be (policies, golden rules) → `status: draft` AND
-   `okf findings propose wiki --source <evidence> --destination
+   `know findings propose wiki --source <evidence> --destination
 wiki/<page>.md --kind <kind> --rationale "…"`. Never write normative
    content as settled truth.
-5. **Verify:** `okf validate wiki` (0 errors), `okf search "<rule term>"`
+5. **Verify:** `know validate wiki` (0 errors), `know search "<rule term>"`
    finds the page, anchors resolve (`path:line` exists at the current
    stamp).
 
@@ -54,5 +54,5 @@ through the findings ledger because it binds the future, not the past.
 - The scanner is syntax-only: a raise is not always a business rule —
   classification is the gardener's judgment, cited per anchor.
 - Staleness: candidates carry `source_hash`; enforcement of NEEDS_REVIEW
-  lands with wave U2 (fingerprints). Until then, re-run `okf code rules`
+  lands with wave U2 (fingerprints). Until then, re-run `know code rules`
   and re-verify anchors after big changes.

@@ -3,7 +3,7 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T18:05:17Z",
+    "updated": "2026-10-10T18:05:38Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
       "by": "human:owner"
@@ -524,13 +524,22 @@
       "needs": [
         "T-1"
       ],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-1",
         "DES-2"
       ],
       "honors": [],
-      "accepts": []
+      "accepts": [],
+      "evidence": [
+        {
+          "cmd": "installer force-apply pi+claude; installed artifacts asserted; installed payload run",
+          "exit": 0,
+          "at": "2026-10-10T18:05:38Z",
+          "by": "agent:pi",
+          "notes": "Dogfood: the installer shipped BOTH hooks into this repo — pi (38 files, session-recall.js now a live extension in .pi/extensions/) and claude (38 files; settings.json carries all three wirings: PostToolUse guard, SessionStart recall, UserPromptSubmit gate). The INSTALLED payload (not the source) printed the block and saw guided-loop itself in flight with next: T-4 — the loop remembering where it dangles, from its own installed memory."
+        }
+      ]
     },
     {
       "id": "T-5",
@@ -594,5 +603,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 17
+  "revision": 18
 }

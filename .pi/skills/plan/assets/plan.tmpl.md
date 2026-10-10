@@ -38,7 +38,7 @@ resolves to a real Q/D id.
 
 What implement loads for the task — exactly this, no browsing:
 
-- **T1:** `okf search "<question>"` + `okf read <cid> --depth 1`; wiki:
+- **T1:** `know search "<question>"` + `know read <cid>`; wiki:
   `<cid list>`; refs: spec.md §R1, design.md §D2, `<source paths>`; key
   files: `<paths>`.
 

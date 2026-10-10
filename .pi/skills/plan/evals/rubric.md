@@ -3,7 +3,7 @@
 Run each case against its fixture with the skill and a clean workspace.
 Evaluate the produced design.md/plan.md, not the conversation. Keep
 expectations out of the execution prompt. Record fixture revision, skill
-version, tools (okf version), results, and failure evidence. Do
+version, tools (harness CLI version), results, and failure evidence. Do
 not label unevaluated cases as passed.
 
 ## Critical gates (all must pass — zero tolerance)
