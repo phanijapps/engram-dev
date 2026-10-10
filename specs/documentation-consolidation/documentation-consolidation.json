@@ -4,15 +4,19 @@
   "description": "Consolidate workspace knowledge and preserve retrospectives",
   "date": {
     "created": "2026-10-10T20:28:49.896Z",
-    "updated": "2026-10-10T21:21:06.634Z",
+    "updated": "2026-10-10T22:55:03Z",
     "approved": {
       "at": "2026-10-10T20:40:25Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T22:55:03Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "feature": {
@@ -490,5 +494,5 @@
     "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
   },
   "format": "specpack/0.3",
-  "revision": 24
+  "revision": 25
 }

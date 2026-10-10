@@ -3,15 +3,19 @@
   "name": "docs-root-migration",
   "description": "Move work to root specs and remove docs",
   "date": {
-    "updated": "2026-10-10T21:25:44Z",
+    "updated": "2026-10-10T22:38:40Z",
     "approved": {
       "at": "2026-10-10T21:24:12Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T22:38:40Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "awaiting_owner"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "feature": {
@@ -146,13 +150,15 @@
         "id": "D-2",
         "decision": "Place historical raw artifacts under specs/archive and non-concept documentation under wiki/assets",
         "because": "History stays outside active discovery; raw Markdown does not violate wiki concept/link rules.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-3",
         "decision": "Prefer root specs exclusively; use legacy discovery only when the canonical root is absent",
         "because": "Untouched external projects remain readable without merging duplicate roots.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
     "designs": [
@@ -445,5 +451,5 @@
     "verification_cwd": "repository root"
   },
   "format": "specpack/0.3",
-  "revision": 20
+  "revision": 23
 }
