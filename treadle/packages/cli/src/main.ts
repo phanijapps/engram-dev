@@ -1,37 +1,37 @@
 #!/usr/bin/env node
 /**
- * The CLI surface: two pedals, one loom (naming doc). `know` is the knowledge
- * plane, `do` is the loop plane. The banner says the brand token — the ONLY
- * string in this package that names the product, imported from @treadle/brand.
+ * The CLI surface: two pedals, one loom. `know` is the knowledge plane,
+ * `do` is the loop plane. The banner says brand tokens — the ONLY strings
+ * here that name the product, imported from the brand package.
  */
 import { Command } from 'commander';
 import { brand } from '@treadle/brand';
 import { registerDo } from './commands/do.js';
+import { registerKnow } from './commands/know.js';
 
-const program = new Command();
-
-program
-  .name(brand.binName)
-  .description(`${brand.name} — ${brand.tagline} (formerly ${brand.formerly})`)
-  .version('0.1.0');
-
-program
-  .command('know')
-  .description('the knowledge plane: index, search, read, findings, anchors')
-  .action(() => {
-    console.log(`${brand.name} know — the knowledge plane (scaffold)`);
-  });
-
-const doCmd = program
-  .command('do')
-  .description('the loop plane: answer, approve, record, close, status');
-registerDo(doCmd);
-
-export function runCli(argv: string[]): void {
-  program.parse(argv);
+export function buildProgram(): Command {
+  const p = new Command();
+  p.name(brand.binName)
+    .description(`${brand.name} — ${brand.tagline} (formerly ${brand.formerly})`)
+    .version('0.1.0');
+  const doCmd = p
+    .command('do')
+    .description('the loop plane: init, add, next, record, answer, approve, close, check, status');
+  registerDo(doCmd);
+  const knowCmd = p
+    .command('know')
+    .description(
+      'the knowledge plane: search, read, validate, links, findings, fingerprints, anchors, status',
+    );
+  registerKnow(knowCmd);
+  return p;
 }
 
-// direct execution (tsx / bin): only when run as a script
-if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop()! + '')) {
-  program.parse();
+export function runCli(argv: string[]): void {
+  buildProgram().parse(argv);
+}
+
+// direct execution (tsx / bin): parse the real argv once
+if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split('/').pop()!)) {
+  buildProgram().parse();
 }

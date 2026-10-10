@@ -123,7 +123,7 @@ export function proposeFinding(
   source: string,
   destination: string,
   kind: string,
-  opts: { rationale?: string; bundle: string; at?: string },
+  opts: { rationale?: string | undefined; bundle: string; at?: string | undefined },
 ): ProposeResult {
   const ledger = findingsPath(opts.bundle);
   const findings = load(ledger);
@@ -178,7 +178,7 @@ export function resolveFinding(
 }
 
 export function listFindings(opts: {
-  status?: 'pending' | 'accepted' | 'declined';
+  status?: 'pending' | 'accepted' | 'declined' | undefined;
   bundle: string;
 }): LedgerEntry[] {
   const findings = load(findingsPath(opts.bundle));

@@ -46,6 +46,9 @@ importers:
       '@treadle/core':
         specifier: workspace:*
         version: link:../core
+      '@treadle/knowledge':
+        specifier: workspace:*
+        version: link:../knowledge
       '@treadle/web':
         specifier: workspace:*
         version: link:../web

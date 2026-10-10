@@ -9,6 +9,7 @@
     "@treadle/brand": "workspace:*",
     "@treadle/core": "workspace:*",
     "commander": "^12.0.0",
-    "@treadle/web": "workspace:*"
+    "@treadle/web": "workspace:*",
+    "@treadle/knowledge": "workspace:*"
   }
 }

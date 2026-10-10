@@ -5,6 +5,8 @@
  * the vocabulary is the API.
  */
 import type { Command } from 'commander';
+import { existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
 import {
   alignment,
   answerQuestion,
@@ -17,6 +19,7 @@ import {
   nextTask,
   record,
   savePack,
+  deriveStage,
   type PackDoc,
 } from '@treadle/core';
 
@@ -232,6 +235,118 @@ export function registerDo(doCmd: Command): void {
       if (opts.open) await openBrowser(lib.url);
       await new Promise<never>(() => void 0); // standing surface
     });
+
+  doCmd
+    .command('init <packDir>')
+    .description('birth a pack: the born shape, saved through the machine writer')
+    .requiredOption('--title <t>', 'the pack title')
+    .requiredOption('--why <w>', 'why this work exists')
+    .action((packDir: string, opts: { title: string; why: string }) => {
+      const name = packDir
+        .replace(/[\\/]+$/, '')
+        .split(/[\\/]/)
+        .pop()!;
+      const pjson = join(packDir, `${name}.json`);
+      if (existsSync(pjson)) return fail(`${pjson} already exists`);
+      mkdirSync(packDir, { recursive: true });
+      const doc: PackDoc = {
+        format: 'specpack/0.3',
+        name,
+        revision: 1,
+        title: opts.title,
+        spec: { why: opts.why, requirements: [], clarifications: [], out_of_scope: [] },
+        plan: { decisions: [], designs: [] },
+        tasks: [],
+      };
+      savePack(doc, pjson, { at: now() });
+      console.log(`born: ${pjson} (revision 1, stage ${deriveStage(doc)})`);
+    });
+
+  const add = doCmd.command('add');
+  add
+    .command('question <packDir>')
+    .requiredOption('--id <id>', 'e.g. Q-1')
+    .requiredOption('--question <q>', 'what the owner must answer')
+    .option('--kind <k>', 'open | choice')
+    .option('--options <opts...>', 'choice options')
+    .option('--default <d>', 'the recommended option')
+    .action(
+      (
+        packDir: string,
+        opts: { id: string; question: string; kind?: string; options?: string[]; default?: string },
+      ) => {
+        const l = load(packDir);
+        if ('refused' in l) return fail(l.refused);
+        const qs = l.doc.spec.clarifications ?? (l.doc.spec.clarifications = []);
+        if (qs.some((q) => q.id === opts.id)) return fail(`${opts.id}: already asked`);
+        const q: Record<string, unknown> = {
+          id: opts.id,
+          question: opts.question,
+          status: 'open',
+          owner: 'human:owner',
+        };
+        if (opts.kind) q['kind'] = opts.kind;
+        if (opts.options) q['options'] = opts.options;
+        if (opts.default) q['default'] = opts.default;
+        qs.push(q as never);
+        l.doc.revision = (l.doc.revision ?? 1) + 1;
+        savePack(l.doc, l.path, { at: now() });
+        console.log(`asked ${opts.id} (revision ${l.doc.revision})`);
+      },
+    );
+  add
+    .command('decision <packDir>')
+    .requiredOption('--id <id>', 'e.g. D-1')
+    .requiredOption('--decision <d>', 'the proposal')
+    .requiredOption('--because <b>', 'the reasoning')
+    .action((packDir: string, opts: { id: string; decision: string; because: string }) => {
+      const l = load(packDir);
+      if ('refused' in l) return fail(l.refused);
+      const ds = l.doc.plan.decisions ?? (l.doc.plan.decisions = []);
+      if (ds.some((d) => d.id === opts.id)) return fail(`${opts.id}: already proposed`);
+      ds.push({ id: opts.id, decision: opts.decision, because: opts.because, status: 'proposed' });
+      l.doc.revision = (l.doc.revision ?? 1) + 1;
+      savePack(l.doc, l.path, { at: now() });
+      console.log(`proposed ${opts.id} (revision ${l.doc.revision}) — acceptance needs a human`);
+    });
+  add
+    .command('task <packDir>')
+    .requiredOption('--id <id>', 'e.g. T-1')
+    .requiredOption('--title <t>', 'one line')
+    .requiredOption('--verify-cmd <c>', 'the observable verification command')
+    .requiredOption('--verify-expect <e>', 'what success looks like')
+    .option('--satisfies <frs...>', 'requirement ids')
+    .action(
+      (
+        packDir: string,
+        opts: {
+          id: string;
+          title: string;
+          verifyCmd: string;
+          verifyExpect: string;
+          satisfies?: string[];
+        },
+      ) => {
+        const l = load(packDir);
+        if ('refused' in l) return fail(l.refused);
+        if (l.doc.tasks.some((t) => t.id === opts.id)) return fail(`${opts.id}: already exists`);
+        l.doc.tasks.push({
+          id: opts.id,
+          title: opts.title,
+          detail: '',
+          status: 'todo',
+          phase: 'core',
+          satisfies: opts.satisfies ?? [],
+          implements: [],
+          honors: [],
+          accepts: [],
+          verify: { cmd: opts.verifyCmd, expect: opts.verifyExpect },
+        } as never);
+        l.doc.revision = (l.doc.revision ?? 1) + 1;
+        savePack(l.doc, l.path, { at: now() });
+        console.log(`staged ${opts.id} (revision ${l.doc.revision})`);
+      },
+    );
 
   doCmd.command('status <packDir>').action(
     guarded((l) => {
