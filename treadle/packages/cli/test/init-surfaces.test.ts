@@ -176,9 +176,17 @@ describe('the four surface adapters (T-3)', () => {
       errored = (e as { status: number }).status === 1;
     }
     expect(errored).toBe(true);
-    expect(run('{"tool_path": "/x/wiki/code/a.md", "env_note": "override skipped"}')).toContain(
-      '"ok":false',
-    );
+    // a second managed path (wiki/code again, noisier payload) also refuses with ok:false
+    let wikiOut = '';
+    try {
+      execFileSync('node', [
+        hook,
+        JSON.stringify({ tool_path: '/x/wiki/code/a.md', env_note: 'skip' }),
+      ]);
+    } catch (e) {
+      wikiOut = String((e as { stdout?: string }).stdout ?? '');
+    }
+    expect(wikiOut).toContain('"ok":false');
   });
 
   it('the hook payload: extension mode exports the pi factory and guards tool_call', async () => {

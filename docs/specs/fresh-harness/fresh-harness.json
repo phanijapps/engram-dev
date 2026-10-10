@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:14:59Z",
+    "updated": "2026-10-10T15:16:08Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -707,6 +707,12 @@
         "verdict": "IMPROVE",
         "by": "agent:red-forman",
         "note": "Artifact round on analysis+design+plan (pre-A2 snapshot; findings re-checked against A2 before folding). 2 BLOCKER + 8 DEFECT + 4 SMELL. ALL FOLDED: T-0 placeholder verify given real teeth; T-0 reset todo (the pack awaits the owner — no move before approval); acceptance layer wired (accepts T-2→AC-1 T-1→AC-2 T-6→AC-3 T-4/T-5→AC-4; every FR serves a story; nine DES design entries; implements wired) — alignment now 0 violations 0 gaps; verify cmds assert every clause of their expects (T-4 greps ci.yml both keys + .gitignore; T-5 runs anchors+status+link-grep; T-6 applies for real then asserts all-same; T-7 machine-checks evidence rows); CI fix completed (cache-dependency-path — defaults.run does not reach uses: steps); hook rows carry payload file + wiring (pi extension dest, claude matcher/command, codex notify, copilot null); hash normalization (LF + one trailing newline) + .gitattributes eol=lf; .pi legacy drift pre-clean engineered into T-0 + explicit destinations + --force removal list; uninstall added (state file + --remove, FR-17, D-10); design.md renamed to D-vocabulary. SMELLs: #11 already dissolved by the owner answers (Q-1/Q-3 resolved); #12 recorded in T-7 (installer close must not wait on the wiki); #13 refuse defined (exit 3); #14 FR-11 evidence = a green post-push matrix run. Remaining: the owner approves."
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "SELF-DISCLOSURE (sixth instance of the evidence-outran-proof class): T-3 was recorded pass while one assertion in the script-mode test still threw — a managed-path call used the throwing helper where the suite expected output; a grep between commands kept the chain alive past the failing check. The test is fixed (managed paths assert through the catch), the full suite re-run green UNPIPED (89/89, check=0, brand=0, corpus=0 verified by exit code), and the hook payload gained its eslint home (harness/** ignored — shipped plain-JS payload by contract, not workspace source). Post-hoc the T-3 evidence stands; the record now says so."
       }
     ]
   },
