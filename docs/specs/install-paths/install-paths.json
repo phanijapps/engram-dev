@@ -3,7 +3,7 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T19:22:43Z",
+    "updated": "2026-10-10T19:23:25Z",
     "approved": {
       "at": "2026-10-10T19:21:30Z",
       "by": "human:owner"
@@ -236,7 +236,16 @@
       "accepts": [
         "AC-1"
       ],
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "bash treadle/scripts/cleanroom-link.sh",
+          "exit": 0,
+          "at": "2026-10-10T19:23:25Z",
+          "by": "agent:pi",
+          "notes": "The committed falsifiable proof: scripts/cleanroom-link.sh — fresh temp clone of the real repo, corepack enable, pnpm install --frozen-lockfile, pnpm build, pnpm link --global from packages/cli, then from /tmp: --help, do where (the no-git degradation fires honestly, exit 0), know validate — all asserted, CLEANROOM LINK PASS. Transcript artifact at /tmp/cleanroom-link.transcript; the trap unlinks the temp package and drops the clone (machine as found); the real repo relinked after."
+        }
+      ]
     },
     {
       "id": "T-2",
@@ -318,5 +327,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 7
+  "revision": 8
 }
