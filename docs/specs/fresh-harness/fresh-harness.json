@@ -1,0 +1,440 @@
+{
+  "id": "fresh-harness",
+  "name": "fresh-harness",
+  "description": "The harness, installable — and the repo, fresh",
+  "date": {
+    "updated": "2026-10-10T14:43:35Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "spec": {
+    "why": "The harness must ship as a product: agents and skills packaged under treadle/harness behind an interactive installer (treadle init harness) like speckkit's specify CLI. The repo must read as new: no dead engine links in live surfaces.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "agents/ and skills/ live under treadle/harness/ with a versioned manifest (harness/0.1) describing components, surfaces, transforms, and hooks (empty = honestly unsupported)."
+      },
+      {
+        "id": "FR-2",
+        "text": "The installer compiles manifest + choices into an explicit plan (component, surface, source, destination, transform, mode); --dry-run prints it; --json emits it."
+      },
+      {
+        "id": "FR-3",
+        "text": "Apply writes exactly the plan: content-hash idempotency (re-run = same), --force to overwrite, never deletes unknown files."
+      },
+      {
+        "id": "FR-4",
+        "text": "Flags are complete: --agent --scope --skills --no-agents --no-hooks --yes; no TTY without required flags exits 2 with the exact remediation command."
+      },
+      {
+        "id": "FR-5",
+        "text": "The engine (plan compiler + apply) is fully unit-tested through flags; no logic lives above the flag layer."
+      },
+      {
+        "id": "FR-6",
+        "text": "The interactive skin renders agent/scope/component choices and returns flags only; thin by construction and asserted."
+      },
+      {
+        "id": "FR-7",
+        "text": "Surface adapters: pi project+user, claude project+global, codex user (project verified), copilot project-only — paths verified at build; failures refuse, never guess."
+      },
+      {
+        "id": "FR-8",
+        "text": "Hooks: claude settings.json JSON-merge preserving unknown keys; codex config notify; pi and copilot print not-supported in the plan (Q-1)."
+      },
+      {
+        "id": "FR-9",
+        "text": "Copilot installs copilot-instructions.md plus skill-to-prompt conversions under .github/prompts with description frontmatter (Q-3)."
+      },
+      {
+        "id": "FR-10",
+        "text": "engine/ and graphify-out/ residue deleted; .gitignore prevents return."
+      },
+      {
+        "id": "FR-11",
+        "text": "ci.yml runs from the repo root with working-directory: treadle; valid YAML, steps locally reproducible."
+      },
+      {
+        "id": "FR-12",
+        "text": "A links gate (scripts/link-check.mjs + pnpm links) walks live surfaces and fails on any unresolved markdown link; archive excluded by design."
+      },
+      {
+        "id": "FR-13",
+        "text": "The wiki tells the TS truth: treadle.md and sdd-harness-architecture.md rewritten; retired engine pages superseded per Q-4; zero engine/(okf|loom) links in live surfaces."
+      },
+      {
+        "id": "FR-14",
+        "text": "The know ritual ends green: validate 0/0, fingerprints + stamp updated, anchors 0, status fresh."
+      },
+      {
+        "id": "FR-15",
+        "text": "Self-host: the installer run against this repo converges .pi to the manifest; recorded as dogfood evidence."
+      },
+      {
+        "id": "FR-16",
+        "text": "The wave closes through its own loop: every task evidence-recorded, review rounds in the verdicts, corpus byte-stable, closed by human:owner."
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Hooks v1 policy: ship hooks only where a surface natively supports them (Claude Code settings.json, Codex config notify), and print an honest 'not supported' for pi and Copilot?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "native-only + honest nos",
+          "defer all hooks to v2"
+        ],
+        "default": "native-only + honest nos"
+      },
+      {
+        "id": "Q-2",
+        "question": "The interactive layer: add @clack/prompts (small MIT lib, the speckkit-grade UX) or build a zero-dependency arrow-key selector we own (~150 lines)?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "@clack/prompts dependency",
+          "zero-dep custom selector"
+        ],
+        "default": "@clack/prompts dependency"
+      },
+      {
+        "id": "Q-3",
+        "question": "GitHub Copilot v1: install as copilot-instructions.md + prompt files (.github/prompts), no agents (cloud-only) and no global?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "include minimal copilot",
+          "defer copilot to v2"
+        ],
+        "default": "include minimal copilot"
+      },
+      {
+        "id": "Q-4",
+        "question": "Retired wiki pages (systems/okf-engine.md, loom-engine.md): supersede into docs/archive and delete from the live wiki, or keep in place with SUPERSEDED banners?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "archive + delete",
+          "keep with banners"
+        ],
+        "default": "archive + delete"
+      },
+      {
+        "id": "Q-5",
+        "question": "Global installs v1: pi to ~/.pi/agent, claude to ~/.claude, codex to ~/.codex (Copilot none) — with an explicit confirm that shows absolute paths before any write outside the repo?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "globals with confirm",
+          "project-scope only v1"
+        ],
+        "default": "globals with confirm"
+      }
+    ],
+    "out_of_scope": [
+      "new-project and roadmap skills stay stubs",
+      "pack birth stays do init (no treadle init spec this wave)",
+      "copilot org-level agents, pi extensions, remote installs",
+      "engram-dev brand split (DEBT.md, separate wave)"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "title": "Install by choosing",
+        "priority": "P1",
+        "as": "a developer on a new project",
+        "want": "to run treadle init harness and pick my agent from a list",
+        "so": "my agent reads the skills where it expects them",
+        "acceptance": [
+          {
+            "text": "The flow asks agent, scope, components; the plan prints before any write; apply lands them",
+            "id": "AC-1",
+            "given": "a TTY and the command run",
+            "when": "agent, scope, and components are chosen",
+            "then": "the plan prints (destinations, transforms, modes) and apply writes exactly it"
+          }
+        ]
+      },
+      {
+        "id": "US-2",
+        "title": "Install without a TTY",
+        "priority": "P1",
+        "as": "a CI script",
+        "want": "the same install through flags in a temp HOME",
+        "so": "agents and humans get identical results",
+        "acceptance": [
+          {
+            "text": "Flags-only run equals interactive run; no TTY without flags exits 2 with the remediation command",
+            "id": "AC-2",
+            "given": "no TTY",
+            "when": "the command runs with all flags",
+            "then": "the result equals the interactive result; missing flags exit 2 with the exact remediation command"
+          }
+        ]
+      },
+      {
+        "id": "US-3",
+        "title": "The repo installs itself",
+        "priority": "P2",
+        "as": "this repository",
+        "want": "to run my own installer against my .pi",
+        "so": "the dogfood is the proof",
+        "acceptance": [
+          {
+            "text": "The plan shows .pi destinations as same or converges them; evidence recorded",
+            "id": "AC-3",
+            "given": "the installer run in this repo",
+            "when": "agent pi, scope project",
+            "then": "every .pi destination reports same, or converges with --force, and the evidence is recorded"
+          }
+        ]
+      },
+      {
+        "id": "US-4",
+        "title": "Nothing dead left",
+        "priority": "P1",
+        "as": "a newcomer reading the repo",
+        "want": "every live link to resolve",
+        "so": "the repo reads as new, not as archaeology",
+        "acceptance": [
+          {
+            "text": "Links gate exits 0; know ritual green; zero engine/(okf|loom) links in live surfaces",
+            "id": "AC-4",
+            "given": "the repo after the sweep",
+            "when": "the links gate and the know ritual run",
+            "then": "links exit 0; validate 0/0; anchors 0; status fresh; no engine/(okf|loom) links in live surfaces"
+          }
+        ]
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Content moves under treadle/harness/, manifest-driven (harness/0.1)",
+        "because": "The owner asked for the package; one repo one truth; per-surface npm packages are sprawl we refuse (engram-dev split is a later recorded wave). Root noise dies.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-2",
+        "decision": "Plan-then-apply: an inspectable plan precedes every write",
+        "because": "No write before review; the plan is testable output, apply is deterministic replay; copy-as-you-go is unreviewable.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Flags are the engine; the interactive layer is skin that only produces flags",
+        "because": "TUIs test badly; engines test well. Every choice has a flag; no TTY + no flags = exit 2 with the remediation command.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-4",
+        "decision": "Adapters are manifest rows plus two tiny transforms (identity; skill-to-prompt)",
+        "because": "A new surface is a manifest row; a new transform is one registry function. Per-surface script directories are the sprawl we came to escape.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-5",
+        "decision": "Hooks native-only with honest nos (claude settings merge, codex notify, pi/copilot print not-supported)",
+        "because": "Emulated hooks lie; a printed no is trust. The plan shows the truth before anything touches disk (Q-1 default).",
+        "status": "proposed"
+      },
+      {
+        "id": "D-6",
+        "decision": "Idempotency by content hash; never delete unknown files",
+        "because": "Destinations are shared (.claude/, ~/.codex); a mirror would destroy foreign content. Re-run = same; --force is explicit.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-7",
+        "decision": "Globals write only after an absolute-path confirm (--yes or interactive)",
+        "because": "Writing /home/videogamer unconfirmed is the one unrecoverable act here; the plan prints every absolute path first (Q-5 default).",
+        "status": "proposed"
+      },
+      {
+        "id": "D-8",
+        "decision": "The cleanup is checked, not vibes: links gate + know ritual prove freshness",
+        "because": "Manual sweeps rot back. The gate runs in CI; the archive stays untouched because history is evidence (Q-4 default: supersede into docs/archive).",
+        "status": "proposed"
+      }
+    ],
+    "designs": []
+  },
+  "tasks": [
+    {
+      "id": "T-0",
+      "title": "Move the harness content home",
+      "detail": "git mv agents/ and skills/ to treadle/harness/; author harness.json (format harness/0.1): components with per-surface transforms, hooks map with honest empty arrays; update every path reference (AGENTS.md repo map, .pi sync note); pnpm check + brand:check green.",
+      "status": "doing",
+      "phase": "core",
+      "satisfies": [
+        "FR-1"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "y",
+        "expect": "z"
+      }
+    },
+    {
+      "id": "T-4",
+      "title": "The repo sweep: residue gone, CI unbroken, links gate",
+      "detail": "Delete engine/ (untracked pyc/cache residue, 246 files) and graphify-out/ (untracked); .gitignore rules so residue cannot return; fix .github/workflows/ci.yml with defaults.run.working-directory: treadle; author scripts/link-check.mjs + pnpm links gate over live surfaces (archive excluded by design).",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-10",
+        "FR-11",
+        "FR-12"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "test ! -d ../engine && test ! -d ../graphify-out && node scripts/link-check.mjs",
+        "expect": "engine/ and graphify-out/ deleted; ci.yml carries working-directory: treadle; links gate exits 0 over live surfaces"
+      }
+    },
+    {
+      "id": "T-1",
+      "title": "The installer engine: manifest to plan to apply (flags only)",
+      "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse), apply (content-hash idempotent, never deletes, --force overrides); flags command init harness with --agent --scope --skills --no-agents --no-hooks --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts",
+        "expect": "plan compiler + apply + idempotency + no-TTY refusal all green"
+      },
+      "needs": [
+        "T-0"
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "The interactive skin: prompts render choices, return flags",
+      "detail": "The interactive layer (Q-2 answer decides @clack/prompts vs zero-dep selector): agent picker, scope picker, component multi-select; the module only produces flags and calls the engine; TTY detection honest; tests assert the skin is thin.",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-6"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "TUI module thin (choice to flags only); no-TTY + missing flags exits 2 with the exact command"
+      },
+      "needs": [
+        "T-1"
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Surface adapters: four surfaces, two transforms, honest hooks",
+      "detail": "Adapters: pi (.pi/skills, .pi/agents, user ~/.pi/agent), claude (.claude/skills, .claude/agents, settings.json hooks merge preserving unknown keys, ~/.claude), codex (~/.codex paths per our README, project dirs verified, config.toml notify), copilot (.github/copilot-instructions.md + .github/prompts/*.prompt.md via skill-to-prompt; no agents, no global — printed honestly). Paths verified against current docs at build; failures refuse. Integration tests in temp HOME + temp project.",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-7",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts",
+        "expect": "temp-project installs for pi/claude/codex/copilot asserted; settings.json merge preserves unknown keys; hook nos printed"
+      },
+      "needs": [
+        "T-1"
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "The wiki tells the TS truth",
+      "detail": "Wiki truth pass: rewrite systems/treadle.md + sdd-harness-architecture.md to the TS engines; supersede okf-engine.md + loom-engine.md into docs/archive/wiki-systems/ per Q-4; de-python domain pages; regenerate indexes; full know ritual green (validate 0/0, fingerprints, stamp, anchors 0, fresh).",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-13",
+        "FR-14"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "tsx packages/cli/src/main.ts know validate ../wiki",
+        "expect": "validate 0 errors 0 warnings; zero old engine links in live surfaces; know status fresh; anchors 0"
+      },
+      "needs": [
+        "T-4"
+      ]
+    },
+    {
+      "id": "T-6",
+      "title": "Self-host: the installer converges this repo's .pi",
+      "detail": "Self-host dogfood: run the installer against this repo (--agent pi --scope project); the plan shows .pi destinations as same or converges with --force; .pi then matches the manifest; recorded as evidence.",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-15"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "tsx packages/cli/src/main.ts init harness --agent pi --scope project --dry-run --json",
+        "expect": "plan shows every .pi destination as same (or converges); the dogfood proof"
+      },
+      "needs": [
+        "T-3"
+      ]
+    },
+    {
+      "id": "T-7",
+      "title": "Close: evidence, review rounds, freeze",
+      "detail": "Close: every task recorded with evidence rows; review rounds recorded in verdicts (artifact round + closing round minimum); corpus byte-stable; PACK verdict; close by human:owner.",
+      "status": "todo",
+      "phase": "core",
+      "satisfies": [
+        "FR-16"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check",
+        "expect": "every task has evidence rows; review rounds recorded; corpus byte-stable; closed by owner"
+      },
+      "needs": [
+        "T-2",
+        "T-5",
+        "T-6"
+      ]
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 23
+}
