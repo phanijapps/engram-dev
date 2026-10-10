@@ -1,23 +1,81 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+      /* pre-render theme resolution (FR-2): the shared key, read before first paint */
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          document.documentElement.dataset.theme = t === 'dark' || t === 'light' ? t : 'light';
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>The spec library</title>
     <style>
-      :root {
-        --bg: #101418;
-        --panel: #171d24;
-        --card: #1d252e;
-        --line: #2a3441;
-        --ink: #e8edf2;
-        --dim: #93a1b0;
-        --you: #f5a623;
-        --go: #3fb950;
-        --stuck: #f85149;
-        --rev: #58a6ff;
-        --amber: #d29922;
+      /* ── The token layer (FR-1, pinned): Alexandria light + dark variant ── */
+      :root,
+      [data-theme='light'] {
+        /* canonical light (decision-studio) + declared derived shades (FR-1) */
+        --bg: #faf9fa;
+        --surface-1: #f5f3f4;
+        --surface-2: #efedee;
+        --surface-3: #e9e8e9;
+        --surface-4: #e3e2e3;
+        --ink: #1b1c1d;
+        --ink-2: #434653;
+        --primary: #094cb2;
+        --primary-c: #3366cc;
+        --tertiary: #6d5e00;
+        --error: #ba1a1a;
+        --error-bg: #ffdad6;
+        --pass: #15803d;
+        --warn: #b45309;
+        --smell: #6d28d9;
+        --focus: rgba(9, 76, 178, 0.35);
+        --ghost: rgba(195, 198, 213, 0.15);
+        --voice-serif: Georgia, 'Iowan Old Style', serif;
+        --voice-body: system-ui, sans-serif;
+        --voice-mono: ui-monospace, Menlo, monospace;
+        color-scheme: light;
       }
+      [data-theme='dark'] {
+        /* canonical dark (library-review) + declared derived shades (FR-1) */
+        --bg: #0b0f14;
+        --surface-1: #11161f;
+        --surface-2: #161d27;
+        --surface-3: #1e2836;
+        --surface-4: #232d3d;
+        --ink: #e2e8f0;
+        --ink-2: #94a3b8;
+        --primary: #38bdf8;
+        --primary-c: #0284c7;
+        --tertiary: #f9e37a;
+        --error: #f87171;
+        --error-bg: #3a1a20;
+        --pass: #10b981;
+        --warn: #f59e0b;
+        --smell: #a855f7;
+        --focus: rgba(56, 189, 248, 0.4);
+        --ghost: rgba(148, 163, 184, 0.15);
+        color-scheme: dark;
+      }
+      /* legacy aliases: the current CSS consumes these until T-2's reskin */
+      :root {
+        --panel: var(--surface-1);
+        --card: var(--surface-2);
+        --line: var(--ghost);
+        --dim: var(--ink-2);
+        --you: var(--primary);
+        --go: var(--pass);
+        --stuck: var(--error);
+        --amber: var(--warn);
+        --rev: var(--primary-c);
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -388,6 +446,14 @@
     <header>
       <h1>The spec library</h1>
       <input id="search" type="search" placeholder="Search specs…" aria-label="Search specs" />
+      <button
+        class="btn theme-toggle"
+        id="themeToggle"
+        title="light / dark"
+        aria-label="Toggle light or dark theme"
+      >
+        ◐
+      </button>
       <span id="counts" style="color: var(--dim); font-size: 13px"></span>
     </header>
     <div id="layout">

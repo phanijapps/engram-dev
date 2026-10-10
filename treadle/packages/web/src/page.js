@@ -438,3 +438,18 @@ function renderAll() {
       `<div class="qcard"><div class="err">${esc(String(e))}</div></div>`;
   }
 })();
+
+/* ── the theme toggle (FR-2): the shared key, one preference ── */
+(function () {
+  var b = document.getElementById('themeToggle');
+  if (!b) return;
+  b.onclick = function () {
+    var cur = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = cur;
+    try {
+      localStorage.setItem('theme', cur);
+    } catch (e) {
+      /* storage refused: session-only */
+    }
+  };
+})();

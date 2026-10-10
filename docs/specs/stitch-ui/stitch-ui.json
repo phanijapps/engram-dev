@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T11:48:46Z",
+    "updated": "2026-10-10T13:30:21Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -472,13 +472,22 @@
         "AC-1",
         "AC-2"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — theme token tests (both palettes present, canonical values) + jsdom: toggle persists, pre-render script runs before first paint"
       },
       "needs": [
         "T-0"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T13:30:21Z",
+          "by": "agent:pi",
+          "notes": "Token layer in BOTH pages: FR-1 pinned values (canonical light + dark + declared derived shades + state roles), legacy var aliases so the current CSS themes instantly, pre-render script first-in-head reading the shared key, toggle in both headers writing data-theme + localStorage. 59 tests green (theme.test.ts: structural anchors both pages, default-light, seeded-dark-before-boot = the no-flash property, toggle write-read-back both directions), corpus byte-stable, floors met. Restarted the live app to serve it."
+        }
       ]
     },
     {
@@ -687,5 +696,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 20
+  "revision": 22
 }
