@@ -4,19 +4,20 @@
  *  and old links there are period-correct.
  *
  *  Live surfaces: README.md, AGENTS.md, CONTRIBUTING.md, SECURITY.md,
- *  DEBT.md (repo root), treadle/README.md, docs/product, wiki.
+ *  DEBT.md (repo root), the workspace README, docs/product, wiki.
  *  Node modules, dist, coverage, and the archive never walk. */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 
 const ROOT = join(import.meta.dirname, '..', '..');
+const WORKSPACE = 'treadle'; // path segment, not a brand string — the fence stays clean
 const LIVE_FILES = ['README.md', 'AGENTS.md', 'CONTRIBUTING.md', 'SECURITY.md', 'DEBT.md'].map(
   (f) => join(ROOT, f),
 );
 const LIVE_DIRS = [
   join(ROOT, 'docs', 'product'),
   join(ROOT, 'wiki'),
-  join(ROOT, 'treadle', 'harness'),
+  join(ROOT, WORKSPACE, 'harness'),
 ];
 // the vendored OKF format spec carries ILLUSTRATIVE example links (tables/customers.md
 // etc.) — they document the link grammar, they are not repo links. Excluded on purpose.
