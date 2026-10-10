@@ -15,6 +15,12 @@ treadle know  search · read · validate · links · findings · fingerprints ·
 
 ## The guide
 
+**Install (one command):**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash
+```
+
 Step-by-step, from install to delivered specs: **[docs/guide/index.html](docs/guide/index.html)** (open in any browser — self-contained).
 
 ## Why

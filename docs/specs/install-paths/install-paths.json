@@ -3,7 +3,7 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T19:33:32Z",
+    "updated": "2026-10-10T19:34:12Z",
     "approved": {
       "at": "2026-10-10T19:21:30Z",
       "by": "human:owner"
@@ -301,7 +301,16 @@
       "accepts": [
         "AC-3"
       ],
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd treadle && node scripts/link-check.mjs && ! grep -il launcher ../docs/guide/index.html && ! grep -q \"treadle.mjs\" ../README.md",
+          "exit": 0,
+          "at": "2026-10-10T19:34:12Z",
+          "by": "agent:pi",
+          "notes": "Docs tell the proven truth: guide §03 rewritten around the two real paths — the one-command install.sh (curl | bash) and the developer clone+link — with the honest note WHY npm-from-git does not work (five mechanisms, recorded); the launcher dance purged everywhere (grep -il launcher = 0, including the HARNESS_CLI troubleshooting row re-pointed at the link fix); README carries the one-command install. Guide well-formed re-verified; links green."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -342,5 +351,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 9
+  "revision": 10
 }

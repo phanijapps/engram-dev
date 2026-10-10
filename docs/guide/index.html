@@ -541,56 +541,57 @@
         <!-- ───────────────────────── 3 ───────────────────────── -->
         <h2 id="install"><span class="n">03</span>Install the CLI</h2>
         <p>
-          The CLI is one workspace. Clone the repository, install, and put
-          the launcher on your PATH.
+          Two paths, both proven in clean-room tests on Node 22 and 24.
+          Pick the one that fits you.
         </p>
 
         <div class="step" data-n="1">
-          <h3>Get the repository</h3>
-          <div class="codewrap"><button class="copy">copy</button><pre><code>git clone &lt;this-repository&gt; harness
-<span class="cmt"># and enter the workspace</span>
-cd harness/treadle</code></pre></div>
+          <h3>The one-command install (from the repository)</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash</code></pre></div>
+          <p>
+            The script clones the repository to <code>~/.engram-dev</code>,
+            installs with the frozen lockfile, builds, and links the CLI
+            globally. It prints the uninstall commands when it finishes.
+          </p>
         </div>
 
         <div class="step" data-n="2">
-          <h3>Install the dependencies</h3>
-          <div class="codewrap"><button class="copy">copy</button><pre><code>corepack enable
-pnpm install</code></pre></div>
-          <p>
-            One workspace, one install. Lockfile included —
-            <code>pnpm install --frozen-lockfile</code> in CI.
-          </p>
-        </div>
-
-        <div class="step" data-n="3">
-          <h3>Put the CLI on your PATH</h3>
-          <p>The launcher delegates to the source through tsx (alpha shape):</p>
-          <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># option A — run it where it lives</span>
-cd treadle &amp;&amp; pnpm exec tsx packages/cli/src/main.ts --help
-
-<span class="cmt"># option B — link the launcher (any directory)</span>
-chmod +x bin/treadle.mjs
-ln -s "$(pwd)/bin/treadle.mjs" ~/.local/bin/treadle
-treadle --help</code></pre></div>
+          <h3>The developer install (from your clone)</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>git clone https://github.com/phanijapps/engram-dev harness
+cd harness/treadle
+corepack enable
+pnpm install
+pnpm build
+<span class="cmt"># link the CLI globally — one command, from the cli package</span>
+cd packages/cli && pnpm link --global</code></pre></div>
           <p>You should see the two planes listed: <code>do</code> and <code>know</code>.</p>
         </div>
 
-        <div class="step" data-n="4">
+        <div class="step" data-n="3">
           <h3>Prove the install (the honest way)</h3>
           <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do where .
-<span class="out">no git — worktree scan unavailable   <span class="cmt">(or your packs listed)</span>
-nothing in flight — every spec is delivered or closed.</span></code></pre></div>
+<span class="out">nothing in flight — every spec is delivered or closed.</span></code></pre></div>
           <p>
             The command always exits <code>0</code> — it is a report, not a
-            gate. If you see usage help instead, the PATH link missed.
+            gate. If you see usage help instead, the link missed.
           </p>
         </div>
 
+        <div class="note">
+          Why a script and not <code>npm i -g &lt;git-url&gt;</code>? The
+          harness is a pnpm workspace whose packages speak the
+          <code>workspace:</code> protocol — every npm-based remote
+          mechanism was tested and recorded broken in the
+          install-paths spec (five of them, with transcripts). The
+          script wraps the native mechanism; a registry publish is the
+          recorded successor that retires the question.
+        </div>
+
         <div class="warn">
-          The compiled binary ships with the first built release. Until
-          then the launcher runs the TypeScript source — keep the
-          repository around, and keep Node 22+ where the launcher can find
-          it.
+          Node 22+ is the floor and it is real: the CLI runs from
+          compiled JavaScript (not TypeScript source), verified on both
+          22 and 24. Uninstall:
+          <code>cd ~/.engram-dev/treadle/packages/cli &amp;&amp; pnpm unlink --global</code>.
         </div>
 
         <!-- ───────────────────────── 4 ───────────────────────── -->
@@ -1019,7 +1020,7 @@ more than one is open: ASK which one continues. never guess.</span></code></pre>
             </tr>
             <tr>
               <td>recall says "unavailable"</td>
-              <td>The hook could not run the CLI. Check the PATH link, or set <code>HARNESS_CLI</code> to the launcher.</td>
+              <td>The hook could not run the CLI. Check <code>treadle --version</code>; if the link is gone, re-run install.sh or <code>pnpm link --global</code> from <code>treadle/packages/cli</code>.</td>
             </tr>
           </tbody>
         </table>
