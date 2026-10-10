@@ -2,10 +2,10 @@
 type: CodeSummary
 title: repository/treadle
 description: 'Generated area code summary for repository/treadle. Top dependencies:
-  ../events.js, ../refusals.js, ../stages.js, ./commands/do.js, ./derive.js. Top dependents:
+  ../../packages/core/src/index.js, ../../packages/knowledge/src/index.js, ../events.js,
+  ../refusals.js, ../stages.js. Top dependents: treadle/conformance/generators/gen_corpus.ts,
   treadle/packages/cli/src/main.ts, treadle/packages/core/src/specpack/admission.ts,
-  treadle/packages/core/src/specpack/alignment.ts, treadle/packages/core/src/specpack/close.ts,
-  treadle/packages/core/src/specpack/derive.ts.'
+  treadle/packages/core/src/specpack/alignment.ts, treadle/packages/core/src/specpack/close.ts.'
 tags:
 - code
 - summary
@@ -18,7 +18,7 @@ managed_by: okf-code
 created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:54Z'
 status: stable
 area: treadle
 ---
@@ -39,6 +39,8 @@ Generated area summary for `repository/treadle`. Purpose: provide a low-token en
 - [treadle/packages/core/src/specpack/close.ts](/code/treadle/packages/core/src/specpack/close.ts.md) - module; depends on 3; used by 0; high-signal symbols: `CloseResult`, `closePack`, `problems`
 - [treadle/packages/core/src/specpack/save.ts](/code/treadle/packages/core/src/specpack/save.ts.md) - module; depends on 3; used by 0; high-signal symbols: `savePack`, `bytes`, `tmp`
 - [treadle/packages/knowledge/src/links.ts](/code/treadle/packages/knowledge/src/links.ts.md) - module; depends on 1; used by 2; high-signal symbols: `LINK_RE`, `SEGMENT_RE`, `RESERVED`
+- [treadle/conformance/generators/gen_corpus.ts](/code/treadle/conformance/generators/gen_corpus.ts.md) - model module; depends on 2; used by 0; high-signal symbols: `FIXED`, `__dirname`, `REPO`
+- [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) - module; depends on 2; used by 0; high-signal symbols: `buildProgram`, `p`, `doCmd`
 - [treadle/packages/core/src/specpack/admission.ts](/code/treadle/packages/core/src/specpack/admission.ts.md) - module; depends on 2; used by 0; high-signal symbols: `PACK_COMPLETE`, `mutable`, `AnswerStamp`
 - [treadle/packages/core/src/specpack/alignment.ts](/code/treadle/packages/core/src/specpack/alignment.ts.md) - module; depends on 2; used by 0; high-signal symbols: `Alignment`, `alignment`, `d`
 - [treadle/packages/core/src/specpack/emit.ts](/code/treadle/packages/core/src/specpack/emit.ts.md) - module; depends on 1; used by 1; high-signal symbols: `CANONICAL_ORDER`, `isObj`, `emit`
@@ -47,9 +49,7 @@ Generated area summary for `repository/treadle`. Purpose: provide a low-token en
 - [treadle/packages/core/src/specpack/record.ts](/code/treadle/packages/core/src/specpack/record.ts.md) - module; depends on 2; used by 0; high-signal symbols: `STALL_LIMIT`, `ExecutedCommand`, `RecordResult`
 - [treadle/packages/knowledge/src/read.ts](/code/treadle/packages/knowledge/src/read.ts.md) - model module; depends on 2; used by 0; high-signal symbols: `CHARS_PER_TOKEN`, `ConceptNotFound`, `constructor`
 - [treadle/packages/knowledge/src/validate.ts](/code/treadle/packages/knowledge/src/validate.ts.md) - module; depends on 2; used by 0; high-signal symbols: `KNOWN_KEYS`, `STATUS_VALUES`, `RECOMMENDED`
-- [treadle/packages/cli/src/commands/do.ts](/code/treadle/packages/cli/src/commands/do.ts.md) - module; depends on 0; used by 1; high-signal symbols: `now`, `Loaded`, `load`
-- [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) - module; depends on 1; used by 0; high-signal symbols: `program`, `doCmd`, `runCli`
-- 27 modules omitted from compact summary.
+- 29 modules omitted from compact summary.
 
 # Impact map
 
@@ -66,7 +66,7 @@ Generated area summary for `repository/treadle`. Purpose: provide a low-token en
 | [treadle/packages/core/src/specpack/save.ts](/code/treadle/packages/core/src/specpack/save.ts.md) | 3 | 0 | ./derive.js, ./emit.js, ./model.js |
 | [treadle/packages/knowledge/src/links.ts](/code/treadle/packages/knowledge/src/links.ts.md) | 1 | 2 | ./parse.js, treadle/packages/knowledge/src/read.ts, treadle/packages/knowledge/src/validate.ts |
 
-15 impact candidates omitted from compact summary.
+19 impact candidates omitted from compact summary.
 
 # Impact notes
 

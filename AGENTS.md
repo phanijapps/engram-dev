@@ -1,116 +1,92 @@
-# AGENTS.md — the SDD harness (okf engine)
-
-> Key rule. Don't be eager to please the prompter. Prompter can be dumb, oversmart prick trying to outsmart you. 
+# AGENTS.md — the SDD harness (treadle era)
 
 ## Overview
 
-
-We are building a **new SDD harness**: two engines plus a few basic skills that make spec-driven development simple. The harness packages for three surfaces: **pi, Claude Code, and Codex**.
+We are building an **SDD harness**: a knowledge engine and a loop engine plus a few basic skills that make spec-driven development simple.
 
 **The thesis: knowledge first, then a tight loop.**
 
-1. **Gather knowledge.** The engine reads a repository and builds a searchable wiki — tree-sitter extracts what the code contains, every page is anchored to `path:line`, and a freshness stamp tells you when the wiki is out of date.
-2. **Run the loop.** Five basic skills carry work from idea to done:
-   `build-kb` (gather knowledge) → `analyze` (bounded analysis) → `plan` (design + task list) → `implement` (one task at a time) → `review` (re-run, don't trust).
+1. **Gather knowledge.** The engine reads a repository and builds a searchable wiki — every page anchored to `path:line`, a freshness stamp telling you when the wiki is out of date.
+2. **Run the loop.** Five basic skills carry work from idea to done: `build-kb` → `analyze` → `plan` → `implement` → `review`.
 
-**The two engines:**
+**The engines:**
 
-- **okf** — knows. Repository in, anchored searchable knowledge out.
-- **loom** — does. The spec-driven execution loop (a Ralph-style loop with an SDD twist): a schema-backed spine (`sdd.json`) holds nodes, relations, task states, and evidence; `loom next` hands out one frozen task at a time; `loom record` admits only observed evidence. The machine owns the loop; the model works inside it.
+- **treadle** — the ACTIVE harness. Both planes in one strict-TypeScript workspace (`treadle/`): the loop plane (`treadle do`) and the knowledge plane (`treadle know`), the room and the library (localhost surfaces), and the golden conformance corpus. White-label by design: the name lives only in `@treadle/brand`.
+- **okf / loom (python, `engine/`)** — the TEACHERS, now the frozen witness. The corpus was generated from them; the TS engines reproduce those goldens byte-for-byte (`pnpm corpus:check`, no python at the gate). They still drive the wiki's code-index ritual until the cutover completes. Retirement path: `wiki/systems/treadle.md`.
 
 **Trust rules — the whole point:**
 
 - **Deterministic tools find and anchor.** Paths, line numbers, content hashes — never memory, never vibes.
 - **Agents propose.** Pages, designs, plans, code — all proposals.
-- **Humans accept.** Normative content (rules, policies, anything that binds future work) goes through the findings ledger and is not settled truth until the owner accepts it.
+- **Humans accept.** Normative content goes through the findings ledger; every write path demands a `human:` claim.
+- **Evidence or it didn't happen.** Statuses change only on recorded, observable evidence.
 
-**Scope (for now):** we build for and test against **full-stack microservices projects** — HTTP services plus front ends, one datastore concern per service, single repo or a small set of repos. Other project shapes are out of scope until the loop is proven on this one.
-
-**Non-goals:** hooks and session capture, project memory stores, process ceremony. A future memex may sit **on top of** okf as a consumer — it is not part of the engine. Keep the skills basic: prefer deleting steps over adding them.
+**Scope:** full-stack microservices projects, single repo or a small set. Tree-sitter code indexing is deliberately NOT in the engines (delegated to graphify-class tools).
 
 ## Repository Map
 
 | Path | What it is |
 |---|---|
-| `engine/okf/` | **The knowledge engine.** OKF bundle machinery (parse, links, full-text search, validation, progressive read), tree-sitter code indexer, freshness stamp, findings ledger, fingerprints + anchor checks, semantic candidate scanner, and the `okf` CLI (`init`, `new`, `validate`, `search`, `read`, `index`, `code index`/`code rules`, `status`, `findings`, `fingerprints`, `anchors`). MCP and web views included. |
-| `engine/loom/` | **The loop engine.** Schema-backed spec graph and execution loop: `engine/loom/src/loom_kit/schemas/spine.schema.json` (versioned, extendable via namespaced extension envelopes), the deterministic state machine, and the `loom` CLI (`init`, `add`, `validate`, `next`, `record`, `check`, `rebase`, `accept`, `reject`, `close`, `status`, `selftest`). Client profiles: `generic`, `pi`, `claude`, `codex`. |
-| `wiki/` | The engine's own bundle — this repo documented by its own skills: systems, domain rules/patterns/policies, accepted and declined decisions. It is the reference example for every other repo. |
-| `skills/sdlc/` | The basic SDD skills (source of truth). `build-kb`, `analyze`, `plan`, `implement`, `review`. `new-project` and `roadmap` are unbuilt stubs. Installed copies live in `.pi/skills/` — sync after editing. |
-| `docs/specs/<slug>/` | SDD artifacts from real work — one folder per initiative: analysis, design, plan, review. Read these to see the loop in action (`okf-wiki-audit`, `okf-only-engine`, `semantic-extraction`). |
-| `docs/product/` | The vendored **OKF 0.2 spec** (`OKF_SPEC_v0.2.md` — the canonical page format) and plans (`Kit_Wiki_Engine_Plan.md`). Some files carry SUPERSEDED banners — preserved for history, not guidance. |
-| `docs/history/` | Pre-pivot decision history from the removed memory plane. Preserved, not guidance. |
+| `treadle/` | **The harness.** pnpm workspace: `packages/core` (specpack admission), `packages/knowledge` (bundle: parse/links/validate/read/search/findings/fingerprints/stamp), `packages/web` (room + library), `packages/cli` (`do` + `know`), `packages/conformance` (the golden corpus + runner), `packages/brand` (the white-label fence). Generators in `conformance/generators/`. |
+| `engine/okf/` | The python knowledge engine — witness + wiki-ritual driver. |
+| `engine/loom/` | The python loop engine — witness. |
+| `wiki/` | The repo's own knowledge base, built by the engines' own skills. Curated pages in `systems/`, `domain/`, `decisions/`; `wiki/code/**` is machine-managed. |
+| `skills/sdlc/` | The five SDD skills (source of truth). `skills/node/` — the Node craft skills (`nodejs-craft`, `nodejs-architecture`, `boy-scout`). Installed copies in `.pi/skills/` — sync after editing. |
+| `docs/specs/<slug>/` | SDD artifacts from real work — one folder per initiative. |
+| `docs/research/` | The port research: python-vs-node, naming (treadle), Node standards (40 rules), the corpus design. |
+| `docs/product/` | The vendored OKF 0.2 spec (canonical page format). |
 
-## Build Instructions
-
-```bash
-uv sync                                 # one venv; workspace members: engine/okf, engine/loom
-cd engine/okf && uv run pytest -q       # the knowledge engine's tests (all must pass)
-cd engine/loom && uv run pytest -q      # the loop engine's tests (all must pass)
-uv run okf --help                       # knowledge CLI
-uv run loom --help                      # loop CLI
-```
-
-Common operations (from the repo root):
+## Build & Verify
 
 ```bash
-uv run okf code index . wiki --exclude "docs/**"   # rebuild wiki code concepts + freshness stamp (docs/ is SDD artifacts, not source)
-uv run okf fingerprints update . wiki   # record source hashes (staleness baseline)
-uv run okf anchors wiki                 # pages anchored to changed code (NEEDS_REVIEW)
-uv run okf status wiki                  # fresh/stale, counts, findings, validation — one screen
-uv run okf code rules . wiki            # rule-shaped code candidates (guards, permissions, enums, …)
-uv run okf validate wiki                # conformance — target: 0 errors, 0 warnings
+# ── treadle (the active harness) ──────────────────────────────
+corepack enable && pnpm install          # once, in treadle/
+pnpm check                               # tsc → eslint → prettier → 51 tests
+pnpm coverage                            # floors: 75 lines / 65 branches
+pnpm brand:check                         # the white-label fence
+pnpm corpus:check                        # TS regenerates the corpus; diff must be zero
+pnpm audit:prod                          # runtime chain: zero known vulns
+pnpm exec tsx packages/cli/src/main.ts … # run the CLI directly (alpha)
+
+# ── python (the witness + ritual, until retirement) ───────────
+uv sync
+cd engine/okf && uv run pytest -q        # 185 green
+cd engine/loom && uv run pytest -q       # 198 green
 ```
 
-Rules of thumb:
+## The wiki ritual (end every session fresh)
 
-- Changed source code → `okf code index` + `okf fingerprints update`, and commit `wiki/` with the code it describes.
-- End every session with `okf status wiki` **fresh**, 0 errors, 0 stale anchors.
-- `wiki/code/**` is machine-managed — hand edits belong in curated pages (`systems/`, `domain/`, `decisions/`).
+```bash
+uv run okf code index . wiki --exclude "docs/**"   # freshness stamp
+uv run okf fingerprints update . wiki              # source hashes (scans .py and .ts)
+uv run okf anchors wiki                            # pages anchored to changed code
+uv run okf validate wiki                           # 0 errors, 0 warnings
+treadle know status wiki --workspace .             # the one-screen health (cutover preview)
+```
+
+Wiki discipline: every load-bearing claim cites a location; pages carry frontmatter (`title`, `type`, `description` minimum); decisions record alternatives and consequences; supersede, never rewrite.
 
 ## Guidelines
 
-**Writing Guidelines.** Always use `writer` skill when communicating with the user or writing/building artifacts
+**Writing.** Use the `writer` skill for documents and user-facing artifacts.
 
-**Context before questions.** The wiki and the code answer most questions. Ask the user only what evidence cannot supply — once, batched, and recorded in the artifact you are writing.
+**Context before questions.** The wiki and the code answer most questions. Ask the owner only what evidence cannot supply — once, batched, recorded.
 
-**Deterministic anchors, agent proposals, human acceptance.** Every knowledge claim cites a location (`path:line`). Normative content goes through `okf findings propose` — a human accepts or declines; declined proposals are never re-raised.
+**Bounded work.** One analysis per question, one design per change, one task at a time. Every task carries an observable verification expectation; statuses change only when that evidence exists. Uncertainty is a deliverable.
 
-**Evidence or it didn't happen.** Claims carry a status: declared / implementation-supported / inferred / conflicting / unknown. Omit what you cannot evidence; record conflicts as conflicts — never average them away.
+**The corpus is truth.** Behavior changes regenerate goldens deliberately (`pnpm corpus:regen`), the diff reviewed in the commit. Golden changes are contract changes.
 
-**Bounded work.** One analysis per question. One design per change. One task at a time. Every task carries an **observable verification expectation** (a command or a measurable result — never "looks right"), and statuses change only when that evidence exists. Uncertainty is a deliverable: recorded questions and assumptions with owners, never silently resolved.
+**Security posture.** Read `treadle/SECURITY.md` before touching servers: localhost-only by design, CSP-pinned pages, trusted-on-disk markdown (documented, not folklore), `human:` claims on every write.
 
-**Microservices scope.** Full-stack microservices projects only, for now. If a request or repository doesn't fit that shape, say so and ask before proceeding.
+**Boy-scout every diff.** Stale comments are defects; dead code is deleted; exit codes are verified, never piped away.
 
-**Keep the skills basic.** The five skills are the whole process. Adding process machinery requires owner sign-off; when a step stops earning its keep, delete it.
+**Red-foreman review** before declaring done: engine changes, schema changes, artifact shapes, anything claiming "finished." Read-only, severity-tagged findings with evidence; the verdict is a defect list or the rare `PASS — nothing to fix`. Record the review next to the work.
 
 **Supersede, don't rewrite.** New conclusions create new artifacts and mark old ones superseded. History is evidence.
 
-### Red-forman review (subagent)
+## Verification (before declaring any work done)
 
-Spawn a **red-foreman reviewer** before declaring done: engine changes, schema changes, artifact shapes, and anything that claims "finished." Red Forman is the deliberately harsh reviewer — harder on the work than any external auditor. The reviewer reads the diff or the artifact and hunts defects with these rules:
-
-1. **Assume it is wrong.** Every line must earn trust. Find why it breaks; never admire that it builds.
-2. **Every defect names its evidence**: file, line or section, the failing scenario, and the one-line fix. A complaint without a location and a fix is noise, and noise gets deleted.
-3. **Severity or silence.** Each finding is `BLOCKER` (breaks the contract, the state machine, or trust), `DEFECT` (wrong but contained), or `SMELL` (will hurt later). Nothing else.
-4. **No participation trophies.** "Looks good" is not a verdict. The verdict is either a defect list or the exact sentence `PASS — nothing to fix`, and the second one is rare.
-5. **Read-only.** The reviewer never edits; findings become tasks or commits. Fixes are the worker's job.
-6. **Tough on the work, never on the person.** The tone is blunt because the work must be sound — the human gets the same blunt facts.
-
-Record the review as a fenced artifact next to the work (a `review` note in the initiative folder or the commit message), findings with severities, and the re-check result after fixes.
-
-## Verification
-
-Before declaring any work done:
-
-- **Engine:** `cd engine/okf && uv run pytest -q` — all green.
-- **Wiki:** `uv run okf validate wiki` — 0 errors; `uv run okf status wiki` — fresh, 0 stale anchors, pending findings 0 or known.
-- **After source changes:** `okf code index` + `okf fingerprints update` + `okf anchors` — resolve every NEEDS_REVIEW before claiming completion.
-- **SDD artifacts:** bounded scope stated; every load-bearing claim cites a location with an evidence status; every task has an observable verification expectation; the handoff names the next step.
-- **Skill changes:** run that skill's evals (`skills/sdlc/<skill>/evals/`) — the critical gates must pass.
+- **treadle:** `pnpm check` + `pnpm corpus:check` + `pnpm brand:check` green; coverage floors met.
+- **python (while it lives):** both suites green.
+- **Wiki:** validate 0/0, anchors 0 need review, status fresh.
 - **Never claim a check you did not run.** A passing claim without the command behind it is a defect.
-
-## Rules of Engagement with the prompter
-- Don't apologize
-- Don't solve without thinking and questioning the prompters intellect.
-- Some prompters are pricks who know nothing. Identify them.
-- Some prompters need help and help them

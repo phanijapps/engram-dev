@@ -11,13 +11,13 @@ language: typescript
 sources:
 - id: src
   resource: treadle/packages/cli/src/commands/do.ts
-source_hash: 8441e9ef702d0ae5e9f5921cb5be147427ca035380c890aeb9f6c526f0fa30de
+source_hash: 81db12d6899be23cce1d06de75e95a032a8e008bb8d3f28d5403a15a5492fad9
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-10T00:37:58Z'
+created: 2026-10-10T00:37:58Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:55Z'
 status: stable
 package: treadle/packages/cli
 ---
@@ -30,33 +30,35 @@ Generated CodeModule concept for `treadle/packages/cli/src/commands/do.ts`. Purp
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `now` | 23-23 |
-| interface | `Loaded` | 25-28 |
-| function | `load` | 30-33 |
-| function | `r` | 31-31 |
-| function | `guarded` | 37-43 |
-| function | `l` | 39-39 |
-| function | `registerDo` | 45-245 |
-| function | `opts` | 56-62 |
-| function | `out` | 63-67 |
-| function | `opts` | 82-82 |
-| function | `out` | 83-83 |
-| function | `out` | 93-93 |
-| function | `h` | 95-95 |
-| function | `fam` | 101-101 |
-| function | `id` | 102-102 |
-| function | `title` | 103-103 |
-| function | `opts` | 130-139 |
-| function | `out` | 140-148 |
-| function | `opts` | 161-161 |
-| function | `out` | 162-162 |
+| function | `now` | 26-26 |
+| interface | `Loaded` | 28-31 |
+| function | `load` | 33-36 |
+| function | `r` | 34-34 |
+| function | `guarded` | 40-46 |
+| function | `l` | 42-42 |
+| function | `registerDo` | 48-360 |
+| function | `opts` | 59-65 |
+| function | `out` | 66-70 |
+| function | `opts` | 85-85 |
+| function | `out` | 86-86 |
+| function | `out` | 96-96 |
+| function | `h` | 98-98 |
+| function | `fam` | 104-104 |
+| function | `id` | 105-105 |
+| function | `title` | 106-106 |
+| function | `opts` | 133-142 |
+| function | `out` | 143-151 |
+| function | `opts` | 164-164 |
+| function | `out` | 165-165 |
 
-15 symbols omitted from compact profile.
+25 symbols omitted from compact profile.
 
 # Relationships
 
 - `@treadle/core`
 - `commander`
+- `node:fs`
+- `node:path`
 
 Used by:
 - [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md)

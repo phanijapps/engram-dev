@@ -17,14 +17,14 @@ generated_profile: compact
 created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:55Z'
 status: stable
 package: treadle/packages/core
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `treadle/packages/core/src/index.ts`. Purpose: treadle/packages/core/src/index.ts is a `typescript` entry-point module in package `treadle/packages/core`. Role: entry-point module. high-signal symbols: none detected. Dependency context: 0 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `treadle/packages/core/src/index.ts`. Purpose: treadle/packages/core/src/index.ts is a `typescript` entry-point module in package `treadle/packages/core`. Role: entry-point module. high-signal symbols: none detected. Dependency context: 0 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -32,7 +32,8 @@ No classes, functions, methods, or elements detected.
 
 # Relationships
 
-No imports detected.
+Used by:
+- [treadle/conformance/generators/gen_corpus.ts](/code/treadle/conformance/generators/gen_corpus.ts.md)
 
 # Impact notes
 

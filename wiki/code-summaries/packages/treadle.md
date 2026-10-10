@@ -2,7 +2,8 @@
 type: CodeSummary
 title: repository/treadle
 description: 'Generated package code summary for repository/treadle. Top dependencies:
-  loom_kit.events, loom_kit.specpack, loom_kit.spine.LoomError.'
+  ../../packages/core/src/index.js, ../../packages/knowledge/src/index.js, loom_kit.events,
+  loom_kit.specpack, loom_kit.spine.LoomError.'
 tags:
 - code
 - summary
@@ -14,7 +15,7 @@ managed_by: okf-code
 created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:54Z'
 status: stable
 package: treadle
 ---
@@ -26,6 +27,7 @@ Generated package summary for `repository/treadle`. Purpose: provide a low-token
 # Key modules
 
 - [treadle/conformance/generators/gen_corpus.py](/code/treadle/conformance/generators/gen_corpus.py.md) - module; depends on 3; used by 0; high-signal symbols: `_norm`, `J`, `emit_bytes`
+- [treadle/conformance/generators/gen_corpus.ts](/code/treadle/conformance/generators/gen_corpus.ts.md) - model module; depends on 2; used by 0; high-signal symbols: `FIXED`, `__dirname`, `REPO`
 - [treadle/eslint.config.mjs](/code/treadle/eslint.config.mjs.md) - module; depends on 0; used by 0
 - [treadle/scripts/brand-check.mjs](/code/treadle/scripts/brand-check.mjs.md) - module; depends on 0; used by 0; high-signal symbols: `BRAND`, `ALLOW`, `ALLOW_CONTAINS`
 - [treadle/scripts/corpus-check.mjs](/code/treadle/scripts/corpus-check.mjs.md) - module; depends on 0; used by 0; high-signal symbols: `here`, `repo`
@@ -37,6 +39,7 @@ Generated package summary for `repository/treadle`. Purpose: provide a low-token
 | Module | Depends | Used by | Relationship signals |
 |---|---:|---:|---|
 | [treadle/conformance/generators/gen_corpus.py](/code/treadle/conformance/generators/gen_corpus.py.md) | 3 | 0 | loom_kit.events, loom_kit.specpack, loom_kit.spine.LoomError |
+| [treadle/conformance/generators/gen_corpus.ts](/code/treadle/conformance/generators/gen_corpus.ts.md) | 2 | 0 | ../../packages/core/src/index.js, ../../packages/knowledge/src/index.js |
 
 # Impact notes
 

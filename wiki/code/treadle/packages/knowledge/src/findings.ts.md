@@ -11,13 +11,13 @@ language: typescript
 sources:
 - id: src
   resource: treadle/packages/knowledge/src/findings.ts
-source_hash: f98a5b1e80464a00a45b238e532db935d5bf655da1fd1c413539df23eb4aff45
+source_hash: 596aeff6fefea1e33279ccc77ffe83b7a7e39b1322c0e1c8563fa8968f32451e
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-10T00:37:58Z'
+created: 2026-10-10T00:37:58Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:55Z'
 status: stable
 package: treadle/packages/knowledge
 ---

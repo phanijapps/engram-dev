@@ -11,6 +11,16 @@ tags: [system, okf, engine, architecture, call-graph, criticality]
 
 # Overview
 
+# Port status (2026-10-10)
+
+**This engine is ported.** treadle (`treadle/`, strict TypeScript) now
+hosts the knowledge engine natively, proven byte-for-byte by the
+self-hosted golden corpus. The python engine remains as the frozen
+witness and the wiki-ritual driver until the cutover completes; see
+[the retirement board](treadle.md). The description below is the
+historical truth of what this engine was and taught.
+
+
 okf turns a repository into an OKF bundle of anchored, searchable
 knowledge. It gives agents the trust machinery that keeps that
 knowledge honest: a freshness stamp, a findings ledger, fingerprints,

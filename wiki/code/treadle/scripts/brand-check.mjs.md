@@ -11,13 +11,13 @@ language: javascript
 sources:
 - id: src
   resource: treadle/scripts/brand-check.mjs
-source_hash: 916ae891e2431ef15e55b747be1e48229cf7e47a7a5cc298a784173e6d35cb14
+source_hash: 70a91166575d1b697ed028af42e7327cf84a19fac30c9d5d12dc5aa948fae4cf
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:55Z'
 status: stable
 package: treadle
 ---
@@ -32,12 +32,12 @@ Generated CodeModule concept for `treadle/scripts/brand-check.mjs`. Purpose: tre
 |---|---|---|
 | function | `BRAND` | 7-7 |
 | function | `ALLOW` | 8-13 |
-| function | `ALLOW_CONTAINS` | 14-23 |
-| function | `walk` | 25-33 |
-| function | `p` | 28-28 |
-| function | `violations` | 35-35 |
-| function | `rel` | 37-37 |
-| function | `src` | 41-41 |
+| function | `ALLOW_CONTAINS` | 14-24 |
+| function | `walk` | 26-34 |
+| function | `p` | 29-29 |
+| function | `violations` | 36-36 |
+| function | `rel` | 38-38 |
+| function | `src` | 42-42 |
 
 # Relationships
 

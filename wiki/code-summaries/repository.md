@@ -2,9 +2,9 @@
 type: CodeSummary
 title: repository
 description: 'Generated repository code summary for repository. Top dependencies:
-  ../events.js, ../refusals.js, ../stages.js, ..events, ..specpack. Top dependents:
-  engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py, engine/loom/src/loom_kit/specpack.py,
-  engine/loom/src/loom_kit/spine.py, engine/loom/src/loom_kit/web/library.py.'
+  ../../packages/core/src/index.js, ../../packages/knowledge/src/index.js, ../events.js,
+  ../refusals.js, ../stages.js. Top dependents: engine/loom/src/loom_kit/cli.py, engine/loom/src/loom_kit/machine.py,
+  engine/loom/src/loom_kit/specpack.py, engine/loom/src/loom_kit/spine.py, engine/loom/src/loom_kit/web/library.py.'
 tags:
 - code
 - summary
@@ -17,7 +17,7 @@ managed_by: okf-code
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:54Z'
 status: stable
 ---
 <!-- okf-code:start -->
@@ -45,9 +45,9 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 - [treadle/packages/core/src/specpack/close.ts](/code/treadle/packages/core/src/specpack/close.ts.md) - module; depends on 3; used by 0; high-signal symbols: `CloseResult`, `closePack`, `problems`
 - [treadle/packages/core/src/specpack/save.ts](/code/treadle/packages/core/src/specpack/save.ts.md) - module; depends on 3; used by 0; high-signal symbols: `savePack`, `bytes`, `tmp`
 - [treadle/packages/knowledge/src/links.ts](/code/treadle/packages/knowledge/src/links.ts.md) - module; depends on 1; used by 2; high-signal symbols: `LINK_RE`, `SEGMENT_RE`, `RESERVED`
-- [treadle/packages/core/src/specpack/admission.ts](/code/treadle/packages/core/src/specpack/admission.ts.md) - module; depends on 2; used by 0; high-signal symbols: `PACK_COMPLETE`, `mutable`, `AnswerStamp`
-- [treadle/packages/core/src/specpack/alignment.ts](/code/treadle/packages/core/src/specpack/alignment.ts.md) - module; depends on 2; used by 0; high-signal symbols: `Alignment`, `alignment`, `d`
-- 68 modules omitted from compact summary.
+- [treadle/conformance/generators/gen_corpus.ts](/code/treadle/conformance/generators/gen_corpus.ts.md) - model module; depends on 2; used by 0; high-signal symbols: `FIXED`, `__dirname`, `REPO`
+- [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) - module; depends on 2; used by 0; high-signal symbols: `buildProgram`, `p`, `doCmd`
+- 70 modules omitted from compact summary.
 
 # Impact map
 
@@ -64,7 +64,7 @@ Generated repository summary for `repository`. Purpose: provide a low-token entr
 | [engine/loom/src/loom_kit/web/library.py](/code/engine/loom/src/loom_kit/web/library.py.md) | 4 | 0 | ..events, ..specpack, ..spine.LoomError |
 | [treadle/packages/core/src/specpack/loader.ts](/code/treadle/packages/core/src/specpack/loader.ts.md) | 4 | 0 | ../refusals.js, ./derive.js, ./model.js |
 
-25 impact candidates omitted from compact summary.
+29 impact candidates omitted from compact summary.
 
 # Impact notes
 

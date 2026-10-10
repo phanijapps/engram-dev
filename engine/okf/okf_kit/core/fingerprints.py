@@ -45,7 +45,10 @@ def compute_fingerprints(workspace: Path, *, include_tests: bool = False) -> dic
 
     workspace = Path(workspace)
     fingerprints: dict[str, str] = {}
-    for path in sorted(workspace.rglob("*.py")):
+    # the witness scans both languages until the cutover completes: the
+    # harness's own wiki anchors to .ts sources now
+    paths = sorted(set(workspace.rglob("*.py")) | set(workspace.rglob("*.ts")))
+    for path in paths:
         rel = path.relative_to(workspace).as_posix()
         # scope rules apply to the WORKSPACE-RELATIVE parts, never the
         # absolute ancestors: a repo checked out under any dir named

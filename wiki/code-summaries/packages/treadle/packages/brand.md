@@ -12,7 +12,7 @@ managed_by: okf-code
 created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:54Z'
 status: stable
 package: treadle/packages/brand
 ---

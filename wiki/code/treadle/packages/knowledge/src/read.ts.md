@@ -16,10 +16,10 @@ sources:
 source_hash: eb2f7ae88f56b6a83b44f031bd94bb0630df3b136cda1d4aeea021ccab6b427d
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-10T00:37:58Z'
+created: 2026-10-10T00:37:58Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T00:37:58Z'
+  at: '2026-10-10T01:57:55Z'
 status: stable
 package: treadle/packages/knowledge
 ---

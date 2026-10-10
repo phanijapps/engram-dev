@@ -11,13 +11,18 @@ tags: [system, architecture, criticality, harness, call-graph]
 
 # Overview
 
+> **Ported (2026-10-10):** treadle now hosts both planes natively; the
+> python engines teach and witness — see [treadle](treadle.md) and the
+> [port decision](../decisions/port-to-typescript.md).
+
 The harness has four parts. Each part owns one job and no other part
 does that job. [^p1]
 
 | Part | Job | Location |
 |---|---|---|
-| **okf** | Know. Turn a repository into anchored, searchable knowledge. | `engine/okf/` |
-| **loom** | Do. Run one initiative as a schema-backed task loop. | `engine/loom/` |
+| **treadle** | Do and know, in one strict-TypeScript harness — the ACTIVE engine. | `treadle/` |
+| **okf** | Know (python). Ported; frozen witness + wiki-ritual driver until cutover. | `engine/okf/` |
+| **loom** | Do (python). Ported; frozen witness. | `engine/loom/` |
 | **Skills** | Integrate. Drive both engines from the agent side. | `skills/sdlc/` |
 | **Wiki** | Remember. The shared knowledge state, in git. | `wiki/` |
 

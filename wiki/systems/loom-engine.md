@@ -11,6 +11,16 @@ tags: [system, loom, engine, architecture, call-graph, criticality]
 
 # Overview
 
+# Port status (2026-10-10)
+
+**This engine is ported.** treadle (`treadle/`, strict TypeScript) now
+hosts the loop engine natively, proven byte-for-byte by the
+self-hosted golden corpus. The python engine remains as the frozen
+witness and the wiki-ritual driver until the cutover completes; see
+[the retirement board](treadle.md). The description below is the
+historical truth of what this engine was and taught.
+
+
 okf knows. loom does. loom runs one initiative as a loop: the spine
 (`sdd.json`, or a specpack json) holds nodes, relations, task states,
 and evidence. The engine owns every state move. The model works inside
