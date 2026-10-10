@@ -1,16 +1,17 @@
 #!/usr/bin/env node
-/** Golden provenance gate (red-forman D14): regenerating the corpus from the
- *  python engines must reproduce the committed goldens byte for byte. Run
- *  from the repo root via pnpm corpus:check. */
+/** Golden provenance gate: the TS engines regenerate the corpus; the committed
+ *  goldens are the frozen python witness (equality proven at the keystone
+ *  commit; python retired at tag python-final). Zero python at the gate. */
 import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const repo = join(here, '..', '..');
+const treadle = join(here, '..');
+const repo = join(treadle, '..');
 try {
-  execFileSync('uv', ['run', 'python', 'treadle/conformance/generators/gen_corpus.py'], {
-    cwd: repo,
+  execFileSync('./node_modules/.bin/tsx', ['conformance/generators/gen_corpus.ts'], {
+    cwd: treadle,
     stdio: 'inherit',
   });
 } catch {

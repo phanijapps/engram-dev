@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: 'SDD harness: the top architecture'
 description: 'How the parts compose: okf knows, loom does, the five skills integrate, the wiki remembers. Includes the repo criticality map and the dead code register.'
-sources: [{ id: root, resource: pyproject.toml }, { id: okf, resource: engine/okf/okf_kit/cli.py }, { id: loom, resource: engine/loom/src/loom_kit/cli.py }, { id: skills, resource: skills/sdlc/implement/SKILL.md }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [system, architecture, criticality, harness, call-graph]
 ---
 
@@ -21,8 +21,8 @@ does that job. [^p1]
 | Part | Job | Location |
 |---|---|---|
 | **treadle** | Do and know, in one strict-TypeScript harness — the ACTIVE engine. | `treadle/` |
-| **okf** | Know (python). Ported; frozen witness + wiki-ritual driver until cutover. | `engine/okf/` |
-| **loom** | Do (python). Ported; frozen witness. | `engine/loom/` |
+| **okf** | Know (python). RETIRED at `python-final`; witness lives in the corpus goldens. | git history |
+| **loom** | Do (python). RETIRED at `python-final`. | git history |
 | **Skills** | Integrate. Drive both engines from the agent side. | `skills/sdlc/` |
 | **Wiki** | Remember. The shared knowledge state, in git. | `wiki/` |
 

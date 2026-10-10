@@ -5,7 +5,7 @@ description: 'Every write and resolution of a concept path checks bundle contain
 status: stable
 created: 2026-10-07
 updated: 2026-10-07
-sources: [{ id: src, resource: engine/okf/okf_kit/code/paths.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [security, paths, domain]
 ---
 

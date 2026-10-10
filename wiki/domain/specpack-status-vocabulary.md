@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: 'The specpack status vocabulary: one table, machine-maintained'
 description: 'Every status a specpack carries or reports: level, statuses, who sets them, stored or reported, terminality. Complete packs are read-only reference for future loops.'
-sources: [{ id: schema, resource: engine/loom/src/loom_kit/schemas/specpack.schema.json }, { id: code, resource: engine/loom/src/loom_kit/specpack.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [contract, specpack, status, lifecycle, loom]
 ---
 

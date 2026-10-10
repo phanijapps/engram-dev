@@ -45,7 +45,7 @@ A spec is born through Q&A (`treadle do interview`), work is handed out one froz
 
 ## Proven, not hoped: the golden corpus
 
-The harness was born in Python (`engine/`), then ported to strict TypeScript. The port's equality is a **byte-for-byte fact**: a corpus of 37 golden cases — canonical emissions, refusal vocabularies, event sequences, search results, validation reports — regenerates from the TypeScript engines and diffs to zero against the python-witnessed originals.
+The harness was born in Python, then ported to strict TypeScript — and the python engines are now **retired** (tag `python-final`). The port's equality is a permanent, byte-for-byte fact: a corpus of 42 golden cases — canonical emissions, refusal vocabularies, event sequences, search results, validation reports — regenerates from the TypeScript engines and diffs to zero against the frozen python-witnessed originals. The goldens are the witness; no python exists at any gate.
 
 ```bash
 pnpm corpus:check   # TS regenerates; git diff gates to zero. No python at the gate.
@@ -80,8 +80,8 @@ treadle/                 the harness (pnpm workspace)
   packages/cli           do + know
   packages/conformance   the golden corpus + the self-hosting generator
   packages/brand         the white-label fence — rebrand in one command
-engine/                  the python teachers (frozen witness, retiring)
-wiki/                    this repo documented by its own engines
+docs/archive/            the retired record: old spec initiatives, history, the python era
+wiki/                    this repo documented by its own engine
 skills/                  the five SDD skills + the Node craft skills
 docs/research/           the port decisions: python-vs-node, naming, standards
 docs/specs/              SDD artifacts from real initiatives (the record)
@@ -104,4 +104,4 @@ Localhost-only surfaces, CSP-pinned pages, no telemetry, no CDN (assets vendored
 
 ## Status
 
-**Alpha with beta bones** — the port is corpus-proven, coverage floored (≈86% lines), the debt ledger honest ([`treadle/DEBT.md`](treadle/DEBT.md)): SPEC-level decisions pending (trust tiers, Attested Computation), the python retirement ceremony scheduled, license choice open. The record of how it got here lives in `docs/specs/` — seven frozen initiatives, evidence and all.
+**Alpha with beta bones** — corpus-proven, coverage floored (≈86% lines), the debt ledger honest ([`treadle/DEBT.md`](treadle/DEBT.md)): SPEC-level decisions pending (trust tiers, Attested Computation), license choice open. The record of how it got here lives in `docs/archive/` — the python era, seven frozen initiatives, evidence and all. New specs start fresh.

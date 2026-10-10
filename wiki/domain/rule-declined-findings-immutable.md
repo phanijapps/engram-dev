@@ -5,7 +5,7 @@ description: 'The findings ledger refuses proposals at a declined (source, desti
 status: stable
 created: 2026-10-07
 updated: 2026-10-07
-sources: [{ id: src, resource: engine/okf/okf_kit/core/findings.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [findings, authority, domain]
 ---
 

@@ -13,7 +13,7 @@
  *
  * Run from the repo root:  pnpm corpus:regen   (diff must be zero)
  */
-import { mkdirSync, writeFileSync, readFileSync, rmSync, cpSync, readdirSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync, rmSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -184,15 +184,11 @@ function W(path: string, content: string): void {
 
 // ── L1 ────────────────────────────────────────────────────────────────────
 function genL1(): void {
+  // the frozen-pack cases are SELF-CONTAINED: their inputs live in the corpus
+  // (witnessed copies, committed) — the original docs/specs packs are retired
   for (const slug of ['specpack-context', 'spec-web', 'status-vocabulary']) {
     const caseDir = join(ROOT, 'L1-canonical', slug);
-    rmSync(caseDir, { recursive: true, force: true });
     const inp = join(caseDir, 'input');
-    mkdirSync(inp, { recursive: true });
-    for (const f of readdirSync(join(REPO, 'docs/specs', slug))) {
-      if (f.endsWith('.json') || f.endsWith('.md'))
-        cpSync(join(REPO, 'docs/specs', slug, f), join(inp, f));
-    }
     const loaded = loadPack(inp);
     if (!loaded.ok) throw new Error(`frozen pack ${slug}: ${loaded.message}`);
     W(join(caseDir, 'expected.emit.json'), emitBytes(loaded.value));

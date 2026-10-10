@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: Misfit-Governed Development — a design theory for AI-assisted software (arXiv 2610.01372)
 description: 'Chen and Cheng, 2026. Fit is seen only through misfits. Verification is an enumerated, machine-checked misfit list. A dual loop separates machine-paced repair from human-paced judgment. The builder may never amend the law.'
-sources: [{ id: src, resource: docs/specs/sdd-research/analysis.md }]
+sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, verification, loop]
 ---
 

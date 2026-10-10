@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: SpecAgent — agentic synthesis of formal specifications (arXiv 2610.05132)
 description: '2026. Specification synthesis for C program verification. Forward-only workflows with localized repair fail: weak upstream specifications cause cascading downstream failures. SpecAgent traces root causes across dependencies, revisits finished specifications, and critiques strength beyond proof success.'
-sources: [{ id: src, resource: docs/specs/sdd-research/analysis.md }]
+sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, verification, specification, loop]
 ---
 

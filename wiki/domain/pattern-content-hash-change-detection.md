@@ -5,7 +5,7 @@ description: 'Every extracted artifact carries a sha256 of the bytes it came fro
 status: stable
 created: 2026-10-07
 updated: 2026-10-07
-sources: [{ id: src, resource: engine/okf/okf_kit/code/treesitter/languages/base.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [pattern, hashing, freshness]
 ---
 

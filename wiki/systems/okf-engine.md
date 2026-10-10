@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: 'okf: the engine of the SDD harness'
 description: 'The knowledge engine: repository in, anchored searchable knowledge out. Internal architecture in two layers, the module call graph, criticality tiers, and the dead code and stale docs found.'
-sources: [{ id: src, resource: engine/okf/okf_kit/cli.py }, { id: indexer, resource: engine/okf/okf_kit/code/indexer.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [system, okf, engine, architecture, call-graph, criticality]
 ---
 

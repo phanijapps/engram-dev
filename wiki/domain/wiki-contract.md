@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: The wiki contract — bundle rules every harness repo follows
 description: 'The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections.'
-sources: [{ id: src, resource: engine/okf/okf_kit/__init__.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [contract, okf, conventions]
 ---
 

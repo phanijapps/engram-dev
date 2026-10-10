@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: 'loom: the loop engine of the SDD harness'
 description: 'The execution engine: a schema-backed spine (sdd.json) is the machine authority, the deterministic state machine moves tasks in spine mode, specpack 0.3 is the native format. Internal architecture, the task loop call graph, criticality tiers, and the dead code found.'
-sources: [{ id: machine, resource: engine/loom/src/loom_kit/machine.py }, { id: spine, resource: engine/loom/src/loom_kit/spine.py }, { id: specpack, resource: engine/loom/src/loom_kit/specpack.py }]
+# sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [system, loom, engine, architecture, call-graph, criticality]
 ---
 
