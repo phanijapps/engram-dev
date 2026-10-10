@@ -124,7 +124,7 @@ export function search(
       score,
     });
   }
-  hits.sort((a, b) => b.score - a.score || a.cid.localeCompare(b.cid));
+  hits.sort((a, b) => b.score - a.score || (a.cid < b.cid ? -1 : a.cid > b.cid ? 1 : 0)); // code points, not locale (S17)
   return hits.slice(0, limit);
 }
 
@@ -144,20 +144,41 @@ function scoreDoc(normQuery: string, qTerms: string[], doc: DocMeta): number {
   return score;
 }
 
+/** python str.strip(): unicode whitespace, but NOT the BOM (JS trim strips both). */
+const PY_WS = /^[\t\n\v\f\r \u0085\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000]*/;
+
+/** index of `needle` counted in code points (python str.find parity). */
+function cpIndexOf(hay: string, needle: string): number {
+  const i = hay.indexOf(needle);
+  return i < 0 ? -1 : [...hay.slice(0, i)].length;
+}
+
+function pyStrip(text: string): string {
+  const lead = PY_WS.exec(text)?.[0].length ?? 0;
+  const tail = PY_WS.exec([...text].reverse().join(''))?.[0].length ?? 0;
+  return [...text].slice(lead, [...text].length - tail).join('');
+}
+
+/** python slices by code point; JS slice cuts UTF-16 units (astral halves). */
+function cpSlice(text: string, start: number, end: number): string {
+  return [...text].slice(start, end).join('');
+}
+
 function snippet(qTerms: string[], doc: DocMeta): string {
-  const text = doc.body.trim() || doc.description.trim();
+  const text = pyStrip(doc.body) || pyStrip(doc.description);
   if (!text) return '';
   const lower = text.toLowerCase();
-  const positions = qTerms.filter((t) => t && lower.includes(t)).map((t) => lower.indexOf(t));
+  const positions = qTerms.filter((t) => t && lower.includes(t)).map((t) => cpIndexOf(lower, t));
   if (positions.length) {
     const center = Math.min(...positions);
+    const cp = [...text].length;
     const start = Math.max(0, center - 40);
-    const end = Math.min(text.length, center + 40);
+    const end = Math.min(cp, center + 40);
     const prefix = start > 0 ? '…' : '';
-    const suffix = end < text.length ? '…' : '';
-    return prefix + text.slice(start, end) + suffix;
+    const suffix = end < cp ? '…' : '';
+    return prefix + cpSlice(text, start, end) + suffix;
   }
-  return text.slice(0, 80) + (text.length > 80 ? '…' : '');
+  return cpSlice(text, 0, 80) + ([...text].length > 80 ? '…' : '');
 }
 
 import { resolve } from 'node:path';

@@ -1,7 +1,9 @@
 {
   "adjacency": {
+    "cronly": [],
     "domain/broken": [],
     "domain/trust-rules": [],
+    "dupkeys": [],
     "legacy": [],
     "plain": [],
     "systems/loom": [
@@ -11,10 +13,12 @@
     "systems/okf": []
   },
   "backlinks": {
+    "cronly": [],
     "domain/broken": [],
     "domain/trust-rules": [
       "systems/loom"
     ],
+    "dupkeys": [],
     "legacy": [],
     "plain": [],
     "systems/loom": [],

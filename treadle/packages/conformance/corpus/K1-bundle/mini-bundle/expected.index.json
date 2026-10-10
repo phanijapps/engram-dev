@@ -1,5 +1,11 @@
 [
   {
+    "cid": "cronly",
+    "tags": [],
+    "title": "CR endings",
+    "type": "note"
+  },
+  {
     "cid": "domain/broken",
     "tags": [],
     "title": "",
@@ -12,6 +18,12 @@
     ],
     "title": "Trust rules",
     "type": "pattern"
+  },
+  {
+    "cid": "dupkeys",
+    "tags": [],
+    "title": "First",
+    "type": "last-wins"
   },
   {
     "cid": "legacy",

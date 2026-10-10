@@ -3,7 +3,7 @@
   "name": "p",
   "description": "The born fixture",
   "date": {
-    "updated": "2026-10-09T21:57:00Z"
+    "updated": "2026-10-10T00:18:59Z"
   },
   "status": {
     "lifecycle": "active",
@@ -12,6 +12,7 @@
   "spec": {
     "why": "w",
     "requirements": [],
+    "out_of_scope": [],
     "clarifications": [
       {
         "id": "Q-1",
@@ -37,8 +38,7 @@
         "answered_by": "human:owner",
         "answered_at": "2026-10-10T12:00:00Z"
       }
-    ],
-    "out_of_scope": []
+    ]
   },
   "design": {
     "decisions": [

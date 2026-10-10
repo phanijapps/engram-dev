@@ -11,7 +11,10 @@
       "missing_touch": [
         "T-1"
       ],
-      "open_questions": []
+      "open_questions": [
+        "Q-1",
+        "Q-2"
+      ]
     },
     "story_drift": {
       "requirements_without_stories": [],

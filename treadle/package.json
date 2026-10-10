@@ -11,7 +11,9 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean",
     "brand:check": "node scripts/brand-check.mjs",
-    "brand:set": "node scripts/set-brand.mjs"
+    "brand:set": "node scripts/set-brand.mjs",
+    "corpus:regen": "python3 conformance/generators/gen_corpus.py",
+    "corpus:check": "node scripts/corpus-check.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",

@@ -30,6 +30,18 @@
   ],
   "warnings": [
     {
+      "cid": "cronly",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
+      "cid": "dupkeys",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
       "cid": "legacy",
       "code": "missing-description",
       "message": "missing recommended field 'description'",

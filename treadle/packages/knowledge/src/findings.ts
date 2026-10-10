@@ -46,18 +46,58 @@ function load(ledger: string): LedgerEntry[] {
   let current: Partial<LedgerEntry> | null = null;
   for (const line of readFileSync(ledger, 'utf8').split('\n')) {
     if (line.trim() === '[[findings]]') {
-      if (current?.id) out.push(current as LedgerEntry);
+      if (current?.id) out.push(coerce(current));
       current = {};
       continue;
     }
-    const m = /^(\w+) = ("(?:[^"\\]|\\.)*")$/.exec(line.trim());
+    const m = /^(\w+)\s*=\s*(.+)$/.exec(line.trim());
     if (m && current) {
-      const value = JSON.parse(m[2]!) as string;
+      const raw = m[2]!;
+      let value: string;
+      if (raw.startsWith('"')) {
+        try {
+          value = String(JSON.parse(raw) ?? '');
+        } catch {
+          value = '';
+        }
+      } else if (raw.startsWith("'")) {
+        value = raw.slice(1, -1); // literal string: coerce, never emit back undefined
+      } else {
+        value = raw; // bare token (number/bool written by a foreign tool): coerce
+      }
       (current as Record<string, unknown>)[m[1]!] = value;
     }
   }
-  if (current?.id) out.push(current as LedgerEntry);
+  if (current?.id) out.push(coerce(current));
   return out;
+}
+
+/** every field a string, resolved_at null-or-string: the file is valid TOML
+ *  for BOTH engines no matter what a foreign tool wrote into it. */
+function coerce(e: Partial<LedgerEntry>): LedgerEntry {
+  return {
+    id: String(e.id ?? ''),
+    source: String(e.source ?? ''),
+    destination: String(e.destination ?? ''),
+    kind: String(e.kind ?? ''),
+    status: (['pending', 'accepted', 'declined'].includes(String(e.status))
+      ? String(e.status)
+      : 'pending') as LedgerEntry['status'],
+    rationale: String(e.rationale ?? ''),
+    proposed_at: String(e.proposed_at ?? ''),
+    resolved_at:
+      e.resolved_at === undefined || e.resolved_at === null ? null : String(e.resolved_at),
+  };
+}
+
+/** python datetime.now(UTC).isoformat(): microseconds + "+00:00" — the
+ *  cross-engine ledger diffs depend on it (D10). */
+export function pythonNow(): string {
+  const d = new Date();
+  const ms = d.getMilliseconds().toString().padStart(3, '0');
+  const us = ms + '000'; // python keeps microseconds; we pad millis to that width
+  const base = d.toISOString().replace(/\.\d{3}Z$/, '');
+  return `${base}.${us}+00:00`;
 }
 
 function dump(findings: readonly LedgerEntry[], ledger: string): void {
@@ -100,7 +140,7 @@ export function proposeFinding(
     kind,
     status: 'pending',
     rationale: opts.rationale ?? '',
-    proposed_at: opts.at ?? new Date().toISOString(),
+    proposed_at: opts.at ?? pythonNow(),
     resolved_at: null,
   };
   findings.push(entry);

@@ -12,7 +12,9 @@
         "T-1"
       ],
       "open_questions": [
-        "Q-1"
+        "Q-1",
+        "Q-2",
+        "Q-9"
       ]
     },
     "story_drift": {

@@ -1,0 +1,1 @@
+---title: CR endingstype: note---python splitlines treats lone CR as line ends.

@@ -1,0 +1,30 @@
+[
+  {
+    "hits": [
+      {
+        "cid": "legacy",
+        "score": 109.0,
+        "snippet": "# Citations\n\nlegacy shapes on purpose",
+        "title": "Legacy",
+        "type": "note"
+      }
+    ],
+    "query": {
+      "q": "legacy"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "good",
+        "score": 1.0,
+        "snippet": "clean 0.2 page",
+        "title": "Good",
+        "type": "note"
+      }
+    ],
+    "query": {
+      "q": "clean"
+    }
+  }
+]

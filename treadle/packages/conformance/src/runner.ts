@@ -286,6 +286,19 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
   return { case: tag, layer, ok: true };
 }
 
+/** Dates walk to ISO-date strings BEFORE stringify: toJSON fires before any
+ *  replacer, so Date instances never survive the replacer hook. */
+function datesToIso(x: unknown): unknown {
+  if (Array.isArray(x)) return x.map(datesToIso);
+  if (x instanceof Date) return x.toISOString().slice(0, 10);
+  if (x && typeof x === 'object') {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(x)) out[k] = datesToIso(v);
+    return out;
+  }
+  return x;
+}
+
 /** canonical JSON (sorted keys, compact) — value equality, python parity */
 function canon(x: unknown): string {
   if (Array.isArray(x)) return '[' + x.map(canon).join(',') + ']';
@@ -330,6 +343,23 @@ import {
 
 function runKnowledge(layer: string, name: string, dir: string, input: string): CaseResult {
   const tag = `${layer}/${name}`;
+  // D13: a case with no goldens proves nothing — it must fail, not pass
+  const goldens = [
+    'expected.index.json',
+    'expected.concepts.json',
+    'expected.links.json',
+    'expected.validate.json',
+    'expected.read.json',
+    'expected.search.json',
+  ];
+  if (!goldens.some((g) => read(dir, g) !== null)) {
+    return {
+      case: tag,
+      layer,
+      ok: false,
+      detail: 'no expected.* goldens — a case that proves nothing fails',
+    };
+  }
   const idx = buildIndex(input);
   const expIndex = read(dir, 'expected.index.json');
   if (expIndex !== null && canon(toDict(idx)) !== canon(JSON.parse(expIndex))) {
@@ -345,11 +375,7 @@ function runKnowledge(layer: string, name: string, dir: string, input: string): 
         reserved: c.reserved,
         frontmatter_present: c.frontmatter_present,
         frontmatter_error: c.frontmatter_error,
-        frontmatter: JSON.parse(
-          JSON.stringify(c.frontmatter, (_k, v) =>
-            v instanceof Date ? v.toISOString().slice(0, 10) : v,
-          ),
-        ),
+        frontmatter: datesToIso(c.frontmatter),
         body_startswith: c.body.slice(0, 40),
       };
     });

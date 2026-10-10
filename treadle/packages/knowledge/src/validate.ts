@@ -255,6 +255,7 @@ export function validateBundle(root: string): Report {
         }
       }
       if ('stale_after' in fm && typeof fm['stale_after'] !== 'string') {
+        // Date (unquoted YAML) warns too — python parity
         warnings.push({
           severity: 'warning',
           code: 'invalid-stale-after',

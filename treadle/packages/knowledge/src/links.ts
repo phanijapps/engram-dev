@@ -5,6 +5,7 @@
  * nodes. Defense in depth: lexical segment rules + resolved-path containment.
  */
 import { resolve, relative, dirname, isAbsolute } from 'node:path';
+import { realpathSync } from 'node:fs';
 import { statSync } from 'node:fs';
 import type { Concept } from './parse.js';
 
@@ -21,9 +22,24 @@ export function cidSegmentsValid(cid: string): boolean {
   return cid.split('/').every((seg) => SEGMENT_RE.test(seg));
 }
 
+/** Realpath containment: resolve() is lexical and never follows symlinks —
+ *  the I/O layer does. Both sides must be realpathed or the guard is prose. */
 function isWithin(path: string, root: string): boolean {
-  const rel = relative(root, path);
-  return rel !== '' && !rel.startsWith('..') && !isAbsolute(rel);
+  const realPath = safeReal(path);
+  const realRoot = safeReal(root);
+  if (!realPath || !realRoot) return false;
+  const rel = relative(realRoot, realPath);
+  if (rel === '' || isAbsolute(rel)) return false;
+  // component-aware: '..weird.md' is a file NAME, not an escape (S19 parity)
+  return !rel.split(/[\\/]+/).includes('..');
+}
+
+function safeReal(p: string): string | null {
+  try {
+    return realpathSync(p);
+  } catch {
+    return null;
+  }
 }
 
 export function resolveCidPath(root: string, cid: string): string | null {
@@ -36,7 +52,7 @@ export function resolveCidPath(root: string, cid: string): string | null {
   } catch {
     return null;
   }
-  return candidate;
+  return candidate; // callers compare realpaths through isWithin; content reads use safeReal
 }
 
 export function extractLinkTargets(body: string): string[] {

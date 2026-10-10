@@ -1,5 +1,16 @@
 [
   {
+    "body_startswith": "python splitlines treats lone CR as line",
+    "cid": "cronly",
+    "frontmatter": {
+      "title": "CR endings",
+      "type": "note"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
     "body_startswith": "This block is invalid frontmatter and th",
     "cid": "domain/broken",
     "frontmatter": {},
@@ -17,6 +28,17 @@
       ],
       "title": "Trust rules",
       "type": "pattern"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
+    "body_startswith": "Duplicate keys take the last value.\n",
+    "cid": "dupkeys",
+    "frontmatter": {
+      "title": "First",
+      "type": "last-wins"
     },
     "frontmatter_error": null,
     "frontmatter_present": true,

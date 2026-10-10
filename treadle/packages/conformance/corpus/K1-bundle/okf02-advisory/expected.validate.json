@@ -1,0 +1,61 @@
+{
+  "conformant": true,
+  "errors": [],
+  "info": [],
+  "warnings": [
+    {
+      "cid": "good",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "legacy-timestamp",
+      "message": "'timestamp' is superseded by 'generated: {by, at}' (§13.1)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "legacy-citations",
+      "message": "body '# Citations' is superseded by frontmatter 'sources' (§13.1)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "invalid-status",
+      "message": "'status' must be draft | stable | deprecated, got 'maybe' (§5.4)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "invalid-generated",
+      "message": "'generated' must be a mapping with non-empty 'by' (§5.2)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "invalid-verified",
+      "message": "'verified' must be (a list of) mappings with non-empty 'by' (§5.2)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "invalid-sources",
+      "message": "'sources' must be a list of mappings with 'id' and 'resource' (§5.1)",
+      "severity": "warning"
+    },
+    {
+      "cid": "legacy",
+      "code": "invalid-stale-after",
+      "message": "'stale_after' must be an absolute ISO-8601 instant (§5.5)",
+      "severity": "warning"
+    }
+  ]
+}

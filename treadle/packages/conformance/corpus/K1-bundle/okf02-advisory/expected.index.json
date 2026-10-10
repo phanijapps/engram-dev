@@ -1,0 +1,14 @@
+[
+  {
+    "cid": "good",
+    "tags": [],
+    "title": "Good",
+    "type": "note"
+  },
+  {
+    "cid": "legacy",
+    "tags": [],
+    "title": "Legacy",
+    "type": "note"
+  }
+]

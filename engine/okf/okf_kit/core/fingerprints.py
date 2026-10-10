@@ -47,10 +47,13 @@ def compute_fingerprints(workspace: Path, *, include_tests: bool = False) -> dic
     fingerprints: dict[str, str] = {}
     for path in sorted(workspace.rglob("*.py")):
         rel = path.relative_to(workspace).as_posix()
-        parts = set(path.parts)
+        # scope rules apply to the WORKSPACE-RELATIVE parts, never the
+        # absolute ancestors: a repo checked out under any dir named
+        # 'test'/'fixtures' must not fingerprint to {} (D8, red-forman)
+        parts = set(rel.split("/"))
         if parts & _SKIP_DIRS:
             continue
-        if not include_tests and any(part in {"tests", "test"} for part in path.parts):
+        if not include_tests and any(part in {"tests", "test"} for part in parts):
             continue
         digest = _sha256(path)
         if digest:

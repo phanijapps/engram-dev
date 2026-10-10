@@ -44,6 +44,13 @@
         "type": ""
       },
       {
+        "cid": "dupkeys",
+        "score": 1.0,
+        "snippet": "Duplicate keys take the last value.",
+        "title": "First",
+        "type": "last-wins"
+      },
+      {
         "cid": "legacy",
         "score": 1.0,
         "snippet": "Old shape kept for the validator's warnings.",
@@ -134,6 +141,13 @@
   {
     "hits": [
       {
+        "cid": "cronly",
+        "score": 0.0,
+        "snippet": "python splitlines treats lone CR as line ends.",
+        "title": "CR endings",
+        "type": "note"
+      },
+      {
         "cid": "domain/broken",
         "score": 0.0,
         "snippet": "This block is invalid frontmatter and the validator will say so.",
@@ -146,6 +160,13 @@
         "snippet": "Deterministic tools find and anchor. Agents propose; humans accept. Evidence or …",
         "title": "Trust rules",
         "type": "pattern"
+      },
+      {
+        "cid": "dupkeys",
+        "score": 0.0,
+        "snippet": "Duplicate keys take the last value.",
+        "title": "First",
+        "type": "last-wins"
       },
       {
         "cid": "legacy",
@@ -178,6 +199,34 @@
     ],
     "query": {
       "q": ""
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "cronly",
+        "score": 8.0,
+        "snippet": "python splitlines treats lone CR as line ends.",
+        "title": "CR endings",
+        "type": "note"
+      }
+    ],
+    "query": {
+      "q": "endings"
+    }
+  },
+  {
+    "hits": [
+      {
+        "cid": "dupkeys",
+        "score": 13.0,
+        "snippet": "Duplicate keys take the last value.",
+        "title": "First",
+        "type": "last-wins"
+      }
+    ],
+    "query": {
+      "q": "last-wins"
     }
   }
 ]

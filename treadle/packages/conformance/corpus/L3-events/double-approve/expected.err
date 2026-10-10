@@ -1,4 +1,4 @@
 {
-  "code": "already_approved",
+  "code": "mid_sequence_refusal",
   "message": "already approved by human:owner at 2026-10-10T12:00:00Z"
 }

@@ -9,7 +9,7 @@
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, readdirSync, writeFileSync, existsSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { join, relative, resolve, isAbsolute } from 'node:path';
 import { parseConcept } from './parse.js';
 
 const FILENAME = 'fingerprints.json';
@@ -45,7 +45,8 @@ export function computeFingerprints(
     } catch {
       return;
     }
-    for (const e of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+    for (const e of entries.sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
+      // S17
       const p = join(dir, e.name);
       if (e.isDirectory()) {
         if (SKIP_DIRS.has(e.name)) continue;
@@ -135,7 +136,11 @@ export function anchorReview(bundle: string, repoRoot: string): AnchorVerdict[] 
           const resource = (entry as Record<string, unknown>)['resource'];
           if (typeof resource !== 'string' || !resource) continue;
           const target = resolve(rootR, resource);
-          if (target.startsWith(bundleR)) {
+          // component-aware: 'wiki.d/evil.py' is not inside 'wiki' (D7)
+          const relToBundle = relative(bundleR, target);
+          const insideBundle =
+            relToBundle !== '' && !relToBundle.startsWith('..') && !isAbsolute(relToBundle);
+          if (insideBundle) {
             review.push({
               page: cid,
               resource,

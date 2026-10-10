@@ -94,6 +94,35 @@ describe('the freshness stamp', () => {
     execFileSync('git', ['add', '.'], { cwd: repo });
     execFileSync('git', ['commit', '-qm', 'two'], { cwd: repo });
     expect(readFreshness(bundle, repo)).toBe('stale');
-    expect(readFreshness(join(tmp, 'nowhere'), repo)).toBe('no-stamp');
+    expect(readFreshness(join(tmp, 'nowhere'), repo)).toBe('absent'); // bundle itself missing
+    const emptyBundle = join(tmp, 'empty-wiki');
+    mkdirSync(emptyBundle);
+    expect(readFreshness(emptyBundle, repo)).toBe('no-stamp'); // bundle present, never indexed
+  });
+});
+
+describe('cross-engine round-trips (red-forman harden list)', () => {
+  it('a foreign literal-string rationale never corrupts the ledger', async () => {
+    const bundle = mkdtempSync(join(tmpdir(), 'rt-'));
+    const a = proposeFinding('x.md', 'y.md', 'relates', { bundle, at: AT });
+    // a foreign tool writes a single-quoted literal (valid TOML, not our managed shape)
+    const path = join(bundle, '.okf', 'findings.toml');
+    writeFileSync(
+      path,
+      readFileSync(path, 'utf8').replace(/rationale = ""/, "rationale = 'hand written'"),
+    );
+    const listed = listFindings({ bundle });
+    expect(listed[0]?.rationale).toBe('hand written'); // coerced, never undefined
+    proposeFinding('z.md', 'y.md', 'relates', { bundle, at: AT }); // a write-through must stay valid TOML
+    const again = listFindings({ bundle });
+    expect(
+      again.every((f) => typeof f.rationale === 'string' && !f.rationale.includes('undefined')),
+    ).toBe(true);
+  });
+
+  it('the python clock format on default stamps', async () => {
+    const bundle = mkdtempSync(join(tmpdir(), 'clk-'));
+    const r = proposeFinding('a.md', 'b.md', 'k', { bundle }); // no at: default clock
+    expect(r.proposed_at).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}\+00:00$/);
   });
 });

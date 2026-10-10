@@ -1,9 +1,9 @@
 {
   "id": "p",
   "name": "p",
-  "description": "Stage fixture",
+  "description": "The born fixture",
   "date": {
-    "updated": "2026-10-10T00:00:35Z"
+    "updated": "2026-10-10T00:18:59Z"
   },
   "status": {
     "deliverable": "in_progress"
@@ -11,8 +11,27 @@
   "spec": {
     "why": "w",
     "requirements": [],
-    "clarifications": [],
-    "out_of_scope": []
+    "out_of_scope": [],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "pick one",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "a",
+          "b"
+        ],
+        "default": "a"
+      },
+      {
+        "id": "Q-2",
+        "question": "say something",
+        "status": "open",
+        "owner": "human:owner"
+      }
+    ]
   },
   "design": {
     "decisions": [

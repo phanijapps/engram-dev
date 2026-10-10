@@ -3,9 +3,14 @@
  * never raises on malformed input; a present-but-invalid frontmatter block
  * records the error for the validator to report. Enumeration is symlink-safe.
  */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, statSync, realpathSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
 import { parse as parseYaml } from 'yaml';
+
+/* PyYAML parity (YAML 1.1 dialect): duplicate keys take last-wins, scalars
+ * like yes/on are booleans. Without these options the port flips conformance
+ * verdicts against its own authority engine. */
+const YAML_OPTS = { uniqueKeys: false, schema: 'yaml-1.1' } as const;
 
 const DELIMITER = '---';
 const RESERVED: Record<string, string> = { 'index.md': 'index', 'log.md': 'log' };
@@ -28,17 +33,23 @@ export function splitFrontmatter(text: string): {
   error: string | null;
 } {
   if (text.startsWith('﻿')) return { data: {}, body: text, present: false, error: null };
-  const lines = text.split('\n').map((l, i, a) => (i === a.length - 1 ? l : l + '\n'));
-  if (!lines.length || lines[0]!.replace(/\r?\n$/, '') !== DELIMITER) {
+  // python splitlines(): \r\n, \r, and \n all end lines — reconstruct keepends
+  const lines = text.match(/[^\r\n]*(?:\r\n|\r|\n|[^\r\n]$)/g) ?? [];
+  if (!lines.length || rstripEol(lines[0]!) !== DELIMITER) {
     return { data: {}, body: text, present: false, error: null };
   }
-  const closeIdx = lines.findIndex((l, i) => i > 0 && l.replace(/\r?\n$/, '') === DELIMITER);
+  const closeIdx = lines.findIndex((l, i) => i > 0 && rstripEol(l) === DELIMITER);
   if (closeIdx < 1) return { data: {}, body: text, present: false, error: null };
-  const fmText = lines.slice(1, closeIdx).join('');
+  // YAML sees clean \n lines (python's splitlines already stripped CR)
+  const fmText =
+    lines
+      .slice(1, closeIdx)
+      .map((l) => rstripEol(l))
+      .join('\n') + '\n';
   const bodyText = lines.slice(closeIdx + 1).join('');
   if (!fmText.trim()) return { data: {}, body: bodyText, present: true, error: null };
   try {
-    const data = parseYaml(fmText);
+    const data = parseYaml(fmText, YAML_OPTS);
     if (typeof data !== 'object' || data === null || Array.isArray(data)) {
       return {
         data: {},
@@ -56,6 +67,11 @@ export function splitFrontmatter(text: string): {
       error: `frontmatter YAML parse error: ${(e as Error).message}`,
     };
   }
+}
+
+/** python rstrip("\r\n"): strip any run of CR/LF at the end, not one pair. */
+function rstripEol(line: string): string {
+  return line.replace(/[\r\n]+$/, '');
 }
 
 export function parseConcept(absPath: string, root: string): Concept {
@@ -120,14 +136,18 @@ export function iterConceptFiles(root: string): string[] {
     for (const e of entries.sort((a, b) => a.name.localeCompare(b.name))) {
       const p = join(dir, e.name);
       if (e.isDirectory()) walk(p);
-      else if (e.isFile() && e.name.endsWith('.md')) {
-        let real: string;
+      else if (e.name.endsWith('.md')) {
+        // Dirent.isFile() is lexical: a symlinked .md reads as a file here and
+        // escapes below unless realpathed — the guard lives on the real path
+        const st = statSync(p, { throwIfNoEntry: false });
+        if (!st?.isFile()) continue;
+        let real: string | null;
         try {
-          real = resolve(p);
+          real = realpathSync(p);
         } catch {
           continue;
         }
-        if (!real.startsWith(rootResolved)) continue; // symlink escape: never read
+        if (!real.startsWith(realpathSync(rootResolved))) continue; // escape: never read
         if (seen.has(real)) continue; // dupe: once
         seen.add(real);
         out.push(real);
@@ -135,5 +155,5 @@ export function iterConceptFiles(root: string): string[] {
     }
   };
   walk(rootResolved);
-  return out.sort();
+  return out.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0)); // code points (S17)
 }
