@@ -23,3 +23,20 @@ The exact task command passed 14 tests. See T-1-verification.log.
 Type checks, core lint and corpus checks also passed.
 The engine recorded the result through do record.
 These checks prove the task result. They do not replace the final independent review.
+
+## T-2
+
+The CLI now has separate decision, start and final completion actions.
+Owner actions check the revision before they change the record.
+The CLI uses an exclusive lock that the web server will share.
+Lock recovery needs explicit owner action and proof that the old process stopped.
+The core public exports connect these checks to the CLI.
+
+The exact task command passed 7 tests. See T-2-verification.log.
+A later check adds the changed-document bootstrap case. See T-2-bootstrap-verification.log.
+The existing CLI tests, type checks and lint also passed.
+
+This initiative adopted the new format through the CLI.
+legacy-revision-22.json preserves the exact prior file.
+The start receipt keeps the actual owner date, 2026-10-10T21:57:36Z.
+The approved plan digest still matches. No start permission was backdated or invented.

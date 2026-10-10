@@ -1,4 +1,5 @@
 export type { PackDoc, Question, Decision, Task, Artifact } from './model.js';
+export { withPackLock, recoverPackLock } from './transaction.js';
 export {
   validateWorkflow,
   planDigest,

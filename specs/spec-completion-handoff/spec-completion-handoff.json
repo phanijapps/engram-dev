@@ -3,7 +3,7 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:03:15Z"
+    "updated": "2026-10-10T22:10:37.083Z"
   },
   "status": {
     "lifecycle": "active",
@@ -103,6 +103,14 @@
     "pre-execution-snapshot": {
       "ref": "pre-execution-revision-12.json",
       "type": "application/json"
+    },
+    "legacy-snapshot": {
+      "ref": "legacy-revision-22.json",
+      "type": "application/json"
+    },
+    "execution-log": {
+      "ref": "execution-log.md",
+      "type": "text/markdown"
     }
   },
   "spec": {
@@ -467,7 +475,7 @@
       "title": "Add owner CLI acts, strict revisions and explicit adoption",
       "detail": "Implement plan.md T-2 only after owner decision acceptance and exact-plan start consent. Init/adopt/start/status and owner mutation fixtures pass, stale revisions do not mutate, and adoption preserves actual owner consent without backdating or touching a closed pack.",
       "phase": "core",
-      "status": "blocked",
+      "status": "done",
       "needs": [
         "T-1"
       ],
@@ -490,7 +498,8 @@
       "context": {
         "touch": [
           {
-            "path": "treadle/packages/cli/src/commands/do.ts"
+            "path": "treadle/packages/cli/src/commands/do.ts",
+            "sha256": "f14aaa41322c5f6477c8a3358c196f0e57cb3e23a21c37434b719a29f2dee6d6"
           },
           {
             "path": "treadle/packages/cli/test/owner-workflow.test.ts"
@@ -505,7 +514,16 @@
         "notes": [
           "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-2; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/owner-workflow.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T22:09:21Z",
+          "by": "agent:codex",
+          "notes": "Actual declared expectation passed. See T-2-verification.log. Independent delivery review remains separate."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -747,6 +765,52 @@
       }
     }
   ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "bootstrap-start-22",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-10T21:57:36Z",
+        "revision": 23,
+        "plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3"
+      },
+      {
+        "id": "adopt-23",
+        "kind": "adopt",
+        "by": "human:owner",
+        "at": "2026-10-10T22:10:00Z",
+        "revision": 23
+      }
+    ],
+    "pending_audit": [
+      {
+        "id": "bootstrap-start-22",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-10T21:57:36Z",
+        "revision": 23,
+        "plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3"
+      },
+      {
+        "id": "adopt-23",
+        "kind": "adopt",
+        "by": "human:owner",
+        "at": "2026-10-10T22:10:00Z",
+        "revision": 23
+      }
+    ],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-10T21:57:36Z",
+      "plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3"
+    }
+  },
   "review": {
     "verdicts": [
       {
@@ -766,9 +830,9 @@
   "env": {
     "workspace": "../..",
     "source_head": "5f0bd1fed1246e42f651f91f6d2166477a71c3c2",
-    "mode": "planning-awaiting-owner",
-    "source_state": "No runtime edits. Owner Q1 answer preserved. Four proposed decisions and exact Plan1 start question await separate owner acts; all seven tasks blocked."
+    "mode": "executing-approved-plan",
+    "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
-  "format": "specpack/0.3",
-  "revision": 19
+  "format": "specpack/0.4",
+  "revision": 24
 }

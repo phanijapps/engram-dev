@@ -6,10 +6,16 @@
  */
 import type { Command } from 'commander';
 import { where, recallBlock } from '../harness/where.js';
-import { existsSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { join, dirname as packDirFrom } from 'node:path';
 import {
   alignment,
+  withPackLock,
+  recoverPackLock,
+  ownerAction,
+  workflowGate,
+  planDigest,
+  humanClaim,
   answerQuestion,
   approveSpec,
   acceptDecision,
@@ -24,6 +30,7 @@ import {
   savePack,
   deriveStage,
   type PackDoc,
+  type OwnerAct,
 } from '@treadle/core';
 
 const now = () => new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -40,12 +47,52 @@ function load(packDir: string): Loaded | { refused: string } {
 
 type Cmd = (packDir: string, opts: Record<string, string | number | boolean | undefined>) => void;
 
-function guarded(fn: (l: Loaded, opts: Record<string, never>) => void): Cmd {
-  return (packDir, opts) => {
+function lockedAction<T extends unknown[]>(fn: (packDir: string, ...opts: T) => void) {
+  return (packDir: string, ...opts: T): void => {
+    const result = withPackLock(packDir, () => fn(packDir, ...opts));
+    if (!result.ok) fail(result.message);
+  };
+}
+function guarded(fn: (l: Loaded, opts: Record<string, never>) => void, mutation = true): Cmd {
+  const run: Cmd = (packDir, opts) => {
     const l = load(packDir);
     if ('refused' in l) return fail(l.refused);
+    const expected = opts['expectedRevision'];
+    if (
+      mutation &&
+      ((expected !== undefined &&
+        (!Number.isSafeInteger(expected) || expected !== l.doc.revision)) ||
+        (l.doc.format === 'specpack/0.4' && expected === undefined))
+    )
+      return fail(
+        `stale writer: file is at revision ${l.doc.revision ?? 1}; pass the held --expected-revision`,
+      );
     fn(l, opts as Record<string, never>);
   };
+  return mutation ? lockedAction(run) : run;
+}
+function workflowOwner(
+  l: Loaded,
+  kind: OwnerAct['kind'],
+  opts: { by: string; expectedRevision: number; at?: string; decision?: string; because?: string },
+): boolean {
+  if (l.doc.format !== 'specpack/0.4') return false;
+  const action: Parameters<typeof ownerAction>[1] = {
+    kind,
+    by: opts.by,
+    at: opts.at ?? now(),
+    expected_revision: opts.expectedRevision,
+  };
+  if (opts.decision) action.decision = opts.decision;
+  if (opts.because) action.because = opts.because;
+  const out = ownerAction(l.doc, action, l.path);
+  if (!out.ok) {
+    fail(out.message);
+    return true;
+  }
+  savePack(l.doc, l.path, { at: action.at });
+  console.log(`recorded ${kind} by ${opts.by}; audit pending`);
+  return true;
 }
 
 export function registerDo(doCmd: Command): void {
@@ -85,7 +132,8 @@ export function registerDo(doCmd: Command): void {
     .option('--at <iso>', 'stamp (defaults to now)')
     .action(
       guarded((l, o) => {
-        const opts = o as unknown as { by: string; at?: string };
+        const opts = o as unknown as { by: string; at?: string; expectedRevision: number };
+        if (workflowOwner(l, 'approve', opts)) return;
         const out = approveSpec(l.doc, opts.by, { at: opts.at ?? now() });
         if (!out.ok) return fail(out.message);
         l.doc.revision = (l.doc.revision ?? 1) + 1;
@@ -108,32 +156,39 @@ export function registerDo(doCmd: Command): void {
       }
       console.log(recallBlock(report));
     });
-  doCmd.command('next <packDir>').action(
-    guarded((l) => {
-      const out = nextTask(l.doc, { packPath: l.path });
-      if (!out.ok) return fail(out.message);
-      const h = out.value;
-      if (h.status === 'task') {
-        console.log(
-          `task ${h.task} — ${h.items.length} items in the frozen slice (digest ${h.slice_digest.slice(0, 12)}…)`,
-        );
-        for (const it of h.items) {
-          const fam = String((it as Record<string, unknown>)['family'] ?? '?');
-          const id = String((it as Record<string, unknown>)['id'] ?? '?');
-          const title = String((it as Record<string, unknown>)['title'] ?? '');
-          console.log(`  ${fam.padEnd(4)} ${id}${title ? ' — ' + title : ''}`);
+  doCmd
+    .command('next <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
+    .action(
+      guarded((l) => {
+        const out = nextTask(l.doc, { packPath: l.path });
+        if (!out.ok) return fail(out.message);
+        const h = out.value;
+        if (h.status === 'task') {
+          console.log(
+            `task ${h.task} — ${h.items.length} items in the frozen slice (digest ${h.slice_digest.slice(0, 12)}…)`,
+          );
+          for (const it of h.items) {
+            const fam = String((it as Record<string, unknown>)['family'] ?? '?');
+            const id = String((it as Record<string, unknown>)['id'] ?? '?');
+            const title = String((it as Record<string, unknown>)['title'] ?? '');
+            console.log(`  ${fam.padEnd(4)} ${id}${title ? ' — ' + title : ''}`);
+          }
+        } else if (h.status === 'owner_gate') {
+          console.log(`${h.gate.phase}: ${h.gate.reasons.join('; ')}`);
+          process.exitCode = 1;
+          return;
+        } else if (h.status === 'needs_closure') {
+          console.log(
+            `closure needed: ${h.pending_decisions.length} decisions proposed, ${h.open_questions.length} questions open`,
+          );
+          process.exitCode = 1;
+        } else {
+          console.log(h.status);
         }
-      } else if (h.status === 'needs_closure') {
-        console.log(
-          `closure needed: ${h.pending_decisions.length} decisions proposed, ${h.open_questions.length} questions open`,
-        );
-        process.exitCode = 1;
-      } else {
-        console.log(h.status);
-      }
-      savePack(l.doc, l.path, { at: now() }); // handout bumped the revision
-    }),
-  );
+        savePack(l.doc, l.path, { at: now() }); // handout bumped the revision
+      }),
+    );
 
   doCmd
     .command('record <packDir>')
@@ -164,7 +219,7 @@ export function registerDo(doCmd: Command): void {
           [{ command: opts.cmd, exit: opts.exit }],
           opts.expectedRevision,
           opts.by,
-          { at: opts.at ?? now(), notes: opts.notes },
+          { at: opts.at ?? now(), notes: opts.notes, packPath: l.path },
         );
         if (!out.ok) return fail(out.message);
         savePack(l.doc, l.path, { at: opts.at ?? now() }); // record bumped inside
@@ -174,11 +229,13 @@ export function registerDo(doCmd: Command): void {
 
   doCmd
     .command('close <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--by <claim>', 'human claim (human:<owner>)')
     .option('--at <iso>', 'stamp (defaults to now)')
     .action(
       guarded((l, o) => {
-        const opts = o as unknown as { by: string; at?: string };
+        const opts = o as unknown as { by: string; at?: string; expectedRevision: number };
+        if (workflowOwner(l, 'close', opts)) return;
         const out = closePack(l.doc, opts.by, { at: opts.at ?? now() });
         if (!out.ok) return fail(out.message);
         savePack(l.doc, l.path, { at: opts.at ?? now() }); // close bumped inside
@@ -195,7 +252,7 @@ export function registerDo(doCmd: Command): void {
         `alignment: ${a.value.violations.length} violation(s), ${gapCount(a.value)} gap(s) — gaps are reported, never guessed`,
       );
       if (a.value.violations.length) process.exitCode = 1;
-    }),
+    }, false),
   );
 
   doCmd.command('events <packDir>').action(
@@ -258,7 +315,8 @@ export function registerDo(doCmd: Command): void {
     .description('birth a pack: the born shape, saved through the machine writer')
     .requiredOption('--title <t>', 'the pack title')
     .requiredOption('--why <w>', 'why this work exists')
-    .action((packDir: string, opts: { title: string; why: string }) => {
+    .option('--owner-gated', 'use the new owner approval workflow', false)
+    .action((packDir: string, opts: { title: string; why: string; ownerGated: boolean }) => {
       const name = packDir
         .replace(/[\\/]+$/, '')
         .split(/[\\/]/)
@@ -267,7 +325,7 @@ export function registerDo(doCmd: Command): void {
       if (existsSync(pjson)) return fail(`${pjson} already exists`);
       mkdirSync(packDir, { recursive: true });
       const doc: PackDoc = {
-        format: 'specpack/0.3',
+        format: opts.ownerGated ? 'specpack/0.4' : 'specpack/0.3',
         name,
         revision: 1,
         title: opts.title,
@@ -275,103 +333,279 @@ export function registerDo(doCmd: Command): void {
         plan: { decisions: [], designs: [] },
         tasks: [],
       };
-      savePack(doc, pjson, { at: now() });
+      if (opts.ownerGated)
+        doc.workflow = {
+          policy: 'owner-gated/1',
+          plan: 1,
+          phase_questions: { spec: [] },
+          acts: [],
+          pending_audit: [],
+        };
+      const born = withPackLock(packDir, () => {
+        if (existsSync(pjson)) return fail(`${pjson} already exists`);
+        savePack(doc, pjson, { at: now() });
+      });
+      if (!born.ok) return fail(born.message);
       console.log(`born: ${pjson} (revision 1, stage ${deriveStage(doc)})`);
+    });
+
+  doCmd
+    .command('start <packDir>')
+    .requiredOption('--by <claim>', 'the owner claim')
+    .requiredOption('--expected-revision <n>', 'the held revision', Number)
+    .option('--at <iso>', 'owner act date')
+    .action(
+      guarded((l, o) => {
+        if (!l.doc.workflow) return fail('Adopt the owner workflow before start approval');
+        workflowOwner(
+          l,
+          'start',
+          o as unknown as { by: string; expectedRevision: number; at?: string },
+        );
+      }),
+    );
+
+  doCmd
+    .command('adopt <packDir>')
+    .description('explicitly adopt the owner workflow; preserve the legacy record')
+    .requiredOption('--by <claim>', 'the owner claim')
+    .requiredOption('--expected-revision <n>', 'the held revision', Number)
+    .option('--bootstrap <file>', 'preserve an actual reviewed bootstrap start receipt')
+    .action(
+      guarded((l, o) => {
+        const opts = o as unknown as { by: string; expectedRevision: number; bootstrap?: string };
+        if (!humanClaim(opts.by)) return fail('Adoption needs an owner claim');
+        if (l.doc.status === 'complete') return fail('A complete spec cannot be adopted');
+        if (l.doc.format === 'specpack/0.4')
+          return fail('This spec already uses the owner workflow');
+        const original = readFileSync(l.path, 'utf8');
+        l.doc.format = 'specpack/0.4';
+        l.doc.workflow = {
+          policy: 'owner-gated/1',
+          plan: 1,
+          phase_questions: { spec: [] },
+          acts: [],
+          pending_audit: [],
+        };
+        if (opts.bootstrap) {
+          let receipt: {
+            format: string;
+            plan: number;
+            plan_digest: string;
+            start: { question: string; by: string; at: string; answer: string };
+          };
+          try {
+            receipt = JSON.parse(readFileSync(opts.bootstrap, 'utf8')) as typeof receipt;
+          } catch {
+            return fail('Cannot read the bootstrap receipt');
+          }
+          const q = l.doc.spec.clarifications?.find((q) => q.id === receipt.start?.question);
+          const scope = planDigest(l.doc, l.path);
+          if (
+            receipt.format !== 'owner-bootstrap/0.1' ||
+            receipt.plan !== 1 ||
+            !scope.ok ||
+            scope.value !== receipt.plan_digest ||
+            !q ||
+            q.status !== 'resolved' ||
+            q.answered_by !== opts.by ||
+            q.answered_by !== receipt.start.by ||
+            q.answered_at !== receipt.start.at ||
+            q.answer !== receipt.start.answer ||
+            q.answer !== 'Yes, start Plan 1' ||
+            !String(q['notes'] ?? '').includes(receipt.plan_digest) ||
+            !Number.isFinite(Date.parse(receipt.start.at))
+          )
+            return fail('Bootstrap receipt does not match actual owner consent and reviewed scope');
+          l.doc.workflow.start_receipt = {
+            by: receipt.start.by,
+            at: receipt.start.at,
+            plan_digest: scope.value,
+          };
+          const start: OwnerAct = {
+            id: `bootstrap-start-${l.doc.revision}`,
+            kind: 'start',
+            by: receipt.start.by,
+            at: receipt.start.at,
+            revision: l.doc.revision! + 1,
+            plan_digest: scope.value,
+          };
+          l.doc.workflow.acts.push(start);
+          l.doc.workflow.pending_audit.push(start);
+        }
+        const snapshot = `legacy-revision-${l.doc.revision}.json`;
+        if (existsSync(join(packDirFrom(l.path), snapshot)))
+          return fail('Legacy snapshot already exists; do not overwrite it');
+        writeFileSync(join(packDirFrom(l.path), snapshot), original, { flag: 'wx' });
+        l.doc.artifacts ??= {};
+        l.doc.artifacts['legacy-snapshot'] = { file: snapshot, type: 'application/json' };
+        l.doc.revision = (l.doc.revision ?? 1) + 1;
+        const act: OwnerAct = {
+          id: `adopt-${l.doc.revision}`,
+          kind: 'adopt',
+          by: opts.by,
+          at: now(),
+          revision: l.doc.revision,
+        };
+        l.doc.workflow.acts.push(act);
+        l.doc.workflow.pending_audit.push(act);
+        savePack(l.doc, l.path, { at: act.at });
+        console.log(`adopted owner workflow by ${opts.by}; legacy bytes preserved; audit pending`);
+      }),
+    );
+
+  doCmd
+    .command('recover-lock <packDir>')
+    .requiredOption('--by <claim>', 'the owner claim')
+    .requiredOption('--owner-token <token>', 'the verified token from .specpack-lock/owner.json')
+    .action((packDir: string, opts: { by: string; ownerToken: string }) => {
+      const r = recoverPackLock(packDir, opts.ownerToken, opts.by);
+      if (!r.ok) return fail(r.message);
+      console.log('Recovered the verified dead lock');
     });
 
   const add = doCmd.command('add');
   add
     .command('question <packDir>')
+    .option('--phase <phase>', 'spec or design question', 'spec')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--id <id>', 'e.g. Q-1')
     .requiredOption('--question <q>', 'what the owner must answer')
     .option('--kind <k>', 'open | choice')
     .option('--options <opts...>', 'choice options')
     .option('--default <d>', 'the recommended option')
     .action(
-      (
-        packDir: string,
-        opts: { id: string; question: string; kind?: string; options?: string[]; default?: string },
-      ) => {
-        const l = load(packDir);
-        if ('refused' in l) return fail(l.refused);
-        const qs = l.doc.spec.clarifications ?? (l.doc.spec.clarifications = []);
-        if (qs.some((q) => q.id === opts.id)) return fail(`${opts.id}: already asked`);
-        const q: Record<string, unknown> = {
-          id: opts.id,
-          question: opts.question,
-          status: 'open',
-          owner: 'human:owner',
-        };
-        if (opts.kind) q['kind'] = opts.kind;
-        if (opts.options) q['options'] = opts.options;
-        if (opts.default) q['default'] = opts.default;
-        qs.push(q as never);
-        l.doc.revision = (l.doc.revision ?? 1) + 1;
-        savePack(l.doc, l.path, { at: now() });
-        console.log(`asked ${opts.id} (revision ${l.doc.revision})`);
-      },
+      lockedAction(
+        (
+          packDir: string,
+          opts: {
+            id: string;
+            question: string;
+            kind?: string;
+            options?: string[];
+            default?: string;
+            phase: string;
+          },
+        ) => {
+          const l = load(packDir);
+          if ('refused' in l) return fail(l.refused);
+          const held = (opts as unknown as { expectedRevision?: number }).expectedRevision;
+          if (
+            (held !== undefined && held !== l.doc.revision) ||
+            (l.doc.format === 'specpack/0.4' && held === undefined)
+          )
+            return fail('Pass the current --expected-revision');
+          if (l.doc.status === 'complete') return fail('The spec is complete');
+          const qs = l.doc.spec.clarifications ?? (l.doc.spec.clarifications = []);
+          if (!['spec', 'design'].includes(opts.phase))
+            return fail('Question phase must be spec or design');
+          if (qs.some((q) => q.id === opts.id)) return fail(`${opts.id}: already asked`);
+          const q: Record<string, unknown> = {
+            id: opts.id,
+            question: opts.question,
+            status: 'open',
+            owner: 'human:owner',
+          };
+          if (opts.kind) q['kind'] = opts.kind;
+          if (opts.options) q['options'] = opts.options;
+          if (opts.default) q['default'] = opts.default;
+          qs.push(q as never);
+          if (l.doc.workflow && opts.phase === 'spec')
+            l.doc.workflow.phase_questions.spec.push(opts.id);
+          l.doc.revision = (l.doc.revision ?? 1) + 1;
+          savePack(l.doc, l.path, { at: now() });
+          console.log(`asked ${opts.id} (revision ${l.doc.revision})`);
+        },
+      ),
     );
   add
     .command('decision <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--id <id>', 'e.g. D-1')
     .requiredOption('--decision <d>', 'the proposal')
     .requiredOption('--because <b>', 'the reasoning')
-    .action((packDir: string, opts: { id: string; decision: string; because: string }) => {
-      const l = load(packDir);
-      if ('refused' in l) return fail(l.refused);
-      const ds = l.doc.plan.decisions ?? (l.doc.plan.decisions = []);
-      if (ds.some((d) => d.id === opts.id)) return fail(`${opts.id}: already proposed`);
-      ds.push({ id: opts.id, decision: opts.decision, because: opts.because, status: 'proposed' });
-      l.doc.revision = (l.doc.revision ?? 1) + 1;
-      savePack(l.doc, l.path, { at: now() });
-      console.log(`proposed ${opts.id} (revision ${l.doc.revision}) — acceptance needs a human`);
-    });
+    .action(
+      lockedAction((packDir: string, opts: { id: string; decision: string; because: string }) => {
+        const l = load(packDir);
+        if ('refused' in l) return fail(l.refused);
+        const held = (opts as unknown as { expectedRevision?: number }).expectedRevision;
+        if (
+          (held !== undefined && held !== l.doc.revision) ||
+          (l.doc.format === 'specpack/0.4' && held === undefined)
+        )
+          return fail('Pass the current --expected-revision');
+        if (l.doc.status === 'complete') return fail('The spec is complete');
+        const ds = l.doc.plan.decisions ?? (l.doc.plan.decisions = []);
+        if (ds.some((d) => d.id === opts.id)) return fail(`${opts.id}: already proposed`);
+        ds.push({
+          id: opts.id,
+          decision: opts.decision,
+          because: opts.because,
+          status: 'proposed',
+        });
+        l.doc.revision = (l.doc.revision ?? 1) + 1;
+        savePack(l.doc, l.path, { at: now() });
+        console.log(`proposed ${opts.id} (revision ${l.doc.revision}) — acceptance needs a human`);
+      }),
+    );
   add
     .command('task <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--id <id>', 'e.g. T-1')
     .requiredOption('--title <t>', 'one line')
     .requiredOption('--verify-cmd <c>', 'the observable verification command')
     .requiredOption('--verify-expect <e>', 'what success looks like')
     .option('--satisfies <frs...>', 'requirement ids')
     .action(
-      (
-        packDir: string,
-        opts: {
-          id: string;
-          title: string;
-          verifyCmd: string;
-          verifyExpect: string;
-          satisfies?: string[];
+      lockedAction(
+        (
+          packDir: string,
+          opts: {
+            id: string;
+            title: string;
+            verifyCmd: string;
+            verifyExpect: string;
+            satisfies?: string[];
+          },
+        ) => {
+          const l = load(packDir);
+          if ('refused' in l) return fail(l.refused);
+          const held = (opts as unknown as { expectedRevision?: number }).expectedRevision;
+          if (
+            (held !== undefined && held !== l.doc.revision) ||
+            (l.doc.format === 'specpack/0.4' && held === undefined)
+          )
+            return fail('Pass the current --expected-revision');
+          if (l.doc.status === 'complete') return fail('The spec is complete');
+          if (l.doc.tasks.some((t) => t.id === opts.id)) return fail(`${opts.id}: already exists`);
+          l.doc.tasks.push({
+            id: opts.id,
+            title: opts.title,
+            detail: '',
+            status: 'todo',
+            phase: 'core',
+            satisfies: opts.satisfies ?? [],
+            implements: [],
+            honors: [],
+            accepts: [],
+            verify: { cmd: opts.verifyCmd, expect: opts.verifyExpect },
+          } as never);
+          l.doc.revision = (l.doc.revision ?? 1) + 1;
+          savePack(l.doc, l.path, { at: now() });
+          console.log(`staged ${opts.id} (revision ${l.doc.revision})`);
         },
-      ) => {
-        const l = load(packDir);
-        if ('refused' in l) return fail(l.refused);
-        if (l.doc.tasks.some((t) => t.id === opts.id)) return fail(`${opts.id}: already exists`);
-        l.doc.tasks.push({
-          id: opts.id,
-          title: opts.title,
-          detail: '',
-          status: 'todo',
-          phase: 'core',
-          satisfies: opts.satisfies ?? [],
-          implements: [],
-          honors: [],
-          accepts: [],
-          verify: { cmd: opts.verifyCmd, expect: opts.verifyExpect },
-        } as never);
-        l.doc.revision = (l.doc.revision ?? 1) + 1;
-        savePack(l.doc, l.path, { at: now() });
-        console.log(`staged ${opts.id} (revision ${l.doc.revision})`);
-      },
+      ),
     );
 
   doCmd
     .command('accept <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--decision <id>', 'the decision id')
     .requiredOption('--by <claim>', 'human claim (human:<owner>)')
     .action(
       guarded((l, o) => {
-        const opts = o as unknown as { decision: string; by: string };
+        const opts = o as unknown as { decision: string; by: string; expectedRevision: number };
+        if (workflowOwner(l, 'accept', opts)) return;
         const out = acceptDecision(l.doc, opts.decision, opts.by);
         if (!out.ok) return fail(out.message);
         savePack(l.doc, l.path, { at: now() }); // accept bumped the revision
@@ -384,12 +618,19 @@ export function registerDo(doCmd: Command): void {
 
   doCmd
     .command('reject <packDir>')
+    .option('--expected-revision <n>', 'the held revision', Number)
     .requiredOption('--decision <id>', 'the decision id')
     .requiredOption('--by <claim>', 'human claim (human:<owner>)')
     .requiredOption('--because <text>', 'why')
     .action(
       guarded((l, o) => {
-        const opts = o as unknown as { decision: string; by: string; because: string };
+        const opts = o as unknown as {
+          decision: string;
+          by: string;
+          because: string;
+          expectedRevision: number;
+        };
+        if (workflowOwner(l, 'reject', opts)) return;
         const out = rejectDecision(l.doc, opts.decision, opts.by, opts.because);
         if (!out.ok) return fail(out.message);
         savePack(l.doc, l.path, { at: now() }); // reject bumped the revision
@@ -400,11 +641,17 @@ export function registerDo(doCmd: Command): void {
   doCmd.command('status <packDir>').action(
     guarded((l) => {
       const d = l.doc;
+      if (d.workflow) {
+        const gate = workflowGate(d, l.path);
+        console.log(
+          `workflow: ${gate.phase} — ${gate.reasons.join('; ') || 'approved work may continue'}`,
+        );
+      }
       const open = (d.spec.clarifications ?? []).filter((q) => q.status === 'open').length;
       console.log(
         `deliverable: ${d.deliverable ?? '«underived»'} · ${d.tasks.length} tasks · revision ${d.revision ?? 1} · ${open} open · ${d.approved_at ? 'approved' : 'not approved'}`,
       );
-    }),
+    }, false),
   );
 }
 

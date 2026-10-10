@@ -1,4 +1,5 @@
 export { assertNever } from './assert.js';
+export { withPackLock, recoverPackLock } from './specpack/transaction.js';
 export {
   validateWorkflow,
   planDigest,
