@@ -95,6 +95,15 @@ Inside the inspector's conformance phase: findings counted by severity from `rev
 - `servers.test.ts` gains the headers assertion (all four `SECURITY_HEADERS` — CSP, nosniff, frame-ancestors, referrer — on `/` and assets).
 - The portability test stays the brand gate; the corpus stays untouched (no engine change — `pnpm corpus:check` must stay green with zero diff, proven per task).
 
+## Recorded deviation (R5)
+
+The loader gained a missing-directory guard during T-4 (13 lines in
+`packages/core/src/specpack/loader.ts`): a nonexistent pack dir now
+refuses as a 404-grade message instead of throwing to a 500. "No engine
+change of any kind" meant admission/emit semantics — both untouched, the
+corpus byte-stable through the change — but the guard is engine code and
+the record now says so.
+
 ## What this design does not do
 
 No live sockets, no inspector actions, no webfonts, no factory pipeline, no engine change of any kind — each recorded in the pack's `out_of_scope` and DEBT lineage.

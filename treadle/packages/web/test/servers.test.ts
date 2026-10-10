@@ -222,6 +222,14 @@ describe('the alignment route (T-4, DES-5)', () => {
       expect(typeof out.gapCount).toBe('number');
       const ghost = await fetch(lib.url + 'alignment/ghost');
       expect(ghost.status).toBe(404);
+      // R5 DEFECT 3: a corrupt pack is a 400 JSON refusal, never a 500
+      mkdirSync(join(tmp, 'broken'), { recursive: true });
+      writeFileSync(join(tmp, 'broken', 'broken.json'), '{ not json');
+      const bad = await fetch(lib.url + 'alignment/broken');
+      expect(bad.status).toBe(400);
+      const badBody = (await bad.json()) as { ok: boolean; error: string };
+      expect(badBody.ok).toBe(false);
+      expect(badBody.error.length).toBeGreaterThan(0);
     } finally {
       await lib.close();
     }

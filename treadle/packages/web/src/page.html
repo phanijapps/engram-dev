@@ -74,6 +74,11 @@
         --stuck: var(--error);
         --amber: var(--warn);
         --rev: var(--primary-c);
+        --muted: var(--ink-2);
+        --accent: var(--primary);
+        --soft: var(--surface-3);
+        --good: var(--pass);
+        --bad: var(--error);
       }
 
       * {
@@ -93,6 +98,7 @@
         position: sticky;
         top: 0;
         z-index: 5;
+        background: var(--bg);
         background: color-mix(in srgb, var(--bg) 92%, transparent);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
@@ -103,7 +109,7 @@
         font-family: var(--voice-serif);
       }
       header .sub {
-        color: #b9c2c9;
+        color: var(--ink-2);
         font-size: 12.5px;
       }
       .chip {
@@ -116,8 +122,8 @@
         color: var(--ink-2);
       }
       .chip.on {
-        background: #1d3a34;
-        color: #9fe0d0;
+        background: color-mix(in srgb, var(--pass) 14%, transparent);
+        color: var(--pass);
       }
       main {
         display: grid;
@@ -174,23 +180,23 @@
         border-radius: 4px;
       }
       .st-open {
-        background: #fde2e2;
+        background: color-mix(in srgb, var(--error) 12%, transparent);
         color: var(--bad);
       }
       .st-res {
-        background: #d8efdf;
+        background: color-mix(in srgb, var(--pass) 12%, transparent);
         color: var(--good);
       }
       .st-unk {
-        background: #fdeecd;
+        background: color-mix(in srgb, var(--warn) 14%, transparent);
         color: var(--warn);
       }
       .st-acc {
-        background: #d8efdf;
+        background: color-mix(in srgb, var(--pass) 12%, transparent);
         color: var(--good);
       }
       .st-rej {
-        background: #fde2e2;
+        background: color-mix(in srgb, var(--error) 12%, transparent);
         color: var(--bad);
       }
       .st-prop {
@@ -202,15 +208,15 @@
         color: #525f6f;
       }
       .st-doing {
-        background: #fdeecd;
+        background: color-mix(in srgb, var(--warn) 14%, transparent);
         color: var(--warn);
       }
       .st-done {
-        background: #d8efdf;
+        background: color-mix(in srgb, var(--pass) 12%, transparent);
         color: var(--good);
       }
       .st-blocked {
-        background: #fde2e2;
+        background: color-mix(in srgb, var(--error) 12%, transparent);
         color: var(--bad);
       }
       .note {
@@ -221,7 +227,7 @@
       .links a {
         color: var(--accent);
         text-decoration: none;
-        border-bottom: 1px dotted var(--accent);
+        box-shadow: inset 0 -1px 0 var(--ghost);
         font-size: 12px;
         margin-right: 9px;
       }
@@ -247,7 +253,7 @@
           600 11.5px/1.5 ui-monospace,
           monospace;
         color: var(--muted);
-        border-top: 1px solid var(--line);
+        box-shadow: inset 0 1px 0 var(--ghost);
         padding-top: 9px;
         margin-top: 12px;
       }
@@ -277,9 +283,6 @@
         background: var(--surface-2);
         padding: 18px 20px;
         margin-bottom: 14px;
-      }
-      .qcard.done {
-        border-left-color: #b7c4bd;
       }
       .qtext {
         font-size: 17px;
@@ -315,12 +318,12 @@
         width: 15px;
         height: 15px;
         border-radius: 50%;
-        border: 2px solid var(--line);
+        box-shadow: inset 0 0 0 2px var(--ghost);
         margin-top: 2px;
         flex: none;
       }
       .opt.sel .dot {
-        border-color: var(--accent);
+        box-shadow: inset 0 0 0 2px var(--focus);
         background: var(--accent);
       }
       .opt .lbl {
@@ -399,7 +402,7 @@
         font-size: 13px;
         margin-top: 9px;
         padding-top: 9px;
-        border-top: 1px dashed var(--line);
+        box-shadow: inset 0 1px 0 var(--ghost);
       }
       .approve-card {
         text-align: center;
@@ -415,7 +418,7 @@
         gap: 8px;
         align-items: baseline;
         padding: 5px 2px;
-        border-bottom: 1px solid #eef0ec;
+        box-shadow: inset 0 -1px 0 var(--ghost);
         font-size: 12.5px;
       }
       .err {

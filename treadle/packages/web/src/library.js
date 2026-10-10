@@ -613,9 +613,9 @@ function paintInspector() {
     '</div>' +
     '<div class="group"><h2>Review</h2>' +
     '<div id="telemetry">' +
-    '<div class="meta" style="margin:4px 0 8px">' +
+    '<div class="meta" style="margin:4px 0 8px"><span class="chip">' +
     esc(reviewer) +
-    ' · ' +
+    '</span> · ' +
     verdicts.length +
     ' verdicts</div>' +
     '<div style="display:flex;gap:6px;flex-wrap:wrap">' +

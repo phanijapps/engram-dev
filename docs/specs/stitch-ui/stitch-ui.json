@@ -3,15 +3,19 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T14:08:47Z",
+    "updated": "2026-10-10T14:24:30Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T14:24:30Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "The harness works; its room shows the machine's plumbing. The owner chose the direction (library-inspector, Alexandria editorial): one design system over both surfaces, the phase inspector as the library's third pane, and the seam contracts frozen.",
@@ -642,7 +646,7 @@
       "implements": [],
       "honors": [],
       "accepts": [],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd treadle && pnpm check && pnpm corpus:check",
         "expect": "exit 0 — suite + corpus green; the pack closes: evidence rows on every task, PASS on PACK, five rounds recorded"
@@ -651,6 +655,15 @@
         "T-5",
         "T-7",
         "T-8"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check",
+          "exit": 0,
+          "at": "2026-10-10T14:09:03Z",
+          "by": "agent:pi",
+          "notes": "All slices landed with evidence (T-0 harness, T-1 tokens, T-2 reskin, T-3 inspector, T-4 route, T-5 room+headers+keyboard, T-7 scrub gate, T-8 telemetry+gate); check 70 tests green; corpus byte-stable; brand clean; coverage 86.1/73.61/94.4 over floors; five review rounds in verdicts (R1 SPEC, R2 DESIGN, R3 PLAN, R4 first-diff, T-5 self-disclosure). The R5 closing audit runs before the freeze verdict."
+        }
       ]
     },
     {
@@ -752,9 +765,21 @@
         "verdict": "IMPROVE",
         "by": "agent:pi",
         "note": "SELF-DISCLOSURE (the record outran the evidence — the fifth instance of the pipe-masked class, this time without a pipe): T-5 was recorded pass while the standalone keyboard proof still failed; pnpm check passed because the spawning test was green on a stale file list. Root cause of the test failure: a RACE — the wait anchored on any .qcard, which matched the loading card, so Enter fired into a null spec; plus .mts extension for TS syntax. Both fixed: waits anchor on the question card (options/textarea present) and the textarea repaint. The proof now runs PASS deterministically (Enter submits the default, types+Enter answers Q-2, approve card reached). T-5 evidence is therefore post-hoc valid: the same commands re-run green — check 0, standalone PASS, corpus byte-stable, brand clean, coverage floors met. Recorded here because record refuses done tasks; the disclosure is the durable record."
+      },
+      {
+        "on": "R5",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "R5 of 5 (the closing audit): PASS WITHHELD on one BLOCKER — the room carried five consumed-but-undefined legacy custom properties (dark mode unreadable chips, vanishing focus outlines; T-5 evidence overclaimed \"token aliases\" for 14 names when 9 existed). ALL FIXED: the five aliases landed (--muted/--accent/--soft/--good/--bad), every .st-* pastel retinted through tokens, the off-token lines ghosted (border-bottom dotted/dashed included — the no-line regex broadened to catch them), color-mix fallbacks added for the glass headers, the dead .qcard.done rule deleted, the reviewer wrapped in a chip, and the defined-var assertion now guards BOTH pages (dangling vars fail the suite forever). DEFECTs: corrupt-json 400 asserted on /alignment, headers asserted on assets, dead loader + imports + conditional deleted, the loader deviation recorded in design.md. Re-verified by the reviewer: all five owner answers shipped, FR-by-FR walked live, the standalone keyboard PASS deterministic on direct re-run, corpus byte-exact, coverage over floors."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-forman",
+        "note": "The Alexandria wave is sound: the library looks like what the owner pointed at, the machine beneath is unchanged and byte-proven, the room finally wears the whole dress, and the record tells the truth about every stumble. Five rounds, 56 findings, all closed. Close it clean."
       }
     ]
   },
   "format": "specpack/0.3",
-  "revision": 34
+  "revision": 37
 }
