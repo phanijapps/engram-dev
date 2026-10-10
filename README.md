@@ -13,6 +13,10 @@ treadle know  search · read · validate · links · findings · fingerprints ·
 
 ---
 
+## The guide
+
+Step-by-step, from install to delivered specs: **[docs/guide/index.html](docs/guide/index.html)** (open in any browser — self-contained).
+
 ## Why
 
 Most agent harnesses forget. They read your codebase fresh every session, trust their own summaries, and mark work done because it *looks* done. Treadle refuses all three:

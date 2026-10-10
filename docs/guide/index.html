@@ -1,0 +1,1091 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The harness — a step-by-step guide</title>
+    <meta name="description" content="Install the CLI, set up a new project, run the loop on an existing one — the SDD harness from zero to delivered specs.">
+    <script>
+      /* theme before first paint — no flash */
+      (() => {
+        try {
+          const k = localStorage.getItem('theme');
+          const t = k === 'dark' || k === 'light' ? k : matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          document.documentElement.dataset.theme = t;
+        } catch (e) {
+          /* first visit, private mode — light stands */
+        }
+      })();
+    </script>
+    <style>
+      :root,
+      [data-theme='light'] {
+        --bg: #faf9fa;
+        --surface-1: #f5f3f4;
+        --surface-2: #efedee;
+        --surface-3: #e9e8e9;
+        --surface-4: #e3e2e3;
+        --ink: #1b1c1d;
+        --ink-2: #434653;
+        --primary: #094cb2;
+        --primary-c: #3366cc;
+        --error: #ba1a1a;
+        --error-bg: #ffdad6;
+        --pass: #15803d;
+        --pass-bg: #e7f6ec;
+        --warn: #b45309;
+        --warn-bg: #fdeecd;
+        --focus: rgba(9, 76, 178, 0.35);
+        --ghost: rgba(195, 198, 213, 0.35);
+        --voice-serif: Georgia, 'Iowan Old Style', serif;
+        --voice-body: system-ui, sans-serif;
+        --voice-mono: ui-monospace, Menlo, monospace;
+        color-scheme: light;
+      }
+      [data-theme='dark'] {
+        --bg: #0b0f14;
+        --surface-1: #11161f;
+        --surface-2: #161d27;
+        --surface-3: #1e2836;
+        --surface-4: #232d3d;
+        --ink: #e2e8f0;
+        --ink-2: #94a3b8;
+        --primary: #38bdf8;
+        --primary-c: #0284c7;
+        --error: #f87171;
+        --error-bg: #3a1a20;
+        --pass: #10b981;
+        --pass-bg: #12291f;
+        --warn: #f59e0b;
+        --warn-bg: #33270e;
+        --focus: rgba(56, 189, 248, 0.4);
+        --ghost: rgba(148, 163, 184, 0.22);
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 16px/1.65 var(--voice-body);
+      }
+      /* ── the glass header ── */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 28px;
+        background: var(--bg); /* fallback */
+        background: color-mix(in srgb, var(--bg) 92%, transparent);
+        backdrop-filter: blur(10px);
+        box-shadow: inset 0 -1px 0 var(--ghost);
+      }
+      header .brand {
+        font-family: var(--voice-serif);
+        font-size: 19px;
+        letter-spacing: 0.01em;
+      }
+      header .sub {
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+      header .spacer {
+        flex: 1;
+      }
+      .theme-toggle {
+        background: var(--surface-2);
+        color: var(--ink);
+        border: none;
+        border-radius: 999px;
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .theme-toggle:focus-visible {
+        outline: 2px solid var(--focus);
+      }
+      /* ── layout ── */
+      .shell {
+        display: grid;
+        grid-template-columns: 250px minmax(0, 1fr);
+        gap: 44px;
+        max-width: 1160px;
+        margin: 0 auto;
+        padding: 34px 28px 90px;
+      }
+      @media (max-width: 900px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        nav.toc {
+          position: static !important;
+          max-height: none !important;
+        }
+      }
+      nav.toc {
+        position: sticky;
+        top: 74px;
+        align-self: start;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        font-size: 13.5px;
+      }
+      nav.toc .toc-title {
+        font-family: var(--voice-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        margin: 0 0 10px;
+      }
+      nav.toc ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        counter-reset: step;
+      }
+      nav.toc li {
+        counter-increment: step;
+        margin: 2px 0;
+      }
+      nav.toc a {
+        display: flex;
+        gap: 8px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        color: var(--ink-2);
+        text-decoration: none;
+      }
+      nav.toc a::before {
+        content: counter(step, decimal-leading-zero);
+        font-family: var(--voice-mono);
+        font-size: 11px;
+        color: var(--ink-2);
+        opacity: 0.8;
+      }
+      nav.toc a:hover {
+        background: var(--surface-2);
+        color: var(--ink);
+      }
+      nav.toc a.active {
+        background: var(--surface-3);
+        color: var(--ink);
+        box-shadow: inset 0 0 0 1px var(--ghost);
+      }
+      main {
+        min-width: 0;
+      }
+      /* ── typography ── */
+      h1,
+      h2,
+      h3 {
+        font-family: var(--voice-serif);
+        line-height: 1.25;
+      }
+      h1 {
+        font-size: 40px;
+        margin: 8px 0 12px;
+      }
+      h2 {
+        font-size: 28px;
+        margin: 56px 0 6px;
+        padding-top: 18px;
+        scroll-margin-top: 80px;
+      }
+      h2:first-of-type {
+        margin-top: 12px;
+      }
+      h2 .n {
+        font-family: var(--voice-mono);
+        font-size: 15px;
+        color: var(--primary);
+        margin-right: 10px;
+        vertical-align: 2px;
+      }
+      h3 {
+        font-size: 19px;
+        margin: 30px 0 6px;
+        scroll-margin-top: 80px;
+      }
+      p {
+        margin: 10px 0;
+        max-width: 72ch;
+      }
+      .lede {
+        font-size: 18.5px;
+        color: var(--ink-2);
+        max-width: 66ch;
+      }
+      .pillar {
+        color: var(--ink-2);
+        font-family: var(--voice-mono);
+        font-size: 12.5px;
+        letter-spacing: 0.06em;
+      }
+      /* ── steps ── */
+      .step {
+        position: relative;
+        margin: 22px 0 30px;
+        padding: 18px 20px 16px 62px;
+        background: var(--surface-1);
+        border-radius: 14px;
+        box-shadow: inset 0 0 0 1px var(--ghost);
+      }
+      .step::before {
+        content: attr(data-n);
+        position: absolute;
+        left: 18px;
+        top: 18px;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--primary-c));
+        color: #fff;
+        font-family: var(--voice-mono);
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .step h3 {
+        margin: 0 0 4px;
+      }
+      .step p {
+        margin: 6px 0;
+      }
+      /* ── code ── */
+      .codewrap {
+        position: relative;
+        margin: 12px 0;
+      }
+      pre {
+        margin: 0;
+        padding: 14px 16px;
+        overflow-x: auto;
+        background: var(--surface-2);
+        border-radius: 10px;
+        box-shadow: inset 0 0 0 1px var(--ghost);
+        font: 13.5px/1.6 var(--voice-mono);
+      }
+      code {
+        font-family: var(--voice-mono);
+        font-size: 0.92em;
+      }
+      p code,
+      li code,
+      td code {
+        background: var(--surface-2);
+        padding: 2px 6px;
+        border-radius: 6px;
+      }
+      .codewrap .copy {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        border: none;
+        border-radius: 7px;
+        padding: 4px 10px;
+        background: var(--surface-4);
+        color: var(--ink-2);
+        font: 11px var(--voice-mono);
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.12s;
+      }
+      .codewrap:hover .copy,
+      .codewrap .copy:focus-visible {
+        opacity: 1;
+      }
+      .codewrap .copy:focus-visible {
+        outline: 2px solid var(--focus);
+      }
+      .cmt {
+        color: var(--ink-2);
+        opacity: 0.85;
+      }
+      .out {
+        color: var(--ink-2);
+      }
+      /* ── callouts ── */
+      .note,
+      .tip,
+      .warn {
+        margin: 16px 0;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 14.5px;
+        max-width: 76ch;
+      }
+      .note {
+        background: var(--surface-2);
+        box-shadow: inset 0 0 0 1px var(--ghost);
+      }
+      .tip {
+        background: color-mix(in srgb, var(--pass) 10%, transparent);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pass) 35%, transparent);
+      }
+      .tip::before,
+      .warn::before,
+      .note::before {
+        font-family: var(--voice-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        display: block;
+        margin-bottom: 3px;
+      }
+      .tip::before {
+        content: 'tip';
+        color: var(--pass);
+      }
+      .warn {
+        background: color-mix(in srgb, var(--warn) 10%, transparent);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--warn) 35%, transparent);
+      }
+      .warn::before {
+        content: 'careful';
+        color: var(--warn);
+      }
+      .note::before {
+        content: 'note';
+        color: var(--ink-2);
+      }
+      /* ── tables ── */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 16px 0 22px;
+        font-size: 14px;
+      }
+      th {
+        text-align: left;
+        font-family: var(--voice-mono);
+        font-size: 11.5px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink-2);
+        padding: 8px 12px;
+      }
+      td {
+        padding: 9px 12px;
+        vertical-align: top;
+      }
+      tbody tr {
+        box-shadow: inset 0 -1px 0 var(--ghost);
+      }
+      /* ── chips ── */
+      .chip {
+        display: inline-block;
+        padding: 1px 9px;
+        border-radius: 999px;
+        font: 11.5px var(--voice-mono);
+        background: var(--surface-3);
+        color: var(--ink-2);
+        white-space: nowrap;
+      }
+      .chip.ok {
+        background: color-mix(in srgb, var(--pass) 14%, transparent);
+        color: var(--pass);
+      }
+      .chip.bad {
+        background: color-mix(in srgb, var(--error) 12%, transparent);
+        color: var(--error);
+      }
+      .chip.go {
+        background: color-mix(in srgb, var(--primary) 12%, transparent);
+        color: var(--primary);
+      }
+      footer {
+        border-top: 1px solid var(--ghost);
+        color: var(--ink-2);
+        font-size: 13px;
+        text-align: center;
+        padding: 26px 20px 40px;
+      }
+      .flow {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+        margin: 14px 0;
+        font: 12.5px var(--voice-mono);
+      }
+      .flow b {
+        padding: 6px 11px;
+        border-radius: 9px;
+        background: var(--surface-2);
+        box-shadow: inset 0 0 0 1px var(--ghost);
+        font-weight: 500;
+      }
+      .flow i {
+        color: var(--ink-2);
+        font-style: normal;
+      }
+      a {
+        color: var(--primary);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span class="brand">The harness</span>
+      <span class="sub">a step-by-step guide</span>
+      <span class="spacer"></span>
+      <span class="sub">v0.1.0 · alpha</span>
+      <button class="theme-toggle" aria-label="Toggle light or dark theme">◐</button>
+    </header>
+
+    <div class="shell">
+      <nav class="toc" aria-label="Guide contents">
+        <p class="toc-title">Contents</p>
+        <ol>
+          <li><a href="#what">What this is</a></li>
+          <li><a href="#needs">What you need</a></li>
+          <li><a href="#install">Install the CLI</a></li>
+          <li><a href="#agent">Install into your agent</a></li>
+          <li><a href="#new">Set up a new project</a></li>
+          <li><a href="#loop">Run the loop</a></li>
+          <li><a href="#existing">Use on an existing project</a></li>
+          <li><a href="#recall">Recall and the hard gate</a></li>
+          <li><a href="#reference">Command reference</a></li>
+          <li><a href="#trust">The trust rules</a></li>
+          <li><a href="#trouble">Troubleshooting</a></li>
+          <li><a href="#glossary">Glossary</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <p class="pillar">KNOWLEDGE FIRST · THEN A TIGHT LOOP</p>
+        <h1>Spec-driven development,<br>with the machine as the clerk</h1>
+        <p class="lede">
+          This guide takes you from an empty terminal to delivered, frozen
+          specs. You will install one CLI, teach it to your coding agent,
+          and run a loop where every claim carries evidence and every write
+          carries a human's name.
+        </p>
+
+        <!-- ───────────────────────── 1 ───────────────────────── -->
+        <h2 id="what"><span class="n">01</span>What this is</h2>
+        <p>
+          The harness has two planes. The <strong>knowledge plane</strong>
+          (<code>know</code>) turns a repository into an anchored wiki: every
+          page cites a location, a freshness stamp says when it went stale.
+          The <strong>loop plane</strong> (<code>do</code>) carries
+          work from idea to done through one frozen spec at a time.
+        </p>
+        <div class="flow">
+          <b>analyze</b><i>→</i><b>plan</b><i>→</i><b>implement</b><i>→</i><b>review</b><i>→</i><b>frozen spec</b>
+        </div>
+        <p>Three rules hold the whole thing up:</p>
+        <ul>
+          <li>
+            <strong>Evidence or it did not happen.</strong> A status changes
+            only on a recorded, observable result. A task is never "done"
+            because someone said so.
+          </li>
+          <li>
+            <strong>Agents propose. Humans accept.</strong> Every write path
+            wants a claim like <code>human:owner</code> or
+            <code>agent:pi</code>. The machine refuses to guess your intent.
+          </li>
+          <li>
+            <strong>Supersede, never rewrite.</strong> New conclusions make
+            new artifacts. History stays as evidence.
+          </li>
+        </ul>
+        <div class="note">
+          Work lives in a <strong>spec pack</strong> — a folder under
+          <code>docs/specs/&lt;name&gt;/</code> holding one JSON file plus
+          markdown artifacts. The JSON (<code>specpack/0.3</code> format) is
+          the machine's truth: questions, decisions, tasks, evidence,
+          verdicts. The machine writes it; humans approve it.
+        </div>
+
+        <!-- ───────────────────────── 2 ───────────────────────── -->
+        <h2 id="needs"><span class="n">02</span>What you need</h2>
+        <table>
+          <thead>
+            <tr><th>Need</th><th>Why</th><th>Check</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Node.js 22+</td>
+              <td>the CLI runs on it</td>
+              <td><code>node --version</code></td>
+            </tr>
+            <tr>
+              <td>pnpm 9</td>
+              <td>the workspace's package manager</td>
+              <td><code>corepack enable</code> then <code>pnpm --version</code></td>
+            </tr>
+            <tr>
+              <td>git</td>
+              <td>packs, recall, worktrees</td>
+              <td><code>git --version</code></td>
+            </tr>
+            <tr>
+              <td>a coding agent <span class="chip">optional</span></td>
+              <td>the harness installs its skills into one</td>
+              <td>pi · Claude Code · Codex · GitHub Copilot</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>No API keys. No accounts. Everything runs on your machine.</p>
+
+        <!-- ───────────────────────── 3 ───────────────────────── -->
+        <h2 id="install"><span class="n">03</span>Install the CLI</h2>
+        <p>
+          The CLI is one workspace. Clone the repository, install, and put
+          the launcher on your PATH.
+        </p>
+
+        <div class="step" data-n="1">
+          <h3>Get the repository</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>git clone &lt;this-repository&gt; harness
+<span class="cmt"># and enter the workspace</span>
+cd harness/treadle</code></pre></div>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Install the dependencies</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>corepack enable
+pnpm install</code></pre></div>
+          <p>
+            One workspace, one install. Lockfile included —
+            <code>pnpm install --frozen-lockfile</code> in CI.
+          </p>
+        </div>
+
+        <div class="step" data-n="3">
+          <h3>Put the CLI on your PATH</h3>
+          <p>The launcher delegates to the source through tsx (alpha shape):</p>
+          <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># option A — run it where it lives</span>
+cd treadle &amp;&amp; pnpm exec tsx packages/cli/src/main.ts --help
+
+<span class="cmt"># option B — link the launcher (any directory)</span>
+chmod +x bin/treadle.mjs
+ln -s "$(pwd)/bin/treadle.mjs" ~/.local/bin/treadle
+treadle --help</code></pre></div>
+          <p>You should see the two planes listed: <code>do</code> and <code>know</code>.</p>
+        </div>
+
+        <div class="step" data-n="4">
+          <h3>Prove the install (the honest way)</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do where .
+<span class="out">no git — worktree scan unavailable   <span class="cmt">(or your packs listed)</span>
+nothing in flight — every spec is delivered or closed.</span></code></pre></div>
+          <p>
+            The command always exits <code>0</code> — it is a report, not a
+            gate. If you see usage help instead, the PATH link missed.
+          </p>
+        </div>
+
+        <div class="warn">
+          The compiled binary ships with the first built release. Until
+          then the launcher runs the TypeScript source — keep the
+          repository around, and keep Node 22+ where the launcher can find
+          it.
+        </div>
+
+        <!-- ───────────────────────── 4 ───────────────────────── -->
+        <h2 id="agent"><span class="n">04</span>Install into your coding agent</h2>
+        <p>
+          The harness ships skills (the SDD loop), one agent (red-foreman,
+          the adversarial reviewer), and hooks (a write guard and session
+          recall). One command puts them where your agent reads.
+        </p>
+
+        <div class="step" data-n="1">
+          <h3>Run the installer</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle init harness</code></pre></div>
+          <p>You will be asked three things:</p>
+          <ul>
+            <li><strong>Your coding agent</strong> — pi · Claude Code · Codex · GitHub Copilot</li>
+            <li><strong>Install level</strong> — this project, or global (user directories)</li>
+            <li><strong>Skills and hooks</strong> — space toggles, enter accepts</li>
+          </ul>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Read the plan, then let it write</h3>
+          <p>
+            The installer never writes before it shows you exactly what it
+            will do. Every row carries a mode:
+          </p>
+          <table>
+            <thead><tr><th>Mode</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><span class="chip ok">create</span></td><td>the destination is absent</td></tr>
+              <tr><td><span class="chip ok">same</span></td><td>bytes already match — nothing to do</td></tr>
+              <tr><td><span class="chip bad">refuse</span></td><td>differs and no <code>--force</code> — nothing is written, exit 3</td></tr>
+              <tr><td><span class="chip">update</span></td><td>differs and <code>--force</code> is set</td></tr>
+              <tr><td><span class="chip">skip</span></td><td>the honest no — e.g. hooks on Copilot</td></tr>
+            </tbody>
+          </table>
+          <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># preview only — writes nothing</span>
+treadle init harness --agent pi --scope project --dry-run
+
+<span class="cmt"># the same install, scripted (no prompts, ever)</span>
+treadle init harness --agent pi --scope project --yes</code></pre></div>
+        </div>
+
+        <div class="step" data-n="3">
+          <h3>Know what landed where</h3>
+          <table>
+            <thead><tr><th>Surface</th><th>Skills</th><th>Agent</th><th>Hooks</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>pi</strong></td>
+                <td><code>.pi/skills/</code></td>
+                <td><code>.pi/agents/</code></td>
+                <td><code>.pi/extensions/</code> (real extensions)</td>
+              </tr>
+              <tr>
+                <td><strong>Claude Code</strong></td>
+                <td><code>.claude/skills/</code></td>
+                <td><code>.claude/agents/</code></td>
+                <td><code>.claude/settings.json</code> (merged, foreign keys kept)</td>
+              </tr>
+              <tr>
+                <td><strong>Codex</strong></td>
+                <td><code>.codex/skills/</code></td>
+                <td><code>.codex/agents/</code></td>
+                <td>a recall prompt + <code>~/.codex/config.toml</code> notify</td>
+              </tr>
+              <tr>
+                <td><strong>Copilot</strong></td>
+                <td><code>.github/skills/</code></td>
+                <td><code>.github/agents/</code></td>
+                <td>none — stated honestly in the plan</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="step" data-n="4">
+          <h3>Undo it, exactly</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle init harness --agent pi --scope project --remove</code></pre></div>
+          <p>
+            Removes exactly what the recorded install wrote — and refuses
+            any path outside the install roots, even if the state file was
+            edited. Foreign files are never touched.
+          </p>
+        </div>
+
+        <div class="tip">
+          Re-running the installer is safe. Matching files read
+          <span class="chip ok">same</span>; nothing duplicates. To
+          converge drift after editing skills in the harness source, add
+          <code>--force</code>.
+        </div>
+
+        <!-- ───────────────────────── 5 ───────────────────────── -->
+        <h2 id="new"><span class="n">05</span>Set up a new project</h2>
+        <p>
+          A project is a git repository plus two directories the loop owns:
+          <code>docs/specs/</code> (the packs) and <code>wiki/</code> (the
+          knowledge). You will birth the first pack, interview it in the
+          room, and approve it.
+        </p>
+
+        <div class="step" data-n="1">
+          <h3>Birth the pack</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>mkdir my-app &amp;&amp; cd my-app &amp;&amp; git init
+treadle do init docs/specs/first-wave \
+  --title "First wave — the core loop" \
+  --why "The user can sign in and out"</code></pre></div>
+          <p>
+            The machine writes the born shape:
+            <code>docs/specs/first-wave/first-wave.json</code> at revision
+            1. Stage: <code>awaiting_owner</code>.
+          </p>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Ask the questions you cannot answer</h3>
+          <p>
+            The loop is honest about what it does not know. Anything the
+            evidence cannot supply becomes a question for you — asked
+            once, batched:
+          </p>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do add question docs/specs/first-wave \
+  --id Q-1 --kind choice \
+  --question "Sessions: server-side store or JWT?" \
+  --options "server-side" "jwt" \
+  --default "server-side"</code></pre></div>
+        </div>
+
+        <div class="step" data-n="3">
+          <h3>Open the room and answer</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do interview docs/specs/first-wave</code></pre></div>
+          <p>
+            A local page opens (localhost, no auth — it is yours). You
+            answer the questions with your owner claim and approve the
+            pack. The room blocks until you do; Ctrl-C escapes.
+          </p>
+          <div class="codewrap"><pre><code>treadle do answer docs/specs/first-wave --q Q-1 \
+  --by human:owner --expected-revision 3 --text "server-side"</code></pre></div>
+        </div>
+
+        <div class="step" data-n="4">
+          <h3>Shape the work: decisions, then tasks</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># a decision is a proposal until a human accepts it</span>
+treadle do add decision docs/specs/first-wave \
+  --id D-1 --decision "Sessions live server-side" --because "revocable"
+
+<span class="cmt"># every task carries an observable verification</span>
+treadle do add task docs/specs/first-wave \
+  --id T-1 --title "The session table" \
+  --verify-cmd "pnpm test" \
+  --verify-expect "the session round-trip test passes"</code></pre></div>
+          <p>
+            Approve the pack when the shape is right:
+            <code>treadle do approve docs/specs/first-wave --by human:owner</code>.
+          </p>
+        </div>
+
+        <!-- ───────────────────────── 6 ───────────────────────── -->
+        <h2 id="loop"><span class="n">06</span>Run the loop</h2>
+        <p>One task at a time. Evidence every time. The cycle:</p>
+
+        <div class="step" data-n="1">
+          <h3>Take the next ready task</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do next docs/specs/first-wave
+<span class="out">task T-1 — the session table … (the frozen slice)</span></code></pre></div>
+          <p>
+            <code>next</code> hands out the first task whose dependencies
+            are done. The task's context is frozen at handout — if the
+            files it points at move, the task reports drift and waits.
+          </p>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Do the work, then prove it</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># …work… then run the task's own verify command, unpiped</span>
+pnpm test; echo "exit=$?"</code></pre></div>
+        </div>
+
+        <div class="step" data-n="3">
+          <h3>Record the evidence</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do record docs/specs/first-wave \
+  --task T-1 --result pass \
+  --cmd "pnpm test" --exit 0 \
+  --expected-revision 7 \
+  --by agent:pi \
+  --notes "session round-trip green"</code></pre></div>
+          <p>
+            The record wants the revision you hold. If the pack moved under
+            you, the record refuses — re-read, re-run, re-record. That
+            refusal is the loop protecting you from stale work.
+          </p>
+        </div>
+
+        <div class="step" data-n="4">
+          <h3>Check alignment, close the wave</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do check docs/specs/first-wave
+<span class="out">alignment: 0 violation(s), 0 gap(s) — gaps are reported, never guessed</span>
+
+treadle do close docs/specs/first-wave --by human:owner
+<span class="out">closed by human:owner: the record is frozen</span></code></pre></div>
+          <p>
+            <code>check</code> proves every requirement is served by a
+            story, every task satisfies one, no id dangles. Close freezes
+            the record — history, not rewrite.
+          </p>
+        </div>
+
+        <div class="tip">
+          Any time, see the standing picture:
+          <code>treadle do library docs/specs</code> serves a local,
+          readable surface of every pack — stages, evidence, reviews.
+        </div>
+
+        <!-- ───────────────────────── 7 ───────────────────────── -->
+        <h2 id="existing"><span class="n">07</span>Use on an existing project</h2>
+        <p>
+          Brownfield work begins with knowledge, not code. You build the
+          wiki first, then run the same loop on top of it.
+        </p>
+
+        <div class="step" data-n="1">
+          <h3>Scaffold the wiki by hand</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>mkdir -p wiki/systems wiki/domain
+cat &gt; wiki/index.md &lt;&lt;'EOF'
+---
+okf_version: "0.2"
+---
+
+# Systems
+
+* [The build](systems/build.md) - how this repo builds
+EOF</code></pre></div>
+          <p>
+            Pages carry frontmatter — <code>type</code>,
+            <code>title</code>, <code>description</code> — and cite their
+            sources with paths. Quote the version string exactly:
+            <code>"0.2"</code>.
+          </p>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Ground every page in the code</h3>
+          <p>
+            The <code>build-kb</code> skill (installed into your agent in
+            step 04) walks the repository and writes pages that cite
+            <code>path</code> locations — never memory. Anchored claims
+            first:
+          </p>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle know search wiki "how does auth work"
+treadle know read wiki systems/auth
+treadle know validate wiki
+<span class="out">conformant: 0 error(s), 0 warning(s)</span></code></pre></div>
+        </div>
+
+        <div class="step" data-n="3">
+          <h3>Run the ritual (end every session fresh)</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle know fingerprints . wiki   <span class="cmt"># record source hashes</span>
+treadle know stamp wiki --workspace .   <span class="cmt"># freshness stamp</span>
+treadle know anchors wiki --workspace .
+treadle know validate wiki
+treadle know status wiki --workspace .
+<span class="out">freshness: fresh … findings: 0 pending</span></code></pre></div>
+          <p>
+            The stamp records the commit it saw. Stale after new commits is
+            normal — re-stamp at session close and the wiki tells the truth
+            again.
+          </p>
+        </div>
+
+        <div class="step" data-n="4">
+          <h3>Then change things through the loop</h3>
+          <p>
+            Birth a pack per change (step 05), ground the analysis in the
+            wiki (<code>know search</code> before every question to the
+            owner), and implement against frozen tasks. The wiki and the
+            specs converge: pages cite code, specs cite pages.
+          </p>
+        </div>
+
+        <!-- ───────────────────────── 8 ───────────────────────── -->
+        <h2 id="recall"><span class="n">08</span>Recall and the hard gate</h2>
+        <p>
+          The harness remembers where work dangles. Fresh sessions start
+          oriented; "continue" never guesses.
+        </p>
+
+        <div class="step" data-n="1">
+          <h3>Ask where work stands</h3>
+          <div class="codewrap"><button class="copy">copy</button><pre><code>treadle do where .
+<span class="out">work in flight (2):
+  checkout       in_review    next: T-3   rev 12
+  search         in_progress  Q open: 1   evidence 2026-10-10
+more than one is open: ASK which one continues. never guess.</span></code></pre></div>
+          <p>
+            Live packs across roots and git worktrees. Delivered work and
+            the archive are never listed.
+          </p>
+        </div>
+
+        <div class="step" data-n="2">
+          <h3>Let the session start oriented</h3>
+          <p>
+            The <code>session-recall</code> hook (installed in step 04)
+            injects that block when a session starts — pi sees it as a
+            message, Claude Code as context, Codex reads the taught prompt.
+            And the <strong>hard gate</strong>: when more than one spec is
+            open and your first message is continue-shaped
+            ("continue", "go on", "resume"…), the loop
+            <em>asks which one</em> — enforced on pi and Claude Code,
+            taught on the rest.
+          </p>
+        </div>
+
+        <div class="tip">
+          The write guard runs alongside: edits into machine-managed trees
+          (the corpus goldens, generated wiki code pages) are refused with
+          the reason. Hand edits there fight the engines — the guard makes
+          the fight loud. <code>HARNESS_ALLOW_MACHINE_EDITS=1</code>
+          overrides when you truly mean it.
+        </div>
+
+        <!-- ───────────────────────── 9 ───────────────────────── -->
+        <h2 id="reference"><span class="n">09</span>Command reference</h2>
+
+        <h3>treadle do — the loop plane</h3>
+        <table>
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>do init &lt;packDir&gt;</code></td><td>birth a pack (<code>--title</code>, <code>--why</code>)</td></tr>
+            <tr><td><code>do add question|decision|task</code></td><td>stage the spec's shape</td></tr>
+            <tr><td><code>do interview &lt;packDir&gt;</code></td><td>serve the room; block until approved</td></tr>
+            <tr><td><code>do answer &lt;packDir&gt;</code></td><td>record an owner answer (<code>--by human:owner</code>)</td></tr>
+            <tr><td><code>do approve &lt;packDir&gt;</code></td><td>the approval act — a human claim</td></tr>
+            <tr><td><code>do next &lt;packDir&gt;</code></td><td>hand out the next ready task</td></tr>
+            <tr><td><code>do record &lt;packDir&gt;</code></td><td>record evidence: task, result, cmd, exit, revision</td></tr>
+            <tr><td><code>do check &lt;packDir&gt;</code></td><td>alignment: violations and gaps, honestly counted</td></tr>
+            <tr><td><code>do status &lt;packDir&gt;</code></td><td>stage, revision, open questions</td></tr>
+            <tr><td><code>do events &lt;packDir&gt;</code></td><td>the pack's event journal</td></tr>
+            <tr><td><code>do where &lt;workspace&gt;</code></td><td>recall: every dangling pack, every worktree</td></tr>
+            <tr><td><code>do library &lt;specsRoot&gt;</code></td><td>the standing local surface of every pack</td></tr>
+            <tr><td><code>do close &lt;packDir&gt;</code></td><td>freeze the record (<code>--by human:owner</code>)</td></tr>
+          </tbody>
+        </table>
+
+        <h3>treadle know — the knowledge plane</h3>
+        <table>
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>know search &lt;bundle&gt; &lt;query…&gt;</code></td><td>weighted search; <code>--type</code>, <code>--tag</code>, <code>--limit</code></td></tr>
+            <tr><td><code>know read &lt;bundle&gt; &lt;cid&gt;</code></td><td>a concept plus its neighborhood (<code>--depth</code>)</td></tr>
+            <tr><td><code>know validate &lt;bundle&gt;</code></td><td>conformance: errors, warnings, info — never vibes</td></tr>
+            <tr><td><code>know links &lt;bundle&gt;</code></td><td>every cross-link, broken ones named</td></tr>
+            <tr><td><code>know findings list|propose|resolve</code></td><td>the normative ledger — a human accepts or declines</td></tr>
+            <tr><td><code>know fingerprints &lt;ws&gt; &lt;bundle&gt;</code></td><td>record source hashes</td></tr>
+            <tr><td><code>know anchors &lt;bundle&gt;</code></td><td>re-anchor pages to changed sources</td></tr>
+            <tr><td><code>know stamp &lt;bundle&gt;</code></td><td>the freshness stamp</td></tr>
+            <tr><td><code>know status &lt;bundle&gt;</code></td><td>fresh or stale, counts, findings — one screen</td></tr>
+          </tbody>
+        </table>
+
+        <h3>treadle init — the installer</h3>
+        <table>
+          <thead><tr><th>Flag</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>--agent</code>, <code>--scope</code></td><td>surface and level (project | global)</td></tr>
+            <tr><td><code>--skills</code>, <code>--no-agents</code>, <code>--no-hooks</code></td><td>component choice</td></tr>
+            <tr><td><code>--dry-run</code>, <code>--json</code></td><td>inspect the plan; machine form (exit 3 on refuses)</td></tr>
+            <tr><td><code>--force</code></td><td>overwrite drift; remove exactly the listed leftovers</td></tr>
+            <tr><td><code>--yes</code></td><td>confirm writes outside the repo (global scope)</td></tr>
+            <tr><td><code>--remove</code></td><td>delete exactly the recorded install</td></tr>
+          </tbody>
+        </table>
+
+        <!-- ───────────────────────── 10 ───────────────────────── -->
+        <h2 id="trust"><span class="n">10</span>The trust rules</h2>
+        <ul>
+          <li>
+            <strong>Exit codes are verified, never piped away.</strong> A
+            green you did not watch is not green.
+          </li>
+          <li>
+            <strong>Claims name their actor.</strong>
+            <code>human:owner</code> for your acts, <code>agent:&lt;name&gt;</code>
+            for the machine's. No claim, no write.
+          </li>
+          <li>
+            <strong>The corpus is truth.</strong> Behavior changes move
+            golden files deliberately; the diff is reviewed in the commit.
+          </li>
+          <li>
+            <strong>Advisory signals stay advisory.</strong> Trust tiers
+            surface; they never reject. Gaps are reported, never guessed.
+          </li>
+        </ul>
+
+        <!-- ───────────────────────── 11 ───────────────────────── -->
+        <h2 id="trouble"><span class="n">11</span>Troubleshooting</h2>
+        <table>
+          <thead><tr><th>Symptom</th><th>Cause and fix</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>exit 2</code>, "missing and no TTY"</td>
+              <td>The installer needs the flags in scripts. Use the exact command it prints.</td>
+            </tr>
+            <tr>
+              <td><code>exit 3</code>, rows marked <span class="chip bad">refuse</span></td>
+              <td>Destinations differ. Read the diff, then <code>--force</code> if you mean it.</td>
+            </tr>
+            <tr>
+              <td><code>pack_refused_to_load</code></td>
+              <td>The JSON shape broke a rule — the message names the file and the reason. Fix the source, never hand-set a stage.</td>
+            </tr>
+            <tr>
+              <td><code>deliverable stage mismatch</code></td>
+              <td>A stage was hand-set. Delete the stored stage; deriveStage computes it from tasks and questions.</td>
+            </tr>
+            <tr>
+              <td>record refused — revision moved</td>
+              <td>The pack changed under you. Re-read it, re-run the verify, record against the revision you now hold.</td>
+            </tr>
+            <tr>
+              <td>wiki <code>non-conformant</code></td>
+              <td>Read the error lines: frontmatter missing, index/log structure, attested shapes. Warnings never block.</td>
+            </tr>
+            <tr>
+              <td>recall says "unavailable"</td>
+              <td>The hook could not run the CLI. Check the PATH link, or set <code>HARNESS_CLI</code> to the launcher.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- ───────────────────────── 12 ───────────────────────── -->
+        <h2 id="glossary"><span class="n">12</span>Glossary</h2>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>pack</strong></td><td>one wave of work: a folder with the spec JSON and its artifacts</td></tr>
+            <tr><td><strong>specpack/0.3</strong></td><td>the JSON format the machine writes and reads</td></tr>
+            <tr><td><strong>stage</strong></td><td>where a pack is: awaiting_owner → planning → in_progress → in_review → delivered</td></tr>
+            <tr><td><strong>evidence row</strong></td><td>a recorded run: task, result, command, exit code, revision, claim</td></tr>
+            <tr><td><strong>claim</strong></td><td>who acted: <code>human:owner</code> or <code>agent:&lt;name&gt;</code></td></tr>
+            <tr><td><strong>bundle</strong></td><td>the wiki directory the knowledge plane reads</td></tr>
+            <tr><td><strong>anchor</strong></td><td>a citation to a real location — path and line, never memory</td></tr>
+            <tr><td><strong>freshness stamp</strong></td><td>which commit the wiki last saw; stale means re-stamp</td></tr>
+            <tr><td><strong>findings ledger</strong></td><td>where normative claims wait for a human yes or no</td></tr>
+            <tr><td><strong>red-foreman</strong></td><td>the adversarial reviewer: assumes the work is wrong, tags findings BLOCKER / DEFECT / SMELL with evidence</td></tr>
+          </tbody>
+        </table>
+      </main>
+    </div>
+
+    <footer>
+      The harness · every claim carries evidence · every write carries a name
+    </footer>
+
+    <script>
+      /* theme toggle — one key, both surfaces read it */
+      document.querySelector('.theme-toggle').addEventListener('click', () => {
+        const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {
+          /* private mode — the toggle still works for this page view */
+        }
+      });
+
+      /* copy buttons — the text, nothing else */
+      for (const btn of document.querySelectorAll('.copy')) {
+        btn.addEventListener('click', async () => {
+          const code = btn.parentElement.querySelector('code').innerText;
+          try {
+            await navigator.clipboard.writeText(code);
+            btn.textContent = 'copied';
+            setTimeout(() => (btn.textContent = 'copy'), 1200);
+          } catch (e) {
+            btn.textContent = 'select + copy';
+          }
+        });
+      }
+
+      /* TOC highlight — the section you are reading */
+      const links = [...document.querySelectorAll('nav.toc a')];
+      const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
+      const pick = () => {
+        let best = 0;
+        secs.forEach((s, i) => {
+          if (s && s.getBoundingClientRect().top < 120) best = i;
+        });
+        links.forEach((a, i) => a.classList.toggle('active', i === best));
+      };
+      addEventListener('scroll', pick, { passive: true });
+      pick();
+    </script>
+  </body>
+</html>
