@@ -1,7 +1,14 @@
 {
   "conformant": true,
   "errors": [],
-  "info": [],
+  "info": [
+    {
+      "cid": "good",
+      "code": "trust-tier",
+      "message": "trust tier: human-reviewed (§5.3, advisory)",
+      "severity": "info"
+    }
+  ],
   "warnings": [
     {
       "cid": "good",

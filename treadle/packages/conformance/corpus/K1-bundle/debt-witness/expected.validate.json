@@ -1,0 +1,81 @@
+{
+  "conformant": false,
+  "errors": [
+    {
+      "cid": "broken",
+      "code": "attested-runtime-required",
+      "message": "'runtime' is REQUIRED for type: Attested Computation (§10.2)",
+      "severity": "error"
+    },
+    {
+      "cid": "broken",
+      "code": "attested-parameters-shape",
+      "message": "each 'parameters' entry needs { name, type } (§10.2)",
+      "severity": "error"
+    },
+    {
+      "cid": "broken",
+      "code": "attested-executor-receipt",
+      "message": "'executor' must declare 'receipt' fields (the evidence the attester inspects) (§10.2)",
+      "severity": "error"
+    }
+  ],
+  "info": [
+    {
+      "cid": "broken",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'parameters'",
+      "severity": "info"
+    },
+    {
+      "cid": "broken",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'executor'",
+      "severity": "info"
+    },
+    {
+      "cid": "run",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'runtime'",
+      "severity": "info"
+    },
+    {
+      "cid": "run",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'parameters'",
+      "severity": "info"
+    },
+    {
+      "cid": "run",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'executor'",
+      "severity": "info"
+    },
+    {
+      "cid": "run",
+      "code": "extension-key",
+      "message": "extension frontmatter key 'attester'",
+      "severity": "info"
+    }
+  ],
+  "warnings": [
+    {
+      "cid": "broken",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    },
+    {
+      "cid": "broken",
+      "code": "stale-after-passed",
+      "message": "stale: now >= stale_after (2020-01-01T00:00:00Z) (§5.5)",
+      "severity": "warning"
+    },
+    {
+      "cid": "run",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    }
+  ]
+}

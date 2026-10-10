@@ -1,0 +1,23 @@
+[
+  {
+    "hits": [
+      {
+        "cid": "broken",
+        "score": 6.0,
+        "snippet": "no runtime, bad parameters, empty receipt, and stale",
+        "title": "Broken",
+        "type": "Attested Computation"
+      },
+      {
+        "cid": "run",
+        "score": 6.0,
+        "snippet": "# Computation\n\n```sql\nselect 1\n```",
+        "title": "Run",
+        "type": "Attested Computation"
+      }
+    ],
+    "query": {
+      "q": "attested"
+    }
+  }
+]

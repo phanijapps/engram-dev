@@ -879,6 +879,38 @@ function genK1(): void {
       'sources: [{id: s1, resource: docs/x.md}]\nstale_after: "2027-01-01T00:00:00Z"\n---\nclean 0.2 page\n',
   );
   k1Goldens(c2, [{ q: 'legacy' }, { q: 'clean' }]);
+
+  // ── the debt witnesses (guided-loop T-3): §9 log structure, §10 admission, §5.5 staleness ──
+  const c3 = join(ROOT, 'K1-bundle', 'debt-witness');
+  mkdirSync(join(c3, 'input'), { recursive: true });
+  W(
+    join(c3, 'input', 'index.md'),
+    '---\nokf_version: "0.2"\n---\n\n# Concepts\n\n* [run](run.md) - attested, valid\n* [broken](broken.md) - attested, runtime missing\n',
+  );
+  W(
+    join(c3, 'input', 'log.md'),
+    '# Directory Update Log\n\n## 2026-05-22\n* **Update**: added the attested pair.\n\n## 2026-05-15\n* **Initialization**: born.\n',
+  );
+  W(
+    join(c3, 'input', 'run.md'),
+    '---\ntitle: Run\ntype: Attested Computation\nruntime: dbt\n' +
+      'parameters:\n  - {name: p1, type: string, required: true}\n' +
+      'executor: {resource: runs/dbt.sh, receipt: [job_id]}\n' +
+      'attester: {resource: checks/job.js}\n' +
+      'stale_after: "2999-01-01T00:00:00Z"\n---\n\n# Computation\n\n```sql\nselect 1\n```\n',
+  );
+  W(
+    join(c3, 'input', 'broken.md'),
+    '---\ntitle: Broken\ntype: Attested Computation\n' +
+      'parameters:\n  - {name: only-name}\n' +
+      'executor: {resource: x}\n' +
+      'stale_after: "2020-01-01T00:00:00Z"\n---\n\nno runtime, bad parameters, empty receipt, and stale\n',
+  );
+  W(
+    join(c3, 'expected.log-good.md'),
+    'the log.md above is period-correct (ISO dates, newest first) — no log-structure errors expected\n',
+  );
+  k1Goldens(c3, [{ q: 'attested' }]);
 }
 
 if (process.argv[1]?.endsWith('gen_corpus.ts')) {

@@ -4,6 +4,7 @@
  * `# <cid> (depth k)` headers, truncated to a token budget with an honest
  * omission marker naming what was cut.
  */
+import { trustTier } from './validate.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { iterConceptFiles, parseConcept } from './parse.js';
