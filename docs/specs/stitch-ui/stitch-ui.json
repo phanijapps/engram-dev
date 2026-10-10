@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T10:52:29Z",
+    "updated": "2026-10-10T11:02:11Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -372,8 +372,58 @@
           "FR-1",
           "FR-2"
         ]
+      },
+      {
+        "id": "DES-4",
+        "title": "The token layer",
+        "kind": "component",
+        "detail": "Two theme scopes of CSS custom properties, canonical values only; inline pre-render theme resolution; no-line rule with ghost edges; gradient primary CTAs; system voice stacks.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "The alignment route",
+        "kind": "api",
+        "detail": "GET /alignment/<name>: server-side alignment from core, {violations, gapCount, sentence}, read-only, same refusal posture as every route.",
+        "addresses": [
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "The phase inspector",
+        "kind": "component",
+        "detail": "Third pane, collapsible, rendered from /spec with the exact FR-4 derivation table; click routes to the mapped tab; zero admission controls.",
+        "addresses": [
+          "FR-4",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-7",
+        "title": "Review telemetry + gate panel",
+        "kind": "component",
+        "detail": "Findings by severity from verdicts, reviewer claim from verdict.by, severity filter, alignment panel, honest poll posture note.",
+        "addresses": [
+          "FR-5",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-8",
+        "title": "The room in the same dress",
+        "kind": "component",
+        "detail": "Same tokens and voice; wizard DOM contract untouched; gradient CTA on approve; route parity re-asserted.",
+        "addresses": [
+          "FR-7"
+        ]
       }
-    ]
+    ],
+    "approach": "A reskin with three additions: the token layer (DES-4), one read route (DES-5), the inspector pane (DES-6). Pages stay portable vanilla-JS assets; every act admits through the seam; nothing engine-side moves (design.md)."
   },
   "tasks": [
     {
