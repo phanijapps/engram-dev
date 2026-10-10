@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-[#FAF9F6] text-[#0F172A] antialiased" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The spec library — Quality Conformance Review</title>
+<!-- Google Fonts for Editorial Alexandria Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with forms and container-queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            alabaster: '#FAF9F6',
+            bone: '#F4F2EC',
+            parchment: '#EDE9E0',
+            ink: '#0F172A',
+            'ink-muted': '#475569',
+            'ink-subtle': '#64748B',
+            borderLight: '#E2E8F0',
+            borderMedium: '#CBD5E1',
+            treadle: {
+              accent: '#2563EB',
+              accentLight: '#EFF6FF',
+              blocker: '#DC2626',
+              blockerBg: '#FEF2F2',
+              defect: '#D97706',
+              defectBg: '#FFFBEB',
+              smell: '#7C3AED',
+              smellBg: '#F5F3FF',
+              pass: '#059669',
+              passBg: '#ECFDF5'
+            }
+          },
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'Menlo', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom refined scrollbars */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FAF9F6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col overflow-hidden text-sm selection:bg-blue-100 selection:text-blue-900 bg-[#FAF9F6] font-sans text-slate-800">
+<!-- BEGIN: Clean Editorial TopHeader -->
+<header class="h-14 bg-white/95 backdrop-blur border-b border-[#E2E8F0] flex items-center justify-between px-5 z-30 flex-shrink-0 shadow-[0_1px_2px_rgba(0,0,0,0.03)]" data-purpose="top-navigation-bar">
+<!-- Left Section: Treadle Identity & Harness Info -->
+<div class="flex items-center gap-4 flex-shrink-0">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-md bg-[#0F172A] text-white flex items-center justify-center font-mono font-bold text-xs tracking-wider shadow-sm ring-1 ring-slate-900/10">
+          FOF
+        </div>
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-sm font-semibold tracking-tight text-[#0F172A] font-serif flex items-center gap-1.5">
+              Treadle Harness
+            </h1>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium uppercase tracking-wider bg-slate-100 text-slate-700 border border-slate-200">
+              Loom Assembly
+            </span>
+</div>
+<div class="text-[11px] text-slate-500 font-mono flex items-center gap-1.5 leading-none mt-0.5">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+<span>Station 5: Quality Conformance Gate</span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-400">Port 8788</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Center: Quick Docket Status Summary -->
+<div class="hidden lg:flex items-center gap-2 bg-[#F8FAFC] border border-[#E2E8F0] px-3 py-1 rounded-full text-xs text-slate-600 shadow-sm">
+<span class="font-mono text-[11px] font-medium text-slate-500">Inspecting:</span>
+<span class="font-semibold text-slate-800 font-mono text-xs">specpack/0.4.1</span>
+<span class="text-slate-300">•</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[10px] font-mono font-medium bg-amber-50 text-amber-700 border border-amber-200">
+<span class="w-1 h-1 rounded-full bg-amber-500"></span>
+        10 Findings for Gatekeeper
+      </span>
+</div>
+<!-- Right: Search Docket, Filter Blockers & Quick Ratification -->
+<div class="flex items-center gap-3 flex-shrink-0">
+<div class="relative w-56 md:w-64">
+<svg class="absolute left-2.5 top-2.5 w-3.5 h-3.5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<input class="w-full bg-[#FAF9F6] border border-[#CBD5E1] rounded-md pl-8 pr-3 py-1.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition shadow-inner" id="specSearchInput" placeholder="Search docket or findings..." type="text"/>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 border border-[#CBD5E1] rounded-md text-xs font-medium text-slate-700 shadow-sm hover:border-slate-400 transition" id="toggleFilterBtn">
+<svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span>Filter Blockers</span>
+</button>
+<div class="h-5 w-[1px] bg-slate-200"></div>
+<div class="flex items-center gap-2 pl-1">
+<span class="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 text-slate-700 flex items-center justify-center font-serif font-bold text-xs">
+          RF
+        </span>
+<span class="hidden xl:inline text-xs font-medium text-slate-600">red-forman</span>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- BEGIN: Three-Column Application Body -->
+<div class="flex-1 flex overflow-hidden">
+<!-- =============================================================== -->
+<!-- COLUMN 1: LEFT SIDEBAR (Specpack Tree & Navigation) -->
+<!-- =============================================================== -->
+<aside class="w-80 md:w-[340px] bg-[#FAF9F6] border-r border-[#E2E8F0] flex flex-col flex-shrink-0" data-purpose="spec-lifecycle-sidebar">
+<!-- Sidebar Header -->
+<div class="px-4 py-3 border-b border-[#E2E8F0] bg-[#F5F2EA] flex items-center justify-between">
+<div class="flex items-center gap-2">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-xs font-mono font-semibold uppercase tracking-wider text-slate-700">Active Specpacks</span>
+</div>
+<span class="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-white text-slate-600 border border-[#CBD5E1]">14 indexed</span>
+</div>
+<!-- Scrollable list of Specs -->
+<div class="flex-1 overflow-y-auto px-3 py-3 space-y-4" id="specListContainer">
+<!-- SECTION: MOVING 1 -->
+<div class="space-y-1.5">
+<div class="px-2 flex items-center justify-between text-[11px] font-mono font-semibold tracking-wider text-amber-800 uppercase">
+<span>MOVING</span>
+<span class="px-1.5 py-0.2 rounded bg-amber-100 text-[10px] text-amber-800 font-bold border border-amber-200">1</span>
+</div>
+<!-- Item 1 -->
+<div class="group rounded-md p-2.5 bg-white border border-[#E2E8F0] hover:border-amber-400 hover:shadow-sm cursor-pointer transition">
+<div class="flex items-start justify-between gap-2">
+<h2 class="text-xs font-medium text-slate-800 group-hover:text-amber-900 leading-snug">
+                Loom L1 — loom speaks specpack natively
+              </h2>
+</div>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                In review
+              </span>
+<span class="text-[11px] font-mono text-slate-400">14x</span>
+</div>
+</div>
+</div>
+<!-- SECTION: DONE 6 -->
+<div class="space-y-1.5">
+<div class="px-2 flex items-center justify-between text-[11px] font-mono font-semibold tracking-wider text-slate-500 uppercase">
+<span>DONE</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-[10px] text-slate-600 font-bold border border-slate-200">6</span>
+</div>
+<!-- Done Spec 1 (ACTIVE SELECTED ITEM) -->
+<div class="rounded-lg p-3 bg-white border-2 border-blue-600 shadow-sm ring-2 ring-blue-100 cursor-pointer transition relative">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span>
+<span class="text-[10px] font-mono uppercase tracking-wider text-blue-700 font-bold">Selected Spec</span>
+</div>
+<h2 class="text-xs font-semibold text-[#0F172A] leading-snug font-serif">
+              The spec library — every spec, readable by its owner
+            </h2>
+<div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+<svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewbox="0 0 20 20"><path clip-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" fill-rule="evenodd"></path></svg>
+                Done
+              </span>
+<span class="text-[11px] font-mono text-slate-500 font-medium">26x commits</span>
+</div>
+</div>
+<!-- Done Spec 2 -->
+<div class="rounded-md p-2.5 bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-slate-300 cursor-pointer transition">
+<h2 class="text-xs font-normal text-slate-700 leading-snug">
+              The spec interview page: loom interview renders the spec and collects the owner's answers
+            </h2>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Done</span>
+<span class="text-[11px] font-mono text-slate-400">28x</span>
+</div>
+</div>
+<!-- Done Spec 3 -->
+<div class="rounded-md p-2.5 bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-slate-300 cursor-pointer transition">
+<h2 class="text-xs font-normal text-slate-700 leading-snug">
+              The spec file reads chronologically: one canonical layout
+            </h2>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Done</span>
+<span class="text-[11px] font-mono text-slate-400">14x</span>
+</div>
+</div>
+<!-- Done Spec 4 -->
+<div class="rounded-md p-2.5 bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-slate-300 cursor-pointer transition">
+<h2 class="text-xs font-normal text-slate-700 leading-snug">
+              Specpack 0
+            </h2>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Done</span>
+<span class="text-[11px] font-mono text-slate-400">24x</span>
+</div>
+</div>
+<!-- Done Spec 5 -->
+<div class="rounded-md p-2.5 bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-slate-300 cursor-pointer transition">
+<h2 class="text-xs font-normal text-slate-700 leading-snug">
+              The deliverable status: one machine-derived stage for the whole pack
+            </h2>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Done</span>
+<span class="text-[11px] font-mono text-slate-400">23x</span>
+</div>
+</div>
+<!-- Done Spec 6 -->
+<div class="rounded-md p-2.5 bg-white hover:bg-[#F8FAFC] border border-[#E2E8F0] hover:border-slate-300 cursor-pointer transition">
+<h2 class="text-xs font-normal text-slate-700 leading-snug">
+              One status vocabulary, maintained by the loop
+            </h2>
+<div class="mt-2 flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded text-[10px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">Done</span>
+<span class="text-[11px] font-mono text-slate-400">8x</span>
+</div>
+</div>
+</div>
+<!-- SECTION: HISTORY 7 -->
+<div class="space-y-1.5 pt-1">
+<div class="px-2 flex items-center justify-between text-[11px] font-mono font-semibold tracking-wider text-slate-400 uppercase">
+<span>HISTORY</span>
+<span class="px-1.5 py-0.2 rounded bg-slate-100 text-[10px] text-slate-500 border border-slate-200">7</span>
+</div>
+<div class="rounded-md p-2 bg-[#F8FAFC] border border-slate-200 text-slate-500 hover:text-slate-800 cursor-pointer transition flex items-center justify-between">
+<span class="text-xs font-mono">loom</span>
+<span class="text-[10px] italic text-slate-400">archive</span>
+</div>
+<div class="rounded-md p-2 bg-[#F8FAFC] border border-slate-200 text-slate-500 hover:text-slate-800 cursor-pointer transition flex items-center justify-between">
+<span class="text-xs font-mono">loom engine</span>
+<span class="text-[10px] italic text-slate-400">archive</span>
+</div>
+<div class="rounded-md p-2 bg-[#F8FAFC] border border-slate-200 text-slate-500 hover:text-slate-800 cursor-pointer transition flex items-center justify-between">
+<span class="text-xs font-mono">okf only engine</span>
+<span class="text-[10px] italic text-slate-400">archive</span>
+</div>
+</div>
+</div>
+<!-- Left Sidebar Footer -->
+<div class="p-3 bg-[#F5F2EA] border-t border-[#E2E8F0] flex items-center justify-between text-[11px] text-slate-500">
+<span class="font-medium">Treadle v1.08</span>
+<span class="font-mono text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-200">127.0.0.1:8788</span>
+</div>
+</aside>
+<!-- =============================================================== -->
+<!-- COLUMN 2: CENTER MAIN AREA (Detailed Review & Findings View) -->
+<!-- =============================================================== -->
+<main class="flex-1 flex flex-col bg-[#FAF9F6] overflow-hidden" data-purpose="review-workspace">
+<!-- Selected Spec Hero / Review Docket Header -->
+<div class="px-6 py-4 bg-white border-b border-[#E2E8F0] flex flex-wrap items-center justify-between gap-4 flex-shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-blue-50 text-blue-700 border border-blue-200 uppercase tracking-wider">
+              Active Run Docket
+            </span>
+<span class="font-mono text-xs text-slate-500 font-medium">specpack/0.4.1</span>
+<span class="text-slate-300">•</span>
+<span class="text-xs font-mono text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+              Gate 05: Quality Conformance
+            </span>
+</div>
+<h2 class="text-lg font-semibold text-[#0F172A] font-serif tracking-tight">
+            The spec library — every spec, readable by its owner
+          </h2>
+</div>
+<!-- Primary Gatekeeper Actions -->
+<div class="flex items-center gap-2.5">
+<button class="px-3 py-1.5 rounded-md bg-white hover:bg-slate-50 border border-[#CBD5E1] text-xs font-medium text-slate-700 shadow-sm transition">
+            Expand All Dockets
+          </button>
+<button class="px-4 py-1.5 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs shadow-sm flex items-center gap-1.5 transition">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+<span>Ratify Verdict &amp; Advance Loom</span>
+</button>
+</div>
+</div>
+<!-- Quick Conformance Alert Strip -->
+<div class="px-6 py-2 bg-amber-50/70 border-b border-amber-200/80 flex items-center justify-between text-xs text-amber-900 flex-shrink-0">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+<span class="font-medium">10 findings require resolution or ratification before Loom advances to deployment.</span>
+</div>
+<div class="flex items-center gap-3 text-[11px] font-mono">
+<span class="font-semibold text-rose-700">2 Blockers</span>
+<span class="text-amber-400">|</span>
+<span class="font-semibold text-amber-700">6 Defects</span>
+<span class="text-amber-400">|</span>
+<span class="font-semibold text-purple-700">2 Smells</span>
+</div>
+</div>
+<!-- Scrollable Findings Cards Container -->
+<div class="flex-1 overflow-y-auto px-6 py-5 space-y-4" id="reviewFindingsCards">
+<!-- CARD T-2 -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="T-2" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">T-2</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold tracking-wider bg-slate-100 text-slate-700 border border-slate-200">IMPROVE</span>
+<span class="text-xs text-slate-600 font-serif italic">LibraryServer isolation &amp; port defaults</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<!-- Findings List -->
+<div class="space-y-3.5">
+<!-- Finding 1: BLOCKER -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-rose-50 text-rose-700 border border-rose-200 badge-blocker">
+                BLOCKER
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">LibraryServer.start() mutated the shared _Handler class:</span> two instances cross-wired — server A admitted events into server B's packs. Live-demonstrated by the reviewer.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> Per-instance binding via <code class="text-amber-800 bg-amber-50 px-1 py-0.5 rounded border border-amber-200 font-mono">type('Bound', ...)</code> exactly as InterviewServer does.
+                </div>
+</div>
+</div>
+<!-- Finding 2: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">list_specs read file-layout keys off the normalized doc:</span> every real pack showed the folder name as title and empty updated; the sort on updated was dead.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> Read title/updated; <code class="text-blue-700 bg-blue-50 px-1 py-0.5 rounded border border-blue-200 font-mono">DERIVE</code> the stage through derive_deliverable — never trust a stored copy (this also fixed three frozen packs displaying 'drafted', flagged by the worker before the verdict).
+                </div>
+</div>
+</div>
+<!-- Finding 3: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">Fixed default port 8788 bound by tests:</span> the suite failed whenever the standing library ran (5 failed/192 reproduced).
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> LibraryServer defaults ephemeral; the CLI passes 8788.
+                </div>
+</div>
+</div>
+<!-- Finding 4: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">A pack whose internal name differed from its folder was listed under a name that 404s.</span>
+<div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> The folder is the route key; the internal name is display-only.
+                </div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD T-3 -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="T-3" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">T-3</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold tracking-wider bg-slate-100 text-slate-700 border border-slate-200">IMPROVE</span>
+<span class="text-xs text-slate-600 font-serif italic">Cross-tab routing and markdown jump links</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<div class="space-y-3.5">
+<!-- Finding 1: BLOCKER FR-9 -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<div class="flex items-center gap-1.5 flex-shrink-0 mt-0.5">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide bg-rose-50 text-rose-700 border border-rose-200 badge-blocker">
+                  BLOCKER
+                </span>
+<span class="px-1.5 py-0.5 rounded font-mono font-bold text-[10px] bg-slate-100 text-slate-700 border border-slate-200">
+                  FR-9
+                </span>
+</div>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">jump-links were dead for every cross-tab ID</span> (card-T-x lives on another tab) and every ID inside rendered markdown (verified: marked emits plain text); the nomatch fallback referenced an element no code creates.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> <code class="text-amber-800 bg-amber-50 px-1 py-0.5 rounded border border-amber-200">jump()</code> routes to the tab owning the ID family, lands after render via pendingJump; id!Html wraps IDs in parsed markdown text nodes only; misses toast honestly.
+                </div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD T-5 -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="T-5" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">T-5</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold tracking-wider bg-slate-100 text-slate-700 border border-slate-200">IMPROVE</span>
+<span class="text-xs text-slate-600 font-serif italic">Approval predicate and server error handling</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<div class="space-y-3.5">
+<!-- Finding 1: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">The page checked S.spec.approved_at, a key /spec never emits</span> — the Approve button reappeared after approval, proposing an act the record forbids.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> Read date.approved.{at,by} from the emitted layout.
+                </div>
+</div>
+</div>
+<!-- Finding 2: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">do_POST had no catch-all:</span> a read-only pack dir killed the socket with a traceback instead of JSON (reproduced).
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> except Exception → 500 JSON, matching the room.
+                </div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD T-6 -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="T-6" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">T-6</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold tracking-wider bg-slate-100 text-slate-700 border border-slate-200">IMPROVE</span>
+<span class="text-xs text-slate-600 font-serif italic">Progress node position mapping</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<div class="space-y-3.5">
+<!-- Finding 1: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">posOf mapped blocked to node 0:</span> a stuck in-review pack rendered as 'Just started' — the opposite of honest states.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> posFor infers the furthest reached node from the record (done/doing work → in_progress; content → shaping); flags never move the path backward.
+                </div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD T-1 -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="T-1" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">T-1</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono font-semibold tracking-wider bg-slate-100 text-slate-700 border border-slate-200">IMPROVE</span>
+<span class="text-xs text-slate-600 font-serif italic">Evidence overclaim &amp; containment checks</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<div class="space-y-3.5">
+<!-- Finding 1: DEFECT -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-amber-50 text-amber-700 border border-amber-200 badge-defect">
+                DEFECT
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">Evidence overclaim</span> (the
+                <a class="text-blue-600 font-mono hover:underline" href="#t-1">T-1</a> /
+                <a class="text-blue-600 font-mono hover:underline" href="#t-4">T-4</a> class, third instance): verify.expect claimed 'script tags neutralized' but no neutralization exists or is tested — the real posture is trusted-on-disk (
+                <a class="text-blue-600 font-mono hover:underline" href="#d-1">D-1</a>).
+                <a class="text-blue-600 font-mono hover:underline" href="#t-2">T-2</a>'s 'five real packs' was also wrong (seven), and
+                <a class="text-blue-600 font-mono hover:underline" href="#t-6">T-6</a>'s recorded evidence ran only its focused file while verify named the full suite.
+                <a class="text-blue-600 font-mono hover:underline" href="#t-7">T-7</a> with exits verified directly; this verdict is the durable disclosure.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> Expect texts reworded to the truth; the full gate ran directly on disk.
+                </div>
+</div>
+</div>
+<!-- Finding 2: SMELL -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-purple-50 text-purple-700 border border-purple-200 badge-smell">
+                SMELL
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">/artifact followed symlinks out of the pack folder while the comment claimed containment.</span>
+<div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> resolve() containment check — the comment's claim is now the code.
+                </div>
+</div>
+</div>
+</div>
+</article>
+<!-- CARD PACK PASS -->
+<article class="bg-white border border-[#E2E8F0] hover:border-[#CBD5E1] rounded-lg p-5 shadow-sm space-y-4 transition" data-card-task="PACK" data-purpose="review-task-card">
+<div class="flex items-center justify-between border-b border-slate-100 pb-3">
+<div class="flex items-center gap-2.5">
+<span class="font-mono font-bold text-sm text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">PACK</span>
+<span class="text-slate-300">—</span>
+<span class="px-2 py-0.5 rounded text-[11px] font-mono tracking-wider font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 badge-pass">PASS</span>
+<span class="text-xs text-slate-600 font-serif italic">Behavioral assertion coverage</span>
+</div>
+<div class="text-xs text-slate-500 font-mono">
+              agent: <span class="text-slate-800 font-medium">red-forman</span>  •  today
+            </div>
+</div>
+<div class="space-y-3.5">
+<!-- Finding 1: SMELL -->
+<div class="flex items-start gap-3 text-xs leading-relaxed">
+<span class="px-2 py-0.5 rounded font-mono font-bold text-[10px] tracking-wide flex-shrink-0 mt-0.5 bg-purple-50 text-purple-700 border border-purple-200 badge-smell">
+                SMELL
+              </span>
+<div class="text-slate-700 flex-1">
+<span class="font-medium text-[#0F172A]">The structural tests blessed the dead branches (S-10):</span> twenty string-presence asserts proved presence, not behavior — the institutionalized <a class="text-blue-600 font-mono hover:underline" href="#t-4">T-4</a> precedent.
+                <div class="mt-1.5 text-slate-600 font-mono text-[11px] bg-[#F8FAFC] p-2.5 rounded-md border border-[#E2E8F0]">
+<span class="text-emerald-700 font-semibold">fix:</span> test_web_behavior.py now executes the page's real functions under node with a stubbed DOM: markdown ID wrapping, cross-tab routing, toast-on-miss, flag positioning, grouping, picked-reset — 19 behavior assertions.
+                </div>
+</div>
+</div>
+</div>
+</article>
+</div>
+<!-- Center Area Minimal Status Bar -->
+<footer class="h-9 bg-white border-t border-[#E2E8F0] px-6 flex items-center justify-between text-xs text-slate-500 select-none flex-shrink-0" data-purpose="statusBar">
+<div class="flex items-center gap-3">
+<span class="flex items-center gap-1.5 font-mono text-[11px] text-emerald-700 font-medium">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            Review Socket: Live
+          </span>
+<span class="text-slate-300">|</span>
+<span class="text-slate-600">Total Findings: 10 (2 Blocker, 6 Defect, 2 Smell)</span>
+</div>
+<div class="flex items-center gap-3 font-mono text-[11px] text-slate-400">
+<span>Markdown wrap: active</span>
+<span>•</span>
+<span>Treadle 8788/specpack</span>
+</div>
+</footer>
+</main>
+<!-- =============================================================== -->
+<!-- COLUMN 3: RIGHT PANEL (Phase Inspection Tabs for Selected Spec) -->
+<!-- =============================================================== -->
+<aside class="w-80 md:w-88 bg-white border-l border-[#E2E8F0] flex flex-col flex-shrink-0 z-10 shadow-[-1px_0_3px_rgba(0,0,0,0.02)]" data-purpose="spec-phase-inspection-dock">
+<!-- Right Panel Title -->
+<div class="p-4 border-b border-[#E2E8F0] bg-[#FAF9F6]">
+<div class="text-[10px] font-mono uppercase tracking-wider text-slate-500 font-bold mb-1">Spec Lifecycle Phase</div>
+<h3 class="text-sm font-semibold text-[#0F172A] font-serif">Phase Navigation &amp; Context</h3>
+</div>
+<!-- Phase Vertical Navigation Dock -->
+<div class="p-3 border-b border-[#E2E8F0] bg-white">
+<nav aria-label="Spec Lifecycle Phases" class="space-y-1.5">
+<!-- Tab 1: Overview -->
+<button class="w-full text-left px-3 py-2 rounded-lg text-slate-600 hover:bg-[#F8FAFC] hover:text-slate-900 transition flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] flex items-center justify-center font-bold">✓</span>
+<div>
+<div class="text-xs font-medium text-slate-800">01. Blueprint Intake</div>
+<div class="text-[10px] text-slate-400 font-mono">Completed</div>
+</div>
+</div>
+<span class="text-[10px] font-mono text-slate-400 group-hover:text-slate-600">view</span>
+</button>
+<!-- Tab 2: Spec -->
+<button class="w-full text-left px-3 py-2 rounded-lg text-slate-600 hover:bg-[#F8FAFC] hover:text-slate-900 transition flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] flex items-center justify-center font-bold">✓</span>
+<div>
+<div class="text-xs font-medium text-slate-800">02. Canonical Spec</div>
+<div class="text-[10px] text-slate-400 font-mono">Anchored</div>
+</div>
+</div>
+<span class="text-[10px] font-mono text-slate-400 group-hover:text-slate-600">view</span>
+</button>
+<!-- Tab 3: Design -->
+<button class="w-full text-left px-3 py-2 rounded-lg text-slate-600 hover:bg-[#F8FAFC] hover:text-slate-900 transition flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] flex items-center justify-center font-bold">✓</span>
+<div>
+<div class="text-xs font-medium text-slate-800">03. UI/UX Archetype</div>
+<div class="text-[10px] text-slate-400 font-mono">Synthesized</div>
+</div>
+</div>
+<span class="text-[10px] font-mono text-slate-400 group-hover:text-slate-600">view</span>
+</button>
+<!-- Tab 4: Tasks -->
+<button class="w-full text-left px-3 py-2 rounded-lg text-slate-600 hover:bg-[#F8FAFC] hover:text-slate-900 transition flex items-center justify-between group">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-mono text-[10px] flex items-center justify-center font-bold">✓</span>
+<div>
+<div class="text-xs font-medium text-slate-800">04. Assembly Tasks</div>
+<div class="text-[10px] text-slate-400 font-mono">6 tasks woven</div>
+</div>
+</div>
+<span class="text-[10px] font-mono text-slate-400 group-hover:text-slate-600">view</span>
+</button>
+<!-- Tab 5: Review (CURRENTLY ACTIVE) -->
+<div class="w-full text-left px-3 py-2.5 rounded-lg bg-blue-50/80 border-2 border-blue-600 transition flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-2.5">
+<span class="relative flex h-3 w-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3 w-3 bg-blue-600"></span>
+</span>
+<div>
+<div class="text-xs font-bold text-blue-900">05. Conformance Gate</div>
+<div class="text-[10px] text-blue-700 font-mono font-medium">Currently Inspecting</div>
+</div>
+</div>
+<span class="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-100 text-amber-800 border border-amber-300">
+              10
+            </span>
+</div>
+</nav>
+</div>
+<!-- Right Panel Context Details / Curatorial Metadata -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs bg-[#FAF9F6]/50">
+<!-- Review Stage Meta Card -->
+<div class="bg-white border border-[#E2E8F0] rounded-lg p-3.5 space-y-2.5 shadow-sm">
+<div class="text-[11px] font-mono uppercase text-slate-500 font-semibold tracking-wider">Gate Conformance State</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Current Phase:</span>
+<span class="font-semibold text-slate-800 font-mono">Gatekeeper Review</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Required Signoff:</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-amber-50 text-amber-800 border border-amber-200">
+              Awaiting Verdict
+            </span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-slate-600">Lead Reviewer:</span>
+<span class="font-mono text-slate-800 font-medium">red-forman</span>
+</div>
+</div>
+<!-- Metric Breakdown -->
+<div class="bg-white border border-[#E2E8F0] rounded-lg p-3.5 space-y-2.5 shadow-sm">
+<div class="text-[11px] font-mono uppercase text-slate-500 font-semibold tracking-wider">Finding Distribution</div>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-rose-700 font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-rose-600"></span> Blockers
+                </span>
+<span class="font-mono font-semibold text-rose-700">2</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-rose-600 h-1.5 rounded-full" style="width: 20%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-amber-700 font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-500"></span> Defects
+                </span>
+<span class="font-mono font-semibold text-amber-700">6</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-amber-500 h-1.5 rounded-full" style="width: 60%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] mb-1">
+<span class="text-purple-700 font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-purple-500"></span> Code Smells
+                </span>
+<span class="font-mono font-semibold text-purple-700">2</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-purple-500 h-1.5 rounded-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Spec Provenance -->
+<div class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-3 text-[11px] space-y-1.5 text-slate-500">
+<div class="font-semibold text-slate-700 font-serif">Curatorial Guidance</div>
+<p class="leading-relaxed">
+            All Blockers must be ratified or resolved prior to promoting deliverable status. Resolving blockers unlocks the automated loom pipeline.
+          </p>
+</div>
+</div>
+<!-- Right Panel Footer -->
+<div class="p-3 bg-[#FAF9F6] border-t border-[#E2E8F0] text-center">
+<button class="w-full py-1.5 px-3 rounded bg-white hover:bg-slate-50 border border-[#CBD5E1] text-xs font-medium text-slate-700 shadow-sm transition">
+          Export Review Docket (JSON)
+        </button>
+</div>
+</aside>
+</div>
+<!-- END: ApplicationBody -->
+<!-- BEGIN: Filtering & Interactive Scripts -->
+<script data-purpose="review-filtering-interactivity">
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterBtn = document.getElementById('toggleFilterBtn');
+      const searchInput = document.getElementById('specSearchInput');
+      const cards = document.querySelectorAll('[data-purpose="review-task-card"]');
+      let onlyBlockers = false;
+
+      // Filter blocker cards toggle
+      if (filterBtn) {
+        filterBtn.addEventListener('click', () => {
+          onlyBlockers = !onlyBlockers;
+          if (onlyBlockers) {
+            filterBtn.classList.remove('bg-white', 'text-slate-700');
+            filterBtn.classList.add('bg-rose-50', 'border-rose-300', 'text-rose-800');
+            filterBtn.innerHTML = `
+              <svg class="w-3.5 h-3.5 text-rose-700" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span>Showing Blockers Only</span>
+            `;
+            cards.forEach(card => {
+              const hasBlocker = card.querySelector('.badge-blocker') !== null;
+              card.style.display = hasBlocker ? 'block' : 'none';
+            });
+          } else {
+            filterBtn.classList.remove('bg-rose-50', 'border-rose-300', 'text-rose-800');
+            filterBtn.classList.add('bg-white', 'text-slate-700');
+            filterBtn.innerHTML = `
+              <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/></svg>
+              <span>Filter Blockers</span>
+            `;
+            cards.forEach(card => card.style.display = 'block');
+          }
+        });
+      }
+
+      // Quick Spec / Finding text filtering
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          cards.forEach(card => {
+            const text = card.textContent.toLowerCase();
+            if (text.includes(query)) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+<!-- END: Filtering & Interactive Scripts -->
+</body></html>

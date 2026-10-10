@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Treadle — The human drives; the machine moves</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ba1a1a",
+            "primary-container": "#3366cc",
+            "on-secondary-fixed": "#171c20",
+            "inverse-surface": "#303031",
+            "secondary-fixed": "#dfe3e8",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#211b00",
+            "tertiary-fixed-dim": "#dcc661",
+            "surface": "#faf9fa",
+            "inverse-on-surface": "#f2f0f1",
+            "tertiary-fixed": "#f9e37a",
+            "on-surface": "#1b1c1d",
+            "surface-dim": "#dbdadb",
+            "surface-container-high": "#e9e8e9",
+            "on-secondary-container": "#606569",
+            "on-primary-fixed-variant": "#00419d",
+            "on-tertiary-fixed-variant": "#524600",
+            "tertiary": "#6d5e00",
+            "surface-bright": "#faf9fa",
+            "secondary-fixed-dim": "#c2c7cc",
+            "surface-container-highest": "#e3e2e3",
+            "secondary-container": "#dfe3e8",
+            "primary": "#094cb2",
+            "on-primary-container": "#e7ebff",
+            "on-tertiary": "#ffffff",
+            "on-error-container": "#93000a",
+            "tertiary-container": "#bfab49",
+            "outline-variant": "#c3c6d5",
+            "on-tertiary-container": "#4a3f00",
+            "on-background": "#1b1c1d",
+            "on-surface-variant": "#434653",
+            "on-secondary": "#ffffff",
+            "surface-container": "#efedee",
+            "on-error": "#ffffff",
+            "on-secondary-fixed-variant": "#42474b",
+            "surface-container-low": "#f5f3f4",
+            "primary-fixed-dim": "#b1c5ff",
+            "outline": "#737784",
+            "secondary": "#5a5f63",
+            "error-container": "#ffdad6",
+            "on-primary-fixed": "#001946",
+            "primary-fixed": "#d9e2ff",
+            "inverse-primary": "#b1c5ff",
+            "surface-variant": "#e3e2e3",
+            "background": "#faf9fa",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#2259bf"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "fontFamily": {
+            "headline": ["Noto Serif", "serif"],
+            "display": ["Noto Serif", "serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Public Sans", "sans-serif"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 1.15rem;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    
+    /* Tactile Pedal Animation & Mechanical Button Feel */
+    .treadle-pedal-btn {
+      box-shadow: 0 4px 0 #002f7a, 0 8px 16px rgba(9, 76, 178, 0.25);
+      transition: all 0.08s ease-in-out;
+    }
+    .treadle-pedal-btn:hover {
+      transform: translateY(1px);
+      box-shadow: 0 3px 0 #002f7a, 0 6px 12px rgba(9, 76, 178, 0.22);
+    }
+    .treadle-pedal-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 #002f7a, 0 2px 4px rgba(9, 76, 178, 0.15);
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #faf9fa;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #c3c6d5;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #737784;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- 1. Editorial Navigation Header (Implementing TopNavBar Shared Component Logic) -->
+<header class="bg-surface-container-lowest/80 dark:bg-inverse-surface/80 backdrop-blur-md docked full-width top-0 z-50 sticky transition-colors flat no shadows">
+<div class="flex items-center justify-between px-6 py-3 w-full border-none">
+<!-- Brand & Philosophy -->
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline font-bold text-lg shadow-sm">
+<span class="material-symbols-outlined" data-icon="tune" style="font-variation-settings: 'FILL' 1;">tune</span>
+</div>
+<div>
+<span class="font-headline font-bold text-xl tracking-tight text-on-surface dark:text-inverse-on-surface">Treadle</span>
+<p class="font-label text-[11px] text-on-surface-variant dark:text-outline-variant tracking-normal -mt-0.5">The human drives; the machine moves</p>
+</div>
+</div>
+<!-- Mode Pedal Switcher: 'Know' vs 'Do' -->
+<div class="ml-4 hidden lg:flex items-center bg-surface-container-low p-1 rounded-xl">
+<button class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-label font-medium text-on-surface-variant hover:text-on-surface transition-all" id="knowPlaneTab">
+<span class="material-symbols-outlined text-sm" data-icon="menu_book">menu_book</span>
+<span>Know (Knowledge)</span>
+</button>
+<button class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-label font-bold bg-surface-container-lowest text-primary shadow-sm transition-all" id="doPlaneTab">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="autorenew">autorenew</span>
+<span>Do (Loops)</span>
+<span class="inline-block w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</button>
+</div>
+</div>
+<!-- Center Status: Loom Live Telemetry -->
+<div class="hidden xl:flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-container-low">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-label text-xs text-on-surface-variant font-medium">
+          Loom Active: <strong class="text-on-surface font-semibold">Sprint 04</strong> · Agent Weaving <code class="font-mono text-[11px] bg-surface-container-high px-1.5 py-0.5 rounded text-primary">specpack/0.4</code>
+</span>
+</div>
+<!-- Trailing Action Badges & Curator Profile -->
+<div class="flex items-center gap-4">
+<!-- Review Pending Decisions Badge -->
+<button class="flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed px-3 py-1.5 rounded-xl font-label text-xs font-semibold hover:bg-tertiary-fixed-dim transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm" data-icon="fact_check" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span>Review Diffs (3)</span>
+<span class="w-5 h-5 rounded-full bg-tertiary text-on-tertiary text-[10px] flex items-center justify-center font-bold">3</span>
+</button>
+<!-- Quick Trailing Icon Actions from Shared Component -->
+<div class="hidden sm:flex items-center gap-1 text-on-surface-variant">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors hover:text-on-surface" title="Archival Logs">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors hover:text-on-surface" title="Spec Tree Graph">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors hover:text-on-surface relative" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<!-- Curator Profile -->
+<div class="flex items-center gap-2.5 pl-2 border-l border-outline-variant/30">
+<img class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-highest" data-alt="A dignified close-up editorial portrait of Elena, an expert spec curator, bathed in soft studio daylight. She has a composed, thoughtful gaze with dark hair, styled in modern minimalist clothing. The backdrop uses clean museum-grade parchment tones with gentle architectural shadows that reflect a serene, scholarly environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZtKRcyKoLiimsPfUJ9azCLcVi6KEvVKbpZiRFA82MKPzFfwI0k0EIEztPvqE_uyr7Z13IVMToqw4yRfMPokoDV89iJgIE7A1o-Df_dWXBVOtyMx8b2sJt-Aj4GUzVvnDfXhLkK20Xp0Y88xByrcV5U8D9x5IYYsgP6Qbdt2v_G7Zl7k5pakK0hqU4bhithNzdBZ0FfXPUE_kmMU1nH7w7PZioSva_ohZOxR5XWdY5oJbYUQC9ltl5rA"/>
+<div class="hidden md:block text-left">
+<p class="font-label text-xs font-semibold leading-tight text-on-surface">Elena Ramos</p>
+<p class="font-label text-[10px] text-on-surface-variant">Lead Spec Curator</p>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- 2. Sub-header: Harness Rhythm Bar -->
+<section class="bg-surface-container-low px-6 py-2.5 transition-colors">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+<!-- Philosophy / Rhythm Metaphor -->
+<div class="flex items-center gap-3">
+<span class="font-label text-xs uppercase tracking-wider text-tertiary font-bold flex items-center gap-1 bg-tertiary-fixed/60 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-xs" data-icon="auto_stories">auto_stories</span>
+          The Treadle Rhythm
+        </span>
+<div class="flex items-center gap-2 text-xs font-medium text-on-surface-variant">
+<span class="text-on-surface">Agent Proposes</span>
+<span class="material-symbols-outlined text-sm text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+<span class="text-primary font-bold bg-primary-fixed/50 px-2 py-0.5 rounded">Human Presses Pedal</span>
+<span class="material-symbols-outlined text-sm text-outline-variant" data-icon="arrow_forward">arrow_forward</span>
+<span class="text-on-surface">Loop Advances</span>
+</div>
+</div>
+<!-- Quick Metrics & Conformance Snapshot -->
+<div class="flex items-center gap-6 text-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-bold text-on-surface">18</span>
+<span class="text-on-surface-variant">Verified Specs</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-tertiary" data-icon="pending_actions" style="font-variation-settings: 'FILL' 1;">pending_actions</span>
+<span class="font-bold text-tertiary">3 Proposals</span>
+<span class="text-on-surface-variant">Awaiting Pedal</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-primary-container" data-icon="task_alt">task_alt</span>
+<span class="font-bold text-on-surface">99.4%</span>
+<span class="text-on-surface-variant">Automated Evidence</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. Three-Column Main Studio Workspace -->
+<main class="flex-1 max-w-7xl w-full mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+<!-- COLUMN A: Left Column (3 cols) — Spec Knowledge & Tree (Anchored Truth) -->
+<aside class="lg:col-span-3 flex flex-col gap-4">
+<!-- Box Header & Search -->
+<div class="bg-surface-container-lowest p-4 rounded-xl shadow-none">
+<div class="flex items-center justify-between mb-3">
+<div>
+<h2 class="font-headline font-semibold text-base text-on-surface">Knowledge Plane</h2>
+<p class="font-label text-xs text-on-surface-variant">Anchored Truth &amp; Living Specs</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary p-1 rounded hover:bg-surface-container transition-colors" title="Create New Spec Node">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+</button>
+</div>
+<!-- Plain English Search Input -->
+<div class="relative mb-3">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-sm" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low pl-9 pr-3 py-2 text-xs rounded-lg text-on-surface placeholder:text-on-surface-variant/70 border-none focus:ring-1 focus:ring-primary font-body outline-none" placeholder="Search truths, specs &amp; rules..." type="text"/>
+</div>
+<!-- Non-technical Tree Navigation -->
+<div class="space-y-1">
+<!-- Item 1: Active Focus -->
+<div class="p-2.5 rounded-lg bg-surface-container text-on-surface cursor-pointer transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="folder_open">folder_open</span>
+<span class="font-body text-xs font-semibold">1. Team &amp; Workspace</span>
+</div>
+<span class="text-[10px] font-label font-bold px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed">
+                Needs Pedal
+              </span>
+</div>
+<div class="ml-5 mt-1.5 space-y-1 text-xs">
+<div class="p-1.5 rounded bg-surface-container-lowest text-primary font-medium flex items-center justify-between">
+<span class="truncate">RFC-104: Seats &amp; Billing</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<div class="p-1 text-on-surface-variant hover:text-on-surface truncate cursor-pointer">
+                Spec 1.2: Admin Invitation Rights
+              </div>
+</div>
+</div>
+<!-- Item 2: Frozen Spec -->
+<div class="p-2 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="folder">folder</span>
+<span class="font-body text-xs text-on-surface font-medium">2. User Onboarding Flow</span>
+</div>
+<span class="text-[10px] font-label px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">
+                Frozen
+              </span>
+</div>
+</div>
+<!-- Item 3: Checkout -->
+<div class="p-2 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="folder">folder</span>
+<span class="font-body text-xs text-on-surface font-medium">3. Checkout &amp; Stripe Hook</span>
+</div>
+<span class="text-[10px] font-label px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">
+                Verified
+              </span>
+</div>
+</div>
+<!-- Item 4: Golden Rules -->
+<div class="p-2 rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="shield">shield</span>
+<span class="font-body text-xs text-on-surface font-medium">4. Golden Conformance Rules</span>
+</div>
+<span class="text-[10px] font-label px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-semibold">
+                40 Rules
+              </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Friendly Treadle Harness Principle Card -->
+<div class="bg-surface-container-low p-4 rounded-xl">
+<div class="flex items-start gap-2.5">
+<div class="p-1 rounded bg-tertiary-fixed text-on-tertiary-fixed shrink-0">
+<span class="material-symbols-outlined text-base" data-icon="balance">balance</span>
+</div>
+<div>
+<h3 class="font-headline font-semibold text-xs text-on-surface mb-1">Treadle Golden Principle</h3>
+<p class="font-body text-xs text-on-surface-variant leading-relaxed">
+              "No agent edits code or deploys loops without a human-ratified spec and automated conformance receipts."
+            </p>
+</div>
+</div>
+</div>
+<!-- Loom Harness Quick Status -->
+<div class="bg-surface-container-lowest p-4 rounded-xl space-y-2">
+<div class="flex items-center justify-between text-xs font-label">
+<span class="text-on-surface-variant">Loop Runner Harness:</span>
+<span class="text-primary font-bold">Autonomous v2.4</span>
+</div>
+<div class="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full w-3/4"></div>
+</div>
+<p class="text-[11px] text-on-surface-variant">Agent halted at Pedal Gate. Ready for human decision.</p>
+</div>
+</aside>
+<!-- COLUMN B: Center Column (6 cols) — The Decision Loom (Agents Propose, You Steer) -->
+<section class="lg:col-span-6 flex flex-col gap-5">
+<!-- Active Proposal Banner Card -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm">
+<!-- Header & RFC Identification -->
+<div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-surface-container-high/60">
+<div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label text-[11px] font-bold tracking-wide">
+                RFC-104
+              </span>
+<span class="text-xs font-label text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="radio_button_checked">radio_button_checked</span>
+                Pending Pedal Stroke
+              </span>
+</div>
+<h1 class="font-headline font-bold text-2xl text-on-surface mt-1">Flexible Team Seats &amp; Billing Tiers</h1>
+</div>
+<div class="text-right">
+<span class="font-label text-xs text-on-surface-variant">Loop Run: #412</span>
+<p class="font-mono text-[11px] text-primary">target: specpack/0.4.1</p>
+</div>
+</div>
+<!-- Weaver-Agent Explainer Persona -->
+<div class="bg-surface-container-low p-4 rounded-xl flex items-start gap-3.5 mb-5">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 border border-outline-variant/30 text-primary">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-body font-semibold text-xs text-on-surface">Weaver-Agent v2 (Autonomous Spec Coder)</h3>
+<span class="text-[10px] text-on-surface-variant">Just now</span>
+</div>
+<p class="font-body text-xs text-on-surface-variant mt-1 leading-relaxed">
+              "I have analyzed our customer survey data and drafted pricing rules in plain English. I added logic so workspace administrators can invite up to 10 view-only team members without triggering Stripe credit card validation. Here is the plain-language proposal:"
+            </p>
+</div>
+</div>
+<!-- Plain-English Side-by-Side Diff Component -->
+<div class="space-y-2 mb-5">
+<div class="flex items-center justify-between text-xs font-label">
+<span class="font-bold text-on-surface">Plain-Language Spec Comparison</span>
+<span class="text-on-surface-variant">Non-technical readability: 98%</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<!-- Left: Current Truth -->
+<div class="p-3.5 rounded-xl bg-surface-container-high/60 border-l-4 border-outline">
+<div class="flex items-center gap-1.5 text-secondary font-label text-[11px] font-semibold uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+                Current Anchored Truth
+              </div>
+<p class="font-body text-xs text-on-surface leading-relaxed">
+                Admins can invite <strong>paid members only</strong> at fixed price ($20/seat). Any invited email immediately triggers seat billing and requires credit card checkout.
+              </p>
+<div class="mt-3 pt-2 border-t border-surface-container-highest flex items-center gap-1 text-[11px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs" data-icon="lock">lock</span>
+                Ratified in Sprint 02 (Oct 14)
+              </div>
+</div>
+<!-- Right: Agent Proposal -->
+<div class="p-3.5 rounded-xl bg-primary-fixed/30 border-l-4 border-primary">
+<div class="flex items-center gap-1.5 text-primary font-label text-[11px] font-semibold uppercase tracking-wider mb-2">
+<span class="material-symbols-outlined text-sm" data-icon="auto_awesome">auto_awesome</span>
+                Agent's Proposed Truth
+              </div>
+<p class="font-body text-xs text-on-surface font-medium leading-relaxed">
+                Admins can invite <strong>unlimited view-only guests</strong> and up to <strong>3 trial editors</strong> for 14 calendar days without immediate Stripe charges.
+              </p>
+<div class="mt-3 pt-2 border-t border-primary-fixed/50 flex items-center gap-1 text-[11px] text-primary font-semibold">
+<span class="material-symbols-outlined text-xs" data-icon="check_circle">check_circle</span>
+                Preserves Golden Rule #12 &amp; #40
+              </div>
+</div>
+</div>
+</div>
+<!-- Golden Suite Conformance Status Tag -->
+<div class="flex items-center justify-between bg-surface-container-low px-4 py-2.5 rounded-xl mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base text-primary" data-icon="verified_user" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label text-xs font-semibold text-on-surface">Golden Suite Conformance:</span>
+<span class="text-xs text-primary font-bold">40/40 Checks Passed ✓</span>
+</div>
+<span class="text-[11px] font-label text-on-surface-variant bg-surface-container-lowest px-2 py-0.5 rounded">
+            Zero Breaking Changes Detected
+          </span>
+</div>
+<!-- Physical Loom / Treadle Pedal Actions -->
+<div class="space-y-4 pt-2">
+<p class="font-label text-xs text-on-surface-variant text-center font-medium">
+            The machine cannot weave until your foot presses down.
+          </p>
+<div class="flex flex-col sm:flex-row items-stretch gap-3">
+<!-- Tactile Master Pedal Button -->
+<button class="treadle-pedal-btn flex-1 bg-gradient-to-r from-primary to-primary-container text-on-primary font-headline text-sm font-bold py-3.5 px-6 rounded-xl flex items-center justify-center gap-3 cursor-pointer select-none" id="pedalButton">
+<span class="text-xl">🦶</span>
+<span>Step on Pedal: Ratify &amp; Weave Spec</span>
+</button>
+<!-- Revision Button -->
+<button class="bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label text-xs font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm" data-icon="rate_review">rate_review</span>
+<span>Ask for Revision</span>
+</button>
+<!-- Halt Button -->
+<button class="bg-surface-container hover:bg-error-container hover:text-error text-secondary font-label text-xs font-semibold py-3 px-3 rounded-xl flex items-center justify-center gap-1 transition-colors active:scale-[0.98]" title="Halt current loop harness">
+<span class="material-symbols-outlined text-sm" data-icon="front_hand">front_hand</span>
+<span>Halt</span>
+</button>
+</div>
+<!-- Plain English Inline Steer Prompt -->
+<div class="relative mt-2">
+<input class="w-full bg-surface-container-lowest px-4 py-2.5 text-xs rounded-xl text-on-surface placeholder:text-on-surface-variant/70 border border-outline-variant/40 focus:ring-2 focus:ring-primary focus:border-transparent font-body outline-none" placeholder="Give feedback or steer direction in plain English (e.g. 'Make trial 30 days instead')..." type="text"/>
+<button class="absolute right-2 top-2 px-2.5 py-1 bg-surface-container-high hover:bg-primary hover:text-on-primary rounded-lg text-xs font-label font-medium transition-colors">
+              Steer
+            </button>
+</div>
+</div>
+</div>
+<!-- Living Evidence Log Preview -->
+<div class="bg-surface-container-lowest p-5 rounded-xl">
+<h3 class="font-headline font-semibold text-sm text-on-surface mb-2">Automated Spec Conformance Graph</h3>
+<p class="font-body text-xs text-on-surface-variant mb-4">
+          Each loom pedal event commits an immutable cryptographic snapshot to our archival registry.
+        </p>
+<div class="grid grid-cols-3 gap-3 text-center">
+<div class="p-3 bg-surface-container-low rounded-xl">
+<span class="font-label text-lg font-bold text-on-surface">12</span>
+<p class="font-label text-[10px] text-on-surface-variant uppercase mt-1">Screen Viewports</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-xl">
+<span class="font-label text-lg font-bold text-primary">0ms</span>
+<p class="font-label text-[10px] text-on-surface-variant uppercase mt-1">Spec Latency</p>
+</div>
+<div class="p-3 bg-surface-container-low rounded-xl">
+<span class="font-label text-lg font-bold text-tertiary">SHA-256</span>
+<p class="font-label text-[10px] text-on-surface-variant uppercase mt-1">Anchored Hash</p>
+</div>
+</div>
+</div>
+</section>
+<!-- COLUMN C: Right Column (3 cols) — Evidence & Conformance Feed (Evidence Only) -->
+<aside class="lg:col-span-3 flex flex-col gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-xl">
+<div class="flex items-center justify-between pb-3 mb-3 border-b border-surface-container-high/60">
+<div>
+<h2 class="font-headline font-semibold text-base text-on-surface">Live Evidence</h2>
+<p class="font-label text-xs text-on-surface-variant">Receipts &amp; Proof Log</p>
+</div>
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" title="Evidence feed streaming"></span>
+</div>
+<!-- Evidence Receipts Stream -->
+<div class="space-y-2.5" id="evidenceFeed">
+<!-- Receipt 1 -->
+<div class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="task_alt">task_alt</span>
+                Rule #12: Pinned Contract
+              </span>
+<span class="font-label text-[10px] text-on-surface-variant">0.12s ago</span>
+</div>
+<p class="font-body text-xs text-on-surface mt-1">
+              Package schemas match deterministic locks without dependency mutation.
+            </p>
+</div>
+<!-- Receipt 2 -->
+<div class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="task_alt">task_alt</span>
+                Rule #28: Brand Check
+              </span>
+<span class="font-label text-[10px] text-on-surface-variant">1.4s ago</span>
+</div>
+<p class="font-body text-xs text-on-surface mt-1">
+              Zero leaked legacy naming. Vocabulary conforms with editorial style guide.
+            </p>
+</div>
+<!-- Receipt 3 -->
+<div class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="task_alt">task_alt</span>
+                Snapshot Matrix
+              </span>
+<span class="font-label text-[10px] text-on-surface-variant">3.2s ago</span>
+</div>
+<p class="font-body text-xs text-on-surface mt-1">
+              Verified across 12 mobile &amp; desktop viewports with zero visual regression.
+            </p>
+</div>
+<!-- Receipt 4 -->
+<div class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-label text-[11px] font-bold text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="security">security</span>
+                Data Isolation Proof
+              </span>
+<span class="font-label text-[10px] text-on-surface-variant">8s ago</span>
+</div>
+<p class="font-body text-xs text-on-surface mt-1">
+              Multi-tenant customer partitions validated against leak probes.
+            </p>
+</div>
+</div>
+<!-- Evidence Triggers & Actions -->
+<div class="mt-4 pt-3 border-t border-surface-container-high/60 space-y-2">
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-on-surface font-label text-xs font-semibold py-2 px-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-[0.98]" id="runCheckBtn">
+<span class="material-symbols-outlined text-sm text-primary" data-icon="play_circle">play_circle</span>
+<span>Run Conformance Check</span>
+</button>
+<button class="w-full bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label text-xs font-medium py-2 px-3 rounded-lg flex items-center justify-center gap-2 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-sm" data-icon="lock_clock">lock_clock</span>
+<span>Freeze Snapshot into Git</span>
+</button>
+</div>
+</div>
+<!-- Loom Pedal Metaphor Graphic -->
+<div class="bg-surface-container-lowest p-4 rounded-xl text-center">
+<div class="w-12 h-12 mx-auto rounded-full bg-surface-container flex items-center justify-center text-primary mb-2">
+<span class="material-symbols-outlined text-2xl" data-icon="directions_walk">directions_walk</span>
+</div>
+<h4 class="font-headline font-semibold text-xs text-on-surface">The Mechanical Treadle</h4>
+<p class="font-body text-[11px] text-on-surface-variant mt-1 leading-relaxed">
+          Inspired by traditional weaving looms where the foot cadence controls the shuttle. You dictate the pace.
+        </p>
+</div>
+</aside>
+</main>
+<!-- Editorial Footer Bar -->
+<footer class="mt-auto bg-surface-container-low py-4 px-6 border-none">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs text-on-surface-variant gap-3">
+<div class="flex items-center gap-3">
+<span class="font-headline font-bold text-on-surface text-sm">Treadle</span>
+<span class="text-outline-variant">|</span>
+<span>Spec-driven harness for thoughtful creators</span>
+</div>
+<div class="flex items-center gap-6 font-label">
+<span class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+          Engine: Deterministic Rust 1.78
+        </span>
+<span>Signed as: elena@treadle.design</span>
+<a class="hover:text-primary transition-colors" href="#">Archival Specs</a>
+<a class="hover:text-primary transition-colors" href="#">Harness Docs</a>
+</div>
+</div>
+</footer>
+<!-- Pedal Click Micro-Interaction Script -->
+<script>
+    const pedalBtn = document.getElementById('pedalButton');
+    const feed = document.getElementById('evidenceFeed');
+    const runCheckBtn = document.getElementById('runCheckBtn');
+
+    if (pedalBtn) {
+      pedalBtn.addEventListener('click', () => {
+        // Haptic feel visual feedback
+        const originalText = pedalBtn.innerHTML;
+        pedalBtn.innerHTML = `
+          <span class="material-symbols-outlined animate-spin text-xl">autorenew</span>
+          <span>Weaving Spec RFC-104...</span>
+        `;
+        pedalBtn.classList.add('bg-primary');
+
+        setTimeout(() => {
+          pedalBtn.innerHTML = `
+            <span class="material-symbols-outlined text-xl">check_circle</span>
+            <span>Ratified & Weaved! Pedal Released</span>
+          `;
+          
+          // Append new receipt to feed
+          const newReceipt = document.createElement('div');
+          newReceipt.className = 'p-3 rounded-lg bg-primary-fixed/40 transition-all duration-300';
+          newReceipt.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="font-label text-[11px] font-bold text-primary flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">verified</span>
+                RFC-104 Ratified
+              </span>
+              <span class="font-label text-[10px] text-on-surface-variant">Just now</span>
+            </div>
+            <p class="font-body text-xs text-on-surface mt-1">
+              Human pedal stroke stamped spec into branch main (hash: #04b82e).
+            </p>
+          `;
+          feed.prepend(newReceipt);
+
+          setTimeout(() => {
+            pedalBtn.innerHTML = originalText;
+          }, 3500);
+        }, 1200);
+      });
+    }
+
+    if (runCheckBtn) {
+      runCheckBtn.addEventListener('click', () => {
+        runCheckBtn.classList.add('opacity-70');
+        runCheckBtn.innerHTML = `
+          <span class="material-symbols-outlined animate-spin text-sm text-primary">sync</span>
+          <span>Verifying 40 Golden Rules...</span>
+        `;
+        setTimeout(() => {
+          runCheckBtn.classList.remove('opacity-70');
+          runCheckBtn.innerHTML = `
+            <span class="material-symbols-outlined text-sm text-primary">verified</span>
+            <span>All 40 Passed Conformance</span>
+          `;
+          setTimeout(() => {
+            runCheckBtn.innerHTML = `
+              <span class="material-symbols-outlined text-sm text-primary">play_circle</span>
+              <span>Run Conformance Check</span>
+            `;
+          }, 2500);
+        }, 1000);
+      });
+    }
+  </script>
+</body></html>
