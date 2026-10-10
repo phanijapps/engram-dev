@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** The treadle launcher: delegates to tsx with the CLI entry (alpha shape —
+/** The root launcher: delegates to tsx with the CLI entry (alpha shape —
  *  the compiled bin lands with the first built release). */
 import { spawnSync } from 'node:child_process';
 import { join, dirname } from 'node:path';

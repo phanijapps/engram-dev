@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T11:39:15Z",
+    "updated": "2026-10-10T11:48:46Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -677,6 +677,12 @@
         "verdict": "IMPROVE",
         "by": "agent:red-forman",
         "note": "R3 of 5: fix-then-execute. 2 BLOCKER (five headers vs four that exist; three unprovenanced dark tokens) + 6 DEFECT + 6 SMELL — all amended: four headers, tokens declared derived, the ghost DESIGN.md citation repaired, wiring moved to where work lands (FR-3→T-8, FR-8→T-7, AC-3→T-3, FR-9→T-2), one shared theme key, T-1 persistence honest, the 0.4.1 assertion added to the portability gate, T-6 names its closure preconditions, the needs chain declared, T-2 split (scrub+gate = T-7), T-4 split (route = T-4, panel = T-8), T-3 pinned to the corpus fixture, test files named per task."
+      },
+      {
+        "on": "T-0",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "R4 of 5 (first implementation diff): fix-and-ship. 1 BLOCKER (the harness dropped marked.min.js — doc panes would render ReferenceError under T-3/T-8 fixtures) + 3 DEFECT (design mechanism unrecorded; inline pre-render scripts inert — T-1 no-flash untestable; a brand-fence entry justified by a false sentence, gate quiet because brand:check rides outside pnpm check) + 5 SMELL. ALL FIXED in the harness: scripts evaluate in document order (marked → inline → page), the design doc records the shipped mechanism, the launcher comment cleaned and the false fence deleted (a real leak in bin/ is visible again), MouseEvent dispatch, exact-route + aria-selected assertions, Request-aware fetch shim, tmp cleanup, no double-slash URL. Record verified true by the reviewer (54/54, corpus, coverage, loop state)."
       }
     ]
   },

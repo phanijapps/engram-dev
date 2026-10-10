@@ -3,7 +3,7 @@
  *  server, and a dispatched click drives the router. If this passes, every
  *  later DOM verify has legs. */
 import { describe, expect, it } from 'vitest';
-import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { startLibrary } from '../src/servers.js';
@@ -60,6 +60,7 @@ describe('the DOM harness (T-0 smoke)', () => {
     const root = specRoot();
     const lib = await startLibrary(root);
     try {
+      void rmSync;
       const h = await loadLibraryPage(lib.url);
       // boot: the pane fills from /specs through the shimminged fetch
       await h.waitFor(() => h.window.document.querySelectorAll('#pane .card').length > 0);
@@ -67,12 +68,15 @@ describe('the DOM harness (T-0 smoke)', () => {
       // a dispatched click routes: hash moves, the dossier renders tabs
       h.click('#pane .card');
       await h.waitFor(() => h.window.document.querySelectorAll('.tab').length >= 5);
-      expect(h.window.location.hash).toContain('/p');
+      expect(h.window.location.hash).toBe('#/p'); // exact: a half-broken router must fail
+      const selected = h.window.document.querySelector('.tab[aria-selected="true"]');
+      expect(selected?.textContent).toContain('Overview');
       expect(h.window.document.querySelector('#detail')?.textContent).not.toContain(
         'Choose a spec',
       );
     } finally {
       await lib.close();
+      rmSync(root, { recursive: true, force: true });
     }
   });
 
@@ -94,6 +98,7 @@ describe('the DOM harness (T-0 smoke)', () => {
       expect(second.window.localStorage.getItem('theme')).toBe('dark');
     } finally {
       await lib.close();
+      rmSync(root, { recursive: true, force: true });
     }
   });
 });
