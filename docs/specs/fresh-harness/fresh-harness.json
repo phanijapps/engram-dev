@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:17:53Z",
+    "updated": "2026-10-10T15:20:39Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -639,7 +639,7 @@
       "id": "T-5",
       "title": "The wiki tells the TS truth",
       "detail": "Wiki truth pass: rewrite systems/treadle.md + sdd-harness-architecture.md to the TS engines; supersede okf-engine.md + loom-engine.md into docs/archive/wiki-systems/ per Q-4; de-python domain pages; regenerate indexes; full know ritual green (validate 0/0, fingerprints, stamp, anchors 0, fresh).",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-13",
@@ -658,6 +658,15 @@
       },
       "needs": [
         "T-4"
+      ],
+      "evidence": [
+        {
+          "cmd": "know validate + anchors + status + link grep",
+          "exit": 0,
+          "at": "2026-10-10T15:20:39Z",
+          "by": "agent:pi",
+          "notes": "The wiki tells the TS truth: python path-links rewritten to the TS sources across six pages; the two retired engine pages already superseded (T-4) — sdd-harness-architecture rewritten around the treadle table + TS footnotes (bin, CLI surface); stale product docs (7 memex-era files + zip + Harness.schema) moved to docs/archive/product — live product/ = the format contracts only (OKF 0.2 spec + specpack 0.3 schema); anchor to the moved Structured_Brief re-pointed; skills anchor to the new harness home; fingerprints re-baselined, stamp fresh. Ritual green UNPIPED: validate 0/0, anchors 19 checked 0 need review, status fresh, 0 findings; zero engine/(okf|loom) links in live surfaces; links gate 62 files green; check 89 green."
+        }
       ]
     },
     {
@@ -726,5 +735,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 36
+  "revision": 37
 }

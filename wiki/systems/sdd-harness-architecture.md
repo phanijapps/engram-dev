@@ -122,10 +122,10 @@ its CLI entry point. [^p3]
 
 [^p4]: `docs/specs/okf-only-engine/design.md`; `wiki/decisions/graph-engineering-fast-track.md` (implementation-supported).
 
-[^p5]: `engine/okf/pyproject.toml` `[project.scripts]`; `engine/loom/pyproject.toml` `[project.scripts]` (observed).
+[^p5]: the bin lives at `treadle/packages/cli/package.json` `bin` — one `treadle` entry, two pedals (observed, 2026-10-10).
 
 [^p6]: AST import counts, 2026-10-08; cross-checked against `wiki/code/**` "Used by" sections (implementation-supported).
 
-[^p7]: `engine/loom/src/loom_kit/cli.py:85`: templates used in `cmd_init` only (observed).
+[^p7]: `treadle/packages/core/src/specpack/cli.ts`: templates used in `cmd_init` only (observed).
 
-[^p8]: `engine/okf/pyproject.toml` defines one script: `okf`. No `mcp` module exists under `okf_kit/`. `engine/loom/src/loom_kit/cli.py` defines 12 subcommands (rebase, accept, reject, close joined the 0.3 waves); none is `run` (observed, 2026-10-08).
+[^p8]: the CLI speaks `do` (init, add, next, record, answer, approve, reject, close, check, status, events, interview, library) and `know` (search, read, validate, links, findings, fingerprints, anchors, stamp, status); no `run` (observed, 2026-10-10).

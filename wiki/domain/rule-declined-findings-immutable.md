@@ -17,12 +17,12 @@ A finding that was **declined** is dead at its key: re-proposing the same
 (accepted or declined) is terminal — resolving it again raises.
 
 [^f1]:
-    `engine/okf/okf_kit/core/findings.py:120-141` — `propose_finding`
+    `treadle/packages/knowledge/src/core/findings.ts` — `propose_finding`
     returns the existing finding untouched and flags `refused` when its status
     is `declined`.
 
 [^f2]:
-    `engine/okf/okf_kit/core/findings.py:144-158` — `resolve_finding`
+    `treadle/packages/knowledge/src/core/findings.ts` — `resolve_finding`
     raises `FindingsError` for already-terminal findings, unknown ids, and
     invalid decisions.
 

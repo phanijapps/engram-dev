@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: The anti-waterfall loop — bounded artifacts, interleaved work
 description: "The SDD loop pattern: knowledge first, then the smallest analysis/design that unblocks the next slice; uncertainty recorded as a deliverable; unblocked work proceeds while questions run."
-sources: [{ id: src, resource: skills/sdlc/analyze/SKILL.md }]
+sources: [{ id: src, resource: treadle/harness/skills/sdlc/analyze/SKILL.md }]
 tags: [pattern, sdd, anti-waterfall, loop]
 ---
 
@@ -15,7 +15,7 @@ Knowledge first, then five basic skills in a loop — with the loop's shape
 itself preventing waterfall:
 
 [^l1]:
-    `skills/sdlc/analyze/SKILL.md` §0 — bounded artifacts, uncertainty
+    `treadle/harness/skills/sdlc/analyze/SKILL.md` §0 — bounded artifacts, uncertainty
     as a deliverable, interleaving is the point.
 
 [^l2]:

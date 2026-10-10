@@ -45,5 +45,5 @@ last-meaningful-change instant. Trust tier comes from `verified` events.
 
 # Evidence
 
-- `engine/okf/okf_kit/core/stamp.py`, `findings.py`, `fingerprints.py`,
-  `templates.py`; `engine/okf/okf_kit/code/indexer.py` (implementation-supported)
+- `treadle/packages/knowledge/src/core/stamp.ts`, `findings.py`, `fingerprints.py`,
+  `templates.py`; `treadle/packages/knowledge/src/code/indexer.ts` (implementation-supported)

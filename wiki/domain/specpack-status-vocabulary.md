@@ -13,7 +13,7 @@ tags: [contract, specpack, status, lifecycle, loom]
 
 Statuses are one machine-maintained vocabulary. One source of truth:
 the constants in `specpack.py`, equal by guard test to the vendored
-schema enums (`engine/loom/tests/test_specpack_status.py`). A status
+schema enums (`treadle/packages/core/src/schemas/`). A status
 never arrives as a convention; it arrives as an enum extension plus a
 guard plus a row in this table. [^s1]
 
@@ -73,10 +73,10 @@ never redefine it.
 
 # Evidence
 
-[^s1]: `engine/loom/src/loom_kit/specpack.py` constants `PACK_STATUSES`, `TASK_STATUSES`, `DECISION_STATUSES`, `QUESTION_STATUSES`, `VERDICTS`, `HANDOUT_STATUSES`; guard test `engine/loom/tests/test_specpack_status.py` (observed, 2026-10-08).
+[^s1]: `treadle/packages/core/src/specpack/specpack.ts` constants `PACK_STATUSES`, `TASK_STATUSES`, `DECISION_STATUSES`, `QUESTION_STATUSES`, `VERDICTS`, `HANDOUT_STATUSES`; the frozen status vocabulary is asserted across the core test suite (observed, 2026-10-10).
 
 [^s2]: `load_specpack` materializes `status: active` when absent; `_next_specpack` skips the save for `COMPLETE` handouts (implementation-supported).
 
-[^s3]: `engine/loom/src/loom_kit/specpack.py` `next_task` returns `DONE`; `close` sets `complete` (implementation-supported).
+[^s3]: `treadle/packages/core/src/specpack/specpack.ts` `next_task` returns `DONE`; `close` sets `complete` (implementation-supported).
 
-[^s4]: `engine/loom/src/loom_kit/__init__.py` `TASK_STATES` (observed).
+[^s4]: `treadle/packages/core/src/specpack/__init__.ts` `TASK_STATES` (observed).

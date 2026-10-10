@@ -16,11 +16,11 @@ When okf extracts or scans something, it records
 detection is then a plain hash comparison — no mtimes, no clocks.
 
 [^h1]:
-    `engine/okf/okf_kit/code/treesitter/languages/base.py:79` — module
+    `treadle/packages/knowledge/src/code/treesitter/languages/base.ts` — module
     extraction pins the source hash used for citations and change detection.
 
 [^h2]:
-    `engine/okf/okf_kit/code/semantic.py` — every rule candidate carries
+    `treadle/packages/knowledge/src/code/semantic.ts` — every rule candidate carries
     its file's hash, so wave-U2 fingerprints can diff without re-analysis.
 
 # When to apply

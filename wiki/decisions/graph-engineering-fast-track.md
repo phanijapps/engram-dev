@@ -7,7 +7,7 @@ verified:
   - { by: human:owner, at: 2026-10-08T00:50:00Z }
 title: A packagable harness that fast-tracks graph engineering without the waterfall trap (accepted 2026-10-08)
 description: "DRAFT — acceptance requested. The harness ships as a package other teams install to run graph engineering (spec-driven development over a versioned solution graph) without falling into the waterfall trap: knowledge first, bounded artifacts, uncertainty recorded, humans accepting."
-sources: [{ id: src, resource: docs/product/Structured_Brief.md }]
+sources: [{ id: src, resource: docs/archive/product/Structured_Brief.md }]
 tags: [decision, purpose, graph-engineering, anti-waterfall, draft]
 ---
 
