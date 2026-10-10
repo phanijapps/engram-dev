@@ -11,13 +11,13 @@ language: typescript
 sources:
 - id: src
   resource: treadle/packages/cli/src/commands/know.ts
-source_hash: 5a4da965e80e5102b1f53e0a14a1638a89e49a5796918c99ad07710777208447
+source_hash: f059ce460bdcee0eb150f4f7febb1f2da71e157ff6d939470d3c7ea6913a0999
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-10T01:56:17Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T01:57:55Z'
+  at: '2026-10-10T02:00:52Z'
 status: stable
 package: treadle/packages/cli
 ---
