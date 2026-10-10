@@ -1,0 +1,237 @@
+{
+  "id": "install-paths",
+  "name": "install-paths",
+  "description": "Install in one command — pnpm link and git main, proven",
+  "date": {
+    "updated": "2026-10-10T18:45:41Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "spec": {
+    "why": "Installation is the first touch. Today it takes a clone, a launcher symlink, and faith. Two paths must be true and documented: a dev link in one command (pnpm link) and a global install straight from the git main branch — both verified on the Node floor the docs claim.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "The cli bin points at compiled dist (dist/src/main.js — shebang included by tsc); the bin runs on Node 22 and 24 (proven on both present on this machine); the checked-in launcher bin/treadle.mjs retires.",
+        "serves": ["US-1"]
+      },
+      {
+        "id": "FR-2",
+        "text": "Dev link: from a fresh clone — pnpm install, pnpm build, pnpm link --global (from packages/cli, or one documented chain); the linked treadle passes --help + do where + a know command from an arbitrary directory.",
+        "serves": ["US-1"]
+      },
+      {
+        "id": "FR-3",
+        "text": "Git install: the repo root package.json (private, workspaces:[\"treadle\"], bin → cli dist, prepare building the workspace) makes `npm i -g --allow-scripts=<name> <git-url>#main` deliver a working treadle; the flag is documented as npm security default, not an obstacle.",
+        "serves": ["US-2"]
+      },
+      {
+        "id": "FR-4",
+        "text": "Clean-room verification: every documented path proves itself in a fresh temp clone on BOTH node floors (22.14, 24.19 present locally); a windows note records the CI-matrix check.",
+        "serves": ["US-1", "US-2"]
+      },
+      {
+        "id": "FR-5",
+        "text": "The pnpm git-workspace syntax is recorded broken (observed crash) unless a clean-room test passes in-wave; the guide names npm for git installs, pnpm for the dev link.",
+        "serves": ["US-2"]
+      },
+      {
+        "id": "FR-6",
+        "text": "Guide section 03 + README rewritten to the two one-command paths; the launcher-symlink dance removed; install verified literally (AC-3).",
+        "serves": ["US-3"]
+      },
+      {
+        "id": "FR-7",
+        "text": "Gates stay green: pnpm check, corpus byte-stable, brand clean (the root package.json rides the fence allowances like ci.yml), links green.",
+        "serves": ["US-3"]
+      },
+      {
+        "id": "FR-8",
+        "text": "The wave closes through its own loop: evidence rows, review rounds, frozen by human:owner.",
+        "serves": ["US-3"]
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "The git-install target: the whole repository (root package.json orchestrating treadle/ via prepare, npm --allow-scripts documented) or the future engram-dev shape where the workspace IS the repo root (cleanest, no orchestration layer)?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": ["this repo, root orchestrates", "wait for engram-dev root"],
+        "default": "this repo, root orchestrates"
+      },
+      {
+        "id": "Q-2",
+        "question": "Node floor: the guide says 22+ — hold that floor (bin must point at compiled dist, proven working on 22.14) or raise the docs to 24 (native TS lets the source bin run)?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": ["hold 22+, bin to dist", "raise to 24"],
+        "default": "hold 22+, bin to dist"
+      }
+    ],
+    "out_of_scope": [
+      "registry publish (npm publish of one bundled package) — the successor that retires the whole question",
+      "the engram-dev code split (Q-1 names the shape; the bin and clean-room verifications carry over)"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "title": "One-command dev link",
+        "priority": "P1",
+        "as": "a contributor on a fresh clone",
+        "want": "pnpm link in one command, no hand-made symlinks",
+        "so": "the first touch installs in seconds",
+        "acceptance": [
+          {
+            "id": "AC-1",
+            "given": "a fresh clone and Node 22",
+            "when": "the documented link command runs",
+            "then": "treadle --help and treadle do where work from any directory; no launcher file is involved"
+          }
+        ]
+      },
+      {
+        "id": "US-2",
+        "title": "Install from main",
+        "priority": "P1",
+        "as": "a user with the repo URL",
+        "want": "a global install straight from the git main branch",
+        "so": "no clone, no build, no faith",
+        "acceptance": [
+          {
+            "id": "AC-2",
+            "given": "the repo URL and npm",
+            "when": "the documented install command runs",
+            "then": "treadle works from any directory; the security flag is named and explained in the same breath"
+          }
+        ]
+      },
+      {
+        "id": "US-3",
+        "title": "Docs tell the truth",
+        "priority": "P1",
+        "as": "a reader of the guide",
+        "want": "section 03 to match reality exactly",
+        "so": "no step surprises me",
+        "acceptance": [
+          {
+            "id": "AC-3",
+            "given": "the updated guide",
+            "when": "each command is run literally",
+            "then": "every one works as written — the clean-room proof is the evidence"
+          }
+        ]
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "bin → compiled dist; the Node floor is 22 (Q-2 default)",
+        "because": "Proven: node 22.14 refuses the .ts bin (ERR_UNKNOWN_FILE_EXTENSION); the dist bin ran green on 22 and 24. The floor the docs already claim becomes real.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-2",
+        "decision": "Root orchestrator for the git install; npm with --allow-scripts documented (Q-1 default)",
+        "because": "Proven: npm skips prepare by default (allow-scripts); the orchestrator must declare the bin itself. pnpm #workspace syntax crashed (observed).",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Clean-room proof or it is not documented",
+        "because": "The guide teaches commands; every command must have run literally in a fresh clone on both node floors before it is printed.",
+        "status": "proposed"
+      }
+    ],
+    "designs": []
+  },
+  "tasks": [
+    {
+      "id": "T-0",
+      "title": "The bin contract: dist + the Node floor",
+      "phase": "core",
+      "detail": "packages/cli bin → ./dist/src/main.js; pnpm build verified as prerequisite; bin/treadle.mjs retired; the local PATH symlink refreshed; treadle proven on Node 22 AND 24 (both present).",
+      "verify": {
+        "cmd": "cd treadle && pnpm build && /usr/local/bin/node packages/cli/dist/src/main.js --help && node packages/cli/dist/src/main.ts --help 2>/dev/null || true",
+        "expect": "dist bin speaks usage under node 22 explicitly; the launcher file no longer exists"
+      },
+      "satisfies": ["FR-1"],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "todo"
+    },
+    {
+      "id": "T-1",
+      "title": "The dev link, one command",
+      "phase": "core",
+      "detail": "From a FRESH temp clone (not this tree): corepack enable, pnpm install, pnpm build, pnpm link --global (from packages/cli); then from /tmp: treadle --help, do where, know validate — all exit 0. Record the exact command chain the guide will teach.",
+      "verify": {
+        "cmd": "clean-room script: temp clone → link chain → /tmp assertions",
+        "expect": "all commands green from an arbitrary directory on a fresh clone; no launcher file touched"
+      },
+      "satisfies": ["FR-2", "FR-4"],
+      "needs": ["T-0"],
+      "implements": [],
+      "honors": [],
+      "accepts": ["AC-1"],
+      "status": "todo"
+    },
+    {
+      "id": "T-2",
+      "title": "The git install from main",
+      "phase": "core",
+      "detail": "Repo-root package.json (private, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build); clean-room: git clone file:// → npm i -g --allow-scripts=<name> <clone> → treadle from /tmp on both node floors; pnpm git path retested once, recorded working or broken.",
+      "verify": {
+        "cmd": "clean-room script: bare-clone → npm i -g --allow-scripts → /tmp assertions",
+        "expect": "treadle delivered and working; the allow-scripts flag documented in the same command"
+      },
+      "satisfies": ["FR-3", "FR-4", "FR-5"],
+      "needs": ["T-0"],
+      "implements": [],
+      "honors": [],
+      "accepts": ["AC-2"],
+      "status": "todo"
+    },
+    {
+      "id": "T-3",
+      "title": "Docs tell the truth",
+      "phase": "polish",
+      "detail": "Guide section 03 rewritten (two one-command paths, node floor stated, the flag explained, launcher dance gone, troubleshooting row for allow-scripts); README install block matches; every documented command run literally as the evidence.",
+      "verify": {
+        "cmd": "the documented commands, run literally from the guide text",
+        "expect": "each command works as written — the literal run is the evidence"
+      },
+      "satisfies": ["FR-6"],
+      "needs": ["T-1", "T-2"],
+      "implements": [],
+      "honors": [],
+      "accepts": ["AC-3"],
+      "status": "todo"
+    },
+    {
+      "id": "T-4",
+      "title": "Close: evidence, review round, freeze",
+      "phase": "polish",
+      "detail": "Every task evidence-rows machine-checked; one review round minimum; gates green (check, corpus, brand incl. the new root package.json, links); frozen by human:owner.",
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+        "expect": "gates green; rounds recorded; closed by owner"
+      },
+      "satisfies": ["FR-7", "FR-8"],
+      "needs": ["T-3"],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "todo"
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 3
+}
