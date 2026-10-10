@@ -111,7 +111,7 @@ describe('the four surface adapters (T-3)', () => {
       expect(existsSync(join(w.project, '.codex/agents/red-foreman.toml'))).toBe(true);
       expect(existsSync(join(w.project, '.harness/hooks/post-tool-check.js'))).toBe(true);
       const cfg = readFileSync(join(w.home, '.codex/config.toml'), 'utf8');
-      expect(cfg).toMatch(/^notify\s*=/m);
+      expect(cfg).toMatch(/^notify\s*=\s*\["node", "\/.*post-tool-check\.js"\]/m); // absolute — user-level config
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });

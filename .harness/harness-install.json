@@ -46,8 +46,8 @@
       "target": "/home/videogamer/.codex/config.toml",
       "kind": "config-notify",
       "matcher": "notify",
-      "command": "notify = [\"node\", \".harness/hooks/post-tool-check.js\"]"
+      "command": "notify = [\"node\", \"/home/videogamer/code/memex_beta/.harness/hooks/post-tool-check.js\"]"
     }
   ],
-  "at": "2026-10-10T15:21:21Z"
+  "at": "2026-10-10T15:24:38Z"
 }

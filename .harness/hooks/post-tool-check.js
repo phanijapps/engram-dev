@@ -33,7 +33,19 @@ export function check(payload) {
 }
 
 // ── script mode (claude settings wiring, codex notify, humans) ──
-if (process.argv[2] !== undefined) {
+// enter ONLY when this file is the invoked program — not when pi
+// imports it as an extension (pi's own argv must never reach here;
+// the dogfooded load-kill proved why)
+const invoked = (() => {
+  try {
+    return (
+      process.argv[1] !== undefined && import.meta.url.endsWith(process.argv[1].split('/').pop())
+    );
+  } catch {
+    return false;
+  }
+})();
+if (invoked) {
   let payload;
   try {
     payload = JSON.parse(process.argv[2]);

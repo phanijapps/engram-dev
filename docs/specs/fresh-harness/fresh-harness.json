@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:21:47Z",
+    "updated": "2026-10-10T15:24:50Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -740,6 +740,12 @@
         "verdict": "IMPROVE",
         "by": "agent:pi",
         "note": "SELF-DISCLOSURE (sixth instance of the evidence-outran-proof class): T-3 was recorded pass while one assertion in the script-mode test still threw — a managed-path call used the throwing helper where the suite expected output; a grep between commands kept the chain alive past the failing check. The test is fixed (managed paths assert through the catch), the full suite re-run green UNPIPED (89/89, check=0, brand=0, corpus=0 verified by exit code), and the hook payload gained its eslint home (harness/** ignored — shipped plain-JS payload by contract, not workspace source). Post-hoc the T-3 evidence stands; the record now says so."
+      },
+      {
+        "on": "T-6",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "THE DOGFOOD CAUGHT A REAL BUG — the process worked. The first closing-audit run died at child startup: pi loads project extensions from .pi/extensions/, and the payload dual-entry fired in MODULE mode too (pi argv[2] looked like script input; JSON.parse failed; process.exit(1) killed the child at load). Fixed: script mode now enters only when this file IS the invoked program (argv[1] basename check) — the load-kill repro passes (module import with pi-shaped argv survives), script mode intact (exit 0/3/1 proven). Second real fix while at it: codex notify now wires the ABSOLUTE payload path (user-level config cannot be relative). Both surfaces re-applied (--force): 13/13 same again on re-run, notify absolute in ~/.codex/config.toml. No seventh evidence instance: everything re-verified unpiped this time (check=0, brand=0, 89/89, pi/codex apply exit 0)."
       }
     ]
   },

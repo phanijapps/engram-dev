@@ -199,7 +199,14 @@ export function compilePlan(
           surface: agent,
           kind: w.kind,
           target: wiringTarget(agent, scope, choices.root),
-          detail: w.matcher ? `${w.matcher} → ${w.command}` : (w.command ?? ''),
+          // config-notify wires at user level — the payload path must be absolute;
+          // settings-hooks runs from the project root — the manifest command stands
+          detail:
+            w.kind === 'config-notify'
+              ? `node ${destAbs}`
+              : w.matcher
+                ? `${w.matcher} → ${w.command}`
+                : (w.command ?? ''),
         });
       }
     }
