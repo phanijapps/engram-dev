@@ -21,18 +21,18 @@ Four deliverables, one goal — **hooks that recall and guide**:
 
 ## 2. Evidence — statuses
 
-| Fact | Status | Evidence |
-|---|---|---|
-| pi extension `session_start` event exists; `pi.sendMessage()` can inject content the model sees; long-lived resources start there | **implementation-supported** | pi's own extensions.md (local docs): factory registers, `pi.on('session_start', …)` documented; sendMessage in the state table |
-| Claude Code hooks support SessionStart matchers whose stdout becomes context | **declared** (industry docs) — verify wiring keys at build; the settings-merge machinery already exists in the installer |
-| Codex has NO session-start injection mechanism; `notify` is post-hoc only | **declared** (fresh-harness R2 verified notify) |
-| Pack stages today: both delivered (stitch-ui rev 37, fresh-harness rev 40) — nothing dangles this minute; the recall needs a fixture to prove against | implementation-supported | `docs/specs/*` scan |
-| `git worktree list` is the worktree source; today only main | implementation-supported | one row |
-| `do status` reports ONE pack; no workspace-level scan exists | implementation-supported | CLI surface |
-| DEBT.md lists 5 SPEC debts (§5.3, §9, §10, §8 partial, stale_after) | implementation-supported | treadle/DEBT.md lines 5–12 |
-| §5.3 semantics are SPECIFIED (unverified / machine-confirmed / human-reviewed, derived from `verified` actors; advisory, consumers MUST NOT reject) — the missing piece is the derivation helper + surfacing | implementation-supported | OKF_SPEC_v0.2.md §5.3 |
-| The corpus (42 cases / 67 goldens) is the byte-stability gate for any knowledge-engine change (§5.3, §9, stale_after touch validate/read paths) | implementation-supported | `pnpm corpus:check` |
-| The installer ships hooks via manifest wiring: pi extension file, claude settings-hooks, codex config-notify, copilot null | implementation-supported | harness.json + apply.ts, dogfooded live |
+| Fact                                                                                                                                                                                                         | Status                                                                                                                   | Evidence                                                                                                                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| pi extension `session_start` event exists; `pi.sendMessage()` can inject content the model sees; long-lived resources start there                                                                            | **implementation-supported**                                                                                             | pi's own extensions.md (local docs): factory registers, `pi.on('session_start', …)` documented; sendMessage in the state table |
+| Claude Code hooks support SessionStart matchers whose stdout becomes context                                                                                                                                 | **declared** (industry docs) — verify wiring keys at build; the settings-merge machinery already exists in the installer |
+| Codex has NO session-start injection mechanism; `notify` is post-hoc only                                                                                                                                    | **declared** (fresh-harness R2 verified notify)                                                                          |
+| Pack stages today: both delivered (stitch-ui rev 37, fresh-harness rev 40) — nothing dangles this minute; the recall needs a fixture to prove against                                                        | implementation-supported                                                                                                 | `docs/specs/*` scan                                                                                                            |
+| `git worktree list` is the worktree source; today only main                                                                                                                                                  | implementation-supported                                                                                                 | one row                                                                                                                        |
+| `do status` reports ONE pack; no workspace-level scan exists                                                                                                                                                 | implementation-supported                                                                                                 | CLI surface                                                                                                                    |
+| DEBT.md lists 5 SPEC debts (§5.3, §9, §10, §8 partial, stale_after)                                                                                                                                          | implementation-supported                                                                                                 | treadle/DEBT.md lines 5–12                                                                                                     |
+| §5.3 semantics are SPECIFIED (unverified / machine-confirmed / human-reviewed, derived from `verified` actors; advisory, consumers MUST NOT reject) — the missing piece is the derivation helper + surfacing | implementation-supported                                                                                                 | OKF_SPEC_v0.2.md §5.3                                                                                                          |
+| The corpus (42 cases / 67 goldens) is the byte-stability gate for any knowledge-engine change (§5.3, §9, stale_after touch validate/read paths)                                                              | implementation-supported                                                                                                 | `pnpm corpus:check`                                                                                                            |
+| The installer ships hooks via manifest wiring: pi extension file, claude settings-hooks, codex config-notify, copilot null                                                                                   | implementation-supported                                                                                                 | harness.json + apply.ts, dogfooded live                                                                                        |
 
 ## 3. The shape of the answer
 
@@ -75,7 +75,32 @@ Four deliverables, one goal — **hooks that recall and guide**:
 - **Skill evals**: refresh changes skill text; evals must still pass
   or the eval rubric itself is honestly revised.
 
-## 5. Questions for the owner
+## 5. Round A2 — the owner's answers (2026-10-10, in the room)
 
-Recorded as Q-1..Q-5 (§5.3 semantics, brand-in-skills, codex subset,
-soft vs hard pause, debt scope). Each carries a recommended default.
+All five answered by `human:owner`. Two recommendations overruled —
+the owner's calls are the contract now:
+
+- **Q-1 spec-faithful advisory helper** (as recommended): §5.3 tiers
+  implement exactly as the spec derives them; advisory only.
+- **Q-2 NEUTRAL PHRASING** (overruled the bin-token design): skills
+  carry NO bin name at all. They speak bare subcommands (`do where`,
+  `know validate`) and "the harness CLI". brand:set stays untouched;
+  the fence stays trivially clean. The copy-paste cost is accepted.
+- **Q-3 honest subset now** (as recommended): codex gets the
+  prompt-file + notify; the plan prints what codex cannot do.
+- **Q-4 HARD GATE** (overruled the soft discipline): when more than
+  one spec is open and the FIRST user message is continue-shaped, the
+  loop MUST ask — enforced, not suggested. Mechanism evidence:
+  pi's `message_end` can REPLACE a finalized message while preserving
+  its role (extensions.md, verified line), and `before_agent_start`
+  can inject per-run prompt sections — either enforces the ask.
+  Claude: UserPromptSubmit hooks can block with a reason the user
+  sees (declared — verify keys at build). Codex: no such mechanism —
+  the honest subset stands, and the plan says the gate is pi+claude
+  only.
+- **Q-5 ALL FIVE NOW** (overruled the subset): §5.3, §9, §10, §8,
+  stale_after — the whole DEBT.md SPEC list this wave. §10 means
+  real validation rules for Attested Computation concepts (runtime
+  required; executor/attester shapes). §8 means the index structure
+  becomes a conformance condition per §11.3. Corpus goldens move in
+  more places; every diff reviewed in the commit.

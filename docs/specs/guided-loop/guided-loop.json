@@ -3,11 +3,11 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T16:42:34Z"
+    "updated": "2026-10-10T16:46:46Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "awaiting_owner"
   },
   "spec": {
     "why": "The harness installs everywhere now; the loop must orient itself. A fresh session saying continue should be TOLD where work dangles (open specs, worktrees) and pause to ask which one. Skills still speak the retired CLI. Five spec debts are recorded. This wave pays them.",
@@ -21,7 +21,7 @@
       },
       {
         "id": "FR-2",
-        "text": "The recall block: engine-quoted lines only (paths, stages, counts), worktree rows labeled with their tree, ends with the ask-which-one sentence when more than one is open.",
+        "text": "The recall block: engine-quoted lines only (paths, stages, counts), worktree rows labeled with their tree; when more than one is open it ends with the ask-which-one sentence.",
         "serves": [
           "US-1",
           "US-2"
@@ -50,7 +50,7 @@
       },
       {
         "id": "FR-6",
-        "text": "Brand-in-skills per Q-2: if bin tokens, brand:set rewrites harness/skills together with the fence; white-label proof: brand:check green after a set/set-back cycle.",
+        "text": "Skills carry NO bin or brand name: bare subcommands (do where, know validate) and \"the harness CLI\"; brand:set untouched; brand:check trivially green over harness skills.",
         "serves": [
           "US-3"
         ]
@@ -85,7 +85,7 @@
       },
       {
         "id": "FR-11",
-        "text": "§10 + §8 recorded-deferred in DEBT.md with owners and triggers.",
+        "text": "ALL FIVE DEBTS PAID (Q-5): §5.3 helper, §9 log format, §10 Attested Computation admission rules (runtime required; executor/attester shapes), §8 index structure as a §11.3 conformance condition, stale_after comparison — DEBT.md closes each with evidence.",
         "serves": [
           "US-4"
         ]
@@ -97,75 +97,96 @@
           "US-2",
           "US-4"
         ]
+      },
+      {
+        "id": "FR-13",
+        "text": "THE HARD GATE (Q-4): when more than one spec is open and the FIRST user message is continue-shaped, the loop asks before acting — enforced on pi (message_end replacement + before_agent_start guideline, both doc-verified mechanisms) and claude (UserPromptSubmit block, keys verified at build); codex honestly states the gate is pi+claude; the gate never fires when exactly one or none is open.",
+        "serves": [
+          "US-2"
+        ]
       }
     ],
     "clarifications": [
       {
         "id": "Q-1",
         "question": "Spec debt §5.3 trust tiers: implement the spec's exact derivation (unverified / machine-confirmed / human-reviewed from  actors) as an ADVISORY helper surfaced in know read + validate info, consumers never reject?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "spec-faithful advisory helper",
           "decline and record"
         ],
-        "default": "spec-faithful advisory helper"
+        "default": "spec-faithful advisory helper",
+        "answer": "spec-faithful advisory helper",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T16:45:10Z"
       },
       {
         "id": "Q-2",
         "question": "Skills and the brand: skills speak the bin name (treadle today) and brand:set rewrites harness/skills together with the fence (white-label stays true), or skills use neutral phrasing (the harness CLI) with no bin names?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "bin tokens brand:set rewrites",
           "neutral phrasing"
         ],
-        "default": "bin tokens brand:set rewrites"
+        "default": "bin tokens brand:set rewrites",
+        "answer": "neutral phrasing",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T16:45:15Z"
       },
       {
         "id": "Q-3",
         "question": "Codex recall: session-start injection is not a codex mechanism — ship the honest subset (a recall prompt-file + notify) and say so in the plan, or defer codex entirely?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "honest subset now",
           "defer codex"
         ],
-        "default": "honest subset now"
+        "default": "honest subset now",
+        "answer": "honest subset now",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T16:44:34Z"
       },
       {
         "id": "Q-4",
         "question": "The pause-and-ask: soft discipline (the recall block instructs: more than one open spec → ask which one; skills reinforce) or a hard gate (the extension blocks continue-style first messages until a choice is made)?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "soft discipline",
           "hard gate"
         ],
-        "default": "soft discipline"
+        "default": "soft discipline",
+        "answer": "hard gate",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T16:44:53Z"
       },
       {
         "id": "Q-5",
         "question": "Spec-debt scope: pay the recall-serving subset this wave (§5.3 helper, §9 log-format validation, stale_after comparison) and record §10 Attested Computation + §8 index-structure as deferred debts, or pay all five now?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "subset now, defer two",
           "all five now"
         ],
-        "default": "subset now, defer two"
+        "default": "subset now, defer two",
+        "answer": "all five now",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T16:45:05Z"
       }
     ],
     "out_of_scope": [
-      "§10 Attested Computation (a wave of its own)",
-      "§8 index structure conformance condition",
-      "hard gates on user messages (Q-4 default: soft)",
-      "recall on copilot (no mechanism — stays the honest null)"
+      "§10 EXECUTION machinery (executor/attester runtimes) — this wave pays the ADMISSION contract only",
+      "recall on copilot (no mechanism — the honest null)",
+      "hard gate on codex (no mechanism — honestly stated)"
     ],
     "stories": [
       {
@@ -235,7 +256,43 @@
     ]
   },
   "design": {
-    "decisions": [],
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Recall is an engine command (do where), hooks only carry it",
+        "because": "Deterministic scan over memory; hooks quote the engine, never vibes.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Neutral phrasing everywhere in skills — no bin names (Q-2)",
+        "because": "Owner answer: white-label simplicity beats copy-paste convenience; brand:set untouched.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-3",
+        "decision": "The hard gate (Q-4): continue-shaped first message + >1 open → the loop asks, enforced",
+        "because": "Owner answer overruled soft discipline: never guess my intent. Enforced via doc-verified pi mechanisms (message_end replacement, before_agent_start guidelines) and claude UserPromptSubmit block; codex honestly subset.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-4",
+        "decision": "All five SPEC debts this wave (Q-5)",
+        "because": "Owner answer overruled the subset: pay §5.3, §9, §10 admission rules, §8 conformance, stale_after; corpus diffs reviewed in the commit.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-5",
+        "decision": "Codex honest subset (Q-3)",
+        "because": "No session-start mechanism exists on codex; a printed no beats a fake yes.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
     "designs": []
   },
   "tasks": [
@@ -261,16 +318,17 @@
     },
     {
       "id": "T-1",
-      "title": "session-recall payload + three wirings",
+      "title": "session-recall payload + the hard gate + three wirings",
       "phase": "core",
-      "detail": "harness/hooks/session-recall.js dual entry (script prints block; pi extension session_start→sendMessage); claude SessionStart wiring keys verified against current docs; codex honest subset (recall prompt-file + notify); manifest rows; tests.",
+      "detail": "harness/hooks/session-recall.js dual entry (script prints block; pi extension session_start→sendMessage); THE HARD GATE (Q-4) in the same extension: message_end replaces continue-shaped FIRST user messages when >1 open (role preserved), before_agent_start injects the ask-first guideline; claude SessionStart + UserPromptSubmit wiring keys verified against current docs (refuse unverifiable); codex honest subset (recall prompt-file + notify, gate honestly pi+claude); manifest rows; tests.",
       "verify": {
         "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts && node harness/hooks/session-recall.js .. | head -3",
         "expect": "payload proven both entries; wirings land on pi/claude/codex; the block prints from the script"
       },
       "satisfies": [
         "FR-3",
-        "FR-4"
+        "FR-4",
+        "FR-13"
       ],
       "needs": [
         "T-0"
@@ -286,10 +344,10 @@
       "id": "T-2",
       "title": "skill refresh + pause discipline",
       "phase": "core",
-      "detail": "sdlc skills walk current commands/paths; zero retired references; pause-and-ask in analyze/plan/implement; evals run; Q-2 brand mechanics (brand:set rewrites harness/skills; set/set-back proof).",
+      "detail": "sdlc skills walk current commands/paths in NEUTRAL phrasing (bare subcommands, \"the harness CLI\" — zero brand strings, Q-2); zero retired references; ask-first discipline in analyze/plan/implement (teaching what the gate enforces); evals run.",
       "verify": {
-        "cmd": "grep -rE \"okf|loom|uv run\" ../treadle/harness/skills/sdlc --include=\"SKILL.md\" | wc -l",
-        "expect": "0 retired references; evals pass; brand:check green after set/set-back"
+        "cmd": "grep -rEi \"okf|loom|uv run|treadle\" ../treadle/harness/skills/sdlc --include=\"SKILL.md\" | wc -l",
+        "expect": "0 retired AND 0 brand references in sdlc SKILL.md text; evals pass"
       },
       "satisfies": [
         "FR-5",
@@ -308,18 +366,19 @@
     },
     {
       "id": "T-3",
-      "title": "spec debts paid: §5.3 + §9 + stale_after",
+      "title": "Spec debts paid: ALL FIVE (Q-5)",
       "phase": "core",
-      "detail": "knowledge engine: trustTier helper (advisory) surfaced in read/validate; §9 ISO-date log headings warn; stale_after compares with injectable clock; corpus regen where output changes, diff reviewed.",
+      "detail": "knowledge engine: trustTier helper (advisory) in read/validate; §9 ISO-date log headings warn; §10 Attested Computation admission rules (runtime REQUIRED, executor/attester shapes per §10.2 — no execution machinery); §8 index structure enforced per §11.3; stale_after compares with injectable clock; corpus regen wherever output changes, every diff reviewed in the commit.",
       "verify": {
         "cmd": "cd treadle && pnpm check && pnpm corpus:check",
-        "expect": "tests green; corpus diff = exactly the debt-fix output changes, reviewed in the commit"
+        "expect": "tests green; the corpus diff contains exactly the debt-fix output changes (§5.3 info lines, §9 warnings, §10 rules, §8 conformance, stale_after) — reviewed line by line in the commit"
       },
       "satisfies": [
         "FR-7",
         "FR-8",
         "FR-9",
-        "FR-10"
+        "FR-10",
+        "FR-11"
       ],
       "needs": [
         "T-2"
@@ -394,5 +453,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 6
+  "revision": 11
 }

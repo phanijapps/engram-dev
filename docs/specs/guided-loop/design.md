@@ -21,6 +21,26 @@ harness/skills/sdlc/**                    ← refreshed to the current loop
 @treadle/knowledge: trust tiers + log format + stale_after  [Q-5]
 ```
 
+### The hard gate (Q-4 — the owner overruled soft)
+
+When the recall scan finds MORE THAN ONE open spec and the FIRST user
+message is continue-shaped (continue / go on / keep going / resume /
+pick up …), the loop ASKS — enforced:
+
+- **pi**: the extension replaces the continue-shaped user message
+  (message_end preserves role — verified in pi's docs) with the
+  original text + the recall block + "ASK which spec before any
+  action"; belt-and-braces: before_agent_start injects the same rule
+  as a per-run guideline.
+- **claude**: UserPromptSubmit hook returns a block decision with
+  the recall block as the reason — the user sees the list (declared;
+  keys verified at build, refused if unverifiable).
+- **codex**: no mechanism — the honest subset; the plan and the
+  prompt-file both say the gate lives on pi and claude.
+
+The gate NEVER fires when exactly one spec is open (continue resolves
+to it) or when none are (the block says so).
+
 ### The recall block (the contract)
 
 ```
@@ -53,27 +73,32 @@ ends with the discipline sentence (soft, Q-4).
   `pi.sendMessage(block)`; long-lived resources start per the pi
   contract.
 
-### Spec debts (Q-5 default: subset)
+### Spec debts (Q-5 — ALL FIVE this wave)
 
 - **§5.3**: `trustTier(frontmatter)` in knowledge — unverified /
   machine-confirmed / human-reviewed from `verified` actors; surfaced
   as info in `know read` + `know validate`; advisory only (§11 holds).
 - **§9**: `know validate` checks log.md ISO date headings; warnings
   never block.
+- **§10**: Attested Computation validation — `runtime` REQUIRED for
+  `type: Attested Computation` concepts; `executor`/`attester`
+  shapes checked per §10.2 (execution machinery stays out — this is
+  the admission contract, not the runtime).
+- **§8**: the index structure becomes a conformance condition per
+  §11.3 (partial → enforced).
 - **stale_after**: the comparison `now >= stale_after` with the
   injectable clock; status surfaces stale honestly.
-- **§10 + §8**: recorded-deferred in DEBT.md (§10 is a wave of its
-  own).
-- Corpus: goldens move only where output changes; `corpus:regen`,
-  diff reviewed in the commit — a contract change on record.
+- Corpus: goldens move wherever output changes; `corpus:regen`, diff
+  reviewed in the commit — a contract change on record.
 
-### Skills (Q-2 default: bin tokens brand:set rewrites)
+### Skills (Q-2 — neutral phrasing, no bin names)
 
 - Every sdlc skill walks the current commands and paths; evals run.
-- The pause-and-ask lands in analyze/plan/implement: more than one
-  open spec → ask; the recall block is the source of truth.
-- brand:set gains `harness/skills/**` to its rewrite set — the fence
-  and the skills move together, white-label stays true.
+- Skills speak BARE subcommands (`do where`, `do next`, `know
+validate`) and "the harness CLI" — zero brand strings; brand:set
+  untouched; the fence trivially green.
+- The ask-first rule lands in analyze/plan/implement as the human
+  contract; the hard gate enforces what the skills teach.
 
 ## Open by design
 
