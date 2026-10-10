@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T11:10:03Z",
+    "updated": "2026-10-10T11:36:30Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -22,7 +22,7 @@
         "serves": [
           "US-1"
         ],
-        "text": "A token layer (CSS custom properties) SHALL encode the pinned token table below, light default + dark alternate, with system font stacks (serif headline voice: Georgia/Iowan/serif; sans body: system-ui; mono status: ui-monospace) — no webfonts, no CDN. CANONICAL ARTIFACT: designs/decision-studio.html (its tokens match the project DESIGN.md exactly; library-inspector carries slate drift the spec rejects). LIGHT: primary #094cb2, primary_container #3366cc, tertiary #6d5e00, background #faf9fa, surface_container tiers #f5f3f4/#efedee/#e9e8e9/#e3e2e3, ink #1b1c1d, on_surface_variant #434653, outline_variant #c3c6d5. DARK (from designs/library-review.html, actual values): background #0b0f14, surface tiers #11161f/#161d27/#1e2836, accent #38bdf8, ink #e2e8f0. STATE ROLES (R2): light error #ba1a1a/error-bg #ffdad6 verbatim (decision-studio); dark severity verbatim (library-review): error #f87171, pass #10b981, warn #f59e0b, smell #a855f7, focus rgba(56,189,248,.40); DECLARED DERIVED SHADES (named here, not invented): light pass #15803d, warn #b45309, smell #6d28d9, focus rgba(9,76,178,.35); dark primary-c #0284c7, tertiary #f9e37a; dark surface-4 #232d3d verbatim."
+        "text": "A token layer (CSS custom properties) SHALL encode the pinned token table below, light default + dark alternate, with system font stacks (serif headline voice: Georgia/Iowan/serif; sans body: system-ui; mono status: ui-monospace) — no webfonts, no CDN. CANONICAL ARTIFACT: designs/decision-studio.html (its tokens match the extracted system in research.md A1 exactly; library-inspector carries slate drift the spec rejects). LIGHT: primary #094cb2, primary_container #3366cc, tertiary #6d5e00, background #faf9fa, surface_container tiers #f5f3f4/#efedee/#e9e8e9/#e3e2e3, ink #1b1c1d, on_surface_variant #434653, outline_variant #c3c6d5. DARK (from designs/library-review.html, actual values): background #0b0f14, surface tiers #11161f/#161d27/#1e2836, accent #38bdf8, ink #e2e8f0. STATE ROLES (R2): light error #ba1a1a/error-bg #ffdad6 verbatim (decision-studio); dark severity verbatim (library-review): error #f87171, pass #10b981, warn #f59e0b, smell #a855f7, focus rgba(56,189,248,.40); DECLARED DERIVED SHADES (named here, not invented): light pass #15803d, warn #b45309, smell #6d28d9, focus rgba(9,76,178,.35); dark primary-c #0284c7, tertiary #f9e37a; dark surface-4 #232d3d verbatim. FURTHER DECLARED DERIVED (R3): dark error-bg #3a1a20, dark ink-2 #94a3b8, dark ghost rgba(148,163,184,.15) — named here, not invented."
       },
       {
         "id": "FR-2",
@@ -30,7 +30,7 @@
         "serves": [
           "US-1"
         ],
-        "text": "The theme toggle SHALL persist per surface (localStorage) and apply without flash on load; light is default."
+        "text": "The theme toggle SHALL persist under ONE shared key (\"theme\") both surfaces read (localStorage) and apply without flash on load; light is default."
       },
       {
         "id": "FR-3",
@@ -429,7 +429,7 @@
     {
       "id": "T-0",
       "title": "DOM test harness",
-      "detail": "jsdom installed in root devDependencies; per-file environment pragmas; a fetch shim rebasing relative URLs against the live server; persistence proven as write-to-read-back plus a seeded fresh DOM",
+      "detail": "jsdom installed in root devDependencies; per-file environment pragmas; a fetch shim rebasing relative URLs against the live server; persistence = write-to-read-back plus a seeded fresh DOM; smoke test test/dom.smoke.test.ts loads library.js and dispatches a click",
       "phase": "setup",
       "satisfies": [
         "FR-8"
@@ -441,12 +441,13 @@
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — a jsdom smoke test loads library.js and dispatches a click"
-      }
+      },
+      "needs": []
     },
     {
       "id": "T-1",
       "title": "Token layer + theme toggle",
-      "detail": "CSS custom properties per the FR-1 pinned table (decision-studio light + library-review dark), system stacks, persisted toggle, inline pre-render theme resolution; DOM-harness tests: toggle persists across jsdom reload, no-flash via pre-render script presence",
+      "detail": "CSS custom properties per the FR-1 pinned table (canonical + declared-derived), system stacks, the shared-key toggle, inline pre-render theme resolution; test/theme.test.ts: persistence as write-to-read-back plus a seeded fresh DOM (jsdom has no reload), no-flash via pre-render script; needs T-0",
       "phase": "core",
       "satisfies": [
         "FR-1",
@@ -466,16 +467,21 @@
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — theme token tests (both palettes present, canonical values) + jsdom: toggle persists, pre-render script runs before first paint"
-      }
+      },
+      "needs": [
+        "T-0"
+      ]
     },
     {
       "id": "T-2",
       "title": "Library 3-pane + Alexandria skin",
-      "detail": "the no-line rule, ghost borders, serif voice, warm paper; list + dossier reskin; grammar per FR-3 (gradient CTA, glass header, mono chips); brand scrub + true format tag",
+      "detail": "3-pane layout + list/dossier skin: no-line rule, ghost edges, serif voice, warm paper; grammar per FR-3 (gradient CTA, glass header with the theme toggle, mono chips); the journey strip STAYS (render assertion in test/library-skin.test.ts); needs T-1",
       "phase": "core",
       "satisfies": [
         "FR-3",
-        "FR-4"
+        "FR-4",
+        "FR-8",
+        "FR-9"
       ],
       "implements": [
         "DES-1",
@@ -483,43 +489,49 @@
       ],
       "honors": [],
       "accepts": [
+        "AC-1",
         "AC-3"
       ],
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — three panes present in jsdom, no structural 1px borders in the token layer, portability test green (no brand strings, no false tags)"
-      }
+      },
+      "needs": [
+        "T-1"
+      ]
     },
     {
       "id": "T-3",
       "title": "Phase inspector",
-      "detail": "five generic phases, states per the FR-4 derivation table, click focuses the mapped tab, read-only",
+      "detail": "five generic phases, states per the FR-4 derivation table, click focuses the mapped tab, read-only; test/inspector.test.ts against the corpus spec-web input copied into a temp root (never the live pack — mid-flight stage flips brick the loader); needs T-2",
       "phase": "core",
       "satisfies": [
-        "FR-4",
-        "FR-9"
+        "FR-4"
       ],
       "implements": [
         "DES-6"
       ],
       "honors": [],
       "accepts": [
+        "AC-3",
         "AC-4"
       ],
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — jsdom: phases render from a real pack with the exact derivation states; click dispatch focuses the tab; no admission controls in the pane"
-      }
+      },
+      "needs": [
+        "T-2"
+      ]
     },
     {
       "id": "T-4",
       "title": "Review telemetry + conformance panel",
-      "detail": "findings by severity + verdicts from /spec (counts from verdicts[].findings), alignment from GET /alignment/<name>, poll on interaction, honest posture note",
+      "detail": "ROUTE ONLY: GET /alignment/<name> in servers.ts + servers.test.ts (404 ghost, 400 bad pack, the pinned sentence from alignment().value + gapCount()); needs nothing",
       "phase": "core",
       "satisfies": [
-        "FR-5",
         "FR-6"
       ],
       "implements": [
@@ -528,20 +540,19 @@
       ],
       "honors": [],
       "accepts": [
-        "AC-5",
-        "AC-6",
         "AC-7"
       ],
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — jsdom: telemetry renders from the corpus spec-web fixture with its REAL counts (5 verdicts, 11 findings: 2 BLOCKER / 7 DEFECT / 2 SMELL); severity filter works"
-      }
+      },
+      "needs": []
     },
     {
       "id": "T-5",
       "title": "Room reskin (Decision Studio)",
-      "detail": "same grammar, wizard contract at what the page owns; headers assertion added (five SECURITY_HEADERS), keyboard parity via DOM harness",
+      "detail": "same grammar, wizard DOM contract at what the page owns; test/room-skin.test.ts (keyboard acts in jsdom) + the four-header assertion in servers.test.ts; needs T-1",
       "phase": "integration",
       "satisfies": [
         "FR-7",
@@ -560,13 +571,16 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
-        "expect": "exit 0 — room behavior tests green under the new skin; headers test asserts all five security headers; keyboard acts fire in jsdom"
-      }
+        "expect": "exit 0 — room behavior tests green under the new skin; headers test asserts all four SECURITY_HEADERS (CSP, nosniff, frame-ancestors, referrer); keyboard acts fire in jsdom"
+      },
+      "needs": [
+        "T-1"
+      ]
     },
     {
       "id": "T-6",
       "title": "Red-forman rounds ×5 + verdicts + close",
-      "detail": "the owner-ordered rigor: five adversarial rounds across the drafts, findings fixed and recorded, then freeze",
+      "detail": "the close: every task recorded with evidence rows through the loop (record per task — done-without-evidence refuses closure), the final review verdict on:PACK verdict:PASS, rounds R1-R5 all in review.verdicts; needs T-5, T-7, T-8",
       "phase": "polish",
       "satisfies": [
         "FR-8"
@@ -577,7 +591,61 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check && pnpm corpus:check",
-        "expect": "exit 0 — five review rounds recorded in the pack, corpus untouched (no engine change)"
+        "expect": "exit 0 — suite + corpus green; the pack closes: evidence rows on every task, PASS on PACK, five rounds recorded"
+      },
+      "needs": [
+        "T-5",
+        "T-7",
+        "T-8"
+      ]
+    },
+    {
+      "id": "T-7",
+      "title": "Brand scrub + the portability gate",
+      "detail": "scrub the Stitch artifacts embedded strings from both surfaces, the false specpack/0.4.1 tag replaced by the true contract tag, and EXTEND test/pages.test.ts portability with not.toContain(\"specpack/0.4.1\"); needs T-2",
+      "phase": "polish",
+      "satisfies": [
+        "FR-8"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-9"
+      ],
+      "status": "todo",
+      "needs": [
+        "T-2"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — portability test green including the 0.4.1 assertion"
+      }
+    },
+    {
+      "id": "T-8",
+      "title": "Review telemetry panel",
+      "detail": "the inspector conformance phase: findings by severity from verdicts (real fixture: 5 verdicts, 11 findings 2/7/2), reviewer chip from verdict.by, severity filter, alignment panel from the T-4 route, refresh triggers (re-select, panel open, window focus), posture note; test/telemetry.test.ts; needs T-3 and T-4",
+      "phase": "core",
+      "satisfies": [
+        "FR-3",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-7"
+      ],
+      "honors": [],
+      "accepts": [
+        "AC-5",
+        "AC-6"
+      ],
+      "status": "todo",
+      "needs": [
+        "T-3",
+        "T-4"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — telemetry renders the corpus spec-web fixture with 2/7/2 counts; filter works; posture note present"
       }
     }
   ],
@@ -594,6 +662,12 @@
         "verdict": "IMPROVE",
         "by": "agent:red-forman",
         "note": "R2 of 5: build-after-fixes. 2 BLOCKER (token table missing every state role — error/pass/warn/smell/focus; DES-5 sentence had no producer) + 4 DEFECT (stage vs status.deliverable, ?? vs ||, the three unimplementable harness facts, three dark values without provenance) + 4 SMELL — all amended: state roles pinned with provenance and declared derived shades, the house sentence composed exactly from alignment().value + gapCount(), the derivation table reads the real payload fields, T-0 names the jsdom/fetch-shim/persistence facts, no-new-fetches scoped to the phase rows, refresh triggers named, markdown tables carved out of the no-line rule, T-1 cwd normalized."
+      },
+      {
+        "on": "PLAN",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "R3 of 5: fix-then-execute. 2 BLOCKER (five headers vs four that exist; three unprovenanced dark tokens) + 6 DEFECT + 6 SMELL — all amended: four headers, tokens declared derived, the ghost DESIGN.md citation repaired, wiring moved to where work lands (FR-3→T-8, FR-8→T-7, AC-3→T-3, FR-9→T-2), one shared theme key, T-1 persistence honest, the 0.4.1 assertion added to the portability gate, T-6 names its closure preconditions, the needs chain declared, T-2 split (scrub+gate = T-7), T-4 split (route = T-4, panel = T-8), T-3 pinned to the corpus fixture, test files named per task."
       }
     ]
   },

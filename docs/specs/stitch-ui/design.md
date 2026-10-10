@@ -30,7 +30,7 @@ One `<style>` block of CSS custom properties per page, two theme scopes:
 - **Canonical values only** (FR-1's table; decision-studio light, library-review dark). State roles (error/pass/warn/smell, focus rings) are pinned per R2: light error verbatim from decision-studio, dark severity verbatim from library-review's badges; light pass/warn/smell and dark primary-c/tertiary are DECLARED DERIVED SHADES — named in FR-1, not invented by implementers.
 - **No-flash:** an inline script in `<head>` sets `document.documentElement.dataset.theme` from `localStorage['theme']` before the stylesheet renders; default light.
 - **The no-line rule:** structural separation via surface steps only; `--ghost` where an edge is unavoidable; primary CTAs carry the `linear-gradient(135deg, var(--primary), var(--primary-c))`. **Markdown tables are the carve-out**: rendered table edges are ghost borders or surface stripes — exempt from the no-line assertion (briefs carry tables; legibility wins).
-- **The toggle:** one control per surface (header icon), persists to the same key both surfaces read.
+- **The toggle:** one control per surface (header icon), persists under the ONE shared key (`theme`) both surfaces read (FR-2, R3).
 
 ### DES-5 — The alignment route
 `GET /alignment/<name>` — the web server loads the pack through `@treadle/core`, unwraps `alignment(doc).value`, computes `gapCount(value)`, and serves `{ violations, gapCount, sentence }` where **sentence is pinned exactly**: `` `alignment: ${violations.length} violation(s), ${gapCount} gap(s) — gaps are reported, never guessed` `` — composed only from the two exported functions, no invented wording. Read-only, `no-store`, 404 for ghosts, 400-JSON on a pack that will not load — the same refusal posture as every route. The corpus and core are untouched; this is surface reads composing what core already exports.
@@ -58,7 +58,7 @@ Inside the inspector's conformance phase: findings counted by severity from `rev
 
 - `// @vitest-environment jsdom` per-file pragmas on new page tests; **jsdom installed in root devDependencies** (T-0's first act — it is not currently a dependency).
 - Pages load their real JS (classic scripts, `runScripts:'dangerously'`); **jsdom ships no fetch** — the harness injects a `window.fetch` shim rebasing relative URLs against the live server URL; **persistence = write→read-back plus a seeded fresh DOM** (jsdom reload is not implemented).
-- `servers.test.ts` gains the headers assertion (all five `SECURITY_HEADERS` on `/` and assets).
+- `servers.test.ts` gains the headers assertion (all four `SECURITY_HEADERS` — CSP, nosniff, frame-ancestors, referrer — on `/` and assets).
 - The portability test stays the brand gate; the corpus stays untouched (no engine change — `pnpm corpus:check` must stay green with zero diff, proven per task).
 
 ## What this design does not do
