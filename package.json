@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@9.15.9",
-  "workspaces": ["treadle"],
-  "description": "The SDD harness — knowledge first, then a tight loop. Git-install root orchestrator: npm i -g --allow-scripts=engram-dev github:phanijapps/engram-dev#main",
-  "bin": {
-    "treadle": "treadle/packages/cli/dist/src/main.js"
-  },
+  "workspaces": [
+    "treadle"
+  ],
+  "description": "The SDD harness \u2014 knowledge first, then a tight loop. Remote install: git clone \u2026 && npm i -g --allow-scripts=engram-dev \"$(npm pack --silent)\"",
   "dependencies": {
     "@treadle/brand": "file:treadle/packages/brand",
     "@treadle/core": "file:treadle/packages/core",
     "@treadle/knowledge": "file:treadle/packages/knowledge",
-    "@treadle/web": "file:treadle/packages/web"
+    "@treadle/web": "file:treadle/packages/web",
+    "@treadle/cli": "file:treadle/packages/cli"
   },
   "scripts": {
     "prepare": "cd treadle && corepack enable && pnpm install --frozen-lockfile && pnpm build"
