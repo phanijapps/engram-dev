@@ -13,8 +13,9 @@ import {
   type Surface,
   UsageError,
 } from '../harness/types.js';
+import { promptForMissing } from '../harness/skin.js';
 
-interface Flags {
+export interface Flags {
   agent?: string;
   scope?: string;
   skills?: string[];
@@ -48,7 +49,22 @@ export function registerInit(initCmd: Command): void {
     .action((f: Flags) => runHarnessInit(f));
 }
 
-export function runHarnessInit(f: Flags): void {
+export async function runHarnessInit(rawFlags: Flags): Promise<void> {
+  let f = rawFlags;
+  if (
+    isTTY() &&
+    (f.agent === undefined ||
+      f.scope === undefined ||
+      f.hooks === undefined ||
+      f.agents === undefined)
+  ) {
+    const out = await promptForMissing(f, true);
+    if (out === 'cancelled') {
+      process.exitCode = 1;
+      return;
+    }
+    f = out;
+  }
   let choices: InstallChoices;
   try {
     choices = choicesFromFlags(f);

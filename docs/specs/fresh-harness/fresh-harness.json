@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:10:54Z",
+    "updated": "2026-10-10T15:12:59Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -563,7 +563,7 @@
       "id": "T-2",
       "title": "The interactive skin: prompts render choices, return flags",
       "detail": "The interactive layer: @clack/prompts (Q-2 answered) — agent picker, scope picker, component multi-select; the module only produces flags and calls the engine; TTY detection honest; tests assert the skin is thin.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-6"
@@ -581,6 +581,15 @@
       },
       "needs": [
         "T-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T15:12:59Z",
+          "by": "agent:pi",
+          "notes": "The skin: @clack/prompts (Q-2) — agent picker (pi/Claude Code/Codex/GitHub Copilot), install level (project/global), hooks + agents confirms; answers map to flags the engine already understands; non-TTY callers get flags back unchanged (no fake interaction); thin-by-construction asserted (skin module imports no fs/apply/plan); the command consults the skin only when a TTY exists AND a choice is missing; cancel exits 1 clean. 83 tests green, brand clean."
+        }
       ]
     },
     {
@@ -693,5 +702,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 32
+  "revision": 33
 }
