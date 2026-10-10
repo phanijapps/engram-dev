@@ -3,32 +3,112 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T10:38:21Z"
+    "updated": "2026-10-10T10:43:05Z",
+    "approved": {
+      "at": "2026-10-10T10:40:20Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "drafted"
   },
   "spec": {
-    "why": "The owner chose the direction: library-inspector inspires a full Alexandria redesign of the room and library — 3-pane library with phase inspector, Decision Studio room, one design system, seam contracts frozen.",
-    "requirements": [],
+    "why": "The harness works; its room shows the machine's plumbing. The owner chose the direction (library-inspector, Alexandria editorial): one design system over both surfaces, the phase inspector as the library's third pane, and the seam contracts frozen.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "text": "A token layer (CSS custom properties) SHALL encode the Alexandria light system as default and the dark review variant as an alternate, with system font stacks (serif headline voice, sans body, mono status) — no webfonts, no CDN."
+      },
+      {
+        "id": "FR-2",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "text": "The theme toggle SHALL persist per surface (localStorage) and apply without flash on load; light is default."
+      },
+      {
+        "id": "FR-3",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "text": "The library SHALL adopt the no-line rule: structure via surface shifts; ghost borders (15% outline) only where structure demands."
+      },
+      {
+        "id": "FR-4",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The library SHALL render a third pane — the phase inspector — with the five phases, their states derived from pack state, and per-phase view focusing; the inspector SHALL NOT admit actions in v1."
+      },
+      {
+        "id": "FR-5",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "text": "The inspector SHALL render review telemetry: verdicts, findings counted by severity, reviewer claims; refreshed on interaction (poll), with the refresh posture stated in the UI."
+      },
+      {
+        "id": "FR-6",
+        "priority": "P1",
+        "serves": [
+          "US-4"
+        ],
+        "text": "The conformance phase SHALL render the alignment report (violations, gaps, the house sentence) as a panel."
+      },
+      {
+        "id": "FR-7",
+        "priority": "P1",
+        "serves": [
+          "US-5"
+        ],
+        "text": "The room SHALL be reskinned in the same system with the wizard contract frozen: question-by-question, Enter submits, honest unknown, approve at end, block-until-approved with Ctrl-C escape."
+      },
+      {
+        "id": "FR-8",
+        "priority": "P1",
+        "serves": [
+          "US-6"
+        ],
+        "text": "All existing seam, portability, and security contracts SHALL hold unchanged: events-only admission, engine-name-free assets, keyboard and pointer complete, CSP headers, route parity."
+      },
+      {
+        "id": "FR-9",
+        "priority": "P2",
+        "serves": [
+          "US-2"
+        ],
+        "text": "The journey strip in the dossier overview SHALL remain (factory pipeline is aspiration, recorded)."
+      }
+    ],
     "clarifications": [
       {
         "id": "Q-1",
         "question": "The phase inspector v1: read-only as designed, or clickable phases that also act (answer/approve from the inspector)?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "read-only v1, actions stay in the dossier",
           "actionable right away"
         ],
-        "default": "read-only v1, actions stay in the dossier"
+        "default": "read-only v1, actions stay in the dossier",
+        "answer": "read-only v1, actions stay in the dossier",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T10:39:43Z"
       },
       {
         "id": "Q-2",
         "question": "The dark review variant: a manual mode toggle, an automatic theme in review phase, or dropped for v1?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
@@ -36,46 +116,192 @@
           "manual toggle",
           "auto in review"
         ],
-        "default": "dropped for v1 (light only)"
+        "default": "dropped for v1 (light only)",
+        "answer": "manual toggle",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T10:39:49Z"
       },
       {
         "id": "Q-3",
         "question": "Webfonts (Noto Serif + Inter + Public Sans, ~300KB vendored, no CDN): ship them, or system-font fallback v1?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "vendored webfonts",
           "system fonts v1"
         ],
-        "default": "vendored webfonts"
+        "default": "vendored webfonts",
+        "answer": "system fonts v1",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T10:40:01Z"
       },
       {
         "id": "Q-4",
         "question": "The Decision Studio room: keep the wizard contract exactly (Q-by-Q, Enter submits, approve at end) inside the new card layout?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "yes, wizard unchanged",
           "reshape into free-order cards"
         ],
-        "default": "yes, wizard unchanged"
+        "default": "yes, wizard unchanged",
+        "answer": "yes, wizard unchanged",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T10:40:07Z"
       },
       {
         "id": "Q-5",
         "question": "The Factory pipeline screen: aspiration only for v1, or must it ship?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "aspiration (journey strip stays)",
           "must ship"
         ],
-        "default": "aspiration (journey strip stays)"
+        "default": "aspiration (journey strip stays)",
+        "answer": "aspiration (journey strip stays)",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T10:40:18Z"
       }
     ],
-    "out_of_scope": []
+    "out_of_scope": [
+      "the factory pipeline screen (aspiration)",
+      "webfonts (system stacks v1)",
+      "live sockets (poll v1)",
+      "inspector actions (v2 candidate)",
+      "any engine-side change"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "title": "Read the library in daylight",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "the library in the warm Alexandria light with serif titles and ghost-bordered cards",
+        "so": "the record feels like a curated archive, not a terminal",
+        "acceptance": [
+          {
+            "id": "AC-1",
+            "given": "the library opens",
+            "when": "it renders",
+            "then": "the Alexandria light tokens are the default: warm paper surfaces, serif headline voice, ink text, no 1px structural borders"
+          },
+          {
+            "id": "AC-2",
+            "given": "the theme toggle",
+            "when": "I switch to dark",
+            "then": "the dark review variant applies and the choice persists across visits without a flash on load"
+          }
+        ]
+      },
+      {
+        "id": "US-2",
+        "title": "Walk the phases in the inspector",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "a right-hand phase inspector showing the spec journey with states",
+        "so": "I see where the work is without reading tasks",
+        "acceptance": [
+          {
+            "id": "AC-3",
+            "given": "a selected spec",
+            "when": "the inspector renders",
+            "then": "the five phases appear with their states, derived from the frozen stage vocabulary and pack state"
+          },
+          {
+            "id": "AC-4",
+            "given": "a phase with a view affordance",
+            "when": "I click it",
+            "then": "the dossier focuses that phase's content and the inspector itself stays read-only"
+          }
+        ]
+      },
+      {
+        "id": "US-3",
+        "title": "See the review live",
+        "priority": "P1",
+        "as": "the owner",
+        "want": "review telemetry in the inspector",
+        "so": "findings and verdicts surface without opening the review tab",
+        "acceptance": [
+          {
+            "id": "AC-5",
+            "given": "a pack with verdicts",
+            "when": "the inspector renders",
+            "then": "findings appear counted by severity with the reviewer named"
+          },
+          {
+            "id": "AC-6",
+            "given": "review state changes",
+            "when": "I refresh or re-select",
+            "then": "the telemetry reflects the current pack (v1: poll on interaction, no sockets, said honestly in the UI)"
+          }
+        ]
+      },
+      {
+        "id": "US-4",
+        "title": "Trust the gate",
+        "priority": "P1",
+        "as": "the owner",
+        "want": "the conformance state as a panel",
+        "so": "violations and gaps are visible at a glance",
+        "acceptance": [
+          {
+            "id": "AC-7",
+            "given": "the conformance phase",
+            "when": "selected",
+            "then": "the alignment report renders: violations, gap counts, the house sentence"
+          }
+        ]
+      },
+      {
+        "id": "US-5",
+        "title": "Hold the ceremony in the studio",
+        "priority": "P1",
+        "as": "a product owner",
+        "want": "the interview room reskinned in the same grammar",
+        "so": "both surfaces feel like one product",
+        "acceptance": [
+          {
+            "id": "AC-8",
+            "given": "the room",
+            "when": "it renders",
+            "then": "the Alexandria system applies and the wizard contract is unchanged: one question at a time, Enter submits, approve at the end, Ctrl-C escapes"
+          },
+          {
+            "id": "AC-9",
+            "given": "the room and library",
+            "when": "audited",
+            "then": "both remain engine-name-free and admit only through the event seam"
+          }
+        ]
+      },
+      {
+        "id": "US-6",
+        "title": "Nothing regresses",
+        "priority": "P1",
+        "as": "the owner",
+        "want": "every existing behavior intact under the new skin",
+        "so": "the redesign costs no capability",
+        "acceptance": [
+          {
+            "id": "AC-10",
+            "given": "any page",
+            "when": "keyboard and pointer are used",
+            "then": "every act works both ways, as before"
+          },
+          {
+            "id": "AC-11",
+            "given": "the served pages",
+            "when": "inspected",
+            "then": "CSP and security headers are unchanged and the route contract holds (every referenced asset serves 200)"
+          }
+        ]
+      }
+    ]
   },
   "design": {
     "decisions": [
@@ -83,24 +309,163 @@
         "id": "D-1",
         "decision": "Alexandria light editorial is THE theme; library-inspector is the primary inspiration (owner directive).",
         "because": "The owner named the direction mid-round; the artifacts confirm coherence.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-2",
         "decision": "The five phases are a presentation layer over the frozen stage vocabulary — no engine stages added or renamed.",
         "because": "D-2 of the spec-library lineage: translation is presentation, the vocabulary is frozen.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-3",
         "decision": "Seam contracts frozen: pages stay engine-name-free, admission only through specweb-events, keyboard and pointer complete, CSP-pinned, no CDN.",
         "because": "The portability thesis is not negotiable for a skin change.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-4",
+        "decision": "System font stacks carry the voices: serif headline (Georgia/Iowan/serif), sans body (system-ui), mono status (ui-monospace) — the Alexandria hierarchy without webfont weight.",
+        "because": "Owner Q-3: no vendored fonts v1; the hierarchy survives in the stack order.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-5",
+        "decision": "The dark review variant ships as a manual, persisted toggle — not auto-in-review, not dropped.",
+        "because": "Owner Q-2: the dark posture is valued for review work; the choice stays human.",
         "status": "proposed"
       }
     ],
     "designs": []
   },
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Token layer + theme toggle",
+      "detail": "CSS custom properties for both themes, system stacks, persisted toggle, no-flash load",
+      "phase": "core",
+      "satisfies": [
+        "FR-1",
+        "FR-2"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-1",
+        "AC-2"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd engine/../treadle && pnpm check",
+        "expect": "exit 0 — token tests green (both themes, persistence, no-flash)"
+      }
+    },
+    {
+      "id": "T-2",
+      "title": "Library 3-pane + Alexandria skin",
+      "detail": "the no-line rule, ghost borders, serif titles, warm paper; list + dossier reskin",
+      "phase": "core",
+      "satisfies": [
+        "FR-3",
+        "FR-4"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-3"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — layout tests: three panes, no structural 1px borders in tokens"
+      }
+    },
+    {
+      "id": "T-3",
+      "title": "Phase inspector",
+      "detail": "five phases, states derived from pack state, view focusing, read-only",
+      "phase": "core",
+      "satisfies": [
+        "FR-4",
+        "FR-9"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-4"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — inspector renders phases from real packs, click focuses dossier, no admission controls"
+      }
+    },
+    {
+      "id": "T-4",
+      "title": "Review telemetry + conformance panel",
+      "detail": "findings by severity, verdicts, alignment report, poll-on-interaction with honest posture note",
+      "phase": "core",
+      "satisfies": [
+        "FR-5",
+        "FR-6"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-5",
+        "AC-6",
+        "AC-7"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — telemetry renders from spec-web fixtures (10 findings, 2/6/2)"
+      }
+    },
+    {
+      "id": "T-5",
+      "title": "Room reskin (Decision Studio)",
+      "detail": "same grammar, wizard contract frozen; route + asset parity re-verified",
+      "phase": "integration",
+      "satisfies": [
+        "FR-7",
+        "FR-8"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [
+        "AC-8",
+        "AC-9",
+        "AC-10",
+        "AC-11"
+      ],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — room behavior tests green under the new skin, engine-name grep clean"
+      }
+    },
+    {
+      "id": "T-6",
+      "title": "Red-forman rounds ×5 + verdicts + close",
+      "detail": "the owner-ordered rigor: five adversarial rounds across the drafts, findings fixed and recorded, then freeze",
+      "phase": "polish",
+      "satisfies": [
+        "FR-8"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check",
+        "expect": "exit 0 — five review rounds recorded in the pack, corpus untouched (no engine change)"
+      }
+    }
+  ],
   "format": "specpack/0.3",
-  "revision": 9
+  "revision": 18
 }
