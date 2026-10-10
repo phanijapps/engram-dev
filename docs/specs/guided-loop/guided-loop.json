@@ -3,15 +3,19 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T18:05:54Z",
+    "updated": "2026-10-10T18:25:51Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T18:25:51Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "The harness installs everywhere now; the loop must orient itself. A fresh session saying continue should be TOLD where work dangles (open specs, worktrees) and pause to ask which one. Skills still speak the retired CLI. Five spec debts are recorded. This wave pays them.",
@@ -587,12 +591,21 @@
         "T-4",
         "T-5"
       ],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-3"
       ],
       "honors": [],
-      "accepts": []
+      "accepts": [],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+          "exit": 0,
+          "at": "2026-10-10T18:25:50Z",
+          "by": "agent:pi",
+          "notes": "Close: R1 (14 findings) + R2 (15 findings: 4 blockers incl. a dead gate and an empty injection — both ALIVE now, proven by the enforced-path test) + the eighth and ninth masked-chain disclosures, all folded and recorded; 111 tests; corpus 44 cases byte-stable (the malformed witnesses fire the §8/§9 errors); brand clean; links 63; wiki ritual green AT CLOSE (validate 0/0, anchors 0/19, fresh — re-stamped after the §8 fix healed the wiki); both payloads reinstalled through the installer (the dogfood current)."
+        }
+      ]
     }
   ],
   "review": {
@@ -608,9 +621,27 @@
         "verdict": "IMPROVE",
         "by": "agent:pi",
         "note": "SELF-DISCLOSURE (eighth instance of the masked-chain class): T-3 was recorded pass while check=1 and brand=1 had been printed but not gated — my chain used echo between the commands, and the record ran anyway. What was actually broken: the read.ts tier-surfacing edit had never landed (a silently-missed replace left an unused import — eslint fail), and the witness case had shifted two goldens the runner counts (42→43) and the mini-bundle read golden (the new tier header line). All fixed with verified-in-file edits: the tier header now surfaces in read (the golden diff shows exactly the one line), the runner counts 43, prettier satisfied. Everything re-verified UNPIPED after the fix commit: check=0 (111 tests), corpus=0, brand=0. Post-hoc the T-3 evidence stands."
+      },
+      {
+        "on": "R2",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "The closing audit: 4 BLOCKER + 8 DEFECT + 3 SMELL — the deepest round yet, because the gates were green while the mechanisms were dead. ALL FIXED: the pi hard gate is ALIVE (array-shaped content extraction — real pi builds [{type:text}] and String(content) yielded [object Object]; the gate never fired); the session_start injection DELIVERS (sendMessage takes {customType, content, display} — the bare string was silently dropped, which is why the reviewer session saw no block); §8 accepts [-*+] markers (the asterisk-only rule was INVENTED — it condemned our own dash-bulleted wiki with 5 false errors, now 0); the T-1 test drives the enforced path for real (stubbed CLI, two open packs, object send asserted, array-content replacement asserted, one-open allow asserted) — the ninth masked instance closed. Defects: where() resolves the workspace (relative paths double-listed the root and fired the ASK with ONE open — the exact misfire the gate exists to stop, reproduced live by the reviewer); blocked joined both open sets; evidence age prints; non-conformant verdicts; build-kb positional truth; the codex prompt is a real prompt from its own source (21 lines teaching the rule); the corpus gained debt-witness-malformed (44 cases) — headingless index + non-ISO log fire the §8/§9 errors in a golden, closing the no-witness gap the reviewer named. The hook re-renders from the JSON (openCount from data, never prose-matching); stdin times out; --claude-start reads payload.cwd. Wiki re-validated (0/0) and re-stamped fresh at close; both hook payloads reinstalled through the installer."
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "CORRECTION (R2 #7): the T-3 evidence note overclaimed — \"goldens prove every error/warning\" was false for §8/§9 at the time (only the conformant log existed; the error paths had NO witnesses — and §8 itself was an invented glyph rule that broke the repo wiki unnoticed). Now true: debt-witness-malformed fires index-structure and log-structure errors in goldens; §8 accepts [-*+] per the spec sentence; the wiki validates 0/0 again."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-forman",
+        "note": "R2 said IMPROVE — do not close; every finding is fixed and re-verified unpiped, and the fixes were the wave's own thesis proven: the recall found the dangling work, the reviewer ran inside the dogfooded extension, and the corpus now witnesses the rules it enforces. The loop remembers where work dangles (do where + session-recall live on pi and claude in this very repo); the hard gate asks instead of guessing (enforced, array-shaped, never over-firing); the skills speak today in neutral phrasing; all five SPEC debts are paid with golden witnesses; DEBT.md tells the truth. Two audit rounds on artifacts, two on the build, 29 findings total, all closed. Close it clean — and let the next session open with the block already in its eyes."
       }
     ]
   },
   "format": "specpack/0.3",
-  "revision": 19
+  "revision": 21
 }
