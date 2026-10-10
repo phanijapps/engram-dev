@@ -3,7 +3,7 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T17:57:46Z",
+    "updated": "2026-10-10T18:03:05Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
       "by": "human:owner"
@@ -489,7 +489,7 @@
         "FR-11"
       ],
       "needs": [],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-5",
         "DES-6"
@@ -497,6 +497,15 @@
       "honors": [],
       "accepts": [
         "AC-4"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check",
+          "exit": 0,
+          "at": "2026-10-10T18:03:05Z",
+          "by": "agent:pi",
+          "notes": "All five debts paid: §5.3 trustTier helper (unverified/machine-confirmed/human-reviewed from verified actors; advisory info in validate + a header line in read; never a rejection); §8+§9 enforced as the ONE §11.3 clause (D-6: index sections-with-bullets and log ISO-dates-newest-first are errors); §10 admission rules (runtime REQUIRED; parameters {name,type}; executor/attester resource + receipt — execution machinery out of scope, stated); stale_after compares now >= instant with the injectable clock (validateBundle opts.now, proven flipping both ways). Corpus: the debt-witness case born (goldens prove every error/warning); okf02-advisory golden gains exactly the one trust-tier info line — diff reviewed line by line, committed as the contract change. Two fixture quirks witnessed: quoted \"0.2\" (bare parses as float) and quoted stale_after. 18 knowledge tests, 111 total, corpus stable post-commit."
+        }
       ]
     },
     {
@@ -579,5 +588,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 16
+  "revision": 17
 }

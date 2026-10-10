@@ -32,8 +32,11 @@ export function readConcept(root: string, cid: string, depth = 0, tokenBudget = 
   const adjacency = buildAdjacency(rootR, concepts);
   const levels = bfsLevels(cid, adjacency, depth);
 
+  const seedFm = parseConcept(seedPath, rootR).frontmatter;
+  const tier = trustTier(seedFm['verified']);
   const parts: string[] = [
     `<!-- okf context: seed=${cid} depth=${depth} token_budget=${tokenBudget} -->\n\n`,
+    `<!-- trust tier: ${tier} (§5.3, advisory) -->\n\n`,
   ];
   let used = estimate(parts[0]!);
   const seedBlock = `# ${cid} (seed)\n\n${readFileSync(seedPath, 'utf8')}\n\n`;

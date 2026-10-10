@@ -87,7 +87,9 @@ describe('the five debts (T-3)', () => {
   it('stale_after: the comparison runs, with the injectable clock (§5.5)', () => {
     const past = bundle({ 'c.md': concept('type: Concept\nstale_after: "2020-01-01T00:00:00Z"') });
     expect(validateBundle(past).warnings.some((w) => w.code === 'stale-after-passed')).toBe(true);
-    const future = bundle({ 'c.md': concept('type: Concept\nstale_after: "2999-01-01T00:00:00Z"') });
+    const future = bundle({
+      'c.md': concept('type: Concept\nstale_after: "2999-01-01T00:00:00Z"'),
+    });
     expect(validateBundle(future).warnings.some((w) => w.code === 'stale-after-passed')).toBe(
       false,
     );
