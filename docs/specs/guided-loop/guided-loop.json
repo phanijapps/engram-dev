@@ -3,7 +3,7 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T18:03:05Z",
+    "updated": "2026-10-10T18:05:17Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
       "by": "human:owner"
@@ -584,6 +584,12 @@
         "verdict": "IMPROVE",
         "by": "agent:red-forman",
         "note": "Artifact round: 3 BLOCKER + 6 DEFECT + 5 SMELL, all folded. The blockers were A2 fold gaps: AC-2 still tested the OVERRULED soft discipline (now the enforced gate, falsifiable); T-5 re-defered debts Q-5 ordered paid (now closes all five, only §10 execution machinery deferred with trigger); T-2 verify was a double false-green (unanchored cwd + SKILL.md-only filter that skips 21 live references in resources/assets/evals — now anchored, unfiltered, expect 0). Defects: design soft-line fixed; T-3 corpus promise made fulfillable (generator gains log.md + Attested Computation + staleness cases so the biggest debt fixes have goldens to move); §11.3 single-clause decision recorded as D-6 (proposed, surfaced); diagram names all five; T-4 asserts INSTALLED artifacts; T-1 unpiped. Smells: false T-3→T-2 dependency cut; \"first user message\" operationally defined (no prior user entry, resumed included); no-git fixture; DES entries landed (stale closing line struck); do library divergence recorded. The reviewer confirmed both pi hard-gate mechanisms against pi docs + types.d.ts and found no invented spec rules."
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "SELF-DISCLOSURE (eighth instance of the masked-chain class): T-3 was recorded pass while check=1 and brand=1 had been printed but not gated — my chain used echo between the commands, and the record ran anyway. What was actually broken: the read.ts tier-surfacing edit had never landed (a silently-missed replace left an unused import — eslint fail), and the witness case had shifted two goldens the runner counts (42→43) and the mini-bundle read golden (the new tier header line). All fixed with verified-in-file edits: the tier header now surfaces in read (the golden diff shows exactly the one line), the runner counts 43, prettier satisfied. Everything re-verified UNPIPED after the fix commit: check=0 (111 tests), corpus=0, brand=0. Post-hoc the T-3 evidence stands."
       }
     ]
   },
