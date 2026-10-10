@@ -45,3 +45,12 @@ Unbaselined TypeScript and Markdown sources remain a disclosed limitation.
 The installer dry-run made no writes and returned exit 3 for an existing modified
 build-kb destination. The README explains that conflict and the need to inspect
 differences before overwrite. No skill was installed or used for this update.
+
+
+Evidence asset packaging follow-up
+
+The first Markdown receipt was indexed as a wiki concept and lacked frontmatter.
+That check reported one error. The receipt now uses a text asset, outside the
+concept graph. Repeated validation reported 0 errors and 0 warnings; status
+reported 44 concepts, 148 anchors with 0 needing review, and a fresh stamp.
+The reviewed AGENTS.md and README.md hashes remain unchanged.
