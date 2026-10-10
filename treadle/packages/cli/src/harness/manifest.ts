@@ -61,8 +61,11 @@ function validateHook(h: HookRow): void {
   if (!h.id || !h.file) throw new Error('hook refused: id and file are required');
   if (!safePath(h.file)) throw new Error(`${h.id}: hook file escapes the manifest root — refused`);
   for (const [k, w] of Object.entries(h.wiring)) {
-    if (w !== null && w.dest !== undefined && !safePath(w.dest))
-      throw new Error(`${h.id}: wiring dest for ${k} escapes — refused`);
+    const ws = Array.isArray(w) ? w : [w];
+    for (const one of ws) {
+      if (one !== null && one.dest !== undefined && !safePath(one.dest))
+        throw new Error(`${h.id}: wiring dest for ${k} escapes — refused`);
+    }
   }
   if (!h.wiring || typeof h.wiring !== 'object') throw new Error(`${h.id}: wiring map required`);
 }

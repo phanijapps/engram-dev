@@ -16,7 +16,15 @@ import { join } from 'node:path';
 import { normalizedHash } from './content.js';
 import { destPath, sourceFile } from './manifest.js';
 import { destRoots } from './paths.js';
-import type { HarnessManifest, InstallChoices, Plan, PlanRow, Scope, Surface } from './types.js';
+import type {
+  HarnessManifest,
+  HookWiring,
+  InstallChoices,
+  Plan,
+  PlanRow,
+  Scope,
+  Surface,
+} from './types.js';
 
 function stripSurfacePrefix(dest: string): string {
   return dest.replace(/^(\.pi|\.claude|\.codex)\//, '');
@@ -159,7 +167,10 @@ export function compilePlan(
 
   if (choices.hooks) {
     for (const h of manifest.hooks) {
-      const w = h.wiring[agent];
+      const w0 = h.wiring[agent];
+      const wiringList: HookWiring[] =
+        w0 === undefined || w0 === null ? [] : Array.isArray(w0) ? w0 : [w0];
+      const w = wiringList[0]; // the first wiring decides the payload destination; every wiring lands
       if (!w) {
         rows.push({
           component: h.id,
@@ -185,7 +196,7 @@ export function compilePlan(
         });
         continue;
       }
-      if (w.kind === 'extension' && w.dest) {
+      if ((w.kind === 'extension' || w.kind === 'prompt-file') && w.dest) {
         const destAbs = destFor(w.dest, agent, scope, choices.root);
         rows.push({
           component: h.id,
@@ -194,7 +205,11 @@ export function compilePlan(
           source: h.file,
           destination: destAbs,
           mode: modeForFile(src, destAbs, choices.force),
+          ...(w.kind === 'prompt-file'
+            ? { note: 'recall prompt-file (the honest codex subset)' }
+            : {}),
         });
+        if (w.kind === 'prompt-file') continue; // the file IS the wiring — no settings to merge
       } else {
         const destAbs = join(roots.runtime, 'hooks', h.file.split('/').pop()!);
         rows.push({
@@ -219,6 +234,17 @@ export function compilePlan(
           target: wiringTarget(agent, scope, choices.root),
           detail,
         });
+      }
+      // additional wirings from array-valued wiring (claude multi-matcher — additive manifest)
+      for (const extra of wiringList.slice(1)) {
+        if (extra.kind === 'settings-hooks' && extra.matcher) {
+          wirings.push({
+            surface: agent,
+            kind: 'settings-hooks',
+            target: wiringTarget(agent, scope, choices.root),
+            detail: `${extra.matcher} → ${extra.command ?? ''}`,
+          });
+        }
       }
     }
   }

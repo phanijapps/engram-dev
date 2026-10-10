@@ -144,13 +144,46 @@
       "id": "post-tool-check",
       "file": "hooks/post-tool-check.js",
       "wiring": {
-        "pi": { "kind": "extension", "dest": ".pi/extensions/post-tool-check.js" },
+        "pi": {
+          "kind": "extension",
+          "dest": ".pi/extensions/post-tool-check.js"
+        },
         "claude": {
           "kind": "settings-hooks",
           "matcher": "PostToolUse",
           "command": "node .harness/hooks/post-tool-check.js"
         },
-        "codex": { "kind": "config-notify", "command": "node .harness/hooks/post-tool-check.js" },
+        "codex": {
+          "kind": "config-notify",
+          "command": "node .harness/hooks/post-tool-check.js"
+        },
+        "copilot": null
+      }
+    },
+    {
+      "id": "session-recall",
+      "file": "hooks/session-recall.js",
+      "wiring": {
+        "pi": {
+          "kind": "extension",
+          "dest": ".pi/extensions/session-recall.js"
+        },
+        "claude": [
+          {
+            "kind": "settings-hooks",
+            "matcher": "SessionStart",
+            "command": "node .harness/hooks/session-recall.js --claude-start"
+          },
+          {
+            "kind": "settings-hooks",
+            "matcher": "UserPromptSubmit",
+            "command": "node .harness/hooks/session-recall.js --claude-gate"
+          }
+        ],
+        "codex": {
+          "kind": "prompt-file",
+          "dest": ".codex/prompts/recall.md"
+        },
         "copilot": null
       }
     }

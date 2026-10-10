@@ -6,7 +6,7 @@ export type Scope = 'project' | 'global';
 export type ComponentKind = 'skill' | 'agent';
 
 export interface HookWiring {
-  kind: 'extension' | 'settings-hooks' | 'config-notify';
+  kind: 'extension' | 'settings-hooks' | 'config-notify' | 'prompt-file';
   dest?: string;
   matcher?: string;
   command?: string;
@@ -15,7 +15,7 @@ export interface HookWiring {
 export interface HookRow {
   id: string;
   file: string;
-  wiring: Partial<Record<Surface, HookWiring | null>>;
+  wiring: Partial<Record<Surface, HookWiring | HookWiring[] | null>>;
 }
 
 export interface ComponentRow {

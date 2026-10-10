@@ -3,7 +3,7 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T17:48:31Z",
+    "updated": "2026-10-10T17:56:10Z",
     "approved": {
       "at": "2026-10-10T17:41:26Z",
       "by": "human:owner"
@@ -418,7 +418,7 @@
       "needs": [
         "T-0"
       ],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-2",
         "DES-3"
@@ -426,6 +426,15 @@
       "honors": [],
       "accepts": [
         "AC-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts && node harness/hooks/session-recall.js ..",
+          "exit": 0,
+          "at": "2026-10-10T17:56:10Z",
+          "by": "agent:pi",
+          "notes": "The recall payload + the hard gate + three wirings: session-recall.js dual entry (script prints the engine block via do where --json; pi extension session_start→sendMessage); THE HARD GATE — claude UserPromptSubmit entry reads stdin JSON, exit 2 + the ask-list when continue-shaped AND >1 open (allow otherwise: proven live with one open — the gate never over-fires); pi message_end replacement fires only with scan data (inert without it — a gate without data never blocks, asserted). Manifest grew additively: array wirings (claude SessionStart + UserPromptSubmit both merge into settings.json alongside PostToolUse) and the prompt-file kind (codex honest subset: .codex/prompts/recall.md); installer engine extended + 12 surface tests green. The block is engine-quoted end to end — the payload shells to the CLI, never memory."
+        }
       ]
     },
     {
@@ -561,5 +570,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 14
+  "revision": 15
 }

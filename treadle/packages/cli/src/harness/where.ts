@@ -10,6 +10,7 @@ import { loadPackWithMeta } from '@treadle/core';
 interface PackDocLike {
   name?: string;
   revision?: number;
+  deliverable?: string;
   status?: unknown;
   spec: { clarifications?: { status?: string }[] };
   tasks?: { id: string; status?: string; needs?: string[]; evidence?: { at?: string }[] }[];
@@ -67,7 +68,12 @@ function scanSpecsDir(dir: string, tree: string): PackRow[] {
     rows.push({
       name: doc.name ?? e.name,
       path: packDir,
-      stage: String((doc.status as { deliverable?: string } | undefined)?.deliverable ?? 'unknown'),
+      // the deliverable stage lives flat or nested depending on which writer touched the pack last — read both, honestly
+      stage: String(
+        doc.deliverable ??
+          (doc.status as { deliverable?: string } | undefined)?.deliverable ??
+          'unknown',
+      ),
       openQuestions,
       nextTask: ready,
       revision: doc.revision ?? null,
