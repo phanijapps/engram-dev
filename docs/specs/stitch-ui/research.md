@@ -65,3 +65,53 @@ Extracted from the Stitch project's DESIGN.md and namedColors (verified live):
 ## Handoff
 
 A4 next: interaction model. Then A5: the spec synthesis — born into this folder through the machine, questions asked in the room once it exists.
+
+---
+
+## Owner directive (2026-10-10, mid-round)
+
+> "I want you to be inspired from library-inspector."
+
+The light editorial 3-pane library is THE primary direction (this answers
+Open Question 1: Alexandria light is the theme; the dark review variant
+becomes at most a mode, not the identity).
+
+## A4 — The interaction model, read out of library-inspector (✓ done)
+
+Deep-read of `designs/library-inspector.html` found the design populated
+with THIS harness's real data — the phases, the findings, the review
+state. The screen encodes a complete interaction model:
+
+1. **Three panes:** spec list (340px rail) / dossier / **phase
+   inspector** (the new third pane). The inspector is the stage
+   vocabulary made visible as a journey: `01. Blueprint Intake →
+   02. Canonical Spec → 03. UI/UX Archetype → 04. Assembly Tasks →
+   05. Conformance Gate`, each with a state (Completed / Anchored /
+   Synthesized / "6 tasks woven" / Currently Inspecting) and a `view`
+   affordance — clicking a phase focuses the dossier on that phase's
+   content. **Mapping to the frozen stages is presentation** (like the
+   words layer): the five phases are views over
+   drafted/planning→in_progress→in_review→delivered; no engine stages
+   are added or renamed.
+2. **Review telemetry, live:** "Review Socket: Live", "Total Findings:
+   10 (2 Blocker, 6 Defect, 2 Smell)", "Markdown wrap: active" — the
+   inspector surfaces `review.verdicts` and findings by severity in
+   real time. Implication: a review-state fetch (poll or socket) joins
+   the seam's read model; v1 = poll on refresh, honest about it.
+3. **Gate Conformance State panel:** the conformance gate phase carries
+   a check-state panel (violations/gaps) — `do check`'s alignment
+   report rendered as a first-class citizen.
+4. **Component grammar confirmed:** serif card titles, mono status
+   chips (11px, emerald for healthy), ghost-bordered cards, warm-paper
+   surfaces `#FAF9F6/#F5F2EA`, slate ink — and the known drift (some
+   1px slate borders) that the spec will resolve IN FAVOR of the
+   no-line rule.
+5. **The room inherits the same grammar** (Decision Studio) — one
+   system, two surfaces; the wizard contract (Q-by-Q, Enter submits,
+   approve-at-end) must survive inside the card layout unchanged
+   (A5's stance: the seam contract is frozen; only the skin changes).
+
+**A4 closes with a decision-input, not a question:** the inspector ships
+in v1 as read-only phase navigation + review telemetry + conformance
+panel. Actions stay in the dossier (answer/approve) — one primary action
+per view, per Alexandria's own rule.

@@ -1,0 +1,106 @@
+{
+  "id": "stitch-ui",
+  "name": "stitch-ui",
+  "description": "The Stitch UI: the harness in Alexandria dress",
+  "date": {
+    "updated": "2026-10-10T10:38:21Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "spec": {
+    "why": "The owner chose the direction: library-inspector inspires a full Alexandria redesign of the room and library — 3-pane library with phase inspector, Decision Studio room, one design system, seam contracts frozen.",
+    "requirements": [],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "The phase inspector v1: read-only as designed, or clickable phases that also act (answer/approve from the inspector)?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "read-only v1, actions stay in the dossier",
+          "actionable right away"
+        ],
+        "default": "read-only v1, actions stay in the dossier"
+      },
+      {
+        "id": "Q-2",
+        "question": "The dark review variant: a manual mode toggle, an automatic theme in review phase, or dropped for v1?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "dropped for v1 (light only)",
+          "manual toggle",
+          "auto in review"
+        ],
+        "default": "dropped for v1 (light only)"
+      },
+      {
+        "id": "Q-3",
+        "question": "Webfonts (Noto Serif + Inter + Public Sans, ~300KB vendored, no CDN): ship them, or system-font fallback v1?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "vendored webfonts",
+          "system fonts v1"
+        ],
+        "default": "vendored webfonts"
+      },
+      {
+        "id": "Q-4",
+        "question": "The Decision Studio room: keep the wizard contract exactly (Q-by-Q, Enter submits, approve at end) inside the new card layout?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "yes, wizard unchanged",
+          "reshape into free-order cards"
+        ],
+        "default": "yes, wizard unchanged"
+      },
+      {
+        "id": "Q-5",
+        "question": "The Factory pipeline screen: aspiration only for v1, or must it ship?",
+        "status": "open",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "aspiration (journey strip stays)",
+          "must ship"
+        ],
+        "default": "aspiration (journey strip stays)"
+      }
+    ],
+    "out_of_scope": []
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Alexandria light editorial is THE theme; library-inspector is the primary inspiration (owner directive).",
+        "because": "The owner named the direction mid-round; the artifacts confirm coherence.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-2",
+        "decision": "The five phases are a presentation layer over the frozen stage vocabulary — no engine stages added or renamed.",
+        "because": "D-2 of the spec-library lineage: translation is presentation, the vocabulary is frozen.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Seam contracts frozen: pages stay engine-name-free, admission only through specweb-events, keyboard and pointer complete, CSP-pinned, no CDN.",
+        "because": "The portability thesis is not negotiable for a skin change.",
+        "status": "proposed"
+      }
+    ],
+    "designs": []
+  },
+  "tasks": [],
+  "format": "specpack/0.3",
+  "revision": 9
+}
