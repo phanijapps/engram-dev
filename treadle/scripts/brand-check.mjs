@@ -17,6 +17,7 @@ const ALLOW_CONTAINS = [
   /\.github\/.*\.yml$/,
   /README\.md$/,
   /^DEBT\.md$/, // governance: records the future repo name by owner decision
+  /^bin\/treadle\.mjs$/, // the launcher names the binary it execs — brand.binName territory, fenced
   /scripts\/set-brand\.mjs$/,
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source
