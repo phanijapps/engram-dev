@@ -142,3 +142,67 @@ describe('the library (TS)', () => {
     }
   });
 });
+
+describe('the refusal battery (absorbed from the python suite)', () => {
+  it('refuses bad claims and shapes with the exact vocabulary', async () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'ref-'));
+    const d = bornPack(tmp);
+    const room = await startRoom(d);
+    try {
+      const agent = await post(room.url + 'event', {
+        kind: 'answer',
+        q: 'Q-2',
+        text: 'x',
+        by: 'agent:pi',
+      });
+      expect(agent.status).toBe(400);
+      expect(agent.json.error).toContain('an answer needs a human claim');
+      const ghost = await post(room.url + 'event', { kind: 'answer', q: 'Q-9', text: 'x' });
+      expect(ghost.status).toBe(400);
+      expect(ghost.json.error).toContain('no such question');
+      const notJson = await fetch(room.url + 'event', { method: 'POST', body: 'not json' });
+      expect(notJson.status).toBe(400);
+      expect((await notJson.json()).error).toContain('not JSON');
+    } finally {
+      await room.close();
+    }
+  });
+
+  it('traversal battery on artifacts (the python encodings)', async () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'trav-'));
+    bornPack(tmp);
+    const lib = await startLibrary(tmp);
+    try {
+      for (const bad of [
+        'artifact/p/..%2Fp.json',
+        'artifact/p/%2e%2e%2fp.json',
+        'artifact/p/..%5Cp.json',
+        'artifact/p/%c0%aep.json',
+        'artifact/p/notes.txt',
+        'artifact/ghost/brief.md',
+      ]) {
+        const r = await fetch(lib.url + bad);
+        expect(r.status, bad).toBe(404);
+      }
+    } finally {
+      await lib.close();
+    }
+  });
+
+  it('double approve refuses; frozen pack refuses to load-write', async () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'dbl-'));
+    const d = bornPack(tmp);
+    const room = await startRoom(d);
+    try {
+      await post(room.url + 'event', { kind: 'choice', q: 'Q-1', text: 'a', option: 'a' });
+      await post(room.url + 'event', { kind: 'answer', q: 'Q-2', text: 'x' });
+      const first = await post(room.url + 'event', { kind: 'approve' });
+      expect(first.status).toBe(200);
+      const second = await post(room.url + 'event', { kind: 'approve' });
+      expect(second.status).toBe(400);
+      expect(second.json.error).toContain('already approved');
+    } finally {
+      await room.close();
+    }
+  });
+});

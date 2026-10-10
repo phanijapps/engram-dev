@@ -29,6 +29,15 @@ function denied(status: number, message: string): Error & { status: number } {
   return Object.assign(new Error(message), { status });
 }
 
+/** decode or refuse: malformed encodings are 404s, never 500s */
+function decodeOr(path: string): string {
+  try {
+    return decodeURIComponent(path);
+  } catch {
+    return '\x00invalid';
+  }
+}
+
 function json(res: ServerResponse, code: number, obj: unknown): void {
   const bytes = JSON.stringify(obj) + '\n';
   res.writeHead(code, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
@@ -210,7 +219,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       return;
     }
     if (path.startsWith('/spec/')) {
-      const name = decodeURIComponent(path.slice('/spec/'.length));
+      const name = decodeOr(path.slice('/spec/'.length));
       if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
       const loaded = loadPackWithMeta(join(root, name));
       if (!loaded.ok)
@@ -222,8 +231,8 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
     }
     if (path.startsWith('/artifact/')) {
       const rest = path.slice('/artifact/'.length);
-      const name = decodeURIComponent(rest.split('/')[0] ?? '');
-      const file = decodeURIComponent(rest.split('/')[1] ?? '');
+      const name = decodeOr(rest.split('/')[0] ?? '');
+      const file = decodeOr(rest.split('/')[1] ?? '');
       if (!NAME_RE.test(name) || !FILE_RE.test(file)) throw denied(404, 'no such document');
       const f = resolve(join(root, name), file);
       const contained = f.startsWith(resolve(join(root, name)));
@@ -238,7 +247,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       return;
     }
     if (path.startsWith('/event/') && req.method === 'POST') {
-      const name = decodeURIComponent(path.slice('/event/'.length));
+      const name = decodeOr(path.slice('/event/'.length));
       if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
       let parsed: Record<string, unknown>;
       try {
