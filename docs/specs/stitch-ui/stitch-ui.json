@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T10:43:05Z",
+    "updated": "2026-10-10T10:52:29Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -11,7 +11,7 @@
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "planning"
   },
   "spec": {
     "why": "The harness works; its room shows the machine's plumbing. The owner chose the direction (library-inspector, Alexandria editorial): one design system over both surfaces, the phase inspector as the library's third pane, and the seam contracts frozen.",
@@ -22,7 +22,7 @@
         "serves": [
           "US-1"
         ],
-        "text": "A token layer (CSS custom properties) SHALL encode the Alexandria light system as default and the dark review variant as an alternate, with system font stacks (serif headline voice, sans body, mono status) — no webfonts, no CDN."
+        "text": "A token layer (CSS custom properties) SHALL encode the pinned token table below, light default + dark alternate, with system font stacks (serif headline voice: Georgia/Iowan/serif; sans body: system-ui; mono status: ui-monospace) — no webfonts, no CDN. CANONICAL ARTIFACT: designs/decision-studio.html (its tokens match the project DESIGN.md exactly; library-inspector carries slate drift the spec rejects). LIGHT: primary #094cb2, primary_container #3366cc, tertiary #6d5e00, background #faf9fa, surface_container tiers #f5f3f4/#efedee/#e9e8e9/#e3e2e3, ink #1b1c1d, on_surface_variant #434653, outline_variant #c3c6d5. DARK (from designs/library-review.html, actual values): background #0b0f14, surface tiers #11161f/#161d27/#1e2836, accent #38bdf8, ink #e2e8f0."
       },
       {
         "id": "FR-2",
@@ -38,7 +38,7 @@
         "serves": [
           "US-1"
         ],
-        "text": "The library SHALL adopt the no-line rule: structure via surface shifts; ghost borders (15% outline) only where structure demands."
+        "text": "The library SHALL adopt the no-line rule: structure via surface shifts; ghost borders (outline_variant at 15%) only where structure demands. The grammar is adopted with it: gradient primary CTAs (primary to primary_container), glass sticky header (surface at 95% + backdrop-blur), 11px mono status chips, severity-filter control in the review telemetry panel (ships), reviewer identity chip rendered from verdict.by (never hardcoded)."
       },
       {
         "id": "FR-4",
@@ -46,7 +46,7 @@
         "serves": [
           "US-2"
         ],
-        "text": "The library SHALL render a third pane — the phase inspector — with the five phases, their states derived from pack state, and per-phase view focusing; the inspector SHALL NOT admit actions in v1."
+        "text": "The library SHALL render a third pane — the phase inspector — mapping the five dossier sections to generic phases, each state computed from named pack fields: 01 Blueprint Intake (overview) = \"completed\" when zero open clarifications, else \"n open\"; 02 Canonical Spec (spec) = \"anchored\" when date.approved exists, else \"shaping\"; 03 Design Synthesis (design) = \"synthesized\" when design.decisions or design.designs non-empty (count shown), else \"not yet\"; 04 Assembly (tasks) = \"n of total woven\" from task statuses; 05 Conformance Gate (review) = \"inspecting\" when review.verdicts exist or stage is in_review, \"sealed\" when delivered. The inspector SHALL NOT admit actions in v1; clicking a phase focuses the dossier tab it maps to."
       },
       {
         "id": "FR-5",
@@ -62,7 +62,7 @@
         "serves": [
           "US-4"
         ],
-        "text": "The conformance phase SHALL render the alignment report (violations, gaps, the house sentence) as a panel."
+        "text": "The conformance phase SHALL render the alignment report (violations, gaps, the house sentence) as a panel, carried by a new read route the web server computes from @treadle/core (GET /alignment/<name>) — a surface read, not an engine change: core admission/emit semantics and the corpus stay untouched."
       },
       {
         "id": "FR-7",
@@ -70,7 +70,7 @@
         "serves": [
           "US-5"
         ],
-        "text": "The room SHALL be reskinned in the same system with the wizard contract frozen: question-by-question, Enter submits, honest unknown, approve at end, block-until-approved with Ctrl-C escape."
+        "text": "The room SHALL be reskinned in the same system with the wizard contract frozen at what the page owns: one question at a time, Enter submits, the honest unknown, approve at end. (Ctrl-C escape is the CLI adapter contract, not the page contract.)"
       },
       {
         "id": "FR-8",
@@ -78,7 +78,7 @@
         "serves": [
           "US-6"
         ],
-        "text": "All existing seam, portability, and security contracts SHALL hold unchanged: events-only admission, engine-name-free assets, keyboard and pointer complete, CSP headers, route parity."
+        "text": "All existing seam, portability, and security contracts SHALL hold unchanged: events-only admission, CSP/security headers (proven by a headers assertion in the web tests), keyboard and pointer complete (proven by the DOM harness), route parity. The Stitch artifacts carry brand strings and a false \"specpack/0.4.1\" tag: the port SHALL scrub both (engine-name-free, true format tag), gated by the existing portability test."
       },
       {
         "id": "FR-9",
@@ -193,7 +193,7 @@
             "id": "AC-2",
             "given": "the theme toggle",
             "when": "I switch to dark",
-            "then": "the dark review variant applies and the choice persists across visits without a flash on load"
+            "then": "the dark variant applies, the choice persists in localStorage across reloads, and the initial theme resolves before first paint (inline pre-render script)"
           }
         ]
       },
@@ -209,7 +209,7 @@
             "id": "AC-3",
             "given": "a selected spec",
             "when": "the inspector renders",
-            "then": "the five phases appear with their states, derived from the frozen stage vocabulary and pack state"
+            "then": "the five generic phases appear with states computed exactly per the FR-4 derivation table"
           },
           {
             "id": "AC-4",
@@ -253,7 +253,7 @@
             "id": "AC-7",
             "given": "the conformance phase",
             "when": "selected",
-            "then": "the alignment report renders: violations, gap counts, the house sentence"
+            "then": "the alignment report renders from GET /alignment/<name>: violations, gap counts, the house sentence"
           }
         ]
       },
@@ -330,28 +330,82 @@
         "id": "D-4",
         "decision": "System font stacks carry the voices: serif headline (Georgia/Iowan/serif), sans body (system-ui), mono status (ui-monospace) — the Alexandria hierarchy without webfont weight.",
         "because": "Owner Q-3: no vendored fonts v1; the hierarchy survives in the stack order.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       },
       {
         "id": "D-5",
         "decision": "The dark review variant ships as a manual, persisted toggle — not auto-in-review, not dropped.",
         "because": "Owner Q-2: the dark posture is valued for review work; the choice stays human.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner"
       }
     ],
-    "designs": []
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "library-inspector (the inspiration)",
+        "kind": "interface",
+        "detail": "3-pane library, warm paper, phase inspector, review telemetry — canonical for LAYOUT; its slate palette is rejected drift",
+        "addresses": [
+          "FR-3",
+          "FR-4",
+          "FR-5"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "decision-studio",
+        "kind": "interface",
+        "detail": "the room in Alexandria dress — canonical for TOKENS (matches DESIGN.md exactly)",
+        "addresses": [
+          "FR-1",
+          "FR-7"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "library-review (dark variant)",
+        "kind": "interface",
+        "detail": "the dark posture — canonical for the DARK token table",
+        "addresses": [
+          "FR-1",
+          "FR-2"
+        ]
+      }
+    ]
   },
   "tasks": [
     {
+      "id": "T-0",
+      "title": "DOM test harness",
+      "detail": "jsdom environment for the web tests (vitest environment per-file): pages load their JS, acts dispatch, localStorage persists — the harness every later verify leans on",
+      "phase": "setup",
+      "satisfies": [
+        "FR-8"
+      ],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "todo",
+      "verify": {
+        "cmd": "cd treadle && pnpm check",
+        "expect": "exit 0 — a jsdom smoke test loads library.js and dispatches a click"
+      }
+    },
+    {
       "id": "T-1",
       "title": "Token layer + theme toggle",
-      "detail": "CSS custom properties for both themes, system stacks, persisted toggle, no-flash load",
+      "detail": "CSS custom properties per the FR-1 pinned table (decision-studio light + library-review dark), system stacks, persisted toggle, inline pre-render theme resolution; DOM-harness tests: toggle persists across jsdom reload, no-flash via pre-render script presence",
       "phase": "core",
       "satisfies": [
         "FR-1",
         "FR-2"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2",
+        "DES-3"
+      ],
       "honors": [],
       "accepts": [
         "AC-1",
@@ -360,19 +414,21 @@
       "status": "todo",
       "verify": {
         "cmd": "cd engine/../treadle && pnpm check",
-        "expect": "exit 0 — token tests green (both themes, persistence, no-flash)"
+        "expect": "exit 0 — theme token tests (both palettes present, canonical values) + jsdom: toggle persists, pre-render script runs before first paint"
       }
     },
     {
       "id": "T-2",
       "title": "Library 3-pane + Alexandria skin",
-      "detail": "the no-line rule, ghost borders, serif titles, warm paper; list + dossier reskin",
+      "detail": "the no-line rule, ghost borders, serif voice, warm paper; list + dossier reskin; grammar per FR-3 (gradient CTA, glass header, mono chips); brand scrub + true format tag",
       "phase": "core",
       "satisfies": [
         "FR-3",
         "FR-4"
       ],
-      "implements": [],
+      "implements": [
+        "DES-1"
+      ],
       "honors": [],
       "accepts": [
         "AC-3"
@@ -380,19 +436,21 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
-        "expect": "exit 0 — layout tests: three panes, no structural 1px borders in tokens"
+        "expect": "exit 0 — three panes present in jsdom, no structural 1px borders in the token layer, portability test green (no brand strings, no false tags)"
       }
     },
     {
       "id": "T-3",
       "title": "Phase inspector",
-      "detail": "five phases, states derived from pack state, view focusing, read-only",
+      "detail": "five generic phases, states per the FR-4 derivation table, click focuses the mapped tab, read-only",
       "phase": "core",
       "satisfies": [
         "FR-4",
         "FR-9"
       ],
-      "implements": [],
+      "implements": [
+        "DES-1"
+      ],
       "honors": [],
       "accepts": [
         "AC-4"
@@ -400,19 +458,21 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
-        "expect": "exit 0 — inspector renders phases from real packs, click focuses dossier, no admission controls"
+        "expect": "exit 0 — jsdom: phases render from a real pack with the exact derivation states; click dispatch focuses the tab; no admission controls in the pane"
       }
     },
     {
       "id": "T-4",
       "title": "Review telemetry + conformance panel",
-      "detail": "findings by severity, verdicts, alignment report, poll-on-interaction with honest posture note",
+      "detail": "findings by severity + verdicts from /spec (counts from verdicts[].findings), alignment from GET /alignment/<name>, poll on interaction, honest posture note",
       "phase": "core",
       "satisfies": [
         "FR-5",
         "FR-6"
       ],
-      "implements": [],
+      "implements": [
+        "DES-1"
+      ],
       "honors": [],
       "accepts": [
         "AC-5",
@@ -422,19 +482,21 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
-        "expect": "exit 0 — telemetry renders from spec-web fixtures (10 findings, 2/6/2)"
+        "expect": "exit 0 — jsdom: telemetry renders from the corpus spec-web fixture with its REAL counts (5 verdicts, 11 findings: 2 BLOCKER / 7 DEFECT / 2 SMELL); severity filter works"
       }
     },
     {
       "id": "T-5",
       "title": "Room reskin (Decision Studio)",
-      "detail": "same grammar, wizard contract frozen; route + asset parity re-verified",
+      "detail": "same grammar, wizard contract at what the page owns; headers assertion added (five SECURITY_HEADERS), keyboard parity via DOM harness",
       "phase": "integration",
       "satisfies": [
         "FR-7",
         "FR-8"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2"
+      ],
       "honors": [],
       "accepts": [
         "AC-8",
@@ -445,7 +507,7 @@
       "status": "todo",
       "verify": {
         "cmd": "cd treadle && pnpm check",
-        "expect": "exit 0 — room behavior tests green under the new skin, engine-name grep clean"
+        "expect": "exit 0 — room behavior tests green under the new skin; headers test asserts all five security headers; keyboard acts fire in jsdom"
       }
     },
     {
@@ -466,6 +528,16 @@
       }
     }
   ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "SPEC",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "R1 of 5: build-after-fixes. 4 BLOCKER (FR-6 data path, phase derivation, unverifiable verifies, token conflicts) + 5 DEFECT + 4 SMELL — all amended into the pack this round: /alignment route named, derivation table pinned, T-0 DOM harness added, canonical token table pinned per artifact, brand scrub + true format tag required, Ctrl-C rescoped to CLI, real fixture counts (2/7/2 not 2/6/2), grammar adopted with ship/drop calls, designs registered as DES-1..3, D-4/D-5 accepted on the owner room answers."
+      }
+    ]
+  },
   "format": "specpack/0.3",
   "revision": 18
 }

@@ -12,9 +12,10 @@
 | A1 | Design system extraction (DESIGN.md, named colors, typography) | ✓ done below |
 | A2 | The screens inventoried (layouts, components, interactions) | ✓ done below |
 | A3 | Gap mapping vs the current pages (tokens, layout, behavior) | ✓ done below |
-| A4 | Interaction model: what the new screens imply for admission/seams | next |
-| A5 | Spec synthesis: stories, FRs, decisions for the interview | next |
-| R1–R5 | red-forman on the spec drafts (one round per revision, findings recorded) | after A5 |
+| A4 | Interaction model: what the new screens imply for admission/seams | ✓ done |
+| A5 | Spec synthesis: stories, FRs, decisions for the interview | ✓ done (pack rev 18, owner-approved in the room) |
+| R1 | red-forman on the spec | ✓ done — build-after-fixes; 4 BLOCKER + 5 DEFECT + 4 SMELL amended into the pack (alignment route named, derivation table pinned, T-0 DOM harness, canonical token table, brand scrub, Ctrl-C rescoped, real fixture counts 2/7/2, grammar adopted, DES-1..3 registered) |
+| R2–R5 | red-forman on the design doc, task slices, and implementation diffs | queued |
 
 ## A1 — The design system: "Alexandria — High-End Editorial"
 
@@ -36,8 +37,8 @@ Extracted from the Stitch project's DESIGN.md and namedColors (verified live):
 
 | Screen | File | What it proposes |
 |---|---|---|
-| **Spec Library + Phase Inspector** | `designs/library-inspector.html` (44KB, 340 classed elements) | The library 2.0: left spec list (warm paper, serif titles), main dossier, and a **right-hand phase inspector** — a third pane the current library lacks. Status chips in emerald mono (`text-[11px] font-mono`), breadcrumb headers, ghost-bordered cards. |
-| **Spec Library — Review Phase** | `designs/library-review.html` (33KB) | A **dark variant** (navy-slate stack `#0c1119/#1b2536/#232d3d`) — evidence rows, verdict panels, review-focused layout. The same library in review posture: the theme question (light editorial vs dark telemetry) is a real decision for the spec. |
+| **Spec Library + Phase Inspector** | `designs/library-inspector.html` (44KB, 340 classed elements) | The library 2.0: left spec list (warm paper, serif titles), main dossier, and a **right-hand phase inspector** — a third pane the current library lacks. Status chips in emerald mono (`text-[11px] font-mono`), ghost-bordered cards (R1: the breadcrumb claim was mine, not the artifact's). |
+| **Spec Library — Review Phase** | `designs/library-review.html` (33KB) | A **dark variant** (obsidian stack `#0b0f14/#11161f/#161d27`, accent `#38bdf8` — corrected in R1; earlier citation was wrong) — evidence rows, verdict panels, review-focused layout. The same library in review posture: the theme question (light editorial vs dark telemetry) is a real decision for the spec. |
 | **Spec Decision Studio** | `designs/decision-studio.html` (34KB) | The interview room 2.0: Alexandria tokens exact (`#faf9fa` bg, `#002f7a` deep blue, surface containers) — decision cards with accept/reject posture, question flows, the ceremony as a *studio* rather than a wizard. |
 | **Factory — Assembly Pipeline** | (HTML unavailable; screenshot seen) | The loop as a factory line: pipeline stages, assembly + review stations. Ambition marker for the journey-strip successor — likely the v2 "workflow" view. |
 
