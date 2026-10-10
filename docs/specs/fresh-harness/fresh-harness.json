@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:03:46Z",
+    "updated": "2026-10-10T15:10:54Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -525,7 +525,7 @@
       "id": "T-1",
       "title": "The installer engine: manifest to plan to apply (flags only)",
       "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse — refuse = destination holds foreign content without --force; apply exits 3 listing the row), apply (normalized-hash idempotent: LF + single trailing newline; never deletes; --force overrides), the applied plan recorded to a state file (.treadle/harness-install.json at the destination root) so `init harness --remove` can delete exactly those paths and nothing else; flags command init harness with --agent --scope --skills --no-agents --no-hooks --remove --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
-      "status": "doing",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-2",
@@ -548,6 +548,15 @@
       },
       "needs": [
         "T-0"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T15:10:54Z",
+          "by": "agent:pi",
+          "notes": "Engine: manifest loader (refuses wrong format), truthful plan compiler (modes by normalized hash — LF + exactly-one trailing newline; refuse = differ without --force; skip = honest nos: copilot hooks, missing sources), apply (records every write to .harness/harness-install.json; never deletes unknown files), wirings (claude settings merge preserves unknown keys, codex notify set-once), --remove deletes exactly the recorded install and undoes wirings (foreign files untouched, empty dirs pruned), no-TTY missing flags exits 2 with the exact remediation (verified unpiped: real-exit=2 — the pipe-masked class caught again). Brand fence enforced: remediation strings speak brand.binName. 9 engine tests; 80 total green; corpus byte-stable."
+        }
       ]
     },
     {
@@ -684,5 +693,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 31
+  "revision": 32
 }
