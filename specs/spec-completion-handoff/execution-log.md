@@ -40,3 +40,20 @@ This initiative adopted the new format through the CLI.
 legacy-revision-22.json preserves the exact prior file.
 The start receipt keeps the actual owner date, 2026-10-10T21:57:36Z.
 The approved plan digest still matches. No start permission was backdated or invented.
+
+## T-3
+
+The browser now has separate decision, start and finish actions.
+Each action checks the held revision and uses the same lock as the CLI.
+The pack saves the owner receipt before the separate audit journal.
+A failed or partial audit append leaves the receipt in a queue.
+Recovery preserves complete events and does not repeat approval.
+The writer also flushes pending CLI receipts and reports the actual audit state.
+Generic legacy adoption keeps its spec questions in the spec approval phase.
+
+The exact task command passed 10 tests. See T-3-verification.log.
+The existing server and CLI suites passed with the new suite: 23 tests total.
+Type checks and lint passed.
+Tests cover concurrent actions, lock recovery, audit faults, current review,
+explicit legacy closure, wrong origins and symlink escapes.
+The engine recorded the task result. Final review and owner closure remain separate.

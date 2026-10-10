@@ -1,4 +1,11 @@
 export { assertNever } from './assert.js';
+export {
+  OWNER_EVENT_FORMAT,
+  ownerEventsPath,
+  readOwnerEvents,
+  appendPendingAudit,
+  flushOwnerAudit,
+} from './specpack/audit.js';
 export { withPackLock, recoverPackLock } from './specpack/transaction.js';
 export {
   validateWorkflow,

@@ -91,7 +91,9 @@ function workflowOwner(
     return true;
   }
   savePack(l.doc, l.path, { at: action.at });
-  console.log(`recorded ${kind} by ${opts.by}; audit pending`);
+  console.log(
+    `recorded ${kind} by ${opts.by}; ${l.doc.workflow!.pending_audit.length ? 'audit pending' : 'audit recorded'}`,
+  );
   return true;
 }
 
@@ -383,11 +385,23 @@ export function registerDo(doCmd: Command): void {
         l.doc.workflow = {
           policy: 'owner-gated/1',
           plan: 1,
-          phase_questions: { spec: [] },
+          phase_questions: {
+            spec: (l.doc.spec.clarifications ?? [])
+              .filter(
+                (q) =>
+                  !l.doc.plan.decisions?.some(
+                    (d) =>
+                      q['resolved_by'] === d.id ||
+                      (Array.isArray(d['resolves']) && d['resolves'].includes(q.id)),
+                  ),
+              )
+              .map((q) => q.id),
+          },
           acts: [],
           pending_audit: [],
         };
         if (opts.bootstrap) {
+          l.doc.workflow.phase_questions.spec = [];
           let receipt: {
             format: string;
             plan: number;
@@ -450,7 +464,9 @@ export function registerDo(doCmd: Command): void {
         l.doc.workflow.acts.push(act);
         l.doc.workflow.pending_audit.push(act);
         savePack(l.doc, l.path, { at: act.at });
-        console.log(`adopted owner workflow by ${opts.by}; legacy bytes preserved; audit pending`);
+        console.log(
+          `adopted owner workflow by ${opts.by}; legacy bytes preserved; ${l.doc.workflow.pending_audit.length ? 'audit pending' : 'audit recorded'}`,
+        );
       }),
     );
 

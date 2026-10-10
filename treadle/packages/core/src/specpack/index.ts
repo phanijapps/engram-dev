@@ -1,4 +1,11 @@
 export type { PackDoc, Question, Decision, Task, Artifact } from './model.js';
+export {
+  OWNER_EVENT_FORMAT,
+  ownerEventsPath,
+  readOwnerEvents,
+  appendPendingAudit,
+  flushOwnerAudit,
+} from './audit.js';
 export { withPackLock, recoverPackLock } from './transaction.js';
 export {
   validateWorkflow,

@@ -7,12 +7,20 @@
  */
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { join, resolve, dirname } from 'node:path';
+import { join, resolve, dirname, sep } from 'node:path';
 import {
   alignment,
+  withPackLock,
+  ownerAction,
+  workflowGate,
+  acceptDecision,
+  rejectDecision,
+  closePack,
+  type OwnerAct,
   gapCount,
+  closureGaps,
   answerQuestion,
   approveSpec,
   deriveStage,
@@ -92,39 +100,172 @@ async function admit(
   const text = typeof body['text'] === 'string' ? body['text'] : undefined;
   const option = typeof body['option'] === 'string' ? body['option'] : undefined;
   const at = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
-  const loaded = loadPackWithMeta(packDir);
-  if (!loaded.ok) throw denied(400, loaded.message);
-  const { doc, path } = loaded.value;
-  if (kind === 'answer' || kind === 'unknown' || kind === 'choice') {
-    const r = answerQuestion(doc, q ?? '', by, {
-      text: kind === 'choice' ? (text ?? option) : text,
-      unknown: kind === 'unknown',
+  const transaction = withPackLock(packDir, () => {
+    const loaded = loadPackWithMeta(packDir);
+    if (!loaded.ok) throw denied(400, loaded.message);
+    const { doc, path } = loaded.value;
+    if (
+      (body['expected_revision'] !== undefined && body['expected_revision'] !== doc.revision) ||
+      (doc.workflow && body['expected_revision'] === undefined)
+    )
+      throw denied(409, 'The spec changed; reload before this action');
+    if (kind === 'answer' || kind === 'unknown' || kind === 'choice') {
+      const r = answerQuestion(doc, q ?? '', by, {
+        text: kind === 'choice' ? (text ?? option) : text,
+        unknown: kind === 'unknown',
+        at,
+      });
+      if (!r.ok) throw denied(400, r.message);
+      doc.revision = (doc.revision ?? 1) + 1;
+    } else if (kind === 'approve' && doc.workflow) {
+      const out = ownerAction(
+        doc,
+        { kind: 'approve', by, at, expected_revision: Number(body['expected_revision']) },
+        path,
+      );
+      if (!out.ok) throw denied(400, out.message);
+      const saved = savePack(doc, path, { at });
+      return {
+        ok: true as const,
+        revision: doc.revision!,
+        audit_pending: doc.workflow.pending_audit.length,
+        ...(saved?.durability_error ? { durability_error: saved.durability_error } : {}),
+      };
+    } else if (kind === 'approve') {
+      const r = approveSpec(doc, by, { at });
+      if (!r.ok) throw denied(400, r.message);
+      doc.revision = (doc.revision ?? 1) + 1;
+    } else {
+      throw denied(
+        400,
+        `unknown event kind: '${kind}' (expected one of answer, unknown, choice, approve)`,
+      );
+    }
+    savePack(doc, path, { at });
+    writeEvent(eventsPath(packDir), {
+      kind: kind as 'answer',
+      by,
       at,
+      ...(q !== undefined ? { q } : {}),
+      ...(text !== undefined ? { text } : {}),
+      ...(option !== undefined ? { option } : {}),
     });
-    if (!r.ok) throw denied(400, r.message);
-    doc.revision = (doc.revision ?? 1) + 1;
-  } else if (kind === 'approve') {
-    const r = approveSpec(doc, by, { at });
-    if (!r.ok) throw denied(400, r.message);
-    doc.revision = (doc.revision ?? 1) + 1;
-  } else {
-    throw denied(
-      400,
-      `unknown event kind: '${kind}' (expected one of answer, unknown, choice, approve)`,
-    );
-  }
-  savePack(doc, path, { at });
-  writeEvent(eventsPath(packDir), {
-    kind: kind as 'answer',
-    by,
-    at,
-    ...(q !== undefined ? { q } : {}),
-    ...(text !== undefined ? { text } : {}),
-    ...(option !== undefined ? { option } : {}),
+    return { ok: true as const, revision: doc.revision! };
   });
-  return { ok: true, revision: doc.revision! };
+  if (!transaction.ok) throw denied(409, transaction.message);
+  return transaction.value;
 }
 
+function admitWorkflow(
+  packDir: string,
+  body: Record<string, unknown>,
+  owner: string,
+): Record<string, unknown> {
+  const transaction = withPackLock(packDir, () => {
+    const loaded = loadPackWithMeta(packDir);
+    if (!loaded.ok) throw denied(400, loaded.message);
+    const { doc, path } = loaded.value;
+    const by = typeof body['by'] === 'string' ? body['by'] : owner;
+    const kind = String(body['kind']);
+    const at = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
+    if (
+      !Number.isSafeInteger(body['expected_revision']) ||
+      body['expected_revision'] !== doc.revision
+    )
+      throw denied(409, 'The spec changed; reload before this action');
+    if (!['accept', 'reject', 'approve', 'start', 'close'].includes(kind))
+      throw denied(400, 'Unknown owner action');
+    if (doc.workflow) {
+      const action: Parameters<typeof ownerAction>[1] = {
+        kind: kind as OwnerAct['kind'],
+        by,
+        at,
+        expected_revision: Number(body['expected_revision']),
+      };
+      if (typeof body['decision'] === 'string') action.decision = body['decision'];
+      if (typeof body['because'] === 'string') action.because = body['because'];
+      const out = ownerAction(doc, action, path);
+      if (!out.ok) throw denied(400, out.message);
+    } else {
+      // Legacy owner resolution and closure use their original evidence contract.
+      const out =
+        kind === 'accept'
+          ? acceptDecision(doc, String(body['decision'] ?? ''), by)
+          : kind === 'reject'
+            ? rejectDecision(doc, String(body['decision'] ?? ''), by, String(body['because'] ?? ''))
+            : kind === 'close'
+              ? closePack(doc, by, { at })
+              : kind === 'approve'
+                ? approveSpec(doc, by, { at })
+                : null;
+      if (!out) throw denied(400, 'Adopt the owner workflow before start approval');
+      if (!out.ok) throw denied(400, out.message);
+      if (kind === 'approve') doc.revision = (doc.revision ?? 1) + 1;
+    }
+    const saved = savePack(doc, path, { at });
+    return {
+      ok: true,
+      recorded: true,
+      revision: doc.revision,
+      audit_pending: doc.workflow?.pending_audit.length ?? 0,
+      ...(saved?.durability_error ? { durability_error: saved.durability_error } : {}),
+    };
+  });
+  if (!transaction.ok) throw denied(409, transaction.message);
+  return transaction.value;
+}
+function workflowReport(doc: PackDoc, path: string): Record<string, unknown> {
+  if (!doc.workflow) {
+    const gaps = closureGaps(doc);
+    const all = doc.tasks.every(
+      (t) => t.status === 'done' && Array.isArray(t['evidence']) && t['evidence'].length > 0,
+    );
+    const phase =
+      doc.status === 'complete'
+        ? 'delivered'
+        : gaps.pending_decisions.length
+          ? 'decisions'
+          : gaps.open_questions.length
+            ? 'spec'
+            : !all
+              ? 'implementation'
+              : !gaps.review_pass
+                ? 'review'
+                : 'closure';
+    return {
+      legacy: true,
+      revision: doc.revision,
+      phase,
+      reasons: [...gaps.pending_decisions, ...gaps.open_questions],
+      can_start: false,
+      can_close: phase === 'closure',
+    };
+  }
+  const gate = workflowGate(doc, path);
+  return {
+    ...gate,
+    revision: doc.revision,
+    audit_pending: doc.workflow.pending_audit.length,
+    can_start: gate.phase === 'start',
+    can_close: gate.phase === 'closure',
+  };
+}
+
+function guardOrigin(req: IncomingMessage): void {
+  const origin = req.headers.origin;
+  if (origin && origin !== `http://${req.headers.host}`)
+    throw denied(403, 'Use this page to record owner actions');
+}
+function packDirectory(root: string, name: string): string {
+  try {
+    const parent = realpathSync(root);
+    const dir = realpathSync(join(root, name));
+    if (!dir.startsWith(parent + sep)) throw denied(404, 'No such spec');
+    return dir;
+  } catch {
+    throw denied(404, 'No such spec');
+  }
+}
 function makeServer(handler: Handler): Server {
   return createServer(async (req, res) => {
     const chunks: Buffer[] = [];
@@ -171,13 +312,39 @@ export function startRoom(packDir: string, port = 0, owner = 'human:owner'): Pro
       res.end(JSON.stringify(emit(loaded.value.doc), null, 2) + '\n');
       return;
     }
+    if (url === '/workflow') {
+      if (req.method === 'GET') {
+        const l = loadPackWithMeta(packDir);
+        if (!l.ok) throw denied(400, l.message);
+        json(res, 200, workflowReport(l.value.doc, l.value.path));
+        return;
+      }
+      if (req.method === 'POST') {
+        guardOrigin(req);
+        if (!req.headers['content-type']?.startsWith('application/json'))
+          throw denied(415, 'Send an owner action as JSON');
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(body);
+        } catch {
+          throw denied(400, 'The body is not JSON');
+        }
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+          throw denied(400, 'The body must be an owner action');
+        json(res, 200, admitWorkflow(packDir, parsed as Record<string, unknown>, owner));
+        return;
+      }
+    }
     if (url === '/event' && req.method === 'POST') {
+      guardOrigin(req);
       let parsed: Record<string, unknown>;
       try {
         parsed = JSON.parse(body || '{}');
       } catch {
         throw denied(400, 'the body is not JSON');
       }
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+        throw denied(400, 'The body must be an event');
       parsed['by'] = typeof parsed['by'] === 'string' && parsed['by'] ? parsed['by'] : owner;
       const out = await admit(packDir, parsed);
       json(res, 200, out);
@@ -226,6 +393,7 @@ async function listSpecs(root: string): Promise<{ specs: unknown[]; legacy: unkn
       open_questions: qs.filter((q) => q.status === 'open').length,
       approved: Boolean(doc.approved_at),
       updated: doc.updated ?? doc.created ?? '',
+      ...(doc.workflow ? { workflow: workflowReport(doc, loaded.value.path) } : {}),
       docs: (await readdir(d)).filter((f) => f.endsWith('.md')).sort(),
     });
   }
@@ -244,6 +412,33 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
     if (path === '/specs') {
       json(res, 200, await listSpecs(root));
       return;
+    }
+    if (path.startsWith('/workflow/')) {
+      const name = decodeOr(path.slice('/workflow/'.length));
+      if (!NAME_RE.test(name)) throw denied(404, 'No such spec');
+      const dir = packDirectory(root, name);
+      if (req.method === 'POST') {
+        guardOrigin(req);
+        if (!req.headers['content-type']?.startsWith('application/json'))
+          throw denied(415, 'Send an owner action as JSON');
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(body);
+        } catch {
+          throw denied(400, 'The body is not JSON');
+        }
+        if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+          throw denied(400, 'The body must be an owner action');
+        json(res, 200, admitWorkflow(dir, parsed as Record<string, unknown>, owner));
+        return;
+      }
+      if (req.method === 'GET') {
+        const loaded = loadPackWithMeta(dir);
+        if (!loaded.ok) throw denied(400, loaded.message);
+        json(res, 200, workflowReport(loaded.value.doc, loaded.value.path));
+        return;
+      }
+      throw denied(405, 'Use GET or POST');
     }
     if (path.startsWith('/alignment/')) {
       // DES-5: a surface read composing what core exports — the pinned
@@ -292,6 +487,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       return;
     }
     if (path.startsWith('/event/') && req.method === 'POST') {
+      guardOrigin(req);
       const name = decodeOr(path.slice('/event/'.length));
       if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
       let parsed: Record<string, unknown>;
@@ -300,8 +496,10 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       } catch {
         throw denied(400, 'the body is not JSON');
       }
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+        throw denied(400, 'The body must be an event');
       parsed['by'] = typeof parsed['by'] === 'string' && parsed['by'] ? parsed['by'] : owner;
-      const out = await admit(join(root, name), parsed);
+      const out = await admit(packDirectory(root, name), parsed);
       json(res, 200, out);
       return;
     }
