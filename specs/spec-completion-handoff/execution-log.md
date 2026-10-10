@@ -164,3 +164,15 @@ All 7 tasks are done. Canonical revision 40 is ready for owner closure.
 The browser workflow reports can_close true and no pending audit acts.
 Implementation and independent review do not grant owner completion consent.
 The owner must use Finish spec in the library.
+
+
+## Owner completion
+
+The owner used the library's Finish spec action at 2026-10-10T23:00:50Z.
+Canonical revision 41 records lifecycle complete and deliverable delivered.
+The close date and close act identify human:owner.
+The matching workflow journal act appears exactly once.
+No audit acts remain pending.
+The library reports phase delivered and disables further start and close acts.
+The revision 40 handoff remains historical evidence.
+The closed pack's bytes were observed, not amended by the agent.

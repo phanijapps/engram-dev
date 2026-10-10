@@ -3,11 +3,15 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:55:57Z"
+    "updated": "2026-10-10T23:00:50Z",
+    "closed": {
+      "at": "2026-10-10T23:00:50Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "analysis": {
@@ -843,6 +847,13 @@
         "by": "human:owner",
         "at": "2026-10-10T22:10:00Z",
         "revision": 23
+      },
+      {
+        "id": "4c1a3b66-ad6f-410c-bacd-49e60e63cb30",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-10T23:00:50Z",
+        "revision": 41
       }
     ],
     "pending_audit": [],
@@ -885,5 +896,5 @@
     "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
   "format": "specpack/0.4",
-  "revision": 40
+  "revision": 41
 }

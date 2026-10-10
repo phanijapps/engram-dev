@@ -89,7 +89,18 @@ The first failed review remains part of the evidence.
 Sources: `specs/spec-completion-handoff/delivery-review.md:1`;
 `specs/spec-completion-handoff/T-7-verification.log:1`.
 
-At canonical revision 40, the owner completion action remains pending.
+At canonical revision 40, the owner completion action remained pending.
 The engine now offers Finish spec as a separate action.
 The canonical pack records the owner's later act.
 Source: `specs/spec-completion-handoff/spec-completion-handoff.json:1`.
+
+
+# Owner completion
+
+The owner completed the spec at 2026-10-10T23:00:50Z.
+Revision 41 records complete and delivered after the separate Finish spec action.
+The canonical close act and journal entry both identify human:owner.
+The journal records the act exactly once. No audit acts remain pending.
+The observed repair now includes implementation, independent review and actual owner completion.
+Sources: `specs/spec-completion-handoff/spec-completion-handoff.json:1`;
+`specs/spec-completion-handoff/workflow.jsonl:1`.

@@ -1,8 +1,8 @@
 ---
-title: "Owner decision gates and completion: approved implementation"
+title: "Owner decision gates and completion: delivered"
 type: Initiative
 description: "Observed execution before decision acceptance, recorded approval without closure, and the approved versioned implementation and owner completion handoff."
-status: draft
+status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
@@ -66,11 +66,25 @@ The independent delivery review passed with no findings after the first review r
 The report records the real reviewer, source revision and digest checks.
 Source: `specs/spec-completion-handoff/delivery-review.md:1`.
 
-At revision 40, the canonical pack awaits the owner's separate Finish spec action.
+At revision 40, the canonical pack awaited the owner's separate Finish spec action.
 The engine does not infer final consent from task completion or review.
 The canonical pack records any later owner action.
 Sources: `specs/spec-completion-handoff/T-7-verification.log:1`;
 `specs/spec-completion-handoff/spec-completion-handoff.json:1`.
 
 The current-session [retrospective](/retrospectives/2026-10-10-owner-gates.md)
-records the observed failure, repair, review and remaining completion step.
+records the observed failure, repair, review and owner completion.
+
+
+# Owner completion supplement
+
+The owner used Finish spec at 2026-10-10T23:00:50Z.
+Canonical revision 41 records lifecycle complete and deliverable delivered.
+The closed date and close act both identify human:owner.
+The workflow journal contains the same close act exactly once.
+No audit acts remain pending.
+Sources: `specs/spec-completion-handoff/spec-completion-handoff.json:1`;
+`specs/spec-completion-handoff/workflow.jsonl:1`.
+
+Observed pack SHA-256: `0628f372643e518ab8bcb91817436347b989663d6ab016a6340bed035ab9a486`.
+This dated supplement records the actual owner action after the revision 40 handoff.
