@@ -16,5 +16,8 @@
   },
   "scripts": {
     "prepare": "cd treadle && corepack enable && pnpm install --frozen-lockfile && pnpm build"
+  },
+  "bin": {
+    "treadle": "./bin/engram.js"
   }
 }
