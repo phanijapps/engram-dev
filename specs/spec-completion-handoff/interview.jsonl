@@ -1,0 +1,2 @@
+{"format":"specweb-events/0.1"}
+{"kind":"answer","by":"human:owner","at":"2026-10-10T21:36:09Z","q":"Q-1","text":"The UI or the flow should be User Requirement -> Brief \nBrief -> Spec .. Approval gate if there are open questions to get started\nSpec -> Design/Plan -> Approval Gates on decisions \nplan -> Tasks -> Wait for approval to  start\nImplement to run all tasks and red-forman reveiew "}

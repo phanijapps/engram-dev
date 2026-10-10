@@ -1,0 +1,40 @@
+{
+  "result": "PLAN_VALIDATED",
+  "observed_at": "2026-10-10T21:51:54.868Z",
+  "revision": 6,
+  "violations": 0,
+  "traceability_gaps": 0,
+  "tasks": 7,
+  "authorized_ready_tasks": [],
+  "engine_handout_on_clone": "BLOCKED",
+  "pending_decisions": [
+    "D-1",
+    "D-2",
+    "D-3",
+    "D-4"
+  ],
+  "spec_approval": "unset",
+  "start_authorization": "unset; awaiting a scope-specific owner act",
+  "open_questions": [
+    "Q-2",
+    "Q-3",
+    "Q-4",
+    "Q-5",
+    "Q-6"
+  ],
+  "owner_flow_answer_preserved": true,
+  "reviewed_plan_digest": "7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3",
+  "source_hashes": {
+    "treadle/packages/core/src/specpack/next.ts": "4d1ac2abfabe5242647c74da47c726c58dafcb7df86470dad00d78d7caa80522",
+    "treadle/packages/core/src/specpack/record.ts": "687a6717feffec0f713849b9c6fbaf081b5af21cebfde0840ebe12b7b0b6e4cc",
+    "treadle/packages/core/src/specpack/admission.ts": "78a20d864a29916b9769a4efc1170da9d9620ab3d28543b508b10ac5938fb6be",
+    "treadle/packages/core/src/specpack/close.ts": "0a97168035ad35581299ab84b78d9b30b2a343ddde38b275d69e11813e60050c",
+    "treadle/packages/core/src/specpack/loader.ts": "cde1ef0326ecd50877f109c36777c93fe94589c49d844d6a0ce09297714d33be",
+    "treadle/packages/core/src/specpack/emit.ts": "6fc076c01abebdceded59c15e7b24f8e6a7bc595c6bd07c198626b4d4aaf8d90",
+    "treadle/packages/web/src/servers.ts": "be8ef5a8d8797b3a054114443e00326b2881e00fc1db198d96e051ebd374fc1c",
+    "treadle/packages/web/src/library.js": "1d50a7ce6bcb273b6bba800c41dbe82e56289f923dc7938c8daaea2a34b0c9cb",
+    "treadle/packages/cli/src/commands/do.ts": "f14aaa41322c5f6477c8a3358c196f0e57cb3e23a21c37434b719a29f2dee6d6",
+    "wiki/assets/contracts/specpack.schema.json": "59d43a06b2c5cc32f6d43f1e6c3e9176a00187019e991b35dd8aa76761578625"
+  },
+  "scope": "Planning artifacts only; no runtime fix or implementation evidence."
+}
