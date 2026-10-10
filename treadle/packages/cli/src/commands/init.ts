@@ -122,14 +122,14 @@ function choicesFromFlags(f: Flags): InstallChoices {
   if (agent && !SURFACES.includes(agent)) {
     throw new UsageError(
       `unknown agent "${agent}"`,
-      'treadle init harness --agent <pi|claude|codex|copilot>',
+      `${brand.binName} init harness --agent <pi|claude|codex|copilot>`,
     );
   }
   const scope = (f.scope ?? 'project') as Scope;
   if (scope !== 'project' && scope !== 'global') {
     throw new UsageError(
       `unknown scope "${scope}"`,
-      'treadle init harness --scope <project|global>',
+      `${brand.binName} init harness --scope <project|global>`,
     );
   }
   if (missing.length > 0) {
