@@ -4,6 +4,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import {
+  acceptDecision,
   answerQuestion,
   approveSpec,
   closePack,
@@ -14,6 +15,7 @@ import {
   readEvents,
   alignment,
   record,
+  rejectDecision,
   type PackDoc,
 } from '@treadle/core';
 import type { Refusal } from '@treadle/core';
@@ -39,6 +41,8 @@ interface Op {
     result?: string | undefined;
     commands?: { command: string; exit: number }[] | undefined;
     expected_revision?: number | undefined;
+    decision?: string | undefined;
+    because?: string | undefined;
   };
 }
 
@@ -114,6 +118,18 @@ function applyOp(doc: PackDoc, op: Op, realInput: string): OpOutcome {
     const r = closePack(doc, by, { at: FIXED_AT });
     if (!r.ok) return { refused: r };
     return {};
+  }
+  if (op.op === 'accept') {
+    const a2 = (op.args ?? {}) as Record<string, unknown>;
+    const r = acceptDecision(doc, String(a2['decision'] ?? ''), by);
+    if (!r.ok) return { refused: r };
+    return { handout: r.value };
+  }
+  if (op.op === 'reject') {
+    const a2 = (op.args ?? {}) as Record<string, unknown>;
+    const r = rejectDecision(doc, String(a2['decision'] ?? ''), by, String(a2['because'] ?? ''));
+    if (!r.ok) return { refused: r };
+    return { handout: r.value };
   }
   if (op.op === 'approve') {
     const r = approveSpec(doc, by, { at: FIXED_AT });
@@ -225,6 +241,8 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
       result?: string;
       commands?: { command: string; exit: number }[];
       expected_revision?: number;
+      decision?: string;
+      because?: string;
     };
     const op: Op = {
       op: e.kind,
@@ -237,6 +255,8 @@ function runCase(layer: string, name: string, dir: string): CaseResult {
         result: ev.result,
         commands: ev.commands,
         expected_revision: ev.expected_revision,
+        decision: ev.decision,
+        because: ev.because,
       },
     };
     const out = applyOp(doc, op, dir + '/input');

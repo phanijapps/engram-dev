@@ -1,0 +1,8 @@
+{
+  "op": "reject",
+  "args": {
+    "decision": "D-9",
+    "by": "human:owner",
+    "because": "x"
+  }
+}

@@ -21,6 +21,7 @@ import {
   writeFingerprints,
   anchorReview,
   readFreshness,
+  writeFreshnessStamp,
 } from '@treadle/knowledge';
 import { resolve } from 'node:path';
 
@@ -167,6 +168,26 @@ export function registerKnow(knowCmd: Command): void {
         `anchors: ${review.length} checked, ${flagged} need review${flagged ? ' — the gardener re-verifies and re-anchors' : ''}`,
       );
     });
+
+  knowCmd
+    .command('stamp <bundle>')
+    .requiredOption('--workspace <root>', 'repo root the stamp describes')
+    .option('--written <n>', 'concepts written', (v) => parseInt(v), 0)
+    .option('--updated <n>', 'concepts updated', (v) => parseInt(v), 0)
+    .option('--skipped <n>', 'concepts skipped', (v) => parseInt(v), 0)
+    .action(
+      (
+        bundle: string,
+        opts: { workspace: string; written: number; updated: number; skipped: number },
+      ) => {
+        const path = writeFreshnessStamp(bundle, opts.workspace, {
+          written: opts.written,
+          updated: opts.updated,
+          skipped: opts.skipped,
+        });
+        console.log(`freshness stamp: ${path}`);
+      },
+    );
 
   knowCmd
     .command('status <bundle>')

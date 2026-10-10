@@ -24,6 +24,10 @@ export const REFUSAL_CODES = [
   'cannot_record_from',
   'pass_needs_zero_exits',
   'cannot_close',
+  'no_such_decision',
+  'already_accepted',
+  'rejected_is_history',
+  'already_resolved_decision',
 ] as const;
 
 export type RefusalCode = (typeof REFUSAL_CODES)[number];

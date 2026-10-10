@@ -1,0 +1,71 @@
+{
+  "id": "p",
+  "name": "p",
+  "description": "The born fixture",
+  "date": {
+    "updated": "2026-10-10T12:00:00Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "spec": {
+    "why": "w",
+    "requirements": [],
+    "out_of_scope": [],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "pick one",
+        "status": "resolved",
+        "owner": "human:owner",
+        "kind": "choice",
+        "options": [
+          "a",
+          "b"
+        ],
+        "default": "a",
+        "answer": "Accepted as D-9 by human:owner"
+      },
+      {
+        "id": "Q-2",
+        "question": "say something",
+        "status": "open",
+        "owner": "human:owner"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-9",
+        "decision": "p",
+        "because": "b",
+        "status": "accepted",
+        "resolves": [
+          "Q-1"
+        ],
+        "accepted_by": "human:owner"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "one",
+      "detail": "d",
+      "satisfies": [],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "todo",
+      "phase": "core",
+      "verify": {
+        "cmd": "true",
+        "expect": "0"
+      }
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 2
+}

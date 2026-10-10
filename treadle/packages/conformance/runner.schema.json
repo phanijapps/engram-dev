@@ -35,7 +35,9 @@
             "read-events",
             "artifact",
             "traverse",
-            "next"
+            "next",
+            "accept",
+            "reject"
           ]
         },
         "args": {

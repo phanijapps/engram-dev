@@ -1,0 +1,7 @@
+{
+  "op": "accept",
+  "args": {
+    "decision": "D-42",
+    "by": "human:owner"
+  }
+}

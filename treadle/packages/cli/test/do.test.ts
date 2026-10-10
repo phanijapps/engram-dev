@@ -192,3 +192,49 @@ describe('do check', () => {
     expect(lines.some((l) => l.startsWith('alignment:'))).toBe(true);
   });
 });
+
+describe('do accept / reject (the human act, last to port)', () => {
+  it('accept resolves the decision and its questions; reject keeps them open', () => {
+    const d = bornPack();
+    const v = loadPackWithMeta(d);
+    expect(v.ok).toBe(true);
+    if (v.ok) {
+      v.value.doc.plan.decisions = [
+        { id: 'D-9', decision: 'p', because: 'b', status: 'proposed', resolves: ['Q-1'] },
+      ];
+      savePack(v.value.doc, v.value.path, { at: AT });
+    }
+    run(['do', 'accept', d, '--decision', 'D-9', '--by', 'human:owner']);
+    const after = loadPack(d);
+    expect(after.ok && after.value.plan.decisions?.[0]?.status).toBe('accepted');
+    if (after.ok) {
+      const q1 = after.value.spec.clarifications?.find((q) => q.id === 'Q-1');
+      expect(q1?.status).toBe('resolved');
+      expect(q1?.answer).toContain('Accepted as D-9');
+    }
+    // rejection keeps questions open — on a fresh proposed decision
+    const d2 = bornPack();
+    const w = loadPackWithMeta(d2);
+    if (w.ok) {
+      w.value.doc.plan.decisions = [{ id: 'D-8', decision: 'p', because: 'b', status: 'proposed' }];
+      savePack(w.value.doc, w.value.path, { at: AT });
+    }
+    run([
+      'do',
+      'reject',
+      d2,
+      '--decision',
+      'D-8',
+      '--by',
+      'human:owner',
+      '--because',
+      'wrong shape',
+    ]);
+    const after2 = loadPack(d2);
+    expect(after2.ok && after2.value.plan.decisions?.[0]?.status).toBe('rejected');
+    const openq = after2.ok
+      ? after2.value.spec.clarifications?.find((q) => q.id === 'Q-1')
+      : undefined;
+    expect(openq?.status).toBe('open');
+  });
+});

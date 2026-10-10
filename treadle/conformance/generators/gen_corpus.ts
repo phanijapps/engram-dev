@@ -17,12 +17,14 @@ import { mkdirSync, writeFileSync, readFileSync, rmSync, cpSync, readdirSync } f
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  acceptDecision,
   answerQuestion,
   deriveStage,
   approveSpec,
   closePack,
   record,
   nextTask,
+  rejectDecision,
   savePack,
   emitBytes,
   loadPack,
@@ -304,6 +306,12 @@ function genL2(): void {
     } else if (op.op === 'close') {
       const r = closePack(d, by, { at: FIXED });
       if (!r.ok) refused = r;
+    } else if (op.op === 'accept') {
+      const r = acceptDecision(d, String(a.decision ?? ''), by);
+      if (!r.ok) refused = r;
+    } else if (op.op === 'reject') {
+      const r = rejectDecision(d, String(a.decision ?? ''), by, String(a.because ?? ''));
+      if (!r.ok) refused = r;
     }
     if (!refused) throw new Error(`${name}: expected refusal, got success`);
     W(join(caseDir, 'expected.err'), J({ code, message: refused.message }));
@@ -432,11 +440,46 @@ function genL2(): void {
     { op: 'close', args: { by: 'agent:pi', at: FIXED } },
     'human_claim_required',
   );
+  const withProposed = (doc: Record<string, unknown>) => {
+    (doc.plan as Record<string, unknown>).decisions = [
+      { id: 'D-9', decision: 'p', because: 'b', status: 'proposed' },
+    ];
+  };
+  const withAccepted = (doc: Record<string, unknown>) => {
+    (doc.plan as Record<string, unknown>).decisions = [
+      { id: 'D-9', decision: 'p', because: 'b', status: 'accepted', accepted_by: 'human:owner' },
+    ];
+  };
+  refusalCase(
+    'accept-no-such-decision',
+    { op: 'accept', args: { decision: 'D-42', by: 'human:owner' } },
+    'no_such_decision',
+  );
+  refusalCase(
+    'accept-agent-claim',
+    { op: 'accept', args: { decision: 'D-9', by: 'agent:pi' } },
+    'human_claim_required',
+    withProposed,
+  );
+  refusalCase(
+    'accept-already-accepted',
+    { op: 'accept', args: { decision: 'D-9', by: 'human:owner' } },
+    'already_accepted',
+    withAccepted,
+  );
+  refusalCase(
+    'reject-already-accepted',
+    { op: 'reject', args: { decision: 'D-9', by: 'human:owner', because: 'x' } },
+    'already_resolved_decision',
+    withAccepted,
+  );
 }
 
 // ── L3 ────────────────────────────────────────────────────────────────────
 interface Ev {
   kind: string;
+  decision?: string;
+  because?: string;
   q?: string;
   text?: string;
   option?: string;
@@ -504,6 +547,29 @@ function genL3(): void {
           W(join(caseDir, 'expected.err'), J({ code: 'mid_sequence_refusal', message: r.message }));
           return;
         }
+      } else if (e.kind === 'accept') {
+        const r = acceptDecision(
+          d,
+          (e as { decision?: string }).decision ?? '',
+          e.by ?? 'human:owner',
+        );
+        if (!r.ok) {
+          W(join(caseDir, 'expected.err'), J({ code: 'mid_sequence_refusal', message: r.message }));
+          return;
+        }
+        W(join(caseDir, 'expected.handout.json'), J(r.value));
+      } else if (e.kind === 'reject') {
+        const r = rejectDecision(
+          d,
+          (e as { decision?: string }).decision ?? '',
+          e.by ?? 'human:owner',
+          (e as { because?: string }).because ?? '',
+        );
+        if (!r.ok) {
+          W(join(caseDir, 'expected.err'), J({ code: 'mid_sequence_refusal', message: r.message }));
+          return;
+        }
+        W(join(caseDir, 'expected.handout.json'), J(r.value));
       } else if (e.kind === 'next') {
         const r = nextTask(d, packPath ? { packPath: packPath() } : {});
         if (!r.ok) {
@@ -603,6 +669,18 @@ function genL3(): void {
     { kind: 'answer', q: 'Q-2', text: 'now I know', by: 'human:owner' },
     { kind: 'answer', q: 'Q-1', text: 'a', by: 'human:owner' },
   ]);
+  const resolvingDoc = (): Record<string, unknown> => {
+    const doc = bornDoc();
+    (doc.plan as Record<string, unknown>).decisions = [
+      { id: 'D-9', decision: 'p', because: 'b', status: 'proposed', resolves: ['Q-1'] },
+    ];
+    return doc;
+  };
+  seq(
+    'accept-resolves-questions',
+    [{ kind: 'accept', decision: 'D-9', by: 'human:owner' }],
+    resolvingDoc(),
+  );
   seq('approve-before-answers', [{ kind: 'approve', by: 'human:owner' }]);
   seq('double-approve', [{ kind: 'approve', by: 'human:owner' }], undefined, preApproved);
   seq(

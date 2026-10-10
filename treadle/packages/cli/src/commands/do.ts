@@ -11,11 +11,13 @@ import {
   alignment,
   answerQuestion,
   approveSpec,
+  acceptDecision,
   closePack,
   gapCount,
   loadPackWithMeta,
   eventsPath,
   readEvents,
+  rejectDecision,
   nextTask,
   record,
   savePack,
@@ -346,6 +348,38 @@ export function registerDo(doCmd: Command): void {
         savePack(l.doc, l.path, { at: now() });
         console.log(`staged ${opts.id} (revision ${l.doc.revision})`);
       },
+    );
+
+  doCmd
+    .command('accept <packDir>')
+    .requiredOption('--decision <id>', 'the decision id')
+    .requiredOption('--by <claim>', 'human claim (human:<owner>)')
+    .action(
+      guarded((l, o) => {
+        const opts = o as unknown as { decision: string; by: string };
+        const out = acceptDecision(l.doc, opts.decision, opts.by);
+        if (!out.ok) return fail(out.message);
+        savePack(l.doc, l.path, { at: now() }); // accept bumped the revision
+        const qs = out.value.resolved_questions;
+        console.log(
+          `accepted ${opts.decision} by ${opts.by}${qs.length ? ` — resolved ${qs.join(', ')}` : ''}`,
+        );
+      }),
+    );
+
+  doCmd
+    .command('reject <packDir>')
+    .requiredOption('--decision <id>', 'the decision id')
+    .requiredOption('--by <claim>', 'human claim (human:<owner>)')
+    .requiredOption('--because <text>', 'why')
+    .action(
+      guarded((l, o) => {
+        const opts = o as unknown as { decision: string; by: string; because: string };
+        const out = rejectDecision(l.doc, opts.decision, opts.by, opts.because);
+        if (!out.ok) return fail(out.message);
+        savePack(l.doc, l.path, { at: now() }); // reject bumped the revision
+        console.log(`rejected ${opts.decision}: ${opts.because} — the questions stay open`);
+      }),
     );
 
   doCmd.command('status <packDir>').action(

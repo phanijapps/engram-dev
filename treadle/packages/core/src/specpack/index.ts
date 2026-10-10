@@ -20,3 +20,9 @@ export {
   validateEvent,
   type JournalEvent,
 } from './events.js';
+export {
+  acceptDecision,
+  rejectDecision,
+  type AcceptResult,
+  type RejectResult,
+} from './decisions.js';

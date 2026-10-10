@@ -1,0 +1,4 @@
+{
+  "code": "human_claim_required",
+  "message": "acceptance needs a human claim: pass --by human:<owner> (A7 shape check)"
+}
