@@ -51,6 +51,15 @@ The missing JSON was an agent workflow error. The corrected
 now carries requirements, proposed decisions, task dependencies, and evidence.
 Source: `docs/specs/documentation-consolidation/bug-missing-specpack.md:1`.
 
-Its engine-derived stage is authoritative. Human approval and closure remain
-unset. New evidence is current re-verification, not a fabricated historical
-handout. The earlier snapshot and retrospective remain dated observations.
+Its engine-derived stage is authoritative. At the correction snapshot, human
+approval and closure were unset. New evidence is current re-verification, not
+a fabricated historical handout. The earlier snapshot and retrospective remain
+dated observations.
+
+# Owner approval — 2026-10-10
+
+The browser recorded approval by `human:owner` at `2026-10-10T20:40:25Z`.
+The pack is at revision 15. Its stage remains `awaiting_owner` because
+decisions D-1 through D-4 remain proposed. Closure remains unset.
+Source: `docs/specs/documentation-consolidation/documentation-consolidation.json:8`,
+`date.approved`, `design.decisions`, and `status`.

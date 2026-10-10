@@ -4,7 +4,11 @@
   "description": "Consolidate workspace knowledge and preserve retrospectives",
   "date": {
     "created": "2026-10-10T20:28:49.896Z",
-    "updated": "2026-10-10T20:36:01.662Z"
+    "updated": "2026-10-10T20:40:25Z",
+    "approved": {
+      "at": "2026-10-10T20:40:25Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
@@ -389,5 +393,5 @@
     "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
   },
   "format": "specpack/0.3",
-  "revision": 14
+  "revision": 15
 }

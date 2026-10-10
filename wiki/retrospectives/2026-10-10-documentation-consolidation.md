@@ -10,6 +10,7 @@ sources:
   - { id: plan, resource: docs/specs/documentation-consolidation/plan.md }
   - { id: baseline, resource: docs/specs/documentation-consolidation/baseline.json }
   - { id: evidence, resource: docs/specs/documentation-consolidation/evidence.md }
+  - { id: machine, resource: docs/specs/documentation-consolidation/documentation-consolidation.json }
 ---
 
 # Intent and provenance
@@ -77,3 +78,10 @@ A canonical pack now backfills the plan through the engine. Current verification
 is recorded with the actual agent and execution time; earlier approval and
 closure are not invented. Skill handoffs now explicitly register and use the
 machine record. Source: `docs/specs/documentation-consolidation/machine-handoff-evidence.md:1`.
+
+# Owner approval observation — 2026-10-10
+
+The browser recorded approval by `human:owner` at `2026-10-10T20:40:25Z`.
+Approval did not accept the four proposed decisions or close the pack.
+Source: `docs/specs/documentation-consolidation/documentation-consolidation.json:8`,
+`date.approved`, `design.decisions`, and `status`.
