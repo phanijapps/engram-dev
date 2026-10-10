@@ -18,7 +18,7 @@ harness/hooks/session-recall.js           ← payload: workspace → recall bloc
   claude:  SessionStart settings wiring → stdout context
   codex:   honest subset (prompt-file + notify)  [Q-3]
 harness/skills/sdlc/**                    ← refreshed to the current loop
-@treadle/knowledge: trust tiers + log format + stale_after  [Q-5]
+@treadle/knowledge: ALL FIVE debts — §5.3 tiers, §9 log structure, §10 admission rules, §8 conformance, stale_after  [Q-5]
 ```
 
 ### The hard gate (Q-4 — the owner overruled soft)
@@ -48,7 +48,7 @@ work in flight (2):
   guided-loop   planning      Q-1..Q-5 open     rev 6   docs/specs/
   spec-web      in_review     R2 waiting        rev 28  ../other-tree/ (worktree)
 nothing delivered is listed; the archive is never listed.
-if more than one: ASK which one continues. never guess.
+if more than one: ASK which one continues. never guess. (hard gate, Q-4 — see the hard gate section)
 ```
 
 Every line quotes the engine (`do where`), never memory. The block
@@ -100,8 +100,18 @@ validate`) and "the harness CLI" — zero brand strings; brand:set
 - The ask-first rule lands in analyze/plan/implement as the human
   contract; the hard gate enforces what the skills teach.
 
-## Open by design
+## R1 fold notes (the review's findings, answered)
 
-Q-1..Q-5 recorded in the pack; the defaults above assume the
-recommendations stand. Contradicting answers rewrite the DES entries
-before build.
+- **"FIRST user message" is defined**: no prior user entry in the
+  session transcript (`ctx.sessionManager` entries); resumed sessions
+  included — the gate can fire again after a resume, by design.
+- **§11.3 is one clause** (D-6, proposed): index.md (§8) and log.md
+  (§9) structure are a single conformance condition — both enforce at
+  error level; "warnings never block" applies to the other §11 checks,
+  not to §11.3. Spec-faithful, mirroring Q-1's pattern.
+- **`do where` without git**: the worktree section reports
+  `unavailable (no git)` and the scan still exits 0 (fixture-proven).
+- **`do library` divergence**: the standing single-root surface stays
+  as-is this wave; recorded in out_of_scope + DEBT.md.
+- The design record IS this file plus the pack's design entries
+  (DES-1..6); nothing rides on stale prose.
