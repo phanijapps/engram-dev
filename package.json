@@ -6,7 +6,7 @@
   "workspaces": [
     "treadle"
   ],
-  "description": "The SDD harness \u2014 knowledge first, then a tight loop. Remote install: git clone \u2026 && npm i -g --allow-scripts=engram-dev \"$(npm pack --silent)\"",
+  "description": "The SDD harness \u2014 knowledge first, then a tight loop. Install: curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash (corepack + pnpm under the hood)",
   "dependencies": {
     "@treadle/brand": "file:treadle/packages/brand",
     "@treadle/core": "file:treadle/packages/core",
