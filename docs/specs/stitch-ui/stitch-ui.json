@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T13:30:21Z",
+    "updated": "2026-10-10T13:36:35Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -510,13 +510,22 @@
         "AC-1",
         "AC-3"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — three panes present in jsdom, no structural 1px borders in the token layer, portability test green (no brand strings, no false tags)"
       },
       "needs": [
         "T-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T13:36:35Z",
+          "by": "agent:pi",
+          "notes": "The Alexandria reskin: no-line rule (zero 1px borders in the layer — surface steps + ghost insets), serif voice on titles/cards/tabs, glass sticky header, gradient CTA, mono chips + severity, focus rings from tokens, three panes (inspector shell awaits T-3), journey strip intact with themed flags, markdown carve-out as ghost edges. 63 tests green incl. library-skin.test.ts (structural no-line + grammar anchors; live DOM: 3 panes, journey renders from the corpus spec-web fixture)."
+        }
       ]
     },
     {
@@ -696,5 +705,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 22
+  "revision": 24
 }
