@@ -26,7 +26,7 @@ We are building an **SDD harness**: a knowledge engine and a loop engine plus a 
 |---|---|
 | `treadle/` | **The harness.** pnpm workspace: `core` (specpack admission), `knowledge` (bundle), `web` (room + library), `cli` (`do` + `know`), `conformance` (the golden corpus, self-hosted), `brand` (the fence). |
 | `wiki/` | The repo's own knowledge base, built and verified by the engine's own skills. Curated pages in `systems/`, `domain/`, `decisions/`, `research/`. |
-| `skills/` | `sdlc/` — the five skills. `node/` — the Node craft skills (`nodejs-craft`, `nodejs-architecture`, `boy-scout`). Installed copies in `.pi/skills/` — sync after editing. |
+| `treadle/harness/` | **The installable harness.** `skills/` (sdlc + node + writer), `agents/` (red-foreman per surface), `hooks/` (JS payloads), `harness.json` (the `harness/0.1` manifest). Installed with `treadle init harness`; the installer keeps `.pi/` and `.codex/` converged. |
 | `docs/product/` | Format contracts: the vendored OKF 0.2 spec, the specpack JSON schema. |
 | `docs/research/` | Current research: python-vs-node, naming, Node standards, the corpus design. |
 | `docs/archive/` | Everything retired: old spec initiatives, pre-pivot history, the python-era code index, superseded plans. New specs start fresh in `docs/specs/` when a wave opens. |
@@ -46,11 +46,11 @@ pnpm exec tsx packages/cli/src/main.ts <cmd>   # run the CLI directly
 ## The wiki ritual (end every session fresh)
 
 ```bash
-pnpm --dir treadle exec tsx packages/cli/src/main.ts know fingerprints . wiki    # source hashes
-pnpm --dir treadle exec tsx packages/cli/src/main.ts know stamp wiki --workspace .  # freshness stamp
-pnpm --dir treadle exec tsx packages/cli/src/main.ts know anchors wiki --workspace .
-pnpm --dir treadle exec tsx packages/cli/src/main.ts know validate wiki          # 0 errors, 0 warnings
-pnpm --dir treadle exec tsx packages/cli/src/main.ts know status wiki --workspace .
+cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know fingerprints .. ../wiki    # source hashes
+cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..  # freshness stamp
+cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..
+cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know validate ../wiki          # 0 errors, 0 warnings
+cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know status ../wiki --workspace ..
 ```
 
 Wiki discipline: every load-bearing claim cites a location; frontmatter carries `title`, `type`, `description`; decisions record alternatives and consequences; `wiki/code/**` pages are machine-managed (currently frozen — code indexing is delegated).

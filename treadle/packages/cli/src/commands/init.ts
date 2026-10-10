@@ -14,6 +14,7 @@ import {
   UsageError,
 } from '../harness/types.js';
 import { promptForMissing } from '../harness/skin.js';
+import { resolve } from 'node:path';
 
 export interface Flags {
   agent?: string;
@@ -106,10 +107,12 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
 
   if (choices.json) {
     console.log(JSON.stringify({ plan: plan.rows, wirings: plan.wirings, summary }, null, 2));
+    if (summary.refuse > 0) process.exitCode = 3; // R2 #15: scripted consumers see would-refuse
     return;
   }
   if (choices.dryRun) {
     printPlan(plan.rows, plan.wirings);
+    if (summary.refuse > 0) process.exitCode = 3; // R2 #15
     return;
   }
   if (summary.refuse > 0) {
@@ -148,6 +151,12 @@ function choicesFromFlags(f: Flags): InstallChoices {
       `${brand.binName} init harness --scope <project|global>`,
     );
   }
+  if (agent === 'copilot' && scope === 'global') {
+    throw new UsageError(
+      'copilot has no global scope — project only (the honest no)',
+      `${brand.binName} init harness --agent copilot --scope project`,
+    );
+  }
   if (missing.length > 0) {
     const remediation = `${brand.binName} init harness --agent pi --scope project`;
     throw new UsageError(
@@ -167,7 +176,7 @@ function choicesFromFlags(f: Flags): InstallChoices {
     skills: f.skills && f.skills.length > 0 ? f.skills : 'all',
     agents: f.agents !== false,
     hooks: f.hooks !== false,
-    root: f.root ?? process.cwd(),
+    root: resolve(f.root ?? process.cwd()), // R2 #9: resolved once — relative --root must not leak into user-level configs
     manifestPath: f.manifest ?? undefined,
     force: f.force === true,
     dryRun: f.dryRun === true,

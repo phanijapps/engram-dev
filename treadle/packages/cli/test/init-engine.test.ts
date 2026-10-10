@@ -211,9 +211,20 @@ describe('the installer engine (T-1)', () => {
         '.harness/hooks/check.js',
       );
 
-      const c2 = choices(root, manifestPath, { agent: 'codex' });
-      const out2 = applyPlan(compilePlan(lm.manifest, lm.root, c2), c2, lm.root, 't');
-      expect(out2.written).toBeGreaterThanOrEqual(2); // skill + agent + hook payload (notify target is HOME, not asserted here)
+      // BLOCKER 3 (R2): HOME isolated — the suite must NEVER touch the real ~/.codex
+      const fakeHome = mkdtempSync(join(tmpdir(), 'hh-'));
+      const origHome = process.env.HOME;
+      process.env.HOME = fakeHome;
+      try {
+        const c2 = choices(root, manifestPath, { agent: 'codex' });
+        const out2 = applyPlan(compilePlan(lm.manifest, lm.root, c2), c2, lm.root, 't');
+        expect(out2.written).toBeGreaterThanOrEqual(2); // skill + agent + hook payload
+        const cfg = readFileSync(join(fakeHome, '.codex', 'config.toml'), 'utf8');
+        expect(cfg).toMatch(/^notify\s*=/m);
+      } finally {
+        process.env.HOME = origHome;
+        rmSync(fakeHome, { recursive: true, force: true });
+      }
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -239,6 +250,118 @@ describe('the installer engine (T-1)', () => {
       };
       expect(after.env.KEEP).toBe('me');
       expect(after.hooks).toBeUndefined(); // our entry unwired
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #1: per-agent state files — two agents never clobber each other', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      const lm = loadManifest(manifestPath);
+      const cPi = choices(root, manifestPath, { agent: 'pi' });
+      applyPlan(compilePlan(lm.manifest, lm.root, cPi), cPi, lm.root, 't');
+      const cCx = choices(root, manifestPath, { agent: 'codex' });
+      applyPlan(compilePlan(lm.manifest, lm.root, cCx), cCx, lm.root, 't');
+      expect(existsSync(join(root, '.harness/harness-install.pi.json'))).toBe(true);
+      expect(existsSync(join(root, '.harness/harness-install.codex.json'))).toBe(true);
+      // removing pi leaves codex intact and pi gone
+      const r = removeInstall(cPi);
+      expect(r.removed.length).toBeGreaterThan(0);
+      expect(existsSync(join(root, '.pi/skills/alpha/SKILL.md'))).toBe(false);
+      expect(existsSync(join(root, '.codex/skills/alpha/SKILL.md'))).toBe(true);
+      expect(existsSync(join(root, '.harness/harness-install.codex.json'))).toBe(true);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #2: --force removes exactly the listed leftovers, and nothing else', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      const lm = loadManifest(manifestPath);
+      const c = choices(root, manifestPath);
+      applyPlan(compilePlan(lm.manifest, lm.root, c), c, lm.root, 't');
+      const foreign = join(root, '.pi/skills/alpha/FOREIGN.md');
+      writeFileSync(foreign, 'stale drift\n');
+      const plan2 = compilePlan(lm.manifest, lm.root, c);
+      const row = plan2.rows.find((r) => r.kind === 'skill');
+      expect(row?.note).toContain('FOREIGN.md');
+      expect(row?.extras).toContain('FOREIGN.md');
+      const out = applyPlan(
+        compilePlan(lm.manifest, lm.root, choices(root, manifestPath, { force: true })),
+        choices(root, manifestPath, { force: true }),
+        lm.root,
+        't',
+      );
+      expect(existsSync(foreign)).toBe(false); // exactly the listed leftover
+      expect(existsSync(join(root, '.pi/skills/alpha/SKILL.md'))).toBe(true); // managed files stay
+      expect(out.removedLeftovers.length).toBe(1);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #6: --remove refuses paths outside the install roots (tampered state)', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      const outside = mkdtempSync(join(tmpdir(), 'htarget-'));
+      const hostage = join(outside, 'hostage.txt');
+      writeFileSync(hostage, 'do not delete\n');
+      const lm = loadManifest(manifestPath);
+      const c = choices(root, manifestPath);
+      applyPlan(compilePlan(lm.manifest, lm.root, c), c, lm.root, 't');
+      const sp = join(root, '.harness/harness-install.pi.json');
+      const doc = JSON.parse(readFileSync(sp, 'utf8')) as { written: string[] };
+      doc.written.push(hostage);
+      writeFileSync(sp, JSON.stringify(doc));
+      expect(() => removeInstall(c)).toThrow(/outside the install roots/);
+      expect(existsSync(hostage)).toBe(true); // the hostage survives
+      rmSync(outside, { recursive: true, force: true });
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #8: a directory squatting on a file destination is a refuse, never a crash', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      const lm = loadManifest(manifestPath);
+      const c = choices(root, manifestPath);
+      applyPlan(compilePlan(lm.manifest, lm.root, c), c, lm.root, 't');
+      const lm2 = loadManifest(manifestPath);
+      const plan2 = compilePlan(lm2.manifest, lm2.root, c);
+      const agentRow = plan2.rows.find((r) => r.destination.endsWith('one.md'));
+      expect(agentRow?.mode).toBe('same');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #17: the manifest loader refuses .. and absolute paths', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      const raw = JSON.parse(readFileSync(manifestPath, 'utf8')) as {
+        components: { id: string; source: unknown }[];
+      };
+      raw.components[0].source = { pi: '../../escape.md', claude: 'x.md' } as never;
+      writeFileSync(manifestPath, JSON.stringify(raw));
+      expect(() => loadManifest(manifestPath)).toThrow(/escapes the manifest root/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('R2 #10: foreign settings.json refuses the wiring loudly (no silent drop)', () => {
+    const { root, manifestPath } = harnessFixture();
+    try {
+      mkdirSync(join(root, '.claude'), { recursive: true });
+      writeFileSync(join(root, '.claude/settings.json'), '{ not json');
+      const lm = loadManifest(manifestPath);
+      const c = choices(root, manifestPath, { agent: 'claude' });
+      const out = applyPlan(compilePlan(lm.manifest, lm.root, c), c, lm.root, 't');
+      expect(out.wiringRefused.length).toBe(1);
+      expect(out.wiringRefused[0]).toContain('settings.json');
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

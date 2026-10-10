@@ -4,14 +4,15 @@
  *  comparison, so --dry-run says exactly what apply would do:
  *
  *    create  destination absent
- *    same    normalized bytes equal
+ *    same    normalized bytes equal (extras listed if leftovers exist)
  *    update  bytes differ and --force is set
- *    refuse  bytes differ and no --force (apply exits 3)
- *    skip    no source for this surface, or hooks unsupported (null wiring)
+ *    refuse  bytes differ and no --force (apply exits 3) — or the
+ *            destination is occupied by a directory where a file belongs
+ *    skip    no source, empty source, or hooks unsupported (null wiring)
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join, relative } from 'node:path';
+import { join } from 'node:path';
 import { normalizedHash } from './content.js';
 import { destPath, sourceFile } from './manifest.js';
 import { destRoots } from './paths.js';
@@ -30,43 +31,52 @@ function destFor(projectDest: string, agent: Surface, scope: Scope, root: string
 
 function listFiles(abs: string, base = abs, out: string[] = []): string[] {
   const st = statSync(abs);
-  if (st.isFile()) out.push(relative(base, abs));
+  if (st.isFile()) out.push(relUnder(base, abs));
   else for (const e of [...readdirSync(abs)].sort()) listFiles(join(abs, e), base, out);
   return out;
+}
+import { relative } from 'node:path';
+function relUnder(base: string, abs: string): string {
+  return relative(base, abs);
 }
 
 function modeForDir(
   sourceAbs: string,
   destAbs: string,
   force: boolean,
-): { mode: PlanRow['mode']; note?: string } {
+): { mode: PlanRow['mode']; note?: string; extras?: string[] } {
   const srcFiles = listFiles(sourceAbs);
+  if (srcFiles.length === 0) return { mode: 'skip', note: 'empty source — nothing to install' }; // R2 #14
   const destExists = existsSync(destAbs);
   if (!destExists) return { mode: 'create' };
-  const destFiles =
-    existsSync(destAbs) && statSync(destAbs).isDirectory() ? listFiles(destAbs) : [];
+  const destFiles = statSync(destAbs).isDirectory() ? listFiles(destAbs) : [];
   const srcSet = new Set(srcFiles);
   const destSet = new Set(destFiles);
-  const extra = [...destSet].filter((f) => !srcSet.has(f));
+  const extras = [...destSet].filter((f) => !srcSet.has(f));
   for (const f of srcFiles) {
     const d = join(destAbs, f);
-    if (!existsSync(d)) return { mode: force ? 'update' : 'refuse' };
+    if (!existsSync(d)) return { mode: force ? 'update' : 'refuse', extras };
     if (
       normalizedHash(readFileSync(join(sourceAbs, f), 'utf8')) !==
       normalizedHash(readFileSync(d, 'utf8'))
     ) {
-      return { mode: force ? 'update' : 'refuse' };
+      return { mode: force ? 'update' : 'refuse', extras };
     }
   }
-  const note = extra.length
-    ? `unmanaged leftover(s): ${extra.join(', ')} (--force removes exactly these)`
-    : undefined;
-  if (note !== undefined) return { mode: 'same', note };
+  if (extras.length) {
+    return {
+      mode: 'same',
+      note: `unmanaged leftover(s): ${extras.join(', ')} (--force removes exactly these)`,
+      extras,
+    };
+  }
   return { mode: 'same' };
 }
 
 function modeForFile(sourceAbs: string, destAbs: string, force: boolean): PlanRow['mode'] {
-  if (!existsSync(destAbs)) return 'create';
+  const destStat = existsSync(destAbs) ? statSync(destAbs) : undefined;
+  if (!destStat) return 'create';
+  if (destStat.isDirectory()) return 'refuse'; // R2 #8: a directory squatting on a file row
   const same =
     normalizedHash(readFileSync(sourceAbs, 'utf8')) ===
     normalizedHash(readFileSync(destAbs, 'utf8'));
@@ -110,22 +120,21 @@ export function compilePlan(
       continue;
     }
     const sourceAbs = join(manifestRoot, src);
-    const destAbs = destFor(dst, agent, scope, choices.root);
     if (!existsSync(sourceAbs)) {
       rows.push({
         component: c.id,
         kind: c.kind,
         surface: agent,
         source: src,
-        destination: destAbs,
+        destination: '',
         mode: 'skip',
         note: 'source missing in the harness',
       });
       continue;
     }
-    const st = statSync(sourceAbs);
-    if (st.isDirectory()) {
-      const { mode, note } = modeForDir(sourceAbs, destAbs, choices.force);
+    const destAbs = destFor(dst, agent, scope, choices.root);
+    if (statSync(sourceAbs).isDirectory()) {
+      const { mode, note, extras } = modeForDir(sourceAbs, destAbs, choices.force);
       rows.push({
         component: c.id,
         kind: c.kind,
@@ -134,6 +143,7 @@ export function compilePlan(
         destination: destAbs,
         mode,
         ...(note !== undefined ? { note } : {}),
+        ...(extras !== undefined ? { extras } : {}),
       });
     } else {
       rows.push({
@@ -141,7 +151,7 @@ export function compilePlan(
         kind: c.kind,
         surface: agent,
         source: src,
-        destination: descAbsOf(destAbs),
+        destination: destAbs,
         mode: modeForFile(sourceAbs, destAbs, choices.force),
       });
     }
@@ -195,27 +205,24 @@ export function compilePlan(
           destination: destAbs,
           mode: modeForFile(src, destAbs, choices.force),
         });
+        // config-notify wires at user level — the payload path must be absolute;
+        // settings-hooks runs from the project root — the manifest command stands
+        const detail =
+          w.kind === 'config-notify'
+            ? `node ${destAbs}`
+            : w.matcher
+              ? `${w.matcher} → ${w.command}`
+              : (w.command ?? '');
         wirings.push({
           surface: agent,
           kind: w.kind,
           target: wiringTarget(agent, scope, choices.root),
-          // config-notify wires at user level — the payload path must be absolute;
-          // settings-hooks runs from the project root — the manifest command stands
-          detail:
-            w.kind === 'config-notify'
-              ? `node ${destAbs}`
-              : w.matcher
-                ? `${w.matcher} → ${w.command}`
-                : (w.command ?? ''),
+          detail,
         });
       }
     }
   }
   return { rows, wirings };
-}
-
-function descAbsOf(p: string): string {
-  return p;
 }
 
 export function planSummary(plan: Plan): {

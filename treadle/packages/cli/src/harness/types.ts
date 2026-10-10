@@ -43,6 +43,8 @@ export interface PlanRow {
   destination: string;
   mode: PlanMode;
   note?: string;
+  /** unmanaged leftovers at the destination — removed only under --force, exactly these */
+  extras?: string[];
 }
 
 export interface Plan {

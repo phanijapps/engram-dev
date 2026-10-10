@@ -3,15 +3,19 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:24:50Z",
+    "updated": "2026-10-10T15:47:03Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T15:47:03Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "The harness must ship as a product: agents and skills packaged under treadle/harness behind an interactive installer (treadle init harness) like speckkit's specify CLI. The repo must read as new: no dead engine links in live surfaces.",
@@ -686,8 +690,8 @@
         "AC-3"
       ],
       "verify": {
-        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})' && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})'",
-        "expect": "pi and codex apply for real, then both dry-runs report every row mode=same — convergence proven, not assumed; dogfood + promotion evidence rows recorded"
+        "cmd": "init harness --agent pi --scope project --root .. --yes && init harness --agent codex --scope project --root .. --yes && both dry-runs (with --root ..) report every row mode=same",
+        "expect": "pi and codex apply at the REPO root for real, then both dry-runs report every row mode=same — convergence proven at the true root, never self-fulfilling"
       },
       "needs": [
         "T-3"
@@ -706,7 +710,7 @@
       "id": "T-7",
       "title": "Close: evidence, review rounds, freeze",
       "detail": "Close: every task recorded with evidence rows; review rounds recorded in verdicts (artifact round + closing round minimum); corpus byte-stable; PACK verdict; close by human:owner. Known tension (R1 #12): two deliverables share one pack — the wiki pass must not stall the installer close; if the sweep drags, the owner may split the close (installer-first) rather than hold the wave.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-16"
@@ -724,6 +728,15 @@
         "T-2",
         "T-5",
         "T-6"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+          "exit": 0,
+          "at": "2026-10-10T15:46:49Z",
+          "by": "agent:pi",
+          "notes": "Close: R1 (14 findings) + R2 (25 findings) both folded and recorded; every task evidence-rows machine-checked; 96 tests; corpus byte-stable; brand clean; links 63 files; wiki ritual green at session close (validate 0/0, anchors 0/19, fingerprints re-baselined — freshness honestly recorded: fresh in the working tree, stale-by-construction at committed HEAD, mechanism debt noted); dogfood 13/13 same both agents at the true root; .harness/ untracked (machine-local state); FR-11 honestly pending: CI green run observed only after push/PR."
+        }
       ]
     }
   ],
@@ -746,9 +759,21 @@
         "verdict": "IMPROVE",
         "by": "agent:pi",
         "note": "THE DOGFOOD CAUGHT A REAL BUG — the process worked. The first closing-audit run died at child startup: pi loads project extensions from .pi/extensions/, and the payload dual-entry fired in MODULE mode too (pi argv[2] looked like script input; JSON.parse failed; process.exit(1) killed the child at load). Fixed: script mode now enters only when this file IS the invoked program (argv[1] basename check) — the load-kill repro passes (module import with pi-shaped argv survives), script mode intact (exit 0/3/1 proven). Second real fix while at it: codex notify now wires the ABSOLUTE payload path (user-level config cannot be relative). Both surfaces re-applied (--force): 13/13 same again on re-run, notify absolute in ~/.codex/config.toml. No seventh evidence instance: everything re-verified unpiped this time (check=0, brand=0, 89/89, pi/codex apply exit 0)."
+      },
+      {
+        "on": "R2",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "The closing audit: 3 BLOCKER + 16 DEFECT + 6 SMELL — the strongest round this repo has had, and every one fixed. BLOCKERs: per-agent state files (a second agent no longer destroys the first record — remove is surgical per agent); --force now removes EXACTLY the listed leftovers (the note tells the truth, FR-15 implemented + tested); the engine test isolated HOME (the suite no longer writes the real ~/.codex — and the dogfood notify was re-wired after the damage). DEFECTs: freshness recorded honestly (fresh at session close, stale-by-construction at committed HEAD — mechanism debt recorded); AGENTS.md ritual commands now resolve the real bundle + the harness repo-map row; --remove containment (tampered state refuses, hostage files survive — tested); copilot+global exits 2 with remediation (never a crash); directory-squat refuse; --root resolved once (relative --root cannot leak into user configs); foreign settings.json refuses the wiring LOUDLY (exit 3); the component multi-select landed (FR-6 honest now); empty sources skip; --json/--dry-run exit 3 on refuses; windows argv + TOML paths hardened. SMELLs: manifest rejects ../absolute; first-party scripts LINT; links gate scope honest + workspace README; the write-guard discriminates tool shapes (reads of managed trees free — verified live by the reviewer being blocked mid-audit, then unblocked); corpus:regen names the TS generator. The evidence class got its seventh round of honesty: every fix verified unpiped this time — 96 tests, corpus byte-stable, brand clean, links 63 files, dogfood 13/13 same BOTH agents at the true root, notify absolute."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-forman",
+        "note": "R2 said FIX BEFORE COMMIT; every finding was fixed and re-verified unpiped — the fix commit closes them. The installer is sound: truthful plans, per-agent reversible records, honest nos, hardened against traversal, tamper, and windows. The dogfood is real: this repo runs on its own installer, the extension guard proved itself by blocking the reviewer mid-audit (then unblocked when reads were freed). Two rounds of brutal audit on the artifacts, one closing audit on the build; 39 findings total, all closed. FR-11 (the CI green run) rides the push — the pack closes with that one honestly open, evidence to follow the PR. Close it clean."
       }
     ]
   },
   "format": "specpack/0.3",
-  "revision": 38
+  "revision": 40
 }

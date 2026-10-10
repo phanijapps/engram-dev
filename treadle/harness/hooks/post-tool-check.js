@@ -59,8 +59,11 @@ if (invoked) {
 }
 
 // ── extension mode (pi) ──
+// guards WRITES only — reads of machine-managed trees stay free (R2 #20)
+const WRITE_TOOL = /(write|edit|patch|create|replace|notebook|apply)/i;
 export default function (pi) {
   pi.on('tool_call', async (event) => {
+    if (!WRITE_TOOL.test(String(event.toolName ?? ''))) return; // reads pass
     const args = event.input ?? {};
     const path = args.file_path ?? args.path ?? args.notebook_path ?? args.filePath ?? '';
     if (path === '') return; // nothing file-shaped to guard

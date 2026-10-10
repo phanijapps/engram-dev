@@ -28,8 +28,24 @@ export function loadManifest(path: string): LoadedManifest {
   return { manifest: m, root: resolve(file, '..') };
 }
 
+function safePath(p: string): boolean {
+  return (
+    !p.startsWith('/') &&
+    !p.startsWith('\\') &&
+    !p.split('/').includes('..') &&
+    !p.split('\\').includes('..')
+  );
+}
+
 function validateComponent(c: ComponentRow): void {
   if (!c.id || !c.kind) throw new Error('component refused: id and kind are required');
+  const sources = typeof c.source === 'string' ? [c.source] : Object.values(c.source);
+  for (const s of sources)
+    if (s !== undefined && !safePath(s))
+      throw new Error(`${c.id}: source escapes the manifest root (${s}) — refused`);
+  for (const d of Object.values(c.dest))
+    if (d !== undefined && !safePath(d))
+      throw new Error(`${c.id}: dest escapes the install root (${d}) — refused`);
   if (c.kind !== 'skill' && c.kind !== 'agent')
     throw new Error(`${c.id}: kind must be skill|agent`);
   if (c.kind === 'skill' && typeof c.source !== 'string') {
@@ -43,6 +59,11 @@ function validateComponent(c: ComponentRow): void {
 
 function validateHook(h: HookRow): void {
   if (!h.id || !h.file) throw new Error('hook refused: id and file are required');
+  if (!safePath(h.file)) throw new Error(`${h.id}: hook file escapes the manifest root — refused`);
+  for (const [k, w] of Object.entries(h.wiring)) {
+    if (w !== null && w.dest !== undefined && !safePath(w.dest))
+      throw new Error(`${h.id}: wiring dest for ${k} escapes — refused`);
+  }
   if (!h.wiring || typeof h.wiring !== 'object') throw new Error(`${h.id}: wiring map required`);
 }
 

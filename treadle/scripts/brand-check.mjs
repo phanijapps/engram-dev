@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /** White-label gate: the brand name appears ONLY in brand.ts (tokens),
  *  package names/bin fields, and the rebrand docs. Source code says tokens. */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const BRAND = 'treadle';

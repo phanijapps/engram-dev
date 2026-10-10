@@ -1,3 +1,7 @@
+/** Apply: writes exactly the plan, records what it wrote, and reverses
+ *  on demand. Never deletes unknown files except the EXACT leftovers
+ *  the plan listed, under --force (R2 #2). Global writes are the
+ *  caller's gate (--yes, D-7). One state record per agent (R2 #1). */
 import {
   existsSync,
   mkdirSync,
@@ -8,12 +12,12 @@ import {
   writeFileSync,
   type Stats,
 } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join } from 'node:path';
 import { normalize } from './content.js';
 import { destRoots } from './paths.js';
 import type { InstallChoices, Plan, PlanRow } from './types.js';
 
-export const STATE_FILE = 'harness-install.json';
+const stateName = (agent: string): string => `harness-install.${agent}.json`;
 
 interface WiringRecord {
   target: string;
@@ -33,8 +37,10 @@ interface StateDoc {
 
 export interface ApplyResult {
   written: number;
+  removedLeftovers: string[];
   refused: PlanRow[];
   wiringNotes: string[];
+  wiringRefused: string[];
 }
 
 function stat(p: string): Stats | undefined {
@@ -52,6 +58,7 @@ function listRel(abs: string, base = abs, out: string[] = []): string[] {
     for (const e of [...readdirSync(abs)].sort()) listRel(join(abs, e), base, out);
   return out;
 }
+import { relative } from 'node:path';
 
 function copyTree(sourceAbs: string, destAbs: string, written: string[]): void {
   const st = stat(sourceAbs);
@@ -67,7 +74,7 @@ function copyTree(sourceAbs: string, destAbs: string, written: string[]): void {
 
 export function statePath(choices: InstallChoices): string {
   const roots = destRoots(choices.agent, choices.scope, choices.root);
-  return join(roots.state, STATE_FILE);
+  return join(roots.state, stateName(choices.agent)); // one record per agent — never clobbered (R2 #1)
 }
 
 export function applyPlan(
@@ -78,16 +85,24 @@ export function applyPlan(
 ): ApplyResult {
   const refused: PlanRow[] = [];
   const written: string[] = [];
+  const removedLeftovers: string[] = [];
   for (const row of plan.rows) {
     if (row.mode === 'skip') continue;
     if (row.mode === 'refuse') {
       refused.push(row);
       continue;
     }
+    // R2 #2: --force removes exactly the listed unmanaged leftovers — the note finally tells the truth
+    if (choices.force && row.extras) {
+      for (const extra of row.extras)
+        rmSync(join(row.destination, extra), { force: true, recursive: true });
+      removedLeftovers.push(...row.extras.map((e) => join(row.destination, e)));
+    }
     copyTree(join(manifestRoot, row.source), row.destination, written);
   }
   const wiringRecords: WiringRecord[] = [];
   const wiringNotes: string[] = [];
+  const wiringRefused: string[] = [];
   if (refused.length === 0) {
     for (const w of plan.wirings) {
       if (w.kind === 'settings-hooks') {
@@ -95,17 +110,27 @@ export function applyPlan(
         if (rec) {
           wiringRecords.push(rec);
           wiringNotes.push(`wired ${w.target} (${rec.matcher} → ${rec.command})`);
+        } else {
+          wiringRefused.push(
+            `${w.target}: settings.json holds unparseable content — wiring refused, nothing overwritten (fix the file or move it aside)`,
+          );
         }
       } else if (w.kind === 'config-notify') {
         const rec = setCodexNotify(w.target, w.detail);
         if (rec) {
           wiringRecords.push(rec);
           wiringNotes.push(`wired ${w.target} (notify)`);
+        } else {
+          wiringRefused.push(`${w.target}: config.toml unwritable — notify refused`);
         }
       }
     }
   }
-  if (refused.length === 0 && (written.length > 0 || wiringRecords.length > 0)) {
+  if (
+    refused.length === 0 &&
+    wiringRefused.length === 0 &&
+    (written.length > 0 || wiringRecords.length > 0)
+  ) {
     mkdirSync(dirname(statePath(choices)), { recursive: true });
     const doc: StateDoc = {
       format: 'harness/0.1',
@@ -117,18 +142,18 @@ export function applyPlan(
     };
     writeFileSync(statePath(choices), JSON.stringify(doc, null, 2) + '\n');
   }
-  return { written: written.length, refused, wiringNotes };
+  return { written: written.length, removedLeftovers, refused, wiringNotes, wiringRefused };
 }
 
-function mergeClaudeSettings(target: string, detail: string): WiringRecord | undefined {
+function mergeClaudeSettings(target: string, detail: string): WiringRecord | null {
   const [matcher, command] = detail.split(' → ');
-  if (!matcher || !command) return undefined;
+  if (!matcher || !command) return null;
   let doc: Record<string, unknown> = {};
   if (existsSync(target)) {
     try {
       doc = JSON.parse(readFileSync(target, 'utf8')) as Record<string, unknown>;
     } catch {
-      return undefined; // foreign settings file — refuse silently upward (plan said create/merge)
+      return null; // foreign settings file — the caller reports the refusal (R2 #10)
     }
   }
   const hooks = (doc['hooks'] as Record<string, unknown[]> | undefined) ?? (doc['hooks'] = {});
@@ -142,13 +167,22 @@ function mergeClaudeSettings(target: string, detail: string): WiringRecord | und
   return { target, kind: 'settings-hooks', matcher, command };
 }
 
-function setCodexNotify(target: string, command: string): WiringRecord | undefined {
+function setCodexNotify(target: string, command: string): WiringRecord | null {
   let text = existsSync(target) ? readFileSync(target, 'utf8') : '';
-  const line = `notify = ["node", "${command.replace(/^node /, '')}"]`;
+  // forward slashes: valid on every OS and safe inside TOML basic strings (R2 #16)
+  const arg = command
+    .replace(/^node /, '')
+    .split('\\')
+    .join('/');
+  const line = `notify = ["node", "${arg}"]`;
   if (/^notify\s*=/m.test(text)) text = text.replace(/^notify\s*=.*$/m, line);
   else text = (text.endsWith('\n') || text === '' ? text : text + '\n') + line + '\n';
   mkdirSync(dirname(target), { recursive: true });
-  writeFileSync(target, text);
+  try {
+    writeFileSync(target, text);
+  } catch {
+    return null;
+  }
   return { target, kind: 'config-notify', matcher: 'notify', command: line };
 }
 
@@ -158,17 +192,36 @@ export interface RemoveResult {
 }
 
 /** --remove: delete exactly what the recorded plan wrote, undo wiring
- *  edits, remove the state file. Nothing else. */
+ *  edits, remove the state file. Nothing else — and nothing outside
+ *  the install roots, even if the state file says so (R2 #6). */
 export function removeInstall(choices: InstallChoices): RemoveResult {
   const sp = statePath(choices);
   if (!existsSync(sp)) throw new Error(`no recorded install at ${sp} — nothing to remove`);
   const doc = JSON.parse(readFileSync(sp, 'utf8')) as StateDoc;
+  const roots = destRoots(choices.agent, choices.scope, choices.root);
+  const sep = String.fromCharCode(92); // backslash, escaped for windows paths
+  const insideRoots = (p: string): boolean =>
+    p === roots.base ||
+    p.startsWith(roots.base + '/') ||
+    p.startsWith(roots.base + sep) ||
+    p.startsWith(roots.runtime + '/') ||
+    p.startsWith(roots.runtime + sep);
+  const tampered: string[] = [];
   const removed: string[] = [];
   for (const p of [...doc.written].sort().reverse()) {
+    if (!insideRoots(p)) {
+      tampered.push(p); // the state file is data — data never arms deletion outside the roots
+      continue;
+    }
     if (existsSync(p)) {
       rmSync(p);
       removed.push(p);
     }
+  }
+  if (tampered.length) {
+    throw new Error(
+      `state file lists paths outside the install roots — refusing to remove (tampered?): ${tampered.join(', ')}`,
+    );
   }
   const unwired: string[] = [];
   for (const w of doc.wirings) {
@@ -207,10 +260,12 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
     }
   }
   // prune empty dirs we created (only if empty — never foreign content)
-  const roots = destRoots(choices.agent, choices.scope, choices.root);
   for (const p of removed) {
     let dir = dirname(p);
-    while (dir.startsWith(roots.base) && dir !== roots.base) {
+    while (
+      (dir.startsWith(roots.base) && dir !== roots.base) ||
+      (dir.startsWith(roots.runtime) && dir !== roots.runtime)
+    ) {
       try {
         if (readdirSync(dir).length === 0) {
           rmSync(dir);

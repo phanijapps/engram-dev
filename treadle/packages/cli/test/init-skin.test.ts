@@ -16,6 +16,7 @@ describe('the interactive skin (T-2)', () => {
     expect(src).not.toMatch(/from 'node:fs'/);
     expect(src).not.toMatch(/from '\.\.\/\.\.\/harness\/(apply|plan|manifest)/);
     expect(src).toContain('@clack/prompts'); // Q-2: the chosen library
+    expect(src).toContain('multiselect'); // R2 #11: the component picker exists
   });
 
   it('the command consults the skin only when a TTY exists and a choice is missing', () => {

@@ -10,7 +10,11 @@ export interface PromptOutcome {
 }
 
 /** Ask only what the flags have not already answered. */
-export async function promptForMissing(flags: Flags, isTTY: boolean): Promise<Flags | 'cancelled'> {
+export async function promptForMissing(
+  flags: Flags,
+  isTTY: boolean,
+  skillIds: string[] = [],
+): Promise<Flags | 'cancelled'> {
   if (!isTTY) return flags; // the caller turns missing flags into exit 2 — no fake TTY
   p.intro('harness install');
 
@@ -32,6 +36,20 @@ export async function promptForMissing(flags: Flags, isTTY: boolean): Promise<Fl
     ]));
   if (scope === undefined) return 'cancelled';
 
+  let skills = flags.skills;
+  if (skills === undefined && skillIds.length > 0) {
+    const picked = await p.multiselect({
+      message: 'Skills to install (space toggles, enter accepts; all = default)',
+      options: skillIds.map((id) => ({ value: id, label: id })),
+      required: false,
+    });
+    if (p.isCancel(picked)) {
+      p.cancel('install cancelled');
+      return 'cancelled';
+    }
+    const sel = picked as string[];
+    skills = sel.length === skillIds.length ? [] : sel; // everything picked → the default all
+  }
   const hooks =
     flags.hooks === false
       ? false
@@ -48,7 +66,14 @@ export async function promptForMissing(flags: Flags, isTTY: boolean): Promise<Fl
         : await confirm('Install the harness agents (red-foreman)?', true);
   if (agents === undefined) return 'cancelled';
 
-  const out: Flags = { ...flags, agent: String(agent), scope: String(scope), hooks, agents };
+  const out: Flags = {
+    ...flags,
+    agent: String(agent),
+    scope: String(scope),
+    hooks,
+    agents,
+    ...(skills !== undefined ? { skills } : {}),
+  };
   p.outro('choices made — the plan prints next');
   return out;
 }

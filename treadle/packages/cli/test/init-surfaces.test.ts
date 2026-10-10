@@ -149,6 +149,15 @@ describe('the four surface adapters (T-3)', () => {
     }
   });
 
+  it('R2 #7: copilot + global is an exit-2 usage refusal, never a crash', async () => {
+    const { runHarnessInit } = await import('../src/commands/init.js');
+    const err = captureExit(() =>
+      runHarnessInit({ agent: 'copilot', scope: 'global', remove: false }),
+    );
+    expect(Number(err?.exit)).toBe(2);
+    expect(err?.messages.some((m) => m.includes('copilot has no global scope'))).toBe(true);
+  });
+
   it('the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage', () => {
     const hook = join(REPO, 'harness', 'hooks', 'post-tool-check.js');
     const run = (arg: string) => execFileSync('node', [hook, arg], { encoding: 'utf8' });
@@ -200,11 +209,36 @@ describe('the four surface adapters (T-3)', () => {
     mod.default(pi);
     expect(handlers.some((h) => h.eventName === 'tool_call')).toBe(true);
     const guard = handlers.find((h) => h.eventName === 'tool_call')!;
-    const blocked = (await guard.fn({ input: { file_path: '/repo/wiki/code/x.md' } })) as
-      { block: boolean; reason: string } | undefined;
+    const blocked = (await guard.fn({
+      toolName: 'Write',
+      input: { file_path: '/repo/wiki/code/x.md' },
+    })) as { block: boolean; reason: string } | undefined;
     expect(blocked?.block).toBe(true);
     expect(blocked?.reason).toContain('machine-managed');
-    const free = await guard.fn({ input: { file_path: '/repo/src/x.ts' } });
+    const free = await guard.fn({ toolName: 'Write', input: { file_path: '/repo/src/x.ts' } });
     expect(free).toBeUndefined(); // no block for free paths
+    const readManaged = await guard.fn({
+      toolName: 'Read',
+      input: { file_path: '/repo/wiki/code/x.md' },
+    });
+    expect(readManaged).toBeUndefined(); // R2 #20: reads of managed trees stay free
   });
 });
+
+function captureExit(
+  fn: () => void,
+): { exit: number | string | undefined; messages: string[] } | undefined {
+  const messages: string[] = [];
+  const origErr = console.error;
+  console.error = (...a: unknown[]) => messages.push(a.map(String).join(' '));
+  process.exitCode = undefined;
+  try {
+    fn();
+    return { exit: process.exitCode, messages };
+  } catch {
+    return undefined;
+  } finally {
+    console.error = origErr;
+    process.exitCode = 0;
+  }
+}

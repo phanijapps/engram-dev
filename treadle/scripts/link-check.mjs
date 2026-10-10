@@ -4,16 +4,24 @@
  *  and old links there are period-correct.
  *
  *  Live surfaces: README.md, AGENTS.md, CONTRIBUTING.md, SECURITY.md,
- *  DEBT.md (repo root), the workspace README, docs/product, wiki.
+ *  DEBT.md (repo root), the workspace README (treadle/README.md), docs/product,
+ *  wiki, and the shipped harness markdown. Scope honesty: fenced links,
+ *  HTML anchors, and reference-style definitions are NOT checked —
+ *  markdown-shaped inline links only. That is the whole scope.
  *  Node modules, dist, coverage, and the archive never walk. */
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const WORKSPACE = 'treadle'; // path segment, not a brand string — the fence stays clean
-const LIVE_FILES = ['README.md', 'AGENTS.md', 'CONTRIBUTING.md', 'SECURITY.md', 'DEBT.md'].map(
-  (f) => join(ROOT, f),
-);
+const LIVE_FILES = [
+  'README.md',
+  'AGENTS.md',
+  'CONTRIBUTING.md',
+  'SECURITY.md',
+  'DEBT.md',
+  join(WORKSPACE, 'README.md'),
+].map((f) => join(ROOT, f));
 const LIVE_DIRS = [
   join(ROOT, 'docs', 'product'),
   join(ROOT, 'wiki'),
