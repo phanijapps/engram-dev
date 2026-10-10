@@ -154,9 +154,13 @@ export function registerKnow(knowCmd: Command): void {
       const review = anchorReview(bundle, opts.workspace);
       let flagged = 0;
       for (const r of review) {
-        if (r.verdict !== 'current' && r.verdict !== 'wiki-internal') {
+        // python parity: only changed/missing-file NEED review; untracked is
+        // report-only (not-yet-baselined is not drift)
+        if (r.verdict === 'changed' || r.verdict === 'missing-file') {
           flagged++;
           console.log(`${r.verdict.padEnd(13)} ${r.page} → ${r.resource}`);
+        } else if (r.verdict === 'untracked') {
+          console.log(`untracked     ${r.page} → ${r.resource} (not yet baselined)`);
         }
       }
       console.log(
