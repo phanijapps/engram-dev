@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: SpecAgent — agentic synthesis of formal specifications (arXiv 2610.05132)
-description: '2026. Specification synthesis for C program verification. Forward-only workflows with localized repair fail: weak upstream specifications cause cascading downstream failures. SpecAgent traces root causes across dependencies, revisits finished specifications, and critiques strength beyond proof success.'
+description: "2026. Specification synthesis for C program verification. Forward-only workflows with localized repair fail: weak upstream specifications cause cascading downstream failures. SpecAgent traces root causes across dependencies, revisits finished specifications, and critiques strength beyond proof success."
 sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, verification, specification, loop]
 ---
@@ -55,4 +55,4 @@ other stacks is our inference.
   in [The SDD loop synthesis](/research/sdd-loop-synthesis.md).
 - The verified-example knowledge base validates our own design: the
   wiki with anchored patterns and the code scanner
-  [okf — the engine](/systems/okf-engine.md).
+  [okf — the engine](/systems/treadle.md).

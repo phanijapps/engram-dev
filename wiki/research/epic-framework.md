@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: EPIC — 40 practices for specification-driven development artifacts (arXiv 2610.07534)
-description: 'Claudino and others, 2026. An empirical study of 114 open-source SDD repositories. 40 practices in 10 quality dimensions in 4 categories: Expressive, Precise, Interpretable, Compartmentalized. Better specifications tracked with fewer bug-fix commits and more contributors.'
+description: "Claudino and others, 2026. An empirical study of 114 open-source SDD repositories. 40 practices in 10 quality dimensions in 4 categories: Expressive, Precise, Interpretable, Compartmentalized. Better specifications tracked with fewer bug-fix commits and more contributors."
 sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, specification, quality]
 ---
@@ -24,7 +24,7 @@ for the full list with examples.
 
 - **E — Expressive.** The agent must know what is required and how the
   work gets checked. Unambiguous (mark unresolved decisions
-  `[NEEDS CLARIFICATION]`; use MUST, not *should*; give measurable
+  `[NEEDS CLARIFICATION]`; use MUST, not _should_; give measurable
   bounds). Singular (one capability per statement). Verifiable (a
   measurable target, the checking command, the scenarios to cover, and
   what counts as complete).
@@ -52,7 +52,7 @@ for the full list with examples.
 
 # Practitioner findings to bank
 
-- Teams write "must" instead of "should" — agents treat *should* as
+- Teams write "must" instead of "should" — agents treat _should_ as
   optional.
 - "The checks that you mechanize and make blockers on your process are
   the ones that actually get followed."

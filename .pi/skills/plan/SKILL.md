@@ -5,8 +5,8 @@ description: Turn an analysis (from the analyze skill) into a technical design a
 
 # plan — technical design + task DAG from analysis
 
-One skill, two artifacts, depth-scaled. `design.md` answers *how the
-system should change and why that way* — it stabilizes early and is
+One skill, two artifacts, depth-scaled. `design.md` answers _how the
+system should change and why that way_ — it stabilizes early and is
 reviewed once. `plan.md` is the executable consequence — a DAG of small,
 independently verifiable slices that mutates as work lands. Design depth
 scales with blast radius: the analysis's impact artifact already says
@@ -23,7 +23,7 @@ come back.
    `docs/specs/<slug>/` (read them all). Plan **only the Handoff's
    Ready-now slices** unless the operator explicitly widens scope.
    Blocked slices may appear as placeholders marked `blocked-on: <Q/D
-   id>` — never designed around with invented answers.
+id>` — never designed around with invented answers.
 2. **Ground before designing.** Same spine as analyze: resolve →
    freshness gate → compile/search the affected surfaces → read the
    load-bearing source. A design that cites no wiki concept or source
@@ -38,7 +38,7 @@ come back.
    need explicit owner acceptance before their tasks become ready.
 5. **Tasks are the unit of delivery.** Small (one sitting / one reviewable
    change), independently verifiable, leaves the repo coherent. Real
-   prerequisites only — a prereq is something whose *output* you need,
+   prerequisites only — a prereq is something whose _output_ you need,
    not something that merely feels earlier. AND-only, acyclic
    (self-prereq or cycle = defect in the plan).
 6. **No task without an observable verification expectation.** "Tests
@@ -61,20 +61,20 @@ come back.
 2. Extract: Ready-now slices, Blocked-on register (Q/A/D ids), route
    hints (needs impact? needs spike?).
 3. **Ground:** freshness check (stamp `repo_head` vs `git rev-parse
-   HEAD`; `okf code index . wiki` or stale-pin) → `okf search "<design
-   question>"` + `okf read <cid> --depth 1` per affected surface → open
+HEAD`; `okf code index . wiki` or stale-pin) → `okf search "<design
+question>"` + `okf read <cid> --depth 1` per affected surface → open
    the cited wiki concepts and source files
    for anything load-bearing. Residual unknowns → ONE batched question
    round, recorded as new Q-ids in the artifact they belong to.
 
 ## 2. Route the depth
 
-| The analysis says… | Design output |
-|---|---|
-| impact artifact lists shared-contract effects / 2+ surfaces | full `design.md` + `plan.md` |
-| feature/spec touching one subsystem, no shared contracts | compact `design.md` (contracts + decisions only) + `plan.md` |
-| bug with confirmed root cause, local fix | mini-design section inside `plan.md` (approach + fix options considered) |
-| micro-plan (trivial) | single `plan.md`, 1–3 tasks |
+| The analysis says…                                          | Design output                                                            |
+| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
+| impact artifact lists shared-contract effects / 2+ surfaces | full `design.md` + `plan.md`                                             |
+| feature/spec touching one subsystem, no shared contracts    | compact `design.md` (contracts + decisions only) + `plan.md`             |
+| bug with confirmed root cause, local fix                    | mini-design section inside `plan.md` (approach + fix options considered) |
+| micro-plan (trivial)                                        | single `plan.md`, 1–3 tasks                                              |
 
 State the chosen depth and why in the plan header. Depth is about
 blast-radius honesty, not ceremony.
@@ -110,7 +110,7 @@ block. Then:
 1. Commit the artifacts — the git history is the durable record
    (project memory back-burnered, okf-only-engine D5).
 2. Normative discoveries ("new code in X must…") → `okf findings
-   propose wiki --source … --destination wiki/<concept>.md --kind …`,
+propose wiki --source … --destination wiki/<concept>.md --kind …`,
    never written as settled truth.
 3. Commit both artifacts. **Handoff**: ready set with per-task frozen
    context → `implement`; blocked set with owners → the analysis's

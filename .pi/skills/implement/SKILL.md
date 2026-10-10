@@ -22,7 +22,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    `analyze` (new question). Browsing-around-until-it-makes-sense is
    drift, and drift is how silent context omission happens.
 3. **Scope jail.** Touch only what the task's goal + frozen context name.
-   A discovered drive-by improvement is *creep*: record it as a task
+   A discovered drive-by improvement is _creep_: record it as a task
    candidate in the plan (one line), then decline it. "While we're here"
    has a skill — it's called `plan`.
 4. **Micro-decisions vs routing back.** Two-way, implementation-level
@@ -33,7 +33,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    question) or `plan` (slice/decision change). The plan is never
    amended silently from inside a task.
 5. **The verification expectation is the exit criterion.** Run the
-   task's expectation *as written*; record verbatim evidence in the
+   task's expectation _as written_; record verbatim evidence in the
    status ledger: command, outcome, commit ref. `done` without the
    observation is fabrication. A red expectation is a valid intermediate
    state — record it red-with-reason and either fix within scope or
@@ -46,15 +46,15 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    ledger (project memory back-burnered, okf-only-engine D5). If the change invalidates wiki content, note
    the staleness in the ledger entry (wiki update is a task or review
    follow-up — never skipped silently).
-8. **Task done ≠ requirement verified.** `done` means *this task's
-   expectation was observed*. Requirement-level verification, conformance
+8. **Task done ≠ requirement verified.** `done` means _this task's
+   expectation was observed_. Requirement-level verification, conformance
    to design, and evidence currency are `review`'s job.
 9. **Stuck states ask the owner (D-7).** `needs_rebase` (drifted digests)
    and `BLOCKED` (stall limit) are stops, not self-serve fixes. Show the
    owner: what drifted (paths, pinned vs current) or why it stalled, the
    remedies (re-pin and continue, replan, or unblock), and the risk of
    each. Act only on the owner's approval, recorded as `loom rebase
-   --approved-by human:<owner>` (or `loom record --result unblock`). Never
+--approved-by human:<owner>` (or `loom record --result unblock`). Never
    re-pin, unblock, or amend the pack silently to keep moving.
 
 ## 1. Select

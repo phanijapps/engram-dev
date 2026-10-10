@@ -8,6 +8,7 @@ import { Command } from 'commander';
 import { brand } from '@treadle/brand';
 import { registerDo } from './commands/do.js';
 import { registerKnow } from './commands/know.js';
+import { registerInit } from './commands/init.js';
 
 export function buildProgram(): Command {
   const p = new Command();
@@ -18,6 +19,10 @@ export function buildProgram(): Command {
     .command('do')
     .description('the loop plane: init, add, next, record, answer, approve, close, check, status');
   registerDo(doCmd);
+  const initCmd = p
+    .command('init')
+    .description('stand something up: harness — the interactive installer');
+  registerInit(initCmd);
   const knowCmd = p
     .command('know')
     .description(

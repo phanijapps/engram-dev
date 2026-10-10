@@ -47,6 +47,7 @@ vigilance is already broken. `brand` is imported only by `cli` and `web` strings
 ## Placement test — where does new code go?
 
 Ask in order:
+
 1. **Is it a contract?** (schema shape, event kind, refusal code) → `core`, plus
    the conformance corpus if it changes observable output.
 2. **Does it touch disk, HTTP, or a process?** It is an adapter — put it behind
@@ -63,9 +64,9 @@ Ask in order:
 - No side-effectful module imports; work happens in called functions.
 - Public surface: named exports only (one default per package at most).
 - Barrels (`index.ts` re-exporting everything) are a smell — export what is used,
-   not what exists.
+  not what exists.
 - Errors cross package boundaries as the typed refusal taxonomy; adapter-level
-   exceptions are wrapped with `{ cause }` at the boundary and never leak raw.
+  exceptions are wrapped with `{ cause }` at the boundary and never leak raw.
 
 ## Review questions for any architecture diff
 

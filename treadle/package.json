@@ -12,10 +12,11 @@
     "clean": "tsc --build --clean",
     "brand:check": "node scripts/brand-check.mjs",
     "brand:set": "node scripts/set-brand.mjs",
-    "corpus:regen": "python3 conformance/generators/gen_corpus.py",
+    "corpus:regen": "./node_modules/.bin/tsx conformance/generators/gen_corpus.ts",
     "corpus:check": "node scripts/corpus-check.mjs",
     "audit:prod": "pnpm audit --prod --audit-level high",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "links": "node scripts/link-check.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
@@ -37,5 +38,8 @@
   },
   "bin": {
     "treadle": "./bin/treadle.mjs"
+  },
+  "dependencies": {
+    "@clack/prompts": "1"
   }
 }

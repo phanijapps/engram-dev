@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /** White-label gate: the brand name appears ONLY in brand.ts (tokens),
  *  package names/bin fields, and the rebrand docs. Source code says tokens. */
-import { readdirSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const BRAND = 'treadle';
@@ -21,6 +21,7 @@ const ALLOW_CONTAINS = [
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source
   /scripts\/corpus-check\.mjs$/, // speaks the repo-root workspace path
+  /scripts\/link-check\.mjs$/, // walks the workspace dir by path — same rationale as corpus-check
   /conformance\/generators\/gen_corpus\.ts$/, // repo-relative fixture paths, not brand
 ];
 

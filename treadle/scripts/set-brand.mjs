@@ -39,9 +39,11 @@ function rewritePackage(dir) {
   }
   if (j.dependencies)
     for (const d of Object.keys(j.dependencies)) {
-      if (d.startsWith('@treadle/'))
-        ((j.dependencies[d.replace(/treadle/g, name.toLowerCase())] = j.dependencies[d]),
-          delete j.dependencies[d]);
+      if (d.startsWith('@treadle/')) {
+        const renamed = d.replace(/treadle/g, name.toLowerCase());
+        j.dependencies[renamed] = j.dependencies[d];
+        delete j.dependencies[d];
+      }
     }
   writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
 }

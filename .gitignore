@@ -5,3 +5,10 @@ __pycache__/
 .coverage
 graphify-out/
 .mcp.json
+
+# retired-python residue must not return
+/engine/
+/graphify-out/
+
+# the installer runtime state (per-agent records, absolute paths — machine-local)
+/.harness/

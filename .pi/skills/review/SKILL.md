@@ -30,7 +30,7 @@ does not certify it).
    task candidate); anything a task's goal implies but the diff doesn't
    touch is an incomplete slice (finding).
 5. **Traceability audit.** Walk the plan's matrix: every in-scope R/G
-   landed or *explicitly* deferred (with an artifact ref); every task
+   landed or _explicitly_ deferred (with an artifact ref); every task
    implements something; no orphan rows either direction.
 6. **Conformance audit.** Design decisions honored in code (spot-check
    each D); carried questions/assumptions still open unless an artifact

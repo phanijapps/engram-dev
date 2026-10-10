@@ -1,0 +1,158 @@
+{
+  "format": "harness/0.1",
+  "components": [
+    {
+      "id": "analyze",
+      "kind": "skill",
+      "source": "skills/sdlc/analyze",
+      "dest": {
+        "pi": ".pi/skills/analyze",
+        "claude": ".claude/skills/analyze",
+        "codex": ".codex/skills/analyze",
+        "copilot": ".github/skills/analyze"
+      }
+    },
+    {
+      "id": "build-kb",
+      "kind": "skill",
+      "source": "skills/sdlc/build-kb",
+      "dest": {
+        "pi": ".pi/skills/build-kb",
+        "claude": ".claude/skills/build-kb",
+        "codex": ".codex/skills/build-kb",
+        "copilot": ".github/skills/build-kb"
+      }
+    },
+    {
+      "id": "implement",
+      "kind": "skill",
+      "source": "skills/sdlc/implement",
+      "dest": {
+        "pi": ".pi/skills/implement",
+        "claude": ".claude/skills/implement",
+        "codex": ".codex/skills/implement",
+        "copilot": ".github/skills/implement"
+      }
+    },
+    {
+      "id": "new-project",
+      "kind": "skill",
+      "source": "skills/sdlc/new-project",
+      "dest": {
+        "pi": ".pi/skills/new-project",
+        "claude": ".claude/skills/new-project",
+        "codex": ".codex/skills/new-project",
+        "copilot": ".github/skills/new-project"
+      }
+    },
+    {
+      "id": "plan",
+      "kind": "skill",
+      "source": "skills/sdlc/plan",
+      "dest": {
+        "pi": ".pi/skills/plan",
+        "claude": ".claude/skills/plan",
+        "codex": ".codex/skills/plan",
+        "copilot": ".github/skills/plan"
+      }
+    },
+    {
+      "id": "review",
+      "kind": "skill",
+      "source": "skills/sdlc/review",
+      "dest": {
+        "pi": ".pi/skills/review",
+        "claude": ".claude/skills/review",
+        "codex": ".codex/skills/review",
+        "copilot": ".github/skills/review"
+      }
+    },
+    {
+      "id": "roadmap",
+      "kind": "skill",
+      "source": "skills/sdlc/roadmap",
+      "dest": {
+        "pi": ".pi/skills/roadmap",
+        "claude": ".claude/skills/roadmap",
+        "codex": ".codex/skills/roadmap",
+        "copilot": ".github/skills/roadmap"
+      }
+    },
+    {
+      "id": "boy-scout",
+      "kind": "skill",
+      "source": "skills/node/boy-scout",
+      "dest": {
+        "pi": ".pi/skills/boy-scout",
+        "claude": ".claude/skills/boy-scout",
+        "codex": ".codex/skills/boy-scout",
+        "copilot": ".github/skills/boy-scout"
+      }
+    },
+    {
+      "id": "nodejs-architecture",
+      "kind": "skill",
+      "source": "skills/node/nodejs-architecture",
+      "dest": {
+        "pi": ".pi/skills/nodejs-architecture",
+        "claude": ".claude/skills/nodejs-architecture",
+        "codex": ".codex/skills/nodejs-architecture",
+        "copilot": ".github/skills/nodejs-architecture"
+      }
+    },
+    {
+      "id": "nodejs-craft",
+      "kind": "skill",
+      "source": "skills/node/nodejs-craft",
+      "dest": {
+        "pi": ".pi/skills/nodejs-craft",
+        "claude": ".claude/skills/nodejs-craft",
+        "codex": ".codex/skills/nodejs-craft",
+        "copilot": ".github/skills/nodejs-craft"
+      }
+    },
+    {
+      "id": "writer",
+      "kind": "skill",
+      "source": "skills/productivity/writer",
+      "dest": {
+        "pi": ".pi/skills/writer",
+        "claude": ".claude/skills/writer",
+        "codex": ".codex/skills/writer",
+        "copilot": ".github/skills/writer"
+      }
+    },
+    {
+      "id": "red-foreman",
+      "kind": "agent",
+      "source": {
+        "pi": "agents/pi/red-foreman.md",
+        "claude": "agents/claude/red-foreman.md",
+        "codex": "agents/codex/red-foreman.toml",
+        "copilot": "agents/copilot/red-foreman.md"
+      },
+      "dest": {
+        "pi": ".pi/agents/red-foreman.md",
+        "claude": ".claude/agents/red-foreman.md",
+        "codex": ".codex/agents/red-foreman.toml",
+        "copilot": ".github/agents/red-foreman.md"
+      }
+    }
+  ],
+  "hooks": [
+    {
+      "id": "post-tool-check",
+      "file": "hooks/post-tool-check.js",
+      "wiring": {
+        "pi": { "kind": "extension", "dest": ".pi/extensions/post-tool-check.js" },
+        "claude": {
+          "kind": "settings-hooks",
+          "matcher": "PostToolUse",
+          "command": "node .harness/hooks/post-tool-check.js"
+        },
+        "codex": { "kind": "config-notify", "command": "node .harness/hooks/post-tool-check.js" },
+        "copilot": null
+      }
+    }
+  ]
+}

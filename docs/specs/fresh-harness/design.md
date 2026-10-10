@@ -40,8 +40,8 @@ packages/cli/src/harness/             ← manifest types, plan compiler, adapter
   "hooks": [
     { "id": "post-tool-check", "file": "hooks/post-tool-check.js",
       "wiring": { "pi": { "kind": "extension", "dest": ".pi/extensions/post-tool-check.js" },
-                  "claude": { "kind": "settings-hooks", "matcher": "PostToolUse", "command": "node .treadle/hooks/post-tool-check.js" },
-                  "codex": { "kind": "config-notify", "command": "node .treadle/hooks/post-tool-check.js" },
+                  "claude": { "kind": "settings-hooks", "matcher": "PostToolUse", "command": "node .harness/hooks/post-tool-check.js" },
+                  "codex": { "kind": "config-notify", "command": "node .harness/hooks/post-tool-check.js" },
                   "copilot": null } }
   ]
 }
@@ -134,7 +134,7 @@ flags are required and the error shows the exact command.
   Reversible: high.
 
 - **D-10 reversibility: every apply records; --remove deletes exactly
-  that.** The applied plan persists to `.treadle/harness-install.json`
+  that.** The applied plan persists to `.harness/harness-install.json`
   at the destination root; `init harness --remove` deletes exactly
   those paths and nothing else (R1 #9). Alternative: no uninstall
   (rejected — an installer product must reverse itself).

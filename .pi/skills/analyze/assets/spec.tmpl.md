@@ -30,9 +30,9 @@ must state why completeness is credible.
 
 ## Requirements
 
-| ID | Requirement (testable, MUST/SHOULD) | Acceptance criterion | Evidence / status |
-|----|--------------------------------------|----------------------|-------------------|
-| R1 | … | … | path:line (implementation-supported) |
+| ID  | Requirement (testable, MUST/SHOULD) | Acceptance criterion | Evidence / status                    |
+| --- | ----------------------------------- | -------------------- | ------------------------------------ |
+| R1  | …                                   | …                    | path:line (implementation-supported) |
 
 Requirements cover in-scope slices only. No "while we're here" creep.
 
@@ -46,39 +46,39 @@ outcomes are recorded elsewhere by the verification stage, never here.
 
 ## Constraints
 
-| Constraint | Mandatory / preference | Source | Applies to |
-|---|---|---|---|
-| … | mandatory | wiki/<concept>.md, spec, or decision link | R1, R2 |
+| Constraint | Mandatory / preference | Source                                    | Applies to |
+| ---------- | ---------------------- | ----------------------------------------- | ---------- |
+| …          | mandatory              | wiki/<concept>.md, spec, or decision link | R1, R2     |
 
 ## Open questions
 
-| ID | Question | Blocks | Owner | Resolution path |
-|----|----------|--------|-------|-----------------|
-| Q1 | … | R2, AC2 | <who> | spike / human decision / evidence source |
+| ID  | Question | Blocks  | Owner | Resolution path                          |
+| --- | -------- | ------- | ----- | ---------------------------------------- |
+| Q1  | …        | R2, AC2 | <who> | spike / human decision / evidence source |
 
 Questions are deliverables. None of them may be silently resolved to make
 the spec look finished.
 
 ## Assumptions
 
-| ID | Assumption | Blast radius | Validation trigger |
-|----|-----------|--------------|--------------------|
-| A1 | … | R3 + AC3 | when X happens / before milestone Y |
+| ID  | Assumption | Blast radius | Validation trigger                  |
+| --- | ---------- | ------------ | ----------------------------------- |
+| A1  | …          | R3 + AC3     | when X happens / before milestone Y |
 
 ## Decisions made here
 
 | Decision | Alternatives considered | Door (two-way / one-way) | Resolves |
-|----------|------------------------|--------------------------|----------|
-| D1 | … | two-way | Q1 |
+| -------- | ----------------------- | ------------------------ | -------- |
+| D1       | …                       | two-way                  | Q1       |
 
 Only record decisions the evidence supports; otherwise the question stays
 open. One-way doors get extra scrutiny and name their reversibility cost.
 
 ## Evidence index
 
-| Claim | Source | Status |
-|-------|--------|--------|
-| … | path:line or wiki cid | implementation-supported |
+| Claim | Source                | Status                   |
+| ----- | --------------------- | ------------------------ |
+| …     | path:line or wiki cid | implementation-supported |
 
 ## Handoff
 

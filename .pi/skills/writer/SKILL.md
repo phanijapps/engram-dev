@@ -1,7 +1,7 @@
 ---
 name: writer
 description: Write and rewrite technical documents in ASD-STE100 Simplified Technical English. Use this skill when the user asks for STE, ASD-STE100, Simplified Technical English, simplified English, controlled language, or plain technical English. Also use it for aircraft, defense, machine, or industrial maintenance procedures, work instructions, warnings, cautions, safety notices, and manuals that must be easy to translate or easy to read for non-native readers.
-metadata: 
+metadata:
   - reference: https://github.com/blagoySimandov/asd-ste100-writer-skill/blob/main/skills/ste100-writer/SKILL.md
 ---
 

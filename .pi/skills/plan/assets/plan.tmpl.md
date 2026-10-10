@@ -24,11 +24,11 @@ full/compact depth — design.md owns that.
 
 ## Task DAG
 
-| ID | Task (goal, one line) | Implements | Prereqs | Verification expectation | Size | Status |
-|----|------------------------|------------|---------|--------------------------|------|--------|
-| T1 | … | R1, D2 | — | `<command>` exits 0 / <observable> | S | todo |
-| T2 | … | R1 | T1 | <command or observation> | M | todo |
-| T3 | … | R2 | — | blocked-on: Q3 | S | blocked |
+| ID  | Task (goal, one line) | Implements | Prereqs | Verification expectation           | Size | Status  |
+| --- | --------------------- | ---------- | ------- | ---------------------------------- | ---- | ------- |
+| T1  | …                     | R1, D2     | —       | `<command>` exits 0 / <observable> | S    | todo    |
+| T2  | …                     | R1         | T1      | <command or observation>           | M    | todo    |
+| T3  | …                     | R2         | —       | blocked-on: Q3                     | S    | blocked |
 
 Rules enforced by walking, not eyeballing: no cycles, no self-prereqs,
 every prereq output exists as a later task's input, every blocked-on id
@@ -44,10 +44,10 @@ What implement loads for the task — exactly this, no browsing:
 
 ## Traceability matrix
 
-| Requirement | Design section | Task(s) | Verification |
-|-------------|----------------|---------|--------------|
-| R1 | §Approach/§Contracts | T1, T2 | T1+T2 expectations |
-| R2 | §Change-by-surface | T3 | T3 expectation |
+| Requirement | Design section       | Task(s) | Verification       |
+| ----------- | -------------------- | ------- | ------------------ |
+| R1          | §Approach/§Contracts | T1, T2  | T1+T2 expectations |
+| R2          | §Change-by-surface   | T3      | T3 expectation     |
 
 Any planned R with no task = hole (fix the plan). Any task implementing
 nothing = creep (cut it).
@@ -63,9 +63,9 @@ unblock move instead.
 Observed evidence only — commands run (with outcome refs), commits,
 review artifacts. "Should work" is not a status.
 
-| Task | Status | Evidence |
-|------|--------|----------|
-| — | — | (implement/review fill this; plan leaves it empty) |
+| Task | Status | Evidence                                           |
+| ---- | ------ | -------------------------------------------------- |
+| —    | —      | (implement/review fill this; plan leaves it empty) |
 
 ## Handoff
 

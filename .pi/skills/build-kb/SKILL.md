@@ -5,8 +5,6 @@ description: Build and maintain a project knowledge base (wiki) from an existing
 
 # build-kb — build the project knowledge base
 
-> use `writer` skill for compiling text.
-
 The project wiki is an **OKF bundle at `<repo>/wiki/`** — concepts as
 Markdown, git-versioned with the code. All engine operations go through
 the **`okf` CLI** (run from the repo root; `uv run okf …`). Never hand-edit generated sections inside `wiki/code/**`.
@@ -48,7 +46,7 @@ never rewritten.
 
 If `graphify` is on PATH (or installed as a platform skill), follow
 `resources/graphify.md`: build the graph, then use `graphify explain` and
-`graphify path` outputs as *evidence* for relationship sections in curated
+`graphify path` outputs as _evidence_ for relationship sections in curated
 concepts. The graph supplements the wiki; it never replaces it.
 
 ## 5. Curated concepts (the layer agents actually read)
@@ -86,7 +84,7 @@ accepted|declined`). Declined findings are never re-proposed.
 
 - Managed sections regenerate; hand edits belong in curated concepts only.
 - Evidence over invention; when sources disagree, record the conflict.
-- The wiki documents what *is*; normative pages (what *should be*) go
+- The wiki documents what _is_; normative pages (what _should be_) go
   through findings.
 - Freshness is the contract: if `resolve` says `stale`, update before
   trusting `wiki/code/**`.

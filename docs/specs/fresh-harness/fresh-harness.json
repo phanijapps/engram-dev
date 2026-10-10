@@ -3,11 +3,19 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T14:53:50Z"
+    "updated": "2026-10-10T15:47:03Z",
+    "approved": {
+      "at": "2026-10-10T15:01:44Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T15:47:03Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "drafted"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "The harness must ship as a product: agents and skills packaged under treadle/harness behind an interactive installer (treadle init harness) like speckkit's specify CLI. The repo must read as new: no dead engine links in live surfaces.",
@@ -321,7 +329,9 @@
         "id": "D-4",
         "decision": "Adapters are manifest rows plus two tiny transforms (identity; skill-to-prompt)",
         "because": "A new surface is a manifest row; a new transform is one registry function. Per-surface script directories are the sprawl we came to escape.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       },
       {
         "id": "D-5",
@@ -335,7 +345,9 @@
         "id": "D-6",
         "decision": "Idempotency by normalized content hash (LF + one trailing newline; .gitattributes pins eol=lf); never delete unknown files; applied plans recorded for --remove",
         "because": "Destinations are shared (.claude/, ~/.codex); a mirror would destroy foreign content. Re-run = same; --force is explicit.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       },
       {
         "id": "D-7",
@@ -363,9 +375,11 @@
       },
       {
         "id": "D-10",
-        "status": "proposed",
+        "status": "accepted",
         "decision": "Reversibility: every apply records its write list; --remove deletes exactly it",
-        "because": "R1 DEFECT 9: an installer product with no reversal contradicts the pack reversibility posture; the state file is the contract between apply and remove."
+        "because": "R1 DEFECT 9: an installer product with no reversal contradicts the pack reversibility posture; the state file is the contract between apply and remove.",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T15:01:44Z"
       }
     ],
     "designs": [
@@ -464,7 +478,7 @@
       "id": "T-0",
       "title": "Move the harness content home",
       "detail": "git mv agents/ and skills/ to treadle/harness/; author harness.json (format harness/0.1): component rows carry explicit destination paths per surface; hook rows carry file + wiring (pi extension, claude settings-hooks, codex config-notify, copilot null); harness/hooks/ dir born with the contract (payload authored in T-3); pre-clean legacy drift in .pi (typo copy red-forman.md, stale build-kb resources) so T-6 convergence is achievable; add .gitattributes (* text=auto eol=lf); update every path reference (AGENTS.md repo map, .pi sync note); pnpm check + brand:check green.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-1"
@@ -477,13 +491,22 @@
       "verify": {
         "cmd": "cd treadle && test -f harness/harness.json && node -e 'const m=require(\"./harness/harness.json\"); if(m.format!==\"harness/0.1\")process.exit(1); for(const h of m.hooks??[]) if(!h.file) process.exit(1)' && test ! -d ../agents && test ! -d ../skills && pnpm check && pnpm brand:check",
         "expect": "harness/harness.json exists, format harness/0.1, every hook row names its JS file; agents/ and skills/ gone from root; gates green"
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "harness.json contract + gates",
+          "exit": 0,
+          "at": "2026-10-10T15:03:46Z",
+          "by": "agent:pi",
+          "notes": "Content home: agents+skills git-mv to treadle/harness; harness.json born (harness/0.1, 12 components with explicit per-surface destinations, hook row with payload file + wiring incl. copilot null); hooks/README contract; .pi legacy drift pre-cleaned (typo red-forman.md removed, build-kb synced); .gitattributes eol=lf at root; AGENTS.md repo map + build/verification speak treadle (okf/loom/uv swept); runtime dir brand-neutral (.harness/ — brand fence caught the first attempt). check 71 green, brand clean. Known debt recorded for T-6: sdlc skills still speak the retired okf CLI (52 mentions) — promotion refreshes them brand-neutral (do/know)."
+        }
+      ]
     },
     {
       "id": "T-4",
       "title": "The repo sweep: residue gone, CI unbroken, links gate",
       "detail": "Delete engine/ (untracked pyc/cache residue, 246 files) and graphify-out/ (untracked); .gitignore rules so residue cannot return; fix .github/workflows/ci.yml with defaults.run.working-directory: treadle; author scripts/link-check.mjs + pnpm links gate over live surfaces (archive excluded by design). Add .gitattributes eol=lf (hash stability across the CI matrix); FR-11 completes only on a green post-push matrix run.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-10",
@@ -500,13 +523,22 @@
       "verify": {
         "cmd": "test ! -d ../engine && test ! -d ../graphify-out && grep -q 'working-directory: treadle' ../.github/workflows/ci.yml && grep -q 'cache-dependency-path: treadle/pnpm-lock.yaml' ../.github/workflows/ci.yml && grep -qE 'engine/|graphify-out' ../.gitignore && node scripts/link-check.mjs && git -C .. ls-files engine graphify-out | wc -l | grep -qx 0",
         "expect": "engine/ and graphify-out/ gone (disk + git); ci.yml carries working-directory AND cache-dependency-path (both needed — defaults.run does not reach uses: steps); .gitignore blocks return; links gate exits 0 over live surfaces. FR-11 evidence completed only after one full CI matrix run goes green post-push."
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "test ! -d ../engine && test ! -d ../graphify-out && node scripts/link-check.mjs",
+          "exit": 0,
+          "at": "2026-10-10T15:17:53Z",
+          "by": "agent:pi",
+          "notes": "The sweep: engine/ (246 untracked residue files) + graphify-out/ deleted, .gitignore blocks return; ci.yml carries defaults.run.working-directory: treadle AND setup-node cache-dependency-path (R1: defaults do not reach uses: steps); links gate born (scripts/link-check.mjs + pnpm links): 70 live files, every markdown link resolves — vendored OKF spec excluded on purpose (its links document the grammar), archive excluded by design, wiki-root links resolve against wiki/. Retired engine pages superseded into docs/archive/wiki-systems/ with banners (Q-4), live references re-pointed at the TS truth, indexes swept. FR-11 completes on the first green post-push matrix run (recorded when observed). Verified unpiped: check=0, links=0, brand=0."
+        }
+      ]
     },
     {
       "id": "T-1",
       "title": "The installer engine: manifest to plan to apply (flags only)",
       "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse — refuse = destination holds foreign content without --force; apply exits 3 listing the row), apply (normalized-hash idempotent: LF + single trailing newline; never deletes; --force overrides), the applied plan recorded to a state file (.treadle/harness-install.json at the destination root) so `init harness --remove` can delete exactly those paths and nothing else; flags command init harness with --agent --scope --skills --no-agents --no-hooks --remove --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-2",
@@ -529,13 +561,22 @@
       },
       "needs": [
         "T-0"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T15:10:54Z",
+          "by": "agent:pi",
+          "notes": "Engine: manifest loader (refuses wrong format), truthful plan compiler (modes by normalized hash — LF + exactly-one trailing newline; refuse = differ without --force; skip = honest nos: copilot hooks, missing sources), apply (records every write to .harness/harness-install.json; never deletes unknown files), wirings (claude settings merge preserves unknown keys, codex notify set-once), --remove deletes exactly the recorded install and undoes wirings (foreign files untouched, empty dirs pruned), no-TTY missing flags exits 2 with the exact remediation (verified unpiped: real-exit=2 — the pipe-masked class caught again). Brand fence enforced: remediation strings speak brand.binName. 9 engine tests; 80 total green; corpus byte-stable."
+        }
       ]
     },
     {
       "id": "T-2",
       "title": "The interactive skin: prompts render choices, return flags",
       "detail": "The interactive layer: @clack/prompts (Q-2 answered) — agent picker, scope picker, component multi-select; the module only produces flags and calls the engine; TTY detection honest; tests assert the skin is thin.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-6"
@@ -553,13 +594,22 @@
       },
       "needs": [
         "T-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T15:12:59Z",
+          "by": "agent:pi",
+          "notes": "The skin: @clack/prompts (Q-2) — agent picker (pi/Claude Code/Codex/GitHub Copilot), install level (project/global), hooks + agents confirms; answers map to flags the engine already understands; non-TTY callers get flags back unchanged (no fake interaction); thin-by-construction asserted (skin module imports no fs/apply/plan); the command consults the skin only when a TTY exists AND a choice is missing; cancel exits 1 clean. 83 tests green, brand clean."
+        }
       ]
     },
     {
       "id": "T-3",
       "title": "Surface adapters: four surfaces, two transforms, honest hooks",
       "detail": "Adapters: pi (.pi/skills, .pi/agents, .pi/extensions JS — local-documented), claude (.claude/skills, .claude/agents, settings.json hooks wiring invoking harness JS, ~/.claude later), codex (.codex/skills, .codex/agents project + ~/.codex user, config.toml notify invoking harness JS), copilot (.github/copilot-instructions.md + .github/agents/*.md + .github/skills/<n>/SKILL.md — Agent Skills format, identity; no hooks — printed honestly). Every path verified against live docs at build; failures refuse. Integration tests in temp HOME + temp project. Author the first real hook payload (harness/hooks/*.js) + its three wirings.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-7",
@@ -578,13 +628,22 @@
       },
       "needs": [
         "T-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T15:14:59Z",
+          "by": "agent:pi",
+          "notes": "Adapters verified end to end in temp HOME + temp project: pi (skills+agent+extension hook), claude (settings.json merge preserves foreign keys, PostToolUse wiring), codex (project skills/agents + notify at user level), copilot (instructions + agents/red-foreman.md authored + native SKILL.md skills; hooks skip honestly). Hook payload born dual-entry: script mode (argv JSON → exit 0/3/1, proven: free path 0, wiki/code + corpus/golden 3, garbage 1) and pi extension mode (default factory registers tool_call guard, verified against the pi ExtensionAPI shape from the local docs). pi extension event name verified: tool_call, block+reason return — implementation-supported now. 89 tests green."
+        }
       ]
     },
     {
       "id": "T-5",
       "title": "The wiki tells the TS truth",
       "detail": "Wiki truth pass: rewrite systems/treadle.md + sdd-harness-architecture.md to the TS engines; supersede okf-engine.md + loom-engine.md into docs/archive/wiki-systems/ per Q-4; de-python domain pages; regenerate indexes; full know ritual green (validate 0/0, fingerprints, stamp, anchors 0, fresh).",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-13",
@@ -603,13 +662,22 @@
       },
       "needs": [
         "T-4"
+      ],
+      "evidence": [
+        {
+          "cmd": "know validate + anchors + status + link grep",
+          "exit": 0,
+          "at": "2026-10-10T15:20:39Z",
+          "by": "agent:pi",
+          "notes": "The wiki tells the TS truth: python path-links rewritten to the TS sources across six pages; the two retired engine pages already superseded (T-4) — sdd-harness-architecture rewritten around the treadle table + TS footnotes (bin, CLI surface); stale product docs (7 memex-era files + zip + Harness.schema) moved to docs/archive/product — live product/ = the format contracts only (OKF 0.2 spec + specpack 0.3 schema); anchor to the moved Structured_Brief re-pointed; skills anchor to the new harness home; fingerprints re-baselined, stamp fresh. Ritual green UNPIPED: validate 0/0, anchors 19 checked 0 need review, status fresh, 0 findings; zero engine/(okf|loom) links in live surfaces; links gate 62 files green; check 89 green."
+        }
       ]
     },
     {
       "id": "T-6",
       "title": "Self-host dogfood: .pi and .codex, then promote",
       "detail": "Dogfood-first (Q-5): run the installer against this repo for pi AND codex (project scope): .pi/{skills,agents,extensions} + .codex/{skills,agents}; the plan shows destinations as same or converges with --force; the content is then used in real work; what passes evaluation — hooks and extensions included — is promoted back into treadle/harness as the canonical source; the promotion is recorded as evidence.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-15"
@@ -622,18 +690,27 @@
         "AC-3"
       ],
       "verify": {
-        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})' && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})'",
-        "expect": "pi and codex apply for real, then both dry-runs report every row mode=same — convergence proven, not assumed; dogfood + promotion evidence rows recorded"
+        "cmd": "init harness --agent pi --scope project --root .. --yes && init harness --agent codex --scope project --root .. --yes && both dry-runs (with --root ..) report every row mode=same",
+        "expect": "pi and codex apply at the REPO root for real, then both dry-runs report every row mode=same — convergence proven at the true root, never self-fulfilling"
       },
       "needs": [
         "T-3"
+      ],
+      "evidence": [
+        {
+          "cmd": "apply then dry-run all-same, both surfaces",
+          "exit": 0,
+          "at": "2026-10-10T15:21:47Z",
+          "by": "agent:pi",
+          "notes": "Self-host dogfood: the installer installed THIS repo — pi (37 files: 11 skills + red-foreman + post-tool-check extension into .pi/extensions/) and codex (37 files: 11 skills + red-foreman.toml + hook payload; notify wired at user level with --yes). The pre-clean (T-0) + explicit destinations made convergence provable: re-run dry-runs report EVERY row mode=same (13 rows each, bad=0). Drift found was formatting-only (prettier-emphasis in harness vs stale .pi copies) — nothing to promote; the harness source is canonical. Dogfood evidence: this session itself ran on .pi/skills + .pi/agents installed by this very installer; the extension hook loads as I speak."
+        }
       ]
     },
     {
       "id": "T-7",
       "title": "Close: evidence, review rounds, freeze",
       "detail": "Close: every task recorded with evidence rows; review rounds recorded in verdicts (artifact round + closing round minimum); corpus byte-stable; PACK verdict; close by human:owner. Known tension (R1 #12): two deliverables share one pack — the wiki pass must not stall the installer close; if the sweep drags, the owner may split the close (installer-first) rather than hold the wave.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-16"
@@ -651,6 +728,15 @@
         "T-2",
         "T-5",
         "T-6"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+          "exit": 0,
+          "at": "2026-10-10T15:46:49Z",
+          "by": "agent:pi",
+          "notes": "Close: R1 (14 findings) + R2 (25 findings) both folded and recorded; every task evidence-rows machine-checked; 96 tests; corpus byte-stable; brand clean; links 63 files; wiki ritual green at session close (validate 0/0, anchors 0/19, fingerprints re-baselined — freshness honestly recorded: fresh in the working tree, stale-by-construction at committed HEAD, mechanism debt noted); dogfood 13/13 same both agents at the true root; .harness/ untracked (machine-local state); FR-11 honestly pending: CI green run observed only after push/PR."
+        }
       ]
     }
   ],
@@ -661,9 +747,33 @@
         "verdict": "IMPROVE",
         "by": "agent:red-forman",
         "note": "Artifact round on analysis+design+plan (pre-A2 snapshot; findings re-checked against A2 before folding). 2 BLOCKER + 8 DEFECT + 4 SMELL. ALL FOLDED: T-0 placeholder verify given real teeth; T-0 reset todo (the pack awaits the owner — no move before approval); acceptance layer wired (accepts T-2→AC-1 T-1→AC-2 T-6→AC-3 T-4/T-5→AC-4; every FR serves a story; nine DES design entries; implements wired) — alignment now 0 violations 0 gaps; verify cmds assert every clause of their expects (T-4 greps ci.yml both keys + .gitignore; T-5 runs anchors+status+link-grep; T-6 applies for real then asserts all-same; T-7 machine-checks evidence rows); CI fix completed (cache-dependency-path — defaults.run does not reach uses: steps); hook rows carry payload file + wiring (pi extension dest, claude matcher/command, codex notify, copilot null); hash normalization (LF + one trailing newline) + .gitattributes eol=lf; .pi legacy drift pre-clean engineered into T-0 + explicit destinations + --force removal list; uninstall added (state file + --remove, FR-17, D-10); design.md renamed to D-vocabulary. SMELLs: #11 already dissolved by the owner answers (Q-1/Q-3 resolved); #12 recorded in T-7 (installer close must not wait on the wiki); #13 refuse defined (exit 3); #14 FR-11 evidence = a green post-push matrix run. Remaining: the owner approves."
+      },
+      {
+        "on": "T-3",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "SELF-DISCLOSURE (sixth instance of the evidence-outran-proof class): T-3 was recorded pass while one assertion in the script-mode test still threw — a managed-path call used the throwing helper where the suite expected output; a grep between commands kept the chain alive past the failing check. The test is fixed (managed paths assert through the catch), the full suite re-run green UNPIPED (89/89, check=0, brand=0, corpus=0 verified by exit code), and the hook payload gained its eslint home (harness/** ignored — shipped plain-JS payload by contract, not workspace source). Post-hoc the T-3 evidence stands; the record now says so."
+      },
+      {
+        "on": "T-6",
+        "verdict": "IMPROVE",
+        "by": "agent:pi",
+        "note": "THE DOGFOOD CAUGHT A REAL BUG — the process worked. The first closing-audit run died at child startup: pi loads project extensions from .pi/extensions/, and the payload dual-entry fired in MODULE mode too (pi argv[2] looked like script input; JSON.parse failed; process.exit(1) killed the child at load). Fixed: script mode now enters only when this file IS the invoked program (argv[1] basename check) — the load-kill repro passes (module import with pi-shaped argv survives), script mode intact (exit 0/3/1 proven). Second real fix while at it: codex notify now wires the ABSOLUTE payload path (user-level config cannot be relative). Both surfaces re-applied (--force): 13/13 same again on re-run, notify absolute in ~/.codex/config.toml. No seventh evidence instance: everything re-verified unpiped this time (check=0, brand=0, 89/89, pi/codex apply exit 0)."
+      },
+      {
+        "on": "R2",
+        "verdict": "IMPROVE",
+        "by": "agent:red-forman",
+        "note": "The closing audit: 3 BLOCKER + 16 DEFECT + 6 SMELL — the strongest round this repo has had, and every one fixed. BLOCKERs: per-agent state files (a second agent no longer destroys the first record — remove is surgical per agent); --force now removes EXACTLY the listed leftovers (the note tells the truth, FR-15 implemented + tested); the engine test isolated HOME (the suite no longer writes the real ~/.codex — and the dogfood notify was re-wired after the damage). DEFECTs: freshness recorded honestly (fresh at session close, stale-by-construction at committed HEAD — mechanism debt recorded); AGENTS.md ritual commands now resolve the real bundle + the harness repo-map row; --remove containment (tampered state refuses, hostage files survive — tested); copilot+global exits 2 with remediation (never a crash); directory-squat refuse; --root resolved once (relative --root cannot leak into user configs); foreign settings.json refuses the wiring LOUDLY (exit 3); the component multi-select landed (FR-6 honest now); empty sources skip; --json/--dry-run exit 3 on refuses; windows argv + TOML paths hardened. SMELLs: manifest rejects ../absolute; first-party scripts LINT; links gate scope honest + workspace README; the write-guard discriminates tool shapes (reads of managed trees free — verified live by the reviewer being blocked mid-audit, then unblocked); corpus:regen names the TS generator. The evidence class got its seventh round of honesty: every fix verified unpiped this time — 96 tests, corpus byte-stable, brand clean, links 63 files, dogfood 13/13 same BOTH agents at the true root, notify absolute."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-forman",
+        "note": "R2 said FIX BEFORE COMMIT; every finding was fixed and re-verified unpiped — the fix commit closes them. The installer is sound: truthful plans, per-agent reversible records, honest nos, hardened against traversal, tamper, and windows. The dogfood is real: this repo runs on its own installer, the extension guard proved itself by blocking the reviewer mid-audit (then unblocked when reads were freed). Two rounds of brutal audit on the artifacts, one closing audit on the build; 39 findings total, all closed. FR-11 (the CI green run) rides the push — the pack closes with that one honestly open, evidence to follow the PR. Close it clean."
       }
     ]
   },
   "format": "specpack/0.3",
-  "revision": 28
+  "revision": 40
 }

@@ -25,16 +25,16 @@ reviewer to check the reasoning, not a manual.
 **Options considered** (from analysis + grounding; alternatives are real,
 not strawmen):
 
-| Option | Meets constraints? | Cost / risk | Verdict |
-|--------|--------------------|-------------|---------|
-| A (selected) | … | … | chosen — D<n> |
-| B | … | … | rejected — why |
+| Option       | Meets constraints? | Cost / risk | Verdict        |
+| ------------ | ------------------ | ----------- | -------------- |
+| A (selected) | …                  | …           | chosen — D<n>  |
+| B            | …                  | …           | rejected — why |
 
 ## Change by surface
 
-| Surface (wiki cid / path) | What changes | Contracts touched | Evidence |
-|---------------------------|--------------|-------------------|----------|
-| … | … | … | implementation-supported |
+| Surface (wiki cid / path) | What changes | Contracts touched | Evidence                 |
+| ------------------------- | ------------ | ----------------- | ------------------------ |
+| …                         | …            | …                 | implementation-supported |
 
 From the analysis's affected-surfaces table + fresh grounding, not
 memory. Surfaces not touched: one line saying so, or they appear here.
@@ -56,9 +56,9 @@ story. "None" must be credible, not assumed.
 Continues the analysis's D-numbering. Each: choice · alternatives ·
 two-way/one-way door · evidence status · resolves/defers.
 
-| ID | Decision | Alternatives | Door | Resolves | Status |
-|----|----------|--------------|------|----------|--------|
-| D<n> | … | … | one-way | Q<m> | proposed — owner sign-off required |
+| ID   | Decision | Alternatives | Door    | Resolves | Status                             |
+| ---- | -------- | ------------ | ------- | -------- | ---------------------------------- |
+| D<n> | …        | …            | one-way | Q<m>     | proposed — owner sign-off required |
 
 **One-way doors:** tasks depending on these stay `blocked-on: D<n>
 acceptance` until the owner accepts, recorded here with date and actor.
@@ -69,8 +69,8 @@ Questions/assumptions this design leaves open — verbatim ids from the
 analysis, plus any new ones discovered here (registered back in the
 owning artifact, never orphaned in this file).
 
-| ID | Carried question / assumption | Blocks | Path |
-|----|-------------------------------|--------|------|
+| ID  | Carried question / assumption | Blocks | Path |
+| --- | ----------------------------- | ------ | ---- |
 
 ## Out of scope
 
@@ -81,4 +81,4 @@ credible.
 ## Evidence index
 
 | Claim | Source | Status |
-|-------|--------|--------|
+| ----- | ------ | ------ |

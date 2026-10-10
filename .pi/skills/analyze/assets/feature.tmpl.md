@@ -34,9 +34,9 @@ One paragraph, testable in principle.
 
 ## Affected surfaces
 
-| Surface | Why affected | Evidence (wiki cid / path) | Status |
-|---------|--------------|---------------------------|--------|
-| … | … | … | implementation-supported |
+| Surface | Why affected | Evidence (wiki cid / path) | Status                   |
+| ------- | ------------ | -------------------------- | ------------------------ |
+| …       | …            | …                          | implementation-supported |
 
 From wiki traversal + compile, not guesswork. Unknown surfaces are listed
 with status `unknown` — that is a finding, not a failure.
@@ -49,18 +49,18 @@ artifact this section links to. If no → "none identified" + why credible.
 
 ## Open questions
 
-| ID | Question | Blocks | Owner | Resolution path |
-|----|----------|--------|-------|-----------------|
+| ID  | Question | Blocks | Owner | Resolution path |
+| --- | -------- | ------ | ----- | --------------- |
 
 ## Assumptions
 
-| ID | Assumption | Blast radius | Validation trigger |
-|----|-----------|--------------|--------------------|
+| ID  | Assumption | Blast radius | Validation trigger |
+| --- | ---------- | ------------ | ------------------ |
 
 ## Decisions needed
 
 | Decision | Needed by (what it unblocks) | Two-way / one-way | Evidence status |
-|----------|------------------------------|-------------------|-----------------|
+| -------- | ---------------------------- | ----------------- | --------------- |
 
 Decisions not yet made stay here — do not manufacture them.
 

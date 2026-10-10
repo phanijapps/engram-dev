@@ -24,16 +24,16 @@ related: []
 
 ## Observed vs expected
 
-| | Behavior | Evidence |
-|---|---|---|
-| Observed | … | path / command / log (status) |
-| Expected | … | requirement, wiki concept, or stated intent (status) |
+|          | Behavior | Evidence                                             |
+| -------- | -------- | ---------------------------------------------------- |
+| Observed | …        | path / command / log (status)                        |
+| Expected | …        | requirement, wiki concept, or stated intent (status) |
 
 ## Hypothesis ledger
 
-| ID | Hypothesis | Evidence FOR | Evidence AGAINST | Status |
-|----|-----------|--------------|------------------|--------|
-| H1 | <mechanism, not a place> | … | … | open / confirmed / eliminated |
+| ID  | Hypothesis               | Evidence FOR | Evidence AGAINST | Status                        |
+| --- | ------------------------ | ------------ | ---------------- | ----------------------------- |
+| H1  | <mechanism, not a place> | …            | …                | open / confirmed / eliminated |
 
 One mechanism per hypothesis. "The bug is in X" is a place, not a
 hypothesis — say what X does wrong. Eliminated hypotheses stay listed:
@@ -51,7 +51,7 @@ Options, not a commitment — and never a fix riding an unconfirmed cause
 unless explicitly labeled a bet (with the question it leaves open):
 
 | Option | Addresses | Door (two-way / one-way) | Risks |
-|--------|-----------|--------------------------|-------|
+| ------ | --------- | ------------------------ | ----- |
 
 ## Verification plan
 
@@ -63,13 +63,13 @@ unless explicitly labeled a bet (with the question it leaves open):
 
 ## Open questions
 
-| ID | Question | Blocks | Owner | Resolution path |
-|----|----------|--------|-------|-----------------|
+| ID  | Question | Blocks | Owner | Resolution path |
+| --- | -------- | ------ | ----- | --------------- |
 
 ## Evidence index
 
 | Claim | Source | Status |
-|-------|--------|--------|
+| ----- | ------ | ------ |
 
 ## Handoff
 

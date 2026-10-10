@@ -19,10 +19,10 @@ related: [plan.md, design.md, gap-1.md]
 
 ## Verdict summary
 
-| Task | Verdict | Re-run result | Evidence ref |
-|------|---------|---------------|--------------|
-| T1 | pass / fail / cannot-verify | <command → outcome> | commit <ref>, output <pinned> |
-| T2 | … | … | … |
+| Task | Verdict                     | Re-run result       | Evidence ref                  |
+| ---- | --------------------------- | ------------------- | ----------------------------- |
+| T1   | pass / fail / cannot-verify | <command → outcome> | commit <ref>, output <pinned> |
+| T2   | …                           | …                   | …                             |
 
 **Slice verdict:** pass requires all pass + zero open blocker/major +
 traceability closed. Partial is per-task, never averaged.
@@ -39,9 +39,9 @@ $ <expectation as written>
 
 ## Findings
 
-| ID | Severity | Finding | Evidence | Route |
-|----|----------|---------|----------|-------|
-| F1 | blocker / major / minor / nit | … | file:line / command output | T-next / plan / analyze |
+| ID  | Severity                      | Finding | Evidence                   | Route                   |
+| --- | ----------------------------- | ------- | -------------------------- | ----------------------- |
+| F1  | blocker / major / minor / nit | …       | file:line / command output | T-next / plan / analyze |
 
 Severity contract: blocker = fabricated evidence, broken contract,
 out-of-scope effect; major = failed expectation, traceability hole;
@@ -55,7 +55,7 @@ Diff vs union of frozen contexts: creep found (file → owning task or
 ## Traceability audit
 
 | R/G | Landed by | Deferred? | Check |
-|-----|-----------|-----------|-------|
+| --- | --------- | --------- | ----- |
 
 Every in-scope row landed or explicitly deferred with artifact ref.
 Orphans = findings.

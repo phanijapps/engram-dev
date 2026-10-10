@@ -30,13 +30,13 @@ From wiki traversal + compile, cited. Include downstream callers found via
 status `unknown` — that is a finding.
 
 | Surface | Reach mechanism | Evidence (wiki cid / path) | Status |
-|---------|-----------------|---------------------------|--------|
+| ------- | --------------- | -------------------------- | ------ |
 
 ## Candidate effects
 
-| # | Effect (surface → consequence) | Confidence | Disposition | Evidence |
-|---|--------------------------------|-----------|-------------|----------|
-| E1 | … | high / medium / low | retain / revise / replace / defer | … |
+| #   | Effect (surface → consequence) | Confidence          | Disposition                       | Evidence |
+| --- | ------------------------------ | ------------------- | --------------------------------- | -------- |
+| E1  | …                              | high / medium / low | retain / revise / replace / defer | …        |
 
 - **retain** — surface is unaffected as-is (needs evidence, not optimism).
 - **revise** — surface must change with this work.
@@ -58,13 +58,13 @@ Empty is fine — say why credible.
 
 ## Open questions
 
-| ID | Question | Blocks | Owner | Resolution path |
-|----|----------|--------|-------|-----------------|
+| ID  | Question | Blocks | Owner | Resolution path |
+| --- | -------- | ------ | ----- | --------------- |
 
 ## Evidence index
 
 | Claim | Source | Status |
-|-------|--------|--------|
+| ----- | ------ | ------ |
 
 ## Handoff
 
