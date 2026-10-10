@@ -3,78 +3,135 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T14:50:11Z"
+    "updated": "2026-10-10T14:53:14Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_progress"
+    "deliverable": "drafted"
   },
   "spec": {
     "why": "The harness must ship as a product: agents and skills packaged under treadle/harness behind an interactive installer (treadle init harness) like speckkit's specify CLI. The repo must read as new: no dead engine links in live surfaces.",
     "requirements": [
       {
         "id": "FR-1",
-        "text": "agents/ and skills/ live under treadle/harness/ with a versioned manifest (harness/0.1) describing components, surfaces, transforms, and hooks (empty = honestly unsupported)."
+        "text": "agents/ and skills/ live under treadle/harness/ with a versioned manifest (harness/0.1) describing components, surfaces, transforms, and hooks (empty = honestly unsupported).",
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-2",
-        "text": "The installer compiles manifest + choices into an explicit plan (component, surface, source, destination, transform, mode); --dry-run prints it; --json emits it."
+        "text": "The installer compiles manifest + choices into an explicit plan (component, surface, source, destination, transform, mode); --dry-run prints it; --json emits it.",
+        "serves": [
+          "US-1",
+          "US-2"
+        ]
       },
       {
         "id": "FR-3",
-        "text": "Apply writes exactly the plan: content-hash idempotency (re-run = same), --force to overwrite, never deletes unknown files."
+        "text": "Apply writes exactly the plan: idempotency by content hash AFTER normalization (LF line endings + exactly one trailing newline), so platform checkout differences never flap modes; --force overwrites; never deletes unknown files; .gitattributes pins eol=lf repo-wide.",
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-4",
-        "text": "Flags are complete: --agent --scope --skills --no-agents --no-hooks --yes; no TTY without required flags exits 2 with the exact remediation command."
+        "text": "Flags are complete: --agent --scope --skills --no-agents --no-hooks --yes; no TTY without required flags exits 2 with the exact remediation command.",
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-5",
-        "text": "The engine (plan compiler + apply) is fully unit-tested through flags; no logic lives above the flag layer."
+        "text": "The engine (plan compiler + apply) is fully unit-tested through flags; no logic lives above the flag layer.",
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-6",
-        "text": "The interactive skin renders agent/scope/component choices and returns flags only; thin by construction and asserted."
+        "text": "The interactive skin renders agent/scope/component choices and returns flags only; thin by construction and asserted.",
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-7",
-        "text": "Surface adapters: pi project+user, claude project+global, codex user (project verified), copilot project-only — paths verified at build; failures refuse, never guess."
+        "text": "Surface adapters: pi project+user, claude project+global, codex user (project verified), copilot project-only — paths verified at build; failures refuse, never guess.",
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-8",
-        "text": "Hooks ship as JS files from the harness (harness/hooks/) and wire per surface: pi extension files (.pi/extensions/, ~/.pi/agent/extensions/), Claude settings.json invoking the JS, Codex config notify invoking the JS; Copilot has no hooks or extensions — the plan prints the honest no (Q-1)."
+        "text": "Hooks ship as JS payload files (harness/hooks/<id>.js) described by manifest rows carrying file + per-surface wiring (pi: extension file to .pi/extensions/; claude: settings.json matcher/command invoking the JS; codex: config notify invoking the JS; copilot: null — no hooks or extensions, printed honestly). T-3 authors the first real hook payload and its wiring.",
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-9",
-        "text": "Copilot is a full adapter: .github/copilot-instructions.md + .github/agents/*.md (frontmatter) + .github/skills/<n>/SKILL.md (Agent Skills format, identity transform); every path verified against live docs at build; refusals over guesses (Q-3)."
+        "text": "Copilot is a full adapter: .github/copilot-instructions.md + .github/agents/*.md (frontmatter) + .github/skills/<n>/SKILL.md (Agent Skills format, identity transform); every path verified against live docs at build; refusals over guesses (Q-3).",
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-10",
-        "text": "engine/ and graphify-out/ residue deleted; .gitignore prevents return."
+        "text": "engine/ and graphify-out/ residue deleted; .gitignore prevents return.",
+        "serves": [
+          "US-4"
+        ]
       },
       {
         "id": "FR-11",
-        "text": "ci.yml runs from the repo root with working-directory: treadle; valid YAML, steps locally reproducible."
+        "text": "ci.yml runs from the repo root: defaults.run.working-directory: treadle for run steps AND cache-dependency-path: treadle/pnpm-lock.yaml on setup-node (defaults do not reach uses: steps); FR-11 evidence = one full green matrix run post-push, recorded.",
+        "serves": [
+          "US-4"
+        ]
       },
       {
         "id": "FR-12",
-        "text": "A links gate (scripts/link-check.mjs + pnpm links) walks live surfaces and fails on any unresolved markdown link; archive excluded by design."
+        "text": "A links gate (scripts/link-check.mjs + pnpm links) walks live surfaces and fails on any unresolved markdown link; archive excluded by design.",
+        "serves": [
+          "US-4"
+        ]
       },
       {
         "id": "FR-13",
-        "text": "The wiki tells the TS truth: treadle.md and sdd-harness-architecture.md rewritten; retired engine pages superseded per Q-4; zero engine/(okf|loom) links in live surfaces."
+        "text": "The wiki tells the TS truth: treadle.md and sdd-harness-architecture.md rewritten; retired engine pages superseded per Q-4; zero engine/(okf|loom) links in live surfaces.",
+        "serves": [
+          "US-4"
+        ]
       },
       {
         "id": "FR-14",
-        "text": "The know ritual ends green: validate 0/0, fingerprints + stamp updated, anchors 0, status fresh."
+        "text": "The know ritual ends green: validate 0/0, fingerprints + stamp updated, anchors 0, status fresh.",
+        "serves": [
+          "US-4"
+        ]
       },
       {
         "id": "FR-15",
-        "text": "Dogfood-first (Q-5): the installer lands content in project-level .pi/{skills,agents,extensions} and .codex/{skills,agents} in this repo; real work evaluates it; what passes — hooks and extensions included — is promoted back into the harness; the loop is recorded as evidence."
+        "text": "Dogfood-first: manifest rows carry explicit destination paths; the installer lands content in project .pi/{skills,agents,extensions} and .codex/{skills,agents} in this repo; T-0 pre-cleans the known legacy drift (.pi/agents/red-forman.md typo copy, stale .pi/skills/build-kb resources) so convergence is achievable; the plan lists unmanaged leftovers and --force removes exactly the confirmed list; what passes evaluation — hooks and extensions included — is promoted back into the harness; recorded as evidence.",
+        "serves": [
+          "US-3"
+        ]
       },
       {
         "id": "FR-16",
-        "text": "The wave closes through its own loop: every task evidence-recorded, review rounds in the verdicts, corpus byte-stable, closed by human:owner."
+        "text": "The wave closes through its own loop: every task evidence-recorded, review rounds in the verdicts, corpus byte-stable, closed by human:owner.",
+        "serves": [
+          "US-4"
+        ]
+      },
+      {
+        "id": "FR-17",
+        "text": "Reversibility: every apply records its plan to a state file listing exactly what was written; `init harness --remove` deletes exactly those paths and nothing else.",
+        "serves": [
+          "US-1",
+          "US-2"
+        ]
       }
     ],
     "clarifications": [
@@ -246,7 +303,7 @@
       },
       {
         "id": "D-2",
-        "decision": "Plan-then-apply: an inspectable plan precedes every write",
+        "decision": "Plan-then-apply: an inspectable plan precedes every write; refuse is defined (destination holds foreign content without --force; apply exits 3 listing the row)",
         "because": "No write before review; the plan is testable output, apply is deterministic replay; copy-as-you-go is unreviewable.",
         "status": "accepted",
         "accepted_by": "human:owner",
@@ -276,7 +333,7 @@
       },
       {
         "id": "D-6",
-        "decision": "Idempotency by content hash; never delete unknown files",
+        "decision": "Idempotency by normalized content hash (LF + one trailing newline; .gitattributes pins eol=lf); never delete unknown files; applied plans recorded for --remove",
         "because": "Destinations are shared (.claude/, ~/.codex); a mirror would destroy foreign content. Re-run = same; --force is explicit.",
         "status": "proposed"
       },
@@ -303,32 +360,129 @@
         "accepted_at": "2026-10-10T14:50:11Z",
         "decision": "Copilot is a full adapter: custom instructions + agents + skills (Agent Skills format); no hooks",
         "because": "Owner answer Q-3 corrects my cloud-only claim: latest Copilot supports all three. Paths verified against live docs at T-3; refusals over guesses. The earlier prompt-file conversion design is superseded."
+      },
+      {
+        "id": "D-10",
+        "status": "proposed",
+        "decision": "Reversibility: every apply records its write list; --remove deletes exactly it",
+        "because": "R1 DEFECT 9: an installer product with no reversal contradicts the pack reversibility posture; the state file is the contract between apply and remove."
       }
     ],
-    "designs": []
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "harness home",
+        "kind": "structure",
+        "detail": "treadle/harness/ with agents, skills, hooks/, and harness.json (harness/0.1); component rows carry explicit destinations; hook rows carry file + wiring",
+        "addresses": [
+          "FR-1"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "plan-then-apply",
+        "kind": "mechanism",
+        "detail": "manifest + choices compile to an inspectable plan (component, surface, source, destination, transform, mode); refuse = foreign content without --force, apply exits 3; --dry-run prints, --json emits, apply replays exactly",
+        "addresses": [
+          "FR-2"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "flags engine, TUI skin",
+        "kind": "mechanism",
+        "detail": "@clack/prompts renders agent/scope/component choices and returns flags only; no TTY without flags exits 2 with the remediation command; all logic below the flag layer",
+        "addresses": [
+          "FR-4",
+          "FR-5",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "surface adapters",
+        "kind": "structure",
+        "detail": "pi (.pi/{skills,agents,extensions} + user), claude (.claude/{skills,agents} + settings.json wiring + ~/.claude later), codex (.codex/{skills,agents} + ~/.codex + config notify), copilot (.github/copilot-instructions.md + agents/*.md + skills/<n>/SKILL.md identity); paths verified at build, refusals over guesses",
+        "addresses": [
+          "FR-7",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "hooks as JS payloads",
+        "kind": "mechanism",
+        "detail": "harness/hooks/<id>.js shipped and wired per surface (pi extension, claude settings-hooks, codex config-notify, copilot null printed honestly); first payload authored in T-3, dogfooded in T-6",
+        "addresses": [
+          "FR-8"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "normalized-hash idempotency",
+        "kind": "mechanism",
+        "detail": "hash after normalization (LF + one trailing newline); .gitattributes pins eol=lf; re-run = same; --force overwrites; never deletes unknown files",
+        "addresses": [
+          "FR-3"
+        ]
+      },
+      {
+        "id": "DES-7",
+        "title": "dogfood loop",
+        "kind": "process",
+        "detail": "installer lands .pi + .codex project installs in this repo; real work evaluates; what passes (hooks/extensions included) promotes into the harness; legacy .pi drift pre-cleaned so convergence is provable",
+        "addresses": [
+          "FR-15"
+        ]
+      },
+      {
+        "id": "DES-8",
+        "title": "checked freshness",
+        "kind": "mechanism",
+        "detail": "links gate over live surfaces (archive excluded); know ritual green (validate 0/0, anchors 0, fresh); CI unbroken with working-directory + cache-dependency-path, evidenced by a green post-push matrix run",
+        "addresses": [
+          "FR-10",
+          "FR-11",
+          "FR-12",
+          "FR-13",
+          "FR-14"
+        ]
+      },
+      {
+        "id": "DES-9",
+        "title": "reversible installs",
+        "kind": "mechanism",
+        "detail": "every apply records its write list to .treadle/harness-install.json; init harness --remove deletes exactly those paths",
+        "addresses": [
+          "FR-17"
+        ]
+      }
+    ]
   },
   "tasks": [
     {
       "id": "T-0",
       "title": "Move the harness content home",
-      "detail": "git mv agents/ and skills/ to treadle/harness/; author harness.json (format harness/0.1): components with per-surface transforms, hooks map with honest empty arrays; update every path reference (AGENTS.md repo map, .pi sync note); pnpm check + brand:check green.",
-      "status": "doing",
+      "detail": "git mv agents/ and skills/ to treadle/harness/; author harness.json (format harness/0.1): component rows carry explicit destination paths per surface; hook rows carry file + wiring (pi extension, claude settings-hooks, codex config-notify, copilot null); harness/hooks/ dir born with the contract (payload authored in T-3); pre-clean legacy drift in .pi (typo copy red-forman.md, stale build-kb resources) so T-6 convergence is achievable; add .gitattributes (* text=auto eol=lf); update every path reference (AGENTS.md repo map, .pi sync note); pnpm check + brand:check green.",
+      "status": "todo",
       "phase": "core",
       "satisfies": [
         "FR-1"
       ],
-      "implements": [],
+      "implements": [
+        "DES-1"
+      ],
       "honors": [],
       "accepts": [],
       "verify": {
-        "cmd": "y",
-        "expect": "z"
+        "cmd": "cd treadle && test -f harness/harness.json && node -e 'const m=require(\"./harness/harness.json\"); if(m.format!==\"harness/0.1\")process.exit(1); for(const h of m.hooks??[]) if(!h.file) process.exit(1)' && test ! -d ../agents && test ! -d ../skills && pnpm check && pnpm brand:check",
+        "expect": "harness/harness.json exists, format harness/0.1, every hook row names its JS file; agents/ and skills/ gone from root; gates green"
       }
     },
     {
       "id": "T-4",
       "title": "The repo sweep: residue gone, CI unbroken, links gate",
-      "detail": "Delete engine/ (untracked pyc/cache residue, 246 files) and graphify-out/ (untracked); .gitignore rules so residue cannot return; fix .github/workflows/ci.yml with defaults.run.working-directory: treadle; author scripts/link-check.mjs + pnpm links gate over live surfaces (archive excluded by design).",
+      "detail": "Delete engine/ (untracked pyc/cache residue, 246 files) and graphify-out/ (untracked); .gitignore rules so residue cannot return; fix .github/workflows/ci.yml with defaults.run.working-directory: treadle; author scripts/link-check.mjs + pnpm links gate over live surfaces (archive excluded by design). Add .gitattributes eol=lf (hash stability across the CI matrix); FR-11 completes only on a green post-push matrix run.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -336,18 +490,22 @@
         "FR-11",
         "FR-12"
       ],
-      "implements": [],
+      "implements": [
+        "DES-8"
+      ],
       "honors": [],
-      "accepts": [],
+      "accepts": [
+        "AC-4"
+      ],
       "verify": {
-        "cmd": "test ! -d ../engine && test ! -d ../graphify-out && node scripts/link-check.mjs",
-        "expect": "engine/ and graphify-out/ deleted; ci.yml carries working-directory: treadle; links gate exits 0 over live surfaces"
+        "cmd": "test ! -d ../engine && test ! -d ../graphify-out && grep -q 'working-directory: treadle' ../.github/workflows/ci.yml && grep -q 'cache-dependency-path: treadle/pnpm-lock.yaml' ../.github/workflows/ci.yml && grep -qE 'engine/|graphify-out' ../.gitignore && node scripts/link-check.mjs && git -C .. ls-files engine graphify-out | wc -l | grep -qx 0",
+        "expect": "engine/ and graphify-out/ gone (disk + git); ci.yml carries working-directory AND cache-dependency-path (both needed — defaults.run does not reach uses: steps); .gitignore blocks return; links gate exits 0 over live surfaces. FR-11 evidence completed only after one full CI matrix run goes green post-push."
       }
     },
     {
       "id": "T-1",
       "title": "The installer engine: manifest to plan to apply (flags only)",
-      "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse), apply (content-hash idempotent, never deletes, --force overrides); flags command init harness with --agent --scope --skills --no-agents --no-hooks --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
+      "detail": "packages/cli/src/harness/: manifest types, plan compiler (choices to destinations with mode create/same/update/refuse — refuse = destination holds foreign content without --force; apply exits 3 listing the row), apply (normalized-hash idempotent: LF + single trailing newline; never deletes; --force overrides), the applied plan recorded to a state file (.treadle/harness-install.json at the destination root) so `init harness --remove` can delete exactly those paths and nothing else; flags command init harness with --agent --scope --skills --no-agents --no-hooks --remove --dry-run --json --yes --force; no TTY + missing flags exits 2 showing the exact command; unit tests over a temp manifest.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -356,9 +514,15 @@
         "FR-4",
         "FR-5"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2",
+        "DES-6",
+        "DES-9"
+      ],
       "honors": [],
-      "accepts": [],
+      "accepts": [
+        "AC-2"
+      ],
       "verify": {
         "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts",
         "expect": "plan compiler + apply + idempotency + no-TTY refusal all green"
@@ -376,9 +540,13 @@
       "satisfies": [
         "FR-6"
       ],
-      "implements": [],
+      "implements": [
+        "DES-3"
+      ],
       "honors": [],
-      "accepts": [],
+      "accepts": [
+        "AC-1"
+      ],
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "TUI module thin (choice to flags only); no-TTY + missing flags exits 2 with the exact command"
@@ -390,7 +558,7 @@
     {
       "id": "T-3",
       "title": "Surface adapters: four surfaces, two transforms, honest hooks",
-      "detail": "Adapters: pi (.pi/skills, .pi/agents, .pi/extensions JS — local-documented), claude (.claude/skills, .claude/agents, settings.json hooks wiring invoking harness JS, ~/.claude later), codex (.codex/skills, .codex/agents project + ~/.codex user, config.toml notify invoking harness JS), copilot (.github/copilot-instructions.md + .github/agents/*.md + .github/skills/<n>/SKILL.md — Agent Skills format, identity; no hooks — printed honestly). Every path verified against live docs at build; failures refuse. Integration tests in temp HOME + temp project.",
+      "detail": "Adapters: pi (.pi/skills, .pi/agents, .pi/extensions JS — local-documented), claude (.claude/skills, .claude/agents, settings.json hooks wiring invoking harness JS, ~/.claude later), codex (.codex/skills, .codex/agents project + ~/.codex user, config.toml notify invoking harness JS), copilot (.github/copilot-instructions.md + .github/agents/*.md + .github/skills/<n>/SKILL.md — Agent Skills format, identity; no hooks — printed honestly). Every path verified against live docs at build; failures refuse. Integration tests in temp HOME + temp project. Author the first real hook payload (harness/hooks/*.js) + its three wirings.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -398,7 +566,10 @@
         "FR-8",
         "FR-9"
       ],
-      "implements": [],
+      "implements": [
+        "DES-4",
+        "DES-5"
+      ],
       "honors": [],
       "accepts": [],
       "verify": {
@@ -419,12 +590,16 @@
         "FR-13",
         "FR-14"
       ],
-      "implements": [],
+      "implements": [
+        "DES-8"
+      ],
       "honors": [],
-      "accepts": [],
+      "accepts": [
+        "AC-4"
+      ],
       "verify": {
-        "cmd": "tsx packages/cli/src/main.ts know validate ../wiki",
-        "expect": "validate 0 errors 0 warnings; zero old engine links in live surfaces; know status fresh; anchors 0"
+        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts know validate ../wiki && ./node_modules/.bin/tsx packages/cli/src/main.ts know anchors ../wiki --workspace .. && ./node_modules/.bin/tsx packages/cli/src/main.ts know status ../wiki --workspace .. && ! grep -rE 'engine/(okf|loom)' ../wiki ../README.md ../AGENTS.md ../docs/product",
+        "expect": "validate 0 errors 0 warnings; anchors 0 NEEDS_REVIEW; status fresh; grep for old engine links in live surfaces exits nonzero (zero matches)"
       },
       "needs": [
         "T-4"
@@ -439,12 +614,16 @@
       "satisfies": [
         "FR-15"
       ],
-      "implements": [],
+      "implements": [
+        "DES-7"
+      ],
       "honors": [],
-      "accepts": [],
+      "accepts": [
+        "AC-3"
+      ],
       "verify": {
-        "cmd": "cd treadle && pnpm check && pnpm corpus:check",
-        "expect": ".pi and .codex installed from the manifest; dogfood evidence recorded; promoted content committed in treadle/harness; corpus byte-stable"
+        "cmd": "cd treadle && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --yes && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent pi --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})' && ./node_modules/.bin/tsx packages/cli/src/main.ts init harness --agent codex --scope project --dry-run --json | node -e 'let s=\"\";process.stdin.on(\"data\",d=>s+=d).on(\"end\",()=>{const p=JSON.parse(s);const bad=p.plan.filter(r=>r.mode!==\"same\");if(bad.length){console.error(bad);process.exit(1)}console.log(\"all same\")})'",
+        "expect": "pi and codex apply for real, then both dry-runs report every row mode=same — convergence proven, not assumed; dogfood + promotion evidence rows recorded"
       },
       "needs": [
         "T-3"
@@ -453,18 +632,20 @@
     {
       "id": "T-7",
       "title": "Close: evidence, review rounds, freeze",
-      "detail": "Close: every task recorded with evidence rows; review rounds recorded in verdicts (artifact round + closing round minimum); corpus byte-stable; PACK verdict; close by human:owner.",
+      "detail": "Close: every task recorded with evidence rows; review rounds recorded in verdicts (artifact round + closing round minimum); corpus byte-stable; PACK verdict; close by human:owner. Known tension (R1 #12): two deliverables share one pack — the wiki pass must not stall the installer close; if the sweep drags, the owner may split the close (installer-first) rather than hold the wave.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
         "FR-16"
       ],
-      "implements": [],
+      "implements": [
+        "DES-2"
+      ],
       "honors": [],
       "accepts": [],
       "verify": {
-        "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check",
-        "expect": "every task has evidence rows; review rounds recorded; corpus byte-stable; closed by owner"
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && node -e 'const p=require(\"../docs/specs/fresh-harness/fresh-harness.json\"); const bad=p.tasks.filter(t=>!(t.evidence&&t.evidence.length)); if(bad.length){console.error(\"no evidence: \"+bad.map(t=>t.id));process.exit(1)} const rounds=p.review.verdicts.filter(v=>v.on&&v.on.startsWith(\"R\")).length; if(rounds<2)process.exit(1)' && ./node_modules/.bin/tsx packages/cli/src/main.ts do check ../docs/specs/fresh-harness",
+        "expect": "gates green; every task carries evidence rows (machine-checked, not grepped prose); at least two review rounds recorded; alignment 0 violations; close then refuses nothing"
       },
       "needs": [
         "T-2",
