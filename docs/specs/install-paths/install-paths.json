@@ -3,7 +3,7 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T18:48:15Z"
+    "updated": "2026-10-10T18:57:04Z"
   },
   "status": {
     "lifecycle": "active",
@@ -14,60 +14,43 @@
     "requirements": [
       {
         "id": "FR-1",
-        "text": "The cli bin points at compiled dist (dist/src/main.js — shebang included by tsc); the bin runs on Node 22 and 24 (proven on both present on this machine); the checked-in launcher bin/treadle.mjs retires.",
-        "serves": [
-          "US-1"
-        ]
+        "text": "EVERY workspace package points its entry at compiled dist: packages/cli bin → dist/src/main.js AND brand/core/web/knowledge main/exports → dist/src/index.js (tsc emits them); the whole chain runs on Node 22 and 24 — proven by running the dist bin under BOTH node binaries on this machine, not by a PATH that might hold an old launcher; bin/treadle.mjs retires (file AND the treadle/package.json bin field).",
+        "serves": ["US-1"]
       },
       {
         "id": "FR-2",
         "text": "Dev link: from a fresh clone — pnpm install, pnpm build, pnpm link --global (from packages/cli, or one documented chain); the linked treadle passes --help + do where + a know command from an arbitrary directory.",
-        "serves": [
-          "US-1"
-        ]
+        "serves": ["US-1"]
       },
       {
         "id": "FR-3",
-        "text": "Git install: `npm i -g --allow-scripts=<name> github:phanijapps/engram-dev#main` delivers a working treadle — the repo root IS the orchestrator (private, workspaces:[\"treadle\"], bin → cli dist, prepare building the workspace); the flag is documented as npm security default. engram-dev main carries the full repo (pushed; the placeholder docs commit subsumed with all 203 files preserved).",
-        "serves": [
-          "US-2"
-        ]
+        "text": "Git install: the repo root IS the orchestrator — package.json named engram-dev (private, packageManager pinned, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build) AND the four @treadle/* siblings declared as file:treadle/packages/* dependencies so the global tree actually resolves them (workspaces alone ship nothing); npm i -g --allow-scripts=engram-dev github:phanijapps/engram-dev#main delivers a working treadle; the flag is documented as npm security default.",
+        "serves": ["US-2"]
       },
       {
         "id": "FR-4",
         "text": "Clean-room verification: every documented path proves itself in a fresh temp clone on BOTH node floors (22.14, 24.19 present locally); a windows note records the CI-matrix check.",
-        "serves": [
-          "US-1",
-          "US-2"
-        ]
+        "serves": ["US-1", "US-2"]
       },
       {
         "id": "FR-5",
         "text": "The pnpm git-workspace syntax is recorded broken (observed crash) unless a clean-room test passes in-wave; the guide names npm for git installs, pnpm for the dev link.",
-        "serves": [
-          "US-2"
-        ]
+        "serves": ["US-2"]
       },
       {
         "id": "FR-6",
         "text": "Guide section 03 + README rewritten to the two one-command paths; the launcher-symlink dance removed; install verified literally (AC-3).",
-        "serves": [
-          "US-3"
-        ]
+        "serves": ["US-3"]
       },
       {
         "id": "FR-7",
-        "text": "Gates stay green: pnpm check, corpus byte-stable, brand clean (the root package.json rides the fence allowances like ci.yml), links green.",
-        "serves": [
-          "US-3"
-        ]
+        "text": "Gates stay green UNCHANGED (check, corpus, brand, links) — stated truthfully: the brand fence and links gate walk treadle/ and markdown only, so the new repo-root package.json sits outside their scope by construction (like ci.yml); no allowance changes, no hole claimed as coverage.",
+        "serves": ["US-3"]
       },
       {
         "id": "FR-8",
         "text": "The wave closes through its own loop: evidence rows, review rounds, frozen by human:owner.",
-        "serves": [
-          "US-3"
-        ]
+        "serves": ["US-3"]
       }
     ],
     "clarifications": [
@@ -77,10 +60,7 @@
         "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": [
-          "this repo, root orchestrates",
-          "wait for engram-dev root"
-        ],
+        "options": ["this repo, root orchestrates", "wait for engram-dev root"],
         "default": "this repo, root orchestrates",
         "answer": "this repo, root orchestrates",
         "answered_by": "human:owner",
@@ -92,10 +72,7 @@
         "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": [
-          "hold 22+, bin to dist",
-          "raise to 24"
-        ],
+        "options": ["hold 22+, bin to dist", "raise to 24"],
         "default": "hold 22+, bin to dist",
         "answer": "hold 22+, bin to dist",
         "answered_by": "human:owner",
@@ -161,14 +138,16 @@
     "decisions": [
       {
         "id": "D-1",
-        "decision": "bin → compiled dist; the Node floor is 22 (Q-2 default)",
-        "because": "Proven: node 22.14 refuses the .ts bin (ERR_UNKNOWN_FILE_EXTENSION); the dist bin ran green on 22 and 24. The floor the docs already claim becomes real.",
-        "status": "proposed"
+        "decision": "bin → compiled dist everywhere; the Node floor is 22 (Q-2 answered in the room: hold 22+, bin to dist)",
+        "because": "Proven by direct run: node 22.14 refuses the .ts bin. The earlier dist \"proof\" was withdrawn — it ran through a PATH holding the old launcher (the tenth instance, disclosed in R1); the wave re-proves with explicit binary invocation per package entry.",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T18:57:04Z"
       },
       {
         "id": "D-2",
         "decision": "The git install targets github.com/phanijapps/engram-dev#main; this repo root IS the orchestrator (Q-1 answered: the repo is linked to engram-dev)",
-        "because": "Owner: the repo is already linked to engram-dev. Proven: npm skips prepare without --allow-scripts; the orchestrator must declare the bin; pnpm #workspace crashed. The placeholder docs commit was subsumed (203/203 files preserved) and engram-dev main now carries the full history.",
+        "because": "Owner: the repo is already linked to engram-dev. Proven: npm skips prepare without --allow-scripts; the orchestrator must declare the bin; pnpm #workspace crashed. The placeholder docs commit was subsumed (206 files: 205 docs + README; the 10 product docs relocated to archive — none lost) and engram-dev main now carries the full history.",
         "status": "accepted",
         "accepted_by": "human:owner",
         "accepted_at": "2026-10-10T18:48:15Z"
@@ -187,14 +166,12 @@
       "id": "T-0",
       "title": "The bin contract: dist + the Node floor",
       "phase": "core",
-      "detail": "packages/cli bin → ./dist/src/main.js; pnpm build verified as prerequisite; bin/treadle.mjs retired; the local PATH symlink refreshed; treadle proven on Node 22 AND 24 (both present).",
+      "detail": "packages/cli bin → ./dist/src/main.js; brand/core/web/knowledge main+exports → ./dist/src/index.js; bin/treadle.mjs deleted AND the treadle/package.json bin field removed; the local PATH symlink re-points at nothing needed (the link IS the bin); treadle proven on Node 22 AND 24 by running the dist file under each binary directly — the tenth-instance lesson: never prove through a PATH that may hold an older tool.",
       "verify": {
-        "cmd": "cd treadle && pnpm build && /usr/local/bin/node packages/cli/dist/src/main.js --help && node packages/cli/dist/src/main.ts --help 2>/dev/null || true",
-        "expect": "dist bin speaks usage under node 22 explicitly; the launcher file no longer exists"
+        "cmd": "cd treadle && pnpm build && grep -q \"dist/src/main.js\" packages/cli/package.json && test ! -f bin/treadle.mjs && ! grep -q \"bin/treadle.mjs\" package.json && /usr/local/bin/node packages/cli/dist/src/main.js --help > /dev/null && node packages/cli/dist/src/main.js --help > /dev/null && for p in brand core knowledge web; do grep -q \"dist/src/index.js\" packages/$p/package.json || exit 1; done",
+        "expect": "bin field → dist; launcher file AND root-workspace bin field gone; the dist bin speaks usage under node 22.14 AND 24.19 explicitly (no PATH ambiguity); every sibling entry points at dist"
       },
-      "satisfies": [
-        "FR-1"
-      ],
+      "satisfies": ["FR-1"],
       "implements": [],
       "honors": [],
       "accepts": [],
@@ -204,70 +181,48 @@
       "id": "T-1",
       "title": "The dev link, one command",
       "phase": "core",
-      "detail": "From a FRESH temp clone (not this tree): corepack enable, pnpm install, pnpm build, pnpm link --global (from packages/cli); then from /tmp: treadle --help, do where, know validate — all exit 0. Record the exact command chain the guide will teach.",
+      "detail": "The committed script scripts/cleanroom-link.sh: fresh temp clone → corepack enable → pnpm install → pnpm build → pnpm link --global (from packages/cli) → from /tmp: treadle --help, do where, know validate — exit codes asserted, transcript artifact path recorded in the evidence row.",
       "verify": {
-        "cmd": "clean-room script: temp clone → link chain → /tmp assertions",
-        "expect": "all commands green from an arbitrary directory on a fresh clone; no launcher file touched"
+        "cmd": "bash treadle/scripts/cleanroom-link.sh",
+        "expect": "all commands green from an arbitrary directory on a fresh clone; transcript recorded; no launcher file touched"
       },
-      "satisfies": [
-        "FR-2",
-        "FR-4"
-      ],
-      "needs": [
-        "T-0"
-      ],
+      "satisfies": ["FR-2", "FR-4"],
+      "needs": ["T-0"],
       "implements": [],
       "honors": [],
-      "accepts": [
-        "AC-1"
-      ],
+      "accepts": ["AC-1"],
       "status": "todo"
     },
     {
       "id": "T-2",
       "title": "The git install from main",
       "phase": "core",
-      "detail": "Repo-root package.json (private, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build); clean-room: the REAL git URL (github:phanijapps/engram-dev#main) via npm i -g --allow-scripts=<name> → treadle from /tmp on both node floors; pnpm git path retested once, recorded working or broken. Push to engram-dev main is part of the loop (the remote is wired).",
+      "detail": "Repo-root package.json: name engram-dev, private, packageManager: pnpm@9.15.9 (corepack pins; first-run network fetch is a declared risk), workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack enable + pnpm install --frozen-lockfile + pnpm build, AND dependencies: the four @treadle/* as file:treadle/packages/* (workspaces ship nothing in a pack — the file: deps are what makes the global tree resolve siblings). Root .gitignore gains node_modules/ + package-lock.json. Clean-room script committed as scripts/cleanroom-git.sh (transcript artifact under /tmp, path in the evidence row): the REAL URL github:phanijapps/engram-dev#main via npm i -g --allow-scripts=engram-dev → treadle from /tmp on both node floors; pnpm git path retested once, recorded.",
       "verify": {
-        "cmd": "npm i -g --allow-scripts=<name> github:phanijapps/engram-dev#main && cd /tmp && treadle do where /tmp",
-        "expect": "treadle delivered from the REAL git main; works from any directory; the flag documented in the same command"
+        "cmd": "bash treadle/scripts/cleanroom-git.sh",
+        "expect": "the committed script installs from the REAL git main and asserts treadle works from /tmp on both node binaries; the transcript path is recorded in the evidence row (falsifiable: anyone re-runs the script)"
       },
-      "satisfies": [
-        "FR-3",
-        "FR-4",
-        "FR-5"
-      ],
-      "needs": [
-        "T-0"
-      ],
+      "satisfies": ["FR-3", "FR-4", "FR-5"],
+      "needs": ["T-0"],
       "implements": [],
       "honors": [],
-      "accepts": [
-        "AC-2"
-      ],
+      "accepts": ["AC-2"],
       "status": "todo"
     },
     {
       "id": "T-3",
       "title": "Docs tell the truth",
       "phase": "polish",
-      "detail": "Guide section 03 rewritten (two one-command paths, node floor stated, the flag explained, launcher dance gone, troubleshooting row for allow-scripts); README install block matches; every documented command run literally as the evidence.",
+      "detail": "Guide section 03 rewritten (two one-command paths, node floor stated, the flag explained); the launcher dance GONE everywhere: grep -il launcher docs/guide/index.html returns zero (the HARNESS_CLI troubleshooting row re-points at the clean-room truths); README install block matches; every documented command run literally as the evidence.",
       "verify": {
-        "cmd": "the documented commands, run literally from the guide text",
-        "expect": "each command works as written — the literal run is the evidence"
+        "cmd": "cd treadle && node scripts/link-check.mjs && ! grep -il launcher ../docs/guide/index.html && ! grep -q \"treadle.mjs\" ../README.md",
+        "expect": "links green; zero launcher mentions in the guide; README clean; the literal runs recorded"
       },
-      "satisfies": [
-        "FR-6"
-      ],
-      "needs": [
-        "T-1",
-        "T-2"
-      ],
+      "satisfies": ["FR-6"],
+      "needs": ["T-1", "T-2"],
       "implements": [],
       "honors": [],
-      "accepts": [
-        "AC-3"
-      ],
+      "accepts": ["AC-3"],
       "status": "todo"
     },
     {
@@ -279,13 +234,8 @@
         "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
         "expect": "gates green; rounds recorded; closed by owner"
       },
-      "satisfies": [
-        "FR-7",
-        "FR-8"
-      ],
-      "needs": [
-        "T-3"
-      ],
+      "satisfies": ["FR-7", "FR-8"],
+      "needs": ["T-3"],
       "implements": [],
       "honors": [],
       "accepts": [],
@@ -293,7 +243,14 @@
     }
   ],
   "review": {
-    "verdicts": []
+    "verdicts": [
+      {
+        "on": "R1",
+        "verdict": "MAJOR REWRITE",
+        "by": "agent:red-forman",
+        "note": "The artifact round reproduced my experiments and broke the two load-bearing proofs — the strongest catch this repo has had. (1) The dist-bin \"proven on both floors\" was a FALSE GREEN: my test ran through PATH, which held the old launcher→tsx symlink — the dist bin actually dies on BOTH nodes because every workspace sibling keeps main→src/index.ts (node 22: ERR_UNKNOWN_FILE_EXTENSION at brand; node 24: ERR_MODULE_NOT_FOUND at brand/src/brand.js — native stripping never rewrites .js→.ts, so even EXP A's \"node 24 runs TS\" premise was the launcher, not the language). The tenth instance of the class, disclosed. (2) The git-install sibling resolution was unproven and its stated mechanism wrong: workspaces are not dependencies and packs ship no node_modules — the root must declare the four @treadle/* as file: deps. All 12 findings folded: every package entry → dist (FR-1/T-0 widened, verify given teeth — no || true, explicit binaries, launcher field AND file both gone); the orchestrator named engram-dev with packageManager pinned, file: deps, root gitignore; clean-room scripts COMMITTED (scripts/cleanroom-{link,git}.sh) with transcript artifacts — the proofs falsifiable; D-1 accepted citing the room answer; FR-7 restated truthfully (the fences walk treadle/ only — the root file is out of scope by construction, not by allowance); counts corrected (206 files, 10 relocated, none lost); T-3 scoped to zero launcher mentions anywhere in the guide."
+      }
+    ]
   },
   "format": "specpack/0.3",
   "revision": 5

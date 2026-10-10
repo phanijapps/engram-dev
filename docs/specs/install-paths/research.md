@@ -18,7 +18,21 @@ Then the guide's section 03 shrinks to match reality.
 
 ## 2. What the experiments proved
 
-### EXP A — pnpm link, today's shape (PROVEN, with a lucky crutch)
+### EXP A — pnpm link, today's shape (REVISED IN R1 — the green was the launcher's)
+
+> **R1 correction (the tenth instance):** the "dist bin works on both
+> floors" claim below was a FALSE GREEN — the test ran `treadle`
+> through PATH, which still held the old launcher→tsx symlink. The
+> dist bin itself dies on BOTH nodes: every workspace sibling
+> (brand/core/web/knowledge) keeps `main → src/index.ts`, so the
+> moment the dist entry imports `@treadle/brand`, node 22 hits
+> `ERR_UNKNOWN_FILE_EXTENSION` and node 24 hits `ERR_MODULE_NOT_FOUND`
+> (native stripping does not rewrite `.js`→`.ts`). Even "node 24 runs
+> the TS bin" was the launcher doing the work. The wave's T-0 widens
+> to every package entry → dist and re-proves by invoking each node
+> binary directly.
+
+### EXP A — original record (kept as the honest history)
 
 ```
 cd treadle/packages/cli && pnpm link --global
@@ -35,11 +49,11 @@ Node is **24**, whose native type-stripping runs the `.ts` bin:
 - **Node 22.14 (present at /usr/local/bin/node) refuses it**:
   `ERR_UNKNOWN_FILE_EXTENSION` — proven by running the same file under 22. The guide documents "Node 22+"; the current bin breaks that
   floor on every machine that takes the docs at their word.
-- **The fix is proven too**: `bin → ./dist/src/main.js` (tsc already
-  emits it WITH the `#!/usr/bin/env node` shebang, because main.ts
-  carries it). Re-linked that way, `treadle --help` ran green under
-  Node 22.14 AND 24. The dist bin resolves workspace deps through the
-  pnpm link target's own node_modules — no launcher file needed.
+- **The fix direction survives, the proof did not**: `bin → ./dist/src/main.js`
+  (tsc emits it WITH the shebang) — but the re-linked run went through
+  PATH and the old launcher answered. The REAL fix spans every
+  package entry (siblings → dist/src/index.js); T-0 proves it by
+  invoking the binaries explicitly.
 - Consequence: the checked-in `bin/treadle.mjs` launcher retires (it
   exists only because the bin shape was wrong); `pnpm build` becomes a
   prerequisite of linking (or the link command chains it — see tasks).
@@ -89,9 +103,11 @@ otherwise the guide says npm for git installs, pnpm for the dev link.
   `prepare` building the workspace. The guide teaches
   `npm i -g --allow-scripts=… github:<repo>#main` with the flag named
   and explained (it is a security default, not an obstacle).
-- **files/prepublish hygiene**: the root ships only what the bin needs
-  (no corpus, no coverage); workspace deps install via the root's
-  prepare, not as workspace-protocol links into the global tree.
+- **sibling resolution is the real mechanism (R1 #2)**: workspaces
+  ship nothing in a pack — the root declares the four `@treadle/*` as
+  `file:treadle/packages/*` dependencies so the global tree resolves
+  them; the clean-room script proves the import chain before any doc
+  text exists.
 - **Clean-room verification**: every path proves itself in a temp
   clone (`git clone` → link / install → `treadle do where` → exit 0)
   on BOTH node floors present on this machine (22.14, 24.19).
