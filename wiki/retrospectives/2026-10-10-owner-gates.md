@@ -61,3 +61,20 @@ Source: `treadle/packages/knowledge/src/fingerprints.ts:1`.
 
 Read [the initiative](/initiatives/spec-completion-handoff.md) and
 [the accepted contract change](/decisions/specpack-owner-gates.md).
+
+
+# First independent review and repair
+
+The first independent review found 2 blockers and 1 defect.
+The late contrast fix broke the pinned gradient test.
+The schema check depended on an undeclared validator.
+A skill eval referred to an absent command flag.
+Source: `specs/spec-completion-handoff/delivery-review-1.md:1`.
+
+The repair restores the gradient and preserves readable text in both themes.
+The schema check now uses a declared repository dependency.
+The installed skill copies match the corrected source.
+The full gate passed 146 tests after the repair.
+These checks supplement the prior task evidence.
+Independent review and owner closure remain separate.
+Source: `specs/spec-completion-handoff/execution-log.md:1`.

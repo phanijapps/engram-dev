@@ -40,12 +40,13 @@ fs.mkdirSync(output, { recursive: true });
   const ratio = (a, b) => { const l = [luminance(a), luminance(b)].sort((a, b) => b - a); return (l[0] + 0.05) / (l[1] + 0.05); };
   for (const theme of ['light', 'dark']) {
     await page.evaluate(t => document.documentElement.dataset.theme = t, theme);
+    await page.evaluate(async () => { await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); await Promise.all(document.getAnimations().map(a => a.finished.catch(() => {}))); });
     await page.evaluate(fs.readFileSync(process.env.AXE_SCRIPT, 'utf8'));
     const audit = await page.evaluate(async () => (await axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] } })).violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target) })));
     audits.push({ theme, violations: audit });
     await page.locator('#owner-start').focus();
-    const colors = await page.locator('#owner-start').evaluate(e => { const s = getComputedStyle(e); return { foreground: s.color, background: s.backgroundColor, outline: s.outlineColor, panel: getComputedStyle(e.parentElement).backgroundColor }; });
-    const contrast = { theme, ...colors, textRatio: ratio(colors.foreground, colors.background), focusRatio: ratio(colors.outline, colors.panel) };
+    const colors = await page.locator('#owner-start').evaluate(e => { const s = getComputedStyle(e); return { foreground: s.color, background: s.backgroundImage, outline: s.outlineColor, panel: getComputedStyle(e.parentElement).backgroundColor }; });
+    const contrast = { theme, ...colors, textRatio: Math.min(...colors.background.match(/rgb\([^)]*\)/g).map(c => ratio(colors.foreground, c))), focusRatio: ratio(colors.outline, colors.panel) };
     assert.ok(contrast.textRatio >= 4.5, 'Owner button text contrast');
     assert.ok(contrast.focusRatio >= 3, 'Owner focus contrast');
     contrasts.push(contrast);

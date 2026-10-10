@@ -79,7 +79,7 @@
         "Shows the owner the drift: paths, pinned vs current digests",
         "Names both remedies (re-pin and continue, or replan) with the risk of each",
         "Does not re-pin frozen context before the owner approves",
-        "Records the approval as --approved-by human:<owner>",
+        "Records the actual owner-approved repair; requests a fresh do start receipt if the plan changes; uses owner-recorded do record --result unblock only for blocked tasks",
         "No silent re-pin, unblock, or pack amendment to keep moving"
       ]
     },

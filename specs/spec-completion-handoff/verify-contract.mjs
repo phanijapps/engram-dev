@@ -5,7 +5,7 @@ import {dirname,join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
 const dir=dirname(fileURLToPath(import.meta.url));const root=resolve(dir,'../..');
-const require=createRequire(import.meta.url);const Ajv=require(process.env.AJV_MODULE);
+const require=createRequire(join(root,'treadle/package.json'));const Ajv=require('ajv/dist/2020.js');
 const schema=JSON.parse(readFileSync(join(root,'wiki/assets/contracts/specpack-owner-workflow.schema.json'),'utf8'));
 const validate=new Ajv({strict:false,allErrors:true,validateFormats:false}).compile(schema);
 const actual=JSON.parse(readFileSync(join(dir,'spec-completion-handoff.json'),'utf8'));

@@ -119,3 +119,31 @@ The independent reviewer includes this within-scope correction and current evide
 The owner independently completed the earlier docs-root-migration record through the library.
 Its revision 23 contains the real owner acceptance and closure fields.
 The wiki adds a dated supplement; this initiative did not infer that closure.
+
+
+## Delivery review 1 and repair
+
+The independent reviewer found 2 blockers and 1 defect at HEAD 797bf408.
+The report remains in delivery-review-1.md. No PACK PASS was recorded.
+The late contrast fix removed a gradient that the skin test requires.
+The repair restores that gradient and keeps text contrast above 4.5 in both themes.
+The schema verifier now uses declared Ajv 8.17.1 from the repository.
+Two new conformance tests check the schema during pnpm check.
+The skill eval now describes supported owner acts instead of an absent flag.
+All installed copies match the shipped skill trees.
+
+The first new schema test assumed an act in a fixture that has none.
+The corrected test adds a valid human act before it checks an invalid agent act.
+The browser audit briefly measured labels during a theme transition.
+It now waits for active transitions. The stable audit reports no violations.
+The complete capture matrix was viewed again.
+HTML validation passes with the standard and accessibility presets.
+The recommended preset adds style rules that conflict with the existing formatter.
+Those style rules are not part of the declared HTML check.
+
+The exact T-6 command passed again after these repairs: exit 0.
+It passed 146 tests, coverage floors, corpus, brand and links.
+Coverage is 85.92 percent lines and 75.78 percent branches in this run.
+The plain schema command and exact T-5 command also passed: exit 0.
+The completed task evidence remains unchanged. These are supplemental checks.
+A second independent review must pass before the owner completion handoff.
