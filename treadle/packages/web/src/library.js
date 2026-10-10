@@ -532,6 +532,29 @@ function phaseStates(spec) {
   ];
 }
 
+async function loadGate() {
+  const panel = document.getElementById('gatePanel');
+  if (!panel || !S.sel || S.sel.indexOf('legacy:') === 0) return;
+  try {
+    const r = await fetch('/alignment/' + encodeURIComponent(S.sel));
+    if (!r.ok) {
+      panel.textContent = 'the gate could not be read (' + r.status + ')';
+      return;
+    }
+    const out = await r.json();
+    panel.className = '';
+    panel.style.cssText = 'padding:10px 8px;font-size:12px';
+    panel.textContent = out.sentence;
+    if (out.violations && out.violations.length) {
+      panel.innerHTML += out.violations
+        .map((v) => '<div class="meta" style="color:var(--error)">' + esc(v) + '</div>')
+        .join('');
+    }
+  } catch (e) {
+    panel.textContent = 'gate unavailable';
+  }
+}
+
 function paintInspector() {
   const host = document.getElementById('inspector');
   if (!host) return;
@@ -566,11 +589,71 @@ function paintInspector() {
         '</div>',
     )
     .join('');
+  /* ── the conformance phase's panels (DES-7): telemetry + the gate ── */
+  const verdicts = ((S.spec || {}).review || {}).verdicts || [];
+  let findings = [];
+  for (const v of verdicts) for (const f of v.findings || []) findings.push(f);
+  const bySev = { BLOCKER: 0, DEFECT: 0, SMELL: 0 };
+  for (const f of findings) if (bySev[f.severity] !== undefined) bySev[f.severity]++;
+  const reviewer = verdicts.length ? verdicts[0].by : '';
+  const sevRow = (cls, label, n) =>
+    '<button class="sev-filter" data-sev="' +
+    label +
+    '" aria-pressed="false">' +
+    '<span class="sev ' +
+    cls +
+    '">' +
+    label +
+    '</span> ' +
+    n +
+    '</button>';
   host.innerHTML =
     '<div class="group"><h2>Phases</h2>' +
     rows +
     '</div>' +
-    '<div id="gatePanel" class="empty" style="padding:12px 8px;font-size:12px">The conformance panel lands with the gate.</div>';
+    '<div class="group"><h2>Review</h2>' +
+    '<div id="telemetry">' +
+    '<div class="meta" style="margin:4px 0 8px">' +
+    esc(reviewer) +
+    ' · ' +
+    verdicts.length +
+    ' verdicts</div>' +
+    '<div style="display:flex;gap:6px;flex-wrap:wrap">' +
+    sevRow('b', 'BLOCKER', bySev.BLOCKER) +
+    sevRow('d', 'DEFECT', bySev.DEFECT) +
+    sevRow('s', 'SMELL', bySev.SMELL) +
+    '</div>' +
+    '<div id="findingList" style="margin-top:8px"></div>' +
+    '</div></div>' +
+    '<div class="group"><h2>Gate</h2><div id="gatePanel" class="empty" style="padding:10px 8px;font-size:12px">loading…</div>' +
+    '<div class="note" style="font-size:10px;color:var(--ink-2);padding:0 8px 8px">refreshes on interaction — no live socket in v1</div></div>';
+  host.querySelectorAll('.sev-filter').forEach((btn) => {
+    btn.onclick = () => {
+      const sev = btn.dataset.sev;
+      const on = btn.getAttribute('aria-pressed') === 'true';
+      host.querySelectorAll('.sev-filter').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+      const list = host.querySelector('#findingList');
+      if (on || !sev) {
+        list.innerHTML = '';
+        return;
+      }
+      list.innerHTML = findings
+        .filter((f) => f.severity === sev)
+        .map(
+          (f) =>
+            '<div class="meta" style="margin:3px 0"><span class="sev ' +
+            sev[0].toLowerCase() +
+            '">' +
+            esc(f.severity) +
+            '</span> ' +
+            esc(String(f.note || '').slice(0, 90)) +
+            '</div>',
+        )
+        .join('');
+    };
+  });
+  loadGate();
   host.querySelectorAll('.phase-row').forEach((row) => {
     const go = () => {
       location.hash = '#/' + S.sel + '/' + row.dataset.tab;
@@ -658,6 +741,7 @@ async function loadAll() {
 }
 
 window.addEventListener('hashchange', route);
+window.addEventListener('focus', () => loadGate()); // R2: a named refresh trigger
 $('search').addEventListener('input', paintPane);
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;

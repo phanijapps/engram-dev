@@ -484,6 +484,21 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
+
+      /* the telemetry panel (DES-7) */
+      .sev-filter {
+        background: var(--surface-2);
+        border: none;
+        border-radius: 8px;
+        padding: 3px 8px;
+        cursor: pointer;
+        font: inherit;
+        font-size: 11px;
+        font-family: var(--voice-mono);
+      }
+      .sev-filter[aria-pressed='true'] {
+        background: var(--surface-4);
+      }
     </style>
   </head>
   <body>

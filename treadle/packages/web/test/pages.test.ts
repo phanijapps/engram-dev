@@ -49,6 +49,12 @@ describe('the room page contract (absorbed)', () => {
     }
   });
 
+  it('never carries the false format tag from the artifacts (FR-8, R3)', () => {
+    for (const asset of [PAGE_HTML, PAGE_JS, LIB_HTML, LIB_JS]) {
+      expect(asset).not.toContain('specpack/0.4.1'); // the Stitch artifacts' invented tag — the contract is 0.3
+    }
+  });
+
   it('hits the adapter endpoints', () => {
     expect(PAGE_JS).toContain('/spec');
     expect(PAGE_JS).toContain('/event');

@@ -51,10 +51,11 @@ describe('the phase inspector (T-3)', () => {
       const selected = h.window.document.querySelector('.tab[aria-selected="true"]');
       expect(selected?.textContent).toContain('Tasks');
 
-      // read-only: no admission controls in the pane
+      // read-only: no ADMISSION controls in the pane (view filters from T-8 are welcome)
       const inspector = h.window.document.getElementById('inspector');
-      expect(inspector?.querySelector('button:not(.theme-toggle)')).toBeNull();
-      expect(inspector?.querySelector('textarea')).toBeNull();
+      expect(inspector?.querySelector('textarea')).toBeNull(); // cannot answer
+      expect(inspector?.querySelector('.btn.primary, .btn.go, .btn.warn')).toBeNull(); // cannot submit/approve/idk
+      expect(inspector?.textContent).not.toContain('Approve this spec');
     } finally {
       await lib.close();
       rmSync(root, { recursive: true, force: true });
