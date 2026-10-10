@@ -176,7 +176,7 @@ export function registerKnow(knowCmd: Command): void {
       const rep = validateBundle(bundle);
       const review = anchorReview(bundle, opts.workspace);
       const flagged = review.filter(
-        (r) => r.verdict !== 'current' && r.verdict !== 'wiki-internal',
+        (r) => r.verdict === 'changed' || r.verdict === 'missing-file', // python parity: untracked is report-only
       ).length;
       const pending = listFindings({ bundle, status: 'pending' }).length;
       console.log(`freshness: ${fresh}`);
