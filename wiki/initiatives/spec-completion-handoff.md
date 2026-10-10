@@ -53,6 +53,12 @@ Sources: `specs/spec-completion-handoff/plan-review.md:1`;
 `specs/spec-completion-handoff/plan-scope.json:1`;
 `specs/spec-completion-handoff/plan-verification.json:1`.
 
+The owner asked for simpler questions. The current questions describe each
+choice and its effect in plain language. The plan scope, original owner answer,
+proposed decisions and blocked tasks remain unchanged.
+Sources: `specs/spec-completion-handoff/spec-completion-handoff.json:1`;
+`specs/spec-completion-handoff/question-wording-revision-6.json:1`.
+
 Read [status rules](/domain/specpack-status-vocabulary.md),
 [the affected migration](/initiatives/docs-root-migration.md), and
 [open work](/project/open-work.md).

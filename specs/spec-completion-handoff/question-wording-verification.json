@@ -1,0 +1,69 @@
+{
+  "observed_at": "2026-10-10T21:54:58.623195+00:00",
+  "scope": "Question wording only. Plan scope unchanged; no decision acceptance or start permission.",
+  "checks": [
+    {
+      "name": "check",
+      "cmd": [
+        "pnpm",
+        "check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-check.log"
+    },
+    {
+      "name": "coverage",
+      "cmd": [
+        "pnpm",
+        "coverage"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-coverage.log"
+    },
+    {
+      "name": "corpus",
+      "cmd": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-corpus.log"
+    },
+    {
+      "name": "brand",
+      "cmd": [
+        "pnpm",
+        "brand:check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-brand.log"
+    },
+    {
+      "name": "alignment",
+      "cmd": [
+        "./node_modules/.bin/tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "check",
+        "../specs/spec-completion-handoff"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-alignment.log"
+    },
+    {
+      "name": "scope",
+      "cmd": [
+        "./node_modules/.bin/tsx",
+        "../specs/spec-completion-handoff/verify-plan.mjs"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "question-wording-scope.log"
+    }
+  ]
+}

@@ -67,7 +67,7 @@ const startQuestion = doc.spec.clarifications.find(
   (question) => question.id === "Q-6",
 );
 assert.equal(startQuestion.status, "open");
-assert.ok(startQuestion.question.includes(scope.digest));
+assert.ok(startQuestion.notes.includes(scope.digest));
 const sourcePaths = [
   "treadle/packages/core/src/specpack/next.ts",
   "treadle/packages/core/src/specpack/record.ts",

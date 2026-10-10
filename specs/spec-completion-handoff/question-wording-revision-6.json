@@ -1,0 +1,733 @@
+{
+  "id": "spec-completion-handoff",
+  "name": "spec-completion-handoff",
+  "description": "Owner decisions before execution and an observable final completion handoff",
+  "date": {
+    "updated": "2026-10-10T21:51:23.077Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "blocked"
+  },
+  "metadata": {
+    "analysis": {
+      "ref": "bug-owner-gates.md",
+      "type": "text/markdown"
+    },
+    "probe": {
+      "ref": "probe.mjs",
+      "type": "text/javascript",
+      "description": "Disposable-fixture analysis probe; does not perform live owner acts"
+    },
+    "observations": {
+      "ref": "probe.json",
+      "type": "application/json"
+    },
+    "snapshot": {
+      "ref": "observed-docs-root-migration.json",
+      "type": "application/json",
+      "description": "Observed revision20 with actual browser approval; unchanged owner decision and closure state"
+    },
+    "review": {
+      "ref": "review.md",
+      "type": "text/markdown"
+    },
+    "verification": {
+      "ref": "verification.json",
+      "type": "application/json"
+    },
+    "wiki-verification": {
+      "ref": "wiki-verification.json",
+      "type": "application/json"
+    },
+    "owner-flow": {
+      "ref": "owner-flow.md",
+      "type": "text/markdown"
+    },
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown"
+    },
+    "pre-plan-snapshot": {
+      "ref": "pre-plan-revision-4.json",
+      "type": "application/json"
+    },
+    "plan-review": {
+      "ref": "plan-review.md",
+      "type": "text/markdown"
+    },
+    "plan-scope": {
+      "ref": "plan-scope.json",
+      "type": "application/json"
+    },
+    "plan-scope-capture": {
+      "ref": "plan-scope.mjs",
+      "type": "text/javascript"
+    },
+    "plan-verification": {
+      "ref": "plan-verification.json",
+      "type": "application/json"
+    },
+    "plan-gates": {
+      "ref": "plan-gates.json",
+      "type": "application/json"
+    },
+    "plan-verifier": {
+      "ref": "verify-plan.mjs",
+      "type": "text/javascript"
+    },
+    "plan-wiki-verification": {
+      "ref": "plan-wiki-verification.json",
+      "type": "application/json"
+    }
+  },
+  "spec": {
+    "why": "Owner approved the completed docs-root-migration loop, but its spec remains active; analyze approval, decision resolution, closure, UI and skill handoff seams.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Owner decision acceptance gates the whole plan before start and each task against its required accepted decisions.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Expose explicit human decision acceptance/rejection through CLI and browser admission with revision checks.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "An explicit owner completion act records complete/delivered only after evidenced tasks and current independent PACK PASS.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Expose distinct pending question, decision, start, implementation, review, closure and delivered handoffs.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Align shipped and installed analyze/plan/implement/review skills with the owner gates.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "Connect requirement, brief, spec, design/plan and task artifacts; gate spec questions separately from design decisions.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "Require separate human start permission bound to the exact canonical plan scope; invalidate it on semantic plan amendments.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-8",
+        "text": "Run all approved tasks sequentially with actual evidence, stop on a new gate/failure, then request independent red-foreman review.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-9",
+        "text": "Version gated work so old engines refuse it while legacy golden witnesses remain byte-identical.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Final UI choice: a separate Finish spec act, or an explicitly labelled final approval with visible per-decision resolution?",
+        "status": "resolved",
+        "owner": "project owner",
+        "kind": "open",
+        "notes": "Blocks final UI design acceptance, not root-cause analysis. Resolve on concrete planning alternatives; do not infer an answer.",
+        "answer": "The UI or the flow should be User Requirement -> Brief \nBrief -> Spec .. Approval gate if there are open questions to get started\nSpec -> Design/Plan -> Approval Gates on decisions \nplan -> Tasks -> Wait for approval to  start\nImplement to run all tasks and red-forman reveiew",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T21:36:09Z"
+      },
+      {
+        "id": "Q-2",
+        "question": "D-1: Approve a whole-plan decision barrier before task start, with per-task decision links so rejected designs cannot execute? Read design.md and plan.md.",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "choice",
+        "options": [
+          "Accept this decision",
+          "Request changes"
+        ],
+        "resolved_by": "D-1",
+        "notes": "Decision-specific consent only. Answering the workflow question or generic spec approval does not accept this proposal or authorize task start."
+      },
+      {
+        "id": "Q-3",
+        "question": "D-2: Use a separate Finish spec owner act after all evidenced tasks and current independent PACK PASS? This decision covers final closure, not permission to start.",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "choice",
+        "options": [
+          "Accept this decision",
+          "Request changes"
+        ],
+        "resolved_by": "D-2",
+        "notes": "Decision-specific consent only. Answering the workflow question or generic spec approval does not accept this proposal or authorize task start."
+      },
+      {
+        "id": "Q-4",
+        "question": "D-3: Use opt-in specpack/0.4 for guarded work, preserving legacy records and requiring explicit owner adoption of active legacy packs?",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "choice",
+        "options": [
+          "Accept this decision",
+          "Request changes"
+        ],
+        "resolved_by": "D-3",
+        "notes": "Decision-specific consent only. Answering the workflow question or generic spec approval does not accept this proposal or authorize task start."
+      },
+      {
+        "id": "Q-5",
+        "question": "D-4: Bind start permission to the exact plan scope and persist owner receipts atomically with serialized writes and a recoverable audit journal?",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "choice",
+        "options": [
+          "Accept this decision",
+          "Request changes"
+        ],
+        "resolved_by": "D-4",
+        "notes": "Decision-specific consent only. Answering the workflow question or generic spec approval does not accept this proposal or authorize task start."
+      },
+      {
+        "id": "Q-6",
+        "question": "After D-1 through D-4 are accepted, authorize implementation of Plan 1, scope SHA256 7469f1c44e8b85379df31fc2275c197a07827e43de21b95c36c99d8f46a7ebf3? Review plan.md and plan-scope.json. This is separate permission to run the seven planned tasks and independent review.",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "choice",
+        "options": [
+          "Approve execution of Plan 1",
+          "Keep waiting"
+        ],
+        "notes": "Permission applies only after all four decisions are accepted and the exact reviewed scope still matches. Generic spec approval does not authorize execution."
+      }
+    ],
+    "out_of_scope": [
+      "Implementation before owner decision and exact-plan start approval",
+      "Accepting/rejecting prior documentation decisions",
+      "Closing or rolling back the prior documentation initiatives",
+      "Historical retrospective reconstruction",
+      "Remote authentication or source-freshness redesign",
+      "Generic job scheduling or speculative parallel execution"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "the project owner",
+        "want": "a brief/spec/design/task flow with decision acceptance and separate start permission before the agent runs all planned tasks and independent review",
+        "so": "owner consent controls execution and the final recorded delivery state is truthful"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Approve whole-plan design decisions before start, retaining per-task decision dependencies for rejected choices",
+        "because": "Owner Q1 specifies a design approval barrier. Original scoped-only proposal is preserved in pre-plan-revision-4.json; this is an unaccepted planning refinement.",
+        "status": "proposed",
+        "resolves": [
+          "Q-2"
+        ]
+      },
+      {
+        "id": "D-2",
+        "decision": "Expose a separate Finish spec act through evidence-gated human closure after current independent PACK PASS",
+        "because": "Owner flow names implementation and independent review but does not choose the final closure label or actor. Explicit finish is a concrete proposal, not inferred consent.",
+        "status": "proposed",
+        "resolves": [
+          "Q-3"
+        ]
+      },
+      {
+        "id": "D-3",
+        "decision": "Introduce opt-in specpack/0.4 for owner-gated work; preserve legacy bytes and adopt active legacy packs only through an owner act",
+        "because": "Old engines refuse unknown formats instead of silently bypassing new fields; legacy corpus witnesses and the original schema remain unchanged.",
+        "status": "proposed",
+        "resolves": [
+          "Q-4"
+        ]
+      },
+      {
+        "id": "D-4",
+        "decision": "Store separate scope-bound start receipts, serialize mutations and atomically persist owner acts before recoverable audit append",
+        "because": "Generic approval is not execution consent; semantic scope changes revoke permission. Atomic authoritative pack receipts avoid lost or repeated owner acts on journal failure.",
+        "status": "proposed",
+        "resolves": [
+          "Q-5"
+        ]
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Versioned owner policy and guarded machine mutations",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-1",
+          "FR-3",
+          "FR-4",
+          "FR-6",
+          "FR-7",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Owner CLI and bootstrap adoption",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-6",
+          "FR-7",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "Serialized browser admission and durable audit",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-7"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "Owner phase flow and task/closure controls",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-6",
+          "FR-7"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "Approved-sequence skill orchestration",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-5",
+          "FR-8"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "Conformance and complete owner-flow integration",
+        "kind": "mechanism",
+        "detail": "See design.md and the corresponding plan task frozen context.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-7",
+          "FR-8",
+          "FR-9"
+        ]
+      }
+    ],
+    "approach": "Proposed owner flow from Q1: brief, spec question ceremony, design decision barrier, exact-plan start, approved sequential tasks, independent review and explicit owner finish. See design.md and plan.md; no implementation consent is inferred."
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Implement the 0.4 contract and core owner gates",
+      "detail": "Implement plan.md T-1 only after owner decision acceptance and exact-plan start consent. Core fixtures exercise first handout/resume/record gates, rejected decision links, conditional spec ceremony, digest invalidation, current review/closure, actor claims and legacy output equality.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [],
+      "satisfies": [
+        "FR-1",
+        "FR-3",
+        "FR-4",
+        "FR-6",
+        "FR-7",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/core/test/owner-workflow.test.ts packages/core/test/core.test.ts",
+        "expect": "Core fixtures exercise first handout/resume/record gates, rejected decision links, conditional spec ceremony, digest invalidation, current review/closure, actor claims and legacy output equality."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/core/src/specpack"
+          },
+          {
+            "path": "treadle/packages/core/src/index.ts"
+          },
+          {
+            "path": "treadle/packages/core/test/owner-workflow.test.ts"
+          },
+          {
+            "path": "wiki/assets/contracts/specpack-owner-workflow.schema.json"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-1; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-2",
+      "title": "Add owner CLI acts, strict revisions and explicit adoption",
+      "detail": "Implement plan.md T-2 only after owner decision acceptance and exact-plan start consent. Init/adopt/start/status and owner mutation fixtures pass, stale revisions do not mutate, and adoption preserves actual owner consent without backdating or touching a closed pack.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-6",
+        "FR-7",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/owner-workflow.test.ts",
+        "expect": "Init/adopt/start/status and owner mutation fixtures pass, stale revisions do not mutate, and adoption preserves actual owner consent without backdating or touching a closed pack."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/commands/do.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/owner-workflow.test.ts"
+          },
+          {
+            "path": "treadle/packages/core/src/specpack"
+          },
+          {
+            "path": "specs/spec-completion-handoff"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-2; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-3",
+      "title": "Admit browser owner acts with serialized durable audit",
+      "detail": "Implement plan.md T-3 only after owner decision acceptance and exact-plan start consent. Decision/start/close events obey core gates and held revisions; concurrent writers serialize; audit fault and recovery fixtures preserve a single recorded owner act; old journals stay readable.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-7"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/web/test/owner-workflow.test.ts",
+        "expect": "Decision/start/close events obey core gates and held revisions; concurrent writers serialize; audit fault and recovery fixtures preserve a single recorded owner act; old journals stay readable."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/servers.ts"
+          },
+          {
+            "path": "treadle/packages/web/test/owner-workflow.test.ts"
+          },
+          {
+            "path": "treadle/packages/core/src/specpack"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-3; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-4",
+      "title": "Render the required owner workflow and approval controls",
+      "detail": "Implement plan.md T-4 only after owner decision acceptance and exact-plan start consent. DOM keyboard/pointer scenarios show the declared phase order, distinguish answers/decision/start/closure acts, and never offer execution or delivery through an unresolved gate. Record manual focus/target checks during implementation.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [
+        "T-3"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-6",
+        "FR-7"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts",
+        "expect": "DOM keyboard/pointer scenarios show the declared phase order, distinguish answers/decision/start/closure acts, and never offer execution or delivery through an unresolved gate. Record manual focus/target checks during implementation."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/library.js"
+          },
+          {
+            "path": "treadle/packages/web/src/library.html"
+          },
+          {
+            "path": "treadle/packages/web/test/workflow-ui.test.ts"
+          },
+          {
+            "path": "treadle/packages/web/test/inspector.test.ts"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-4; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-5",
+      "title": "Update the four SDD skills and synchronize installed copies",
+      "detail": "Implement plan.md T-5 only after owner decision acceptance and exact-plan start consent. Four shipped skills match all three installed copies; skill evaluation covers brief/spec gates, reversible recorded decisions, explicit start, all-task stop conditions and independent review. No owner or PACK claim is fabricated.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-5",
+        "FR-8"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "node specs/spec-completion-handoff/verify-skills.mjs",
+        "expect": "Four shipped skills match all three installed copies; skill evaluation covers brief/spec gates, reversible recorded decisions, explicit start, all-task stop conditions and independent review. No owner or PACK claim is fabricated."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/review"
+          },
+          {
+            "path": ".pi/skills"
+          },
+          {
+            "path": ".codex/skills"
+          },
+          {
+            "path": ".claude/skills"
+          },
+          {
+            "path": "specs/spec-completion-handoff/verify-skills.mjs"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-5; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-6",
+      "title": "Verify full owner-flow integration and new conformance cases",
+      "detail": "Implement plan.md T-6 only after owner decision acceptance and exact-plan start consent. All gates pass; new owner-flow fixtures are reviewed deliberately and original golden bytes remain equal. End-to-end owner actors can progress through start, tasks, review and explicit completion; legacy approved documentation fixtures can use explicit decision/close controls without inferred consent.",
+      "phase": "core",
+      "status": "blocked",
+      "needs": [
+        "T-4",
+        "T-5"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm check && pnpm coverage && pnpm corpus:check && pnpm brand:check && pnpm links",
+        "expect": "All gates pass; new owner-flow fixtures are reviewed deliberately and original golden bytes remain equal. End-to-end owner actors can progress through start, tasks, review and explicit completion; legacy approved documentation fixtures can use explicit decision/close controls without inferred consent."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/conformance"
+          },
+          {
+            "path": "treadle/conformance"
+          },
+          {
+            "path": "treadle/packages/web/test/workflow-e2e.test.ts"
+          },
+          {
+            "path": "specs/spec-completion-handoff/verify-review.mjs"
+          },
+          {
+            "path": "wiki/initiatives/spec-completion-handoff.md"
+          },
+          {
+            "path": "wiki/domain/specpack-status-vocabulary.md"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-6; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    },
+    {
+      "id": "T-7",
+      "title": "Run independent red-foreman review and record the PACK verdict",
+      "detail": "Implement plan.md T-7 only after owner decision acceptance and exact-plan start consent. An independent reviewer reruns task expectations, records real severity findings or PACK PASS for the current plan scope, and the verifier reads that actual artifact. The implementer cannot write its own independent verdict; owner closure remains separate.",
+      "phase": "review",
+      "status": "blocked",
+      "needs": [
+        "T-6"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "node specs/spec-completion-handoff/verify-review.mjs",
+        "expect": "An independent reviewer reruns task expectations, records real severity findings or PACK PASS for the current plan scope, and the verifier reads that actual artifact. The implementer cannot write its own independent verdict; owner closure remains separate."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/spec-completion-handoff"
+          },
+          {
+            "path": "wiki/initiatives/spec-completion-handoff.md"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-7; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
+        ]
+      }
+    }
+  ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "ANALYSIS",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Actual independent artifact review: PASS — nothing to fix. Reran probe and do check, checked snapshot hashes, current source claims, wiki and recorded gates. See review.md. This is analysis quality only; it does not satisfy delivery PACK review."
+      },
+      {
+        "on": "PLAN",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Actual independent PLAN verdict and follow-up: PASS — nothing to fix. See plan-review.md. Planning quality only, no owner acceptance, start permission or delivery PACK review."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "../..",
+    "source_head": "5f0bd1fed1246e42f651f91f6d2166477a71c3c2",
+    "mode": "planning-awaiting-owner",
+    "source_state": "No runtime edits. Owner Q1 answer preserved. Four proposed decisions and exact Plan1 start question await separate owner acts; all seven tasks blocked."
+  },
+  "format": "specpack/0.3",
+  "revision": 6
+}
