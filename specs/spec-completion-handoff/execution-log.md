@@ -73,3 +73,17 @@ The exact task command passed five tests. See T-4-verification.log.
 The real browser checks passed in light and dark themes.
 See ui-evidence.md and ui-browser-results.json for results and limits.
 The legacy inspector still uses its original five phases.
+
+## T-5
+
+The four SDD skills now describe the approved owner workflow.
+They keep spec questions, decision acceptance, start permission and final closure separate.
+Implementation continues through the approved sequence one task at a time.
+A new design choice cannot skip approval because it is reversible.
+Progress does not rewrite the approved plan.
+
+The installer copied the same skill trees to Pi, Codex and Claude.
+The exact check compares their complete inventories and bytes.
+It also runs the real engine and CLI approval scenarios: 16 tests passed.
+The skill frontmatter validator passed for all four skills.
+See T-5-verification.log. Independent review still checks the model behavior cases.

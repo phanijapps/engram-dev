@@ -37,14 +37,36 @@ does not certify it).
    resolved them; normative discoveries went through `findings propose`,
    never written as settled truth; wiki content matches landed code
    (freshness re-anchored or staleness noted).
-7. **Read-only verdicts.** Findings route: small two-way fix → new task
-   appended to the plan (T-next, prereq-free); contract/design problem →
-   route back to `plan`; new unknown → `analyze`. Review never applies
-   fixes itself.
+7. **Read-only verdicts.** Record defects and their repair route.
+   Fixes within approved scope return to implementation. New tasks or design
+   changes return to plan for owner review. New unknowns return to analyze.
+   Review never applies fixes itself.
 8. **Pass is expensive.** The initiative slice passes only when: all
    done tasks re-verified green, zero unresolved blocker/major findings,
    traceability closed, evidence current. Partial passes are recorded
    per-task, never averaged into a vibe.
+
+## Owner workflow
+
+Use the writer skill for findings and the owner handoff.
+The reviewer must be independent of the implementation actors.
+For specpack/0.4, record PACK PASS only for the current plan digest
+and current non-review task evidence digest.
+Use `planDigest`, `evidenceDigest` and the core loader/writer API.
+Serialize this write with `withPackLock` and check the held revision.
+Record the actual reviewer identity, re-run logs and review artifact.
+Never copy an old PASS to changed scope or certify your own implementation.
+
+A failed review stops the delivery handoff. Fixes within the approved scope
+can return to implementation and then independent review.
+A new decision or changed plan needs owner review and new start permission.
+Preserve the previous plan. Do not silently add work to an approved plan.
+
+Passing task checks and PACK PASS leave the spec awaiting owner closure.
+Open the spec library at `#/slug/review` and show Finish spec.
+Only the owner's separate action marks the spec complete and freezes it.
+Do not call `do close` or click Finish spec for the owner.
+Legacy packs retain the existing explicit human closure contract.
 
 ## 1. Load
 
@@ -88,16 +110,16 @@ approve the spec, or close the pack. Keep any failed repository gates explicit.
 
 1. Write `specs/<slug>/review-<n>.md` from the template: per-task
    verdicts, findings with severity + route, re-run log (verbatim).
-2. Append routed fixes as tasks in plan.md (T-next rows, prereqs set) —
-   status `todo`, owned by the next `implement` pass.
+2. Record fixes in the review artifact and execution-log.md.
+   Any changed task plan goes back to plan for owner review before execution.
 3. Milestone note in the plan ledger + commit — the review artifact is
    the durable record (project memory back-burnered, knowledge-engine D5).
 4. At an owner handoff, start or reuse `do library <workspace>/specs` and open
    the pack in the browser (`#/slug/review`). Report the actual URL and any
    launch failure. A JSON record alone does not open a surface. Keep acceptance,
    approval, and closure as separate owner acts.
-5. Commit review artifact + plan update. Handoff: all-pass → slice
-   complete, evidence current (say until which commit); else → next
+5. Commit review artifact + plan update. Handoff: all-pass → ready for owner
+   closure, evidence current (say until which commit); else → next
    ready set after routed tasks.
 
 ## Rules

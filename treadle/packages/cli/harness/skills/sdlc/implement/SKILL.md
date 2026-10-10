@@ -1,9 +1,9 @@
 ---
 name: implement
-description: Execute one registered specpack task from its machine handout and frozen context. Run verification and admit actual evidence through do record. Use for implementing the next planned task, not analysis, planning, or independent review.
+description: Execute the owner-approved specpack sequence one task at a time from machine handouts and frozen context. Run checks and record actual evidence. Use for implementation after start permission, not planning or independent review.
 ---
 
-# implement — one task, frozen context, observed evidence
+# implement — approved sequence, one task at a time
 
 The plan's contract is load-bearing: the task, its context, its
 verification expectation, and its prereqs were settled by `plan`. This
@@ -42,7 +42,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    changed files, current state (`doing`), and what remains. Recovery
    resumes from the ledger's evidence, never from memory.
 7. **Close per task:** ledger update (evidence-cited) → commit (message
-   carries `<slug> T<n>: <goal>`); milestone notes live in the plan's
+   carries `<slug> T<n>: <goal>`); milestone notes live in execution-log.md beside the plan's
    ledger (project memory back-burnered, knowledge-engine decision D5). If the change invalidates wiki content, note
    the staleness in the ledger entry (wiki update is a task or review
    follow-up — never skipped silently).
@@ -53,8 +53,37 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    and `BLOCKED` (stall limit) are stops, not self-serve fixes. Show the
    owner: what drifted (paths, pinned vs current) or why it stalled, the
    remedies (re-pin and continue, replan, or unblock), and the risk of
-   each. Act only on the owner's approval, recorded as `do approve --by human:<owner>` (or `do record --result unblock`). Never
+   each. Resume only after the actual owner repair action. Spec approval does not
+   replace start permission. Use `do record --result unblock` for an authorized
+   unblock, and a fresh `do start` receipt if the plan changed. Never
    re-pin, unblock, or amend the pack silently to keep moving.
+
+## Owner permission and sequence
+
+New initiatives use specpack/0.4. Use `do status <packDir>` to read the current gate.
+Spec approval, decision acceptance and start permission are separate acts.
+Do not run the first task until the owner accepts every plan decision
+and gives separate permission to start the exact plan.
+Actual recorded start permission covers all tasks in that bounded sequence.
+Do not ask for permission again at each task boundary.
+
+For each task, run `do next <packDir> --expected-revision <held revision>`.
+Load the returned context. Execute only that task. Run its declared check.
+Record the actual command and exit with `do record` at the current revision.
+Continue to the next admitted task after a successful record.
+Do not run tasks concurrently or maintain a second ready set in prose.
+
+Stop on an owner gate, failed task, source drift or changed plan.
+An implementation detail within the accepted design can proceed.
+A new design choice cannot proceed merely because it is reversible.
+Keep approved plan documents unchanged. Append progress to execution-log.md.
+A changed plan needs a new owner start receipt; do not silently re-pin approval.
+
+When all implementation checks pass, hand off to an independent reviewer.
+Task completion does not mark the spec complete.
+After independent review, open the library for the owner's Finish spec action.
+Do not call `do close` or click Finish spec for the owner.
+Legacy packs retain their original contract; adoption is a separate owner action.
 
 ## 1. Select
 
@@ -96,8 +125,8 @@ bounded task's distinct verification expectation passes.
 1. Run the verification expectation **as written**. Record the evidence
    row: command, outcome (verbatim/pinned), commit ref.
 2. Flip status on evidence only (`done`, or `doing` + red-with-reason).
-3. Task-candidates discovered en route: one line each in the plan's
-   Handoff (for the next `plan` pass). Never self-expand scope.
+3. Task-candidates discovered en route: append them to execution-log.md
+   for the next `plan` pass. Never self-expand scope.
 4. Commit; milestone notes in the plan ledger ("slug: T1+T2 done, T3
    ready — see plan.md").
 

@@ -3,7 +3,7 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:29:55Z"
+    "updated": "2026-10-10T22:31:35Z"
   },
   "status": {
     "lifecycle": "active",
@@ -638,7 +638,7 @@
       "title": "Update the four SDD skills and synchronize installed copies",
       "detail": "Implement plan.md T-5 only after owner decision acceptance and exact-plan start consent. Four shipped skills match all three installed copies; skill evaluation covers brief/spec gates, reversible recorded decisions, explicit start, all-task stop conditions and independent review. No owner or PACK claim is fabricated.",
       "phase": "core",
-      "status": "blocked",
+      "status": "done",
       "needs": [
         "T-2"
       ],
@@ -685,7 +685,16 @@
         "notes": [
           "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-5; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/spec-completion-handoff/verify-skills.mjs",
+          "exit": 0,
+          "at": "2026-10-10T22:31:35Z",
+          "by": "agent:codex",
+          "notes": "Actual declared expectation passed. See T-5-verification.log. Independent delivery review remains separate."
+        }
+      ]
     },
     {
       "id": "T-6",
@@ -840,5 +849,5 @@
     "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
   "format": "specpack/0.4",
-  "revision": 30
+  "revision": 33
 }

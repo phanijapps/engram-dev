@@ -82,6 +82,17 @@
         "Records the approval as --approved-by human:<owner>",
         "No silent re-pin, unblock, or pack amendment to keep moving"
       ]
+    },
+    {
+      "id": "owner-approved-all-task-sequence",
+      "fixture_recipe": "A gated pack has actual human decisions and a current start receipt. Three dependent tasks have real checks.",
+      "prompt": "Complete the approved plan.",
+      "expectations": [
+        "Executes all three tasks sequentially through handouts and real recorded checks",
+        "Does not ask for start permission again at each task",
+        "Stops after a failed check or digest change; does not replace the start receipt",
+        "Hands off independent review and leaves Finish spec to the owner"
+      ]
     }
   ]
 }

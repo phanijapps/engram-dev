@@ -1,0 +1,61 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/core/test/owner-workflow.test.ts (9 tests) 31ms
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+born: /tmp/cli-owner-McnTWJ/p/p.json (revision 1, stage awaiting_owner)
+recorded accept by human:owner; audit recorded
+recorded start by human:owner; audit recorded
+task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+  D    D-1
+  TASK T-1 — Work
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+born: /tmp/cli-owner-Cko7LL/p/p.json (revision 1, stage awaiting_owner)
+asked Q-1 (revision 2)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > explicitly adopts active legacy bytes without inventing earlier start consent
+born: /tmp/cli-owner-YfMt2a/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+born: /tmp/cli-owner-fIq3eR/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+born: /tmp/cli-owner-DvYlBb/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+born: /tmp/cli-owner-VHfKkG/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+born: /tmp/cli-owner-jRfLnH/p/p.json (revision 1, stage awaiting_owner)
+
+ ✓ packages/cli/test/owner-workflow.test.ts (7 tests) 44ms
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  18:31:33
+   Duration  1.02s (transform 446ms, setup 0ms, collect 742ms, tests 75ms, environment 0ms, prepare 215ms)
+
+Four skill trees match Pi, Codex and Claude. Engine approval scenarios pass. Model behavior remains an independent review item.
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+REFUSED: decisions: D-1; T-1 needs D-1
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+REFUSED: A complete spec cannot be adopted
+REFUSED: Adoption needs an owner claim
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+REFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope

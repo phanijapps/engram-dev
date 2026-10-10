@@ -86,6 +86,16 @@
         "Normative 'new code must' statements routed as findings proposals, not settled truth",
         "Verification sections are plans, not observed outcomes"
       ]
+    },
+    {
+      "id": "empty-spec-ceremony",
+      "fixture_recipe": "The repository and wiki resolve every spec question. No human answers are required.",
+      "prompt": "Analyze a small feature and hand it to planning.",
+      "expectations": [
+        "Writes a brief and registered gated JSON pack",
+        "Leaves spec phase question membership empty; does not invent a question or approval",
+        "Keeps design decisions and start permission for the later owner gates"
+      ]
     }
   ]
 }

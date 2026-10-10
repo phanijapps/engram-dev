@@ -37,9 +37,8 @@ analysis, not a style choice.
 6. **Decisions are explicit and reversibility-tagged.** Record choice,
    alternatives, and two-way vs one-way door. Insufficient evidence means
    the question stays open — a DECISION is not manufactured to look done.
-7. **Interleaving is the point.** Analysis hands off slice-shaped work:
-   unblocked slices proceed while spikes and questions run. Nobody waits
-   for a complete spec.
+7. **Bounded planning.** Analysis can prepare ready slices while unknowns remain.
+   Implementation waits for the owner gates of the current plan.
 8. **Supersede, don't mutate.** A re-analysis is a new artifact that marks
    the old one `status: superseded`. Never silently rewrite a prior
    analysis to match new conclusions.
@@ -66,7 +65,7 @@ analysis, not a style choice.
 ### Register the initiative
 
 For an SDD initiative that will hand off to planning or implementation, create
-`specs/<slug>/<slug>.json` with `do init <packDir> --title "…" --why "…"`
+`specs/<slug>/<slug>.json` with `do init <packDir> --owner-gated --title "…" --why "…"`
 if it does not exist. Load and reuse an existing active pack. A completed pack
 is frozen; a new change needs a new initiative. Ordinary repository questions
 do not require creating work records.
@@ -94,6 +93,26 @@ feature analysis reveals shared-contract blast radius, the impact mode runs
 as a _separate_ artifact it links to — modes never blur into each other.
 If mode is genuinely ambiguous, pick by the question column, state the
 choice in the artifact header.
+
+## Owner handoff
+
+Write a brief before planning. State the requirement, purpose, scope and open questions.
+Use the writer skill for documents and owner questions.
+The spec states the intended behavior and observable checks.
+
+Ask only questions that the repository and wiki cannot answer.
+Register required spec questions with `do add question --phase spec`.
+Design choices belong to the later decision review, not this question ceremony.
+Keep `workflow.phase_questions.spec` empty when no spec questions are needed.
+Do not ask the owner to approve an empty question ceremony.
+When questions exist, open `do interview <packDir>` or the spec library.
+The owner answers and then approves those spec questions.
+Record the actual answer and approval; silence and defaults are not consent.
+Pass the brief, spec, question state and pack revision to plan.
+
+New packs use specpack/0.4. Existing legacy packs keep their legacy contract.
+Do not silently adopt them or invent earlier start permission.
+Adoption needs a concrete owner-approved migration and preserves the original JSON.
 
 ## 3. Mode playbooks
 

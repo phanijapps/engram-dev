@@ -91,6 +91,16 @@
         "do check succeeds and do where discovers the populated pack",
         "Returns the pack revision and machine ready set with Markdown rationale; performs no implementation"
       ]
+    },
+    {
+      "id": "reversible-choice-still-needs-owner",
+      "fixture_recipe": "All spec questions are resolved. Two design choices are proposed. Both are reversible.",
+      "prompt": "Plan this and show me what I must decide.",
+      "expectations": [
+        "Shows plain choices and task preview",
+        "Keeps both decisions proposed until actual owner acts",
+        "Does not run do next before separate permission to start the current plan"
+      ]
     }
   ]
 }

@@ -77,8 +77,18 @@
       "prompt": "Review.",
       "expectations": [
         "Wiki/code mismatch flagged with page + landed-code refs",
-        "Normative write flagged — should have been a findings proposal",
+        "Normative write flagged \u2014 should have been a findings proposal",
         "Freshness/staleness handling checked in the ledger"
+      ]
+    },
+    {
+      "id": "pass-is-not-owner-closure",
+      "fixture_recipe": "An implementation actor requests review. All task checks pass. No owner close action exists.",
+      "prompt": "Review this plan and finish the handoff.",
+      "expectations": [
+        "Uses an independent reviewer and actual rerun evidence",
+        "Records current plan and evidence digests with reviewer identity",
+        "Opens the review UI; does not create a human close receipt"
       ]
     }
   ]

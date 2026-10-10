@@ -8,7 +8,8 @@ description: Turn SDD analysis into a technical design, a populated JSON specpac
 One skill, two artifacts, depth-scaled. `design.md` answers _how the
 system should change and why that way_ — it stabilizes early and is
 reviewed once. `plan.md` is the executable consequence — a DAG of small,
-independently verifiable slices that mutates as work lands. Design depth
+independently verifiable slices. Keep approved plan artifacts unchanged.
+Progress belongs in execution-log.md and the canonical JSON pack. Design depth
 scales with blast radius: the analysis's impact artifact already says
 whether you owe a full design or a paragraph.
 
@@ -34,8 +35,8 @@ id>` — never designed around with invented answers.
 4. **Decisions are the deliverable.** Each design decision: choice,
    alternatives considered, two-way/one-way door, evidence status, and
    the question/assumption it resolves or carries. Insufficient evidence
-   = the question stays open and the slice stays blocked. One-way doors
-   need explicit owner acceptance before their tasks become ready.
+   = the question stays open and the slice stays blocked. Every design choice needs explicit owner acceptance before implementation.
+   Reversibility does not remove this requirement.
 5. **Tasks are the unit of delivery.** Small (one sitting / one reviewable
    change), independently verifiable, leaves the repo coherent. Real
    prerequisites only — a prereq is something whose _output_ you need,
@@ -87,14 +88,15 @@ pinned to wiki cids) · external contracts & data shapes (before/after,
 compatibility posture) · failure behavior (new failure modes, rollback
 story) · decisions ledger continuing the analysis's D-numbering · open
 questions/assumptions carried (never resolved by vibes) · out of scope.
-One-way-door decisions are flagged and their tasks stay `blocked-on`
-acceptance until the owner signs.
+Record every choice as proposed until the owner accepts it.
+Link each dependent task through `requires_decisions` to its actual D-ids.
+A rejected required choice blocks the affected work.
 
 ## 4. Author the task DAG (assets/plan.tmpl.md)
 
 ### Persist the machine plan
 
-Load `specs/<slug>/<slug>.json`; create it through `do init` if a legacy
+Load `specs/<slug>/<slug>.json`; create it through `do init --owner-gated` if a legacy
 analysis lacks a pack. Keep Markdown as the design rationale and readable plan.
 The JSON pack owns executable requirements, decisions, designs, task dependencies,
 verification expectations, and frozen context. Register these before handoff.
@@ -121,8 +123,30 @@ block. Then:
 2. **Traceability matrix**: R → design section → task(s) → verification
    expectation. Any R in the planned scope with no task = hole; any task
    implementing nothing = creep.
-3. **Ready set**: tasks with prereqs satisfied and no blocking ids —
-   this is implement's entry contract.
+3. **Ready set**: use machine admission to identify tasks with evidenced prerequisites.
+   A task remains unavailable until the current plan has owner start permission.
+
+## Owner decision and start gates
+
+Use the writer skill. Explain each choice, alternative and consequence in plain words.
+Show the brief, spec, design and complete task plan in the spec library.
+Let the owner accept or reject each proposed design decision.
+Wait for all decisions in this plan before starting any task.
+A generic approval does not accept decisions or give permission to start.
+
+After the decisions are accepted, show all tasks and their checks.
+Ask for the separate Start implementation action for that exact plan.
+The engine binds the start receipt to the plan digest.
+The browser checks its held revision. CLI start uses
+`do start <packDir> --by human:<owner> --expected-revision <held revision>`.
+Only record this claim from an actual owner act. Never perform it for them.
+The owner can approve a bounded sequence of tasks; do not ask again per task.
+
+Keep brief.md, spec.md, design.md and plan.md unchanged after start approval.
+Append observations to execution-log.md. Evidence changes do not amend the plan.
+A requirement, decision, dependency, check or scope change needs owner review again.
+Preserve the previous artifacts and receipt. Publish the changed plan as a new proposal.
+Do not refresh the digest or start receipt silently.
 
 ## 5. Close: record, hand off
 
