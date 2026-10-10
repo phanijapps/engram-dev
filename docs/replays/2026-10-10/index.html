@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A source-grounded replay of treadle: architecture, workflow, verification, and gaps observed on 10 October 2026.">
+    <title>treadle · Repository replay</title>
+    <style>
+      :root {
+        --paper: #f5f2e9; --paper-dark: #eae6da; --ink: #202b28;
+        --muted: #56605a; --rust: #974219; --white: #ffffff;
+        --line: #b8b9ac; --green: #236048; --red: #9b3030;
+        --ds-color-surface: var(--paper); --ds-color-surface-alt: var(--paper-dark);
+        --ds-color-on-surface: var(--ink); --ds-color-on-surface-2: var(--muted);
+        --ds-color-primary: var(--rust); --ds-color-on-primary: var(--white);
+        --ds-color-outline: var(--line); --ds-color-error: var(--red);
+        --ds-space-1: 4px; --ds-space-2: 8px; --ds-space-3: 12px;
+        --ds-space-4: 16px; --ds-space-5: 24px; --ds-space-6: 32px;
+        --ds-space-7: 48px; --ds-space-8: 64px;
+        --ds-text-small: 10pt; --ds-text-base: 13pt; --ds-text-lead: 18pt;
+        --ds-text-title: clamp(28pt, 4.2vw, 46pt);
+        --ds-text-hero: clamp(42pt, 6.3vw, 76pt);
+        --ds-leading: 1.45; --ds-radius: 4px; --ds-control: 44px;
+        --ds-slide-width: 1320px; --ds-color-good: var(--green);
+        --ds-control-focus: var(--ink); --ds-rule: 1px;
+      }
+      * { box-sizing: border-box; }
+      html { background: var(--ds-color-surface); color: var(--ds-color-on-surface); }
+      body { margin: 0; font: var(--ds-text-base)/var(--ds-leading) Arial, Helvetica, sans-serif; }
+      button, select { font: inherit; color: inherit; }
+      button, select, summary { min-height: var(--ds-control); }
+      button, select { border: var(--ds-rule) solid var(--ds-color-outline); background: transparent; border-radius: var(--ds-radius); padding: var(--ds-space-2) var(--ds-space-3); }
+      button { cursor: pointer; }
+      button:hover, button:focus-visible, select:hover, select:focus-visible { background: var(--ds-color-surface-alt); }
+      button:disabled { cursor: default; color: var(--ds-color-on-surface-2); border-style: dashed; }
+      :focus-visible { outline: 3px solid var(--ds-control-focus); outline-offset: 3px; }
+      a { color: var(--ds-color-primary); text-underline-offset: 3px; overflow-wrap: anywhere; }
+      a:hover, a:focus-visible { text-decoration-thickness: 2px; }
+      h1, h2, h3, p, figure { margin: 0; }
+      h2 { font: 400 var(--ds-text-title)/1.08 Georgia, 'Times New Roman', serif; letter-spacing: -0.025em; }
+      h3 { font-size: var(--ds-text-lead); line-height: 1.2; font-weight: 500; }
+      code { font: 0.88em/1.5 'Courier New', monospace; overflow-wrap: anywhere; }
+      ul, ol { margin: 0; padding-left: var(--ds-space-5); }
+      li + li { margin-top: var(--ds-space-3); }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+      .skip { position: absolute; top: var(--ds-space-2); left: var(--ds-space-4); background: var(--ds-color-surface); padding: var(--ds-space-3); clip: rect(0, 0, 0, 0); }
+      .skip:focus { clip: auto; z-index: 2; }
+      .shell { max-width: var(--ds-slide-width); margin: auto; padding-inline: var(--ds-space-6); }
+      .masthead { border-bottom: var(--ds-rule) solid var(--ds-color-outline); }
+      .masthead-inner { display: flex; justify-content: space-between; align-items: center; gap: var(--ds-space-5); padding-block: var(--ds-space-4); }
+      .brand { font-size: var(--ds-text-base); font-weight: 400; letter-spacing: -0.04em; }
+      .brand strong { font-size: 22pt; font-family: Georgia, 'Times New Roman', serif; margin-right: var(--ds-space-3); }
+      .meta, .eyebrow { font-size: var(--ds-text-small); text-transform: uppercase; letter-spacing: 0.12em; color: var(--ds-color-on-surface-2); }
+      .eyebrow { display: flex; gap: var(--ds-space-3); align-items: center; margin-bottom: var(--ds-space-5); }
+      .eyebrow::before { content: ''; width: var(--ds-space-6); border-top: 3px solid var(--ds-color-primary); }
+      .slide { min-height: calc(100vh - 155px); padding-block: var(--ds-space-6) var(--ds-space-5); display: flex; flex-direction: column; gap: var(--ds-space-5); border-bottom: var(--ds-rule) solid var(--ds-color-outline); }
+      .slide > .eyebrow { margin-bottom: 0; }
+      .deck-active .slide { display: none; }
+      .deck-active .slide.is-active, .deck-active.reading .slide { display: flex; }
+      .slide-header { display: grid; gap: var(--ds-space-4); }
+      .lead { font-size: var(--ds-text-lead); max-width: 68ch; color: var(--ds-color-on-surface-2); }
+      .hero { font-size: var(--ds-text-hero); max-width: 17ch; }
+      .accent { color: var(--ds-color-primary); }
+      .hero-layout { display: grid; grid-template-columns: 1.5fr 1fr; align-items: center; gap: var(--ds-space-8); flex: 1; }
+      .thesis { border-left: 3px solid var(--ds-color-primary); padding-left: var(--ds-space-5); display: grid; gap: var(--ds-space-5); }
+      .thesis p { font-size: var(--ds-text-lead); }
+      .stats { display: flex; gap: var(--ds-space-6); flex-wrap: wrap; padding-top: var(--ds-space-5); border-top: var(--ds-rule) solid var(--ds-color-outline); }
+      .stat { display: grid; gap: var(--ds-space-1); }
+      .stat strong { font: 400 34pt/1 Georgia, 'Times New Roman', serif; }
+      .stat span { color: var(--ds-color-on-surface-2); font-size: var(--ds-text-small); }
+      .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ds-space-6); }
+      .cols.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .panel { border-top: var(--ds-rule) solid var(--ds-color-outline); padding-top: var(--ds-space-5); display: grid; align-content: start; gap: var(--ds-space-4); }
+      .panel .number { font: 400 30pt/1 Georgia, 'Times New Roman', serif; color: var(--ds-color-primary); }
+      .panel p, .panel li { color: var(--ds-color-on-surface-2); }
+      .band { background: var(--ds-color-surface-alt); padding: var(--ds-space-5); border-left: 3px solid var(--ds-color-primary); }
+      .band p + p { margin-top: var(--ds-space-2); }
+      .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--ds-space-4); }
+      .step { border-top: 3px solid var(--ds-color-outline); padding-top: var(--ds-space-4); display: grid; gap: var(--ds-space-3); align-content: start; }
+      .step strong { color: var(--ds-color-primary); }
+      .step p { font-size: 12pt; color: var(--ds-color-on-surface-2); }
+      .arch { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-5); }
+      .node { min-width: 0; padding: var(--ds-space-5); border: var(--ds-rule) solid var(--ds-color-outline); display: grid; gap: var(--ds-space-2); }
+      .node.root { grid-column: 1 / -1; background: var(--ds-color-on-surface); color: var(--ds-color-surface); }
+      .node strong { font: 400 24pt/1.2 Georgia, 'Times New Roman', serif; overflow-wrap: anywhere; }
+      .node small { font-size: var(--ds-text-small); }
+      .support { display: flex; flex-wrap: wrap; gap: var(--ds-space-5); padding-block: var(--ds-space-4); border-block: var(--ds-rule) solid var(--ds-color-outline); }
+      .support span { flex: 1; min-width: 18ch; }
+      .tree { white-space: pre-wrap; font: 12pt/1.8 'Courier New', monospace; background: var(--ds-color-on-surface); color: var(--ds-color-surface); padding: var(--ds-space-5); margin: 0; }
+      .ledger { width: 100%; border-collapse: collapse; }
+      .ledger th, .ledger td { text-align: left; vertical-align: top; padding: var(--ds-space-2) var(--ds-space-4); border-bottom: var(--ds-rule) solid var(--ds-color-outline); }
+      .ledger th { font-size: var(--ds-text-small); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ds-color-on-surface-2); }
+      .ledger th:first-child, .ledger td:first-child { padding-left: 0; }
+      .status { font-size: var(--ds-text-small); font-weight: 700; letter-spacing: 0.08em; white-space: nowrap; }
+      .status.good { color: var(--ds-color-good); }
+      .status.fail { color: var(--ds-color-error); }
+      .status.limit { color: var(--ds-color-primary); }
+      .gap { display: grid; grid-template-columns: auto 1fr; gap: var(--ds-space-5); padding-block: var(--ds-space-5); border-top: var(--ds-rule) solid var(--ds-color-outline); }
+      .gap .number { font: 400 30pt/1 Georgia, 'Times New Roman', serif; color: var(--ds-color-primary); }
+      .gap h3 { margin-bottom: var(--ds-space-2); }
+      .gap p { color: var(--ds-color-on-surface-2); }
+      .callout { font: 400 26pt/1.25 Georgia, 'Times New Roman', serif; max-width: 42ch; }
+      .sources { margin-top: auto; border-top: var(--ds-rule) solid var(--ds-color-outline); padding-top: var(--ds-space-2); font-size: var(--ds-text-small); color: var(--ds-color-on-surface-2); }
+      .sources summary { cursor: pointer; display: list-item; padding-block: var(--ds-space-3); }
+      .sources ul { padding-bottom: var(--ds-space-4); }
+      .sources li + li { margin-top: var(--ds-space-2); }
+      .toolbar { border-top: var(--ds-rule) solid var(--ds-color-outline); padding-block: var(--ds-space-3); background: var(--ds-color-surface); }
+      .toolbar-inner { display: flex; align-items: center; gap: var(--ds-space-3); flex-wrap: wrap; }
+      .chooser { flex: 1; display: flex; align-items: center; gap: var(--ds-space-3); }
+      .chooser select { width: 100%; min-width: 0; max-width: 35ch; }
+      .slide-count { min-width: 8ch; font-variant-numeric: tabular-nums; }
+      .help { font-size: var(--ds-text-small); color: var(--ds-color-on-surface-2); }
+      .toolbar .primary { background: var(--ds-color-on-surface); color: var(--ds-color-surface); border-color: var(--ds-color-on-surface); }
+      .toolbar .primary:hover, .toolbar .primary:focus-visible { background: var(--ds-color-primary); }
+      .nojs { padding: var(--ds-space-4); border: var(--ds-rule) solid var(--ds-color-outline); }
+      .source-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-6); }
+      .source-grid div { display: grid; gap: var(--ds-space-3); align-content: start; }
+      .source-grid p { font-size: 12pt; }
+      @media (min-width: 1400px) { .slide { min-height: calc(100vh - 165px); } }
+      @media (min-width: 900px) and (max-height: 800px) {
+        :root { --ds-text-base: 12pt; --ds-text-lead: 16pt; --ds-text-title: 30pt; --ds-text-hero: 56pt; }
+        .masthead-inner { padding-block: var(--ds-space-3); }
+        .slide { padding-block: var(--ds-space-4); gap: var(--ds-space-3); }
+        .panel { padding-top: var(--ds-space-4); gap: var(--ds-space-3); }
+        .node, .band { padding: var(--ds-space-4); }
+        .ledger th, .ledger td { padding-block: var(--ds-space-2); }
+        .gap { padding-block: var(--ds-space-4); }
+        .support { padding-block: var(--ds-space-3); }
+        .tree { font-size: 11pt; line-height: 1.55; }
+        .callout { font-size: 23pt; }
+        .sources { padding-top: 0; }
+        .sources summary { padding-block: var(--ds-space-2); }
+        .toolbar { padding-block: var(--ds-space-2); }
+      }
+      @media (max-width: 899px) {
+        .shell { padding-inline: var(--ds-space-5); }
+        .slide { padding-top: var(--ds-space-6); }
+        .hero-layout, .cols, .cols.two, .source-grid { grid-template-columns: 1fr; gap: var(--ds-space-5); }
+        .hero-layout { align-items: start; }
+        .flow { grid-template-columns: 1fr 1fr; }
+        .help { display: none; }
+        .masthead-inner { align-items: start; }
+        .meta { text-align: right; }
+        .ledger { font-size: 11pt; }
+      }
+      @media (max-width: 599px) {
+        .shell { padding-inline: var(--ds-space-4); }
+        .masthead-inner { flex-direction: column; gap: var(--ds-space-2); }
+        .meta { text-align: left; }
+        .slide { gap: var(--ds-space-5); }
+        .arch, .flow { grid-template-columns: 1fr; }
+        .node.root { grid-column: auto; }
+        .chooser { flex-basis: 100%; order: -1; }
+        .slide-count { margin-right: auto; }
+        .ledger th, .ledger td { padding-inline: var(--ds-space-2); overflow-wrap: anywhere; }
+        .status { white-space: normal; }
+        .gap { gap: var(--ds-space-4); }
+      }
+      @page { size: 13.333in 7.5in; margin: 0; }
+      @media print {
+        :root { --ds-text-base: 12pt; --ds-text-lead: 16pt; }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .masthead, .toolbar, .skip, .nojs { display: none; }
+        .shell { max-width: none; padding-inline: var(--ds-space-7); }
+        .deck-active .slide, .slide { display: flex; min-height: 0; height: 7.5in; padding-block: var(--ds-space-5); break-before: page; break-after: page; break-inside: avoid; gap: var(--ds-space-4); }
+        .slide:first-child { break-before: auto; }
+        .slide:last-child { break-after: auto; }
+        .hero-layout { grid-template-columns: 1.5fr 1fr; }
+        .cols { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .cols.two, .arch, .source-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .flow { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        .node.root { grid-column: 1 / -1; }
+        h2 { font-size: 32pt; } .hero { font-size: 58pt; }
+        .sources { font-size: 9pt; } .sources ul { display: none; }
+        .sources summary { min-height: 0; padding-block: var(--ds-space-1); }
+        h2, h3, table, figure { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#slides">Skip to slides</a>
+    <header class="masthead">
+      <div class="shell masthead-inner">
+        <h1 class="brand"><strong>treadle</strong> repository replay</h1>
+        <p class="meta">10 October 2026 · main · b4dd870</p>
+      </div>
+    </header>
+    <main class="shell" id="slides" tabindex="-1">
+      <noscript><p class="nojs">All slides appear below. Use your browser to read or print this deck.</p></noscript>
+
+      <section class="slide is-active" id="slide-1" aria-labelledby="title-1" data-label="The thesis">
+        <h2 class="sr-only" id="title-1">The thesis: knowledge first, then a tight loop</h2>
+        <div class="hero-layout">
+          <div class="slide-header">
+            <p class="eyebrow">01 · What I understand</p>
+            <p class="hero" aria-hidden="true">Knowledge first.<br><span class="accent">Then a tight loop.</span></p>
+            <p class="lead">A spec-driven development harness that preserves context and admits work through explicit evidence.</p>
+          </div>
+          <div class="thesis">
+            <p>The wiki holds what we know.</p>
+            <p>The specpack holds what we intend and what happened.</p>
+            <p>The human accepts. The agent proposes and executes.</p>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>6</strong><span>TypeScript packages</span></div>
+          <div class="stat"><strong>2</strong><span>data planes</span></div>
+          <div class="stat"><strong>5</strong><span>core loop skills</span></div>
+          <div class="stat"><strong>1</strong><span>task per handout</span></div>
+        </div>
+        <details class="sources"><summary>Basis: repository instructions, manifests, and source · open references</summary><ul><li><a href="../../../AGENTS.md">AGENTS.md:5</a> · thesis and intended scope</li><li><a href="../../../treadle/packages/cli/src/main.ts">CLI main.ts:13</a> · command roots</li><li><a href="../../../treadle/packages/core/src/specpack/next.ts">next.ts:45</a> · one task handout</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-2" aria-labelledby="title-2" data-label="What the product does">
+        <h2 id="title-2">Turn context and intent<br>into a reviewable record.</h2>
+        <p class="eyebrow">02 · Product model</p>
+        <div class="cols">
+          <div class="panel"><span class="number">01</span><h3>Remember the project</h3><p>Curated Markdown pages explain systems, rules, and decisions. Source references connect claims to repository files.</p><p><code>treadle know search / read</code></p></div>
+          <div class="panel"><span class="number">02</span><h3>Bound the next change</h3><p>A specpack connects questions, requirements, decisions, designs, tasks, and review verdicts in one versioned record.</p><p><code>treadle do next / record</code></p></div>
+          <div class="panel"><span class="number">03</span><h3>Keep acceptance explicit</h3><p>The human answers and accepts. The agent works a frozen slice. Review checks the work before closure.</p><p><code>treadle do approve / close</code></p></div>
+        </div>
+        <div class="band"><p><strong>My interpretation:</strong> the product provides a durable work record and repeatable agent workflow.</p><p>The intended audience is a team with a full-stack services repository, or a small set of repositories.</p></div>
+        <details class="sources"><summary>Sources · product scope and data contracts</summary><ul><li><a href="../../../AGENTS.md">AGENTS.md:22</a> · intended project scope</li><li><a href="../../../treadle/packages/core/src/specpack/model.ts">model.ts:1</a> · internal pack objects</li><li><a href="../../../docs/product/OKF_SPEC_v0.2.md">OKF_SPEC_v0.2.md</a> · knowledge format</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-3" aria-labelledby="title-3" data-label="The package architecture">
+        <h2 id="title-3">One runtime. Two independent engines.</h2>
+        <p class="eyebrow">03 · Architecture from package imports</p>
+        <div class="arch">
+          <div class="node root"><strong>@treadle/cli</strong><p><code>do</code> → core and web &nbsp; · &nbsp; <code>know</code> → knowledge &nbsp; · &nbsp; <code>init harness</code> → installer</p></div>
+          <div class="node"><strong>@treadle/knowledge</strong><p>Parse · links · validate · search · findings · fingerprints · freshness</p><small>Knowledge bundle · OKF 0.2 · YAML dependency</small></div>
+          <div class="node"><strong>@treadle/core</strong><p>Normalize · emit · admission · derive · handout · pins · closure</p><small>Specpack · canonical bytes · Node standard library</small></div>
+        </div>
+        <div class="support">
+          <span><strong>web → core + brand</strong><br>Room and library; plain HTML and JavaScript.</span>
+          <span><strong>conformance → both engines</strong><br>Golden cases and the runner.</span>
+          <span><strong>brand → presentation</strong><br>Central name tokens for CLI and web.</span>
+        </div>
+        <p class="help">Node ≥22 · pnpm 9 · strict TypeScript · core and knowledge do not import each other</p>
+        <details class="sources"><summary>Sources · dependency direction is observed</summary><ul><li><a href="../../../treadle/packages/cli/package.json">cli/package.json</a> · CLI dependencies</li><li><a href="../../../treadle/packages/knowledge/package.json">knowledge/package.json</a> and <a href="../../../treadle/packages/core/package.json">core/package.json</a> · engine boundaries</li><li><a href="../../../treadle/tsconfig.base.json">tsconfig.base.json</a> · strict compiler flags</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-4" aria-labelledby="title-4" data-label="Where the truth lives">
+        <h2 id="title-4">The durable state lives in files.</h2>
+        <p class="eyebrow">04 · Repository map</p>
+        <div class="cols two">
+          <pre class="tree">treadle/
+  packages/       engines, CLI, web, corpus, brand
+  conformance/    TypeScript golden generator
+wiki/             curated project knowledge
+docs/product/     format contracts
+docs/specs/       current initiative records
+docs/research/    design research
+docs/archive/     retired code-era records
+docs/guide/       standalone user guide</pre>
+          <div class="panel"><h3>Four completed initiatives</h3><ul><li><strong>fresh-harness:</strong> installable agent harness</li><li><strong>guided-loop:</strong> recall and knowledge conformance</li><li><strong>stitch-ui:</strong> room and library experience</li><li><strong>install-paths:</strong> proven install mechanism</li></ul><p>All four packs say complete and delivered. All 29 tasks are marked done.</p><p><strong>Limit:</strong> this inventory does not re-verify their historical task evidence.</p></div>
+        </div>
+        <details class="sources"><summary>Sources · current records and canonical writes</summary><ul><li><a href="../../../docs/specs/fresh-harness/fresh-harness.json">fresh-harness.json</a>, <a href="../../../docs/specs/guided-loop/guided-loop.json">guided-loop.json</a>, <a href="../../../docs/specs/stitch-ui/stitch-ui.json">stitch-ui.json</a>, <a href="../../../docs/specs/install-paths/install-paths.json">install-paths.json</a> · status and task inventory</li><li><a href="../../../treadle/packages/core/src/specpack/save.ts">save.ts:10</a> · derive, canonical emit, fsync, rename</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-5" aria-labelledby="title-5" data-label="The knowledge plane">
+        <h2 id="title-5">The wiki supplies context.<br>The engine checks its shape.</h2>
+        <p class="eyebrow">05 · The know plane</p>
+        <div class="flow">
+          <div class="step"><strong>01 · Source</strong><p>Curate concepts from repository evidence. Source extraction is external.</p></div>
+          <div class="step"><strong>02 · Bundle</strong><p>Markdown, frontmatter, links, and source references.</p></div>
+          <div class="step"><strong>03 · Retrieve</strong><p>Weighted search and a budgeted read of linked neighbors.</p></div>
+          <div class="step"><strong>04 · Check</strong><p>Validate format and links. Report anchor drift and freshness.</p></div>
+          <div class="step"><strong>05 · Propose</strong><p>Normative findings enter a ledger. Declined keys cannot rise again.</p></div>
+        </div>
+        <div class="cols two"><div class="panel"><h3>What is implemented</h3><p>Search is deterministic: title matches rank above body matches. Ties sort by concept ID.</p><p>Trust tiers are advisory. Format validation includes Attested Computation fields.</p></div><div class="panel"><h3>What requires an agent</h3><p>The engine cannot decide whether prose is true or whether a source supports a claim.</p><p>A curator must inspect changed sources and update the affected knowledge.</p></div></div>
+        <details class="sources"><summary>Sources · retrieval, findings, and validation</summary><ul><li><a href="../../../treadle/packages/knowledge/src/search.ts">search.ts:1</a> · ranking and deterministic order</li><li><a href="../../../treadle/packages/knowledge/src/findings.ts">findings.ts:122</a> · dedupe and declined-key behavior</li><li><a href="../../../treadle/packages/knowledge/src/validate.ts">validate.ts:238</a> · advisory trust tier; line 298 · attested admission</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-6" aria-labelledby="title-6" data-label="The development loop">
+        <h2 id="title-6">Each skill narrows the next action.</h2>
+        <p class="eyebrow">06 · Spec-driven development, or SDD</p>
+        <div class="flow">
+          <div class="step"><strong>build-kb</strong><h3>Understand</h3><p>Find the current knowledge and inspect its sources.</p></div>
+          <div class="step"><strong>analyze</strong><h3>Bound</h3><p>Produce one useful artifact. Record unknowns and assumptions.</p></div>
+          <div class="step"><strong>plan</strong><h3>Connect</h3><p>Link designs and decisions to tasks with observable verification.</p></div>
+          <div class="step"><strong>implement</strong><h3>Execute</h3><p>Work one frozen task slice. Run its verification and record the result.</p></div>
+          <div class="step"><strong>review</strong><h3>Recheck</h3><p>Re-run expectations. Check scope, traceability, and evidence currency.</p></div>
+        </div>
+        <div class="band"><p><strong>The handout is more than a task title.</strong></p><p>It carries related requirements, designs, accepted decisions, a plan prelude, and a digest. File drift can return <code>needs_rebase</code>.</p></div>
+        <p class="callout">The skills supply the workflow.<br>The engines supply deterministic operations.</p>
+        <details class="sources"><summary>Sources · skill contracts and frozen context</summary><ul><li><a href="../../../treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md">analyze/SKILL.md</a>, <a href="../../../treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md">plan/SKILL.md</a>, <a href="../../../treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md">implement/SKILL.md</a> · bounded work contracts</li><li><a href="../../../treadle/packages/core/src/specpack/next.ts">next.ts:82</a> · drift gate; line 115 · slice closure</li><li><a href="../../../treadle/packages/cli/harness/skills/sdlc/review/SKILL.md">review/SKILL.md:14</a> · current verification and traceability</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-7" aria-labelledby="title-7" data-label="Trust and evidence limits">
+        <h2 id="title-7">Trust has a precise local boundary.</h2>
+        <p class="eyebrow">07 · Policy versus enforcement</p>
+        <div class="cols">
+          <div class="panel"><h3>Human acceptance</h3><p>Answers, approval, decision acceptance, and closure require a <code>human:</code> claim.</p><p>The claim checks a string prefix. It does not authenticate a person.</p></div>
+          <div class="panel"><h3>Recorded evidence</h3><p>A passing task needs at least one recorded command and zero exits. Evidence can come from an agent.</p><p><code>do record</code> accepts supplied results. It does not execute the command.</p></div>
+          <div class="panel"><h3>Closure and review</h3><p>Closure checks tasks, evidence presence, decisions, questions, and a PACK PASS verdict.</p><p><code>do check</code> checks alignment. The review skill requires the actual re-runs.</p></div>
+        </div>
+        <div class="band"><p><strong>Documentation overstates the scope of the claim gate.</strong></p><p>“Every write needs human:” does not match proposal creation, task handouts, evidence records, or knowledge-ledger resolution.</p></div>
+        <details class="sources"><summary>Sources · the exact enforcement boundary</summary><ul><li><a href="../../../treadle/packages/core/src/specpack/admission.ts">admission.ts:25</a> · human prefix check</li><li><a href="../../../treadle/packages/core/src/specpack/record.ts">record.ts:62</a> · accepted command results; <a href="../../../treadle/packages/cli/src/commands/do.ts">do.ts:145</a> · agent or human evidence actor; line 189 · alignment check</li><li><a href="../../../treadle/packages/core/src/specpack/close.ts">close.ts:20</a> · closure conditions; <a href="../../../treadle/packages/cli/src/commands/know.ts">know.ts:133</a> · finding resolution has no actor argument</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-8" aria-labelledby="title-8" data-label="The two browser surfaces">
+        <h2 id="title-8">Two browser surfaces serve the loop.</h2>
+        <p class="eyebrow">08 · Room and library</p>
+        <div class="cols two">
+          <div class="panel"><span class="number">Room</span><h3>A spec’s approval ceremony</h3><p>Focus on one pack. Answer open questions, select options, and approve through core admission.</p><p>The CLI waits for approval, then stops the server and returns to the loop.</p><p><code>treadle do interview &lt;packDir&gt;</code></p></div>
+          <div class="panel"><span class="number">Library</span><h3>A standing view of the records</h3><p>Browse packs under one root. Inspect phases, artifacts, questions, and review information.</p><p>It remains available while the owner examines and acts on records.</p><p><code>treadle do library &lt;specsRoot&gt;</code></p></div>
+        </div>
+        <div class="band"><p><strong>Current posture:</strong> both servers bind to <code>127.0.0.1</code>. Assets are local. Authentication is absent by design.</p><p>Markdown comes from trusted disk content and is rendered without HTML sanitization. CSP permits inline scripts and styles.</p></div>
+        <details class="sources"><summary>Sources · server behavior and declared threat model</summary><ul><li><a href="../../../treadle/packages/cli/src/commands/do.ts">do.ts:212</a> · interview lifecycle; line 242 · standing library</li><li><a href="../../../treadle/packages/web/src/servers.ts">servers.ts:64</a> · content security policy; lines 189 and 311 · loopback binding</li><li><a href="../../../SECURITY.md">SECURITY.md:12</a> · trusted-disk Markdown and absent authentication</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-9" aria-labelledby="title-9" data-label="Installation and agent adapters">
+        <h2 id="title-9">The harness ships with the runtime.</h2>
+        <p class="eyebrow">09 · Distribution and agent adapters</p>
+        <div class="cols two"><div class="panel"><h3>Install the CLI</h3><p><code>install.sh</code> clones the repository, installs the locked pnpm workspace, builds it, and links the CLI globally.</p><p>The closed install-paths record explains why ordinary npm remote installs failed on the workspace protocol.</p><p>This session inspected the mechanism. It did not re-run a clean remote installation.</p></div><div class="panel"><h3>Install the agent workflow</h3><p><code>treadle init harness</code> compiles an inspectable plan before it writes skills, agents, and supported hooks.</p><p>Destinations cover pi, Claude Code, Codex, and Copilot. A recorded install supports removal.</p><p>Hook wiring differs by host. Copilot’s manifest has no hook wiring.</p></div></div>
+        <div class="band"><p><strong>Versioned interfaces:</strong> <code>harness/0.1</code>, <code>specpack/0.3</code>, and OKF <code>0.2</code>.</p><p>The brand package centralizes runtime names. Rebranding preserves these format identifiers.</p></div>
+        <details class="sources"><summary>Sources · install path and adapter capabilities</summary><ul><li><a href="../../../install.sh">install.sh:24</a> · clone, build, and global link; <a href="../../../docs/specs/install-paths/research.md">install-paths/research.md</a> · recorded mechanism evidence</li><li><a href="../../../treadle/packages/cli/src/harness/plan.ts">plan.ts:103</a> · compiled installer plan; <a href="../../../treadle/packages/cli/src/harness/apply.ts">apply.ts:80</a> · apply and state record</li><li><a href="../../../treadle/packages/cli/harness/harness.json">harness.json</a> · four destinations and per-host wiring</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-10" aria-labelledby="title-10" data-label="Checks run in this session">
+        <h2 id="title-10">The corpus passes.<br>The full check currently fails.</h2>
+        <p class="eyebrow">10 · Observed in this session</p>
+        <table class="ledger"><caption class="sr-only">Repository verification results on 10 October 2026</caption><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">What the result establishes</th></tr></thead><tbody>
+          <tr><td><code>pnpm corpus:check</code></td><td><span class="status good">PASS</span></td><td>78 generated golden files reproduce exactly across 44 case directories.</td></tr>
+          <tr><td><code>pnpm brand:check</code></td><td><span class="status good">PASS</span></td><td>The runtime brand fence is clean.</td></tr>
+          <tr><td><code>pnpm check</code></td><td><span class="status fail">FAIL</span></td><td>Types, lint, and format pass. Tests: 110 pass; 1 fails.</td></tr>
+          <tr><td><code>pnpm coverage</code></td><td><span class="status fail">FAIL</span></td><td>The same test fails. Current coverage floors remain unverified.</td></tr>
+          <tr><td>Wiki session close</td><td><span class="status limit">LIMITED</span></td><td>Fresh stamp; 0 errors and warnings; 0 broken anchors. Active sources remain untracked.</td></tr>
+        </tbody></table>
+        <div class="band"><p><strong>The failing test assumes a live initiative.</strong></p><p><code>where.test.ts:180</code> expects an open pack and then expects <code>install-paths</code>. All four current packs are delivered.</p></div>
+        <details class="sources"><summary>Sources · actual command results and test location</summary><ul><li><a href="evidence.md">evidence.md</a> · commands, exits, counts, and limits</li><li><a href="../../../treadle/packages/cli/test/where.test.ts">where.test.ts:180</a> · state-dependent self-witness</li><li><a href="../../../treadle/scripts/corpus-check.mjs">corpus-check.mjs:13</a> · regenerate and compare committed bytes</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-11" aria-labelledby="title-11" data-label="Gaps in knowledge freshness">
+        <h2 id="title-11">The freshness story has two gaps.</h2>
+        <p class="eyebrow">11 · Observed implementation gaps</p>
+        <div class="gap"><span class="number">01</span><div><h3>The scanner still selects Python files.</h3><p><code>fingerprints.ts:54</code> includes only <code>.py</code>. TypeScript and Markdown sources remain untracked.</p><p><strong>Implication:</strong> active-source drift lacks a stored hash. The anchor count treats “untracked” as report-only.</p></div></div>
+        <div class="gap"><span class="number">02</span><div><h3>The bundle stamp compares Git HEAD.</h3><p>It does not examine uncommitted edits. Committing the stamp also makes its recorded HEAD one commit old.</p><p><strong>Implication:</strong> “fresh” is a narrow session state. It does not prove that every claim is current.</p></div></div>
+        <p class="callout">Format health, source coverage, and prose truth<br>need separate evidence.</p>
+        <details class="sources"><summary>Sources · exact selectors and freshness comparison</summary><ul><li><a href="../../../treadle/packages/knowledge/src/fingerprints.ts">fingerprints.ts:54</a> · Python-only scan; line 155 · untracked verdict</li><li><a href="../../../treadle/packages/knowledge/src/stamp.ts">stamp.ts:68</a> · freshness compares HEAD</li><li><a href="../../../treadle/packages/cli/src/commands/know.ts">know.ts:158</a> · untracked does not count as review-needed; <a href="../../../treadle/DEBT.md">DEBT.md:27</a> · commit-stamp debt</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-12" aria-labelledby="title-12" data-label="Other observed and declared gaps">
+        <h2 id="title-12">Other gaps have different causes.</h2>
+        <p class="eyebrow">12 · Observed drift and declared deferrals</p>
+        <div class="cols">
+          <div class="panel"><span class="status fail">OBSERVED</span><h3>Documentation drift</h3><p>The workspace README still says “scaffold.” The architecture wiki retains Python commands and obsolete paths.</p><p>The debt ledger says Python retirement is pending, while the generator is already TypeScript.</p></div>
+          <div class="panel"><span class="status limit">OBSERVED</span><h3>The CI gate differs</h3><p>CI runs the conformance tests. Its workflow has no explicit <code>pnpm corpus:check</code> step.</p><p>The generator-and-zero-diff gate passed locally. This review did not inspect remote CI runs.</p></div>
+          <div class="panel"><span class="status limit">DECLARED</span><h3>Capabilities deferred</h3><p>Code indexing belongs to external tools. Attested Computation has admission checks, with execution deferred.</p><p>The library lacks <code>do where</code> multi-root parity. Test files are outside the composite typecheck.</p></div>
+        </div>
+        <details class="sources"><summary>Sources · distinguish stale text from a deliberate scope boundary</summary><ul><li><a href="../../../treadle/README.md">treadle/README.md:13</a>, <a href="../../../wiki/systems/sdd-harness-architecture.md">sdd-harness-architecture.md:49</a>, <a href="../../../treadle/DEBT.md">DEBT.md:47</a> · stale descriptions</li><li><a href="../../../.github/workflows/ci.yml">ci.yml:28</a> · configured CI checks; <a href="../../../treadle/packages/conformance/test/corpus.test.ts">corpus.test.ts:5</a> · case discovery test</li><li><a href="../../../treadle/DEBT.md">DEBT.md:12</a> · attested execution; line 25 · library parity; line 46 · test typecheck</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-13" aria-labelledby="title-13" data-label="What I still do not know">
+        <h2 id="title-13">What I still do not know.</h2>
+        <p class="eyebrow">13 · Uncertainty, recorded explicitly</p>
+        <div class="cols two"><div class="panel"><h3>Product evidence</h3><ul><li>Which measured team outcome defines success?</li><li>What adoption evidence exists beyond this repository’s own use?</li><li>Who owns the external indexer handoff for a new user?</li></ul><p>I did not locate a current validation study or a measured outcome baseline in the material reviewed.</p></div><div class="panel"><h3>Next boundaries</h3><ul><li>Will the product remain a trusted, single-user localhost tool?</li><li>Which consumer triggers executable attestation?</li><li>Which license will apply before publication?</li></ul><p>The license and attestation trigger are already open in the debt ledger. These questions do not block this replay.</p></div></div>
+        <div class="band"><p><strong>Confidence:</strong> high in package boundaries and the operations inspected; lower in complete cross-platform adapter behavior and user adoption.</p><p>The original Python implementation, a clean remote install, and the six-platform CI matrix were not re-run here.</p></div>
+        <details class="sources"><summary>Sources · declared uncertainty and investigation limits</summary><ul><li><a href="../../../treadle/DEBT.md">DEBT.md:12</a> · execution trigger; line 45 · license choice</li><li><a href="../../../AGENTS.md">AGENTS.md:22</a> · intended repository scope; <a href="../../../.github/workflows/ci.yml">ci.yml:13</a> · declared platform matrix</li><li><a href="evidence.md">evidence.md</a> · scope of this investigation</li></ul></details>
+      </section>
+
+      <section class="slide" id="slide-14" aria-labelledby="title-14" data-label="Suggested next slices and sources">
+        <h2 id="title-14">Three bounded follow-ups.</h2>
+        <p class="eyebrow">14 · Suggestions for owner review</p>
+        <div class="cols">
+          <div class="panel"><span class="number">01</span><h3>Restore repeatable checks</h3><p>Replace the live-wave test assumption with stable fixtures.</p><p><strong>Observable result:</strong> checks pass with zero open initiatives.</p></div>
+          <div class="panel"><span class="number">02</span><h3>Make source drift visible</h3><p>Design fingerprints for active source types and a freshness policy that accounts for changed files.</p><p><strong>Observable result:</strong> a TypeScript edit causes the affected source anchor to report drift.</p></div>
+          <div class="panel"><span class="number">03</span><h3>Refresh the current map</h3><p>Supersede Python-era architecture claims and align documentation with current contracts.</p><p><strong>Observable result:</strong> a new engineer can trace each current claim to a live source.</p></div>
+        </div>
+        <p class="callout">I understand the architecture.<br>The largest gaps concern the evidence<br>that keeps its knowledge current.</p>
+        <div class="source-grid"><div><p><a href="../../../docs/guide/index.html">Open the existing user guide</a> · the product’s install and usage walkthrough</p></div><div><p><a href="evidence.md">Open the evidence record</a> · source revision, checks, limits, and deck verification</p></div></div>
+        <details class="sources"><summary>Sources · these are proposals, not accepted decisions</summary><ul><li><a href="../../../treadle/packages/cli/test/where.test.ts">where.test.ts:174</a> · fixture-dependent gap</li><li><a href="../../../treadle/packages/knowledge/src/fingerprints.ts">fingerprints.ts:54</a> and <a href="../../../treadle/packages/knowledge/src/stamp.ts">stamp.ts:77</a> · drift and stamp gaps</li><li><a href="../../../wiki/systems/sdd-harness-architecture.md">sdd-harness-architecture.md</a> · architecture to supersede</li></ul></details>
+      </section>
+    </main>
+    <footer class="toolbar" hidden>
+      <nav class="shell toolbar-inner" aria-label="Presentation controls">
+        <button type="button" id="previous" aria-label="Previous slide">←</button>
+        <span class="slide-count" id="count" role="status" aria-live="polite" aria-atomic="true"></span>
+        <button type="button" id="next" class="primary" aria-label="Next slide">→</button>
+        <div class="chooser"><label for="jump">Slide</label><select id="jump"></select></div>
+        <button type="button" id="reading" aria-pressed="false">All slides</button>
+        <button type="button" id="fullscreen">Fullscreen</button>
+        <button type="button" id="print">Print</button>
+        <span class="help">← → · Home · End</span>
+      </nav>
+      <p class="shell sr-only" id="feedback" role="status" aria-live="polite"></p>
+    </footer>
+    <script>
+      (() => {
+        const slides = Array.from(document.querySelectorAll('.slide'));
+        const jump = document.getElementById('jump');
+        const previous = document.getElementById('previous');
+        const next = document.getElementById('next');
+        const count = document.getElementById('count');
+        const reading = document.getElementById('reading');
+        const fullscreen = document.getElementById('fullscreen');
+        const feedback = document.getElementById('feedback');
+        let current = 0;
+        let allVisible = false;
+        slides.forEach((slide, index) => {
+          const option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = `${String(index + 1).padStart(2, '0')} · ${slide.dataset.label}`;
+          jump.append(option);
+        });
+        function show(index, updateHash = true) {
+          current = Math.max(0, Math.min(slides.length - 1, index));
+          const focused = document.activeElement;
+          if (slides.some((slide, i) => i !== current && slide.contains(focused)) && !allVisible) jump.focus();
+          slides.forEach((slide, i) => {
+            slide.classList.toggle('is-active', i === current);
+            slide.hidden = !allVisible && i !== current;
+            const heading = slide.querySelector('h2');
+            if (i === current) heading.setAttribute('aria-current', 'step');
+            else heading.removeAttribute('aria-current');
+          });
+          jump.value = String(current);
+          previous.disabled = current === 0;
+          next.disabled = current === slides.length - 1;
+          count.textContent = `${String(current + 1).padStart(2, '0')} / ${slides.length}`;
+          if (updateHash && location.hash !== `#slide-${current + 1}`) location.hash = `slide-${current + 1}`;
+          if (allVisible) slides[current].scrollIntoView({ block: 'start' });
+          else window.scrollTo(0, 0);
+          document.dispatchEvent(new CustomEvent('replay:slide', { detail: { index: current + 1, title: slides[current].dataset.label } }));
+        }
+        function fromHash() {
+          const match = /^#slide-(\d+)$/.exec(location.hash);
+          if (match) show(Number(match[1]) - 1, false);
+        }
+        previous.addEventListener('click', () => show(current - 1));
+        next.addEventListener('click', () => show(current + 1));
+        jump.addEventListener('change', () => show(Number(jump.value)));
+        reading.addEventListener('click', () => {
+          allVisible = !allVisible;
+          document.body.classList.toggle('reading', allVisible);
+          reading.setAttribute('aria-pressed', String(allVisible));
+          reading.textContent = allVisible ? 'One slide' : 'All slides';
+          show(current, false);
+        });
+        fullscreen.addEventListener('click', async () => {
+          try {
+            if (document.fullscreenElement) await document.exitFullscreen();
+            else await document.documentElement.requestFullscreen();
+          } catch {
+            feedback.classList.remove('sr-only');
+            feedback.textContent = 'Fullscreen is unavailable. Use the slide controls in this window.';
+          }
+        });
+        document.addEventListener('fullscreenchange', () => { fullscreen.textContent = document.fullscreenElement ? 'Exit fullscreen' : 'Fullscreen'; });
+        document.getElementById('print').addEventListener('click', () => window.print());
+        let restoreAfterPrint = false;
+        window.addEventListener('beforeprint', () => { restoreAfterPrint = true; slides.forEach(slide => { slide.hidden = false; }); });
+        window.addEventListener('afterprint', () => { if (restoreAfterPrint) { restoreAfterPrint = false; show(current, false); } });
+        document.addEventListener('keydown', event => {
+          if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+          if (event.target.closest('button, select, input, textarea, summary, a, [contenteditable]')) return;
+          const actions = { ArrowRight: current + 1, PageDown: current + 1, ArrowLeft: current - 1, PageUp: current - 1, Home: 0, End: slides.length - 1 };
+          if (Object.prototype.hasOwnProperty.call(actions, event.key)) { event.preventDefault(); show(actions[event.key]); }
+        });
+        window.addEventListener('hashchange', fromHash);
+        document.body.classList.add('deck-active');
+        document.querySelector('.toolbar').hidden = false;
+        if (!document.documentElement.requestFullscreen) { fullscreen.hidden = true; }
+        const initial = /^#slide-(\d+)$/.exec(location.hash);
+        show(initial ? Number(initial[1]) - 1 : 0, false);
+      })();
+    </script>
+  </body>
+</html>

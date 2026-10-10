@@ -1,0 +1,37 @@
+[
+  {
+    "name": "fingerprints",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know fingerprints .. ../wiki",
+    "exit": 0
+  },
+  {
+    "name": "stamp",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..",
+    "exit": 0
+  },
+  {
+    "name": "anchors",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..",
+    "exit": 0
+  },
+  {
+    "name": "validate",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know validate ../wiki",
+    "exit": 0
+  },
+  {
+    "name": "status",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know status ../wiki --workspace ..",
+    "exit": 0
+  },
+  {
+    "name": "search",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know search ../wiki retrospective",
+    "exit": 0
+  },
+  {
+    "name": "where",
+    "command": "./node_modules/.bin/tsx packages/cli/src/main.ts do where ..",
+    "exit": 0
+  }
+]

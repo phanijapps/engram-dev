@@ -1,10 +1,10 @@
 ---
 type: Decision
-status: stable
+status: deprecated
 created: 2026-10-07
 updated: 2026-10-08
 title: Okf-only engine (accepted 2026-10-07)
-description: "ACCEPTED. The engine is okf alone; engine/memex and engine/core were removed. A future memex is a consumer layer on top, never a plane inside."
+description: "HISTORICAL, superseded by the TypeScript port. ACCEPTED. The engine is okf alone; engine/memex and engine/core were removed. A future memex is a consumer layer on top, never a plane inside."
 sources: [{ id: src, resource: docs/archive/specs/okf-only-engine/design.md }]
 tags: [decision, architecture, accepted]
 ---
@@ -26,3 +26,11 @@ removed; the workspace builds okf alone.
 
 - `docs/specs/okf-only-engine/` — feature, impact, design, plan, and the
   removal wave's ledger.
+
+# Implementation context — 2026-10-10
+
+This decision describes the October 7 removal wave, not the current runtime.
+Both planes now live in the [TypeScript harness](/systems/treadle.md), following
+[the port decision](/decisions/port-to-typescript.md). The original decision and
+its acceptance are retained above. Its source wave is now under
+`docs/archive/specs/okf-only-engine/`.

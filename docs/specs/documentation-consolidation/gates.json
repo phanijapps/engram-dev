@@ -1,0 +1,77 @@
+{
+  "recorded_at": "2026-10-10T20:20:05.118966+00:00",
+  "results": [
+    {
+      "command": "pnpm check",
+      "cwd": "treadle",
+      "exit": 1,
+      "log": "check.log"
+    },
+    {
+      "command": "pnpm coverage",
+      "cwd": "treadle",
+      "exit": 1,
+      "log": "coverage.log"
+    },
+    {
+      "command": "pnpm corpus:check",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "corpus.log"
+    },
+    {
+      "command": "pnpm brand:check",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "brand.log"
+    },
+    {
+      "command": "pnpm links",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "links.log"
+    },
+    {
+      "command": "./node_modules/.bin/tsx ../docs/specs/documentation-consolidation/verify-docs.mjs",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "verification.json"
+    },
+    {
+      "name": "fingerprints",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know fingerprints .. ../wiki",
+      "exit": 0
+    },
+    {
+      "name": "stamp",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..",
+      "exit": 0
+    },
+    {
+      "name": "anchors",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..",
+      "exit": 0
+    },
+    {
+      "name": "validate",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know validate ../wiki",
+      "exit": 0
+    },
+    {
+      "name": "status",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know status ../wiki --workspace ..",
+      "exit": 0
+    },
+    {
+      "name": "search",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts know search ../wiki retrospective",
+      "exit": 0
+    },
+    {
+      "name": "where",
+      "command": "./node_modules/.bin/tsx packages/cli/src/main.ts do where ..",
+      "exit": 0
+    }
+  ],
+  "coverage_floors": "Not verified by this run; test failure prevented a successful coverage gate."
+}

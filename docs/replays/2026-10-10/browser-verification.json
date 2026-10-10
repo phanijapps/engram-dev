@@ -1,0 +1,214 @@
+{
+  "browser": "151.0.7922.108",
+  "layoutChecks": 84,
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "width": 375,
+      "height": 812
+    },
+    {
+      "width": 320,
+      "height": 800
+    },
+    {
+      "width": 360,
+      "height": 225
+    }
+  ],
+  "audits": [
+    {
+      "slide": 1,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 2,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 3,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 4,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 5,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 6,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 7,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 8,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 9,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 10,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 11,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 12,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 13,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    },
+    {
+      "slide": 14,
+      "violations": [],
+      "incomplete": [
+        "color-contrast",
+        "label-content-name-mismatch"
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "name": "Sources · exact selectors and freshness comparison",
+      "width": 1256,
+      "height": 44
+    },
+    {
+      "name": "←",
+      "width": 43.328125,
+      "height": 44
+    },
+    {
+      "name": "→",
+      "width": 43.328125,
+      "height": 44
+    },
+    {
+      "name": "01 · The thesis02 · What the product does03 · The package architecture04 · Where the truth lives05 · The knowledge plane06 · The development loop07 · Trust and evidence limits08 · The two browser surfaces09 · Installation and agent adapters10 · Checks run in this session11 · Gaps in knowledge freshness12 · Other observed and declared gaps13 · What I still do not know14 · Suggested next slices and sources",
+      "width": 337.296875,
+      "height": 44
+    },
+    {
+      "name": "All slides",
+      "width": 94.375,
+      "height": 44
+    },
+    {
+      "name": "Fullscreen",
+      "width": 105.9375,
+      "height": 44
+    },
+    {
+      "name": "Print",
+      "width": 61.640625,
+      "height": 44
+    }
+  ],
+  "focus": {
+    "width": "3px",
+    "color": "rgb(32, 43, 40)",
+    "style": "solid"
+  },
+  "timings": [
+    {
+      "domContentLoaded": 14.700000001117587,
+      "load": 16.700000001117587
+    }
+  ],
+  "errors": [],
+  "requests": [
+    "file:///home/videogamer/code/memex_beta/docs/replays/2026-10-10/index.html",
+    "file:///home/videogamer/code/memex_beta/docs/replays/2026-10-10/index.html"
+  ],
+  "failures": [],
+  "missingLinks": [],
+  "checks": [
+    "buttons",
+    "keyboard",
+    "deep links",
+    "select",
+    "all slides",
+    "source disclosure",
+    "fullscreen",
+    "print restoration",
+    "no JavaScript",
+    "offline",
+    "reduced motion",
+    "horizontal reflow"
+  ],
+  "htmlBytes": 46475
+}

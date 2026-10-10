@@ -1,49 +1,73 @@
 ---
+title: "The workspace wiki contract"
 type: Domain
+description: "The current OKF bundle layout, concept fields, source references, and evidence limits."
 status: stable
-created: 2026-10-08
-updated: 2026-10-08
-title: The wiki contract — bundle rules every harness repo follows
-description: "The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections."
-# sources: retired with the python engines — evidence preserved at git tag python-final
-tags: [contract, okf, conventions]
+created: 2026-10-10
+updated: 2026-10-10
+sources:
+  - {"id": "s1", "resource": "treadle/packages/knowledge/src/parse.ts"}
+  - {"id": "s2", "resource": "treadle/packages/knowledge/src/validate.ts"}
+  - {"id": "s3", "resource": "treadle/packages/knowledge/src/links.ts"}
+  - {"id": "s4", "resource": "treadle/packages/knowledge/src/stamp.ts"}
+  - {"id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts"}
+  - {"id": "s6", "resource": "AGENTS.md"}
 ---
 
-# Overview
+# Bundle
 
-One bundle per repository at `<repo>/wiki/` — convention, no registry.
-Concepts are Markdown with YAML frontmatter; the root `index.md` declares
-`okf_version`.
+This repository keeps its knowledge bundle at `wiki/`.
+The root index declares OKF 0.2. Markdown concepts use YAML frontmatter.
+`index.md` and `log.md` have reserved roles.
+Source: `treadle/packages/knowledge/src/parse.ts:17`.
 
-**State dir.** `wiki/.okf/` holds engine state, never concepts:
-`last-index.json` (freshness stamp — written by `okf code index`,
-`okf_kit/core/stamp.py`), `findings.toml` (the normative proposal ledger —
-`okf findings`, `okf_kit/core/findings.py`), `fingerprints.json`
-(per-file sha256 for anchor staleness — `okf_kit/core/fingerprints.py`),
-`candidates.json` (semantic rule candidates — `okf code rules`).
+A concept needs a nonempty `type`. Title and description are recommended
+by the validator and required by this repository's documentation discipline.
+Sources: `treadle/packages/knowledge/src/validate.ts:162`; `AGENTS.md:1`.
+Lifecycle values are `draft`, `stable`, and `deprecated`.
+Source: `treadle/packages/knowledge/src/validate.ts:211`.
+Spec stages remain a [different vocabulary](/domain/specpack-status-vocabulary.md).
 
-**Freshness.** `okf status wiki` compares the stamp's `repo_head` to
-`git rev-parse HEAD`: equal → `fresh`; anything else → `stale`, refresh
-before trusting `wiki/code/**`.
+# Navigation and sources
 
-**Managed vs curated.** `wiki/code/**` and `wiki/code-summaries/**` are
-machine-managed — everything between `<!-- okf-code:start -->` and
-`<!-- okf-code:end -->` regenerates; hand edits there are lost or brick
-the indexer. Hand-authored knowledge lives in curated concepts
-(`systems/**`, `domain/**`, `decisions/**`, `research/**` — research-derived
-knowledge with paper-anchored evidence).
+Wiki Markdown links connect in-bundle concepts. External Markdown paths are
+source evidence, not concept edges. Out-of-bundle Markdown links produce warnings.
+Source: `treadle/packages/knowledge/src/links.ts:94`.
+Use workspace-relative `sources[].resource` for repository evidence and
+`path:line` references for load-bearing statements.
+See [the documentation map](/project/documentation-map.md).
 
-**Normative content.** Rules, policies, golden paths never become settled
-truth directly: author `status: draft`, then
-`okf findings propose wiki --source <evidence> --destination
-wiki/<page>.md --kind <kind> --rationale "…"`. A human accepts or
-declines; declined keys are never re-proposed.
+New descriptive types include Initiative, Retrospective, Project, and Research.
+The engine accepts producer-defined nonempty type strings.
+Source: `treadle/packages/knowledge/src/validate.ts:162`.
+These conventions do not introduce machine spec statuses.
 
-**Lifecycle fields.** Every concept carries `status`
-(draft/stable/deprecated), `created`, and `generated: {by, at}` — the
-last-meaningful-change instant. Trust tier comes from `verified` events.
+# State and trust
 
-# Evidence
+`.okf/last-index.json` records HEAD and the stamp time.
+`.okf/fingerprints.json` holds source hashes; its scanner currently tracks Python only.
+`.okf/findings.toml` holds proposals and their terminal resolutions.
+Sources: `treadle/packages/knowledge/src/stamp.ts:14`;
+`treadle/packages/cli/src/commands/know.ts:145`.
 
-- `treadle/packages/knowledge/src/core/stamp.ts`, `findings.py`, `fingerprints.py`,
-  `templates.py`; `treadle/packages/knowledge/src/code/indexer.ts` (implementation-supported)
+A matching HEAD produces a fresh stamp. It does not attest prose correctness
+or dirty TypeScript files. See [freshness limits](/domain/pattern-content-hash-change-detection.md).
+
+Normative proposals go through the findings ledger. New maintenance practices
+remain [draft](/project/documentation-lifecycle.md) until owner resolution.
+The repository does not generate a new code index in this repair.
+
+# Session commands
+
+Run from `treadle/`:
+
+```bash
+./node_modules/.bin/tsx packages/cli/src/main.ts know fingerprints .. ../wiki
+./node_modules/.bin/tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..
+./node_modules/.bin/tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..
+./node_modules/.bin/tsx packages/cli/src/main.ts know validate ../wiki
+./node_modules/.bin/tsx packages/cli/src/main.ts know status ../wiki --workspace ..
+```
+
+Report untracked sources explicitly. A zero review count does not mean those
+sources were baselined. Source: `treadle/packages/cli/src/commands/know.ts:158`.

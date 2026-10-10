@@ -1,7 +1,7 @@
 ---
 type: Policy
 title: The engine never captures sessions, transcripts, or tokens
-description: "Hooks, session capture, and token accounting are a declared non-goal of the okf engine — knowledge comes from repositories, not from surveilling agent runs."
+description: "Session capture and token accounting are declared non-goals of the knowledge engine — knowledge comes from repositories, not from surveilling agent runs."
 status: stable
 created: 2026-10-07
 updated: 2026-10-07
@@ -23,9 +23,18 @@ of okf and would own any such concerns outside this engine.
     (D5), 2026-10-07.
 
 [^pol2]:
-    `docs/specs/okf-only-engine/design.md` — D5 in the removal-wave
+    `docs/archive/specs/okf-only-engine/design.md` — D5 in the removal-wave
     decision ledger.
 
 # Status
 
 **ACCEPTED 2026-10-07** (finding `policy-ff546069`, accepted by the owner via the findings ledger). This policy is binding: the engine never captures sessions, transcripts, or tokens.
+
+# Implementation context — 2026-10-10
+
+The accepted prohibition concerns capture of sessions, transcripts, and tokens.
+The shipped harness now contains session-recall hooks that inspect work records;
+the mere presence of hooks does not establish transcript capture.
+Source: `treadle/packages/cli/harness/hooks/session-recall.js:1`.
+The old “hooks are a non-goal” wording describes the former engine boundary.
+See [the guided-loop record](/initiatives/guided-loop.md).

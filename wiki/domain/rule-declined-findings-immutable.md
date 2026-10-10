@@ -1,39 +1,35 @@
 ---
+title: "Declined findings cannot be re-proposed at the same key"
 type: BusinessRule
-title: A declined finding is never re-proposed; terminal states are immutable
-description: "The findings ledger refuses proposals at a declined (source, destination, kind) key, and accepted/declined findings can never change state again — the suggestion box cannot be worn down."
+description: "The current ledger preserves terminal states and deduplicates source, destination, and kind."
 status: stable
-created: 2026-10-07
-updated: 2026-10-07
-# sources: retired with the python engines — evidence preserved at git tag python-final
-tags: [findings, authority, domain]
+created: 2026-10-10
+updated: 2026-10-10
+sources:
+  - {"id": "s1", "resource": "treadle/packages/knowledge/src/findings.ts"}
+  - {"id": "s2", "resource": "treadle/packages/cli/src/commands/know.ts"}
 ---
 
-# Rule
+# Existing rule and enforcement
 
-A finding that was **declined** is dead at its key: re-proposing the same
-`(source, destination, kind)` returns the declined finding with
-`refused: true` and never creates a new proposal. A **resolved** finding
-(accepted or declined) is terminal — resolving it again raises.
+The ledger deduplicates `(source, destination, kind)`.
+Re-proposing an existing entry returns it. A declined entry sets `refused: true`.
+Source: `treadle/packages/knowledge/src/findings.ts:146`.
 
-[^f1]:
-    `treadle/packages/knowledge/src/core/findings.ts` — `propose_finding`
-    returns the existing finding untouched and flags `refused` when its status
-    is `declined`.
+A pending entry can resolve once. Re-resolving a terminal entry or resolving
+an unknown ID throws an Error.
+Source: `treadle/packages/knowledge/src/findings.ts:178`.
+The TypeScript API does not expose the retired Python `FindingsError` class.
 
-[^f2]:
-    `treadle/packages/knowledge/src/core/findings.ts` — `resolve_finding`
-    raises `FindingsError` for already-terminal findings, unknown ids, and
-    invalid decisions.
+The authority rule remains agents propose and humans accept.
+The knowledge CLI resolution command itself does not authenticate a human or
+require a `human:` argument. This is a limitation of enforcement, not permission
+for an agent to resolve its own proposal.
+Source: `treadle/packages/cli/src/commands/know.ts:133`.
+See [security posture](/project/security-posture.md).
 
-# Enforcement
+# History
 
-Enforced in code, not by convention: `propose_finding` looks up the dedupe
-key before creating anything, and `resolve_finding` rejects non-pending
-transitions unconditionally.
-
-# Examples
-
-Declining `golden-path-416c0995` (the old merge direction) means that
-exact proposal can never return; a genuinely new direction needs a new
-finding (as `golden-path-79bba45a` did).
+This retains the existing accepted rule's meaning and corrects implementation
+references. Its prior text is preserved in the documentation archive.
+No new human acceptance is asserted by this repair.

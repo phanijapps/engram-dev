@@ -9,7 +9,7 @@ description: "The corpus regenerates from the TS engines and gates to zero; the 
 sources:
   [
     { id: generator, resource: treadle/conformance/generators/gen_corpus.ts },
-    { id: witness, resource: treadle/conformance/generators/gen_corpus.py },
+    { id: gate, resource: treadle/scripts/corpus-check.mjs },
   ]
 tags: [decision, corpus, witness, determinism]
 ---
@@ -44,3 +44,11 @@ equality with them proves TS ≡ python forever. [^c2]
     pinned for the whole generation run).
 
 [^c3]: The retirement board: `wiki/systems/treadle.md`.
+
+# Implementation context — 2026-10-10
+
+The retirement ceremony has occurred: Python is preserved at tag `python-final`.
+The historical consequence above described the transition, not a current file.
+The TypeScript generator and committed corpus are the active witnesses.
+Sources: `treadle/conformance/generators/gen_corpus.ts:1`;
+`treadle/scripts/corpus-check.mjs:1`. Equality applies to corpus-covered behavior.

@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: The SDD loop synthesis — three research lines, one loop
-description: "What three 2026 papers agree on, where they tension, and what our harness loop should adopt. Arming the loop redesign (proposals P-1 to P-5, pending owner decisions Q1/Q2)."
+description: "What three 2026 papers agree on, where they tension, and what our harness loop should adopt. Historical loop-redesign proposals; their original pending labels are not current work status."
 sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, loop, synthesis]
 ---
@@ -80,3 +80,11 @@ Full statements with rationale live in
 - [The digest](/research/sdd-loop-synthesis.md) anchors every claim to
   a paper section: `docs/archive/specs/sdd-research/analysis.md`.
 - Paper identities: arXiv 2610.01372, 2610.07534v1, 2610.05132v1.
+
+# Historical context — 2026-10-10
+
+This synthesis belongs to the archived `sdd-research` wave. Its proposal and
+question labels describe that record, not current open work. The paper claims
+remain reports from the retained digest; this repair did not independently
+validate the papers. Current implementation and gaps are in
+[architecture](/systems/sdd-harness-architecture.md) and [open work](/project/open-work.md).

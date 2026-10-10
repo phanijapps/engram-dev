@@ -6,9 +6,9 @@ updated: 2026-10-08
 verified:
   - { by: human:owner, at: 2026-10-08T00:50:00Z }
 title: A packagable harness that fast-tracks graph engineering without the waterfall trap (accepted 2026-10-08)
-description: "DRAFT — acceptance requested. The harness ships as a package other teams install to run graph engineering (spec-driven development over a versioned solution graph) without falling into the waterfall trap: knowledge first, bounded artifacts, uncertainty recorded, humans accepting."
+description: "Accepted purpose; historical packaging terminology retained. The harness ships as a package other teams install to run graph engineering (spec-driven development over a versioned solution graph) without falling into the waterfall trap: knowledge first, bounded artifacts, uncertainty recorded, humans accepting."
 sources: [{ id: src, resource: docs/archive/product/Structured_Brief.md }]
-tags: [decision, purpose, graph-engineering, anti-waterfall, draft]
+tags: [decision, purpose, graph-engineering, anti-waterfall]
 ---
 
 # Decision (ACCEPTED 2026-10-08 — finding `golden-path-8481ab73`)
@@ -45,3 +45,11 @@ microservices projects** (the initial supported shape).
 - Builds on [Okf-only engine](/decisions/okf-only-engine.md).
 - Operationalized by the loop pattern:
   [The SDD loop](/domain/pattern-anti-waterfall-loop.md).
+
+# Implementation context — 2026-10-10
+
+The purpose remains the recorded owner decision. Packaging now supplies the
+TypeScript `do` and `know` planes with installable skills and hooks. Code indexing
+is delegated; the knowledge package owns bundles. See
+[the current architecture](/systems/sdd-harness-architecture.md).
+This dated note does not create a new acceptance event.

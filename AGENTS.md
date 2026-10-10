@@ -25,10 +25,10 @@ We are building an **SDD harness**: a knowledge engine and a loop engine plus a 
 | Path | What it is |
 |---|---|
 | `treadle/` | **The harness.** pnpm workspace: `core` (specpack admission), `knowledge` (bundle), `web` (room + library), `cli` (`do` + `know`), `conformance` (the golden corpus, self-hosted), `brand` (the fence). |
-| `wiki/` | The repo's own knowledge base, built and verified by the engine's own skills. Curated pages in `systems/`, `domain/`, `decisions/`, `research/`. |
+| `wiki/` | Current project knowledge: `systems/`, `domain/`, `decisions/`, `research/`, `project/`, plus dated initiative projections and retrospectives. |
 | `treadle/packages/cli/harness/` | **The installable harness.** `skills/` (sdlc + node + writer), `agents/` (red-foreman per surface), `hooks/` (JS payloads), `harness.json` (the `harness/0.1` manifest). Installed with `treadle init harness`; the installer keeps `.pi/` and `.codex/` converged. |
 | `docs/product/` | Format contracts: the vendored OKF 0.2 spec, the specpack JSON schema. |
-| `docs/research/` | Current research: python-vs-node, naming, Node standards, the corpus design. |
+| `docs/research/` | Retained dated research inputs; current interpretations live in `wiki/research/`. |
 | `docs/archive/` | Everything retired: old spec initiatives, pre-pivot history, the python-era code index, superseded plans. New specs start fresh in `docs/specs/` when a wave opens. |
 
 ## Build & Verify (one runtime)
@@ -76,3 +76,15 @@ Wiki discipline: every load-bearing claim cites a location; frontmatter carries 
 - `pnpm check` + `pnpm corpus:check` + `pnpm brand:check` green; coverage floors met.
 - Wiki: validate 0/0, anchors 0 need review, status fresh.
 - **Never claim a check you did not run.**
+
+## Documentation navigation
+
+The authority map is `wiki/project/documentation-map.md`. Canonical executable
+specpacks remain in `docs/specs/`; wiki initiative pages provide dated navigation,
+not a second mutable task ledger. Dated retrospective pages preserve recorded
+outcomes and distinguish reported evidence from checks rerun in the current session.
+
+The future maintenance and retrospective enforcement proposal is
+`wiki/project/documentation-lifecycle.md` (draft; findings ledger pending).
+The current fingerprint scanner tracks Python only. A fresh stamp does not prove
+TypeScript source freshness; disclose untracked sources and inspect cited code.

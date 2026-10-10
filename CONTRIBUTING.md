@@ -1,22 +1,27 @@
 # Contributing
 
-One command tells the truth:
+Start with the [project overview](wiki/project/overview.md). Read
+[AGENTS](AGENTS.md) for the SDD workflow and [SECURITY](SECURITY.md) for reporting.
 
-    corepack enable && pnpm install
-    pnpm check        # tsc --build → eslint → prettier → vitest (exits checked)
-    pnpm brand:check  # the white-label fence
-    pnpm corpus:check # goldens regenerate byte-exact from the python engines
+Run from `treadle/`:
 
-Rules that matter here (the full set: `skills/node/*/SKILL.md`):
+```bash
+corepack enable
+pnpm install
+pnpm check
+pnpm coverage
+pnpm brand:check
+pnpm corpus:check
+pnpm audit:prod
+pnpm links
+```
 
-1. Types carry the contract; `any` fails the build. Refusals return typed
-   values; bugs throw.
-2. The corpus is truth: behavior changes regenerate goldens deliberately,
-   with the diff in the commit.
-3. Exit codes are verified, never piped away.
-4. Leave the campsite cleaner (the boy-scout skill): stale comments are
-   defects; dead code is deleted; the vcs remembers.
-5. Security findings go through SECURITY.md, not issues.
+The TypeScript generator regenerates the corpus against committed witnesses.
+A golden change is a contract change: regenerate deliberately and review its diff.
+Record actual exit codes. Do not present a failed or unrun check as successful.
 
-Commit style: conventional commits. Architecture decisions land as ADRs
-in `docs/adr/` once the project grows beyond this repo's wiki.
+Use conventional commits. Architectural decisions belong in
+[wiki/decisions](wiki/decisions/index.md). The proposed documentation maintenance
+practice is [here](wiki/project/documentation-lifecycle.md); it remains draft.
+Current controls and known gaps are documented in the wiki rather than duplicated
+in this entry document.
