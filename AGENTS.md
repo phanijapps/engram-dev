@@ -26,7 +26,7 @@ We are building an **SDD harness**: a knowledge engine and a loop engine plus a 
 |---|---|
 | `treadle/` | **The harness.** pnpm workspace: `core` (specpack admission), `knowledge` (bundle), `web` (room + library), `cli` (`do` + `know`), `conformance` (the golden corpus, self-hosted), `brand` (the fence). |
 | `wiki/` | The repo's own knowledge base, built and verified by the engine's own skills. Curated pages in `systems/`, `domain/`, `decisions/`, `research/`. |
-| `treadle/harness/` | **The installable harness.** `skills/` (sdlc + node + writer), `agents/` (red-foreman per surface), `hooks/` (JS payloads), `harness.json` (the `harness/0.1` manifest). Installed with `treadle init harness`; the installer keeps `.pi/` and `.codex/` converged. |
+| `treadle/packages/cli/harness/` | **The installable harness.** `skills/` (sdlc + node + writer), `agents/` (red-foreman per surface), `hooks/` (JS payloads), `harness.json` (the `harness/0.1` manifest). Installed with `treadle init harness`; the installer keeps `.pi/` and `.codex/` converged. |
 | `docs/product/` | Format contracts: the vendored OKF 0.2 spec, the specpack JSON schema. |
 | `docs/research/` | Current research: python-vs-node, naming, Node standards, the corpus design. |
 | `docs/archive/` | Everything retired: old spec initiatives, pre-pivot history, the python-era code index, superseded plans. New specs start fresh in `docs/specs/` when a wave opens. |

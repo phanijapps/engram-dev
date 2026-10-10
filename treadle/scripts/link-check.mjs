@@ -25,7 +25,7 @@ const LIVE_FILES = [
 const LIVE_DIRS = [
   join(ROOT, 'docs', 'product'),
   join(ROOT, 'wiki'),
-  join(ROOT, WORKSPACE, 'harness'),
+  join(ROOT, WORKSPACE, 'packages', 'cli', 'harness'),
 ];
 // the vendored OKF format spec carries ILLUSTRATIVE example links (tables/customers.md
 // etc.) — they document the link grammar, they are not repo links. Excluded on purpose.

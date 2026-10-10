@@ -7,7 +7,7 @@ export default tseslint.config(
       '**/dist/**',
       'packages/*/test/**',
       'packages/web/src/*.js', // vendored browser assets, not node source
-      'harness/**', // shipped payload (plain JS by contract), not workspace source
+      'packages/cli/harness/**', // shipped payload (plain JS by contract), not workspace source
     ],
   },
   eslint.configs.recommended,

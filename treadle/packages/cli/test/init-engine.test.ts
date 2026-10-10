@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { loadManifest } from '../src/harness/manifest.js';
+import { defaultManifestPath, loadManifest } from '../src/harness/manifest.js';
 import { compilePlan, planSummary } from '../src/harness/plan.js';
 import { applyPlan, removeInstall, statePath } from '../src/harness/apply.js';
 import { UsageError } from '../src/harness/types.ts';
@@ -368,7 +368,7 @@ describe('the installer engine (T-1)', () => {
   });
 
   it('the shipped manifest is valid and carries the honest copilot null', () => {
-    const lm = loadManifest(join(import.meta.dirname, '..', '..', '..', 'harness', 'harness.json'));
+    const lm = loadManifest(defaultManifestPath());
     expect(lm.manifest.components.length).toBeGreaterThanOrEqual(12);
     expect(lm.manifest.hooks[0]?.wiring.copilot).toBeNull();
     expect(lm.manifest.hooks[0]?.file).toContain('.js');

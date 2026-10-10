@@ -20,7 +20,7 @@ import { applyPlan } from '../src/harness/apply.js';
 import type { InstallChoices, Surface } from '../src/harness/types.ts';
 
 const REPO = join(import.meta.dirname, '..', '..', '..');
-const REAL_MANIFEST = join(REPO, 'harness', 'harness.json');
+const REAL_MANIFEST = join(REPO, 'packages', 'cli', 'harness', 'harness.json');
 
 interface TempWorld {
   home: string;
@@ -167,7 +167,7 @@ describe('the four surface adapters (T-3)', () => {
   });
 
   it('the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage', () => {
-    const hook = join(REPO, 'harness', 'hooks', 'post-tool-check.js');
+    const hook = join(REPO, 'packages', 'cli', 'harness', 'hooks', 'post-tool-check.js');
     const run = (arg: string) => execFileSync('node', [hook, arg], { encoding: 'utf8' });
     expect(run('{"tool_path": "/x/src/a.ts"}')).toContain('"ok":true');
     const managed = JSON.stringify({ tool_path: '/x/wiki/code/foo.md' });
@@ -207,7 +207,9 @@ describe('the four surface adapters (T-3)', () => {
   });
 
   it('the hook payload: extension mode exports the pi factory and guards tool_call', async () => {
-    const mod = await import(join(REPO, 'harness', 'hooks', 'post-tool-check.js'));
+    const mod = await import(
+      join(REPO, 'packages', 'cli', 'harness', 'hooks', 'post-tool-check.js')
+    );
     expect(typeof mod.default).toBe('function');
     const blocks: { reason: string }[] = [];
     const handlers: { eventName: string; fn: (event: unknown) => unknown }[] = [];
@@ -344,13 +346,13 @@ describe('session-recall payload + wirings (T-1)', () => {
   });
 
   it('script mode: the block prints and exits 0 (unpiped contract)', () => {
-    const hook = join(REPO, 'harness', 'hooks', 'session-recall.js');
+    const hook = join(REPO, 'packages', 'cli', 'harness', 'hooks', 'session-recall.js');
     const out = execFileSync('node', [hook, REPO + '/..'], { encoding: 'utf8' });
     expect(out).toMatch(/(work in flight|nothing in flight)/);
   });
 
   it('claude-gate: not continue-shaped → allow; continue-shaped with one open → allow (gate never over-fires)', () => {
-    const hook = join(REPO, 'harness', 'hooks', 'session-recall.js');
+    const hook = join(REPO, 'packages', 'cli', 'harness', 'hooks', 'session-recall.js');
     const allow1 = execFileSync('node', [hook, '--claude-gate'], {
       input: JSON.stringify({ prompt: 'write a poem', cwd: join(REPO, '..') }),
       encoding: 'utf8',

@@ -1,5 +1,5 @@
 /** Manifest loading + validation. Failures refuse — never guess. */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { isAbsolute, join, resolve } from 'node:path';
 import type { ComponentRow, HarnessManifest, HookRow, Surface } from './types.js';
 
@@ -70,11 +70,19 @@ function validateHook(h: HookRow): void {
   if (!h.wiring || typeof h.wiring !== 'object') throw new Error(`${h.id}: wiring map required`);
 }
 
-/** Default manifest shipped with the package: <repo>/harness/harness.json. */
+/** Default manifest shipped with the package: packages/cli/harness/harness.json.
+ *  The path walks UP from this module until it finds it — the module
+ *  lives at different depths in source (src/harness/), compiled
+ *  (dist/src/harness/), and packed installs; a fixed hop count broke
+ *  all three at once (found by the git-installed binary, T-2). */
 export function defaultManifestPath(): string {
-  // from packages/cli/src/harness/ → packages/cli/src → packages/cli → packages → repo root
-  const here = new URL('.', import.meta.url).pathname;
-  return join(here, '..', '..', '..', '..', 'harness', 'harness.json');
+  let dir = new URL('.', import.meta.url).pathname;
+  for (let i = 0; i < 5; i++) {
+    const candidate = join(dir, 'harness', 'harness.json');
+    if (existsSync(candidate)) return candidate;
+    dir = join(dir, '..');
+  }
+  return join(new URL('.', import.meta.url).pathname, '..', '..', 'harness', 'harness.json'); // the honest ENOENT when truly absent
 }
 
 export function sourceFile(c: ComponentRow, surface: Surface): string | undefined {
