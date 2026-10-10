@@ -21,6 +21,7 @@ const ALLOW_CONTAINS = [
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source
   /scripts\/corpus-check\.mjs$/, // speaks the repo-root workspace path
+  /scripts\/link-check\.mjs$/, // walks the workspace dir by path — same rationale as corpus-check
   /conformance\/generators\/gen_corpus\.ts$/, // repo-relative fixture paths, not brand
 ];
 
