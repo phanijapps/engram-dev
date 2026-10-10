@@ -1,0 +1,26 @@
+{
+  "coverage": {
+    "AC": {},
+    "DES": {},
+    "FR": {},
+    "US": {},
+    "context": {
+      "env_absent": true,
+      "long_notes": [],
+      "missing_detail": [],
+      "missing_touch": [
+        "T-1"
+      ],
+      "open_questions": [
+        "Q-1"
+      ]
+    },
+    "story_drift": {
+      "requirements_without_stories": [],
+      "stories_unserved": []
+    }
+  },
+  "violations": [
+    "A4 T-1 does not align to any requirement"
+  ]
+}

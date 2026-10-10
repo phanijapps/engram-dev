@@ -1,0 +1,56 @@
+{
+  "id": "p",
+  "name": "p",
+  "description": "Stage fixture",
+  "date": {
+    "updated": "2026-10-10T00:00:35Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_review"
+  },
+  "spec": {
+    "why": "w",
+    "requirements": [],
+    "clarifications": [],
+    "out_of_scope": []
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "d",
+        "because": "b",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "one",
+      "detail": "d",
+      "satisfies": [],
+      "implements": [],
+      "honors": [],
+      "accepts": [],
+      "status": "done",
+      "phase": "core",
+      "verify": {
+        "cmd": "true",
+        "expect": "0"
+      },
+      "evidence": [
+        {
+          "cmd": "true",
+          "exit": 0,
+          "at": "2026-10-10T00:00:35Z",
+          "by": "agent:w"
+        }
+      ]
+    }
+  ],
+  "format": "specpack/0.3",
+  "revision": 2
+}
