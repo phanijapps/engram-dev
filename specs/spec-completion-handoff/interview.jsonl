@@ -1,2 +1,7 @@
 {"format":"specweb-events/0.1"}
 {"kind":"answer","by":"human:owner","at":"2026-10-10T21:36:09Z","q":"Q-1","text":"The UI or the flow should be User Requirement -> Brief \nBrief -> Spec .. Approval gate if there are open questions to get started\nSpec -> Design/Plan -> Approval Gates on decisions \nplan -> Tasks -> Wait for approval to  start\nImplement to run all tasks and red-forman reveiew "}
+{"kind":"choice","by":"human:owner","at":"2026-10-10T21:56:49Z","q":"Q-2","text":"Yes, wait for all design approvals","option":"Yes, wait for all design approvals"}
+{"kind":"choice","by":"human:owner","at":"2026-10-10T21:57:05Z","q":"Q-3","text":"Yes, I will mark it complete","option":"Yes, I will mark it complete"}
+{"kind":"choice","by":"human:owner","at":"2026-10-10T21:57:20Z","q":"Q-4","text":"Yes, use the new format","option":"Yes, use the new format"}
+{"kind":"choice","by":"human:owner","at":"2026-10-10T21:57:31Z","q":"Q-5","text":"Yes, use this rule","option":"Yes, use this rule"}
+{"kind":"choice","by":"human:owner","at":"2026-10-10T21:57:36Z","q":"Q-6","text":"Yes, start Plan 1","option":"Yes, start Plan 1"}

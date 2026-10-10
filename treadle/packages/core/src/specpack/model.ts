@@ -43,6 +43,7 @@ export interface Artifact {
 
 /** Internal working doc (post-normalize). Field names are historical. */
 export interface PackDoc {
+  workflow?: import('./workflow.js').Workflow;
   id?: string;
   name: string;
   title?: string;
@@ -58,7 +59,17 @@ export interface PackDoc {
   spec: { why?: string; clarifications?: Question[]; [k: string]: unknown };
   plan: { decisions?: Decision[]; [k: string]: unknown };
   tasks: Task[];
-  review?: { verdicts?: { on?: string; verdict?: string }[]; [k: string]: unknown };
+  review?: {
+    verdicts?: {
+      on?: string;
+      verdict?: string;
+      by?: string;
+      plan_digest?: string;
+      evidence_digest?: string;
+      [k: string]: unknown;
+    }[];
+    [k: string]: unknown;
+  };
   env?: Record<string, unknown>;
   format: string;
   revision?: number;

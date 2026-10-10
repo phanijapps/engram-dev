@@ -1,0 +1,1234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://treadle.dev/contracts/specpack-owner-workflow.schema.json",
+  "title": "Specpack 0.4 owner workflow",
+  "description": "Canonical owner-gated specs. Original 0.2 and 0.3 contracts remain separate.",
+  "type": "object",
+  "properties": {},
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "title": "A file outside this json",
+      "properties": {
+        "file": {
+          "type": "string",
+          "title": "Path, relative to this json file"
+        },
+        "type": {
+          "type": "string",
+          "title": "Media type",
+          "examples": [
+            "text/markdown",
+            "text/x-mermaid",
+            "image/svg+xml",
+            "application/docx",
+            "application/xlsx"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "title": "What this file is"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Digest of the file bytes"
+        }
+      },
+      "required": ["file", "type"],
+      "additionalProperties": false
+    },
+    "spec": {
+      "type": "object",
+      "title": "SPEC — what and why",
+      "properties": {
+        "why": {
+          "type": "string",
+          "title": "The problem, in two sentences"
+        },
+        "stories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/story"
+          },
+          "title": "User stories (US-…)"
+        },
+        "requirements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/requirement"
+          },
+          "title": "Functional requirements (FR-…), one capability each"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/constraint"
+          },
+          "title": "Hard limits (CON-…)"
+        },
+        "clarifications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/clarification"
+          },
+          "title": "Questions (Q-…)"
+        },
+        "out_of_scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Explicit exclusions"
+        },
+        "edge_cases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Boundary and error conditions"
+        },
+        "success_criteria": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/successCriterion"
+          },
+          "title": "Measurable outcomes (SC-...)"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Beliefs the spec depends on"
+        }
+      },
+      "required": ["why", "requirements"],
+      "additionalProperties": false
+    },
+    "story": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^US-[A-Za-z0-9-]+$"
+        },
+        "as": {
+          "type": "string"
+        },
+        "want": {
+          "type": "string"
+        },
+        "so": {
+          "type": "string"
+        },
+        "acceptance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "title": "Acceptance criteria on the story (the Confirmation): when is this story complete"
+        },
+        "title": {
+          "type": "string",
+          "title": "One line: the story named"
+        },
+        "priority": {
+          "enum": ["P1", "P2", "P3"],
+          "title": "P1 alone must be a viable MVP (Spec Kit rule)"
+        },
+        "independent_test": {
+          "type": "string",
+          "title": "How to test this story alone"
+        }
+      },
+      "required": ["id", "as", "want", "so"],
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^FR-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string",
+          "title": "One capability, MUST/SHOULD wording"
+        },
+        "priority": {
+          "enum": ["P1", "P2", "P3"],
+          "title": "P1 = this slice"
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scenario"
+          },
+          "title": "Acceptance scenarios (AC-…)"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "serves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^US-[A-Za-z0-9-]+$"
+          },
+          "title": "Stories this capability serves"
+        }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "scenario": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^AC-[A-Za-z0-9-]+$"
+        },
+        "given": {
+          "type": "string"
+        },
+        "when": {
+          "type": "string"
+        },
+        "then": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "given", "when", "then"],
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^CON-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "clarification": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^Q-[A-Za-z0-9-]+$"
+        },
+        "question": {
+          "type": "string"
+        },
+        "status": {
+          "enum": ["open", "resolved"]
+        },
+        "owner": {
+          "type": "string"
+        },
+        "answer": {
+          "type": "string"
+        },
+        "resolved_by": {
+          "type": "string",
+          "pattern": "^D-[A-Za-z0-9-]+$"
+        },
+        "kind": {
+          "enum": ["open", "choice"],
+          "title": "v1 kinds (D-14): open text or choice"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 2,
+          "title": "Choice options (kind=choice)"
+        },
+        "default": {
+          "type": "string",
+          "title": "Preselected option"
+        },
+        "answered_by": {
+          "type": "string",
+          "title": "Who answered (human claim)"
+        },
+        "answered_at": {
+          "type": "string",
+          "title": "When the answer landed"
+        },
+        "unknown": {
+          "type": "boolean",
+          "title": "The honest unknown: answered, still blocking"
+        }
+      },
+      "required": ["id", "question", "status"],
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "title": "PLAN — how: designs, diagrams, decisions",
+      "properties": {
+        "approach": {
+          "type": "string",
+          "title": "The approach in a paragraph"
+        },
+        "stack": {
+          "type": "object",
+          "title": "Technical context"
+        },
+        "diagrams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/diagram"
+          },
+          "title": "Architecture diagrams (DG-…) — referenced artifacts"
+        },
+        "designs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/design"
+          },
+          "title": "Design elements (DES-…) — the parts the tasks implement"
+        },
+        "decisions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/decision"
+          },
+          "title": "Decisions (D-…), each with its because"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/dataEntity"
+          },
+          "title": "Entities / schemas"
+        },
+        "structure": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Files and folders touched"
+        }
+      },
+      "required": ["decisions"],
+      "additionalProperties": false
+    },
+    "diagram": {
+      "type": "object",
+      "title": "An architecture diagram, referenced",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DG-[A-Za-z0-9-]+$"
+        },
+        "artifact": {
+          "type": "string",
+          "title": "Key into artifacts — the diagram file itself"
+        },
+        "caption": {
+          "type": "string",
+          "title": "What the diagram shows"
+        },
+        "format": {
+          "enum": ["mermaid", "svg", "png", "excalidraw", "ascii"],
+          "title": "How a renderer should treat it"
+        },
+        "covers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(DES|FR|CON)-[A-Za-z0-9-]+$"
+          },
+          "title": "Design elements or requirements the diagram depicts"
+        }
+      },
+      "required": ["id", "artifact", "caption", "format"],
+      "additionalProperties": false
+    },
+    "design": {
+      "type": "object",
+      "title": "A design element — the thing tasks implement",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^DES-[A-Za-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": ["component", "module", "api", "flow", "data", "interface"],
+          "title": "What kind of part this is"
+        },
+        "detail": {
+          "type": "string",
+          "title": "The design in a few sentences"
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(FR|CON)-[A-Za-z0-9-]+$"
+          },
+          "title": "Requirements and constraints this element answers"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs",
+          "title": "Diagram and artifact references (e.g. arch#services)"
+        }
+      },
+      "required": ["id", "title", "kind"],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^D-[A-Za-z0-9-]+$"
+        },
+        "decision": {
+          "type": "string"
+        },
+        "because": {
+          "type": "string",
+          "title": "Why — the alternative beaten"
+        },
+        "resolves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^Q-[A-Za-z0-9-]+$"
+          }
+        },
+        "supersedes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^D-[A-Za-z0-9-]+$"
+          }
+        },
+        "status": {
+          "enum": ["proposed", "accepted", "rejected"],
+          "title": "A human accepts decisions"
+        },
+        "accepted_by": {
+          "type": "string",
+          "title": "Who accepted it",
+          "description": "A7: status 'accepted' requires accepted_by starting with 'human:' — agents may draft decisions, only humans accept them."
+        },
+        "rejected_because": {
+          "type": "string",
+          "title": "Why the decision was not taken (owner-supplied on rejection)"
+        }
+      },
+      "required": ["id", "decision", "because", "status"],
+      "additionalProperties": false
+    },
+    "dataEntity": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "task": {
+      "type": "object",
+      "title": "TASK — flow links and trace links, never mixed",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^T-[A-Za-z0-9-]+$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "detail": {
+          "type": "string",
+          "title": "What to do, for the worker"
+        },
+        "phase": {
+          "enum": [
+            "setup",
+            "test-first",
+            "core",
+            "integration",
+            "polish",
+            "review"
+          ]
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^T-[A-Za-z0-9-]+$"
+          },
+          "title": "FLOW: tasks that must finish first",
+          "description": "Ordering only. The alignment links live in implements/satisfies/accepts/honors."
+        },
+        "implements": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^DES-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: design elements this task realizes"
+        },
+        "satisfies": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^FR-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: requirements this task serves directly"
+        },
+        "accepts": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^AC-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: acceptance scenarios this task makes pass"
+        },
+        "honors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^CON-[A-Za-z0-9-]+$"
+          },
+          "title": "TRACE: constraints this task must respect"
+        },
+        "produces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Files this task creates or changes"
+        },
+        "verify": {
+          "$ref": "#/$defs/verify",
+          "title": "The observable check that completes this task"
+        },
+        "parallel": {
+          "type": "boolean"
+        },
+        "status": {
+          "enum": ["todo", "doing", "done", "blocked"]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "title": "Observed runs — done without evidence is a defect"
+        },
+        "assignee": {
+          "type": "string",
+          "title": "Worker or subagent (pi, claude, codex, …)"
+        },
+        "refs": {
+          "$ref": "#/$defs/refs"
+        },
+        "context": {
+          "$ref": "#/$defs/contextBlock",
+          "title": "Handoff context — what a fresh session needs beside the task"
+        },
+        "requires_decisions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^D-[A-Za-z0-9-]+$"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": ["id", "title", "verify", "status"],
+      "additionalProperties": false
+    },
+    "verify": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "expect": {
+          "type": "string",
+          "title": "The pass condition"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "title": "Ordered checks — every step must pass (A6)"
+        }
+      },
+      "required": ["cmd", "expect"],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "exit": {
+          "type": "integer"
+        },
+        "at": {
+          "type": "string",
+          "title": "ISO-8601 with Z"
+        },
+        "by": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": ["cmd", "exit", "at"],
+      "additionalProperties": false
+    },
+    "refs": {
+      "type": "array",
+      "title": "References into artifacts and diagrams",
+      "description": "'<artifactKey>#<anchor>' for documents ('prd#Refund Rules', 'arch#services'), '<artifactKey>!<Sheet>' for spreadsheets.",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*[#!][^#]+$"
+      }
+    },
+    "review": {
+      "type": "object",
+      "title": "REVIEW — verdicts on any id",
+      "properties": {
+        "checklist": {
+          "type": "string",
+          "title": "Named checklist applied"
+        },
+        "verdicts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/verdict"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "on": {
+          "type": "string"
+        },
+        "verdict": {
+          "enum": ["PASS", "IMPROVE", "REPLAN"]
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/finding"
+          }
+        },
+        "by": {
+          "type": "string"
+        },
+        "at": {
+          "type": "string"
+        },
+        "plan_digest": {
+          "$ref": "#/$defs/hash"
+        },
+        "evidence_digest": {
+          "$ref": "#/$defs/hash"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "required": ["on", "verdict", "by"],
+      "additionalProperties": false
+    },
+    "finding": {
+      "type": "object",
+      "properties": {
+        "severity": {
+          "enum": ["BLOCKER", "DEFECT", "SMELL"]
+        },
+        "note": {
+          "type": "string"
+        },
+        "fix": {
+          "type": "string",
+          "title": "The one-line fix"
+        }
+      },
+      "required": ["severity", "note"],
+      "additionalProperties": false
+    },
+    "contextBlock": {
+      "type": "object",
+      "title": "Handoff context — pin what you must, advise the rest",
+      "description": "touch paths are relative to the git root containing the pack and are pinned (sha256 written by the machine at handout; drift refuses). read, wiki, and digestless links are advisory. links may be URLs or repo-relative paths. notes are plain strings; provenance is the pack's git history. Promote load-bearing notes to D/CON/Q nodes.",
+      "properties": {
+        "touch": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/touchEntry"
+          },
+          "title": "Scope jail — the files this task may change, pinned"
+        },
+        "read": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/readEntry"
+          },
+          "title": "Advisory files — context, never changed"
+        },
+        "wiki": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Local okf bundle concept ids"
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/linkEntry"
+          },
+          "title": "External or repo-relative references"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Plain-text context — promote to a node when load-bearing"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/commandCheck"
+          },
+          "title": "Precise commands a worker may rely on"
+        }
+      },
+      "additionalProperties": false
+    },
+    "touchEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "title": "Relative to the git root containing the pack"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Pinned by the machine at handout; drift refuses the handout"
+        },
+        "why": {
+          "type": "string",
+          "title": "Why this file is in scope"
+        }
+      },
+      "required": ["path"],
+      "additionalProperties": false
+    },
+    "readEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "required": ["path", "why"],
+      "additionalProperties": false
+    },
+    "linkEntry": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "title": "External URL or repo-relative path"
+        },
+        "why": {
+          "type": "string",
+          "title": "What a worker should extract from this reference"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Optional pin — verified at handout when present"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "title": "When the pinned content was fetched (ISO-8601)"
+        }
+      },
+      "required": ["url", "why"],
+      "additionalProperties": false
+    },
+    "commandCheck": {
+      "type": "object",
+      "properties": {
+        "cmd": {
+          "type": "string"
+        },
+        "expect_exit": {
+          "type": "integer",
+          "title": "Expected exit code, default 0"
+        }
+      },
+      "required": ["cmd"],
+      "additionalProperties": false
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "run": {
+          "type": "string"
+        },
+        "expect_exit": {
+          "type": "integer",
+          "title": "Expected exit code, default 0"
+        },
+        "expect_contains": {
+          "type": "string",
+          "title": "Substring the output must contain"
+        }
+      },
+      "required": ["run"],
+      "additionalProperties": false
+    },
+    "envBlock": {
+      "type": "object",
+      "title": "How this pack is built and tested",
+      "properties": {
+        "build": {
+          "type": "string"
+        },
+        "test": {
+          "type": "string"
+        },
+        "lint": {
+          "type": "string"
+        },
+        "toolchain": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "successCriterion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^SC-[A-Za-z0-9-]+$"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "oldRoot": {
+      "title": "Legacy flat layout (pre spec-layout)",
+      "properties": {
+        "format": {
+          "enum": ["specpack/0.2", "specpack/0.3"],
+          "title": "Format tag"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "title": "Initiative name (slug)"
+        },
+        "title": {
+          "type": "string",
+          "title": "Human title"
+        },
+        "artifacts": {
+          "type": "object",
+          "title": "External files this initiative refers to",
+          "description": "Key = short id used in refs (e.g. 'prd', 'arch'). Values point at real files outside this json.",
+          "additionalProperties": {
+            "$ref": "#/$defs/artifact"
+          }
+        },
+        "spec": {
+          "$ref": "#/$defs/spec"
+        },
+        "plan": {
+          "$ref": "#/$defs/plan"
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task"
+          },
+          "title": "The work, one task each"
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        },
+        "env": {
+          "$ref": "#/$defs/envBlock",
+          "title": "Environment contract — how this pack is built and tested"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "title": "Revision — bumped on every machine mutation",
+          "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
+        },
+        "status": {
+          "enum": ["active", "complete"],
+          "title": "Pack lifecycle",
+          "description": "Absent means active. complete is the final state: set by loom close, frozen afterwards."
+        },
+        "closed_by": {
+          "type": "string",
+          "title": "Who closed the pack (human:<owner>)"
+        },
+        "closed_at": {
+          "type": "string",
+          "title": "When the pack closed (owner-supplied ISO-8601)"
+        },
+        "deliverable": {
+          "enum": [
+            "drafted",
+            "planning",
+            "in_progress",
+            "blocked",
+            "awaiting_owner",
+            "in_review",
+            "delivered"
+          ],
+          "title": "Deliverable stage",
+          "description": "Machine-derived and checksum-verified: written at every save, re-derived at load, mismatch refuses. Never hand-set."
+        },
+        "id": {
+          "type": "string",
+          "title": "The slug (spec-layout)"
+        },
+        "created": {
+          "type": "string",
+          "title": "Author-supplied creation date (spec-layout D-3)"
+        },
+        "updated": {
+          "type": "string",
+          "title": "Machine-stamped at save (spec-layout D-3)"
+        },
+        "approved_at": {
+          "type": "string"
+        },
+        "approved_by": {
+          "type": "string"
+        }
+      },
+      "required": ["format", "name", "title", "spec", "plan", "tasks"],
+      "additionalProperties": false
+    },
+    "metadataEntry": {
+      "type": "object",
+      "title": "An external reference (URL or path): Jira, Confluence, tickets, files, the Feature Brief",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "title": "URL or path"
+        },
+        "type": {
+          "type": "string",
+          "title": "Media type or kind"
+        },
+        "description": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Optional pin, verified at handout"
+        }
+      },
+      "required": ["ref", "type"],
+      "additionalProperties": false
+    },
+    "dateGroup": {
+      "type": "object",
+      "title": "Chronology",
+      "properties": {
+        "created": {
+          "type": "string",
+          "title": "Author-supplied"
+        },
+        "updated": {
+          "type": "string",
+          "title": "Machine-stamped at every save (UTC)"
+        },
+        "closed": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "type": "string"
+            },
+            "by": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "approved": {
+          "type": "object",
+          "properties": {
+            "at": {
+              "type": "string"
+            },
+            "by": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "title": "The approval act (spec-web D-11): the twin of closed"
+        }
+      },
+      "additionalProperties": false
+    },
+    "statusGroup": {
+      "type": "object",
+      "title": "Where the deliverable stands",
+      "properties": {
+        "lifecycle": {
+          "enum": ["active", "complete"],
+          "title": "Record lifecycle"
+        },
+        "deliverable": {
+          "enum": [
+            "drafted",
+            "planning",
+            "in_progress",
+            "blocked",
+            "awaiting_owner",
+            "in_review",
+            "delivered"
+          ],
+          "title": "Derived stage"
+        }
+      },
+      "additionalProperties": false
+    },
+    "newRoot": {
+      "title": "Canonical layout (spec-layout D-1): reads chronologically",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "The slug"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+          "title": "Initiative name (slug)"
+        },
+        "description": {
+          "type": "string",
+          "title": "What this is, one line"
+        },
+        "date": {
+          "$ref": "#/$defs/dateGroup"
+        },
+        "status": {
+          "$ref": "#/$defs/statusGroup"
+        },
+        "metadata": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/metadataEntry"
+          },
+          "title": "External references"
+        },
+        "spec": {
+          "$ref": "#/$defs/spec"
+        },
+        "design": {
+          "$ref": "#/$defs/plan"
+        },
+        "tasks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/task"
+          },
+          "title": "The work, one task each"
+        },
+        "review": {
+          "$ref": "#/$defs/review"
+        },
+        "env": {
+          "$ref": "#/$defs/envBlock"
+        },
+        "format": {
+          "const": "specpack/0.4"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991,
+          "title": "Revision — bumped on every machine mutation",
+          "description": "The write fence: record commands carry --expected-revision; a stale writer is refused. Absent = treated as 1."
+        },
+        "workflow": {
+          "$ref": "#/$defs/workflow"
+        }
+      },
+      "required": [
+        "format",
+        "name",
+        "description",
+        "spec",
+        "design",
+        "tasks",
+        "workflow",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "startReceipt": {
+      "type": "object",
+      "properties": {
+        "by": {
+          "type": "string",
+          "pattern": "^human:\\S+$"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "plan_digest": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": ["by", "at", "plan_digest"],
+      "additionalProperties": false
+    },
+    "ownerAct": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": ["accept", "reject", "approve", "start", "close", "adopt"]
+        },
+        "by": {
+          "type": "string",
+          "pattern": "^human:\\S+$"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "decision": {
+          "type": "string"
+        },
+        "because": {
+          "type": "string"
+        },
+        "plan_digest": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "required": ["id", "kind", "by", "at", "revision"],
+      "additionalProperties": false
+    },
+    "workflow": {
+      "type": "object",
+      "properties": {
+        "policy": {
+          "const": "owner-gated/1"
+        },
+        "plan": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "phase_questions": {
+          "type": "object",
+          "properties": {
+            "spec": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": ["spec"],
+          "additionalProperties": false
+        },
+        "start_receipt": {
+          "$ref": "#/$defs/startReceipt"
+        },
+        "acts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ownerAct"
+          }
+        },
+        "pending_audit": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ownerAct"
+          }
+        }
+      },
+      "required": [
+        "policy",
+        "plan",
+        "phase_questions",
+        "acts",
+        "pending_audit"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "anyOf": [
+    {
+      "$ref": "#/$defs/newRoot"
+    }
+  ]
+}

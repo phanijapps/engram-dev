@@ -12,10 +12,12 @@ import type { Admission } from '../refusals.js';
 import { closureGaps } from './derive.js';
 import { pinOrVerify, verifyRefs } from './pins.js';
 import type { PackDoc, Task } from './model.js';
+import { executionGate, taskEvidenced, workflowGate, type WorkflowGate } from './workflow.js';
 
 type Raw = Record<string, unknown>;
 
 export type Handout =
+  | { readonly status: 'owner_gate'; readonly gate: WorkflowGate }
   | {
       readonly status: 'task';
       readonly task: string;
@@ -54,8 +56,17 @@ export function nextTask(
         : { status: 'COMPLETE' },
     };
   }
+  if (doc.format === 'specpack/0.4') {
+    const gate = executionGate(doc, opts.packPath);
+    if (!gate.ok)
+      return { ok: true, value: { status: 'owner_gate', gate: workflowGate(doc, opts.packPath) } };
+  }
   const tasks = doc.tasks;
-  const done = new Set(tasks.filter((t) => t.status === 'done').map((t) => t.id));
+  const done = new Set(
+    tasks
+      .filter((t) => (doc.format === 'specpack/0.4' ? taskEvidenced(t) : t.status === 'done'))
+      .map((t) => t.id),
+  );
   const byId = [...tasks].sort((a, b) => a.id.localeCompare(b.id));
   let pick: Task | undefined = byId.find((t) => t.status === 'doing'); // resume the outstanding handout
   if (!pick) {
@@ -68,6 +79,11 @@ export function nextTask(
       .sort();
     if (blocked.length) return { ok: true, value: { status: 'BLOCKED', tasks: blocked } };
     if (tasks.length && tasks.every((t) => t.status === 'done')) {
+      if (doc.format === 'specpack/0.4')
+        return {
+          ok: true,
+          value: { status: 'owner_gate', gate: workflowGate(doc, opts.packPath) },
+        };
       const gaps = closureGaps(doc);
       if (gaps.pending_decisions.length || gaps.open_questions.length) {
         return {

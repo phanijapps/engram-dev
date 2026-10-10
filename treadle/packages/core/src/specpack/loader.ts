@@ -11,6 +11,7 @@ import { normalize } from './normalize.js';
 import { deriveStage } from './derive.js';
 import type { PackDoc } from './model.js';
 import { refuse, type Admission } from '../refusals.js';
+import { validateWorkflow } from './workflow.js';
 
 const KNOWN_FORMATS = ['specpack/0.3', 'specpack/0.2'];
 
@@ -42,12 +43,15 @@ export function loadPack(dir: string): Admission<PackDoc> {
     return refuse('pack_refused_to_load', `${path}: not a spec: spec.requirements missing`);
   }
   const format = (d['format'] as string | undefined) ?? '';
-  if (!KNOWN_FORMATS.includes(format)) {
+  if (!KNOWN_FORMATS.includes(format) && format !== 'specpack/0.4') {
     return refuse(
       'pack_refused_to_load',
       `${path}: unsupported format '${format}' (this loom speaks: ${KNOWN_FORMATS.join(', ')})`,
     );
   }
+  const workflowProblems = validateWorkflow(doc);
+  if (workflowProblems.length)
+    return refuse('pack_refused_to_load', `${path}: ${workflowProblems.join('; ')}`);
   if (!('status' in d)) d['status'] = 'active'; // explicit from the first machine touch
   const stored = d['deliverable'];
   if (stored !== undefined && stored !== deriveStage(doc)) {

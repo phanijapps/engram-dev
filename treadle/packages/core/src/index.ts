@@ -1,5 +1,20 @@
 export { assertNever } from './assert.js';
 export {
+  validateWorkflow,
+  planDigest,
+  workflowGate,
+  executionGate,
+  ownerAction,
+  evidenceDigest,
+  currentReview,
+  taskEvidenced,
+  humanClaim,
+  canonical,
+  type Workflow,
+  type WorkflowGate,
+  type OwnerAct,
+} from './specpack/workflow.js';
+export {
   parseId,
   idFamily,
   type SpecId,

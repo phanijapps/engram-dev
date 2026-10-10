@@ -90,7 +90,11 @@ export function approveSpec(
     );
   }
   const openq = (doc.spec.clarifications ?? [])
-    .filter((q) => q.status === 'open')
+    .filter(
+      (q) =>
+        q.status === 'open' &&
+        (doc.format !== 'specpack/0.4' || doc.workflow?.phase_questions.spec.includes(q.id)),
+    )
     .map((q) => q.id)
     .sort();
   if (openq.length) {

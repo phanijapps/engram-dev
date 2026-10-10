@@ -12,6 +12,7 @@ export const CANONICAL_ORDER = [
   'spec',
   'design',
   'tasks',
+  'workflow',
   'review',
   'env',
   'format',
@@ -64,6 +65,7 @@ export function emit(doc: PackDoc): Raw {
   out['spec'] = d['spec'];
   out['design'] = d['plan'];
   out['tasks'] = d['tasks'];
+  if (d['format'] === 'specpack/0.4') out['workflow'] = d['workflow'];
   if (d['review']) out['review'] = d['review'];
   if (d['env']) out['env'] = d['env'];
   out['format'] = d['format'];

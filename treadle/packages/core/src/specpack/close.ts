@@ -4,6 +4,7 @@
 import { refuse, type Admission } from '../refusals.js';
 import type { PackDoc } from './model.js';
 import { closureGaps } from './derive.js';
+import { workflowGate } from './workflow.js';
 
 export interface CloseResult {
   readonly name: string;
@@ -15,11 +16,16 @@ export interface CloseResult {
 export function closePack(
   doc: PackDoc,
   by: string,
-  opts: { at?: string | undefined },
+  opts: { at?: string | undefined; packPath?: string | undefined },
 ): Admission<CloseResult> {
   if (doc.status === 'complete') return refuse('pack_is_frozen', frozenMessage());
   if (!by.startsWith('human:')) {
     return refuse('human_claim_required', 'closing needs a human claim: pass --by human:<owner>');
+  }
+  if (doc.format === 'specpack/0.4') {
+    const gate = workflowGate(doc, opts.packPath);
+    if (gate.phase !== 'closure')
+      return refuse('cannot_close', `${gate.phase}: ${gate.reasons.join('; ')}`);
   }
   const problems: string[] = [];
   const undone = doc.tasks

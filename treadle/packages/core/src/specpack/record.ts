@@ -2,6 +2,7 @@
  *  with the exact published vocabulary; revision bumps are part of the op. */
 import { refuse, type Admission } from '../refusals.js';
 import type { PackDoc, Task } from './model.js';
+import { executionGate, taskEvidenced, humanClaim } from './workflow.js';
 
 const STALL_LIMIT = 2;
 
@@ -23,7 +24,7 @@ export function record(
   commands: readonly ExecutedCommand[],
   expectedRevision: number,
   by: string,
-  opts: { at: string; notes?: string | undefined },
+  opts: { at: string; notes?: string | undefined; packPath?: string | undefined },
 ): Admission<RecordResult> {
   if (doc.status === 'complete') return refuse('pack_is_frozen', frozenMessage());
   if ((doc.revision ?? 1) !== expectedRevision) {
@@ -35,6 +36,26 @@ export function record(
   const t = findTask(doc, taskId);
   if (!t.ok) return t;
   const task = t.value;
+  if (doc.format === 'specpack/0.4') {
+    const gate = executionGate(doc, opts.packPath);
+    if (!gate.ok) return gate;
+    if (result === 'unblock' && !humanClaim(by))
+      return refuse('human_claim_required', 'Unblock needs the owner');
+    const missing = ((task['needs'] as string[] | undefined) ?? []).filter(
+      (id) => !doc.tasks.some((t) => t.id === id && taskEvidenced(t)),
+    );
+    if (missing.length)
+      return refuse(
+        'cannot_record_from',
+        `${taskId}: prerequisites lack passing evidence: ${missing.join(', ')}`,
+      );
+    const verify = task['verify'] as { cmd?: string } | undefined;
+    if (
+      result === 'pass' &&
+      (!verify?.cmd || commands.length !== 1 || commands[0]?.command !== verify.cmd)
+    )
+      return refuse('cannot_record_from', `${taskId}: run the declared verification command`);
+  }
   if (result === 'unblock') {
     if (task.status !== 'blocked') {
       return refuse(

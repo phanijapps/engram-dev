@@ -1,0 +1,11 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/core/test/core.test.ts (5 tests) 4ms
+ ✓ packages/core/test/owner-workflow.test.ts (9 tests) 27ms
+
+ Test Files  2 passed (2)
+      Tests  14 passed (14)
+   Start at  18:03:14
+   Duration  760ms (transform 242ms, setup 0ms, collect 485ms, tests 31ms, environment 0ms, prepare 197ms)
+
