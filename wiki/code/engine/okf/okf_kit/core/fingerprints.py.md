@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/core/fingerprints.py
-source_hash: 05de7e434a90cd700e56c162877666044165d90e29f840048a55c2946150ceee
+source_hash: a90b51637c0b558d148afdbf16100a602c21a8993bde9057ba1f3b2e350162c7
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: engine/okf
 ---
@@ -32,10 +32,10 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/fingerprints.py`. Purp
 |---|---|---|
 | function | `_sha256` | 21-25 |
 | function | `_git_head` | 28-39 |
-| function | `compute_fingerprints` | 42-58 |
-| function | `write_fingerprints` | 61-74 |
-| function | `read_fingerprints` | 77-86 |
-| function | `anchor_review` | 89-140 |
+| function | `compute_fingerprints` | 42-61 |
+| function | `write_fingerprints` | 64-77 |
+| function | `read_fingerprints` | 80-89 |
+| function | `anchor_review` | 92-143 |
 
 # Relationships
 

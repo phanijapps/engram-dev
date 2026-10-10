@@ -14,17 +14,17 @@ sources:
 source_hash: 32683245d3f45d448aa07ab33109c4e1668608fb8569ff1852e4cd3eac8627fc
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle/packages/core
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `treadle/packages/core/src/events.ts`. Purpose: treadle/packages/core/src/events.ts is a `typescript` module in package `treadle/packages/core`. Role: module. high-signal symbols: `EVENT_KINDS`, `BaseEvent`, `QuestionEvent`, `ApproveEvent`, `eventKindOf`. Dependency context: 0 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `treadle/packages/core/src/events.ts`. Purpose: treadle/packages/core/src/events.ts is a `typescript` module in package `treadle/packages/core`. Role: module. high-signal symbols: `EVENT_KINDS`, `BaseEvent`, `QuestionEvent`, `ApproveEvent`, `eventKindOf`. Dependency context: 0 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -38,7 +38,8 @@ Generated CodeModule concept for `treadle/packages/core/src/events.ts`. Purpose:
 
 # Relationships
 
-No imports detected.
+Used by:
+- [treadle/packages/core/src/specpack/events.ts](/code/treadle/packages/core/src/specpack/events.ts.md)
 
 # Impact notes
 

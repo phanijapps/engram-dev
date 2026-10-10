@@ -245,8 +245,10 @@ def _check_concept_0_2(report: Report, concept: Any) -> None:
 
     sources = fm.get("sources")
     if sources is not None:
+        # SPEC §5.1: resource is required, id is OPTIONAL — demanding id
+        # warned the SPEC's own canonical example (red-forman conformance table)
         ok = isinstance(sources, list) and all(
-            isinstance(s, dict) and isinstance(s.get("id"), str) and isinstance(s.get("resource"), str)
+            isinstance(s, dict) and isinstance(s.get("resource"), str) and bool(s.get("resource"))
             for s in sources
         )
         if not ok:

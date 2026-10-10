@@ -18,6 +18,8 @@ jobs:
         with: { node-version: '${{ matrix.node }}', cache: pnpm }
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm coverage
       - run: pnpm brand:check
+      - run: pnpm audit:prod
       - name: conformance
         run: pnpm --filter @treadle/conformance test

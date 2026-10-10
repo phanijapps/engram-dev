@@ -242,8 +242,8 @@ export function validateBundle(root: string): Report {
             (sv) =>
               typeof sv === 'object' &&
               sv !== null &&
-              typeof (sv as Record<string, unknown>)['id'] === 'string' &&
-              typeof (sv as Record<string, unknown>)['resource'] === 'string',
+              typeof (sv as Record<string, unknown>)['resource'] === 'string' && // id is OPTIONAL per SPEC §5.1
+              Boolean((sv as Record<string, unknown>)['resource']),
           );
         if (!ok) {
           warnings.push({

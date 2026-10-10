@@ -11,13 +11,13 @@ language: python
 sources:
 - id: src
   resource: engine/okf/okf_kit/core/validate.py
-source_hash: 57dbdc10c063bcc963ae0c0c645053b5423c703c6b0c328fd9f0678f4da86d7d
+source_hash: 61ca089e462e1bc4371baf22d2019de4b754a106fb76844c6f87920507133f40
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-08T00:43:25Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: engine/okf
 ---
@@ -36,8 +36,8 @@ Generated CodeModule concept for `engine/okf/okf_kit/core/validate.py`. Purpose:
 | function | `to_dict` | 63-69 |
 | function | `validate_bundle` | 72-138 |
 | function | `_check_concept` | 141-196 |
-| function | `_check_concept_0_2` | 199-264 |
-| function | `_check_okf_version` | 267-280 |
+| function | `_check_concept_0_2` | 199-266 |
+| function | `_check_okf_version` | 269-282 |
 
 # Relationships
 

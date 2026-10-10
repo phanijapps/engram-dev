@@ -14,17 +14,17 @@ sources:
 source_hash: ca0ca03f329df14d0e02ca5fd7224730a0ecac891ef149908e730d01736f560c
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle/packages/core
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `treadle/packages/core/src/stages.ts`. Purpose: treadle/packages/core/src/stages.ts is a `typescript` module in package `treadle/packages/core`. Role: module. high-signal symbols: `DELIVERABLE_STAGES`, `STAGE_WORDS`, `stageWord`. Dependency context: 0 local dependencies and 0 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `treadle/packages/core/src/stages.ts`. Purpose: treadle/packages/core/src/stages.ts is a `typescript` module in package `treadle/packages/core`. Role: module. high-signal symbols: `DELIVERABLE_STAGES`, `STAGE_WORDS`, `stageWord`. Dependency context: 0 local dependencies and 1 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -36,7 +36,8 @@ Generated CodeModule concept for `treadle/packages/core/src/stages.ts`. Purpose:
 
 # Relationships
 
-No imports detected.
+Used by:
+- [treadle/packages/core/src/specpack/derive.ts](/code/treadle/packages/core/src/specpack/derive.ts.md)
 
 # Impact notes
 

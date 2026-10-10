@@ -9,10 +9,10 @@ tags:
 - package
 summary_level: package
 managed_by: okf-code
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle/packages/conformance
 ---
@@ -24,6 +24,7 @@ Generated package summary for `repository/treadle/packages/conformance`. Purpose
 # Key modules
 
 - [treadle/packages/conformance/src/corpus.ts](/code/treadle/packages/conformance/src/corpus.ts.md) - module; depends on 0; used by 0; high-signal symbols: `Case`, `listCases`, `out`
+- [treadle/packages/conformance/src/runner.ts](/code/treadle/packages/conformance/src/runner.ts.md) - module; depends on 0; used by 0; high-signal symbols: `FIXED_AT`, `SCRUB`, `CaseResult`
 
 # Impact map
 

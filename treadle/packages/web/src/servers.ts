@@ -44,10 +44,20 @@ function json(res: ServerResponse, code: number, obj: unknown): void {
   res.end(bytes);
 }
 
+/** The security headers every surface speaks (R25): CSP pins the page to
+ *  itself + inline config injection; no sniffing; same-origin framing only. */
+const SECURITY_HEADERS: Record<string, string> = {
+  'Content-Security-Policy':
+    "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'",
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'SAMEORIGIN',
+  'Referrer-Policy': 'no-referrer',
+};
+
 async function asset(res: ServerResponse, file: string, type: string): Promise<void> {
   try {
     const bytes = await readFile(join(WEB, file));
-    res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store' });
+    res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store', ...SECURITY_HEADERS });
     res.end(bytes);
   } catch {
     json(res, 404, { ok: false, error: 'not found' });
@@ -123,7 +133,7 @@ export function startRoom(packDir: string, port = 0, owner = 'human:owner'): Pro
     const url = req.url ?? '/';
     if (url === '/' || url === '/index.html') {
       const html = (await readFile(join(WEB, 'page.html'))).toString('utf8');
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8', ...SECURITY_HEADERS });
       res.end(
         html.replace(
           '</head>',

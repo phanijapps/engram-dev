@@ -1,3 +1,4 @@
 dist/
 corpus/
 pnpm-lock.yaml
+coverage/

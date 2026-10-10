@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-09T20:22:36Z",
+  "generated_at": "2026-10-10T00:37:58Z",
   "workspace": "/home/videogamer/code/memex_beta",
-  "head": "cdcc7351b0ca00edb9f58e8bc0ca1163a1b4b459",
+  "head": "83f6f2b410e65acbef50430ed1104b820aebd92a",
   "fingerprints": {
     "engine/loom/src/loom_kit/__init__.py": "4bedd00b79acaa5a9c115f8c8ab77597f46b3f121ac2d68becee60b727c0f682",
     "engine/loom/src/loom_kit/cli.py": "94e8106fbb33e77c5d8b1f0f729ccfc50e2c20a2e8b3752363817e750bc95ed3",
@@ -30,7 +30,7 @@
     "engine/okf/okf_kit/core/__init__.py": "2d7fb8fd6ae009a31596f7b93e45d8b1235ee7f4d2bf3dff4a3dcae1aedae198",
     "engine/okf/okf_kit/core/context.py": "32fa36dbe665c23e46e9bacbeae4cc91df3d32075d5498532a263ba24e8c82f8",
     "engine/okf/okf_kit/core/findings.py": "2b8405dedd356340bbf79a3078c21986599bd53a87f16af3a71a5ecb3c21aeb1",
-    "engine/okf/okf_kit/core/fingerprints.py": "05de7e434a90cd700e56c162877666044165d90e29f840048a55c2946150ceee",
+    "engine/okf/okf_kit/core/fingerprints.py": "a90b51637c0b558d148afdbf16100a602c21a8993bde9057ba1f3b2e350162c7",
     "engine/okf/okf_kit/core/index.py": "c81db3892f1ced3f373cd0a3bfbc450ecd6e39dc34923896f1d519ca677aad29",
     "engine/okf/okf_kit/core/links.py": "6a716e4e64a291c57e745b4e356260d648559b41ec9503b48d8fb11ac7091181",
     "engine/okf/okf_kit/core/model.py": "cfe686eeb1c8ed3f96d175bbc71d952848b2423a03700063842f242d95791d85",
@@ -39,6 +39,7 @@
     "engine/okf/okf_kit/core/stamp.py": "a82cbb66d0472a7f2ec548d4061ce78d1f6ebf7208498b699c67dbe486fac770",
     "engine/okf/okf_kit/core/status.py": "bd4b01b060758541e319a56b07a9a8f0d39734c5fe8d1bc2d4b1625f8eff8557",
     "engine/okf/okf_kit/core/templates.py": "d1921ce1a93194d7d6d75c8c7863d1291e85f4820c083bafbf78b70e50c1b24e",
-    "engine/okf/okf_kit/core/validate.py": "57dbdc10c063bcc963ae0c0c645053b5423c703c6b0c328fd9f0678f4da86d7d"
+    "engine/okf/okf_kit/core/validate.py": "61ca089e462e1bc4371baf22d2019de4b754a106fb76844c6f87920507133f40",
+    "treadle/conformance/generators/gen_corpus.py": "4d7932a5f90d079a69330c74c9b94e1b09cefa64eed7e2d0440a065a5601f894"
   }
 }

@@ -11,13 +11,13 @@ language: javascript
 sources:
 - id: src
   resource: treadle/eslint.config.mjs
-source_hash: a9188eb1cc7986fee8085baffa699666cc715bdc31e8c9702a7c1f2454f72273
+source_hash: 8031f0e19438d771d261dac27c7cec5749d01800fd8ac45c629c11889a92d195
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle
 ---

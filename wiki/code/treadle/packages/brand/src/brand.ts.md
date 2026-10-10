@@ -14,10 +14,10 @@ sources:
 source_hash: 031054e8a8b8ac494af9a6a48bd9193c0c9d87750b4c42ac19f4ec2b3492e214
 managed_by: okf-code
 generated_profile: compact
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle/packages/brand
 ---

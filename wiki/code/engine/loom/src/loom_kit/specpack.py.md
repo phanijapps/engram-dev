@@ -19,14 +19,14 @@ generated_profile: compact
 created: 2026-10-08T02:51:49Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: engine/loom
 ---
 <!-- okf-code:start -->
 # Overview
 
-Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `derive_deliverable`, `_normalize`, `_emit`, `save`, `_now`. Dependency context: 1 local dependencies and 3 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
+Generated CodeModule concept for `engine/loom/src/loom_kit/specpack.py`. Purpose: engine/loom/src/loom_kit/specpack.py is a `python` module in package `engine/loom`. Role: module. high-signal symbols: `derive_deliverable`, `_normalize`, `_emit`, `save`, `_now`. Dependency context: 1 local dependencies and 4 local dependents are linked when resolvable. Impact: changes here may affect linked dependents, imported dependencies, and callers identified by generated reverse edges. This page is syntax-derived for code finding, code-logic search, and impact-analysis groundwork.
 
 # Symbols
 
@@ -74,6 +74,7 @@ Used by:
 - [engine/loom/src/loom_kit/cli.py](/code/engine/loom/src/loom_kit/cli.py.md)
 - [engine/loom/src/loom_kit/web/library.py](/code/engine/loom/src/loom_kit/web/library.py.md)
 - [engine/loom/src/loom_kit/web/server.py](/code/engine/loom/src/loom_kit/web/server.py.md)
+- [treadle/conformance/generators/gen_corpus.py](/code/treadle/conformance/generators/gen_corpus.py.md)
 
 # Impact notes
 

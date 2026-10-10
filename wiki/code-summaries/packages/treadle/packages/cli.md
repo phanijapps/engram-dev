@@ -1,18 +1,21 @@
 ---
 type: CodeSummary
 title: repository/treadle/packages/cli
-description: Generated package code summary for repository/treadle/packages/cli.
+description: 'Generated package code summary for repository/treadle/packages/cli.
+  Top dependencies: ./commands/do.js. Top dependents: treadle/packages/cli/src/main.ts.'
 tags:
 - code
 - summary
 - impact
 - package
+- depends-on
+- used-by
 summary_level: package
 managed_by: okf-code
-created: '2026-10-09T21:44:45Z'
+created: 2026-10-09T21:44:45Z
 generated:
   by: process:okf-code
-  at: '2026-10-09T21:44:45Z'
+  at: '2026-10-10T00:37:58Z'
 status: stable
 package: treadle/packages/cli
 ---
@@ -23,11 +26,15 @@ Generated package summary for `repository/treadle/packages/cli`. Purpose: provid
 
 # Key modules
 
-- [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) - module; depends on 0; used by 0; high-signal symbols: `program`
+- [treadle/packages/cli/src/commands/do.ts](/code/treadle/packages/cli/src/commands/do.ts.md) - module; depends on 0; used by 1; high-signal symbols: `now`, `Loaded`, `load`
+- [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) - module; depends on 1; used by 0; high-signal symbols: `program`, `doCmd`, `runCli`
 
 # Impact map
 
-No local dependency edges detected in this summary scope.
+| Module | Depends | Used by | Relationship signals |
+|---|---:|---:|---|
+| [treadle/packages/cli/src/commands/do.ts](/code/treadle/packages/cli/src/commands/do.ts.md) | 0 | 1 | treadle/packages/cli/src/main.ts |
+| [treadle/packages/cli/src/main.ts](/code/treadle/packages/cli/src/main.ts.md) | 1 | 0 | ./commands/do.js |
 
 # Impact notes
 
