@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:12:59Z",
+    "updated": "2026-10-10T15:14:59Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -596,7 +596,7 @@
       "id": "T-3",
       "title": "Surface adapters: four surfaces, two transforms, honest hooks",
       "detail": "Adapters: pi (.pi/skills, .pi/agents, .pi/extensions JS — local-documented), claude (.claude/skills, .claude/agents, settings.json hooks wiring invoking harness JS, ~/.claude later), codex (.codex/skills, .codex/agents project + ~/.codex user, config.toml notify invoking harness JS), copilot (.github/copilot-instructions.md + .github/agents/*.md + .github/skills/<n>/SKILL.md — Agent Skills format, identity; no hooks — printed honestly). Every path verified against live docs at build; failures refuse. Integration tests in temp HOME + temp project. Author the first real hook payload (harness/hooks/*.js) + its three wirings.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-7",
@@ -615,6 +615,15 @@
       },
       "needs": [
         "T-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T15:14:59Z",
+          "by": "agent:pi",
+          "notes": "Adapters verified end to end in temp HOME + temp project: pi (skills+agent+extension hook), claude (settings.json merge preserves foreign keys, PostToolUse wiring), codex (project skills/agents + notify at user level), copilot (instructions + agents/red-foreman.md authored + native SKILL.md skills; hooks skip honestly). Hook payload born dual-entry: script mode (argv JSON → exit 0/3/1, proven: free path 0, wiki/code + corpus/golden 3, garbage 1) and pi extension mode (default factory registers tool_call guard, verified against the pi ExtensionAPI shape from the local docs). pi extension event name verified: tool_call, block+reason return — implementation-supported now. 89 tests green."
+        }
       ]
     },
     {
@@ -702,5 +711,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 33
+  "revision": 34
 }
