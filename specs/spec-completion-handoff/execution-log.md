@@ -57,3 +57,19 @@ Type checks and lint passed.
 Tests cover concurrent actions, lock recovery, audit faults, current review,
 explicit legacy closure, wrong origins and symlink escapes.
 The engine recorded the task result. Final review and owner closure remain separate.
+
+## T-4
+
+The library now shows the nine owner steps in order.
+Accepting a decision does not start implementation.
+Start implementation grants permission for the current plan.
+Finish spec appears only after task checks and current independent review.
+A separate confirmation freezes the record.
+Failed saves retain the content and provide a refresh action.
+The room now sends its held revision when it saves an answer.
+This required connection keeps the approved spec question flow usable.
+
+The exact task command passed five tests. See T-4-verification.log.
+The real browser checks passed in light and dark themes.
+See ui-evidence.md and ui-browser-results.json for results and limits.
+The legacy inspector still uses its original five phases.

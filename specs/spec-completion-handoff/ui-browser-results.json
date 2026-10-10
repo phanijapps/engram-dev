@@ -1,0 +1,206 @@
+{
+  "captures": [
+    {
+      "route": "/",
+      "file": "600-600-rest.png",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "600-600-scrolled.png",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "scroll-position": 1724,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "600-900-rest.png",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "600-900-scrolled.png",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "scroll-position": 1424,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "601-600-rest.png",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "601-600-scrolled.png",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "scroll-position": 1656,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "601-900-rest.png",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "601-900-scrolled.png",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "scroll-position": 1356,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "901-600-rest.png",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "901-600-scrolled.png",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "scroll-position": 817,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "901-900-rest.png",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "scroll-position": 0,
+      "page-scrollable": "yes"
+    },
+    {
+      "route": "/",
+      "file": "901-900-scrolled.png",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "scroll-position": 517,
+      "page-scrollable": "yes"
+    }
+  ],
+  "layouts": [
+    {
+      "width": 600,
+      "height": 600,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 600,
+      "height": 600,
+      "position": "scrolled",
+      "overflow": false
+    },
+    {
+      "width": 600,
+      "height": 900,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 600,
+      "height": 900,
+      "position": "scrolled",
+      "overflow": false
+    },
+    {
+      "width": 601,
+      "height": 600,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 601,
+      "height": 600,
+      "position": "scrolled",
+      "overflow": false
+    },
+    {
+      "width": 601,
+      "height": 900,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 601,
+      "height": 900,
+      "position": "scrolled",
+      "overflow": false
+    },
+    {
+      "width": 901,
+      "height": 600,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 901,
+      "height": 600,
+      "position": "scrolled",
+      "overflow": false
+    },
+    {
+      "width": 901,
+      "height": 900,
+      "position": "rest",
+      "overflow": false
+    },
+    {
+      "width": 901,
+      "height": 900,
+      "position": "scrolled",
+      "overflow": false
+    }
+  ],
+  "audits": [
+    {
+      "theme": "light",
+      "violations": []
+    },
+    {
+      "theme": "dark",
+      "violations": []
+    }
+  ],
+  "focus": {
+    "outline": "rgb(9, 76, 178) solid 3px",
+    "width": 178.25,
+    "height": 34.5
+  },
+  "reducedMotion": "0s",
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:46307/",
+    "http://127.0.0.1:46307/marked.min.js",
+    "http://127.0.0.1:46307/app.js",
+    "http://127.0.0.1:46307/specs",
+    "http://127.0.0.1:46307/spec/p",
+    "http://127.0.0.1:46307/workflow/p",
+    "http://127.0.0.1:46307/alignment/p",
+    "http://127.0.0.1:46307/artifact/p/brief.md",
+    "http://127.0.0.1:46307/artifact/p/design.md",
+    "http://127.0.0.1:46307/artifact/p/plan.md",
+    "http://127.0.0.1:46307/artifact/p/spec.md"
+  ],
+  "keyboardStart": "recorded on disposable fixture",
+  "prematureFinish": "absent"
+}

@@ -51,7 +51,7 @@ async function emit(ev) {
   const r = await fetch('/event', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(ev),
+    body: JSON.stringify({ ...ev, expected_revision: S.revision }),
   });
   if (!r.ok) {
     const t = await r.text();

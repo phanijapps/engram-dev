@@ -1,7 +1,8 @@
 /* The spec library page (spec-library T-3..T-6; DES-3..DES-7).
    Consumes GETs and emits events at the seam — nothing else. */
 
-var S = { specs: [], legacy: [], sel: null, spec: null, tab: 'overview', docs: [] };
+var S = { specs: [], legacy: [], sel: null, spec: null, workflow: null, tab: 'overview', docs: [] };
+let busy = false;
 const $ = (id) => document.getElementById(id);
 
 /* ── DES-5: the words layer (Q-3) ─────────────────────────────────── */
@@ -44,6 +45,8 @@ function plainDate(iso) {
 
 /* ── DES-3: the pane (Q-2: needs you first) ───────────────────────── */
 function groupOf(p) {
+  if (p.workflow && ['spec', 'decisions', 'start', 'closure'].includes(p.workflow.phase))
+    return 'you';
   if (p.stage === 'awaiting_owner' || p.open_questions > 0) return 'you';
   if (p.stage === 'delivered') return 'done';
   return 'moving';
@@ -104,7 +107,10 @@ function paintPane() {
     .forEach((el) => {
       el.onclick = () => (location.hash = '#/' + el.dataset.name);
       el.onkeydown = (e) => {
-        if (e.key === 'Enter') location.hash = '#/' + el.dataset.name;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          location.hash = '#/' + el.dataset.name;
+        }
       };
     });
   $('pane')
@@ -112,7 +118,10 @@ function paintPane() {
     .forEach((el) => {
       el.onclick = () => (location.hash = '#/legacy/' + el.dataset.legacy);
       el.onkeydown = (e) => {
-        if (e.key === 'Enter') location.hash = '#/legacy/' + el.dataset.legacy;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          location.hash = '#/legacy/' + el.dataset.legacy;
+        }
       };
     });
 }
@@ -235,12 +244,12 @@ function tabOverview() {
   const docs = S.docs
     .map(
       (doc) => `<details class="doc" ${doc.file === 'brief.md' ? 'open' : ''}>
-    <summary style="cursor:pointer;color:var(--rev)">${esc(doc.file)}</summary>
-    <div class="md" data-doc="${esc(doc.file)}"></div></details>`,
+    <summary style="cursor:pointer;color:var(--primary)">${esc(doc.file)}</summary>
+    <div class="md" tabindex="0" data-doc="${esc(doc.file)}"></div></details>`,
     )
     .join('');
   const leg = S.sel && S.sel.startsWith('legacy:');
-  return `${leg ? '' : journey(d.status?.deliverable || 'drafted', d)}
+  return `${leg || d.workflow ? '' : journey(d.status?.deliverable || 'drafted', d)}
     <div class="item"><h4>${esc(d.description || d.title || d.name)}</h4>
       <div class="meta">${stageChip(d.status?.deliverable)} <span title="revision">changed ${d.revision}×</span> ${(d.date || {}).approved ? `<span class="chip go" title="${esc(d.date.approved.at)}">approved by ${esc(d.date.approved.by)}</span>` : ''}</div>
       <div class="meta" style="margin-top:6px">${dates}</div></div>
@@ -300,7 +309,8 @@ function tabDesign() {
       (
         d,
       ) => `<div class="item" id="card-${d.id}"><h4>${idl(d.id)} <span class="chip ${d.status === 'accepted' ? 'go' : d.status === 'declined' ? 'stuck' : ''}">${esc(d.status)}</span></h4>
-    <div>${idl(d.decision)}</div><div class="meta">because ${idl(d.because || '')}${d.accepted_by ? ' · accepted by ' + esc(d.accepted_by) : ''}</div></div>`,
+    <div>${idl(d.decision)}</div><div class="meta">because ${idl(d.because || '')}${d.accepted_by ? ' · accepted by ' + esc(d.accepted_by) : ''}</div>
+    ${d.status === 'proposed' && S.workflow?.phase === 'decisions' ? `<div class="owner-controls"><button type="button" class="btn primary" data-accept="${esc(d.id)}">Accept ${esc(d.id)}</button><details><summary>Reject ${esc(d.id)}</summary><label for="reject-${esc(d.id)}">Reason for rejection</label><textarea id="reject-${esc(d.id)}"></textarea><button type="button" class="btn warn" data-reject="${esc(d.id)}">Reject ${esc(d.id)}</button></details></div>` : ''}</div>`,
     )
     .join('');
   return `<h3>Approach</h3><div class="item">${idl(g.approach || '')}</div>
@@ -346,9 +356,9 @@ const TABS = [
 ];
 function paintTabs() {
   const mk = (id, label) =>
-    `<button class="tab" role="tab" aria-selected="${S.tab === id}" data-tab="${id}">${label}</button>`;
+    `<button type="button" id="tab-${id}" class="tab" role="tab" aria-selected="${S.tab === id}" aria-controls="tabbody" tabindex="${S.tab === id ? '0' : '-1'}" data-tab="${id}">${label}</button>`;
   $('detail').innerHTML =
-    `<div class="tabs">${TABS.map(([i, l]) => mk(i, l)).join('')}</div><div id="tabbody"></div>`;
+    `<div id="owner-panel"></div><div class="tabs" role="tablist" aria-label="Spec sections">${TABS.map(([i, l]) => mk(i, l)).join('')}</div><div id="tabbody" role="tabpanel" aria-labelledby="tab-${S.tab}" tabindex="0"></div>`;
   const body =
     { overview: tabOverview, spec: tabSpec, design: tabDesign, tasks: tabTasks, review: tabReview }[
       S.tab
@@ -366,6 +376,7 @@ function paintTabs() {
     .forEach((el) => (el.onclick = () => jump(el.dataset.jump)));
   renderDocs();
   paintActs();
+  paintOwner();
 }
 
 /* ── markdown docs (D-1) ─────────────────────────────────────────── */
@@ -396,7 +407,7 @@ function qCard(q) {
   const opts = (q.options || [])
     .map(
       (o, i) =>
-        `<button class="btn opt" data-opt="${esc(o)}" aria-pressed="${picked[q.id] === o || (!picked[q.id] && q.default === o)}">${i + 1}. ${esc(o)}</button>`,
+        `<button type="button" class="btn opt" data-opt="${esc(o)}" aria-pressed="${picked[q.id] === o || (!picked[q.id] && q.default === o)}">${i + 1}. ${esc(o)}</button>`,
     )
     .join('');
   return `<div class="item qcard" id="card-${q.id}"><h4>${idl(q.id)} <span class="chip you">waiting on you</span></h4>
@@ -404,10 +415,10 @@ function qCard(q) {
     ${
       q.kind === 'choice' && q.options
         ? `<div class="opts">${opts}</div>
-      <button class="btn primary" data-choice="${q.id}">Answer</button><div class="err" id="act-${q.id}"></div>`
-        : `<textarea id="ta-${q.id}" placeholder="your answer…"></textarea>
-         <div style="margin-top:6px"><button class="btn primary" data-send="${q.id}">Answer</button>
-         <button class="btn warn" data-unk="${q.id}">I don't know</button></div><div class="err" id="act-${q.id}"></div>`
+      <button type="button" class="btn primary" data-choice="${q.id}">Answer</button><div class="err" id="act-${q.id}"></div>`
+        : `<label for="ta-${q.id}">Your answer</label><textarea id="ta-${q.id}" placeholder="your answer…"></textarea>
+         <div style="margin-top:6px"><button type="button" class="btn primary" data-send="${q.id}">Answer</button>
+         <button type="button" class="btn warn" data-unk="${q.id}">I don't know</button></div><div class="err" id="act-${q.id}"></div>`
     }
   </div>`;
 }
@@ -416,7 +427,7 @@ async function emit(name, body) {
   const r = await fetch('/event/' + encodeURIComponent(name), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
+    body: JSON.stringify({ ...body, expected_revision: S.spec.revision }),
   });
   const out = await r.json().catch(() => ({ ok: false, error: 'no JSON' }));
   if (!r.ok || out.ok === false) throw new Error(out.error || 'POST /event ' + r.status);
@@ -431,7 +442,9 @@ function paintActs() {
       (b.onclick = () => {
         const q = b.closest('.qcard').id.slice(5);
         picked[q] = b.dataset.opt;
-        paintTabs();
+        b.closest('.opts')
+          .querySelectorAll('[data-opt]')
+          .forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
       }),
   );
   document.querySelectorAll('[data-send]').forEach(
@@ -458,11 +471,15 @@ function paintActs() {
   );
   /* approve: legal when nothing is open and it never landed (DES-7) */
   const approved = ((S.spec.date || {}).approved || {}).at;
-  const legal = !qs.length && !approved && S.spec.status?.lifecycle !== 'complete';
+  const legal = S.spec.workflow
+    ? S.workflow?.phase === 'spec' &&
+      !approved &&
+      !(S.spec.workflow.phase_questions.spec || []).some((id) => qs.some((q) => q.id === id))
+    : !qs.length && !approved && S.spec.status?.lifecycle !== 'complete';
   const host = document.getElementById('approve-host');
   if (host)
     host.innerHTML = legal
-      ? `<button class="btn go" id="do-approve">✓ Approve this spec</button><span class="err" id="approve-err"></span>`
+      ? `<button type="button" class="btn go" id="do-approve">✓ Approve this spec</button><span class="err" id="approve-err"></span>`
       : '';
   const btn = document.getElementById('do-approve');
   if (btn)
@@ -473,22 +490,189 @@ function paintActs() {
         return;
       }
       try {
-        await emit(S.sel, { kind: 'approve' });
-        await loadAll();
+        await submitOwner({ kind: 'approve' });
       } catch (e) {
-        $('approve-err').textContent = String(e.message || e);
+        showError(e);
       }
     };
 }
 
 async function act(q, body) {
+  if (busy) return;
   const sink = document.getElementById('act-' + q);
+  setBusy(true, 'Saving your answer…');
   try {
     await emit(S.sel, body);
     delete picked[q];
     await loadAll();
+    $('owner-status').textContent = 'Your answer was recorded.';
+    focusOwner();
   } catch (e) {
     if (sink) sink.textContent = String(e.message || e);
+    showError(e);
+  } finally {
+    setBusy(false);
+  }
+}
+
+const PHASE_WORDS = {
+  plan: 'Prepare the plan',
+  spec: 'Answer and approve spec questions',
+  decisions: 'Review the design decisions',
+  start: 'Ready for your permission to start',
+  implementation: 'Implementation in progress',
+  review: 'Awaiting independent review',
+  closure: 'Ready for you to finish',
+  delivered: 'Spec complete',
+};
+function setBusy(on, message) {
+  busy = on;
+  $('detail').setAttribute('aria-busy', String(on));
+  $('detail')
+    .querySelectorAll('button')
+    .forEach((b) => {
+      b.disabled = on;
+    });
+  if (message) $('owner-status').textContent = message;
+}
+function focusOwner() {
+  const target = $('owner-heading') || $('tabbody');
+  if (target) target.focus();
+}
+function showError(error) {
+  const host = $('owner-error');
+  host.textContent = `Could not finish this action: ${String(error.message || error)}. Refresh the spec and try again.`;
+  host.hidden = false;
+  host.focus();
+  $('owner-refresh').hidden = false;
+  $('owner-status').textContent = '';
+}
+function ownerPhases(spec) {
+  const w = spec.workflow;
+  const phase = S.workflow?.phase;
+  const tasks = spec.tasks || [];
+  const done = tasks.filter((t) => t.status === 'done').length;
+  const states = [
+    ['Requirement', 'overview', spec.spec?.why ? 'Recorded' : 'Not written'],
+    ['Brief', 'overview', spec.metadata?.brief ? 'Recorded' : 'Not written'],
+    [
+      'Spec questions',
+      'spec',
+      w.phase_questions.spec.length
+        ? spec.date?.approved
+          ? 'Approved'
+          : 'Awaiting your approval'
+        : 'No questions needed',
+    ],
+    [
+      'Design and decisions',
+      'design',
+      (spec.plan?.decisions || spec.design?.decisions || []).every((d) => d.status === 'accepted')
+        ? 'Accepted'
+        : 'Awaiting your decision',
+    ],
+    ['Task plan', 'tasks', `${tasks.length} tasks to review`],
+    [
+      'Permission to start',
+      'tasks',
+      w.start_receipt && !['plan', 'spec', 'decisions', 'start'].includes(phase)
+        ? 'Recorded for this plan'
+        : 'Awaiting you',
+    ],
+    ['Implementation', 'tasks', `${done} of ${tasks.length} tasks done`],
+    [
+      'Independent review',
+      'review',
+      ['closure', 'delivered'].includes(phase) ? 'Passed' : 'Awaiting review',
+    ],
+    ['Finish spec', 'review', phase === 'delivered' ? 'Complete' : 'Awaiting you'],
+  ];
+  return states.map(([label, tab, state], i) => ({
+    n: String(i + 1).padStart(2, '0'),
+    label,
+    tab,
+    state,
+  }));
+}
+function paintOwner() {
+  const host = $('owner-panel');
+  if (!host || !S.spec || S.sel?.startsWith('legacy:')) return;
+  if (!S.workflow) {
+    host.innerHTML =
+      '<div class="item"><h3 id="owner-heading" tabindex="-1">Owner actions unavailable</h3><p>Refresh the spec to read its current approval state.</p></div>';
+    return;
+  }
+  const w = S.workflow;
+  const gated = !!S.spec.workflow;
+  const reasons = (w.reasons || []).map((r) => `<li>${esc(r)}</li>`).join('');
+  host.innerHTML = `<section class="item owner-panel" aria-labelledby="owner-heading"><h3 id="owner-heading" tabindex="-1">${esc(PHASE_WORDS[w.phase] || 'Owner review')}</h3>
+    ${gated ? '<p>Review the brief and spec, accept each design decision, then give permission to start this plan.</p>' : '<p>This spec uses the legacy approval rules.</p>'}
+    ${reasons ? `<ul>${reasons}</ul>` : ''}
+    ${w.audit_pending ? `<p>Approval was recorded. ${w.audit_pending} audit entries still need recovery.</p>` : ''}
+    ${w.can_start ? `<p>Review all tasks in the Tasks tab. This action gives permission for the agent to execute this plan.</p><button type="button" class="btn primary" id="owner-start">Start implementation</button>` : ''}
+    ${w.can_close ? '<p>Task checks and review passed. Finish spec marks this record complete and freezes it.</p><button type="button" class="btn go" id="owner-finish">Finish spec</button><div id="finish-confirm" hidden><p>Finish and freeze this spec?</p><button type="button" class="btn go" id="owner-confirm-finish">Yes, finish spec</button> <button type="button" class="btn" id="owner-cancel-finish">Keep open</button></div>' : ''}
+    ${w.phase === 'implementation' ? '<p>The agent can continue the approved tasks. A changed plan needs your permission again.</p>' : ''}
+    ${w.phase === 'review' ? '<p>All tasks passed their checks. An independent reviewer must now check this plan and its evidence.</p>' : ''}
+    ${w.phase === 'delivered' ? '<p>You marked this spec complete. The record is frozen.</p>' : ''}</section>`;
+  const start = $('owner-start');
+  if (start) start.onclick = () => submitOwner({ kind: 'start' });
+  const finish = $('owner-finish');
+  if (finish) {
+    finish.onclick = () => {
+      $('finish-confirm').hidden = false;
+      finish.hidden = true;
+      $('owner-confirm-finish').focus();
+    };
+    $('owner-cancel-finish').onclick = () => {
+      $('finish-confirm').hidden = true;
+      finish.hidden = false;
+      finish.focus();
+    };
+    $('owner-confirm-finish').onclick = () => submitOwner({ kind: 'close' });
+  }
+  document.querySelectorAll('[data-accept]').forEach((b) => {
+    b.onclick = () => submitOwner({ kind: 'accept', decision: b.dataset.accept });
+  });
+  document.querySelectorAll('[data-reject]').forEach((b) => {
+    b.onclick = () => {
+      const because = $('reject-' + b.dataset.reject).value.trim();
+      if (!because) {
+        showError(new Error('Enter a reason for rejection'));
+        return;
+      }
+      return submitOwner({ kind: 'reject', decision: b.dataset.reject, because });
+    };
+  });
+  if (busy) setBusy(true);
+}
+async function submitOwner(body) {
+  if (busy) return;
+  if (!S.workflow) {
+    showError(new Error('Refresh the approval state first'));
+    return;
+  }
+  const name = S.sel;
+  setBusy(true, 'Saving your decision…');
+  $('owner-error').hidden = true;
+  try {
+    const r = await fetch('/workflow/' + encodeURIComponent(name), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...body, expected_revision: S.spec.revision }),
+    });
+    const out = await r.json();
+    if (!r.ok || out.ok === false) throw new Error(out.error || 'Owner action refused');
+    $('owner-status').textContent = out.audit_pending
+      ? 'Your action was recorded. The audit journal needs recovery.'
+      : 'Your action was recorded.';
+    if (S.sel === name) {
+      await loadAll();
+      focusOwner();
+    }
+  } catch (e) {
+    showError(e);
+  } finally {
+    setBusy(false);
   }
 }
 
@@ -497,6 +681,7 @@ async function act(q, body) {
    mapped tab through the existing hash router. ── */
 function phaseStates(spec) {
   if (!spec) return [];
+  if (spec.workflow) return ownerPhases(spec);
   const cl = (spec.spec && spec.spec.clarifications) || [];
   const open = cl.filter((q) => q.status === 'open').length;
   const approved = ((spec.date || {}).approved || {}).at;
@@ -597,7 +782,7 @@ function paintInspector() {
   for (const f of findings) if (bySev[f.severity] !== undefined) bySev[f.severity]++;
   const reviewer = verdicts.length ? verdicts[0].by : '';
   const sevRow = (cls, label, n) =>
-    '<button class="sev-filter" data-sev="' +
+    '<button type="button" class="sev-filter" data-sev="' +
     label +
     '" aria-pressed="false">' +
     '<span class="sev ' +
@@ -660,7 +845,10 @@ function paintInspector() {
     };
     row.onclick = go;
     row.onkeydown = (e) => {
-      if (e.key === 'Enter') go();
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        go();
+      }
     };
   });
 }
@@ -692,7 +880,20 @@ function route() {
 async function loadSpec(name) {
   const r = await fetch('/spec/' + encodeURIComponent(name));
   if (!r.ok) throw new Error('no spec named ' + name);
-  S.spec = await r.json();
+  const doc = await r.json();
+  let workflow = null;
+  try {
+    const wr = await fetch('/workflow/' + encodeURIComponent(name));
+    if (!wr.ok) throw new Error('Could not read approval state');
+    workflow = await wr.json();
+    if (workflow.revision !== doc.revision) throw new Error('The spec changed during refresh');
+  } catch (e) {
+    if (S.sel === name) showError(e);
+  }
+  if (S.sel !== name) return false;
+  S.spec = doc;
+  S.workflow = workflow;
+  return true;
 }
 
 async function paintDetail() {
@@ -702,7 +903,10 @@ async function paintDetail() {
     return;
   }
   try {
+    const name = S.sel;
+    $('owner-status').textContent = 'Loading spec…';
     if (S.sel.startsWith('legacy:')) {
+      S.workflow = null;
       const l = S.legacy.find((x) => x.name === S.sel.slice(7)) || {
         name: S.sel.slice(7),
         files: [],
@@ -718,19 +922,24 @@ async function paintDetail() {
         date: {},
       };
     } else {
-      await loadSpec(S.sel);
+      if (!(await loadSpec(name))) return;
       /* Q-7: every .md in the folder — carried from the pane state (S-12: no refetch) */
       const files = (S.specs.find((p) => p.name === S.sel) || {}).docs || [];
       S.docs = files.map((f) => ({ file: f }));
     }
     paintTabs();
+    $('owner-status').textContent = '';
   } catch (e) {
-    $('detail').innerHTML = `<div class="empty">${esc(String(e))}</div>`;
+    S.workflow = null;
+    showError(e);
+    const host = $('owner-panel');
+    if (host) host.innerHTML = '';
   }
 }
 
 async function loadAll() {
   const r = await fetch('/specs');
+  if (!r.ok) throw new Error('Could not load the spec list');
   const out = await r.json();
   S.specs = out.specs || [];
   S.legacy = out.legacy || [];
@@ -742,6 +951,17 @@ async function loadAll() {
 
 window.addEventListener('hashchange', route);
 window.addEventListener('focus', () => loadGate()); // R2: a named refresh trigger
+$('owner-refresh').onclick = async () => {
+  $('owner-error').hidden = true;
+  $('owner-refresh').hidden = true;
+  try {
+    await loadAll();
+    if (!S.workflow && S.sel) throw new Error('Approval state is still unavailable');
+    focusOwner();
+  } catch (e) {
+    showError(e);
+  }
+};
 $('search').addEventListener('input', paintPane);
 document.addEventListener('keydown', (e) => {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -750,9 +970,16 @@ document.addEventListener('keydown', (e) => {
     $('search').focus();
   }
   const t = TABS.findIndex(([id]) => id === S.tab);
+  if (!e.target.closest('[role="tablist"]')) return;
   if (e.key === 'ArrowRight' && t < TABS.length - 1 && S.sel)
     location.hash = '#/' + S.sel + '/' + TABS[t + 1][0];
   if (e.key === 'ArrowLeft' && t > 0 && S.sel) location.hash = '#/' + S.sel + '/' + TABS[t - 1][0];
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    requestAnimationFrame(() =>
+      document.querySelector('[role="tab"][aria-selected="true"]')?.focus(),
+    );
+  }
 });
 
 (async function boot() {
@@ -760,7 +987,7 @@ document.addEventListener('keydown', (e) => {
     await loadAll();
     route();
   } catch (e) {
-    $('detail').innerHTML = `<div class="empty">${esc(String(e))}</div>`;
+    showError(e);
   }
 })();
 

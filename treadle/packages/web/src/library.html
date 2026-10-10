@@ -500,6 +500,126 @@
       .sev-filter[aria-pressed='true'] {
         background: var(--surface-4);
       }
+      .sev {
+        color: var(--ink);
+        background: var(--surface-4);
+      }
+      .sev.b,
+      .sev.d,
+      .sev.s {
+        color: var(--ink);
+        background: var(--surface-4);
+      }
+      /* Owner controls reuse the Alexandria palette. */
+      :root {
+        --owner-gap: 12px;
+        --owner-target: 32px;
+      }
+      #layout {
+        grid-template-columns: 260px minmax(0, 1fr) 280px;
+      }
+      #detail,
+      #pane,
+      #inspector {
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      .owner-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--owner-gap);
+        margin-top: var(--owner-gap);
+      }
+      .owner-panel h3 {
+        margin-top: 0;
+      }
+      .owner-panel p {
+        line-height: 1.6;
+      }
+      label {
+        display: block;
+        margin: var(--owner-gap) 0 6px;
+      }
+      textarea {
+        max-width: 100%;
+        box-sizing: border-box;
+      }
+      button,
+      summary,
+      .phase-row,
+      .card {
+        min-height: var(--owner-target);
+      }
+      button,
+      summary {
+        min-width: var(--owner-target);
+      }
+      :focus-visible {
+        outline: 3px solid var(--primary);
+        outline-offset: 3px;
+      }
+      .owner-feedback {
+        padding: 0 18px;
+        background: var(--surface-1);
+      }
+      #owner-status:empty {
+        display: none;
+      }
+      #owner-error {
+        color: var(--error);
+        padding: 12px 0;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      @media (max-width: 900px) {
+        aside {
+          position: static;
+          max-height: none;
+        }
+        #layout {
+          grid-template-columns: 210px minmax(0, 1fr);
+        }
+        #inspector {
+          grid-column: 1 / -1;
+          position: static;
+          max-height: none;
+        }
+        main {
+          padding: 18px;
+        }
+      }
+      @media (max-width: 600px) {
+        header {
+          flex-wrap: wrap;
+          height: auto;
+        }
+        #layout {
+          display: block;
+        }
+        aside {
+          position: static;
+          max-height: none;
+        }
+        #pane {
+          max-height: 240px;
+        }
+        .tabs {
+          flex-wrap: wrap;
+        }
+        .journey {
+          overflow-x: auto;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation: none !important;
+          transition: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -507,6 +627,7 @@
       <h1>The spec library</h1>
       <input id="search" type="search" placeholder="Search specs…" aria-label="Search specs" />
       <button
+        type="button"
         class="btn theme-toggle"
         id="themeToggle"
         title="light / dark"
@@ -516,6 +637,11 @@
       </button>
       <span id="counts" style="color: var(--dim); font-size: 13px"></span>
     </header>
+    <div class="owner-feedback">
+      <p id="owner-status" role="status" aria-live="polite"></p>
+      <div id="owner-error" role="alert" tabindex="-1" hidden></div>
+      <button type="button" class="btn" id="owner-refresh" hidden>Refresh spec</button>
+    </div>
     <div id="layout">
       <aside id="pane" aria-label="Specs list"></aside>
       <main id="detail"><div class="empty">Choose a spec on the left.</div></main>

@@ -3,7 +3,7 @@
   "name": "spec-completion-handoff",
   "description": "Owner decisions before execution and an observable final completion handoff",
   "date": {
-    "updated": "2026-10-10T22:18:52Z"
+    "updated": "2026-10-10T22:29:55Z"
   },
   "status": {
     "lifecycle": "active",
@@ -581,7 +581,7 @@
       "title": "Render the required owner workflow and approval controls",
       "detail": "Implement plan.md T-4 only after owner decision acceptance and exact-plan start consent. DOM keyboard/pointer scenarios show the declared phase order, distinguish answers/decision/start/closure acts, and never offer execution or delivery through an unresolved gate. Record manual focus/target checks during implementation.",
       "phase": "core",
-      "status": "blocked",
+      "status": "done",
       "needs": [
         "T-3"
       ],
@@ -604,22 +604,34 @@
       "context": {
         "touch": [
           {
-            "path": "treadle/packages/web/src/library.js"
+            "path": "treadle/packages/web/src/library.js",
+            "sha256": "1d50a7ce6bcb273b6bba800c41dbe82e56289f923dc7938c8daaea2a34b0c9cb"
           },
           {
-            "path": "treadle/packages/web/src/library.html"
+            "path": "treadle/packages/web/src/library.html",
+            "sha256": "5bcac627a383be02548c8ce23495d8f96c73d97f229b1d669359d9c3411f53b8"
           },
           {
             "path": "treadle/packages/web/test/workflow-ui.test.ts"
           },
           {
-            "path": "treadle/packages/web/test/inspector.test.ts"
+            "path": "treadle/packages/web/test/inspector.test.ts",
+            "sha256": "a464f3e746023c99b6dcc28819bd4a6d159ce8ba65a8212ad962007e71d9d9ed"
           }
         ],
         "notes": [
           "Read brief.md, spec.md, owner-flow.md, design.md and plan.md T-4; wiki initiatives/spec-completion-handoff and domain/specpack-status-vocabulary. Owner gates: D-1,D-2,D-3,D-4 and separate exact-plan start. Initial blocked state records missing consent; no execution failure is claimed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T22:29:55Z",
+          "by": "agent:codex",
+          "notes": "Actual declared expectation passed. See T-4-verification.log. Independent delivery review remains separate."
+        }
+      ]
     },
     {
       "id": "T-5",
@@ -828,5 +840,5 @@
     "source_state": "Actual owner Q2–Q6 approvals recorded. T1 and T2 verified. This active initiative adopted 0.4 with its original bytes and owner start date preserved."
   },
   "format": "specpack/0.4",
-  "revision": 27
+  "revision": 30
 }
