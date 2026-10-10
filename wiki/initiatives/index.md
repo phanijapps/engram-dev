@@ -5,3 +5,4 @@
 - [guided-loop: initiative record](guided-loop.md)
 - [install-paths: initiative record](install-paths.md)
 - [stitch-ui: initiative record](stitch-ui.md)
+- [Root specs and wiki documentation migration](docs-root-migration.md)

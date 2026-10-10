@@ -27,9 +27,9 @@ We are building an **SDD harness**: a knowledge engine and a loop engine plus a 
 | `treadle/` | **The harness.** pnpm workspace: `core` (specpack admission), `knowledge` (bundle), `web` (room + library), `cli` (`do` + `know`), `conformance` (the golden corpus, self-hosted), `brand` (the fence). |
 | `wiki/` | Current project knowledge: `systems/`, `domain/`, `decisions/`, `research/`, `project/`, plus dated initiative projections and retrospectives. |
 | `treadle/packages/cli/harness/` | **The installable harness.** `skills/` (sdlc + node + writer), `agents/` (red-foreman per surface), `hooks/` (JS payloads), `harness.json` (the `harness/0.1` manifest). Installed with `treadle init harness`; the installer keeps `.pi/` and `.codex/` converged. |
-| `docs/product/` | Format contracts: the vendored OKF 0.2 spec, the specpack JSON schema. |
-| `docs/research/` | Retained dated research inputs; current interpretations live in `wiki/research/`. |
-| `docs/archive/` | Everything retired: old spec initiatives, pre-pivot history, the python-era code index, superseded plans. New specs start fresh in `docs/specs/` when a wave opens. |
+| `wiki/assets/contracts/` | Format contracts: the vendored OKF 0.2 spec, the specpack JSON schema. |
+| `specs/` | Canonical executable work: specpacks, analysis, design, tasks, and evidence. |
+| `specs/archive/` | Everything retired: old spec initiatives, pre-pivot history, the python-era code index, superseded plans. New specs start fresh in `specs/` when a wave opens. |
 
 ## Build & Verify (one runtime)
 
@@ -80,9 +80,10 @@ Wiki discipline: every load-bearing claim cites a location; frontmatter carries 
 ## Documentation navigation
 
 The authority map is `wiki/project/documentation-map.md`. Canonical executable
-specpacks remain in `docs/specs/`; wiki initiative pages provide dated navigation,
-not a second mutable task ledger. Dated retrospective pages preserve recorded
-outcomes and distinguish reported evidence from checks rerun in the current session.
+specpacks remain in `specs/`; wiki initiative pages provide dated navigation,
+not a second mutable task ledger. Retrospectives record observed sessions or
+participant accounts. Do not reconstruct past sessions from specpack records.
+Historical path selectors resolve through `specs/docs-root-migration/relocations.json`.
 
 The future maintenance and retrospective enforcement proposal is
 `wiki/project/documentation-lifecycle.md` (draft; findings ledger pending).

@@ -1286,5 +1286,23 @@
       "destination": "specs/stitch-ui/stitch-ui.json",
       "sha256": "3ddc26351d12562771de908f36dbad68e16a7b00b1442729e938cb46128fd3b7"
     }
+  },
+  "research_concepts": {
+    "nodejs-engineering-standards": {
+      "concept": "wiki/research/nodejs-engineering-standards.md",
+      "source": "specs/archive/research/nodejs-engineering-standards.md"
+    },
+    "python-vs-node-the-harness": {
+      "concept": "wiki/research/python-vs-node-the-harness.md",
+      "source": "specs/archive/research/python-vs-node-the-harness.md"
+    },
+    "harness-naming": {
+      "concept": "wiki/research/harness-naming.md",
+      "source": "specs/archive/research/harness-naming.md"
+    },
+    "golden-conformance-suite": {
+      "concept": "wiki/research/golden-conformance-suite.md",
+      "source": "specs/archive/research/golden-conformance-suite.md"
+    }
   }
 }

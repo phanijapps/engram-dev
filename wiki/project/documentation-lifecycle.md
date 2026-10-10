@@ -6,21 +6,21 @@ status: draft
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {"id": "s1", "resource": "docs/specs/documentation-consolidation/feature.md"}
-  - {"id": "s2", "resource": "docs/specs/documentation-consolidation/design.md"}
+  - {"id": "s1", "resource": "specs/documentation-consolidation/feature.md"}
+  - {"id": "s2", "resource": "specs/documentation-consolidation/design.md"}
   - {"id": "s3", "resource": "treadle/packages/knowledge/src/findings.ts"}
-  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
+  - {id: owner, resource: specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Proposal status
 
 This is a draft maintenance practice. It is not an accepted closure requirement.
 The findings ledger holds the proposal for owner review.
-Source: `docs/specs/documentation-consolidation/feature.md:1`, R6 and Q1.
+Source: `specs/documentation-consolidation/feature.md:1`, R6 and Q1.
 
 The owner rejected historical retrospective backfills. The original proposal
 needs revision; its pending finding does not establish acceptance.
-Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
+Source: `specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
 
 # Proposed responsibilities
 

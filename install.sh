@@ -7,7 +7,7 @@
 # packages speak `workspace:*` — every npm-based remote install mechanism
 # (npm i -g <git>, folder installs, tarball inflation) breaks on npm's
 # handling of that protocol; the mechanisms were tested and recorded in
-# docs/specs/install-paths. The path that WORKS, proven by
+# specs/install-paths. The path that WORKS, proven by
 # treadle/scripts/cleanroom-link.sh, is the native one: clone, pnpm
 # install + build, pnpm link --global. This script wraps exactly that.
 set -euo pipefail

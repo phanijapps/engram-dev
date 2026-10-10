@@ -6,3 +6,4 @@
 - [Open work and evidence gaps](open-work.md)
 - [Project overview and reading path](overview.md)
 - [Security posture and claim boundaries](security-posture.md)
+- [Installation and workspace setup](setup.md)

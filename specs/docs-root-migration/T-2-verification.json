@@ -1,0 +1,22 @@
+{
+  "result": "PASS",
+  "observed_at": "2026-10-10T21:05:54.126Z",
+  "mode": "files",
+  "moved_files_preserved": 321,
+  "full_research_pages": 4,
+  "concepts": 39,
+  "source_resources_checked": 126,
+  "packs": [
+    "docs-root-migration",
+    "documentation-consolidation",
+    "fresh-harness",
+    "guided-loop",
+    "install-paths",
+    "stitch-ui"
+  ],
+  "installed_files_compared": 0,
+  "errors": 0,
+  "warnings": 0,
+  "owner_approval": "unset",
+  "closure": "unset"
+}

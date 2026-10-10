@@ -1,9 +1,9 @@
 # Concepts
 
-Read current research through the pages below. The owner rejected the duplicate
-research locations under D-2. Standalone research files still exist; full
-consolidation into this wiki needs a replacement design.
-Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`.
+These pages are the current research reading home. The four migrated sources
+appear in full, with their historical context and current qualifications.
+Original bytes remain in the work archive for provenance.
+Source: `specs/docs-root-migration/relocations.json:1`.
 
 - [EPIC — 40 practices for specification-driven development artifacts (arXiv 2610.07534)](epic-framework.md)
 - [Golden conformance: design lineage and current witness](golden-conformance-suite.md)

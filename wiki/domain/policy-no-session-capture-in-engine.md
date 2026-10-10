@@ -23,7 +23,7 @@ of okf and would own any such concerns outside this engine.
     (D5), 2026-10-07.
 
 [^pol2]:
-    `docs/archive/specs/okf-only-engine/design.md` — D5 in the removal-wave
+    `specs/archive/specs/okf-only-engine/design.md` — D5 in the removal-wave
     decision ledger.
 
 # Status

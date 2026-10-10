@@ -8,9 +8,9 @@ decided_by: "human:owner"
 description: "Port both engines to strict TypeScript as one white-label harness (treadle), gated by the golden corpus; alternatives and consequences recorded."
 sources:
   [
-    { id: research, resource: docs/research/python-vs-node-the-harness.md },
-    { id: naming, resource: docs/research/harness-naming.md },
-    { id: standards, resource: docs/research/nodejs-engineering-standards.md },
+    { id: research, resource: specs/archive/research/python-vs-node-the-harness.md },
+    { id: naming, resource: specs/archive/research/harness-naming.md },
+    { id: standards, resource: specs/archive/research/nodejs-engineering-standards.md },
   ]
 tags: [decision, port, typescript, treadle]
 ---
@@ -52,6 +52,6 @@ byte-for-byte before python retires. [^d2]
 
 [^d1]: The research register with measured inventory and scored criteria.
 
-[^d2]: The corpus design: `docs/research/golden-conformance-suite.md`.
+[^d2]: The corpus design: `specs/archive/research/golden-conformance-suite.md`.
 
 [^d3]: The retirement board lives in `wiki/systems/treadle.md`.

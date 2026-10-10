@@ -38,6 +38,6 @@ recorded questions (not silence) gate what is not yet known.
 
 # Examples
 
-`docs/archive/specs/okf-only-engine/` — the removal wave ran the full loop:
+`specs/archive/specs/okf-only-engine/` — the removal wave ran the full loop:
 analysis gated planning, planning gated slices, review re-ran every
 expectation before the slice passed.

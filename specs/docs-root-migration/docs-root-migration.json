@@ -3,7 +3,7 @@
   "name": "docs-root-migration",
   "description": "Move work to root specs and remove docs",
   "date": {
-    "updated": "2026-10-10T21:02:12Z"
+    "updated": "2026-10-10T21:05:54Z"
   },
   "status": {
     "lifecycle": "active",
@@ -172,7 +172,7 @@
       "id": "T-2",
       "title": "Relocate docs, consolidate research, and retarget current sources",
       "detail": "Implement plan.md T-2 within its frozen context.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "needs": [
         "T-1"
@@ -205,7 +205,16 @@
         "notes": [
           "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --files",
+          "exit": 0,
+          "at": "2026-10-10T21:05:54Z",
+          "by": "agent:codex",
+          "notes": "321 mapped files retain exact bytes, docs is absent without a symlink, four research pages contain complete original texts, 39 concepts are reachable with valid current sources, closed packs load unchanged. Historical embedded commands and findings paths resolve through the map."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -251,5 +260,5 @@
     "verification_cwd": "repository root"
   },
   "format": "specpack/0.3",
-  "revision": 5
+  "revision": 7
 }

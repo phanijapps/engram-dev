@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: The SDD loop synthesis — three research lines, one loop
 description: "What three 2026 papers agree on, where they tension, and what our harness loop should adopt. Historical loop-redesign proposals; their original pending labels are not current work status."
-sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
+sources: [{ id: src, resource: specs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, loop, synthesis]
 ---
 
@@ -61,7 +61,7 @@ bounded artifacts are piecemeal growth.
 # Proposals for the loop redesign
 
 Full statements with rationale live in
-`docs/archive/specs/sdd-research/analysis.md` §6. Pending owner decision (Q1):
+`specs/archive/specs/sdd-research/analysis.md` §6. Pending owner decision (Q1):
 
 1. **P-1** — checks first-class; a check that cannot run is FAIL,
    never PASS.
@@ -78,7 +78,7 @@ Full statements with rationale live in
 # Evidence
 
 - [The digest](/research/sdd-loop-synthesis.md) anchors every claim to
-  a paper section: `docs/archive/specs/sdd-research/analysis.md`.
+  a paper section: `specs/archive/specs/sdd-research/analysis.md`.
 - Paper identities: arXiv 2610.01372, 2610.07534v1, 2610.05132v1.
 
 # Historical context — 2026-10-10

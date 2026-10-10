@@ -36,7 +36,7 @@ Source: `treadle/packages/knowledge/src/stamp.ts:68`.
 A fresh stamp and zero flagged anchors establish only these limited checks.
 They do not prove that current TypeScript claims are up to date.
 Source reinspection and independent source hashes qualify the documentation repair.
-The dated audit is `docs/specs/documentation-consolidation/verification.json`.
+The dated audit is `specs/documentation-consolidation/verification.json`.
 
 # Proposed follow-up
 

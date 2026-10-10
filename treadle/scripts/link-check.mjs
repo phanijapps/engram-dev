@@ -4,7 +4,7 @@
  *  and old links there are period-correct.
  *
  *  Live surfaces: README.md, AGENTS.md, CONTRIBUTING.md, SECURITY.md,
- *  DEBT.md (repo root), the workspace README (treadle/README.md), docs/product,
+ *  DEBT.md (repo root), the workspace README (treadle/README.md),
  *  wiki, and the shipped harness markdown. Scope honesty: fenced links,
  *  HTML anchors, and reference-style definitions are NOT checked —
  *  markdown-shaped inline links only. That is the whole scope.
@@ -22,14 +22,8 @@ const LIVE_FILES = [
   'DEBT.md',
   join(WORKSPACE, 'README.md'),
 ].map((f) => join(ROOT, f));
-const LIVE_DIRS = [
-  join(ROOT, 'docs', 'product'),
-  join(ROOT, 'wiki'),
-  join(ROOT, WORKSPACE, 'packages', 'cli', 'harness'),
-];
-// the vendored OKF format spec carries ILLUSTRATIVE example links (tables/customers.md
-// etc.) — they document the link grammar, they are not repo links. Excluded on purpose.
-const EXCLUDED = [join(ROOT, 'docs', 'product', 'OKF_SPEC_v0.2.md')];
+const LIVE_DIRS = [join(ROOT, 'wiki'), join(ROOT, WORKSPACE, 'packages', 'cli', 'harness')];
+// Vendored contracts are non-concept assets; their illustrative links are text.
 const SKIP_DIRS = ['node_modules', 'dist', 'coverage', 'archive', '.git', '.pi', '.harness'];
 
 function walkMd(dir, out = []) {
@@ -45,7 +39,7 @@ function walkMd(dir, out = []) {
 const files = [
   ...LIVE_FILES.filter((f) => existsSync(f)),
   ...LIVE_DIRS.filter((d) => existsSync(d)).flatMap((d) => walkMd(d)),
-].filter((f) => !EXCLUDED.includes(f));
+];
 
 const broken = [];
 for (const file of files) {

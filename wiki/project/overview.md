@@ -37,7 +37,7 @@ pnpm exec tsx packages/cli/src/main.ts know search ../wiki "retrospective"
 ```
 
 The command definitions are in `treadle/package.json:9`.
-Work discovery scans `docs/specs/`; source:
+Work discovery scans `specs/`; source:
 `treadle/packages/cli/src/harness/where.ts:109`.
 The wiki also links draft prose analyses that have no executable pack yet.
 

@@ -12,7 +12,7 @@ sources:
   - {"id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts"}
   - {"id": "s5", "resource": "treadle/packages/cli/src/harness/where.ts"}
   - {"id": "s6", "resource": "treadle/packages/knowledge/src/parse.ts"}
-  - {id: owner, resource: docs/specs/documentation-consolidation/owner-decision-revision.md}
+  - {id: owner, resource: specs/documentation-consolidation/owner-decision-revision.md}
 ---
 
 # Purpose and flow
@@ -29,7 +29,7 @@ historical specpack → factual initiative snapshot
 ```
 
 The owner rejected retrospective reconstruction from historical specpacks.
-Source: `docs/specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
+Source: `specs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
 Automatic retrospective capture is not implemented.
 See [the lifecycle proposal](/project/documentation-lifecycle.md).
 
@@ -48,7 +48,7 @@ and `treadle/packages/core/src/specpack/record.ts:19`.
 
 Stages derive from recorded state. They are not manually maintained wiki fields.
 Source: `treadle/packages/core/src/specpack/derive.ts:30`.
-The CLI discovers packs under `docs/specs/`, including registered worktrees.
+The CLI discovers packs under `specs/`, including registered worktrees.
 Source: `treadle/packages/cli/src/harness/where.ts:109`.
 
 # Knowledge limits
@@ -62,5 +62,5 @@ External code indexing remains delegated. Current freshness limitations are
 # History
 
 The prior Python architecture explanation is preserved at
-`docs/archive/documentation/2026-10-10/wiki/systems/sdd-harness-architecture.md`.
+`specs/archive/documentation/2026-10-10/wiki/systems/sdd-harness-architecture.md`.
 The [TypeScript decision](/decisions/port-to-typescript.md) explains the transition.

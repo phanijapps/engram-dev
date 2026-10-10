@@ -12,7 +12,7 @@ sources:
   - {"id": "s4", "resource": "treadle/vitest.config.ts"}
   - {"id": "s5", "resource": ".github/workflows/ci.yml"}
   - {"id": "s6", "resource": "treadle/packages/knowledge/package.json"}
-  - {"id": "s7", "resource": "docs/research/nodejs-engineering-standards.md"}
+  - {"id": "s7", "resource": "specs/archive/research/nodejs-engineering-standards.md"}
 ---
 
 # Observed controls
@@ -33,7 +33,7 @@ that the latest run passed. Current execution evidence belongs in dated records.
 # Historical standards proposal
 
 The forty-rule research document is an input, not an attestation that every
-rule is implemented. Source: `docs/research/nodejs-engineering-standards.md:1`.
+rule is implemented. Source: `specs/archive/research/nodejs-engineering-standards.md:1`.
 It includes proposals for property testing, publishing provenance, benchmarks,
 logging, generated API docs, and broader type-aware lint configuration.
 Do not read these as current runtime guarantees.

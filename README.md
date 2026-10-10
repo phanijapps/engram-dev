@@ -10,7 +10,7 @@ explains which executable and historical records retain their own authority.
 
 ## Install and develop
 
-The [installation guide](docs/guide/index.html) covers the supported install path.
+The [installation guide](wiki/assets/guide/index.html) covers the supported install path.
 For development, run from `treadle/`:
 
 ```bash
@@ -35,7 +35,7 @@ reporting and trusted-on-disk operating limits.
 - [Initiatives](wiki/initiatives/index.md)
 - [Retrospectives](wiki/retrospectives/index.md)
 
-Executable specpacks remain under `docs/specs/`. The wiki links dated summaries
+Executable specpacks remain under `specs/`. The wiki links dated summaries
 to those records. Python engines are preserved at tag `python-final`; the
 TypeScript generator checks the committed corpus. Current gate outcomes belong
 in dated evidence, not an undated claim of green tests or coverage.

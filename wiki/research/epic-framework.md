@@ -5,7 +5,7 @@ created: 2026-10-08
 updated: 2026-10-08
 title: EPIC — 40 practices for specification-driven development artifacts (arXiv 2610.07534)
 description: "Claudino and others, 2026. An empirical study of 114 open-source SDD repositories. 40 practices in 10 quality dimensions in 4 categories: Expressive, Precise, Interpretable, Compartmentalized. Better specifications tracked with fewer bug-fix commits and more contributors."
-sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
+sources: [{ id: src, resource: specs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, specification, quality]
 ---
 
