@@ -17,7 +17,7 @@
       "fixture_recipe": "A brownfield repo with a fresh wiki documenting the stack, conventions, and systems. Brief omits details the wiki already answers.",
       "prompt": "Analyze this feature request for our repo.",
       "expectations": [
-        "okf search/read + stamp freshness check run before any user question",
+        "know search/read + stamp freshness check run before any user question",
         "Zero or one batched question round; questions already answered by artifacts are never asked",
         "Affected surfaces cite wiki concept paths",
         "Claims carry evidence statuses pinned to repo_head"

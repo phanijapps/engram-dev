@@ -1,6 +1,6 @@
 ---
 name: analyze
-description: Analysis-stage skill of the SDD loop — turn a change request, defect, uncertainty, impact question, or knowledge gap into ONE bounded, evidence-grounded artifact before implementation. Grounds in the project wiki via the okf CLI before any question reaches the user; records open questions and assumptions as first-class outputs; hands off to plan/implement with explicit blockers. Six modes — feature brief, testable spec, bug hypothesis ledger, timeboxed spike, impact dispositions, gap register. Triggers are "analyze/spec this feature", "write the spec for X", "investigate this bug", "run a spike on X", "what breaks if we change X", "what are we missing here", "gap analysis". Not for building the knowledge base (build-kb), greenfield scaffolding (new-project), roadmaps (roadmap), task planning (plan), or writing code (implement).
+description: Analysis-stage skill of the SDD loop — turn a change request, defect, uncertainty, impact question, or knowledge gap into ONE bounded, evidence-grounded artifact before implementation. Grounds in the project wiki via the harness CLI (know) before any question reaches the user; records open questions and assumptions as first-class outputs; hands off to plan/implement with explicit blockers. Six modes — feature brief, testable spec, bug hypothesis ledger, timeboxed spike, impact dispositions, gap register. Triggers are "analyze/spec this feature", "write the spec for X", "investigate this bug", "run a spike on X", "what breaks if we change X", "what are we missing here", "gap analysis". Not for building the knowledge base (build-kb), greenfield scaffolding (new-project), roadmaps (roadmap), task planning (plan), or writing code (implement).
 ---
 
 # analyze — bounded analysis for spec-driven delivery
@@ -32,7 +32,7 @@ analysis, not a style choice.
    sections you cannot evidence; never invent content to fill a template.
 5. **Propose, never authorize.** Analyses are data. They never mark
    anything accepted, verified, or successful. Normative claims ("new code
-   must…") route through `okf findings propose`, never written as
+   must…") route through `know findings propose`, never written as
    settled truth.
 6. **Decisions are explicit and reversibility-tagged.** Record choice,
    alternatives, and two-way vs one-way door. Insufficient evidence means
@@ -46,15 +46,15 @@ analysis, not a style choice.
 
 ## 1. Ground before you ask (every mode, read-only first)
 
-1. **Anchor:** `okf validate wiki` (health) and the freshness check —
+1. **Anchor:** `know validate wiki` (health) and the freshness check —
    compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
    Record `repo_head` — it pins every claim in the artifact.
 2. **Freshness gate:** if wiki is `stale` and the analysis depends on code
-   truth, run `okf code index . wiki` first. If you cannot update, pin all
+   truth, run refresh fingerprints + stamp (code indexing is delegated — anchors stay honest). If you cannot update, pin all
    code claims as evidence-status `declared` against the stamped revision
    and say so — do not present stale extractions as current.
-3. **Compile context:** `okf search "<mode question>"` then
-   `okf read <cid> --depth 1` (plus one query per affected subsystem).
+3. **Compile context:** `know search "<mode question>"` then
+   `know read <cid>` (plus one query per affected subsystem).
    Search results are pointers, not proof — open the cited files for
    anything load-bearing.
 4. **Residual questions:** what evidence still cannot supply goes to the
@@ -123,8 +123,8 @@ Then:
 
 1. Note the milestone in the initiative folder and commit — the git
    history is the durable record (project memory is back-burnered;
-   okf-only-engine D5).
-2. Normative claims discovered along the way → `okf findings propose
+   knowledge-engine decision D5).
+2. Normative claims discovered along the way → `know findings propose
 wiki --source <evidence> --destination wiki/<concept>.md --kind
 <kind> --rationale "…"`. Never written directly as settled truth.
 3. Commit the artifact (with any wiki changes) — analysis travels with
@@ -142,3 +142,12 @@ wiki --source <evidence> --destination wiki/<concept>.md --kind
   never asked again.
 - A stale wiki is a warning label, not a blocker: pin, mark, and proceed
   honestly.
+
+## The ask-first rule (the hard gate's human contract)
+
+When the session opens with a recall block showing MORE THAN ONE spec
+in flight, and the user says "continue" (or go on / resume / pick up),
+you do not choose. You list the open specs and ask which one. The
+recall block is the source of truth (`do where <workspace>`); never
+memory. On pi and Claude Code a hard gate enforces this; on you it is
+discipline — the same rule either way.

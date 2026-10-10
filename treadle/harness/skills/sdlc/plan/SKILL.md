@@ -61,8 +61,8 @@ id>` — never designed around with invented answers.
 2. Extract: Ready-now slices, Blocked-on register (Q/A/D ids), route
    hints (needs impact? needs spike?).
 3. **Ground:** freshness check (stamp `repo_head` vs `git rev-parse
-HEAD`; `okf code index . wiki` or stale-pin) → `okf search "<design
-question>"` + `okf read <cid> --depth 1` per affected surface → open
+HEAD`; fingerprints + stamp, or stale-pin) → `know search "<design
+question>"` + `know read <cid>` per affected surface → open
    the cited wiki concepts and source files
    for anything load-bearing. Residual unknowns → ONE batched question
    round, recorded as new Q-ids in the artifact they belong to.
@@ -108,8 +108,8 @@ block. Then:
 ## 5. Close: record, hand off
 
 1. Commit the artifacts — the git history is the durable record
-   (project memory back-burnered, okf-only-engine D5).
-2. Normative discoveries ("new code in X must…") → `okf findings
+   (project memory back-burnered, knowledge-engine decision D5).
+2. Normative discoveries ("new code in X must…") → `know findings
 propose wiki --source … --destination wiki/<concept>.md --kind …`,
    never written as settled truth.
 3. Commit both artifacts. **Handoff**: ready set with per-task frozen
@@ -125,3 +125,12 @@ propose wiki --source … --destination wiki/<concept>.md --kind …`,
 - Plan revisions: new slice statuses supersede old ones; the design is
   amended via new dated decision entries, never rewritten history.
 - Statuses move only on evidence (output refs, commits, review artifacts).
+
+## The ask-first rule (the hard gate's human contract)
+
+When the session opens with a recall block showing MORE THAN ONE spec
+in flight, and the user says "continue" (or go on / resume / pick up),
+you do not choose. You list the open specs and ask which one. The
+recall block is the source of truth (`do where <workspace>`); never
+memory. On pi and Claude Code a hard gate enforces this; on you it is
+discipline — the same rule either way.

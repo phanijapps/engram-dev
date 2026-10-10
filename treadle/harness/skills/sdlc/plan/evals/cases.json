@@ -58,7 +58,7 @@
       "expectations": [
         "Each task lists compile query, wiki cids, exact spec/design refs, key files",
         "No task says 'explore the codebase' as context",
-        "okf grounding ran before design choices were made"
+        "know grounding ran before design choices were made"
       ]
     },
     {

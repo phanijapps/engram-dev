@@ -5,7 +5,7 @@ One package, one product, wiki at the repo root.
 ## Index pass
 
 ```
-okf code index . wiki \
+# code indexing delegated — curated anchors only (recorded gap)
   --include "src/**" \
   --exclude "src/**/tests/**"
 ```

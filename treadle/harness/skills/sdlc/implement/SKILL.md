@@ -43,7 +43,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    resumes from the ledger's evidence, never from memory.
 7. **Close per task:** ledger update (evidence-cited) → commit (message
    carries `<slug> T<n>: <goal>`); milestone notes live in the plan's
-   ledger (project memory back-burnered, okf-only-engine D5). If the change invalidates wiki content, note
+   ledger (project memory back-burnered, knowledge-engine decision D5). If the change invalidates wiki content, note
    the staleness in the ledger entry (wiki update is a task or review
    follow-up — never skipped silently).
 8. **Task done ≠ requirement verified.** `done` means _this task's
@@ -53,8 +53,7 @@ skill's job is faithful execution + honest evidence — not re-deciding.
    and `BLOCKED` (stall limit) are stops, not self-serve fixes. Show the
    owner: what drifted (paths, pinned vs current) or why it stalled, the
    remedies (re-pin and continue, replan, or unblock), and the risk of
-   each. Act only on the owner's approval, recorded as `loom rebase
---approved-by human:<owner>` (or `loom record --result unblock`). Never
+   each. Act only on the owner's approval, recorded as `do approve --by human:<owner>` (or `do record --result unblock`). Never
    re-pin, unblock, or amend the pack silently to keep moving.
 
 ## 1. Select
@@ -66,7 +65,7 @@ the first unblock move (which Q/D/task gates it).
 ## 2. Load
 
 1. Freshness gate: stamp `repo_head` vs `git rev-parse HEAD`
-   (`okf code index . wiki` or stale-pin, same rule as always).
+   (fingerprints + stamp, or stale-pin, same rule as always).
 2. Run the task's frozen-context compile query; open the listed wiki
    cids and key files. Read the design sections the task implements.
 3. Insufficient → STOP (rule 2). Sufficient → state `doing` in the
@@ -107,3 +106,12 @@ cannot observe.
 - Creep becomes a task candidate, not a diff.
 - Route-backs carry the T-id, the surprise, and the proposed destination
   (analyze/plan) — a routed task must never half-land as a "small fix".
+
+## The ask-first rule (the hard gate's human contract)
+
+When the session opens with a recall block showing MORE THAN ONE spec
+in flight, and the user says "continue" (or go on / resume / pick up),
+you do not choose. You list the open specs and ask which one. The
+recall block is the source of truth (`do where <workspace>`); never
+memory. On pi and Claude Code a hard gate enforces this; on you it is
+discipline — the same rule either way.

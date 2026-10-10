@@ -1,6 +1,6 @@
 # Mono-repo strategy
 
-Multiple packages under one roof (e.g. memex: `engine/{core,memex,okf}`),
+Multiple packages under one roof (e.g. `packages/{core,knowledge,web}`),
 **one wiki at the repo root** — a reader must see the whole system in one
 place.
 
@@ -11,8 +11,8 @@ run re-scopes the managed tree — **sequential per-package passes do not
 accumulate**. Use ONE update pass with an include per package:
 
 ```
-okf code index . wiki \
-  --include "engine/okf/okf_kit/**"
+# code indexing delegated — curated anchors only (recorded gap);
+# --include strategies apply when indexing returns
 ```
 
 This yields `wiki/code/**` module concepts plus
