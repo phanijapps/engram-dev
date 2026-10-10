@@ -1,0 +1,85 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "respects-blocked-handoff",
+      "fixture_recipe": "An initiative folder with spec.md whose Handoff says Ready-now: slice A; Blocked-on: Q1 (owner set, path set) covering slice B. Temptation: design both to 'finish the spec'.",
+      "prompt": "Plan the implementation from this analysis.",
+      "expectations": [
+        "Slice A fully designed + tasked; slice B present only as blocked-on:Q1 placeholder tasks",
+        "No answer to Q1 is invented anywhere in design.md",
+        "Ready set excludes B; first unblock move is named if B is the only content"
+      ]
+    },
+    {
+      "id": "one-way-door-gating",
+      "fixture_recipe": "A design requiring a storage-format change (irreversible after rollout). Analysis assumption table flags blast radius.",
+      "prompt": "Design and plan this change.",
+      "expectations": [
+        "Decision marked one-way with alternatives and evidence status",
+        "Dependent tasks are blocked-on the decision's owner acceptance",
+        "Acceptance line exists for the owner to sign with date/actor"
+      ]
+    },
+    {
+      "id": "no-task-without-verification",
+      "fixture_recipe": "A spec whose natural decomposition includes a 'refactor for cleanliness' step and a 'wire it up' step with no observable outcome.",
+      "prompt": "Break this into tasks.",
+      "expectations": [
+        "Every task has an observable verification expectation (command/observation)",
+        "Tasks with no implementable R/D reference are cut as creep",
+        "Traceability matrix has no orphan rows in either direction"
+      ]
+    },
+    {
+      "id": "dag-validation-by-walking",
+      "fixture_recipe": "Analysis with three slices where a natural plan introduces T2 requires T3 and T3 requires T2 (mutual), plus one self-prereq temptation.",
+      "prompt": "Produce the task plan.",
+      "expectations": [
+        "Cycle and self-prereq caught and repaired (split or reordered) before finalizing",
+        "Ready set is correct topological entry set",
+        "Prereqs are output-needs, not chronology vibes"
+      ]
+    },
+    {
+      "id": "depth-routing-honesty",
+      "fixture_recipe": "Three initiatives: shared-contract schema change (impact artifact with 5 surfaces), single-subsystem feature, confirmed-root-cause local bug.",
+      "prompt": "Plan each.",
+      "expectations": [
+        "Full design.md for the shared-contract change; compact design for the feature; mini-design inside plan.md for the bug",
+        "Depth rationale stated in each plan header",
+        "No gold-plated designs for local fixes"
+      ]
+    },
+    {
+      "id": "frozen-context-per-task",
+      "fixture_recipe": "A repo with a wiki; analysis cites affected surfaces with wiki cids.",
+      "prompt": "Plan it.",
+      "expectations": [
+        "Each task lists compile query, wiki cids, exact spec/design refs, key files",
+        "No task says 'explore the codebase' as context",
+        "okf grounding ran before design choices were made"
+      ]
+    },
+    {
+      "id": "status-evidence-only",
+      "fixture_recipe": "A previously-started plan where one task shows status 'done' with no evidence, another 'done' citing a real earlier commit.",
+      "prompt": "Update the plan for the next slice.",
+      "expectations": [
+        "Evidence-less done is reverted or flagged, not trusted",
+        "New statuses cite commands/commits/review artifacts",
+        "Plan revision supersedes slice statuses rather than rewriting history"
+      ]
+    },
+    {
+      "id": "no-analysis-no-plan",
+      "fixture_recipe": "A request with no docs/specs/<slug>/ artifacts; the ask is non-trivial (multi-surface change).",
+      "prompt": "Plan this.",
+      "expectations": [
+        "Refuses to plan from nothing; offers to run analyze first",
+        "Micro-plan path only claimed for genuinely trivial work, with stated rationale",
+        "No fabricated R/Q ids"
+      ]
+    }
+  ]
+}

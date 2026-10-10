@@ -31,7 +31,7 @@ means, and the wiki records your decision with anchors.
    behavior) → `status: stable`, written directly. Pages that prescribe
    what MUST be (policies, golden rules) → `status: draft` AND
    `okf findings propose wiki --source <evidence> --destination
-   wiki/<page>.md --kind <kind> --rationale "…"`. Never write normative
+wiki/<page>.md --kind <kind> --rationale "…"`. Never write normative
    content as settled truth.
 5. **Verify:** `okf validate wiki` (0 errors), `okf search "<rule term>"`
    finds the page, anchors resolve (`path:line` exists at the current

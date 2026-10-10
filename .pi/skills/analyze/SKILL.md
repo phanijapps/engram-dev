@@ -16,8 +16,8 @@ waterfall with AI narration; this skill exists to prevent exactly that.
 These rules bind every mode. Violating any of them is a defect in the
 analysis, not a style choice.
 
-1. **Bounded artifact.** Produce the *smallest analysis that unblocks the
-   next step*. An explicit Out-of-scope register is mandatory; an empty one
+1. **Bounded artifact.** Produce the _smallest analysis that unblocks the
+   next step_. An explicit Out-of-scope register is mandatory; an empty one
    must say why completeness is credible.
 2. **Ground before you ask.** The repo, wiki, and memory answer most
    questions. Ask the user only what evidence cannot supply — once, batched,
@@ -63,18 +63,18 @@ analysis, not a style choice.
 
 ## 2. Route the mode
 
-| The ask is… | Mode | Artifact (under `docs/specs/<slug>/`) | Question it answers |
-|---|---|---|---|
-| "add / change a capability" — what & why | **feature** | `feature.md` | What should change, and why is that justified? |
-| "make it a testable contract" | **spec** | `spec.md` | What exactly must be true, and how would we check? |
-| "this is broken / reproducible" | **bug** | `bug-<short>.md` | Why does this fail? |
-| "we don't know if X works / is right" | **spike** | `spike-<n>-<topic>.md` | What did the bounded investigation learn? |
-| "what breaks if we change X" | **impact** | `impact-<change>.md` | Which effects need dispositions? |
-| "what are we missing / why did context fail" | **gap** | `gap-<n>.md` | What don't we know, where might it live, how do we close it? |
+| The ask is…                                  | Mode        | Artifact (under `docs/specs/<slug>/`) | Question it answers                                          |
+| -------------------------------------------- | ----------- | ------------------------------------- | ------------------------------------------------------------ |
+| "add / change a capability" — what & why     | **feature** | `feature.md`                          | What should change, and why is that justified?               |
+| "make it a testable contract"                | **spec**    | `spec.md`                             | What exactly must be true, and how would we check?           |
+| "this is broken / reproducible"              | **bug**     | `bug-<short>.md`                      | Why does this fail?                                          |
+| "we don't know if X works / is right"        | **spike**   | `spike-<n>-<topic>.md`                | What did the bounded investigation learn?                    |
+| "what breaks if we change X"                 | **impact**  | `impact-<change>.md`                  | Which effects need dispositions?                             |
+| "what are we missing / why did context fail" | **gap**     | `gap-<n>.md`                          | What don't we know, where might it live, how do we close it? |
 
 Routing rules: one artifact per analysis, not per conversation. If a
 feature analysis reveals shared-contract blast radius, the impact mode runs
-as a *separate* artifact it links to — modes never blur into each other.
+as a _separate_ artifact it links to — modes never blur into each other.
 If mode is genuinely ambiguous, pick by the question column, state the
 choice in the artifact header.
 
@@ -98,7 +98,7 @@ honestly — every template section either carries content or a stated
   otherwise the artifact ends at the ledger + what evidence would decide
   it. Verification plan is regression-test-first.
 - **spike** — ONE decision-relevant question, timebox and kill conditions
-  declared *before* work, method, findings (evidence-statused), outcome
+  declared _before_ work, method, findings (evidence-statused), outcome
   with confidence, follow-ups. Spike code is throwaway and marked so; a
   spike that "finishes the feature" has failed.
 - **impact** — candidate effects table: surface → mechanism → confidence →
@@ -125,8 +125,8 @@ Then:
    history is the durable record (project memory is back-burnered;
    okf-only-engine D5).
 2. Normative claims discovered along the way → `okf findings propose
-   wiki --source <evidence> --destination wiki/<concept>.md --kind
-   <kind> --rationale "…"`. Never written directly as settled truth.
+wiki --source <evidence> --destination wiki/<concept>.md --kind
+<kind> --rationale "…"`. Never written directly as settled truth.
 3. Commit the artifact (with any wiki changes) — analysis travels with
    the repo.
 

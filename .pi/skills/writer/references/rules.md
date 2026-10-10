@@ -23,6 +23,7 @@ come after", not "to obey".
 
 **1.6** Do not use a gerund (an "-ing" word) as a noun, as an adjective, or as
 a part of a complex verb. A technical name is an exception.
+
 - Not permitted: "Before starting the engine, do a check of the oil."
 - Permitted: "Before you start the engine, do a check of the oil."
 
@@ -35,6 +36,7 @@ removed". Use "was removed" or "is removed".
 
 **1.9** Use a maximum of three nouns in a noun cluster. If the cluster is
 longer, use prepositions.
+
 - Not permitted: "runway light approach system control panel"
 - Permitted: "the control panel of the approach system for the runway lights"
 
@@ -81,6 +83,7 @@ relation between two ideas. Do not use a long chain of connectives.
 than one sentence if the actions are related.
 
 **3.3** Give the condition before the action.
+
 - Permitted: "If the lamp comes on, stop the pump."
 
 **3.4** Put the warning or the caution before the step that it applies to.

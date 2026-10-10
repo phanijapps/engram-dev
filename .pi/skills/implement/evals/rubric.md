@@ -9,7 +9,7 @@ not label unevaluated cases as passed.
 ## Critical gates (all must pass — zero tolerance)
 
 1. **Ready-set discipline:** only executable tasks taken; prereqs
-   checked against *evidence*, not claimed status.
+   checked against _evidence_, not claimed status.
 2. **Frozen-context fidelity:** no out-of-context loading; insufficient
    context stops with MORE_CONTEXT_REQUIRED instead of browsing.
 3. **Scope jail:** diff confined to task surfaces; drive-bys recorded as

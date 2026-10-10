@@ -13,7 +13,7 @@ related: []
 
 > The register of what we do not know, why it matters, where the answer
 > might live, and how to close it. Ends in a close plan — never a shrug.
-> This mode fixes the *context layer*; it does not spec or fix anything
+> This mode fixes the _context layer_; it does not spec or fix anything
 > itself.
 
 ## Trigger
@@ -25,9 +25,9 @@ real.
 
 ## Gap register
 
-| ID | What we don't know | Why it matters (what it blocks) | Where the answer might live | How to close |
-|----|--------------------|---------------------------------|----------------------------|--------------|
-| G1 | … | … | repo path / wiki area / a person / an experiment | build-kb update / read source / spike / ask-once |
+| ID  | What we don't know | Why it matters (what it blocks) | Where the answer might live                      | How to close                                     |
+| --- | ------------------ | ------------------------------- | ------------------------------------------------ | ------------------------------------------------ |
+| G1  | …                  | …                               | repo path / wiki area / a person / an experiment | build-kb update / read source / spike / ask-once |
 
 ## Coverage & confidence
 
@@ -50,8 +50,8 @@ Concrete next moves, each mapped to its owner/tool:
 What we will proceed on while gaps stay open — each with blast radius and
 the gap ID that closes it:
 
-| ID | Assumption | Blast radius | Closed by |
-|----|-----------|--------------|-----------|
+| ID  | Assumption | Blast radius | Closed by |
+| --- | ---------- | ------------ | --------- |
 
 ## Handoff
 

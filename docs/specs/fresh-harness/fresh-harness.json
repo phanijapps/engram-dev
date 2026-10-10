@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:20:39Z",
+    "updated": "2026-10-10T15:21:47Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -673,7 +673,7 @@
       "id": "T-6",
       "title": "Self-host dogfood: .pi and .codex, then promote",
       "detail": "Dogfood-first (Q-5): run the installer against this repo for pi AND codex (project scope): .pi/{skills,agents,extensions} + .codex/{skills,agents}; the plan shows destinations as same or converges with --force; the content is then used in real work; what passes evaluation — hooks and extensions included — is promoted back into treadle/harness as the canonical source; the promotion is recorded as evidence.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-15"
@@ -691,6 +691,15 @@
       },
       "needs": [
         "T-3"
+      ],
+      "evidence": [
+        {
+          "cmd": "apply then dry-run all-same, both surfaces",
+          "exit": 0,
+          "at": "2026-10-10T15:21:47Z",
+          "by": "agent:pi",
+          "notes": "Self-host dogfood: the installer installed THIS repo — pi (37 files: 11 skills + red-foreman + post-tool-check extension into .pi/extensions/) and codex (37 files: 11 skills + red-foreman.toml + hook payload; notify wired at user level with --yes). The pre-clean (T-0) + explicit destinations made convergence provable: re-run dry-runs report EVERY row mode=same (13 rows each, bad=0). Drift found was formatting-only (prettier-emphasis in harness vs stale .pi copies) — nothing to promote; the harness source is canonical. Dogfood evidence: this session itself ran on .pi/skills + .pi/agents installed by this very installer; the extension hook loads as I speak."
+        }
       ]
     },
     {
@@ -735,5 +744,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 37
+  "revision": 38
 }

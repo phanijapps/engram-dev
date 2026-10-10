@@ -37,7 +37,7 @@ skill is the part you apply at the keyboard.
 
 ## Clean comments — the discipline
 
-A comment is a failure report: it documents what the code *cannot* say.
+A comment is a failure report: it documents what the code _cannot_ say.
 
 1. **Delete the comment the code already makes.** `// increment i` over `i++` is
    noise; noise trains readers to skip comments.
@@ -60,14 +60,14 @@ A comment is a failure report: it documents what the code *cannot* say.
   with honest names.
 - Early returns for refusals; the happy path reads last and flat.
 - Errors: bugs throw; domain refusals return typed values (`{ ok: false, code,
-  message }`). Never throw for a refusal the caller should handle.
+message }`). Never throw for a refusal the caller should handle.
 - No floating promises — await it or name the deliberate detach. Sync I/O only in
   one-shot CLI paths.
 
 ## When you review your own diff
 
 - [ ] Every new name survives the "read it aloud in a standup" test.
-- [ ] Every comment answers *why*; none narrate *what*; none are stale.
+- [ ] Every comment answers _why_; none narrate _what_; none are stale.
 - [ ] Unions are closed; switches are exhaustive; IDs are branded.
 - [ ] The diff contains no commented-out code and no bare TODOs.
 - [ ] `pnpm check` (typecheck → lint → tests) passes with exits verified, not piped.

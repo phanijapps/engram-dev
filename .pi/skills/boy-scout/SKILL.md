@@ -23,7 +23,7 @@ Not "not worse." Cleaner. Every turn, every file, every commit.
 
 - Every new line earns its place: no speculative abstractions, no "might need
   later," no drive-by features outside the task's scope.
-- The scope jail holds: clean *in reach*, not everywhere. A refactor two files
+- The scope jail holds: clean _in reach_, not everywhere. A refactor two files
   over is a new task with its own verification, not a favor.
 - When you must touch a line, leave the line better: honest name, right type,
   comment that tells why or no comment.

@@ -41,7 +41,7 @@ Evidence-statused. `unknown` findings that survive the timebox go to the
 outcome as residual uncertainty, not to the memory hole.
 
 | Finding | Evidence | Status |
-|---------|----------|--------|
+| ------- | -------- | ------ |
 
 ## Outcome
 
@@ -52,12 +52,12 @@ outcome as residual uncertainty, not to the memory hole.
 
 ## Follow-ups
 
-| Type | Entry |
-|------|-------|
-| New question | Q… (blocks …, path …) |
-| New assumption | A… (blast radius …, trigger …) |
-| Decision enabled | D… |
-| Task candidate | … |
+| Type             | Entry                          |
+| ---------------- | ------------------------------ |
+| New question     | Q… (blocks …, path …)          |
+| New assumption   | A… (blast radius …, trigger …) |
+| Decision enabled | D…                             |
+| Task candidate   | …                              |
 
 ## Artifacts
 
