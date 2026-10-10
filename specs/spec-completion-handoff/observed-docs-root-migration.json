@@ -1,0 +1,449 @@
+{
+  "id": "docs-root-migration",
+  "name": "docs-root-migration",
+  "description": "Move work to root specs and remove docs",
+  "date": {
+    "updated": "2026-10-10T21:25:44Z",
+    "approved": {
+      "at": "2026-10-10T21:24:12Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "awaiting_owner"
+  },
+  "metadata": {
+    "feature": {
+      "ref": "feature.md",
+      "type": "text/markdown"
+    },
+    "impact-roots": {
+      "ref": "impact-roots.md",
+      "type": "text/markdown"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown"
+    },
+    "bug-shared-workspace-gate": {
+      "ref": "bug-shared-workspace-gate.md",
+      "type": "text/markdown"
+    },
+    "bug-coverage-source-resolution": {
+      "ref": "bug-coverage-source-resolution.md",
+      "type": "text/markdown"
+    },
+    "bug-superseded-consolidation-approach": {
+      "ref": "bug-superseded-consolidation-approach.md",
+      "type": "text/markdown"
+    },
+    "review": {
+      "ref": "review.md",
+      "type": "text/markdown"
+    },
+    "review-findings": {
+      "ref": "review-findings.md",
+      "type": "text/markdown"
+    },
+    "gates": {
+      "ref": "gates.json",
+      "type": "application/json"
+    },
+    "relocations": {
+      "ref": "relocations.json",
+      "type": "application/json"
+    },
+    "final-verification": {
+      "ref": "final-verification.json",
+      "type": "application/json"
+    },
+    "post-review-verification": {
+      "ref": "post-review-verification.json",
+      "type": "application/json"
+    },
+    "wiki-verification": {
+      "ref": "wiki-verification.json",
+      "type": "application/json"
+    }
+  },
+  "spec": {
+    "why": "The owner wants docs removed completely, root ./specs for executable work, and one current documentation home in the wiki.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Discover canonical root specs in workspace/worktrees with canonical precedence and legacy-only read fallback.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Remove docs without a symlink; retain relocated evidence and closed pack bytes through a complete path/hash map.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Consolidate all four full research sources into their current wiki concepts; retain originals only as archived provenance.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Retarget current wiki sources, entry documents, and shipped/installed skills while preserving historical artifact bytes and corpus.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Serve current work from specs in the local library, open owner review, and record actual checks and independent review.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "Keep historical retrospective interpretations withdrawn; do not invent human approval or closure.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Freshness engine redesign",
+      "Historical retrospective reconstruction",
+      "Schema or corpus contract changes",
+      "Discarding preserved evidence"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "the project owner",
+        "want": "root specs and one current wiki documentation home with no docs directory",
+        "so": "work is easy to track and readers see one current knowledge home"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use root ./specs and remove docs from the workspace",
+        "because": "Explicit owner instruction supersedes the old root-retention proposal.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Place historical raw artifacts under specs/archive and non-concept documentation under wiki/assets",
+        "because": "History stays outside active discovery; raw Markdown does not violate wiki concept/link rules.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Prefer root specs exclusively; use legacy discovery only when the canonical root is absent",
+        "because": "Untouched external projects remain readable without merging duplicate roots.",
+        "status": "proposed"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Root work records and consolidated wiki documentation",
+        "kind": "mechanism",
+        "detail": "See design.md and impact-roots.md; use relocations.json for historical source resolution.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6"
+        ]
+      }
+    ],
+    "approach": "Use root specs for work, specs/archive for history, and wiki concepts/assets for documentation. Keep a complete relocation map and frozen closed bytes."
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Replatform discovery and path regression tests",
+      "detail": "Implement plan.md T-1 within its frozen context.",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "satisfies": [
+        "FR-1"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+        "expect": "All discovery regression fixtures and immutable closed-record witness pass."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/src/harness/where.ts",
+          "treadle/packages/cli/test/where.test.ts"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T21:02:12Z",
+          "by": "agent:codex",
+          "notes": "Seven discovery tests pass: canonical precedence, legacy-only fallback, empty canonical root, mixed worktree roots, archive exclusion, and the immutable delivered install-paths record."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Relocate docs, consolidate research, and retarget current sources",
+      "detail": "Implement plan.md T-2 within its frozen context.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-6"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --files",
+        "expect": "Mapped bytes, wiki sources/navigation/conformance, root discovery, and selected handoff checks pass with no docs directory."
+      },
+      "context": {
+        "touch": [
+          "docs",
+          "specs",
+          "wiki",
+          "README.md",
+          "AGENTS.md",
+          "install.sh",
+          "treadle/DEBT.md",
+          "treadle/scripts/link-check.mjs"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --files",
+          "exit": 0,
+          "at": "2026-10-10T21:05:54Z",
+          "by": "agent:codex",
+          "notes": "321 mapped files retain exact bytes, docs is absent without a symlink, four research pages contain complete original texts, 39 concepts are reachable with valid current sources, closed packs load unchanged. Historical embedded commands and findings paths resolve through the map."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Sync harness skills, verify gates, and open current library",
+      "detail": "Implement plan.md T-3 within its frozen context.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --handoff",
+        "expect": "Mapped bytes, wiki sources/navigation/conformance, root discovery, and selected handoff checks pass with no docs directory."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/harness/skills",
+          "treadle/scripts/link-check.mjs",
+          ".pi/skills",
+          ".codex/skills",
+          ".claude/skills",
+          "wiki",
+          "specs/docs-root-migration"
+        ],
+        "notes": [
+          "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --handoff",
+          "exit": 0,
+          "at": "2026-10-10T21:10:15Z",
+          "by": "agent:codex",
+          "notes": "72 installed files match seven shipped skills across Pi/Codex/Claude; all current sources and preserved bytes validate; library HTTP serves six current packs; xdg-open exited 0. Full check exposed the shared-workspace recall test, routed to a new planned T-4. Removed unsupported enforcement claims in the touched architecture skill."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Isolate recall gate verification from real workspace state",
+      "detail": "See bug-shared-workspace-gate.md. Replace only the real-workspace count assumption with an isolated CLI fixture and zero/one/two-open assertions.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-3"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts",
+        "expect": "All surface/recall tests pass independently of the live project active pack count."
+      },
+      "context": {
+        "touch": [
+          "treadle/packages/cli/test/init-surfaces.test.ts"
+        ],
+        "notes": [
+          "Read bug-shared-workspace-gate.md, plan.md T-4, the failing last test, and shipped session-recall.js JSON contract. Do not change runtime hooks."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T21:10:58Z",
+          "by": "agent:codex",
+          "notes": "All 12 surface tests pass. The recall gate test now isolates zero/one/two-open CLI reports; specific requests pass with two open, ambiguous continue refuses with exit 2. Runtime hooks were not changed."
+        }
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "Resolve tested runtime package entries to the measured source modules",
+      "detail": "See bug-coverage-source-resolution.md. Add Vitest-only aliases; do not lower floors or change production package exports.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-4"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm coverage",
+        "expect": "All tests pass and unchanged global coverage thresholds are met while runtime package entry points resolve to source during tests."
+      },
+      "context": {
+        "touch": [
+          "treadle/vitest.config.ts"
+        ],
+        "notes": [
+          "Read bug-coverage-source-resolution.md, plan.md T-5, coverage-before-source-aliases.log, runtime package export maps, and public test imports. No source exclusion, threshold reduction, or runtime export change."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm coverage > ../specs/docs-root-migration/coverage.log 2>&1",
+          "exit": 0,
+          "at": "2026-10-10T21:14:05Z",
+          "by": "agent:codex",
+          "notes": "Executed in treadle/ after the T-5 handout. All113 tests pass; source coverage83.98lines/statements,74.79branches,92.95functions meets unchanged75/65/75/75 thresholds. Vitest-only runtime package aliases measure existing source implementation calls; production exports and coverage include scope remain unchanged."
+        }
+      ]
+    },
+    {
+      "id": "T-6",
+      "title": "Preserve and supersede the open consolidation approach",
+      "detail": "See bug-superseded-consolidation-approach.md; preserve exact pre-edit bytes before annotating the still-open live pack.",
+      "phase": "core",
+      "status": "done",
+      "needs": [
+        "T-5"
+      ],
+      "satisfies": [
+        "FR-4",
+        "FR-6"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --handoff",
+        "expect": "All321 mapped originals retain exact bytes; live consolidation supersession and owner/evidence preservation checks pass; wiki and current library handoff pass."
+      },
+      "context": {
+        "touch": [
+          "specs/documentation-consolidation/documentation-consolidation.json",
+          "specs/archive/docs-root-migration/documentation-consolidation-revision-23.json",
+          "specs/docs-root-migration/relocations.json",
+          "specs/docs-root-migration/verify-migration.mjs",
+          "wiki/initiatives/documentation-consolidation.md"
+        ],
+        "notes": [
+          "Read bug-superseded-consolidation-approach.md, plan.md T6, independent review findings, revision23 consolidation JSON and original map hash. No change to decisions, human acts, closure, prior task evidence, or closed packs."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec tsx ../specs/docs-root-migration/verify-migration.mjs --handoff > ../specs/docs-root-migration/T-6-verification.json",
+          "exit": 0,
+          "at": "2026-10-10T21:21:43Z",
+          "by": "agent:codex",
+          "notes": "Executed in treadle/ after the T6 frozen handout. All321 original files retain exact bytes, including archived consolidation revision23; live revision24 only annotates supersession and preserves owner acts, decisions, task evidence, review, and status. Current wiki decision prose corrected;40concepts,72installedmatches,library handoff and alignment pass."
+        }
+      ]
+    }
+  ],
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Actual independent red-foreman verdict: PASS — nothing to fix, after correcting the saved findings and independently checking T6 preservation/supersession, current handoff, alignment, wiki and final gate evidence. See review.md and review-findings.md. Remaining owner decisions, approval and closure are separate."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "../..",
+    "source_head": "a14ae28",
+    "verification_cwd": "repository root"
+  },
+  "format": "specpack/0.3",
+  "revision": 20
+}

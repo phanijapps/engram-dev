@@ -1,0 +1,277 @@
+{
+  "observed_at": "2026-10-10T21:28:17.464Z",
+  "source_head": "51c2a789eec47b29108f07947009bfb32db55af0",
+  "observed": {
+    "revision": 20,
+    "lifecycle": "active",
+    "stage": "awaiting_owner",
+    "approval": {
+      "at": "2026-10-10T21:24:12Z",
+      "by": "human:owner"
+    },
+    "closed_at": null,
+    "tasks": [
+      {
+        "id": "T-1",
+        "status": "done",
+        "evidence": 1
+      },
+      {
+        "id": "T-2",
+        "status": "done",
+        "evidence": 1
+      },
+      {
+        "id": "T-3",
+        "status": "done",
+        "evidence": 1
+      },
+      {
+        "id": "T-4",
+        "status": "done",
+        "evidence": 1
+      },
+      {
+        "id": "T-5",
+        "status": "done",
+        "evidence": 1
+      },
+      {
+        "id": "T-6",
+        "status": "done",
+        "evidence": 1
+      }
+    ],
+    "gaps": {
+      "pending_decisions": [
+        "D-2",
+        "D-3"
+      ],
+      "open_questions": [],
+      "review_pass": true
+    },
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use root ./specs and remove docs from the workspace",
+        "because": "Explicit owner instruction supersedes the old root-retention proposal.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Place historical raw artifacts under specs/archive and non-concept documentation under wiki/assets",
+        "because": "History stays outside active discovery; raw Markdown does not violate wiki concept/link rules.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-3",
+        "decision": "Prefer root specs exclusively; use legacy discovery only when the canonical root is absent",
+        "because": "Untouched external projects remain readable without merging duplicate roots.",
+        "status": "proposed"
+      }
+    ],
+    "hashes": {
+      "pack": "8a51fe14f9d4f4ededd4d4b853bd46b8e5fb416e300130ec25272aabd7c61c00",
+      "journal": "e5008d98f0a8bb45d032b18a138fb2f678ff0bdad667bf93c8bbeabfc7a1dcf6"
+    }
+  },
+  "current_close_on_clone": {
+    "ok": false,
+    "code": "cannot_close",
+    "message": "cannot close: decisions proposed: D-2, D-3"
+  },
+  "proposed_decisions_do_not_gate_handout": {
+    "ok": true,
+    "value": {
+      "status": "task",
+      "task": "T-1",
+      "items": [
+        {
+          "family": "D",
+          "id": "D-1",
+          "decision": "Use root ./specs and remove docs from the workspace",
+          "because": "Explicit owner instruction supersedes the old root-retention proposal.",
+          "status": "accepted",
+          "accepted_by": "human:owner"
+        },
+        {
+          "family": "DES",
+          "id": "DES-1",
+          "title": "Root work records and consolidated wiki documentation",
+          "kind": "mechanism",
+          "detail": "See design.md and impact-roots.md; use relocations.json for historical source resolution.",
+          "addresses": [
+            "FR-1",
+            "FR-2",
+            "FR-3",
+            "FR-4",
+            "FR-5",
+            "FR-6"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-1",
+          "text": "Discover canonical root specs in workspace/worktrees with canonical precedence and legacy-only read fallback.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-2",
+          "text": "Remove docs without a symlink; retain relocated evidence and closed pack bytes through a complete path/hash map.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-3",
+          "text": "Consolidate all four full research sources into their current wiki concepts; retain originals only as archived provenance.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-4",
+          "text": "Retarget current wiki sources, entry documents, and shipped/installed skills while preserving historical artifact bytes and corpus.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-5",
+          "text": "Serve current work from specs in the local library, open owner review, and record actual checks and independent review.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "FR",
+          "via": "DES-1",
+          "id": "FR-6",
+          "text": "Keep historical retrospective interpretations withdrawn; do not invent human approval or closure.",
+          "serves": [
+            "US-1"
+          ]
+        },
+        {
+          "family": "TASK",
+          "id": "T-1",
+          "title": "Replatform discovery and path regression tests",
+          "detail": "Implement plan.md T-1 within its frozen context.",
+          "phase": "core",
+          "needs": [],
+          "verify": {
+            "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+            "expect": "All discovery regression fixtures and immutable closed-record witness pass."
+          },
+          "status": "doing",
+          "evidence": [
+            {
+              "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+              "exit": 0,
+              "at": "2026-10-10T21:02:12Z",
+              "by": "agent:codex",
+              "notes": "Seven discovery tests pass: canonical precedence, legacy-only fallback, empty canonical root, mixed worktree roots, archive exclusion, and the immutable delivered install-paths record."
+            }
+          ],
+          "context": {
+            "touch": [
+              "treadle/packages/cli/src/harness/where.ts",
+              "treadle/packages/cli/test/where.test.ts"
+            ],
+            "notes": [
+              "Read feature.md, impact-roots.md, design.md, plan.md, and the task frozen-context block. Owner direction is root specs; archive/layout/fallback details remain proposed."
+            ]
+          }
+        },
+        {
+          "family": "US",
+          "id": "US-1",
+          "as": "the project owner",
+          "want": "root specs and one current wiki documentation home with no docs directory",
+          "so": "work is easy to track and readers see one current knowledge home"
+        }
+      ],
+      "omitted_tasks": [
+        "T-2",
+        "T-3",
+        "T-4",
+        "T-5",
+        "T-6"
+      ],
+      "prelude": {
+        "approach": "Use root specs for work, specs/archive for history, and wiki concepts/assets for documentation. Keep a complete relocation map and frozen closed bytes.",
+        "env": {
+          "workspace": "../..",
+          "source_head": "a14ae28",
+          "verification_cwd": "repository root"
+        }
+      },
+      "slice_digest": "c3141fec1b453ea79d8fb9506300414f1381ff051be4fa5450660c7ad82aadec"
+    }
+  },
+  "settled_not_closed": {
+    "stage": "in_progress",
+    "handout": {
+      "ok": true,
+      "value": {
+        "status": "DONE"
+      }
+    }
+  },
+  "missing_review_handout": {
+    "ok": true,
+    "value": {
+      "status": "DONE"
+    }
+  },
+  "explicit_close_on_clone": {
+    "ok": true,
+    "value": {
+      "name": "docs-root-migration",
+      "status": "complete",
+      "closed_by": "human:probe",
+      "revision": 21
+    }
+  },
+  "fixture_http_approve": {
+    "status": 200,
+    "body": {
+      "ok": true,
+      "revision": 21
+    }
+  },
+  "fixture_after_approval": {
+    "stage": "awaiting_owner",
+    "lifecycle": "active",
+    "gaps": {
+      "pending_decisions": [
+        "D-2",
+        "D-3"
+      ],
+      "open_questions": [],
+      "review_pass": true
+    },
+    "closed_at": null
+  },
+  "fixture_http_close": {
+    "status": 400,
+    "body": {
+      "ok": false,
+      "error": "unknown event kind: 'close' (expected one of answer, unknown, choice, approve)"
+    }
+  },
+  "live_pack_and_journal_unchanged_by_probe": true,
+  "result": "OBSERVED_CURRENT_BEHAVIOR"
+}

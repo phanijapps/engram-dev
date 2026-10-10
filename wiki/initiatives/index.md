@@ -6,3 +6,5 @@
 - [install-paths: initiative record](install-paths.md)
 - [stitch-ui: initiative record](stitch-ui.md)
 - [Root specs and wiki documentation migration](docs-root-migration.md)
+
+- [Owner decision gates and spec completion: bug analysis](spec-completion-handoff.md)

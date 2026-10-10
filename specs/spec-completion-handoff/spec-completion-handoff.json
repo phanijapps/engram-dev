@@ -1,0 +1,148 @@
+{
+  "id": "spec-completion-handoff",
+  "name": "spec-completion-handoff",
+  "description": "Owner decisions before execution and an observable final completion handoff",
+  "date": {
+    "updated": "2026-10-10T21:32:58.654Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "planning"
+  },
+  "metadata": {
+    "analysis": {
+      "ref": "bug-owner-gates.md",
+      "type": "text/markdown"
+    },
+    "probe": {
+      "ref": "probe.mjs",
+      "type": "text/javascript",
+      "description": "Disposable-fixture analysis probe; does not perform live owner acts"
+    },
+    "observations": {
+      "ref": "probe.json",
+      "type": "application/json"
+    },
+    "snapshot": {
+      "ref": "observed-docs-root-migration.json",
+      "type": "application/json",
+      "description": "Observed revision20 with actual browser approval; unchanged owner decision and closure state"
+    },
+    "review": {
+      "ref": "review.md",
+      "type": "text/markdown"
+    },
+    "verification": {
+      "ref": "verification.json",
+      "type": "application/json"
+    },
+    "wiki-verification": {
+      "ref": "wiki-verification.json",
+      "type": "application/json"
+    }
+  },
+  "spec": {
+    "why": "Owner approved the completed docs-root-migration loop, but its spec remains active; analyze approval, decision resolution, closure, UI and skill handoff seams.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Candidate: require explicit owner acceptance of applicable design decisions before dependent tasks receive executable handouts; reversible design decisions remain owner decisions.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Candidate: expose per-decision accept/reject owner acts and show their effect on task readiness in the local review surface.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Candidate: expose an explicit final owner act through existing closePack admission; persist complete lifecycle and delivered stage only after actual eligibility and the human claim.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Candidate: distinguish task exhaustion, missing review, unresolved decisions and pending closure in machine and browser handoffs; generic spec approval does not imply decision acceptance.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Candidate: align analyze/plan/implement/review skill handoffs with these owner boundaries and verify the shipped and installed copies; no inference of decision acceptance from reversibility or broad approval.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [
+      {
+        "id": "Q-1",
+        "question": "Final UI choice: a separate Finish spec act, or an explicitly labelled final approval with visible per-decision resolution?",
+        "status": "open",
+        "owner": "project owner",
+        "kind": "open",
+        "notes": "Blocks final UI design acceptance, not root-cause analysis. Resolve on concrete planning alternatives; do not infer an answer."
+      }
+    ],
+    "out_of_scope": [
+      "Implementation or skill updates in this analysis",
+      "Accepting/rejecting prior owner decisions",
+      "Closing or rolling back the prior documentation initiatives",
+      "Historical retrospective reconstruction",
+      "Authentication or freshness-engine changes"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "the project owner",
+        "want": "to approve design decisions before dependent execution and complete an evidenced loop from its review surface",
+        "so": "the agent respects my decisions and the recorded delivery state reflects my final act"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Proposed direction: encode applicable task-to-decision gates and enforce them in machine task readiness",
+        "status": "proposed",
+        "because": "Preserve independent slices while refusing dependent work until the owner accepts its design; exact additive shape and legacy policy belong to planning."
+      },
+      {
+        "id": "D-2",
+        "decision": "Proposed direction: expose per-decision resolution and a distinct final Finish spec act through closePack",
+        "status": "proposed",
+        "because": "Avoid assigning decision acceptance to generic approval or weakening evidence guards; owner chooses concrete final UX in planning.",
+        "resolves": [
+          "Q-1"
+        ]
+      }
+    ],
+    "designs": []
+  },
+  "tasks": [],
+  "review": {
+    "verdicts": [
+      {
+        "on": "ANALYSIS",
+        "verdict": "PASS",
+        "by": "agent:replay_review",
+        "note": "Actual independent artifact review: PASS — nothing to fix. Reran probe and do check, checked snapshot hashes, current source claims, wiki and recorded gates. See review.md. This is analysis quality only; it does not satisfy delivery PACK review."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "../..",
+    "source_head": "51c2a789eec47b29108f07947009bfb32db55af0",
+    "mode": "analysis-only",
+    "source_state": "Runtime source unchanged; observed migration approval is an uncommitted owner event, preserved in snapshot and hashes."
+  },
+  "format": "specpack/0.3",
+  "revision": 3
+}

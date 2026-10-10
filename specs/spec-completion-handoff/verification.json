@@ -1,0 +1,129 @@
+{
+  "observed_at": "2026-10-10T21:31:39.581722+00:00",
+  "scope": "Analysis validation and unchanged runtime gates; no implementation correctness is claimed.",
+  "checks": [
+    {
+      "name": "check",
+      "cmd": [
+        "pnpm",
+        "check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "coverage",
+      "cmd": [
+        "pnpm",
+        "coverage"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "coverage.log"
+    },
+    {
+      "name": "corpus",
+      "cmd": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "corpus.log"
+    },
+    {
+      "name": "brand",
+      "cmd": [
+        "pnpm",
+        "brand:check"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "brand.log"
+    },
+    {
+      "name": "links",
+      "cmd": [
+        "pnpm",
+        "links"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "links.log"
+    },
+    {
+      "name": "analysis-alignment",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "check",
+        "../specs/spec-completion-handoff"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "analysis-alignment.log"
+    },
+    {
+      "name": "analysis-probe",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "../specs/spec-completion-handoff/probe.mjs"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "analysis-probe.log"
+    }
+  ],
+  "coverage": {
+    "lines": {
+      "total": 4552,
+      "covered": 3823,
+      "skipped": 0,
+      "pct": 83.98
+    },
+    "statements": {
+      "total": 4552,
+      "covered": 3823,
+      "skipped": 0,
+      "pct": 83.98
+    },
+    "functions": {
+      "total": 213,
+      "covered": 198,
+      "skipped": 0,
+      "pct": 92.95
+    },
+    "branches": {
+      "total": 1676,
+      "covered": 1255,
+      "skipped": 0,
+      "pct": 74.88
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "candidate_alignment_gaps": 5,
+  "source_hashes": {
+    "treadle/packages/core/src/specpack/next.ts": "4d1ac2abfabe5242647c74da47c726c58dafcb7df86470dad00d78d7caa80522",
+    "treadle/packages/core/src/specpack/admission.ts": "78a20d864a29916b9769a4efc1170da9d9620ab3d28543b508b10ac5938fb6be",
+    "treadle/packages/core/src/specpack/close.ts": "0a97168035ad35581299ab84b78d9b30b2a343ddde38b275d69e11813e60050c",
+    "treadle/packages/core/src/specpack/alignment.ts": "33133fb53585afc26723e03ff19c83b106429f7975f0e84b81ace2fa58a4508a",
+    "treadle/packages/core/src/specpack/derive.ts": "ee722e2fcfa766c478850c9974cc0005586c5e273553248b666d06eac95929e9",
+    "treadle/packages/web/src/servers.ts": "be8ef5a8d8797b3a054114443e00326b2881e00fc1db198d96e051ebd374fc1c",
+    "treadle/packages/web/src/library.js": "1d50a7ce6bcb273b6bba800c41dbe82e56289f923dc7938c8daaea2a34b0c9cb",
+    ".codex/skills/plan/SKILL.md": "1de3aed22502934ec6b6058e686b99d16112b7698351221d8657595fd2962d43",
+    ".codex/skills/implement/SKILL.md": "ced696b9125ee6d4804ff1ca8560c42499c15300c809051902fc616f4fbc1536",
+    ".codex/skills/review/SKILL.md": "6efdc4625c2239bfb43ca99941c31fd3545b91656ed2e037906c3de2fa1c0898"
+  },
+  "snapshot_hash_verified": true
+}

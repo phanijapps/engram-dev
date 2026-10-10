@@ -31,3 +31,11 @@ Read [the authority map](/project/documentation-map.md),
 The current pack owns completion and acceptance; this page does not infer closure.
 
 Read [this session’s retrospective](/retrospectives/2026-10-10-docs-root-migration.md).
+
+# Later owner approval and control gap
+
+The owner approval landed at revision 20. D-2 and D-3 remain proposed; the
+pack is active with no closure. The owner challenged the earlier execution of
+these proposed decisions. The resulting analysis is a separate initiative.
+Source: `specs/spec-completion-handoff/probe.json:1`.
+Read [the owner-control analysis](/initiatives/spec-completion-handoff.md).

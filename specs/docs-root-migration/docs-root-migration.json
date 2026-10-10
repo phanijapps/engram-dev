@@ -3,7 +3,11 @@
   "name": "docs-root-migration",
   "description": "Move work to root specs and remove docs",
   "date": {
-    "updated": "2026-10-10T21:22:56.452Z"
+    "updated": "2026-10-10T21:25:44Z",
+    "approved": {
+      "at": "2026-10-10T21:24:12Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
@@ -441,5 +445,5 @@
     "verification_cwd": "repository root"
   },
   "format": "specpack/0.3",
-  "revision": 19
+  "revision": 20
 }
