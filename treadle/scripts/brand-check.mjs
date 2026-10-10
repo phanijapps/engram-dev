@@ -20,6 +20,7 @@ const ALLOW_CONTAINS = [
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source
   /scripts\/corpus-check\.mjs$/, // speaks the repo-root workspace path
+  /conformance\/generators\/gen_corpus\.ts$/, // repo-relative fixture paths, not brand
 ];
 
 function walk(dir, files = []) {
