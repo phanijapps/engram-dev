@@ -33,6 +33,10 @@ from okf_kit.core.validate import validate_bundle  # noqa: E402
 from okf_kit.core.context import read_concept  # noqa: E402
 
 FIXED = "2026-10-10T12:00:00Z"
+
+# total determinism: the engine's wall clock is pinned for the whole run —
+# every stamp (save's updated, evidence rows, handouts) becomes reproducible
+specpack._now = lambda: FIXED
 ROOT = REPO / "treadle/packages/conformance/corpus"
 
 
