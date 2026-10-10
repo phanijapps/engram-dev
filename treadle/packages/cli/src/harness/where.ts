@@ -4,7 +4,7 @@
  *  not a gate — exit 0 always. */
 import { execSync } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { loadPackWithMeta } from '@treadle/core';
 
 interface PackDocLike {
@@ -107,7 +107,7 @@ function lastEvidenceAt(doc: { tasks?: { evidence?: { at?: string }[] }[] }): st
 }
 
 export function where(workspace: string): WhereReport {
-  const root = workspace;
+  const root = resolve(workspace); // git prints absolute paths — compare like for like (R2 #5)
   const packs = scanSpecsDir(join(root, 'docs', 'specs'), '');
   const report: WhereReport = { root, packs, worktrees: [] };
   try {
@@ -127,7 +127,14 @@ export function where(workspace: string): WhereReport {
   return report;
 }
 
-const OPEN_STAGES = new Set(['awaiting_owner', 'planning', 'drafted', 'in_progress', 'in_review']);
+const OPEN_STAGES = new Set([
+  'awaiting_owner',
+  'planning',
+  'drafted',
+  'in_progress',
+  'in_review',
+  'blocked',
+]); // the frozen vocabulary incl. blocked (R2 #6)
 export function isOpen(row: PackRow): boolean {
   return OPEN_STAGES.has(row.stage) || row.stage === 'refused';
 }
@@ -147,6 +154,7 @@ export function recallBlock(report: WhereReport): string {
     if (r.openQuestions > 0) bits.push(`Q open: ${r.openQuestions}`);
     if (r.nextTask) bits.push(`next: ${r.nextTask}`);
     if (r.revision !== null) bits.push(`rev ${r.revision}`);
+    if (r.lastEvidenceAt) bits.push(`evidence ${r.lastEvidenceAt.slice(0, 10)}`); // FR-1: the human surface too (R2 #12)
     if (r.tree) bits.push(`(${r.tree})`);
     lines.push('  ' + bits.join('  ').trim());
   }

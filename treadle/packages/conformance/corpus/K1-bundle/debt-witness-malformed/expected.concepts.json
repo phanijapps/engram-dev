@@ -1,0 +1,31 @@
+[
+  {
+    "body_startswith": "plain page\n",
+    "cid": "c",
+    "frontmatter": {
+      "title": "C",
+      "type": "note"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": null
+  },
+  {
+    "body_startswith": "\n* [c](c.md) - bullets with no section h",
+    "cid": "index",
+    "frontmatter": {
+      "okf_version": "0.2"
+    },
+    "frontmatter_error": null,
+    "frontmatter_present": true,
+    "reserved": "index"
+  },
+  {
+    "body_startswith": "# Directory Update Log\n\n## May 22\n* not ",
+    "cid": "log",
+    "frontmatter": {},
+    "frontmatter_error": null,
+    "frontmatter_present": false,
+    "reserved": "log"
+  }
+]

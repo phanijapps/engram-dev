@@ -182,7 +182,8 @@
         ],
         "codex": {
           "kind": "prompt-file",
-          "dest": ".codex/prompts/recall.md"
+          "dest": ".codex/prompts/recall.md",
+          "prompt": "hooks/prompts/codex-recall.md"
         },
         "copilot": null
       }

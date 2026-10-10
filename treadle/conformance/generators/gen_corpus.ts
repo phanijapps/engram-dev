@@ -887,10 +887,24 @@ function genK1(): void {
     join(c3, 'input', 'index.md'),
     '---\nokf_version: "0.2"\n---\n\n# Concepts\n\n* [run](run.md) - attested, valid\n* [broken](broken.md) - attested, runtime missing\n',
   );
+  // the period-correct log lives in the GOOD index dir; the malformed witnesses live in their own sub-bundle
   W(
     join(c3, 'input', 'log.md'),
     '# Directory Update Log\n\n## 2026-05-22\n* **Update**: added the attested pair.\n\n## 2026-05-15\n* **Initialization**: born.\n',
   );
+  // §9/§8 ERROR witnesses (R2 #7): a malformed log and a headingless index must fire goldens
+  const c4 = join(ROOT, 'K1-bundle', 'debt-witness-malformed');
+  mkdirSync(join(c4, 'input'), { recursive: true });
+  W(
+    join(c4, 'input', 'index.md'),
+    '---\nokf_version: "0.2"\n---\n\n* [c](c.md) - bullets with no section heading (§8 violation)\n',
+  );
+  W(
+    join(c4, 'input', 'log.md'),
+    '# Directory Update Log\n\n## May 22\n* not ISO\n\n## 2026-05-15\n* older second — also not newest-first\n',
+  );
+  W(join(c4, 'input', 'c.md'), '---\ntitle: C\ntype: note\n---\nplain page\n');
+  k1Goldens(c4, [{ q: 'plain' }]);
   W(
     join(c3, 'input', 'run.md'),
     '---\ntitle: Run\ntype: Attested Computation\nruntime: dbt\n' +

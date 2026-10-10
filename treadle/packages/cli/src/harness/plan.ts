@@ -198,15 +198,19 @@ export function compilePlan(
       }
       if ((w.kind === 'extension' || w.kind === 'prompt-file') && w.dest) {
         const destAbs = destFor(w.dest, agent, scope, choices.root);
+        // prompt-file wiring installs the PROMPT template, not the JS payload (R2 #10)
+        const srcPath = w.kind === 'prompt-file' && w.prompt ? join(manifestRoot, w.prompt) : src;
         rows.push({
           component: h.id,
           kind: 'hook',
           surface: agent,
-          source: h.file,
+          source: relative(manifestRoot, srcPath),
           destination: destAbs,
-          mode: modeForFile(src, destAbs, choices.force),
+          mode: modeForFile(srcPath, destAbs, choices.force),
           ...(w.kind === 'prompt-file'
-            ? { note: 'recall prompt-file (the honest codex subset)' }
+            ? {
+                note: 'recall prompt-file (the honest codex subset: the prompt teaches the rule; notify rides the guard hook)',
+              }
             : {}),
         });
         if (w.kind === 'prompt-file') continue; // the file IS the wiring — no settings to merge

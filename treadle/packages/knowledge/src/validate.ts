@@ -419,7 +419,9 @@ export function indexStructureIssues(body: string): string[] {
   const issues: string[] = [];
   const lines = body.split('\n');
   const headings = lines.filter((l) => /^#{1,6}\s+\S/.test(l));
-  const bullets = lines.filter((l) => /^\s*\*\s+\[.+\]\([^)]+\)/.test(l));
+  // §8 mandates sections grouping concepts — the MARKER GLYPH is not the rule
+  // (`*` and `-` both group; the wiki itself uses `-` and is conformant)
+  const bullets = lines.filter((l) => /^\s*[-*+]\s+\[.+\]\([^)]+\)/.test(l));
   if (headings.length === 0 && bullets.length === 0) return issues; // empty index carries no structure to violate
   if (headings.length === 0) issues.push('no section headings');
   if (headings.length > 0 && bullets.length === 0)

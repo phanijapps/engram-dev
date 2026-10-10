@@ -8,6 +8,8 @@ export type ComponentKind = 'skill' | 'agent';
 export interface HookWiring {
   kind: 'extension' | 'settings-hooks' | 'config-notify' | 'prompt-file';
   dest?: string;
+  /** prompt-file wiring: the prompt template to install (the JS payload is not the prompt) */
+  prompt?: string;
   matcher?: string;
   command?: string;
 }

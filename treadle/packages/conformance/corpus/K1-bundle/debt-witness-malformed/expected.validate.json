@@ -1,0 +1,26 @@
+{
+  "conformant": false,
+  "errors": [
+    {
+      "cid": "index",
+      "code": "index-structure",
+      "message": "index.md: no section headings (§8, §11.3)",
+      "severity": "error"
+    },
+    {
+      "cid": "log",
+      "code": "log-structure",
+      "message": "log.md: date heading 'May' is not ISO YYYY-MM-DD (§9, §11.3)",
+      "severity": "error"
+    }
+  ],
+  "info": [],
+  "warnings": [
+    {
+      "cid": "c",
+      "code": "missing-description",
+      "message": "missing recommended field 'description'",
+      "severity": "warning"
+    }
+  ]
+}

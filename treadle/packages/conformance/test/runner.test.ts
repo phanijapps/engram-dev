@@ -8,7 +8,7 @@ describe('the golden corpus', () => {
   const results = runCorpus(CORPUS);
 
   it('executes every case', () => {
-    expect(results.length).toBe(43); // debt-witness joined (guided-loop T-3)
+    expect(results.length).toBe(44); // debt-witness joined (guided-loop T-3)
   });
 
   it('is green — conformance, regardless of runner language', () => {

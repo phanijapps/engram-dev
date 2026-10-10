@@ -3,26 +3,26 @@
  *
  *  Entries (one file, one contract):
  *  - script mode:   node session-recall.js <workspace>            → prints
- *                   the recall block (humans, claude SessionStart stdout
- *                   context with --claude-start, which reads the cwd from
- *                   stdin JSON payload).
+ *                   the block (humans; claude SessionStart stdout context
+ *                   with --claude-start, which reads the cwd from stdin).
  *  - claude gate:   node session-recall.js --claude-gate           → reads
  *                   Claude's UserPromptSubmit stdin JSON; exit 2 + stderr
  *                   = the ask (the run stops, the user sees the list);
  *                   exit 0 = allow.
- *  - extension mode: loaded by pi as an extension — session_start injects
- *                   the block (sendMessage), and the HARD GATE fires on
- *                   continue-shaped FIRST user messages (no prior user
- *                   entry in the transcript; resumed sessions included)
- *                   when more than one spec is open: message_end replaces
- *                   the message (role preserved) with the original + the
- *                   block + the ASK directive; before_agent_start also
- *                   injects the ask-first guideline.
+ *  - extension mode: loaded by pi as an extension — session_start sends
+ *                   the block as a custom message (the model SEES it),
+ *                   and the HARD GATE fires on continue-shaped FIRST
+ *                   user messages (no prior user entry in the transcript;
+ *                   resumed sessions included) when more than one spec
+ *                   is open: message_end replaces the message (role
+ *                   preserved) with the original + the block + the ASK
+ *                   directive; before_agent_start also injects the
+ *                   ask-first guideline.
  *
- *  The block is engine-quoted: this payload shells out to the harness
- *  CLI (`do where --json`) and prints what the engine says — never
- *  memory. No CLI → the block says so and the gate stays inert (a gate
- *  without data is a guess; we do not guess).
+ *  Engine-quoted: this payload shells out to `do where --json` and
+ *  renders from the JSON (the open count comes from the data, never
+ *  from string-matching prose). No CLI → the block says so and the
+ *  gate stays inert (a gate without data is a guess; we do not guess).
  */
 import { execFile } from 'node:child_process';
 import { homedir } from 'node:os';
@@ -31,6 +31,16 @@ import { existsSync } from 'node:fs';
 
 const CONTINUE_SHAPED =
   /^\s*(continue|go( on| ahead| darling)?|keep going|resume|pick (up|it up)|carry on|next)\b/i;
+const OPEN_STAGES = new Set([
+  'awaiting_owner',
+  'planning',
+  'drafted',
+  'in_progress',
+  'in_review',
+  'blocked',
+  'refused',
+]);
+const STDIN_TIMEOUT_MS = 5000; // a manual TTY run must not hang the hook (R2 #15)
 
 function findCLI() {
   const candidates = [
@@ -59,21 +69,17 @@ function whereJSON(workspace) {
   });
 }
 
-export async function recallBlockFor(workspace) {
+/** Render the block FROM THE JSON — the count and the lines share one source. */
+export async function recall(workspace) {
   const report = await whereJSON(workspace);
   if (report.unavailable) {
-    return `work recall unavailable (${report.unavailable}) — run do where <workspace> yourself`;
+    return {
+      block: `work recall unavailable (${report.unavailable}) — run do where <workspace> yourself`,
+      openCount: 0,
+    };
   }
   const all = [...(report.packs ?? []), ...(report.worktrees ?? []).flatMap((w) => w.packs ?? [])];
-  const OPEN = new Set([
-    'awaiting_owner',
-    'planning',
-    'drafted',
-    'in_progress',
-    'in_review',
-    'refused',
-  ]);
-  const open = all.filter((p) => OPEN.has(p.stage));
+  const open = all.filter((p) => OPEN_STAGES.has(p.stage));
   const lines = [];
   lines.push(
     open.length > 0
@@ -84,11 +90,48 @@ export async function recallBlockFor(workspace) {
     const bits = [p.name, p.stage];
     if (p.openQuestions > 0) bits.push(`Q open: ${p.openQuestions}`);
     if (p.nextTask) bits.push(`next: ${p.nextTask}`);
+    if (p.revision !== null && p.revision !== undefined) bits.push(`rev ${p.revision}`);
+    if (p.lastEvidenceAt) bits.push(`evidence ${p.lastEvidenceAt.slice(0, 10)}`);
     if (p.tree) bits.push(`(${p.tree})`);
     lines.push('  ' + bits.join('  ').trim());
   }
   if (open.length > 1) lines.push('more than one is open: ASK which one continues. never guess.');
-  return lines.join('\n');
+  return { block: lines.join('\n'), openCount: open.length };
+}
+
+/** Real pi content is parts-shaped: [{type:'text',text},…] — extract the text. */
+function textOf(content) {
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    return content
+      .filter((p) => p && typeof p === 'object' && p.type === 'text' && typeof p.text === 'string')
+      .map((p) => p.text)
+      .join('\n');
+  }
+  return '';
+}
+
+function readStdinJSON() {
+  return new Promise((resolve) => {
+    let raw = '';
+    const timer = setTimeout(() => {
+      resolve(null); // stdin never closed — treat as no payload, never hang (R2 #15)
+      process.stdin.removeAllListeners();
+    }, STDIN_TIMEOUT_MS);
+    process.stdin.on('data', (d) => (raw += d));
+    process.stdin.on('end', () => {
+      clearTimeout(timer);
+      try {
+        resolve(JSON.parse(raw || '{}'));
+      } catch {
+        resolve(null);
+      }
+    });
+    process.stdin.on('error', () => {
+      clearTimeout(timer);
+      resolve(null);
+    });
+  });
 }
 
 const ASK_DIRECTIVE =
@@ -106,31 +149,25 @@ const invoked = (() => {
 
 async function runScript() {
   const args = process.argv.slice(2);
-  if (args[0] === '--claude-gate') {
-    // Claude UserPromptSubmit: stdin JSON {prompt, cwd}; exit 2 + stderr blocks with the reason shown
-    let raw = '';
-    await new Promise((r) => process.stdin.on('data', (d) => (raw += d)).on('end', r));
-    let prompt = '';
-    let cwd = process.cwd();
-    try {
-      const payload = JSON.parse(raw || '{}');
-      prompt = String(payload.prompt ?? '');
-      if (payload.cwd) cwd = String(payload.cwd);
-    } catch {
-      console.error(
-        'session-recall: stdin was not JSON — allowing (a gate without data never blocks)',
-      );
-      return; // exit 0
+  if (args[0] === '--claude-gate' || args[0] === '--claude-start') {
+    const payload = (await readStdinJSON()) ?? {};
+    const cwd =
+      typeof payload.cwd === 'string' && payload.cwd.length > 0 ? payload.cwd : process.cwd();
+    if (args[0] === '--claude-start') {
+      const { block } = await recall(cwd);
+      console.log(block);
+      return;
     }
+    // --claude-gate: UserPromptSubmit — exit 2 + stderr blocks with the list shown
+    const prompt = typeof payload.prompt === 'string' ? payload.prompt : '';
     if (!CONTINUE_SHAPED.test(prompt)) return; // not continue-shaped → allow
-    const block = await recallBlockFor(cwd);
-    if (!block.includes('ASK which one continues')) return; // ≤1 open → allow
+    const { block, openCount } = await recall(cwd);
+    if (openCount < 2) return; // zero or one open → allow (the gate never over-fires)
     console.error(block + ASK_DIRECTIVE);
     process.exit(2);
   }
-  const workspace = args[0] ?? (args[0] === '--claude-start' ? undefined : '.');
-  const ws = args[0] === '--claude-start' ? process.cwd() : (args[0] ?? '.');
-  console.log(await recallBlockFor(ws));
+  const { block } = await recall(args[0] ?? '.');
+  console.log(block);
 }
 
 if (invoked) {
@@ -141,17 +178,15 @@ if (invoked) {
 export default function (pi) {
   let openCount = 0;
   let block = '';
-  let firstUserSeen = false;
 
   pi.on('session_start', async () => {
-    block = await recallBlockFor(process.cwd());
-    openCount = block.includes('ASK which one continues')
-      ? 2
-      : block.startsWith('work in flight (1)')
-        ? 1
-        : 0;
+    const out = await recall(process.cwd());
+    block = out.block;
+    openCount = out.openCount;
     if (block && !block.startsWith('work recall unavailable')) {
-      pi.sendMessage(block);
+      // sendMessage takes {customType, content, display} — a bare string is
+      // silently dropped (R2 #2); the model must SEE this
+      pi.sendMessage({ customType: 'session-recall', content: block, display: true });
     }
   });
 
@@ -164,22 +199,25 @@ export default function (pi) {
       return;
     }
     firstUserSeen = true;
-    const text = typeof msg.content === 'string' ? msg.content : String(msg.content ?? '');
+    const text = textOf(msg.content); // parts-shaped in real pi (R2 #1)
     if (!CONTINUE_SHAPED.test(text)) return;
     if (openCount < 2) return; // zero or one open: continue resolves — never fire
-    // replace the message (role preserved — the doc-verified mechanism)
-    return { message: { ...msg, content: text + ASK_DIRECTIVE + '\n\n' + block } };
+    return {
+      message: { ...msg, content: [{ type: 'text', text: text + ASK_DIRECTIVE + '\n\n' + block }] },
+    };
   });
 
   pi.on('before_agent_start', async (event) => {
     if (openCount < 2) return;
-    if (!CONTINUE_SHAPED.test(String(event.prompt ?? ''))) return;
+    if (!CONTINUE_SHAPED.test(textOf(event.prompt ?? event.prompt?.content ?? ''))) return;
     event.systemPromptOptions.promptGuidelines = [
       ...(event.systemPromptOptions.promptGuidelines ?? []),
       'HARD GATE: more than one spec is open. Ask the user which one continues before doing anything. Never guess.',
     ];
   });
 }
+
+let firstUserSeen = false;
 
 function countUserEntries(pi) {
   try {

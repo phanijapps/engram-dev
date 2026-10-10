@@ -1,0 +1,16 @@
+[
+  {
+    "hits": [
+      {
+        "cid": "c",
+        "score": 1.0,
+        "snippet": "plain page",
+        "title": "C",
+        "type": "note"
+      }
+    ],
+    "query": {
+      "q": "plain"
+    }
+  }
+]

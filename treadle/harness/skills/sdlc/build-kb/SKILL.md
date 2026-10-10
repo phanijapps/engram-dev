@@ -64,11 +64,11 @@ must conform to") is **never written directly as settled truth**: author it
 as `status: draft` and route acceptance through the findings ledger:
 
 ```
-know findings propose wiki <source> <destination> <kind> \
+know findings propose wiki <source-path> <destination-cid> <kind> \
   --destination wiki/<concept>.md --kind golden-path --rationale "…"
 ```
 
-A human accepts or declines (`know findings resolve wiki <id> --decision
+A human accepts or declines (`know findings resolve wiki <id> <decision>
 accepted|declined`). Declined findings are never re-proposed.
 
 ## 6. Validate, record, commit
