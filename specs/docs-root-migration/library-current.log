@@ -1,0 +1,2 @@
+library: http://127.0.0.1:8788/  (localhost only, no auth — v1 disclosure)
+library: serving ../specs — Ctrl-C stops

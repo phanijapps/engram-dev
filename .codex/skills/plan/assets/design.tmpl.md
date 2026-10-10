@@ -13,7 +13,7 @@ related: []
 # Technical design — <title>
 
 > Bounded to the Ready-now slices of the analysis Handoff. Every choice
-> traces to an R/Q/A/D id from `docs/specs/<slug>/`. Evidence status on
+> traces to an R/Q/A/D id from `specs/<slug>/`. Evidence status on
 > load-bearing claims: declared / implementation-supported / inferred /
 > conflicting / unknown.
 

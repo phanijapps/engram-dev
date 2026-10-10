@@ -2,7 +2,7 @@
 name: boy-scout
 description: Leave every file, module, test, and commit cleaner than you found it — the hygiene loop that runs on EVERY code change, any language. Use on every implementation/edit turn: before the first edit (read the mess), during (do not add new mess), and before claiming done (clean the campsite). Triggers on any code edit task, "clean this up", "refactor", commit preparation.
 metadata:
-  - source: docs/research/nodejs-engineering-standards.md (R20, R21, R29, R30)
+  - source: wiki/research/nodejs-engineering-standards.md (R20, R21, R29, R30)
 ---
 
 # Boy Scout — clean your mess, then leave it cleaner

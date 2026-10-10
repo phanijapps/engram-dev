@@ -66,7 +66,7 @@ analysis, not a style choice.
 ### Register the initiative
 
 For an SDD initiative that will hand off to planning or implementation, create
-`docs/specs/<slug>/<slug>.json` with `do init <packDir> --title "…" --why "…"`
+`specs/<slug>/<slug>.json` with `do init <packDir> --title "…" --why "…"`
 if it does not exist. Load and reuse an existing active pack. A completed pack
 is frozen; a new change needs a new initiative. Ordinary repository questions
 do not require creating work records.
@@ -74,18 +74,20 @@ do not require creating work records.
 The JSON pack is the machine work record; the mode's Markdown artifact supplies
 its reasoning. Reference that artifact in the pack. Carry candidate requirements,
 questions, and proposed decisions into the pack before the planning handoff.
+New initiatives use root `specs`. Locate existing records with `do where` and
+reuse their reported path; never create the same initiative in both roots.
 Creation does not authorize implementation, accept decisions, or approve the spec.
 Use the installed harness CLI or the documented direct CLI invocation.
 Never invent human approval or closure fields.
 
-| The ask is…                                  | Mode        | Artifact (under `docs/specs/<slug>/`) | Question it answers                                          |
-| -------------------------------------------- | ----------- | ------------------------------------- | ------------------------------------------------------------ |
-| "add / change a capability" — what & why     | **feature** | `feature.md`                          | What should change, and why is that justified?               |
-| "make it a testable contract"                | **spec**    | `spec.md`                             | What exactly must be true, and how would we check?           |
-| "this is broken / reproducible"              | **bug**     | `bug-<short>.md`                      | Why does this fail?                                          |
-| "we don't know if X works / is right"        | **spike**   | `spike-<n>-<topic>.md`                | What did the bounded investigation learn?                    |
-| "what breaks if we change X"                 | **impact**  | `impact-<change>.md`                  | Which effects need dispositions?                             |
-| "what are we missing / why did context fail" | **gap**     | `gap-<n>.md`                          | What don't we know, where might it live, how do we close it? |
+| The ask is…                                  | Mode        | Artifact (under `specs/<slug>/`) | Question it answers                                          |
+| -------------------------------------------- | ----------- | -------------------------------- | ------------------------------------------------------------ |
+| "add / change a capability" — what & why     | **feature** | `feature.md`                     | What should change, and why is that justified?               |
+| "make it a testable contract"                | **spec**    | `spec.md`                        | What exactly must be true, and how would we check?           |
+| "this is broken / reproducible"              | **bug**     | `bug-<short>.md`                 | Why does this fail?                                          |
+| "we don't know if X works / is right"        | **spike**   | `spike-<n>-<topic>.md`           | What did the bounded investigation learn?                    |
+| "what breaks if we change X"                 | **impact**  | `impact-<change>.md`             | Which effects need dispositions?                             |
+| "what are we missing / why did context fail" | **gap**     | `gap-<n>.md`                     | What don't we know, where might it live, how do we close it? |
 
 Routing rules: one artifact per analysis, not per conversation. If a
 feature analysis reveals shared-contract blast radius, the impact mode runs

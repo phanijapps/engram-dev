@@ -2,7 +2,7 @@
 name: nodejs-architecture
 description: Design and review clean Node/TypeScript architecture — package boundaries, dependency direction, SOLID in TS, schema-first contracts, error taxonomy placement. Use when creating a package/module, deciding where code lives, wiring a CLI or server, or reviewing module structure. Companion to nodejs-craft (code-level); this skill is the module-level rules (standards R4, R28, §8).
 metadata:
-  - source: docs/research/nodejs-engineering-standards.md
+  - source: wiki/research/nodejs-engineering-standards.md
 ---
 
 # Node.js architecture — where code lives, and why
@@ -15,17 +15,18 @@ things do not know about the unimportant things.**
 ```
 packages/
   core/        schema types, admission, normalizer, events, refusals   (knows nothing)
-  knowledge/   bundle plane: pages, links, search, findings, anchors    (imports core)
+  knowledge/   bundle plane: pages, links, search, findings, anchors    (independent)
   web/         pages + localhost servers                                (imports core)
   cli/         commands, banners, user strings                          (imports all)
   brand/       the ONLY place the product name lives (white-label)
   conformance/ the golden corpus + runner (imports core only)
 ```
 
-**Dependency direction is law** (`core` ← `knowledge`/`web`/`conformance` ← `cli`),
-enforced by `eslint-plugin-boundaries` — architecture that depends on review
-vigilance is already broken. `brand` is imported only by `cli` and `web` strings;
-`core` never says the product name.
+**Dependency direction is the design rule** (`core` ← `web`/`conformance` ← `cli`,
+and `knowledge` ← `cli`). The current lint configuration does not enforce package
+boundaries; review the imports. The observed controls are documented in
+`wiki/project/engineering-controls.md`. `brand` supplies CLI and web strings;
+the brand gate keeps product names out of `core`.
 
 ## The five SOLID rules, in this codebase's terms
 

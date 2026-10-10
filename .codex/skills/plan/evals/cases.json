@@ -73,7 +73,7 @@
     },
     {
       "id": "no-analysis-no-plan",
-      "fixture_recipe": "A request with no docs/specs/<slug>/ artifacts; the ask is non-trivial (multi-surface change).",
+      "fixture_recipe": "A request with no specs/<slug>/ artifacts; the ask is non-trivial (multi-surface change).",
       "prompt": "Plan this.",
       "expectations": [
         "Refuses to plan from nothing; offers to run analyze first",

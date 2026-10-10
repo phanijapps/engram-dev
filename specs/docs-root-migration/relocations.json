@@ -1031,7 +1031,7 @@
       "sha256": "eea788d17f3ce9325af9965e780e3b67214e13cbfca5c98d2023533a46da2085"
     },
     "docs/specs/documentation-consolidation/documentation-consolidation.json": {
-      "destination": "specs/documentation-consolidation/documentation-consolidation.json",
+      "destination": "specs/archive/docs-root-migration/documentation-consolidation-revision-23.json",
       "sha256": "a66ffc74c3279010b9644e1ce89117a6e4e7e751b3558117cbf8151dd2220d6f"
     },
     "docs/specs/documentation-consolidation/evidence.md": {

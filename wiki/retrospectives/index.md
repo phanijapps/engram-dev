@@ -1,5 +1,6 @@
 # Retrospectives
 
+- [Root specs migration: observed session retrospective](2026-10-10-docs-root-migration.md)
 - [Documentation consolidation: observed session retrospective](2026-10-10-documentation-consolidation.md)
 
 No retrospective is available for the four earlier initiatives. Their generated

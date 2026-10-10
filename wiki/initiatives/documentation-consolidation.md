@@ -6,13 +6,26 @@ status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {"id": "s1", "resource": "specs/documentation-consolidation/feature.md"}
-  - {"id": "s2", "resource": "specs/documentation-consolidation/design.md"}
-  - {"id": "s3", "resource": "specs/documentation-consolidation/plan.md"}
-  - {"id": "s4", "resource": "specs/documentation-consolidation/baseline.json"}
-  - {"id": "s5", "resource": "wiki/assets/replays/2026-10-10/index.html"}
-  - {"id": "machine", "resource": "specs/documentation-consolidation/documentation-consolidation.json"}
-  - {id: owner, resource: specs/documentation-consolidation/owner-decision-revision.md}
+  - { "id": "s1", "resource": "specs/documentation-consolidation/feature.md" }
+  - { "id": "s2", "resource": "specs/documentation-consolidation/design.md" }
+  - { "id": "s3", "resource": "specs/documentation-consolidation/plan.md" }
+  - {
+      "id": "s4",
+      "resource": "specs/documentation-consolidation/baseline.json",
+    }
+  - { "id": "s5", "resource": "wiki/assets/replays/2026-10-10/index.html" }
+  - {
+      "id": "machine",
+      "resource": "specs/documentation-consolidation/documentation-consolidation.json",
+    }
+  - {
+      id: owner,
+      resource: specs/documentation-consolidation/owner-decision-revision.md,
+    }
+  - {
+      id: snapshot,
+      resource: specs/archive/docs-root-migration/documentation-consolidation-revision-23.json,
+    }
 ---
 
 # Intent and artifacts
@@ -22,11 +35,12 @@ Current work lives in `specs`; full research now lives in the wiki. Paths below
 are retargeted for navigation; original pack and evidence text remain unchanged.
 Source: `specs/docs-root-migration/design.md:1`.
 
-The owner rejected D-2 and D-3 after review. D-4 is accepted; D-1 remains
-proposed. Historical retrospective interpretations are withdrawn. The subsequent root migration
+The owner rejected D-2 and D-3 after review. D-4 is accepted. The later root migration instruction supersedes D-1,
+which is now rejected in the pack. Historical retrospective interpretations are withdrawn. The subsequent root migration
 consolidates research into the wiki. The initial repair below describes
 the earlier state, not acceptance of those rejected choices.
-Source: `specs/documentation-consolidation/owner-decision-revision.md:1`.
+Sources: `specs/documentation-consolidation/owner-decision-revision.md:1`;
+`specs/documentation-consolidation/documentation-consolidation.json:1`.
 
 The owner requested current knowledge consolidated into the workspace wiki,
 easier spec tracking, and saved retrospectives. The analysis recommends retaining
@@ -68,10 +82,15 @@ approval and closure were unset. New evidence is current re-verification, not
 a fabricated historical handout. The earlier snapshot and retrospective remain
 dated observations.
 
-# Owner approval — 2026-10-10
+# Historical owner approval — revision 15, 2026-10-10
 
 The browser recorded approval by `human:owner` at `2026-10-10T20:40:25Z`.
-The pack is at revision 15. Its stage remains `awaiting_owner` because
-decisions D-1 through D-4 remain proposed. Closure remains unset.
+At revision 15, its stage was `awaiting_owner` because decisions D-1 through
+D-4 were proposed. This paragraph records that dated observation.
+
+The current revision 24 records D-1, D-2, and D-3 rejected and D-4 accepted.
+Its approach is explicitly superseded by the root migration. The exact
+revision-23 JSON is retained in the archive; owner approval and closure fields
+were preserved by the annotation. Closure remains unset.
 Source: `specs/documentation-consolidation/documentation-consolidation.json:8`,
 `date.approved`, `design.decisions`, and `status`.

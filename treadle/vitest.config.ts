@@ -1,6 +1,19 @@
 import { defineConfig } from 'vitest/config';
+import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
+  // Package exports target dist in production; tests must exercise the source
+  // modules included by coverage, rather than a second compiled copy.
+  resolve: {
+    alias: {
+      '@treadle/core': fileURLToPath(new URL('./packages/core/src/index.ts', import.meta.url)),
+      '@treadle/knowledge': fileURLToPath(
+        new URL('./packages/knowledge/src/index.ts', import.meta.url),
+      ),
+      '@treadle/web': fileURLToPath(new URL('./packages/web/src/index.ts', import.meta.url)),
+      '@treadle/brand': fileURLToPath(new URL('./packages/brand/src/index.ts', import.meta.url)),
+    },
+  },
   test: {
     coverage: {
       provider: 'v8',

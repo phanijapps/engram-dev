@@ -1,0 +1,18 @@
+{
+  "analyze": {
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  "plan": {
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  "implement": {
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  },
+  "review": {
+    "exit": 0,
+    "output": "Skill is valid!\n"
+  }
+}

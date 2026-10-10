@@ -6,10 +6,10 @@ status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {"id": "s1", "resource": "treadle/packages/core/src/specpack/pins.ts"}
-  - {"id": "s2", "resource": "treadle/packages/knowledge/src/fingerprints.ts"}
-  - {"id": "s3", "resource": "treadle/packages/knowledge/src/stamp.ts"}
-  - {"id": "s4", "resource": "treadle/packages/cli/src/commands/know.ts"}
+  - { "id": "s1", "resource": "treadle/packages/core/src/specpack/pins.ts" }
+  - { "id": "s2", "resource": "treadle/packages/knowledge/src/fingerprints.ts" }
+  - { "id": "s3", "resource": "treadle/packages/knowledge/src/stamp.ts" }
+  - { "id": "s4", "resource": "treadle/packages/cli/src/commands/know.ts" }
 ---
 
 # Current mechanisms
@@ -36,7 +36,9 @@ Source: `treadle/packages/knowledge/src/stamp.ts:68`.
 A fresh stamp and zero flagged anchors establish only these limited checks.
 They do not prove that current TypeScript claims are up to date.
 Source reinspection and independent source hashes qualify the documentation repair.
-The dated audit is `specs/documentation-consolidation/verification.json`.
+The earlier dated audit is `specs/documentation-consolidation/verification.json`.
+The migration audit records current source hashes in
+`specs/docs-root-migration/final-verification.json:1`.
 
 # Proposed follow-up
 

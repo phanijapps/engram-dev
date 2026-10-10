@@ -29,6 +29,20 @@ for (const entry of Object.values(manifest.research_concepts)) {
   assert.ok(concept.endsWith(original), `Research omitted: ${entry.concept}`);
 }
 
+// Supersede the still-open consolidation approach without changing owner acts
+// or prior evidence; the relocation map protects its exact pre-edit snapshot.
+const snapshotEntry = manifest.files['docs/specs/documentation-consolidation/documentation-consolidation.json'];
+const snapshot = JSON.parse(read(snapshotEntry.destination));
+const currentConsolidation = JSON.parse(read('specs/documentation-consolidation/documentation-consolidation.json'));
+assert.match(currentConsolidation.design.approach, /superseded by specs\/docs-root-migration/);
+assert.equal(currentConsolidation.revision, snapshot.revision + 1);
+assert.deepEqual(currentConsolidation.design.decisions, snapshot.design.decisions);
+assert.deepEqual(currentConsolidation.tasks, snapshot.tasks);
+assert.deepEqual(currentConsolidation.review, snapshot.review);
+assert.deepEqual(currentConsolidation.date.approved, snapshot.date.approved);
+assert.deepEqual(currentConsolidation.date.closed, snapshot.date.closed);
+assert.deepEqual(currentConsolidation.status, snapshot.status);
+
 const pages = iterConceptFiles(bundle).map((path) => parseConcept(path, bundle));
 const byPath = new Map(pages.map((page) => [resolve(page.path), page]));
 const reached = new Set();
@@ -46,6 +60,7 @@ while (pending.length) {
   }
 }
 let sources = 0;
+const sourceHashes = {};
 for (const page of pages) {
   if (page.reserved !== null) continue;
   assert.ok(reached.has(resolve(page.path)), `Unreachable concept: ${page.cid}`);
@@ -53,6 +68,7 @@ for (const page of pages) {
   for (const source of page.frontmatter.sources) {
     const path = join(root, source.resource);
     assert.ok(existsSync(path) && statSync(path).isFile(), `Missing source: ${page.cid} → ${source.resource}`);
+    sourceHashes[source.resource] = hash(path);
     sources++;
   }
   // Complete historical source text preserves its dated locators; current prose is checked separately.
@@ -118,6 +134,7 @@ console.log(JSON.stringify({
   full_research_pages: Object.keys(manifest.research_concepts).length,
   concepts: pages.filter((page) => page.reserved === null).length,
   source_resources_checked: sources, packs: report.packs.map((pack) => pack.name),
+  source_hashes: sourceHashes,
   installed_files_compared: installed, errors: validation.errors.length, warnings: validation.warnings.length,
   owner_approval: loaded.value.doc.approved_at ?? 'unset', closure: loaded.value.doc.closed_at ?? 'unset',
 }, null, 2));

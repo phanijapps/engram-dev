@@ -8,7 +8,7 @@ not label unevaluated cases as passed.
 
 ## Critical gates (all must pass — zero tolerance)
 
-1. **Analysis-gated:** plan derives from docs/specs/<slug>/ artifacts;
+1. **Analysis-gated:** plan derives from specs/<slug>/ artifacts;
    Ready-now only; blocked slices never designed around; no invented
    answers to recorded questions.
 2. **Traceability:** every planned R → design section → task(s) →

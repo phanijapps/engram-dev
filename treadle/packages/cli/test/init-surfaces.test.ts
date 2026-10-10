@@ -2,7 +2,7 @@
  *  a temp HOME. Every install asserted end to end; the hook payload
  *  itself proven in both entries (script + extension shape). */
 import { describe, expect, it } from 'vitest';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import {
   chmodSync,
   existsSync,
@@ -351,17 +351,52 @@ describe('session-recall payload + wirings (T-1)', () => {
     expect(out).toMatch(/(work in flight|nothing in flight)/);
   });
 
-  it('claude-gate: not continue-shaped → allow; continue-shaped with one open → allow (gate never over-fires)', () => {
+  it('claude-gate allows specific requests and gates ambiguous continuation from isolated counts', () => {
     const hook = join(REPO, 'packages', 'cli', 'harness', 'hooks', 'session-recall.js');
-    const allow1 = execFileSync('node', [hook, '--claude-gate'], {
-      input: JSON.stringify({ prompt: 'write a poem', cwd: join(REPO, '..') }),
-      encoding: 'utf8',
-    });
-    expect(allow1).toBe('');
-    const allow2 = execFileSync('node', [hook, '--claude-gate'], {
-      input: JSON.stringify({ prompt: 'continue', cwd: join(REPO, '..') }),
-      encoding: 'utf8',
-    });
-    expect(allow2).toBe(''); // one open (guided-loop) → continue resolves
+    const project = mkdtempSync(join(tmpdir(), 'claude-gate-'));
+    const stub = join(project, 'cli-stub.mjs');
+    const report = (count: number) => {
+      const packs = Array.from({ length: count }, (_, index) => ({
+        name: `pack-${index}`,
+        stage: 'in_progress',
+        openQuestions: 0,
+        nextTask: null,
+        revision: 1,
+        lastEvidenceAt: null,
+      }));
+      writeFileSync(
+        stub,
+        '#!/usr/bin/env node\nconsole.log(' +
+          JSON.stringify(JSON.stringify({ root: project, packs, worktrees: [] })) +
+          ');\n',
+      );
+      chmodSync(stub, 0o755);
+    };
+    const run = (prompt: string) =>
+      spawnSync('node', [hook, '--claude-gate'], {
+        input: JSON.stringify({ prompt, cwd: project }),
+        encoding: 'utf8',
+        env: { ...process.env, HARNESS_CLI: stub },
+      });
+    try {
+      for (const count of [0, 1]) {
+        report(count);
+        const allowed = run('continue');
+        expect(allowed.status).toBe(0);
+        expect(allowed.stdout).toBe('');
+        expect(allowed.stderr).toBe('');
+      }
+      report(2);
+      const specific = run('write a poem');
+      expect(specific.status).toBe(0);
+      expect(specific.stderr).toBe('');
+      const ambiguous = run('continue');
+      expect(ambiguous.status).toBe(2);
+      expect(ambiguous.stderr).toContain('the hard gate');
+      expect(ambiguous.stderr).toContain('pack-0');
+      expect(ambiguous.stderr).toContain('pack-1');
+    } finally {
+      rmSync(project, { recursive: true, force: true });
+    }
   });
 });

@@ -1,14 +1,14 @@
 ---
 name: nodejs-craft
-description: Write clean, well-commented TypeScript/Node code — naming, functions, types, comment discipline. Use whenever creating or editing any .ts/.mts/.cts file, reviewing Node code, or answering "is this clean code" for TypeScript. Bakes in the rules from docs/research/nodejs-engineering-standards.md (R1–R15, R40). Triggers on "clean code", "refactor this module", "write the TS for", any TypeScript file edit.
+description: Write clean, well-commented TypeScript/Node code — naming, functions, types, comment discipline. Use whenever creating or editing any .ts/.mts/.cts file, reviewing Node code, or answering "is this clean code" for TypeScript. Bakes in the rules from wiki/research/nodejs-engineering-standards.md (R1–R15, R40). Triggers on "clean code", "refactor this module", "write the TS for", any TypeScript file edit.
 metadata:
-  - source: docs/research/nodejs-engineering-standards.md
+  - source: wiki/research/nodejs-engineering-standards.md
 ---
 
 # Node.js craft — clean code, clean comments
 
 Code is read twenty times more often than it is written. Every rule here serves the
-reader. The full rulebook is `docs/research/nodejs-engineering-standards.md`; this
+reader. The full rulebook is `wiki/research/nodejs-engineering-standards.md`; this
 skill is the part you apply at the keyboard.
 
 ## Before you write

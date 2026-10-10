@@ -72,4 +72,4 @@ corpus golden changes, external websites, and deletion of historical evidence.
 
 Ready now: discovery compatibility, physical migration, current knowledge and
 skill reconciliation, and local review handoff. Route: full plan, then execute
-its three tasks in order. No blocked slice needs an invented owner answer.
+its tasks in dependency order. No blocked slice needs an invented owner answer.

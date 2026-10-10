@@ -1,0 +1,40 @@
+{
+  "stopped_obsolete_server_pids": [
+    13865,
+    13881,
+    14022,
+    14038
+  ],
+  "launches": [
+    {
+      "pid": 172988,
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "library",
+        "../specs",
+        "--port",
+        "8788",
+        "--no-open"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "port": 8788
+    },
+    {
+      "pid": 172989,
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "library",
+        "../specs/archive/specs",
+        "--port",
+        "8789",
+        "--no-open"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "port": 8789
+    }
+  ]
+}

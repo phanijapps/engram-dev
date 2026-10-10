@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Execute one planned task's slice against its frozen context — the implementation stage of the SDD loop. Takes a T-id from a plan.md ready set, loads exactly the frozen context (compile query, wiki cids, exact refs — insufficient context stops and routes back instead of browsing), works inside the scope jail (no drive-by refactors), treats the task's verification expectation as the exit criterion (runs it, records verbatim evidence in the status ledger, never writes done without the observation), and closes with ledger update + commit + memory. Micro-decisions are allowed (two-way, recorded); requirement-level surprises route back to analyze/plan. Triggers are "implement T1", "do the next task", "execute this slice", "work the ready set". Not for planning (plan), analyzing (analyze), or verifying landed work (review).
+description: Execute one registered specpack task from its machine handout and frozen context. Run verification and admit actual evidence through do record. Use for implementing the next planned task, not analysis, planning, or independent review.
 ---
 
 # implement — one task, frozen context, observed evidence
@@ -58,7 +58,12 @@ skill's job is faithful execution + honest evidence — not re-deciding.
 
 ## 1. Select
 
-Read `docs/specs/<slug>/plan.md`: ready set, status ledger. Pick the
+Load the initiative's JSON pack first. Missing pack or unregistered tasks route
+back to `plan`; do not begin implementation from Markdown alone. Use
+`do next <packDir>` to obtain the machine handout and revision. Match that
+task to the explanatory Markdown plan instead of maintaining a second ready set.
+
+Read `specs/<slug>/plan.md`: ready set, status ledger. Pick the
 topologically first executable task. No ready tasks → stop and report
 the first unblock move (which Q/D/task gates it).
 
@@ -79,6 +84,14 @@ surprise. For spikes' follow-up tasks: probe code stays out or clearly
 marked throwaway — a spike that ships feature code failed.
 
 ## 4. Verify & close
+
+Record each executed expectation through `do record <packDir> --task <id>
+--result pass|fail --cmd "<executed command>" --exit <actual exit>
+--expected-revision <held revision> --by agent:<name>`. Re-read the pack after
+admission; the engine owns the resulting task state. Markdown observations
+reference this evidence. An agent may record its own execution but cannot invent
+owner approval or close the pack. Disclose failed repository gates even when a
+bounded task's distinct verification expectation passes.
 
 1. Run the verification expectation **as written**. Record the evidence
    row: command, outcome (verbatim/pinned), commit ref.

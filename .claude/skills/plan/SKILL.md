@@ -1,6 +1,6 @@
 ---
 name: plan
-description: Turn an analysis (from the analyze skill) into a technical design and an executable task plan — the design/planning stage of the SDD loop. Reads docs/specs/<slug>/ analysis artifacts, respects their Handoff (plans only Ready-now slices), grounds in the wiki before designing, produces design.md (approach, contracts, decisions with alternatives and reversibility) and plan.md (a task DAG where every task has an observable verification expectation, frozen context pointers, and real prerequisites), then hands the ready set to implement. Triggers are "plan the implementation", "technical design for X", "turn this spec into tasks", "break this down into a plan", "design the fix". Not for producing analysis artifacts (analyze), writing code (implement), or reviewing landed work (review).
+description: Turn SDD analysis into a technical design, a populated JSON specpack, and an executable task DAG. Register requirements, dependencies, verification expectations, and frozen context before implementation handoff. Use for planning an analyzed change, not investigation or execution.
 ---
 
 # plan — technical design + task DAG from analysis
@@ -13,14 +13,14 @@ scales with blast radius: the analysis's impact artifact already says
 whether you owe a full design or a paragraph.
 
 The gate: **plan consumes analysis, it does not re-do it.** Every design
-choice traces to an R/Q/A/D id from `docs/specs/<slug>/`. If you find
+choice traces to an R/Q/A/D id from `specs/<slug>/`. If you find
 yourself analyzing, stop — that is the analyze skill's job; run it and
 come back.
 
 ## 0. The planning contract
 
 1. **Analysis-gated.** Inputs are the initiative's artifacts under
-   `docs/specs/<slug>/` (read them all). Plan **only the Handoff's
+   `specs/<slug>/` (read them all). Plan **only the Handoff's
    Ready-now slices** unless the operator explicitly widens scope.
    Blocked slices may appear as placeholders marked `blocked-on: <Q/D
 id>` — never designed around with invented answers.
@@ -54,7 +54,7 @@ id>` — never designed around with invented answers.
 
 ## 1. Inputs & gate (read-only first)
 
-1. Locate `docs/specs/<slug>/`; read every artifact's **Handoff** block.
+1. Locate `specs/<slug>/`; read every artifact's **Handoff** block.
    No artifacts there → offer to run the analyze skill; a trivial
    one-liner may proceed as a **micro-plan** (single plan.md, mini-design
    section, stated rationale for skipping analysis).
@@ -92,6 +92,25 @@ acceptance until the owner signs.
 
 ## 4. Author the task DAG (assets/plan.tmpl.md)
 
+### Persist the machine plan
+
+Load `specs/<slug>/<slug>.json`; create it through `do init` if a legacy
+analysis lacks a pack. Keep Markdown as the design rationale and readable plan.
+The JSON pack owns executable requirements, decisions, designs, task dependencies,
+verification expectations, and frozen context. Register these before handoff.
+
+Use `do add decision` and `do add task` for the fields those commands expose.
+For remaining authored fields, use the existing core loader/writer API and check
+alignment with `do check`. Do not hand-set derived stages, evidence-driven task
+states, or human acceptance. Map prose IDs to canonical IDs explicitly when needed
+(for example, R1 → FR-1 and T1 → T-1).
+
+Before returning the ready set, `do check <packDir>` must succeed and
+`do where <workspace>` must discover the pack. An empty shell pack is not a
+completed plan: its tasks, dependencies, verification, and context must be present.
+Future questions outside the current slice remain follow-ups, rather than
+invented answers or unrelated closure blockers.
+
 Per task: goal (one line, slice-shaped) · implements (R/D refs) ·
 prereqs (task ids) · verification expectation (command/observation) ·
 size (S/M/L) · status (todo). Frozen context per task listed in its own
@@ -110,7 +129,7 @@ block. Then:
 1. Commit the artifacts — the git history is the durable record
    (project memory back-burnered, knowledge-engine decision D5).
 2. Normative discoveries ("new code in X must…") → `know findings
-propose wiki --source … --destination wiki/<concept>.md --kind …`,
+propose wiki <evidence> wiki/<concept>.md <kind> --rationale "…"`,
    never written as settled truth.
 3. Commit both artifacts. **Handoff**: ready set with per-task frozen
    context → `implement`; blocked set with owners → the analysis's

@@ -13,14 +13,14 @@ scales with blast radius: the analysis's impact artifact already says
 whether you owe a full design or a paragraph.
 
 The gate: **plan consumes analysis, it does not re-do it.** Every design
-choice traces to an R/Q/A/D id from `docs/specs/<slug>/`. If you find
+choice traces to an R/Q/A/D id from `specs/<slug>/`. If you find
 yourself analyzing, stop — that is the analyze skill's job; run it and
 come back.
 
 ## 0. The planning contract
 
 1. **Analysis-gated.** Inputs are the initiative's artifacts under
-   `docs/specs/<slug>/` (read them all). Plan **only the Handoff's
+   `specs/<slug>/` (read them all). Plan **only the Handoff's
    Ready-now slices** unless the operator explicitly widens scope.
    Blocked slices may appear as placeholders marked `blocked-on: <Q/D
 id>` — never designed around with invented answers.
@@ -54,7 +54,7 @@ id>` — never designed around with invented answers.
 
 ## 1. Inputs & gate (read-only first)
 
-1. Locate `docs/specs/<slug>/`; read every artifact's **Handoff** block.
+1. Locate `specs/<slug>/`; read every artifact's **Handoff** block.
    No artifacts there → offer to run the analyze skill; a trivial
    one-liner may proceed as a **micro-plan** (single plan.md, mini-design
    section, stated rationale for skipping analysis).
@@ -94,7 +94,7 @@ acceptance until the owner signs.
 
 ### Persist the machine plan
 
-Load `docs/specs/<slug>/<slug>.json`; create it through `do init` if a legacy
+Load `specs/<slug>/<slug>.json`; create it through `do init` if a legacy
 analysis lacks a pack. Keep Markdown as the design rationale and readable plan.
 The JSON pack owns executable requirements, decisions, designs, task dependencies,
 verification expectations, and frozen context. Register these before handoff.

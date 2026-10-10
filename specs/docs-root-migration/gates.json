@@ -1,0 +1,88 @@
+{
+  "observed_at": "2026-10-10T21:16:54.073191+00:00",
+  "gates": [
+    {
+      "name": "check",
+      "cmd": "pnpm check",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "coverage",
+      "cmd": "pnpm coverage",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "coverage.log"
+    },
+    {
+      "name": "corpus",
+      "cmd": "pnpm corpus:check",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "corpus-check.log"
+    },
+    {
+      "name": "brand",
+      "cmd": "pnpm brand:check",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "brand-check.log"
+    },
+    {
+      "name": "links",
+      "cmd": "pnpm links",
+      "cwd": "treadle",
+      "exit": 0,
+      "log": "links.log"
+    },
+    {
+      "name": "pack-alignment",
+      "cmd": "pnpm exec tsx packages/cli/src/main.ts do check ../specs/docs-root-migration",
+      "cwd": "treadle",
+      "exit": 0,
+      "violations": 0,
+      "gaps": 0
+    }
+  ],
+  "test_files": 24,
+  "tests_passed": 113,
+  "coverage": {
+    "lines": {
+      "total": 4552,
+      "covered": 3823,
+      "skipped": 0,
+      "pct": 83.98
+    },
+    "statements": {
+      "total": 4552,
+      "covered": 3823,
+      "skipped": 0,
+      "pct": 83.98
+    },
+    "functions": {
+      "total": 213,
+      "covered": 198,
+      "skipped": 0,
+      "pct": 92.95
+    },
+    "branches": {
+      "total": 1673,
+      "covered": 1252,
+      "skipped": 0,
+      "pct": 74.83
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "thresholds": {
+    "lines": 75,
+    "functions": 75,
+    "statements": 75,
+    "branches": 65
+  }
+}

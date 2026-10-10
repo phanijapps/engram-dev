@@ -86,13 +86,17 @@ must cite the independent review and current re-verification; never infer it
 from task completion or owner intent. This record does not accept decisions,
 approve the spec, or close the pack. Keep any failed repository gates explicit.
 
-1. Write `docs/specs/<slug>/review-<n>.md` from the template: per-task
+1. Write `specs/<slug>/review-<n>.md` from the template: per-task
    verdicts, findings with severity + route, re-run log (verbatim).
 2. Append routed fixes as tasks in plan.md (T-next rows, prereqs set) —
    status `todo`, owned by the next `implement` pass.
 3. Milestone note in the plan ledger + commit — the review artifact is
    the durable record (project memory back-burnered, knowledge-engine D5).
-4. Commit review artifact + plan update. Handoff: all-pass → slice
+4. At an owner handoff, start or reuse `do library <workspace>/specs` and open
+   the pack in the browser (`#/slug/review`). Report the actual URL and any
+   launch failure. A JSON record alone does not open a surface. Keep acceptance,
+   approval, and closure as separate owner acts.
+5. Commit review artifact + plan update. Handoff: all-pass → slice
    complete, evidence current (say until which commit); else → next
    ready set after routed tasks.
 

@@ -46,3 +46,11 @@ Source evidence: feature.md, impact-roots.md, relocations.json, discovery source
 and test, parse.ts, link-check.mjs, and the current documentation map.
 The existing Python-only freshness scanner remains a disclosed limitation.
 Historical sessions remain unknown. No code/schema change is made to reconstruct them.
+
+## Open-record supersession after review
+
+The still-open consolidation pack contained a rejected root approach. Its exact
+revision-23 JSON is preserved under `specs/archive/docs-root-migration` and the
+original-path map points there. The live pack receives a revision-24 supersession
+annotation; decisions, approval, task evidence, review, and closure are unchanged.
+Closed packs and every mapped original retain their exact bytes.

@@ -4,7 +4,7 @@
   "description": "Consolidate workspace knowledge and preserve retrospectives",
   "date": {
     "created": "2026-10-10T20:28:49.896Z",
-    "updated": "2026-10-10T21:01:01Z",
+    "updated": "2026-10-10T21:21:06.634Z",
     "approved": {
       "at": "2026-10-10T20:40:25Z",
       "by": "human:owner"
@@ -59,6 +59,11 @@
       "ref": "owner-correction-review.md",
       "type": "text/markdown",
       "description": "Actual independent review and current verification of owner-directed withdrawal"
+    },
+    "pre-root-migration-snapshot": {
+      "ref": "../archive/docs-root-migration/documentation-consolidation-revision-23.json",
+      "type": "application/json",
+      "description": "Exact revision23 snapshot before supersession annotation"
     }
   },
   "spec": {
@@ -212,7 +217,7 @@
         ]
       }
     ],
-    "approach": "Retain docs/specs as canonical machine records; connect wiki initiative projections and dated retrospectives. Backfill the omitted machine record and explicit skill handoffs."
+    "approach": "Historical consolidation approach superseded by specs/docs-root-migration: executable work now lives in root specs; current knowledge and full research live in wiki. Original revision-23 approach and evidence are preserved in specs/archive/docs-root-migration/documentation-consolidation-revision-23.json. Decisions, owner approval, task evidence, and closure are unchanged by this annotation."
   },
   "tasks": [
     {
@@ -485,5 +490,5 @@
     "notes": "Backfill created in response to the owner’s missing-JSON question. No historical approval, closure, or handout is invented."
   },
   "format": "specpack/0.3",
-  "revision": 23
+  "revision": 24
 }

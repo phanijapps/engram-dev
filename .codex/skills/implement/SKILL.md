@@ -63,7 +63,7 @@ back to `plan`; do not begin implementation from Markdown alone. Use
 `do next <packDir>` to obtain the machine handout and revision. Match that
 task to the explanatory Markdown plan instead of maintaining a second ready set.
 
-Read `docs/specs/<slug>/plan.md`: ready set, status ledger. Pick the
+Read `specs/<slug>/plan.md`: ready set, status ledger. Pick the
 topologically first executable task. No ready tasks → stop and report
 the first unblock move (which Q/D/task gates it).
 

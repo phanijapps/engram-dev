@@ -6,9 +6,9 @@ status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {id: pack, resource: specs/docs-root-migration/docs-root-migration.json}
-  - {id: design, resource: specs/docs-root-migration/design.md}
-  - {id: map, resource: specs/docs-root-migration/relocations.json}
+  - { id: pack, resource: specs/docs-root-migration/docs-root-migration.json }
+  - { id: design, resource: specs/docs-root-migration/design.md }
+  - { id: map, resource: specs/docs-root-migration/relocations.json }
 ---
 
 # Intent and work record
@@ -29,3 +29,5 @@ Source: `specs/docs-root-migration/relocations.json:1`.
 Read [the authority map](/project/documentation-map.md),
 [research](/research/index.md), and [setup](/project/setup.md).
 The current pack owns completion and acceptance; this page does not infer closure.
+
+Read [this session’s retrospective](/retrospectives/2026-10-10-docs-root-migration.md).

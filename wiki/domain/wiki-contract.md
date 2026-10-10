@@ -6,12 +6,12 @@ status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {"id": "s1", "resource": "treadle/packages/knowledge/src/parse.ts"}
-  - {"id": "s2", "resource": "treadle/packages/knowledge/src/validate.ts"}
-  - {"id": "s3", "resource": "treadle/packages/knowledge/src/links.ts"}
-  - {"id": "s4", "resource": "treadle/packages/knowledge/src/stamp.ts"}
-  - {"id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts"}
-  - {"id": "s6", "resource": "AGENTS.md"}
+  - { "id": "s1", "resource": "treadle/packages/knowledge/src/parse.ts" }
+  - { "id": "s2", "resource": "treadle/packages/knowledge/src/validate.ts" }
+  - { "id": "s3", "resource": "treadle/packages/knowledge/src/links.ts" }
+  - { "id": "s4", "resource": "treadle/packages/knowledge/src/stamp.ts" }
+  - { "id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts" }
+  - { "id": "s6", "resource": "AGENTS.md" }
 ---
 
 # Bundle
@@ -41,6 +41,13 @@ New descriptive types include Initiative, Retrospective, Project, and Research.
 The engine accepts producer-defined nonempty type strings.
 Source: `treadle/packages/knowledge/src/validate.ts:162`.
 These conventions do not introduce machine spec statuses.
+
+# Contract assets
+
+The vendored [OKF 0.2 contract](../assets/contracts/OKF_SPEC_v0.2.txt) and
+[specpack JSON schema](../assets/contracts/specpack.schema.json) live in wiki
+assets. Their original bytes are preserved by the migration map.
+Source: `specs/docs-root-migration/relocations.json:1`.
 
 # State and trust
 
