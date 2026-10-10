@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-07
 updated: 2026-10-08
 title: Okf-only engine (accepted 2026-10-07)
-description: 'ACCEPTED. The engine is okf alone; engine/memex and engine/core were removed. A future memex is a consumer layer on top, never a plane inside.'
+description: "ACCEPTED. The engine is okf alone; engine/memex and engine/core were removed. A future memex is a consumer layer on top, never a plane inside."
 sources: [{ id: src, resource: docs/archive/specs/okf-only-engine/design.md }]
 tags: [decision, architecture, accepted]
 ---

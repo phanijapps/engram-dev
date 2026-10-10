@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T15:16:08Z",
+    "updated": "2026-10-10T15:17:53Z",
     "approved": {
       "at": "2026-10-10T15:01:44Z",
       "by": "human:owner"
@@ -502,7 +502,7 @@
       "id": "T-4",
       "title": "The repo sweep: residue gone, CI unbroken, links gate",
       "detail": "Delete engine/ (untracked pyc/cache residue, 246 files) and graphify-out/ (untracked); .gitignore rules so residue cannot return; fix .github/workflows/ci.yml with defaults.run.working-directory: treadle; author scripts/link-check.mjs + pnpm links gate over live surfaces (archive excluded by design). Add .gitattributes eol=lf (hash stability across the CI matrix); FR-11 completes only on a green post-push matrix run.",
-      "status": "todo",
+      "status": "done",
       "phase": "core",
       "satisfies": [
         "FR-10",
@@ -519,7 +519,16 @@
       "verify": {
         "cmd": "test ! -d ../engine && test ! -d ../graphify-out && grep -q 'working-directory: treadle' ../.github/workflows/ci.yml && grep -q 'cache-dependency-path: treadle/pnpm-lock.yaml' ../.github/workflows/ci.yml && grep -qE 'engine/|graphify-out' ../.gitignore && node scripts/link-check.mjs && git -C .. ls-files engine graphify-out | wc -l | grep -qx 0",
         "expect": "engine/ and graphify-out/ gone (disk + git); ci.yml carries working-directory AND cache-dependency-path (both needed — defaults.run does not reach uses: steps); .gitignore blocks return; links gate exits 0 over live surfaces. FR-11 evidence completed only after one full CI matrix run goes green post-push."
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "test ! -d ../engine && test ! -d ../graphify-out && node scripts/link-check.mjs",
+          "exit": 0,
+          "at": "2026-10-10T15:17:53Z",
+          "by": "agent:pi",
+          "notes": "The sweep: engine/ (246 untracked residue files) + graphify-out/ deleted, .gitignore blocks return; ci.yml carries defaults.run.working-directory: treadle AND setup-node cache-dependency-path (R1: defaults do not reach uses: steps); links gate born (scripts/link-check.mjs + pnpm links): 70 live files, every markdown link resolves — vendored OKF spec excluded on purpose (its links document the grammar), archive excluded by design, wiki-root links resolve against wiki/. Retired engine pages superseded into docs/archive/wiki-systems/ with banners (Q-4), live references re-pointed at the TS truth, indexes swept. FR-11 completes on the first green post-push matrix run (recorded when observed). Verified unpiped: check=0, links=0, brand=0."
+        }
+      ]
     },
     {
       "id": "T-1",
@@ -717,5 +726,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 34
+  "revision": 36
 }

@@ -1,11 +1,20 @@
+> **SUPERSEDED — the python era.** This page describes the retired
+> python engine (preserved at git tag `python-final`). The live truth
+> lives in `wiki/systems/treadle.md` and
+> `wiki/systems/sdd-harness-architecture.md`. Moved here by the
+> fresh-harness sweep (Q-4, 2026-10-10).
+
 ---
+
 type: System
 status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: 'loom: the loop engine of the SDD harness'
 description: 'The execution engine: a schema-backed spine (sdd.json) is the machine authority, the deterministic state machine moves tasks in spine mode, specpack 0.3 is the native format. Internal architecture, the task loop call graph, criticality tiers, and the dead code found.'
+
 # sources: retired with the python engines — evidence preserved at git tag python-final
+
 tags: [system, loom, engine, architecture, call-graph, criticality]
 ---
 
@@ -19,7 +28,6 @@ self-hosted golden corpus. The python engine remains as the frozen
 witness and the wiki-ritual driver until the cutover completes; see
 [the retirement board](treadle.md). The description below is the
 historical truth of what this engine was and taught.
-
 
 okf knows. loom does. loom runs one initiative as a loop: the spine
 (`sdd.json`, or a specpack json) holds nodes, relations, task states,
@@ -160,15 +168,15 @@ calls `validate` and ignores the return). Schema errors surface in
 `alignment()` (`specpack.py:75`) reports violations, sorted, plus a
 coverage report. A6 is a record-time rule, not part of `alignment`. [^s2]
 
-| Check | Meaning | Where |
-|---|---|---|
-| A1 | ids unique across all families | `specpack.py:79` |
-| A2 | references resolve (needs, implements, satisfies, accepts, honors, addresses, resolved_by, resolves) | `specpack.py:93` |
-| A3 | task `needs` graph is acyclic | `specpack.py:123` |
-| A4 | every task aligns to a requirement (directly, or via a design that addresses one) | `specpack.py:143` |
-| A5 | coverage report: which FR, AC, and designs have no tasks (reported, never blocking) | `specpack.py:149` |
-| A6 | a pass needs at least one executed command and every command must exit 0 (enforced in `record`, not in `alignment`) | `specpack.py:300` |
-| A7 | accepted decisions carry `accepted_by: human:...` | `specpack.py:139` |
+| Check | Meaning                                                                                                             | Where             |
+| ----- | ------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| A1    | ids unique across all families                                                                                      | `specpack.py:79`  |
+| A2    | references resolve (needs, implements, satisfies, accepts, honors, addresses, resolved_by, resolves)                | `specpack.py:93`  |
+| A3    | task `needs` graph is acyclic                                                                                       | `specpack.py:123` |
+| A4    | every task aligns to a requirement (directly, or via a design that addresses one)                                   | `specpack.py:143` |
+| A5    | coverage report: which FR, AC, and designs have no tasks (reported, never blocking)                                 | `specpack.py:149` |
+| A6    | a pass needs at least one executed command and every command must exit 0 (enforced in `record`, not in `alignment`) | `specpack.py:300` |
+| A7    | accepted decisions carry `accepted_by: human:...`                                                                   | `specpack.py:139` |
 
 Determinism rules for specpack: every reported list is sorted; slices
 render canonically with sha256 digests; the only clock in the system
@@ -176,14 +184,14 @@ lives inside evidence rows the caller supplies. [^s1]
 
 # Criticality register
 
-| Module | Tier | Reason |
-|---|---|---|
-| `spine.py` + `schemas/spine.schema.json` | CRITICAL | Single load and save path for `sdd.json`. Fail-closed load. A corrupt spine stops the loop by design. |
-| `schemas/specpack.schema.json` | CRITICAL | The native format contract. Validated by `specpack.py` at check time. |
-| `machine.py` | CRITICAL | The only spine-mode code that moves task states. A defect here breaks the loop contract. |
-| `specpack.py` | CORE | Native mode: slice resolver with full bodies, pin + rebase, alignment checks A1 to A5 and A7, the A6 record rule, and its own state moves. |
-| `cli.py` | CORE | Dispatch and profiles. Thin by design. |
-| `templates.py` | PERIPHERAL | Three stub files for `loom init`. Referenced only at `cli.py:85`. |
+| Module                                   | Tier       | Reason                                                                                                                                     |
+| ---------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `spine.py` + `schemas/spine.schema.json` | CRITICAL   | Single load and save path for `sdd.json`. Fail-closed load. A corrupt spine stops the loop by design.                                      |
+| `schemas/specpack.schema.json`           | CRITICAL   | The native format contract. Validated by `specpack.py` at check time.                                                                      |
+| `machine.py`                             | CRITICAL   | The only spine-mode code that moves task states. A defect here breaks the loop contract.                                                   |
+| `specpack.py`                            | CORE       | Native mode: slice resolver with full bodies, pin + rebase, alignment checks A1 to A5 and A7, the A6 record rule, and its own state moves. |
+| `cli.py`                                 | CORE       | Dispatch and profiles. Thin by design.                                                                                                     |
+| `templates.py`                           | PERIPHERAL | Three stub files for `loom init`. Referenced only at `cli.py:85`.                                                                          |
 
 # Dead code (found 2026-10-08)
 
@@ -201,13 +209,23 @@ docs. Every caller uses `spine.save` directly. [^d1]
 # Evidence
 
 [^l1]: `engine/loom/src/loom_kit/__init__.py` module docstring; `machine.py` docstrings (implementation-supported).
+
 [^l2]: `engine/loom/src/loom_kit/cli.py` subparsers; `engine/loom/pyproject.toml` `[project.scripts]`; `__init__.py` PROFILES (observed).
+
 [^l3]: `engine/loom/src/loom_kit/spine.py`: `_LOCK = threading.Lock()`, `save`, `load`, `MiniValidator` "FAIL-CLOSED" docstring (observed).
+
 [^m1]: AST module graph over `engine/loom/src`, 2026-10-08; `wc -l` per module (observed).
+
 [^t1]: `engine/loom/src/loom_kit/machine.py:175-226` `next_task` (implementation-supported).
+
 [^t2]: `engine/loom/src/loom_kit/machine.py:229-306` `record`; stall limit logic `_fail_streak` at `:309` (implementation-supported).
+
 [^t3]: `engine/loom/src/loom_kit/machine.py:286` assigns SUCCEEDED on pass; `:267` accepts VERIFYING as input; grep for `= "VERIFYING"` returns nothing (observed).
+
 [^s1]: `engine/loom/src/loom_kit/specpack.py:1-6` module docstring; STATES and STALL_LIMIT at `:20-21` (observed).
+
 [^s2]: `engine/loom/src/loom_kit/specpack.py:75-172` `alignment` branches (observed).
+
 [^s3]: `engine/loom/src/loom_kit/specpack.py:52` discards `validate` result; `:278-318` specpack `record` moves todo, done, blocked (observed).
+
 [^d1]: Definition at `engine/loom/src/loom_kit/machine.py:321`; package-wide and repo-wide grep for `persist` against loom returns the definition only (observed).

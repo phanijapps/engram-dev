@@ -3,9 +3,17 @@ type: System
 status: stable
 created: 2026-10-10
 updated: 2026-10-10
-title: 'treadle: the TypeScript harness (the active engine)'
-description: 'The port of both planes into one strict-TS workspace: core (specpack admission), knowledge (bundle), web (room + library), cli (do + know), conformance (the golden corpus). The python engines are the frozen witness the corpus proves equal.'
-sources: [{ id: root, resource: treadle/package.json }, { id: core, resource: treadle/packages/core/src/index.ts }, { id: knowledge, resource: treadle/packages/knowledge/src/index.ts }, { id: web, resource: treadle/packages/web/src/servers.ts }, { id: cli, resource: treadle/packages/cli/src/main.ts }, { id: corpus, resource: treadle/conformance/generators/gen_corpus.ts }]
+title: "treadle: the TypeScript harness (the active engine)"
+description: "The port of both planes into one strict-TS workspace: core (specpack admission), knowledge (bundle), web (room + library), cli (do + know), conformance (the golden corpus). The python engines are the frozen witness the corpus proves equal."
+sources:
+  [
+    { id: root, resource: treadle/package.json },
+    { id: core, resource: treadle/packages/core/src/index.ts },
+    { id: knowledge, resource: treadle/packages/knowledge/src/index.ts },
+    { id: web, resource: treadle/packages/web/src/servers.ts },
+    { id: cli, resource: treadle/packages/cli/src/main.ts },
+    { id: corpus, resource: treadle/conformance/generators/gen_corpus.ts },
+  ]
 tags: [system, treadle, typescript, port, corpus, white-label]
 ---
 
@@ -23,14 +31,14 @@ the frozen packs. [^t2]
 
 # The packages
 
-| Package | Job | Notes |
-|---|---|---|
-| `@treadle/core` | The loop plane: specpack normalize/emit (canonical bytes), derive, admission (answer/unknown/choice/approve/record/close/next), drift pins, the event journal | 100% line coverage at the roots; refusals are typed values, never throws |
-| `@treadle/knowledge` | The knowledge plane: frontmatter parse (PyYAML parity: last-wins dup keys, 1.1 scalars), links with realpath containment, validate (§11: warnings never block), progressive read, weighted search, findings ledger, fingerprints + anchors, freshness stamp | the OKF 0.2 conformance chain |
-| `@treadle/web` | The room (born-spec ceremony, exits on approval) and the library (every pack, standing) | the pages are the portable assets, engine-name-free by contract; CSP-pinned |
-| `@treadle/cli` | `treadle do …` and `treadle know …` | two pedals, one loom |
-| `@treadle/conformance` | The golden corpus (37 cases / 61 golden files) + the runner | the contract arbiter |
-| `@treadle/brand` | The white-label fence: the ONLY home of the name | `pnpm brand:set` rebrands; `brand:check` guards the fence |
+| Package                | Job                                                                                                                                                                                                                                                         | Notes                                                                       |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `@treadle/core`        | The loop plane: specpack normalize/emit (canonical bytes), derive, admission (answer/unknown/choice/approve/record/close/next), drift pins, the event journal                                                                                               | 100% line coverage at the roots; refusals are typed values, never throws    |
+| `@treadle/knowledge`   | The knowledge plane: frontmatter parse (PyYAML parity: last-wins dup keys, 1.1 scalars), links with realpath containment, validate (§11: warnings never block), progressive read, weighted search, findings ledger, fingerprints + anchors, freshness stamp | the OKF 0.2 conformance chain                                               |
+| `@treadle/web`         | The room (born-spec ceremony, exits on approval) and the library (every pack, standing)                                                                                                                                                                     | the pages are the portable assets, engine-name-free by contract; CSP-pinned |
+| `@treadle/cli`         | `treadle do …` and `treadle know …`                                                                                                                                                                                                                         | two pedals, one loom                                                        |
+| `@treadle/conformance` | The golden corpus (37 cases / 61 golden files) + the runner                                                                                                                                                                                                 | the contract arbiter                                                        |
+| `@treadle/brand`       | The white-label fence: the ONLY home of the name                                                                                                                                                                                                            | `pnpm brand:set` rebrands; `brand:check` guards the fence                   |
 
 # The corpus: frozen witness model
 
@@ -60,7 +68,11 @@ port-or-drop decisions. [^t5]
 # Sources
 
 [^t1]: The workspace map: `treadle/package.json` and `pnpm-workspace.yaml`.
+
 [^t2]: The naming analysis with registry evidence: `docs/research/harness-naming.md`.
+
 [^t3]: The equality proof commit and the generator: `treadle/conformance/generators/gen_corpus.ts`.
+
 [^t4]: CI: `treadle/.github/workflows/ci.yml`; thresholds: `treadle/vitest.config.ts`.
+
 [^t5]: The debt ledger, owned and dated: `treadle/DEBT.md`.

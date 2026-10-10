@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: The wiki contract — bundle rules every harness repo follows
-description: 'The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections.'
+description: "The concrete rules an okf wiki bundle follows: location, state dir, freshness stamp, findings ledger, managed vs curated sections."
 # sources: retired with the python engines — evidence preserved at git tag python-final
 tags: [contract, okf, conventions]
 ---

@@ -4,7 +4,7 @@ status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: The SDD loop synthesis — three research lines, one loop
-description: 'What three 2026 papers agree on, where they tension, and what our harness loop should adopt. Arming the loop redesign (proposals P-1 to P-5, pending owner decisions Q1/Q2).'
+description: "What three 2026 papers agree on, where they tension, and what our harness loop should adopt. Arming the loop redesign (proposals P-1 to P-5, pending owner decisions Q1/Q2)."
 sources: [{ id: src, resource: docs/archive/specs/sdd-research/analysis.md }]
 tags: [research, sdd, loop, synthesis]
 ---

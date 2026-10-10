@@ -2,6 +2,10 @@ name: ci
 on:
   push: { branches: [main] }
   pull_request:
+defaults:
+  run:
+    working-directory: treadle
+
 jobs:
   check:
     strategy:
@@ -15,7 +19,10 @@ jobs:
       - uses: pnpm/action-setup@v4
         with: { version: 9 }
       - uses: actions/setup-node@v4
-        with: { node-version: '${{ matrix.node }}', cache: pnpm }
+        with:
+          node-version: '${{ matrix.node }}'
+          cache: pnpm
+          cache-dependency-path: treadle/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm coverage

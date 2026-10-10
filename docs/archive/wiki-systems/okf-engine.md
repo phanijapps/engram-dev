@@ -1,11 +1,20 @@
+> **SUPERSEDED — the python era.** This page describes the retired
+> python engine (preserved at git tag `python-final`). The live truth
+> lives in `wiki/systems/treadle.md` and
+> `wiki/systems/sdd-harness-architecture.md`. Moved here by the
+> fresh-harness sweep (Q-4, 2026-10-10).
+
 ---
+
 type: System
 status: stable
 created: 2026-10-08
 updated: 2026-10-08
 title: 'okf: the engine of the SDD harness'
 description: 'The knowledge engine: repository in, anchored searchable knowledge out. Internal architecture in two layers, the module call graph, criticality tiers, and the dead code and stale docs found.'
+
 # sources: retired with the python engines — evidence preserved at git tag python-final
+
 tags: [system, okf, engine, architecture, call-graph, criticality]
 ---
 
@@ -19,7 +28,6 @@ self-hosted golden corpus. The python engine remains as the frozen
 witness and the wiki-ritual driver until the cutover completes; see
 [the retirement board](treadle.md). The description below is the
 historical truth of what this engine was and taught.
-
 
 okf turns a repository into an OKF bundle of anchored, searchable
 knowledge. It gives agents the trust machinery that keeps that
@@ -106,14 +114,14 @@ pipeline. That is why they are CRITICAL. [^m2]
 
 # Criticality register
 
-| Module | Tier | Reason |
-|---|---|---|
-| `core.parse`, `core.links`, `core.model` | CRITICAL | Bundle read and write path. Highest fan-in. |
-| `code.indexer` | CRITICAL | Pipeline owner: discovery to render, plus summaries and pruning. |
-| `core.stamp`, `core.findings` | CRITICAL | Trust contract: freshness and normative acceptance. |
-| `core.validate`, `core.search`, `core.context`, `core.fingerprints`, `core.status` | CORE | Health, retrieval, drift detection. |
-| `code.discovery`, `code.render`, `code.semantic`, `code.treesitter.*` | CORE | Pipeline stages. |
-| `core.templates`, `core.index`, `code.paths`, `code.managed` | PERIPHERAL | Scaffolding and layout. |
+| Module                                                                             | Tier       | Reason                                                           |
+| ---------------------------------------------------------------------------------- | ---------- | ---------------------------------------------------------------- |
+| `core.parse`, `core.links`, `core.model`                                           | CRITICAL   | Bundle read and write path. Highest fan-in.                      |
+| `code.indexer`                                                                     | CRITICAL   | Pipeline owner: discovery to render, plus summaries and pruning. |
+| `core.stamp`, `core.findings`                                                      | CRITICAL   | Trust contract: freshness and normative acceptance.              |
+| `core.validate`, `core.search`, `core.context`, `core.fingerprints`, `core.status` | CORE       | Health, retrieval, drift detection.                              |
+| `code.discovery`, `code.render`, `code.semantic`, `code.treesitter.*`              | CORE       | Pipeline stages.                                                 |
+| `core.templates`, `core.index`, `code.paths`, `code.managed`                       | PERIPHERAL | Scaffolding and layout.                                          |
 
 # Dead code and stale docs (found 2026-10-08)
 
@@ -142,9 +150,15 @@ layer on top, never a plane inside. [^n1]
 # Evidence
 
 [^c1]: `engine/okf/okf_kit/cli.py` `_dispatch`, `_cmd_*` handlers; `engine/okf/pyproject.toml` `[project.scripts]` (observed).
+
 [^c2]: `engine/okf/okf_kit/cli.py:383-397` `_cmd_code_index` imports `index_codebase` and `write_freshness_stamp`; `grep stamp indexer.py` returns nothing (observed).
+
 [^m1]: `engine/okf/okf_kit/core/fingerprints.py:44`: `from okf_kit.code.semantic import _SKIP_DIRS` (function-local import, observed). AST import scan, 2026-10-08: this is the only core-to-code edge.
+
 [^m2]: AST module graph, 2026-10-08: in-degrees and CLI reachability, cross-checked with `wiki/code/**` "Used by" sections (implementation-supported).
+
 [^d1]: Definition at `engine/okf/okf_kit/code/discovery.py:201`; package-wide and repo-wide grep for `language_help` returns the definition only (observed).
+
 [^d2]: `engine/okf/okf_kit/__init__.py:1-7`; `engine/okf/okf_kit/core/__init__.py:4`; `engine/okf/pyproject.toml:41-42` (observed).
+
 [^n1]: owner-declared non-goal, 2026-10-07 (declared); `wiki/domain/policy-no-session-capture-in-engine.md`.

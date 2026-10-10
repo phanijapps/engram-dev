@@ -1,7 +1,7 @@
 ---
 type: BusinessRule
 title: A declined finding is never re-proposed; terminal states are immutable
-description: 'The findings ledger refuses proposals at a declined (source, destination, kind) key, and accepted/declined findings can never change state again — the suggestion box cannot be worn down.'
+description: "The findings ledger refuses proposals at a declined (source, destination, kind) key, and accepted/declined findings can never change state again — the suggestion box cannot be worn down."
 status: stable
 created: 2026-10-07
 updated: 2026-10-07
@@ -16,12 +16,15 @@ A finding that was **declined** is dead at its key: re-proposing the same
 `refused: true` and never creates a new proposal. A **resolved** finding
 (accepted or declined) is terminal — resolving it again raises.
 
-[^f1]: `engine/okf/okf_kit/core/findings.py:120-141` — `propose_finding`
-returns the existing finding untouched and flags `refused` when its status
-is `declined`.
-[^f2]: `engine/okf/okf_kit/core/findings.py:144-158` — `resolve_finding`
-raises `FindingsError` for already-terminal findings, unknown ids, and
-invalid decisions.
+[^f1]:
+    `engine/okf/okf_kit/core/findings.py:120-141` — `propose_finding`
+    returns the existing finding untouched and flags `refused` when its status
+    is `declined`.
+
+[^f2]:
+    `engine/okf/okf_kit/core/findings.py:144-158` — `resolve_finding`
+    raises `FindingsError` for already-terminal findings, unknown ids, and
+    invalid decisions.
 
 # Enforcement
 
