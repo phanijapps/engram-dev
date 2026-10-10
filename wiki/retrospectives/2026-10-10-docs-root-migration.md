@@ -69,9 +69,9 @@ This retrospective covers observations from this session. It does not infer
 past sessions or restore the four withdrawn historical interpretations.
 Source: `specs/docs-root-migration/feature.md:1`.
 
-The owner explicitly selected root specs and removal of docs. Asset/archive
-placement and the legacy-only discovery fallback remain proposed decisions in
-the machine pack; owner approval and closure remain unset.
+At this report's initial snapshot, the owner selected root specs and removal of docs.
+Asset placement and the legacy-only discovery fallback were still proposed.
+The completion supplement below records the later owner acts.
 Source: `specs/docs-root-migration/docs-root-migration.json:1`.
 
 Wiki freshness still compares HEAD, and its fingerprint scanner still selects
@@ -83,3 +83,10 @@ Sources: `treadle/packages/knowledge/src/fingerprints.ts:54`;
 
 Read [the initiative](/initiatives/docs-root-migration.md) and
 [the authority map](/project/documentation-map.md).
+
+# Owner completion supplement
+
+The owner later accepted D-2 and D-3 and finished the spec through the library.
+Revision 23 records completion by human:owner at 2026-10-10T22:38:40Z.
+This supplements the initial report. It does not reconstruct an earlier session.
+Source: `specs/docs-root-migration/docs-root-migration.json:1`.

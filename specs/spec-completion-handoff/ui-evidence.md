@@ -13,7 +13,7 @@ The experience-design pack is absent. The approved owner-flow.md supplies the jo
 | states | Loading, content, partial, error, disabled, success, keyboard-only, reduced-motion, high-zoom reflow, first-run, blocked and destructive-confirmation. DOM tests exercise stale writes and retry. Permission denial appears as an error. |
 | screenshots | Twelve captures in ui-captures; the five required metadata fields are in ui-browser-results.json. |
 | inspection observations | completed / pass. All twelve captures were viewed. The owner control remains readable at rest. The phase list remains readable after scrolling. A sticky list covered the phase labels at 601 pixels; removing sticky positioning in the two-column layout fixed it. Captures wait for document loading and two animation frames. No unresolved occlusion or top clipping was seen. |
-| a11y result | axe-core: zero WCAG 2.0 and 2.1 A/AA violations in light and dark themes. Target Size 2.5.8: owner controls have at least 32px CSS height; the Start button measures 178.25 by 34.5px. Focus Appearance 2.4.13 AAA enhancement: a 3px primary outline; keyboard Start returns focus to the updated heading. Primary outline contrast against the local surfaces exceeds 3:1 in both themes. This is not a complete WCAG 2.2 AA audit. The remaining AA gap is 2.4.11, 2.5.7, 3.2.6, 3.3.7 and 3.3.8. |
+| a11y result | axe-core: zero WCAG 2.0 and 2.1 A/AA violations in light and dark themes. Target Size 2.5.8: owner controls have at least 32px CSS height; the Start button measures 178.25 by 34.5px. Focus Appearance 2.4.13 AAA enhancement: a 3px primary outline; keyboard Start returns focus to the updated heading. Measured text contrast is 7.44:1 in light and 8.97:1 in dark. Focus contrast is 6.70:1 in light and 7.91:1 in dark. This is not a complete WCAG 2.2 AA audit. The remaining AA gap is 2.4.11, 2.5.7, 3.2.6, 3.3.7 and 3.3.8. |
 | perf result | Existing local assets retained; no new runtime dependency. Field CWV and Lighthouse not measured. |
 | console/network result | No page errors. Recorded requests are local library routes and assets. No third-party calls. |
 | analytics events | The disposable fixture records the keyboard Start act in the pack and workflow journal. No remote analytics. |
@@ -30,3 +30,11 @@ The static HTML passes html-validate 11.16.2 with standard and a11y presets.
 The behavioral proof is workflow-ui.test.ts and the browser result file.
 Use ui-fixture.mts with tsx to start a fresh disposable library.
 verify-ui.cjs takes its URL and requires PLAYWRIGHT_MODULE, CHROMIUM_PATH and AXE_SCRIPT.
+
+## Contrast follow-up
+
+An at-rest probe found white text on the old dark cyan gradient.
+The automated color check returned no violation for that gradient.
+The primary button now uses the existing primary and background tokens.
+verify-ui.cjs measures the actual solid colors and asserts their contrast.
+The complete capture matrix and keyboard proof passed again.

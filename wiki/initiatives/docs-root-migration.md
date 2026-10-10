@@ -32,10 +32,21 @@ The current pack owns completion and acceptance; this page does not infer closur
 
 Read [this session’s retrospective](/retrospectives/2026-10-10-docs-root-migration.md).
 
-# Later owner approval and control gap
+# Dated approval and control gap
 
-The owner approval landed at revision 20. D-2 and D-3 remain proposed; the
-pack is active with no closure. The owner challenged the earlier execution of
+At revision 20, the owner approval was recorded. D-2 and D-3 were still proposed;
+the pack was active without closure. The owner challenged the earlier execution of
 these proposed decisions. The resulting analysis is a separate initiative.
 Source: `specs/spec-completion-handoff/probe.json:1`.
 Read [the owner-control analysis](/initiatives/spec-completion-handoff.md).
+
+# Owner completion supplement
+
+The canonical record now contains accepted D-2 and D-3, each attributed to human:owner.
+The owner finished the spec at 2026-10-10T22:38:40Z.
+Revision 23 records lifecycle complete and deliverable delivered.
+The browser owner action supplies the completion record; no agent closure was inferred.
+Source: `specs/docs-root-migration/docs-root-migration.json:1`.
+
+Observed pack SHA-256: `45ff83511b8da6045c215c7368357a6e1c1ae7cd63aff496f1dbcef4a27b72b0`.
+This is a dated record observation, not a new task verification run.

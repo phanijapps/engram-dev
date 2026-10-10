@@ -9,7 +9,7 @@ fs.mkdirSync(output, { recursive: true });
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH, headless: true, args: ['--no-sandbox'] });
   const page = await browser.newPage();
-  const errors = [], requests = [], captures = [], audits = [], layouts = [];
+  const errors = [], requests = [], captures = [], audits = [], layouts = [], contrasts = [];
   page.on('pageerror', e => errors.push(String(e)));
   page.on('request', r => requests.push(r.url()));
   await page.goto(base + '#/p/overview');
@@ -35,11 +35,20 @@ fs.mkdirSync(output, { recursive: true });
   await page.setViewportSize({ width: 320, height: 800 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, '320px reflow');
   await page.setViewportSize({ width: 1280, height: 900 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const luminance = c => { const rgb = c.match(/[\d.]+/g).slice(0, 3).map(v => { const n = Number(v) / 255; return n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4; }); return rgb[0] * 0.2126 + rgb[1] * 0.7152 + rgb[2] * 0.0722; };
+  const ratio = (a, b) => { const l = [luminance(a), luminance(b)].sort((a, b) => b - a); return (l[0] + 0.05) / (l[1] + 0.05); };
   for (const theme of ['light', 'dark']) {
     await page.evaluate(t => document.documentElement.dataset.theme = t, theme);
     await page.evaluate(fs.readFileSync(process.env.AXE_SCRIPT, 'utf8'));
     const audit = await page.evaluate(async () => (await axe.run(document, { runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] } })).violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.map(n => n.target) })));
     audits.push({ theme, violations: audit });
+    await page.locator('#owner-start').focus();
+    const colors = await page.locator('#owner-start').evaluate(e => { const s = getComputedStyle(e); return { foreground: s.color, background: s.backgroundColor, outline: s.outlineColor, panel: getComputedStyle(e.parentElement).backgroundColor }; });
+    const contrast = { theme, ...colors, textRatio: ratio(colors.foreground, colors.background), focusRatio: ratio(colors.outline, colors.panel) };
+    assert.ok(contrast.textRatio >= 4.5, 'Owner button text contrast');
+    assert.ok(contrast.focusRatio >= 3, 'Owner focus contrast');
+    contrasts.push(contrast);
   }
   await page.evaluate(() => document.documentElement.dataset.theme = 'light');
   await page.locator('#owner-start').focus();
@@ -53,7 +62,7 @@ fs.mkdirSync(output, { recursive: true });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   const motion = await page.locator('.phase-row').first().evaluate(e => getComputedStyle(e).transitionDuration);
   assert.equal(motion, '0s');
-  const result = { captures, layouts, audits, focus, reducedMotion: motion, errors, requests: [...new Set(requests)], keyboardStart: 'recorded on disposable fixture', prematureFinish: 'absent' };
+  const result = { captures, layouts, audits, contrasts, focus, reducedMotion: motion, errors, requests: [...new Set(requests)], keyboardStart: 'recorded on disposable fixture', prematureFinish: 'absent' };
   fs.writeFileSync(path.join(__dirname, 'ui-browser-results.json'), JSON.stringify(result, null, 2) + '\n');
   await browser.close();
   assert.deepEqual(errors, []);

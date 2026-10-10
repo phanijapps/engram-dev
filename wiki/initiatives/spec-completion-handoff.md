@@ -46,7 +46,8 @@ Sources: `specs/spec-completion-handoff/execution-log.md:1`;
 
 The dated analysis, plan review and planning checks remain historical evidence.
 Their original pending state is not the current execution state.
-No previous initiative was closed through this change.
+This repair does not infer completion of an earlier initiative.
+The owner later completed the earlier migration through its separate library action.
 No past-session retrospective was reconstructed.
 Sources: `specs/spec-completion-handoff/plan-review.md:1`;
 `specs/spec-completion-handoff/plan-verification.json:1`;

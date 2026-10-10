@@ -107,3 +107,15 @@ T-6-first-verification.log preserves the first run.
 The room dossier's section list now includes the additive workflow section.
 Wiki validation has zero errors and warnings. Anchors need no review.
 The freshness tool still leaves TypeScript sources unbaselined; this is recorded as a limit.
+
+## Verification follow-up before delivery review
+
+An additional at-rest probe found insufficient dark primary-button text contrast.
+The automated audit did not identify it. The fix uses the existing theme tokens.
+The browser proof now checks actual text and focus contrast in both themes.
+The exact T-4 command passed five tests again.
+The independent reviewer includes this within-scope correction and current evidence.
+
+The owner independently completed the earlier docs-root-migration record through the library.
+Its revision 23 contains the real owner acceptance and closure fields.
+The wiki adds a dated supplement; this initiative did not infer that closure.

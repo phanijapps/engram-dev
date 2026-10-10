@@ -7,4 +7,4 @@
 - [stitch-ui: initiative record](stitch-ui.md)
 - [Root specs and wiki documentation migration](docs-root-migration.md)
 
-- [Owner decision gates and spec completion: bug analysis](spec-completion-handoff.md)
+- [Owner decision gates and spec completion: approved repair](spec-completion-handoff.md)

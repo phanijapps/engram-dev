@@ -181,6 +181,26 @@
       "violations": []
     }
   ],
+  "contrasts": [
+    {
+      "theme": "light",
+      "foreground": "rgb(250, 249, 250)",
+      "background": "rgb(9, 76, 178)",
+      "outline": "rgb(9, 76, 178)",
+      "panel": "rgb(239, 237, 238)",
+      "textRatio": 7.438074708455584,
+      "focusRatio": 6.702629989501774
+    },
+    {
+      "theme": "dark",
+      "foreground": "rgb(11, 15, 20)",
+      "background": "rgb(56, 189, 248)",
+      "outline": "rgb(56, 189, 248)",
+      "panel": "rgb(22, 29, 39)",
+      "textRatio": 8.971361397073698,
+      "focusRatio": 7.910740422517467
+    }
+  ],
   "focus": {
     "outline": "rgb(9, 76, 178) solid 3px",
     "width": 178.25,
@@ -189,17 +209,17 @@
   "reducedMotion": "0s",
   "errors": [],
   "requests": [
-    "http://127.0.0.1:46307/",
-    "http://127.0.0.1:46307/marked.min.js",
-    "http://127.0.0.1:46307/app.js",
-    "http://127.0.0.1:46307/specs",
-    "http://127.0.0.1:46307/spec/p",
-    "http://127.0.0.1:46307/workflow/p",
-    "http://127.0.0.1:46307/alignment/p",
-    "http://127.0.0.1:46307/artifact/p/brief.md",
-    "http://127.0.0.1:46307/artifact/p/design.md",
-    "http://127.0.0.1:46307/artifact/p/plan.md",
-    "http://127.0.0.1:46307/artifact/p/spec.md"
+    "http://127.0.0.1:42615/",
+    "http://127.0.0.1:42615/marked.min.js",
+    "http://127.0.0.1:42615/app.js",
+    "http://127.0.0.1:42615/specs",
+    "http://127.0.0.1:42615/spec/p",
+    "http://127.0.0.1:42615/workflow/p",
+    "http://127.0.0.1:42615/alignment/p",
+    "http://127.0.0.1:42615/artifact/p/brief.md",
+    "http://127.0.0.1:42615/artifact/p/design.md",
+    "http://127.0.0.1:42615/artifact/p/plan.md",
+    "http://127.0.0.1:42615/artifact/p/spec.md"
   ],
   "keyboardStart": "recorded on disposable fixture",
   "prematureFinish": "absent"
