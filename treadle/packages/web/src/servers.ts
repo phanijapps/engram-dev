@@ -9,6 +9,8 @@ import { createServer, type IncomingMessage, type Server, type ServerResponse } 
 import { readFile, readdir } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import {
+  alignment,
+  gapCount,
   answerQuestion,
   approveSpec,
   deriveStage,
@@ -226,6 +228,24 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       return asset(res, 'marked.min.js', 'text/javascript; charset=utf-8');
     if (path === '/specs') {
       json(res, 200, await listSpecs(root));
+      return;
+    }
+    if (path.startsWith('/alignment/')) {
+      // DES-5: a surface read composing what core exports — the pinned
+      // sentence, no invented wording; corpus and engine untouched
+      const name = decodeOr(path.slice('/alignment/'.length));
+      if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
+      const loaded = loadPackWithMeta(join(root, name));
+      if (!loaded.ok) {
+        throw denied(loaded.message.includes('no spec json') ? 404 : 400, loaded.message);
+      }
+      const a = alignment(loaded.value.doc);
+      if (!a.ok) throw denied(400, a.message);
+      json(res, 200, {
+        violations: a.value.violations,
+        gapCount: gapCount(a.value),
+        sentence: `alignment: ${a.value.violations.length} violation(s), ${gapCount(a.value)} gap(s) — gaps are reported, never guessed`,
+      });
       return;
     }
     if (path.startsWith('/spec/')) {

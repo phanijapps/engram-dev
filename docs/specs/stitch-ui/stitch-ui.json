@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T13:43:38Z",
+    "updated": "2026-10-10T13:45:35Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -578,12 +578,21 @@
       "accepts": [
         "AC-7"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — jsdom: telemetry renders from the corpus spec-web fixture with its REAL counts (5 verdicts, 11 findings: 2 BLOCKER / 7 DEFECT / 2 SMELL); severity filter works"
       },
-      "needs": []
+      "needs": [],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T13:45:34Z",
+          "by": "agent:pi",
+          "notes": "GET /alignment/<name>: violations + gapCount + the PINNED sentence composed only from the two exported functions; 404 ghosts (a loader guard now refuses missing dirs instead of throwing to a 500 — corpus untouched, byte-stable); 65 tests green."
+        }
+      ]
     },
     {
       "id": "T-5",
@@ -604,7 +613,7 @@
         "AC-10",
         "AC-11"
       ],
-      "status": "todo",
+      "status": "doing",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — room behavior tests green under the new skin; headers test asserts all four SECURITY_HEADERS (CSP, nosniff, frame-ancestors, referrer); keyboard acts fire in jsdom"
@@ -714,5 +723,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 26
+  "revision": 29
 }

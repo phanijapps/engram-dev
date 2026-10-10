@@ -64,9 +64,16 @@ export function loadPack(dir: string): Admission<PackDoc> {
 function discover(dir: string): Admission<string> {
   const preferred = [join(dir, `${basename(dir)}.json`), join(dir, 'specpack.json')];
   for (const p of preferred) if (existsSync(p)) return { ok: true, value: p };
-  const found = readdirSync(dir)
-    .filter((f) => f.endsWith('.json'))
-    .sort();
+  let names: string[] = [];
+  try {
+    names = readdirSync(dir);
+  } catch {
+    return refuse(
+      'pack_refused_to_load',
+      `${dir}: no spec json found (looked for ${basename(dir)}.json)`,
+    );
+  }
+  const found = names.filter((f) => f.endsWith('.json')).sort();
   if (found.length === 1) return { ok: true, value: join(dir, found[0]!) };
   if (found.length === 0) {
     return refuse(

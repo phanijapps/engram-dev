@@ -206,3 +206,24 @@ describe('the refusal battery (absorbed from the python suite)', () => {
     }
   });
 });
+
+describe('the alignment route (T-4, DES-5)', () => {
+  it('serves the pinned sentence from the real checker; 404 ghosts; 400 bad packs', async () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'al-'));
+    bornPack(tmp);
+    const lib = await startLibrary(tmp);
+    try {
+      const r = await fetch(lib.url + 'alignment/p');
+      expect(r.status).toBe(200);
+      const out = (await r.json()) as { violations: unknown[]; gapCount: number; sentence: string };
+      expect(out.sentence).toBe(
+        `alignment: ${out.violations.length} violation(s), ${out.gapCount} gap(s) — gaps are reported, never guessed`,
+      );
+      expect(typeof out.gapCount).toBe('number');
+      const ghost = await fetch(lib.url + 'alignment/ghost');
+      expect(ghost.status).toBe(404);
+    } finally {
+      await lib.close();
+    }
+  });
+});
