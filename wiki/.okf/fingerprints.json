@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-10-10T02:00:48Z",
+  "generated_at": "2026-10-10T02:02:37Z",
   "workspace": "/home/videogamer/code/memex_beta",
-  "head": "1bf8078c2793c1804968228497ba9b42c342cdf6",
+  "head": "88567b0597fc95781e7d7f6706e401aaa20a13aa",
   "fingerprints": {
     "engine/loom/src/loom_kit/__init__.py": "4bedd00b79acaa5a9c115f8c8ab77597f46b3f121ac2d68becee60b727c0f682",
     "engine/loom/src/loom_kit/cli.py": "94e8106fbb33e77c5d8b1f0f729ccfc50e2c20a2e8b3752363817e750bc95ed3",
@@ -50,7 +50,7 @@
     "treadle/packages/cli/dist/src/commands/know.d.ts": "d35d6dbd269eaa02e0752e4cb86163dec0328ab6721e50ce50bf13ec8c60f86b",
     "treadle/packages/cli/dist/src/main.d.ts": "da55088de46b7fb0f23c62a5ff6f617d2dc7756094d479d84a390c8a557b952f",
     "treadle/packages/cli/src/commands/do.ts": "81db12d6899be23cce1d06de75e95a032a8e008bb8d3f28d5403a15a5492fad9",
-    "treadle/packages/cli/src/commands/know.ts": "f059ce460bdcee0eb150f4f7febb1f2da71e157ff6d939470d3c7ea6913a0999",
+    "treadle/packages/cli/src/commands/know.ts": "e9a0e61a63af28dc9af853777cd0946f11aa138011fcb79c46a515179d7a5f66",
     "treadle/packages/cli/src/main.ts": "958f4ad21789dc0a22546f0c30945190f176db7cb559d4917e9f9df16c5945e2",
     "treadle/packages/conformance/dist/src/corpus.d.ts": "0eb6c5019d237452ecf5df59176c6086fa1eafd33b2403034a9b46ae3502602f",
     "treadle/packages/conformance/dist/src/runner.d.ts": "51496ceafa81053dc6d271d8cbd62a912d8a391dee002083a19dc0d84d496fd2",

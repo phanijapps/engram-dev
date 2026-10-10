@@ -11,13 +11,13 @@ language: typescript
 sources:
 - id: src
   resource: treadle/packages/cli/src/commands/know.ts
-source_hash: f059ce460bdcee0eb150f4f7febb1f2da71e157ff6d939470d3c7ea6913a0999
+source_hash: e9a0e61a63af28dc9af853777cd0946f11aa138011fcb79c46a515179d7a5f66
 managed_by: okf-code
 generated_profile: compact
 created: 2026-10-10T01:56:17Z
 generated:
   by: process:okf-code
-  at: '2026-10-10T02:00:52Z'
+  at: '2026-10-10T02:02:42Z'
 status: stable
 package: treadle/packages/cli
 ---
@@ -30,7 +30,7 @@ Generated CodeModule concept for `treadle/packages/cli/src/commands/know.ts`. Pu
 
 | Kind | Name | Lines |
 |---|---|---|
-| function | `registerKnow` | 27-189 |
+| function | `registerKnow` | 27-193 |
 | function | `idx` | 39-39 |
 | function | `hits` | 40-44 |
 | function | `rep` | 73-73 |
@@ -44,12 +44,12 @@ Generated CodeModule concept for `treadle/packages/cli/src/commands/know.ts`. Pu
 | function | `path` | 146-146 |
 | function | `review` | 154-154 |
 | function | `flagged` | 155-155 |
-| function | `fresh` | 171-171 |
-| function | `concepts` | 172-175 |
-| function | `c` | 173-173 |
-| function | `rep` | 176-176 |
-| function | `review` | 177-177 |
-| function | `flagged` | 178-180 |
+| function | `fresh` | 175-175 |
+| function | `concepts` | 176-179 |
+| function | `c` | 177-177 |
+| function | `rep` | 180-180 |
+| function | `review` | 181-181 |
+| function | `flagged` | 182-184 |
 
 1 symbols omitted from compact profile.
 
