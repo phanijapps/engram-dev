@@ -19,5 +19,12 @@
   },
   "bin": {
     "treadle": "./bin/engram.js"
-  }
+  },
+  "bundleDependencies": [
+    "@treadle/brand",
+    "@treadle/core",
+    "@treadle/knowledge",
+    "@treadle/web",
+    "@treadle/cli"
+  ]
 }
