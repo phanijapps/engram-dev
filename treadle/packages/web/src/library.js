@@ -360,6 +360,7 @@ function paintTabs() {
         location.hash = '#/' + S.sel + '/' + b.dataset.tab;
       }),
   );
+  paintInspector();
   document
     .querySelectorAll('[data-jump]')
     .forEach((el) => (el.onclick = () => jump(el.dataset.jump)));
@@ -489,6 +490,96 @@ async function act(q, body) {
   } catch (e) {
     if (sink) sink.textContent = String(e.message || e);
   }
+}
+
+/* ── the phase inspector (DES-6): five generic phases over the five dossier
+   sections, states computed EXACTLY per FR-4; read-only; click focuses the
+   mapped tab through the existing hash router. ── */
+function phaseStates(spec) {
+  if (!spec) return [];
+  const cl = (spec.spec && spec.spec.clarifications) || [];
+  const open = cl.filter((q) => q.status === 'open').length;
+  const approved = ((spec.date || {}).approved || {}).at;
+  const dec = (spec.design || {}).decisions || [];
+  const des = (spec.design || {}).designs || [];
+  const tasks = spec.tasks || [];
+  const done = tasks.filter((t) => t.status === 'done').length;
+  const verdicts = (spec.review || {}).verdicts || [];
+  const stage = (spec.status || {}).deliverable || 'drafted';
+  const gate =
+    verdicts.length || stage === 'in_review'
+      ? 'inspecting'
+      : stage === 'delivered'
+        ? 'sealed'
+        : 'unlit';
+  return [
+    {
+      n: '01',
+      label: 'Blueprint Intake',
+      tab: 'overview',
+      state: open === 0 ? 'completed' : open + ' open',
+    },
+    { n: '02', label: 'Canonical Spec', tab: 'spec', state: approved ? 'anchored' : 'shaping' },
+    {
+      n: '03',
+      label: 'Design Synthesis',
+      tab: 'design',
+      state:
+        dec.length || des.length ? 'synthesized \u00b7 ' + (dec.length || des.length) : 'not yet',
+    },
+    { n: '04', label: 'Assembly', tab: 'tasks', state: done + ' of ' + tasks.length + ' woven' },
+    { n: '05', label: 'Conformance Gate', tab: 'review', state: gate },
+  ];
+}
+
+function paintInspector() {
+  const host = document.getElementById('inspector');
+  if (!host) return;
+  if (!S.sel || S.sel.indexOf('legacy:') === 0) {
+    host.innerHTML =
+      '<div class="empty" style="padding:18px 8px;font-size:13px">' +
+      (S.sel
+        ? 'History is read-only; phases apply to living specs.'
+        : 'Choose a spec; its journey appears here.') +
+      '</div>';
+    return;
+  }
+  const phases = phaseStates(S.spec);
+  const rows = phases
+    .map(
+      (p) =>
+        '<div class="phase-row" data-tab="' +
+        p.tab +
+        '" tabindex="0" role="button" title="Focus ' +
+        p.tab +
+        '">' +
+        '<div class="phase-n">' +
+        p.n +
+        '</div>' +
+        '<div class="phase-body"><div class="phase-label">' +
+        p.label +
+        '</div>' +
+        '<div class="phase-state">' +
+        esc(p.state) +
+        '</div></div>' +
+        '<div class="phase-view">view</div>' +
+        '</div>',
+    )
+    .join('');
+  host.innerHTML =
+    '<div class="group"><h2>Phases</h2>' +
+    rows +
+    '</div>' +
+    '<div id="gatePanel" class="empty" style="padding:12px 8px;font-size:12px">The conformance panel lands with the gate.</div>';
+  host.querySelectorAll('.phase-row').forEach((row) => {
+    const go = () => {
+      location.hash = '#/' + S.sel + '/' + row.dataset.tab;
+    };
+    row.onclick = go;
+    row.onkeydown = (e) => {
+      if (e.key === 'Enter') go();
+    };
+  });
 }
 
 /* ── the router (D-3) + boot ─────────────────────────────────────── */

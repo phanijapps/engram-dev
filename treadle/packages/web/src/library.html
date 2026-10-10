@@ -445,6 +445,45 @@
         padding: 16px 20px;
         background: var(--surface-1);
       }
+
+      /* the phase inspector (DES-6) */
+      .phase-row {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+        padding: 9px 10px;
+        margin-bottom: 6px;
+        border-radius: 10px;
+        background: var(--surface-2);
+        cursor: pointer;
+      }
+      .phase-row:hover {
+        background: var(--surface-3);
+      }
+      .phase-n {
+        font-family: var(--voice-serif);
+        font-size: 15px;
+        color: var(--primary);
+      }
+      .phase-body {
+        flex: 1;
+      }
+      .phase-label {
+        font-family: var(--voice-serif);
+        font-size: 13px;
+      }
+      .phase-state {
+        font-family: var(--voice-mono);
+        font-size: 11px;
+        color: var(--ink-2);
+      }
+      .phase-view {
+        font-family: var(--voice-mono);
+        font-size: 10px;
+        color: var(--ink-2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
     </style>
   </head>
   <body>

@@ -3,7 +3,7 @@
   "name": "stitch-ui",
   "description": "The Stitch UI: the harness in Alexandria dress",
   "date": {
-    "updated": "2026-10-10T13:36:35Z",
+    "updated": "2026-10-10T13:43:38Z",
     "approved": {
       "at": "2026-10-10T10:40:20Z",
       "by": "human:owner"
@@ -544,13 +544,22 @@
         "AC-3",
         "AC-4"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "cd treadle && pnpm check",
         "expect": "exit 0 — jsdom: phases render from a real pack with the exact derivation states; click dispatch focuses the tab; no admission controls in the pane"
       },
       "needs": [
         "T-2"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check",
+          "exit": 0,
+          "at": "2026-10-10T13:43:38Z",
+          "by": "agent:pi",
+          "notes": "The phase inspector: five generic phases over the five dossier sections, states EXACTLY per FR-4 (spec-web fixture: completed / shaping — the pack predates its own approval gate, derivation honest / synthesized·14 / 6 of 6 woven / inspecting); click focuses the mapped tab through the hash router; pane read-only. 65 tests green."
+        }
       ]
     },
     {
@@ -705,5 +714,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 24
+  "revision": 26
 }
