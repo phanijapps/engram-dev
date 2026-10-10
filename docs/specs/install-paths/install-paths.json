@@ -3,11 +3,11 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T18:45:41Z"
+    "updated": "2026-10-10T18:48:15Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "planning"
+    "deliverable": "drafted"
   },
   "spec": {
     "why": "Installation is the first touch. Today it takes a clone, a launcher symlink, and faith. Two paths must be true and documented: a dev link in one command (pnpm link) and a global install straight from the git main branch — both verified on the Node floor the docs claim.",
@@ -15,62 +15,91 @@
       {
         "id": "FR-1",
         "text": "The cli bin points at compiled dist (dist/src/main.js — shebang included by tsc); the bin runs on Node 22 and 24 (proven on both present on this machine); the checked-in launcher bin/treadle.mjs retires.",
-        "serves": ["US-1"]
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-2",
         "text": "Dev link: from a fresh clone — pnpm install, pnpm build, pnpm link --global (from packages/cli, or one documented chain); the linked treadle passes --help + do where + a know command from an arbitrary directory.",
-        "serves": ["US-1"]
+        "serves": [
+          "US-1"
+        ]
       },
       {
         "id": "FR-3",
-        "text": "Git install: the repo root package.json (private, workspaces:[\"treadle\"], bin → cli dist, prepare building the workspace) makes `npm i -g --allow-scripts=<name> <git-url>#main` deliver a working treadle; the flag is documented as npm security default, not an obstacle.",
-        "serves": ["US-2"]
+        "text": "Git install: `npm i -g --allow-scripts=<name> github:phanijapps/engram-dev#main` delivers a working treadle — the repo root IS the orchestrator (private, workspaces:[\"treadle\"], bin → cli dist, prepare building the workspace); the flag is documented as npm security default. engram-dev main carries the full repo (pushed; the placeholder docs commit subsumed with all 203 files preserved).",
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-4",
         "text": "Clean-room verification: every documented path proves itself in a fresh temp clone on BOTH node floors (22.14, 24.19 present locally); a windows note records the CI-matrix check.",
-        "serves": ["US-1", "US-2"]
+        "serves": [
+          "US-1",
+          "US-2"
+        ]
       },
       {
         "id": "FR-5",
         "text": "The pnpm git-workspace syntax is recorded broken (observed crash) unless a clean-room test passes in-wave; the guide names npm for git installs, pnpm for the dev link.",
-        "serves": ["US-2"]
+        "serves": [
+          "US-2"
+        ]
       },
       {
         "id": "FR-6",
         "text": "Guide section 03 + README rewritten to the two one-command paths; the launcher-symlink dance removed; install verified literally (AC-3).",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       },
       {
         "id": "FR-7",
         "text": "Gates stay green: pnpm check, corpus byte-stable, brand clean (the root package.json rides the fence allowances like ci.yml), links green.",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       },
       {
         "id": "FR-8",
         "text": "The wave closes through its own loop: evidence rows, review rounds, frozen by human:owner.",
-        "serves": ["US-3"]
+        "serves": [
+          "US-3"
+        ]
       }
     ],
     "clarifications": [
       {
         "id": "Q-1",
         "question": "The git-install target: the whole repository (root package.json orchestrating treadle/ via prepare, npm --allow-scripts documented) or the future engram-dev shape where the workspace IS the repo root (cleanest, no orchestration layer)?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": ["this repo, root orchestrates", "wait for engram-dev root"],
-        "default": "this repo, root orchestrates"
+        "options": [
+          "this repo, root orchestrates",
+          "wait for engram-dev root"
+        ],
+        "default": "this repo, root orchestrates",
+        "answer": "this repo, root orchestrates",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T18:46:21Z"
       },
       {
         "id": "Q-2",
         "question": "Node floor: the guide says 22+ — hold that floor (bin must point at compiled dist, proven working on 22.14) or raise the docs to 24 (native TS lets the source bin run)?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
-        "options": ["hold 22+, bin to dist", "raise to 24"],
-        "default": "hold 22+, bin to dist"
+        "options": [
+          "hold 22+, bin to dist",
+          "raise to 24"
+        ],
+        "default": "hold 22+, bin to dist",
+        "answer": "hold 22+, bin to dist",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T18:46:28Z"
       }
     ],
     "out_of_scope": [
@@ -138,9 +167,11 @@
       },
       {
         "id": "D-2",
-        "decision": "Root orchestrator for the git install; npm with --allow-scripts documented (Q-1 default)",
-        "because": "Proven: npm skips prepare by default (allow-scripts); the orchestrator must declare the bin itself. pnpm #workspace syntax crashed (observed).",
-        "status": "proposed"
+        "decision": "The git install targets github.com/phanijapps/engram-dev#main; this repo root IS the orchestrator (Q-1 answered: the repo is linked to engram-dev)",
+        "because": "Owner: the repo is already linked to engram-dev. Proven: npm skips prepare without --allow-scripts; the orchestrator must declare the bin; pnpm #workspace crashed. The placeholder docs commit was subsumed (203/203 files preserved) and engram-dev main now carries the full history.",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T18:48:15Z"
       },
       {
         "id": "D-3",
@@ -161,7 +192,9 @@
         "cmd": "cd treadle && pnpm build && /usr/local/bin/node packages/cli/dist/src/main.js --help && node packages/cli/dist/src/main.ts --help 2>/dev/null || true",
         "expect": "dist bin speaks usage under node 22 explicitly; the launcher file no longer exists"
       },
-      "satisfies": ["FR-1"],
+      "satisfies": [
+        "FR-1"
+      ],
       "implements": [],
       "honors": [],
       "accepts": [],
@@ -176,27 +209,42 @@
         "cmd": "clean-room script: temp clone → link chain → /tmp assertions",
         "expect": "all commands green from an arbitrary directory on a fresh clone; no launcher file touched"
       },
-      "satisfies": ["FR-2", "FR-4"],
-      "needs": ["T-0"],
+      "satisfies": [
+        "FR-2",
+        "FR-4"
+      ],
+      "needs": [
+        "T-0"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-1"],
+      "accepts": [
+        "AC-1"
+      ],
       "status": "todo"
     },
     {
       "id": "T-2",
       "title": "The git install from main",
       "phase": "core",
-      "detail": "Repo-root package.json (private, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build); clean-room: git clone file:// → npm i -g --allow-scripts=<name> <clone> → treadle from /tmp on both node floors; pnpm git path retested once, recorded working or broken.",
+      "detail": "Repo-root package.json (private, workspaces:[\"treadle\"], bin → treadle/packages/cli/dist/src/main.js, prepare: corepack+install+build); clean-room: the REAL git URL (github:phanijapps/engram-dev#main) via npm i -g --allow-scripts=<name> → treadle from /tmp on both node floors; pnpm git path retested once, recorded working or broken. Push to engram-dev main is part of the loop (the remote is wired).",
       "verify": {
-        "cmd": "clean-room script: bare-clone → npm i -g --allow-scripts → /tmp assertions",
-        "expect": "treadle delivered and working; the allow-scripts flag documented in the same command"
+        "cmd": "npm i -g --allow-scripts=<name> github:phanijapps/engram-dev#main && cd /tmp && treadle do where /tmp",
+        "expect": "treadle delivered from the REAL git main; works from any directory; the flag documented in the same command"
       },
-      "satisfies": ["FR-3", "FR-4", "FR-5"],
-      "needs": ["T-0"],
+      "satisfies": [
+        "FR-3",
+        "FR-4",
+        "FR-5"
+      ],
+      "needs": [
+        "T-0"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-2"],
+      "accepts": [
+        "AC-2"
+      ],
       "status": "todo"
     },
     {
@@ -208,11 +256,18 @@
         "cmd": "the documented commands, run literally from the guide text",
         "expect": "each command works as written — the literal run is the evidence"
       },
-      "satisfies": ["FR-6"],
-      "needs": ["T-1", "T-2"],
+      "satisfies": [
+        "FR-6"
+      ],
+      "needs": [
+        "T-1",
+        "T-2"
+      ],
       "implements": [],
       "honors": [],
-      "accepts": ["AC-3"],
+      "accepts": [
+        "AC-3"
+      ],
       "status": "todo"
     },
     {
@@ -224,14 +279,22 @@
         "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
         "expect": "gates green; rounds recorded; closed by owner"
       },
-      "satisfies": ["FR-7", "FR-8"],
-      "needs": ["T-3"],
+      "satisfies": [
+        "FR-7",
+        "FR-8"
+      ],
+      "needs": [
+        "T-3"
+      ],
       "implements": [],
       "honors": [],
       "accepts": [],
       "status": "todo"
     }
   ],
+  "review": {
+    "verdicts": []
+  },
   "format": "specpack/0.3",
-  "revision": 3
+  "revision": 5
 }
