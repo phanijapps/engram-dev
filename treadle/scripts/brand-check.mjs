@@ -16,6 +16,7 @@ const ALLOW_CONTAINS = [
   /pnpm-lock\.yaml$/,
   /\.github\/.*\.yml$/,
   /README\.md$/,
+  /^DEBT\.md$/, // governance: records the future repo name by owner decision
   /scripts\/set-brand\.mjs$/,
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source

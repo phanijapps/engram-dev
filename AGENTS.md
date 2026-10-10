@@ -65,7 +65,7 @@ Wiki discipline: every load-bearing claim cites a location; frontmatter carries 
 
 **The corpus is truth.** Behavior changes regenerate goldens deliberately (`pnpm corpus:regen`), the diff reviewed in the commit. Golden changes are contract changes.
 
-**Security posture.** Read `treadle/SECURITY.md` before touching servers: localhost-only by design, CSP-pinned pages, trusted-on-disk markdown, `human:` claims on every write.
+**Security posture.** Read `SECURITY.md` before touching servers: localhost-only by design, CSP-pinned pages, trusted-on-disk markdown, `human:` claims on every write.
 
 **Boy-scout every diff.** Stale comments are defects; dead code is deleted; exit codes are verified, never piped away.
 

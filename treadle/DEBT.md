@@ -19,6 +19,12 @@
 
 ## Process
 
+- **Future public repository name: engram-dev** (owner decision,
+  2026-10-10). The GitHub repo phanijapps/engram-dev is born as the
+  docs home; the harness itself carries the treadle brand until the
+  split completes — the brand fence makes the eventual rename a
+  one-command act.
+
 - License choice (MIT vs Apache-2.0) — owner decision before any publish.
 - Test-file typecheck outside the composite build (recorded in README).
 - Python engines remain the golden authority; they retire only when the

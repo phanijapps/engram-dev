@@ -100,7 +100,7 @@ Format tags (`specpack/0.x`, `specweb-events/0.1`, OKF `0.2`) are contracts, not
 
 ## Security posture
 
-Localhost-only surfaces, CSP-pinned pages, no telemetry, no CDN (assets vendored), runtime dependency chain at zero known vulnerabilities, path/symlink/decode guards under test. The full threat model: [`treadle/SECURITY.md`](treadle/SECURITY.md).
+Localhost-only surfaces, CSP-pinned pages, no telemetry, no CDN (assets vendored), runtime dependency chain at zero known vulnerabilities, path/symlink/decode guards under test. The full threat model: [`SECURITY.md`](SECURITY.md).
 
 ## Status
 
