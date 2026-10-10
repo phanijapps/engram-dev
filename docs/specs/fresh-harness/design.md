@@ -34,21 +34,22 @@ packages/cli/src/harness/             ← manifest types, plan compiler, adapter
       "id": "sdlc-analyze", "kind": "skill", "source": "skills/sdlc/analyze",
       "surfaces": ["pi", "claude", "codex", "copilot"],
       "transform": { "pi": "identity", "claude": "identity",
-                     "codex": "identity", "copilot": "skill-to-prompt" }
+                     "codex": "identity", "copilot": "identity" }
     },
     { "id": "red-foreman", "kind": "agent", "source": "agents/pi/red-foreman.md",
-      "surfaces": ["pi"], "transform": { "pi": "identity" } }
+      "surfaces": ["pi", "claude", "codex", "copilot"], "transform": { "pi": "identity" } }
   ],
-  "hooks": {
-    "claude": [ { "id": "post-tool-use-check", "merge": "settings-hooks" } ],
-    "codex":  [ { "id": "notify", "merge": "config-notify" } ],
-    "pi": [], "copilot": []
-  }
+  "hooks": [
+    { "id": "post-tool-check", "file": "hooks/post-tool-check.js",
+      "wiring": { "pi": "extension", "claude": "settings-hooks",
+                  "codex": "config-notify", "copilot": null } }
+  ]
 }
 ```
 
-Empty hook arrays are the honest "not supported" — the plan prints
-them, the user sees the truth.
+`null` wiring is the honest "not supported" — the plan prints it,
+the user sees the truth. Copilot skills are SKILL.md natively
+(Agent Skills format): identity transform, no conversion.
 
 ### The plan (the contract between user and disk)
 
@@ -88,23 +89,35 @@ flags are required and the error shows the exact command.
   transform = one function in a registry. Alternative: per-surface
   script directories (rejected — speckkit's sprawl, our constraint
   is few moving parts). Reversible: high.
-- **DES-5 hooks native-only, honest nos.** (Q-1 default.) Claude:
-  merge `hooks` into `.claude/settings.json` preserving unknown keys;
-  Codex: `notify` line in config.toml; pi/copilot: plan prints
-  `not supported` — refuse to fake. Alternative: ship emulated hooks
-  everywhere (rejected — lies break trust). Reversible: high.
+- **DES-5 hooks ship as JS files, wired per surface; copilot honestly none.**
+  (Q-1 answer.) The harness carries `harness/hooks/*.js`; pi gets them as
+  extension files (`.pi/extensions/` — local-documented), Claude Code
+  gets settings.json wiring that invokes them, Codex gets a config
+  notify line that invokes them; Copilot has no hooks or extensions —
+  the plan prints the no. They dogfood in this repo like everything
+  else. Alternative: emulated hooks everywhere (rejected — lies).
+  Reversible: high.
 - **DES-6 idempotency by content hash; never delete.** Re-run = `same`.
   `--force` overwrites; unknown files in destinations are never
   touched. Alternative: rsync-style mirror (rejected — destructive
   in shared dirs like `.claude/`). Reversible: high.
-- **DES-7 globals need the absolute-path confirm.** (Q-5 default.)
-  Writes outside the repo print each absolute path and require
-  `--yes` (or interactive confirm). Alternative: project-only v1.
+- **DES-7 dogfood-first; globals later.** (Q-5 answer.) The installer
+  lands content in project-level `.pi/` and `.codex/` in this repo;
+  real work exercises it; what passes is promoted back into the
+  harness — hooks and extensions included. Global (`$HOME`) installs
+  are a later wave; when they come, the absolute-path confirm applies.
   Reversible: high.
 - **DES-8 the cleanup is checked, not vibes.** A `links` gate script
   walks live surfaces and fails on unresolved links; the wiki pass
   ends in the know ritual green. Archive untouched (history is
   evidence). Alternative: manual sweep (rejected — rots back).
+  Reversible: high.
+- **DES-9 Copilot is a full adapter: instructions + agents + skills,
+  no hooks.** (Q-3 answer.) `.github/copilot-instructions.md`,
+  `.github/agents/*.md` (frontmatter), `.github/skills/<n>/SKILL.md`
+  (the Agent Skills format — identity transform, not conversion).
+  Every path verified against live docs at T-3; refusal over guessing.
+  The earlier "prompt-file conversion" design is superseded.
   Reversible: high.
 
 ## Portability / brand

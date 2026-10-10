@@ -3,7 +3,7 @@
   "name": "fresh-harness",
   "description": "The harness, installable — and the repo, fresh",
   "date": {
-    "updated": "2026-10-10T14:43:35Z"
+    "updated": "2026-10-10T14:50:11Z"
   },
   "status": {
     "lifecycle": "active",
@@ -42,11 +42,11 @@
       },
       {
         "id": "FR-8",
-        "text": "Hooks: claude settings.json JSON-merge preserving unknown keys; codex config notify; pi and copilot print not-supported in the plan (Q-1)."
+        "text": "Hooks ship as JS files from the harness (harness/hooks/) and wire per surface: pi extension files (.pi/extensions/, ~/.pi/agent/extensions/), Claude settings.json invoking the JS, Codex config notify invoking the JS; Copilot has no hooks or extensions — the plan prints the honest no (Q-1)."
       },
       {
         "id": "FR-9",
-        "text": "Copilot installs copilot-instructions.md plus skill-to-prompt conversions under .github/prompts with description frontmatter (Q-3)."
+        "text": "Copilot is a full adapter: .github/copilot-instructions.md + .github/agents/*.md (frontmatter) + .github/skills/<n>/SKILL.md (Agent Skills format, identity transform); every path verified against live docs at build; refusals over guesses (Q-3)."
       },
       {
         "id": "FR-10",
@@ -70,7 +70,7 @@
       },
       {
         "id": "FR-15",
-        "text": "Self-host: the installer run against this repo converges .pi to the manifest; recorded as dogfood evidence."
+        "text": "Dogfood-first (Q-5): the installer lands content in project-level .pi/{skills,agents,extensions} and .codex/{skills,agents} in this repo; real work evaluates it; what passes — hooks and extensions included — is promoted back into the harness; the loop is recorded as evidence."
       },
       {
         "id": "FR-16",
@@ -81,62 +81,80 @@
       {
         "id": "Q-1",
         "question": "Hooks v1 policy: ship hooks only where a surface natively supports them (Claude Code settings.json, Codex config notify), and print an honest 'not supported' for pi and Copilot?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "native-only + honest nos",
-          "defer all hooks to v2"
+          "defer all hooks to v2",
+          "hooks as JS files everywhere: pi extensions (.pi/extensions), claude settings wiring, codex notify — copilot honestly none"
         ],
-        "default": "native-only + honest nos"
+        "default": "native-only + honest nos",
+        "answer": "hooks as JS files everywhere: pi extensions (.pi/extensions), claude settings wiring, codex notify — copilot honestly none",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T14:49:05Z"
       },
       {
         "id": "Q-2",
         "question": "The interactive layer: add @clack/prompts (small MIT lib, the speckkit-grade UX) or build a zero-dependency arrow-key selector we own (~150 lines)?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "@clack/prompts dependency",
           "zero-dep custom selector"
         ],
-        "default": "@clack/prompts dependency"
+        "default": "@clack/prompts dependency",
+        "answer": "@clack/prompts dependency",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T14:49:05Z"
       },
       {
         "id": "Q-3",
         "question": "GitHub Copilot v1: install as copilot-instructions.md + prompt files (.github/prompts), no agents (cloud-only) and no global?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "include minimal copilot",
-          "defer copilot to v2"
+          "defer copilot to v2",
+          "full copilot: custom instructions + agents + skills (all supported per owner; verified in research)"
         ],
-        "default": "include minimal copilot"
+        "default": "include minimal copilot",
+        "answer": "full copilot: custom instructions + agents + skills (all supported per owner; verified in research)",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T14:49:05Z"
       },
       {
         "id": "Q-4",
         "question": "Retired wiki pages (systems/okf-engine.md, loom-engine.md): supersede into docs/archive and delete from the live wiki, or keep in place with SUPERSEDED banners?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "archive + delete",
           "keep with banners"
         ],
-        "default": "archive + delete"
+        "default": "archive + delete",
+        "answer": "archive + delete",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T14:49:05Z"
       },
       {
         "id": "Q-5",
         "question": "Global installs v1: pi to ~/.pi/agent, claude to ~/.claude, codex to ~/.codex (Copilot none) — with an explicit confirm that shows absolute paths before any write outside the repo?",
-        "status": "open",
+        "status": "resolved",
         "owner": "human:owner",
         "kind": "choice",
         "options": [
           "globals with confirm",
-          "project-scope only v1"
+          "project-scope only v1",
+          "dogfood-first: project .pi + .codex in this repo, promotion into harness; globals later"
         ],
-        "default": "globals with confirm"
+        "default": "globals with confirm",
+        "answer": "dogfood-first: project .pi + .codex in this repo, promotion into harness; globals later",
+        "answered_by": "human:owner",
+        "answered_at": "2026-10-10T14:49:06Z"
       }
     ],
     "out_of_scope": [
@@ -222,19 +240,25 @@
         "id": "D-1",
         "decision": "Content moves under treadle/harness/, manifest-driven (harness/0.1)",
         "because": "The owner asked for the package; one repo one truth; per-surface npm packages are sprawl we refuse (engram-dev split is a later recorded wave). Root noise dies.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
       },
       {
         "id": "D-2",
         "decision": "Plan-then-apply: an inspectable plan precedes every write",
         "because": "No write before review; the plan is testable output, apply is deterministic replay; copy-as-you-go is unreviewable.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
       },
       {
         "id": "D-3",
         "decision": "Flags are the engine; the interactive layer is skin that only produces flags",
         "because": "TUIs test badly; engines test well. Every choice has a flag; no TTY + no flags = exit 2 with the remediation command.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
       },
       {
         "id": "D-4",
@@ -244,9 +268,11 @@
       },
       {
         "id": "D-5",
-        "decision": "Hooks native-only with honest nos (claude settings merge, codex notify, pi/copilot print not-supported)",
-        "because": "Emulated hooks lie; a printed no is trust. The plan shows the truth before anything touches disk (Q-1 default).",
-        "status": "proposed"
+        "decision": "Hooks ship as JS files wired per surface (pi extensions, claude settings wiring, codex notify); copilot prints the honest no",
+        "because": "Owner answer Q-1: pi has extensions (local-documented), copilot has neither hooks nor extensions; JS files are the one medium all three can invoke; a printed no beats an emulated lie.",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
       },
       {
         "id": "D-6",
@@ -256,15 +282,27 @@
       },
       {
         "id": "D-7",
-        "decision": "Globals write only after an absolute-path confirm (--yes or interactive)",
-        "because": "Writing /home/videogamer unconfirmed is the one unrecoverable act here; the plan prints every absolute path first (Q-5 default).",
-        "status": "proposed"
+        "decision": "Dogfood-first: project .pi and .codex in this repo; promotion into the harness; globals later",
+        "because": "Owner answer Q-5: the named targets are .pi/{agents,skills} and .codex/{agents,skills}; evaluation happens in real work; what passes — hooks/extensions included — is promoted. The absolute-path confirm stays recorded for the later global wave.",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
       },
       {
         "id": "D-8",
         "decision": "The cleanup is checked, not vibes: links gate + know ritual prove freshness",
         "because": "Manual sweeps rot back. The gate runs in CI; the archive stays untouched because history is evidence (Q-4 default: supersede into docs/archive).",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z"
+      },
+      {
+        "id": "D-9",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T14:50:11Z",
+        "decision": "Copilot is a full adapter: custom instructions + agents + skills (Agent Skills format); no hooks",
+        "because": "Owner answer Q-3 corrects my cloud-only claim: latest Copilot supports all three. Paths verified against live docs at T-3; refusals over guesses. The earlier prompt-file conversion design is superseded."
       }
     ],
     "designs": []
@@ -332,7 +370,7 @@
     {
       "id": "T-2",
       "title": "The interactive skin: prompts render choices, return flags",
-      "detail": "The interactive layer (Q-2 answer decides @clack/prompts vs zero-dep selector): agent picker, scope picker, component multi-select; the module only produces flags and calls the engine; TTY detection honest; tests assert the skin is thin.",
+      "detail": "The interactive layer: @clack/prompts (Q-2 answered) — agent picker, scope picker, component multi-select; the module only produces flags and calls the engine; TTY detection honest; tests assert the skin is thin.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -352,7 +390,7 @@
     {
       "id": "T-3",
       "title": "Surface adapters: four surfaces, two transforms, honest hooks",
-      "detail": "Adapters: pi (.pi/skills, .pi/agents, user ~/.pi/agent), claude (.claude/skills, .claude/agents, settings.json hooks merge preserving unknown keys, ~/.claude), codex (~/.codex paths per our README, project dirs verified, config.toml notify), copilot (.github/copilot-instructions.md + .github/prompts/*.prompt.md via skill-to-prompt; no agents, no global — printed honestly). Paths verified against current docs at build; failures refuse. Integration tests in temp HOME + temp project.",
+      "detail": "Adapters: pi (.pi/skills, .pi/agents, .pi/extensions JS — local-documented), claude (.claude/skills, .claude/agents, settings.json hooks wiring invoking harness JS, ~/.claude later), codex (.codex/skills, .codex/agents project + ~/.codex user, config.toml notify invoking harness JS), copilot (.github/copilot-instructions.md + .github/agents/*.md + .github/skills/<n>/SKILL.md — Agent Skills format, identity; no hooks — printed honestly). Every path verified against live docs at build; failures refuse. Integration tests in temp HOME + temp project.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -394,8 +432,8 @@
     },
     {
       "id": "T-6",
-      "title": "Self-host: the installer converges this repo's .pi",
-      "detail": "Self-host dogfood: run the installer against this repo (--agent pi --scope project); the plan shows .pi destinations as same or converges with --force; .pi then matches the manifest; recorded as evidence.",
+      "title": "Self-host dogfood: .pi and .codex, then promote",
+      "detail": "Dogfood-first (Q-5): run the installer against this repo for pi AND codex (project scope): .pi/{skills,agents,extensions} + .codex/{skills,agents}; the plan shows destinations as same or converges with --force; the content is then used in real work; what passes evaluation — hooks and extensions included — is promoted back into treadle/harness as the canonical source; the promotion is recorded as evidence.",
       "status": "todo",
       "phase": "core",
       "satisfies": [
@@ -405,8 +443,8 @@
       "honors": [],
       "accepts": [],
       "verify": {
-        "cmd": "tsx packages/cli/src/main.ts init harness --agent pi --scope project --dry-run --json",
-        "expect": "plan shows every .pi destination as same (or converges); the dogfood proof"
+        "cmd": "cd treadle && pnpm check && pnpm corpus:check",
+        "expect": ".pi and .codex installed from the manifest; dogfood evidence recorded; promoted content committed in treadle/harness; corpus byte-stable"
       },
       "needs": [
         "T-3"
@@ -436,5 +474,5 @@
     }
   ],
   "format": "specpack/0.3",
-  "revision": 23
+  "revision": 28
 }

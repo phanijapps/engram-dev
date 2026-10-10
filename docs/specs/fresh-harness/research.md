@@ -98,8 +98,62 @@ Also observed: the owner moved `.github/` to the repo root.
 - Copilot org-level agents, pi extensions, remote installs.
 - engram-dev brand split (recorded in DEBT.md, separate wave).
 
-## 6. Questions for the owner
+## 6. Round A2 — the owner's answers, folded in
 
-Recorded in the pack as Q-1..Q-5 (hooks policy, TUI dependency,
-Copilot v1, retired wiki pages, global installs). Each carries a
-recommended default; the room or this thread settles them.
+Answered 2026-10-10, in-thread, by human:owner. Recorded in the
+pack (Q-1..Q-5, revision-gated). What they change:
+
+### Q-1 — hooks are JS files; pi has extensions; copilot has neither
+
+- **pi extensions are real and local-documented**:
+  `.pi/extensions/` (project) and `<agent-dir>/extensions/` =
+  `~/.pi/agent/extensions/` (user); Pi loads direct `.ts`/`.js` files
+  or directories with an entry point. Status: **implementation-
+  supported** (pi's own docs, configuration.md lines 21/34; the user
+  dir exists on this machine with `extensions/`).
+- Therefore pi hooks ship as **extension JS files** from the harness.
+- Claude Code hooks: `settings.json` wiring that invokes **JS hook
+  files** (commands run `node <hook>.js`).
+- Codex: `config.toml` `notify` invoking a **JS file**.
+- Copilot: no hooks and no extensions mechanism — the plan prints
+  the honest no. Status: **declared** (owner) — verify at build.
+- All hooks ship as JS files in the harness (`harness/hooks/`),
+  wired per surface. They dogfood with everything else.
+
+### Q-3 — Copilot supports all three (research)
+
+The owner's correction stands against my earlier "cloud-only agents"
+claim. The current Copilot surface (late-2025/2026 GitHub docs):
+
+| Capability | Location | Status |
+|---|---|---|
+| Custom instructions | `.github/copilot-instructions.md` (repo); org via org `.github` repo; personal via settings text (not files) | **declared** — stable, well known |
+| Custom agents | `.github/agents/<name>.md`, YAML frontmatter (name, description, when-to-use, tools, model); used by the Copilot coding agent and agent-mode clients | **declared** — verify frontmatter keys at build against live docs |
+| Skills | `.github/skills/<name>/SKILL.md` — the Agent Skills format announced at GitHub Universe 2025; same SKILL.md progressive-disclosure shape Claude and pi use | **declared** — verify at build |
+| Hooks / extensions | none | **declared** (owner) |
+
+No web access from this session — statuses are declared, not
+verified-against-live-docs; **T-3 verifies each path against current
+documentation before the adapter lands, and refuses what it cannot
+verify.** The earlier research table row "agents are cloud/org-only"
+was **wrong** and is superseded by this round.
+
+### Q-4 — sweep and retire the wiki
+
+Old pages leave the live bundle (superseded copies to
+`docs/archive/wiki-systems/`); the live wiki tells the TS truth only.
+
+### Q-5 — dogfood-first
+
+The named dogfood targets are **project-level `.pi/agents`,
+`.pi/skills`, `.codex/agents`, `.codex/skills` in this repo**. The
+loop: harness content installs there → it is used and evaluated in
+real work → what passes is promoted back into the harness — **hooks
+and extensions included**. Global installs wait; the confirm design
+(Q-5 original) stays recorded for when they arrive.
+
+## 7. Questions for the owner
+
+Q-1..Q-5 are answered and recorded. New questions surfaced by this
+round are held as build-time verifications (T-3), not owner
+questions — the owner answers direction, the build verifies facts.
