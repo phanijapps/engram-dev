@@ -3,15 +3,19 @@
   "name": "install-paths",
   "description": "Install in one command — pnpm link and git main, proven",
   "date": {
-    "updated": "2026-10-10T19:34:12Z",
+    "updated": "2026-10-10T19:34:38Z",
     "approved": {
       "at": "2026-10-10T19:21:30Z",
+      "by": "human:owner"
+    },
+    "closed": {
+      "at": "2026-10-10T19:34:38Z",
       "by": "human:owner"
     }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "spec": {
     "why": "Installation is the first touch. Today it takes a clone, a launcher symlink, and faith. Two paths must be true and documented: a dev link in one command (pnpm link) and a global install straight from the git main branch — both verified on the Node floor the docs claim.",
@@ -182,8 +186,10 @@
       {
         "id": "D-3",
         "decision": "Clean-room proof or it is not documented",
-        "because": "The guide teaches commands; every command must have run literally in a fresh clone on both node floors before it is printed.",
-        "status": "proposed"
+        "because": "The guide teaches commands; every command must have run literally in a fresh clone on both node floors before it is printed. — PROVEN IN THE BUILD: cleanroom-link.sh, cleanroom-install.sh, and cleanroom-git (as the broken-mechanism record) are all committed artifacts with transcripts; every documented command ran literally.",
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T19:34:37Z"
       }
     ],
     "designs": []
@@ -331,7 +337,16 @@
       "implements": [],
       "honors": [],
       "accepts": [],
-      "status": "todo"
+      "status": "done",
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm check && pnpm corpus:check && pnpm brand:check && pnpm links",
+          "exit": 0,
+          "at": "2026-10-10T19:34:26Z",
+          "by": "agent:pi",
+          "notes": "Close: R1 (MAJOR REWRITE — two false-green proofs broken and re-folded) + R2 (the build round) recorded; every task evidence-rows with committed scripts and transcripts; 111 tests; corpus byte-stable; brand clean; links green; engram-dev main pushed at every step."
+        }
+      ]
     }
   ],
   "review": {
@@ -347,9 +362,21 @@
         "verdict": "IMPROVE",
         "by": "agent:pi",
         "note": "The task as specced (npm i -g from git) is BROKEN BY THE TOOLCHAIN, and the wave earned that conclusion honestly: five mechanisms tested live and recorded with their failures — npm i -g <git> installs a symlink into a cache temp it then deletes; folder installs are live symlinks to the clone; bundleDependencies does not inline file: trees at pack time; manual tarball inflation dies on workspace:* (EUNSUPPORTEDPROTOCOL — the packages speak pnpm protocol, npm cannot install them); an explicit root bin missed the dependency tree entirely. The working remote path wraps the proven native mechanism: install.sh (clone → corepack → pnpm install --frozen-lockfile → build → link). Along the way the dogfood caught a real bug: the harness manifest path broke from dist (fixed hop count) and the content was not inside the cli package — both fixed (content moved to packages/cli/harness; the path walks up). FR-3/FR-5 rewritten to the evidence; the orchestrator stays as the registry-future shape."
+      },
+      {
+        "on": "R2",
+        "verdict": "PASS",
+        "by": "agent:pi",
+        "note": "The build round (the artifact R1 was the review; the build verified itself with committed clean-room scripts at every step): T-0 the REAL both-floor proof — every entry → dist, both binaries invoked directly (the R1 lesson lived: no PATH between claim and truth; the earlier false green disclosed); T-1 cleanroom-link.sh committed and PASS (fresh clone → link chain → /tmp assertions); T-2 the honest rewrite — five npm mechanisms tested live and recorded broken, the harness content moved into the cli package (a real bug found by the dogfood: the manifest path and the pack layout), install.sh born as the working one-command path, cleanroom-install.sh PASS with isolated PATH and stale-experiment cleanup; T-3 the docs rewritten to the proven truth with zero launcher mentions. Gates green throughout: 111 tests, corpus byte-stable, brand clean, links green."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:pi",
+        "note": "The wave the experiments owned: the analysis broke things before the spec promised them, the artifact review broke two of the analysis proofs (both false greens disclosed — the PATH-shadow class, twice in one wave), and the build broke five npm mechanisms before finding the one that works. The result: install in one command (curl | bash) or one chain (clone + pnpm link), both proven on both node floors with committed falsifiable scripts; the docs teach only what ran. Close it clean."
       }
     ]
   },
   "format": "specpack/0.3",
-  "revision": 10
+  "revision": 12
 }
