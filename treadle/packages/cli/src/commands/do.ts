@@ -5,6 +5,7 @@
  * the vocabulary is the API.
  */
 import type { Command } from 'commander';
+import { where, recallBlock } from '../harness/where.js';
 import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import {
@@ -93,6 +94,20 @@ export function registerDo(doCmd: Command): void {
       }),
     );
 
+  doCmd
+    .command('where <workspace>')
+    .description(
+      'recall: where does work dangle? live specs roots + git worktrees (the archive is never listed)',
+    )
+    .option('--json', 'machine form (for hooks)')
+    .action((workspace: string, opts: { json?: boolean }) => {
+      const report = where(workspace);
+      if (opts.json) {
+        console.log(JSON.stringify(report, null, 2));
+        return;
+      }
+      console.log(recallBlock(report));
+    });
   doCmd.command('next <packDir>').action(
     guarded((l) => {
       const out = nextTask(l.doc, { packPath: l.path });

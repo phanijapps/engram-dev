@@ -3,11 +3,15 @@
   "name": "guided-loop",
   "description": "The loop remembers — recall hooks, workspace status, skills that speak today, spec debts paid",
   "date": {
-    "updated": "2026-10-10T16:56:53Z"
+    "updated": "2026-10-10T17:48:31Z",
+    "approved": {
+      "at": "2026-10-10T17:41:26Z",
+      "by": "human:owner"
+    }
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "drafted"
+    "deliverable": "in_progress"
   },
   "spec": {
     "why": "The harness installs everywhere now; the loop must orient itself. A fresh session saying continue should be TOLD where work dangles (open specs, worktrees) and pause to ask which one. Skills still speak the retired CLI. Five spec debts are recorded. This wave pays them.",
@@ -297,7 +301,9 @@
         "id": "D-6",
         "decision": "§8 and §9 structure enforce as ONE §11.3 conformance clause (both error-level); \"warnings never block\" applies to the other §11 checks",
         "because": "R1 #6: the vendored spec makes index.md and log.md structure a single conformance condition — enforcing §8 but not §9 hands consumers a false conformant. Spec-faithful reading, mirroring the owner Q-1 pattern; surfaced for the owner at approval.",
-        "status": "proposed"
+        "status": "accepted",
+        "accepted_by": "human:owner",
+        "accepted_at": "2026-10-10T17:41:26Z"
       }
     ],
     "designs": [
@@ -377,13 +383,22 @@
         "FR-1",
         "FR-2"
       ],
-      "status": "todo",
+      "status": "done",
       "implements": [
         "DES-1"
       ],
       "honors": [],
       "accepts": [
         "AC-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/where.test.ts",
+          "exit": 0,
+          "at": "2026-10-10T17:48:31Z",
+          "by": "agent:pi",
+          "notes": "The recall core: do where <workspace> — live-roots scan (archive never listed), per-pack stage/open-questions/next-ready/revision/last-evidence, git worktree cross-ref with tree labels, --json machine form, no-git degrades to unavailable with exit 0 always (a report, never a gate). The recall block ends with the ask-which-one sentence when more than one is open. 5 tests: two-open fixture, one-open resolves, worktree-labeled row, no-git, and the self-witness (guided-loop sees itself in flight — stage read through the loader truthfully after two honest misses: refused fixtures and the nested status.deliverable). All gates unpiped."
+        }
       ]
     },
     {
@@ -546,5 +561,5 @@
     ]
   },
   "format": "specpack/0.3",
-  "revision": 11
+  "revision": 14
 }
