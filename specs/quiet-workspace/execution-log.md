@@ -182,3 +182,15 @@ superseded. No old frame is presented as proof of a later repair.
 T-4's admitted pass remains a historical actual run. Subsequent bounded review
 repairs do not reset task status or change approved plan definitions; the final
 independent exactcheck rerun supplies current review evidence.
+
+
+The independent T-4 current rerun passed check but failed coverage on a timing
+assertion in workflow-ui.test.ts:112. The test waited for a removed Start
+button and stored receipt, both visible during pending refresh before the
+returned UI state. It now waits additionally for the returned Implementation
+heading and restored keyboard focus; its original authority assertions remain.
+The frontend pending state now says Updating approval state instead of
+falsely claiming unavailable while a request is still pending. A delayed
+refresh regression checks retained content, absent eligible actions and final
+heading/focus. These bounded T-2 repairs preserve the original failed run in
+the evidence manifest and need a final independent exact rerun.

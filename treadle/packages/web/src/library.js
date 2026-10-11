@@ -653,7 +653,7 @@ function ownerPhases(spec) {
     state,
   }));
 }
-function paintOwner() {
+function paintOwner(loading = false) {
   const host = $('owner-panel');
   if (!host || !S.spec || S.sel?.startsWith('legacy:')) return;
   if (!S.workflow) {
@@ -662,8 +662,9 @@ function paintOwner() {
       actions.replaceChildren();
       actions.hidden = true;
     }
-    host.innerHTML =
-      '<div class="item"><h3 id="owner-heading" tabindex="-1">Owner actions unavailable</h3><p>Refresh the spec to read its current approval state.</p></div>';
+    host.innerHTML = loading
+      ? '<div class="item"><h3 id="owner-heading" tabindex="-1">Updating approval state…</h3><p>Existing content stays available while the current permissions are checked.</p></div>'
+      : '<div class="item"><h3 id="owner-heading" tabindex="-1">Owner actions unavailable</h3><p>Refresh the spec to read its current approval state.</p></div>';
     return;
   }
   const w = S.workflow;
@@ -1010,7 +1011,7 @@ async function paintDetail() {
       $('inspector').innerHTML = '<div class="empty">Loading approval steps…</div>';
     } else {
       S.workflow = null;
-      paintOwner();
+      paintOwner(true);
     }
     if (S.sel.startsWith('legacy:')) {
       S.workflow = null;

@@ -30,7 +30,10 @@ function fixture(phase = 'start') {
   const gate = { phase, revision: 1, can_start: phase === 'start', can_close: false, reasons: [] };
   return { doc, gate };
 }
-async function page(f = fixture(), options: { unavailable?: boolean; delay?: boolean } = {}) {
+async function page(
+  f = fixture(),
+  options: { unavailable?: boolean; delay?: boolean; delayRefresh?: boolean } = {},
+) {
   const posts: Record<string, unknown>[] = [];
   let release: () => void = () => {};
   const h = await loadLibraryPage('http://localhost/', {
@@ -64,10 +67,15 @@ async function page(f = fixture(), options: { unavailable?: boolean; delay?: boo
             legacy: [],
           });
         if (path === '/spec/p') return Response.json(f.doc);
-        if (path === '/workflow/p')
+        if (path === '/workflow/p') {
+          if (options.delayRefresh && f.doc.revision > 1)
+            await new Promise<void>((resolve) => {
+              release = resolve;
+            });
           return options.unavailable
             ? Response.json({ error: 'Unavailable' }, { status: 503 })
             : Response.json(f.gate);
+        }
         if (path === '/alignment/p')
           return Response.json({ sentence: 'No alignment gaps', violations: [] });
         return new Response('', { status: 404 });
@@ -118,6 +126,29 @@ describe('Quiet Workspace approval behavior', () => {
       );
       expect(h.window.document.querySelector('#owner-start')).toBeNull();
       expect(h.window.document.activeElement?.id).toBe('owner-heading');
+    } finally {
+      h.window.close();
+    }
+  });
+  it('names pending approval refresh without claiming failure or retaining an eligible action', async () => {
+    const { h, release } = await page(fixture(), { delayRefresh: true });
+    try {
+      h.click('#owner-start');
+      await h.waitFor(
+        () =>
+          h.window.document.querySelector('#owner-heading')?.textContent ===
+          'Updating approval state…',
+      );
+      expect(h.window.document.querySelector('#owner-start')).toBeNull();
+      expect(h.window.document.querySelector('#tabbody')).not.toBeNull();
+      expect(h.window.document.querySelector('#owner-status')?.textContent).toBe('Loading spec…');
+      release();
+      await h.waitFor(
+        () =>
+          h.window.document.querySelector('#owner-heading')?.textContent ===
+            'Implementation in progress' && h.window.document.activeElement?.id === 'owner-heading',
+      );
+      expect(h.window.document.querySelector('#owner-finish')).toBeNull();
     } finally {
       h.window.close();
     }
