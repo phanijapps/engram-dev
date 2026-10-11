@@ -40,3 +40,9 @@ and the six server lifecycle expectations passed on each; original smoke files
 and exact tested-head provenance are retained under native-runtime/. These
 witnesses supply the runtime matrix, while the four full host journey categories
 in platform-evidence.json remain pending.
+
+Updated runtime witnesses after the asynchronous cleanup repair:
+[run 38101187204](https://github.com/phanijapps/engram-dev/actions/runs/38101187204)
+passed all six native OS/Node rows at d0a2bca. These unchanged downloaded
+artifacts are retained under native-runtime/run-38101187204/ and are now the
+release matrix's referenced runtime evidence. Earlier witnesses remain intact.

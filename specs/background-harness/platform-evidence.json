@@ -1,12 +1,12 @@
 {
   "format": "release-matrix/1",
   "runtimeFiles": [
-    "native-runtime/harness-smoke-Linux-22/harness-smoke.json",
-    "native-runtime/harness-smoke-Linux-24/harness-smoke.json",
-    "native-runtime/harness-smoke-Windows-22/harness-smoke.json",
-    "native-runtime/harness-smoke-Windows-24/harness-smoke.json",
-    "native-runtime/harness-smoke-macOS-22/harness-smoke.json",
-    "native-runtime/harness-smoke-macOS-24/harness-smoke.json"
+    "native-runtime/run-38101187204/harness-smoke-Linux-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Linux-24/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Windows-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Windows-24/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-macOS-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-macOS-24/harness-smoke.json"
   ],
   "hostObservations": "host-observations.json",
   "requiredRuntimePlatforms": [

@@ -141,3 +141,15 @@ filesystem retries, with all ownership checks retained. Independent read-only
 review returned **PASS — nothing to fix** and reran 8 runtime/callback tests.
 The earlier run7 witnesses identify their own source revision; the changed
 production runtime still requires new native evidence.
+
+Native verification of the changed production runtime: run 38101187204 at
+d0a2bca619760931dad44b0a6cbf20cf54ad973d passed every Linux/macOS/Windows
+Node 22/24 row, including coverage, packaging and all six lifecycle expectations.
+Original updated artifacts and hashes are under native-runtime/run-38101187204/.
+The matrix now references these witnesses; earlier run7 artifacts remain intact
+with their own provenance. Host activation/trust and owner closure remain open.
+
+Independent final review of the run10 evidence returned **PASS — nothing to
+fix**, checking all six originals, expected checks, hashes/provenance, matrix
+and documentation. Release status remains INCOMPLETE only for full host
+journeys; no PACK, host trust or owner Finish claim was fabricated.

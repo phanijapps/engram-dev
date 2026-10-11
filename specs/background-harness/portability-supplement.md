@@ -134,3 +134,8 @@ Native confirmation of the updated production source remains required.
 [Upstream Windows synchronous retry issue](https://github.com/nodejs/node/issues/64016)
 supports choosing asynchronous cleanup; it does not prove the exact root cause
 of every observed CI failure. ci-ninth-run.json retains the actual failed run.
+
+Actual confirmation of asynchronous runtime cleanup: run 38101187204 at
+d0a2bca passed all six native OS/Node rows, including coverage, portable package
+and server lifecycle journey. Updated originals and tested-head provenance are
+retained in native-runtime/run-38101187204/; earlier artifacts are preserved.
