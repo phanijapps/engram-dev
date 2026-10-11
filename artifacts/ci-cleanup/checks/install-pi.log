@@ -1,0 +1,3 @@
+project enrolled; runtime running: http://127.0.0.1:8788/
+Host activation is pending until you enable/reload the integration and, for Codex, review and trust its hook definition.
+installed: 4 file(s) written, 1 same, 3 skipped — plan recorded

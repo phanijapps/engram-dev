@@ -4,10 +4,14 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-function report(outcome: string, smoke?: object) {
+function report(outcome: string, smoke?: object | string) {
   const dir = mkdtempSync(join(tmpdir(), 'ci receipts '));
   try {
-    if (smoke) writeFileSync(join(dir, 'harness-smoke.json'), JSON.stringify(smoke));
+    if (smoke)
+      writeFileSync(
+        join(dir, 'harness-smoke.json'),
+        typeof smoke === 'string' ? smoke : JSON.stringify(smoke),
+      );
     const steps = { check: { outcome: 'failure' }, smoke: { outcome } };
     const result = spawnSync(
       process.execPath,
@@ -50,4 +54,12 @@ it('fails when an executed smoke step omitted its promised report, preserving th
   expect(result.stderr).toContain('omitted its required report');
   expect(receipt.steps.smoke.outcome).toBe('success');
   expect(receipt.smoke).toBe(null);
+});
+it('preserves all outcomes when a failed smoke step left malformed JSON', () => {
+  const { result, receipt, steps } = report('failure', '{incomplete');
+  expect(result.status).toBe(1);
+  expect(result.stderr).toContain('could not be read or parsed');
+  expect(receipt.steps).toEqual(steps);
+  expect(receipt.smoke).toBe(null);
+  expect(receipt.smoke_error).toContain('SyntaxError');
 });

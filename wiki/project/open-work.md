@@ -66,6 +66,20 @@ This report does not imply attested computation execution exists.
 
 # Verification boundary
 
+## CI evidence supplement — 2026-10-11
+
+For G5, current native execution evidence is now available: run 38175935828
+passed Linux, macOS and Windows on Node 22 and 24 for branch commit
+`76e2486c025de56df3ad795c508e5f75512eb3af` (PR merge `400c231cfed503e5cfaf290ee97d9c069bf96750`).
+The retained matrix receipts include corpus comparison, links, coverage,
+production audit, runtime packaging and smoke outcomes. Sources:
+`artifacts/ci-cleanup/native-run-76e2486.json` and
+`artifacts/ci-cleanup/native-76e2486/`.
+See [CI verification](/project/ci-verification.md) for the original failure,
+repairs, source boundaries and chronology. This supplies current execution
+evidence without changing the historical fresh-harness pack or certifying its
+original revision. The real host/platform acceptance in G4 remains separate.
+
 The owner deferred the remaining background harness host journeys to
 `specs/harness-host-acceptance/harness-host-acceptance.json`. That canonical
 backlog preserves the platform and surface acceptance requirements; runtime

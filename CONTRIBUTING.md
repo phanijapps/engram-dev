@@ -3,7 +3,8 @@
 Start with the [project overview](wiki/project/overview.md). Read
 [AGENTS](AGENTS.md) for the SDD workflow and [SECURITY](SECURITY.md) for reporting.
 
-Use Node 22.13+ in the 22.x line or Node 24.x and pnpm 9.15.9. Run from `treadle/`:
+Use Node 22.22.2+ in the 22.x line or Node 24.15+ in 24.x, and pnpm 9.15.9.
+Run from `treadle/`:
 
 ```bash
 corepack enable

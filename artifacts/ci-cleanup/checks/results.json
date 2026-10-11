@@ -1,0 +1,43 @@
+{
+  "observed_at": "2026-10-11 21:21:08 UTC",
+  "source_commit": "76e2486c025de56df3ad795c508e5f75512eb3af",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "command": "pnpm check",
+      "exit": 0,
+      "log": "checks/check.log"
+    },
+    {
+      "command": "pnpm coverage",
+      "exit": 0,
+      "log": "checks/coverage.log"
+    },
+    {
+      "command": "pnpm corpus:check",
+      "exit": 0,
+      "log": "checks/corpus.log"
+    },
+    {
+      "command": "pnpm brand:check",
+      "exit": 0,
+      "log": "checks/brand.log"
+    },
+    {
+      "command": "pnpm audit:prod",
+      "exit": 0,
+      "log": "checks/audit-prod.log"
+    },
+    {
+      "command": "pnpm links",
+      "exit": 0,
+      "log": "checks/links.log"
+    }
+  ],
+  "initial_logging_attempt": {
+    "commands_executed": false,
+    "exit": 1,
+    "reason": "Redirection used ../../artifacts from treadle; corrected to ../artifacts before running commands."
+  }
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "command": "pnpm check",
+    "exit": 0,
+    "log": "check.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  },
+  {
+    "command": "pnpm coverage",
+    "exit": 0,
+    "log": "coverage.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  },
+  {
+    "command": "pnpm corpus:check",
+    "exit": 0,
+    "log": "corpus-check.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  },
+  {
+    "command": "pnpm brand:check",
+    "exit": 0,
+    "log": "brand-check.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  },
+  {
+    "command": "pnpm audit:prod",
+    "exit": 0,
+    "log": "audit-prod.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  },
+  {
+    "command": "pnpm links",
+    "exit": 0,
+    "log": "links.log",
+    "scope": "Linux source unchanged; not a native repair witness"
+  }
+]

@@ -1,0 +1,2362 @@
+[
+  {
+    "id": 114569561138,
+    "name": "check (macos-latest, 24)",
+    "conclusion": "failure",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561138",
+    "failures": [
+      {
+        "test": "packages/cli/test/codex-project-paths.test.ts > global hooks retain absolute payload paths and execute from an unrelated cwd",
+        "log_line": 469,
+        "diagnostics": [
+          "SyntaxError: Unexpected end of JSON input",
+          "\u276f packages/cli/test/codex-project-paths.test.ts:158:17"
+        ],
+        "primary_diagnostic_log_line": 470
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resolves only an enrolled canonical pack and rejects absent registry matches",
+        "log_line": 481,
+        "diagnostics": [
+          "FeedbackError: Connect the explicit workspace first; feedback needs one enrolled project and canonical spec directory",
+          "\u276f Module.feedbackProject packages/cli/src/commands/feedback.ts:28:11",
+          "\u276f packages/cli/test/feedback-cli.test.ts:98:12"
+        ],
+        "primary_diagnostic_log_line": 482
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > opens through capability detection, echoes selection and returns the precise project URL",
+        "log_line": 494,
+        "diagnostics": [
+          "AssertionError: expected 1 to be +0 // Object.is equality",
+          "\u276f packages/cli/test/feedback-cli.test.ts:123:20"
+        ],
+        "primary_diagnostic_log_line": 495
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns original cursor on an open retry after a submitted batch",
+        "log_line": 513,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:160:12"
+        ],
+        "primary_diagnostic_log_line": 514
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > refuses older or unavailable applications before publishing snapshots",
+        "log_line": 535,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f packages/cli/test/feedback-cli.test.ts:190:12"
+        ],
+        "primary_diagnostic_log_line": 536
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays open and round operations from original immutable bytes after live-source changes",
+        "log_line": 553,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:196:24"
+        ],
+        "primary_diagnostic_log_line": 558
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "log_line": 1223,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:226:20"
+        ],
+        "primary_diagnostic_log_line": 1224
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs",
+        "log_line": 1240,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:246:17"
+        ],
+        "primary_diagnostic_log_line": 1241
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resumes a bounded wait when a batch arrives without consuming it",
+        "log_line": 1258,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:274:17"
+        ],
+        "primary_diagnostic_log_line": 1259
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state",
+        "log_line": 1276,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:299:17"
+        ],
+        "primary_diagnostic_log_line": 1277
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > records replies with explicit agent identity and rejects human role or oversized body files",
+        "log_line": 1294,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:314:17"
+        ],
+        "primary_diagnostic_log_line": 1295
+      },
+      {
+        "test": "packages/cli/test/feedback-harness.test.ts > context exposes counts and stable IDs without draft, submitted, reply or snapshot bodies and never admits work",
+        "log_line": 1312,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/cli/test/feedback-harness.test.ts:82:26",
+          "\u276f Object.open packages/cli/test/feedback-harness.test.ts:87:5",
+          "\u276f packages/cli/test/feedback-harness.test.ts:96:11"
+        ],
+        "primary_diagnostic_log_line": 1313
+      },
+      {
+        "test": "packages/cli/test/feedback-harness.test.ts > bounds context summaries and reports corrupt state without injecting its content or changing files",
+        "log_line": 1330,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/cli/test/feedback-harness.test.ts:82:26",
+          "\u276f Object.open packages/cli/test/feedback-harness.test.ts:87:5",
+          "\u276f packages/cli/test/feedback-harness.test.ts:148:34"
+        ],
+        "primary_diagnostic_log_line": 1331
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart",
+        "log_line": 1348,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:118:9"
+        ],
+        "primary_diagnostic_log_line": 1349
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "log_line": 1365,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:203:69"
+        ],
+        "primary_diagnostic_log_line": 1366
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > replays a durably submitted batch after a lost acknowledgement without duplication",
+        "log_line": 1382,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:276:9"
+        ],
+        "primary_diagnostic_log_line": 1383
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > never supplies Start through feedback, invalidates an old Start on plan change, and keeps closed history read-only",
+        "log_line": 1399,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:324:9"
+        ],
+        "primary_diagnostic_log_line": 1400
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > reads registered Markdown and explicit documents without Git, and excludes unrelated dirty bytes",
+        "log_line": 1416,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:74:20"
+        ],
+        "primary_diagnostic_log_line": 1417
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > refuses duplicate, missing, directory, state, credential and escaping selections",
+        "log_line": 1431,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'absent' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:102:7"
+        ],
+        "primary_diagnostic_log_line": 1432
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "log_line": 1447,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:147:20"
+        ],
+        "primary_diagnostic_log_line": 1448
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "log_line": 1462,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:167:18"
+        ],
+        "primary_diagnostic_log_line": 1463
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "log_line": 1477,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:212:20"
+        ],
+        "primary_diagnostic_log_line": 1478
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > preserves selected BOM bytes and refuses canonical JSON symlinks",
+        "log_line": 1492,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:226:7"
+        ],
+        "primary_diagnostic_log_line": 1493
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "log_line": 1507,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:250:20"
+        ],
+        "primary_diagnostic_log_line": 1508
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "log_line": 1522,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:276:7"
+        ],
+        "primary_diagnostic_log_line": 1523
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "log_line": 1538,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:284:20"
+        ],
+        "primary_diagnostic_log_line": 1539
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > publishes immutable sides and never changes canonical owner bytes",
+        "log_line": 1553,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:101:17"
+        ],
+        "primary_diagnostic_log_line": 1554
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > keeps drafts private to state until explicit submission and supports restart/redelivery",
+        "log_line": 1571,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:124:17"
+        ],
+        "primary_diagnostic_log_line": 1572
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > returns the same operation receipt before stale revision checks and rejects changed retries",
+        "log_line": 1589,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f packages/core/test/feedback.test.ts:159:21"
+        ],
+        "primary_diagnostic_log_line": 1590
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > seals submissions, delivers empty batches without granting approval, and permits new rounds",
+        "log_line": 1605,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:171:17"
+        ],
+        "primary_diagnostic_log_line": 1606
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > recovers stale threads through refreshed snapshots and human reattachment plus Submit",
+        "log_line": 1623,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:193:17"
+        ],
+        "primary_diagnostic_log_line": 1624
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"start\":0} without a revision change",
+        "log_line": 1641,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647,
+        "shared_diagnostic_with_fail_titles_at": [1642, 1643, 1644, 1645, 1646]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"end\":3} without a revision change",
+        "log_line": 1642,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647,
+        "shared_diagnostic_with_fail_titles_at": [1643, 1644, 1645, 1646]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"sha256\":\"0000000000000000000000000000000000000000000000000000000000000000\"} without a revision change",
+        "log_line": 1643,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647,
+        "shared_diagnostic_with_fail_titles_at": [1644, 1645, 1646]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"side\":\"before\"} without a revision change",
+        "log_line": 1644,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647,
+        "shared_diagnostic_with_fail_titles_at": [1645, 1646]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"quote\":\"forged\"} without a revision change",
+        "log_line": 1645,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647,
+        "shared_diagnostic_with_fail_titles_at": [1646]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"quote\":\"two\"} without a revision change",
+        "log_line": 1646,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 1647
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > supports round/file comments and absent/deleted text sides with explicit line bounds",
+        "log_line": 1664,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:270:17"
+        ],
+        "primary_diagnostic_log_line": 1665
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses role confusion, draft loss and changed target selection",
+        "log_line": 1682,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:295:17"
+        ],
+        "primary_diagnostic_log_line": 1683
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves BOM snapshot bytes across reads and payload retries",
+        "log_line": 1700,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f packages/core/test/feedback.test.ts:346:15"
+        ],
+        "primary_diagnostic_log_line": 1701
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > flushes the published state and newly created feedback parent on lost-ack retries",
+        "log_line": 1716,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'lost ack' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:372:7"
+        ],
+        "primary_diagnostic_log_line": 1717
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses canonical JSON symlinks on reads and locked writes",
+        "log_line": 1732,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'Symlink' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:387:47"
+        ],
+        "primary_diagnostic_log_line": 1733
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > uses the same writer lock and refuses audit recovery or completed writes",
+        "log_line": 1748,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:392:17"
+        ],
+        "primary_diagnostic_log_line": 1749
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > fails closed on format corruption, changed snapshots and cross-project/symlink reads",
+        "log_line": 1766,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:413:17"
+        ],
+        "primary_diagnostic_log_line": 1767
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves unacknowledged snapshots artifacts for explicit orphan recovery",
+        "log_line": 1784,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'injected failure' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:450:9"
+        ],
+        "primary_diagnostic_log_line": 1786,
+        "shared_diagnostic_with_fail_titles_at": [1785]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves unacknowledged ledger-flushed artifacts for explicit orphan recovery",
+        "log_line": 1785,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'injected failure' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:450:9"
+        ],
+        "primary_diagnostic_log_line": 1786
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > recovers a published-but-unacknowledged result by the same operation ID",
+        "log_line": 1801,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'ack lost' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:477:7"
+        ],
+        "primary_diagnostic_log_line": 1802
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > rechecks sources inside the lock before acknowledging and enforces body/file/round counts",
+        "log_line": 1817,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'source drift' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:500:7"
+        ],
+        "primary_diagnostic_log_line": 1818
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > isolates snapshots and records comments, submission retries and resolution without canonical writes",
+        "log_line": 1833,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:92:19"
+        ],
+        "primary_diagnostic_log_line": 1834
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > rejects CSRF, role escalation, malformed anchors, oversized input and path escapes",
+        "log_line": 1850,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:160:19"
+        ],
+        "primary_diagnostic_log_line": 1851
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > retains closed history but rejects writes and leaves legacy packs unsupported",
+        "log_line": 1867,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:220:19"
+        ],
+        "primary_diagnostic_log_line": 1868
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > renders inert source, keyboard line selection, draft save and explicit Submit without owner writes",
+        "log_line": 1884,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:133:19"
+        ],
+        "primary_diagnostic_log_line": 1885
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > preserves local input and line range across remount and revision conflicts",
+        "log_line": 1902,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:165:19"
+        ],
+        "primary_diagnostic_log_line": 1903
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > shows first-run, unsupported and closed states with disabled writes",
+        "log_line": 1920,
+        "diagnostics": [
+          "AssertionError: expected 'FeedbackRefresh feedbackReview commen\u2026' to contain 'No review session'",
+          "\u276f packages/web/test/feedback-ui.test.ts:198:32"
+        ],
+        "primary_diagnostic_log_line": 1921
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > retains original anchor, shows stale/replies and explicitly reattaches to an open new round",
+        "log_line": 1936,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:218:19"
+        ],
+        "primary_diagnostic_log_line": 1937
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > paginates large source without silently dropping lines and keeps Markdown preview opaque",
+        "log_line": 1954,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:268:19"
+        ],
+        "primary_diagnostic_log_line": 1955
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > shows explicit old and new diff sides without interpreting either as app markup",
+        "log_line": 1972,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:298:19"
+        ],
+        "primary_diagnostic_log_line": 1973
+      }
+    ],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 14,
+        "start_column": null,
+        "end_line": 14,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "No files were found with the provided path: /Users/runner/work/_temp/harness-smoke.json. No artifacts will be uploaded.",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:299:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resumes a bounded wait when a batch arrives without consuming it",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:274:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:246:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:226:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays open and round operations from original immutable bytes after live-source changes",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:196:24\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > refuses older or unavailable applications before publishing snapshots",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f packages/cli/test/feedback-cli.test.ts:190:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns original cursor on an open retry after a submitted batch",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:160:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-cli.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-cli.test.ts",
+        "start_line": 123,
+        "start_column": null,
+        "end_line": 123,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > opens through capability detection, echoes selection and returns the precise project URL",
+        "message": "AssertionError: expected 1 to be +0 // Object.is equality\n\n- Expected\n+ Received\n\n- 0\n+ 1\n\n \u276f packages/cli/test/feedback-cli.test.ts:123:20\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/commands/feedback.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/commands/feedback.ts",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resolves only an enrolled canonical pack and rejects absent registry matches",
+        "message": "FeedbackError: Connect the explicit workspace first; feedback needs one enrolled project and canonical spec directory\n \u276f Module.feedbackProject packages/cli/src/commands/feedback.ts:28:11\n \u276f packages/cli/test/feedback-cli.test.ts:98:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'unavailable' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/codex-project-paths.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/codex-project-paths.test.ts",
+        "start_line": 158,
+        "start_column": null,
+        "end_line": 158,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/codex-project-paths.test.ts > global hooks retain absolute payload paths and execute from an unrelated cwd",
+        "message": "SyntaxError: Unexpected end of JSON input\n \u276f packages/cli/test/codex-project-paths.test.ts:158:17\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "Due to capacity constraints, jobs targeting macOS arm64 runners may experience longer queue times.",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "id": 114569561183,
+    "name": "check (windows-latest, 24)",
+    "conclusion": "failure",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561183",
+    "failures": [
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "log_line": 2428,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17",
+          "\u276f packages/cli/test/feedback-cli.test.ts:227:19"
+        ],
+        "primary_diagnostic_log_line": 2429
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "log_line": 2443,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17",
+          "\u276f packages/cli/test/feedback-loop.test.ts:203:18"
+        ],
+        "primary_diagnostic_log_line": 2444
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "log_line": 2458,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:147:20"
+        ],
+        "primary_diagnostic_log_line": 2459
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "log_line": 2472,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:167:18"
+        ],
+        "primary_diagnostic_log_line": 2473
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "log_line": 2486,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:212:20"
+        ],
+        "primary_diagnostic_log_line": 2487
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "log_line": 2500,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:250:20"
+        ],
+        "primary_diagnostic_log_line": 2501
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "log_line": 2514,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Diff paths resolve from the enrolled \u2026'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:276:7"
+        ],
+        "primary_diagnostic_log_line": 2515
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "log_line": 2530,
+        "diagnostics": [
+          "Error: ENOENT: no such file or directory, open 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-aRMnuF\\:(glob)*.ts'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:282:5"
+        ],
+        "primary_diagnostic_log_line": 2531
+      }
+    ],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 14,
+        "start_column": null,
+        "end_line": 14,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "No files were found with the provided path: D:\\a\\_temp/harness-smoke.json. No artifacts will be uploaded.",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 417,
+        "start_column": null,
+        "end_line": 417,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "start_line": 282,
+        "start_column": null,
+        "end_line": 282,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "message": "Error: ENOENT: no such file or directory, open 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-aRMnuF\\:(glob)*.ts'\n \u276f packages/cli/test/feedback-snapshot.test.ts:282:5\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { errno: -4058, code: 'ENOENT', syscall: 'open', path: 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-aRMnuF\\:(glob)*.ts' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "start_line": 276,
+        "start_column": null,
+        "end_line": 276,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "message": "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Diff paths resolve from the enrolled \u2026'\n\nExpected: \"unavailable\"\nReceived: \"Diff paths resolve from the enrolled Git root\"\n\n \u276f packages/cli/test/feedback-snapshot.test.ts:276:7\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:250:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:212:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:167:18\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:147:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17\n \u276f packages/cli/test/feedback-loop.test.ts:203:18\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17\n \u276f packages/cli/test/feedback-cli.test.ts:227:19\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "id": 114569561219,
+    "name": "check (windows-latest, 22)",
+    "conclusion": "failure",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561219",
+    "failures": [
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "log_line": 3064,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17",
+          "\u276f packages/cli/test/feedback-cli.test.ts:227:19"
+        ],
+        "primary_diagnostic_log_line": 3065
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "log_line": 3079,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17",
+          "\u276f packages/cli/test/feedback-loop.test.ts:203:18"
+        ],
+        "primary_diagnostic_log_line": 3080
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "log_line": 3094,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:147:20"
+        ],
+        "primary_diagnostic_log_line": 3095
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "log_line": 3108,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:167:18"
+        ],
+        "primary_diagnostic_log_line": 3109
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "log_line": 3122,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:212:20"
+        ],
+        "primary_diagnostic_log_line": 3123
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "log_line": 3136,
+        "diagnostics": [
+          "FeedbackError: Diff paths resolve from the enrolled Git root",
+          "\u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:250:20"
+        ],
+        "primary_diagnostic_log_line": 3137
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "log_line": 3150,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Diff paths resolve from the enrolled \u2026'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:276:7"
+        ],
+        "primary_diagnostic_log_line": 3151
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "log_line": 3166,
+        "diagnostics": [
+          "Error: ENOENT: no such file or directory, open 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-k2BH1g\\:(glob)*.ts'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:282:5"
+        ],
+        "primary_diagnostic_log_line": 3167
+      }
+    ],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 14,
+        "start_column": null,
+        "end_line": 14,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "No files were found with the provided path: D:\\a\\_temp/harness-smoke.json. No artifacts will be uploaded.",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 424,
+        "start_column": null,
+        "end_line": 424,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "",
+        "message": "Process completed with exit code 1.",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "start_line": 282,
+        "start_column": null,
+        "end_line": 282,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "message": "Error: ENOENT: no such file or directory, open 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-k2BH1g\\:(glob)*.ts'\n \u276f packages/cli/test/feedback-snapshot.test.ts:282:5\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { errno: -4058, code: 'ENOENT', syscall: 'open', path: 'C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\feedback-snapshot-k2BH1g\\:(glob)*.ts' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-snapshot.test.ts",
+        "start_line": 276,
+        "start_column": null,
+        "end_line": 276,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "message": "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Diff paths resolve from the enrolled \u2026'\n\nExpected: \"unavailable\"\nReceived: \"Diff paths resolve from the enrolled Git root\"\n\n \u276f packages/cli/test/feedback-snapshot.test.ts:276:7\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:250:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:212:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:167:18\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f packages/cli/test/feedback-snapshot.test.ts:147:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17\n \u276f packages/cli/test/feedback-loop.test.ts:203:18\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "start_line": 18,
+        "start_column": null,
+        "end_line": 18,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "message": "FeedbackError: Diff paths resolve from the enrolled Git root\n \u276f refuse packages/cli/src/harness/feedback-snapshot.ts:18:9\n \u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:207:7\n \u276f Module.publishFeedbackSnapshots packages/cli/src/commands/feedback.ts:85:17\n \u276f packages/cli/test/feedback-cli.test.ts:227:19\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "id": 114569561290,
+    "name": "check (macos-latest, 22)",
+    "conclusion": "failure",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561290",
+    "failures": [
+      {
+        "test": "packages/cli/test/codex-project-paths.test.ts > global hooks retain absolute payload paths and execute from an unrelated cwd",
+        "log_line": 3763,
+        "diagnostics": [
+          "SyntaxError: Unexpected end of JSON input",
+          "\u276f packages/cli/test/codex-project-paths.test.ts:158:17"
+        ],
+        "primary_diagnostic_log_line": 3764
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resolves only an enrolled canonical pack and rejects absent registry matches",
+        "log_line": 3775,
+        "diagnostics": [
+          "FeedbackError: Connect the explicit workspace first; feedback needs one enrolled project and canonical spec directory",
+          "\u276f Module.feedbackProject packages/cli/src/commands/feedback.ts:28:11",
+          "\u276f packages/cli/test/feedback-cli.test.ts:98:12"
+        ],
+        "primary_diagnostic_log_line": 3776
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > opens through capability detection, echoes selection and returns the precise project URL",
+        "log_line": 3788,
+        "diagnostics": [
+          "AssertionError: expected 1 to be +0 // Object.is equality",
+          "\u276f packages/cli/test/feedback-cli.test.ts:123:20"
+        ],
+        "primary_diagnostic_log_line": 3789
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns original cursor on an open retry after a submitted batch",
+        "log_line": 3807,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:160:12"
+        ],
+        "primary_diagnostic_log_line": 3808
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > refuses older or unavailable applications before publishing snapshots",
+        "log_line": 3830,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f packages/cli/test/feedback-cli.test.ts:190:12"
+        ],
+        "primary_diagnostic_log_line": 3832
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays open and round operations from original immutable bytes after live-source changes",
+        "log_line": 3851,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:196:24"
+        ],
+        "primary_diagnostic_log_line": 3852
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "log_line": 3868,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f packages/cli/test/feedback-cli.test.ts:226:20"
+        ],
+        "primary_diagnostic_log_line": 3869
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs",
+        "log_line": 3885,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:246:17"
+        ],
+        "primary_diagnostic_log_line": 3886
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resumes a bounded wait when a batch arrives without consuming it",
+        "log_line": 3903,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:274:17"
+        ],
+        "primary_diagnostic_log_line": 3904
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state",
+        "log_line": 3921,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:299:17"
+        ],
+        "primary_diagnostic_log_line": 3922
+      },
+      {
+        "test": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > records replies with explicit agent identity and rejects human role or oversized body files",
+        "log_line": 3939,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f envelope packages/cli/test/feedback-cli.test.ts:81:24",
+          "\u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83",
+          "\u276f packages/cli/test/feedback-cli.test.ts:314:17"
+        ],
+        "primary_diagnostic_log_line": 3940
+      },
+      {
+        "test": "packages/cli/test/feedback-harness.test.ts > context exposes counts and stable IDs without draft, submitted, reply or snapshot bodies and never admits work",
+        "log_line": 3957,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/cli/test/feedback-harness.test.ts:82:26",
+          "\u276f Object.open packages/cli/test/feedback-harness.test.ts:87:5",
+          "\u276f packages/cli/test/feedback-harness.test.ts:96:11"
+        ],
+        "primary_diagnostic_log_line": 3958
+      },
+      {
+        "test": "packages/cli/test/feedback-harness.test.ts > bounds context summaries and reports corrupt state without injecting its content or changing files",
+        "log_line": 3975,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/cli/test/feedback-harness.test.ts:82:26",
+          "\u276f Object.open packages/cli/test/feedback-harness.test.ts:87:5",
+          "\u276f packages/cli/test/feedback-harness.test.ts:148:34"
+        ],
+        "primary_diagnostic_log_line": 3976
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart",
+        "log_line": 3993,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:118:9"
+        ],
+        "primary_diagnostic_log_line": 3994
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > delivers stale reattachment only after another human Submit and preserves the original code anchor",
+        "log_line": 4010,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:203:69"
+        ],
+        "primary_diagnostic_log_line": 4011
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > replays a durably submitted batch after a lost acknowledgement without duplication",
+        "log_line": 4027,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:276:9"
+        ],
+        "primary_diagnostic_log_line": 4028
+      },
+      {
+        "test": "packages/cli/test/feedback-loop.test.ts > never supplies Start through feedback, invalidates an old Start on plan change, and keeps closed history read-only",
+        "log_line": 4044,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f Object.envelope packages/cli/test/feedback-loop.test.ts:83:24",
+          "\u276f packages/cli/test/feedback-loop.test.ts:324:9"
+        ],
+        "primary_diagnostic_log_line": 4045
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > reads registered Markdown and explicit documents without Git, and excludes unrelated dirty bytes",
+        "log_line": 4061,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:74:20"
+        ],
+        "primary_diagnostic_log_line": 4062
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > refuses duplicate, missing, directory, state, credential and escaping selections",
+        "log_line": 4076,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'absent' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:102:7"
+        ],
+        "primary_diagnostic_log_line": 4077
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline",
+        "log_line": 4092,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:147:20"
+        ],
+        "primary_diagnostic_log_line": 4093
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > keeps both sides of selected renames and reads committed head comparisons",
+        "log_line": 4107,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:167:18"
+        ],
+        "primary_diagnostic_log_line": 4108
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > does not execute external diff, textconv, clean or smudge commands",
+        "log_line": 4122,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:212:20"
+        ],
+        "primary_diagnostic_log_line": 4123
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > preserves selected BOM bytes and refuses canonical JSON symlinks",
+        "log_line": 4137,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:226:7"
+        ],
+        "primary_diagnostic_log_line": 4138
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > ignores inherited Git routing and index configuration",
+        "log_line": 4152,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:250:20"
+        ],
+        "primary_diagnostic_log_line": 4153
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > fails offline for absent promisor objects without executing configured transport",
+        "log_line": 4167,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'unavailable' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:276:7"
+        ],
+        "primary_diagnostic_log_line": 4168
+      },
+      {
+        "test": "packages/cli/test/feedback-snapshot.test.ts > selected feedback snapshots > detects moving refs, literal path names and unsupported/no Git selections",
+        "log_line": 4183,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f Module.feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f Module.buildFeedbackSnapshots packages/cli/src/harness/feedback-snapshot.ts:141:19",
+          "\u276f packages/cli/test/feedback-snapshot.test.ts:284:20"
+        ],
+        "primary_diagnostic_log_line": 4184
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > publishes immutable sides and never changes canonical owner bytes",
+        "log_line": 4198,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:101:17"
+        ],
+        "primary_diagnostic_log_line": 4199
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > keeps drafts private to state until explicit submission and supports restart/redelivery",
+        "log_line": 4216,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:124:17"
+        ],
+        "primary_diagnostic_log_line": 4217
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > returns the same operation receipt before stale revision checks and rejects changed retries",
+        "log_line": 4234,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f packages/core/test/feedback.test.ts:159:21"
+        ],
+        "primary_diagnostic_log_line": 4235
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > seals submissions, delivers empty batches without granting approval, and permits new rounds",
+        "log_line": 4250,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:171:17"
+        ],
+        "primary_diagnostic_log_line": 4251
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > recovers stale threads through refreshed snapshots and human reattachment plus Submit",
+        "log_line": 4268,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:193:17"
+        ],
+        "primary_diagnostic_log_line": 4269
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"start\":0} without a revision change",
+        "log_line": 4286,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292,
+        "shared_diagnostic_with_fail_titles_at": [4287, 4288, 4289, 4290, 4291]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"end\":3} without a revision change",
+        "log_line": 4287,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292,
+        "shared_diagnostic_with_fail_titles_at": [4288, 4289, 4290, 4291]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"sha256\":\"0000000000000000000000000000000000000000000000000000000000000000\"} without a revision change",
+        "log_line": 4288,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292,
+        "shared_diagnostic_with_fail_titles_at": [4289, 4290, 4291]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"side\":\"before\"} without a revision change",
+        "log_line": 4289,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292,
+        "shared_diagnostic_with_fail_titles_at": [4290, 4291]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"quote\":\"forged\"} without a revision change",
+        "log_line": 4290,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292,
+        "shared_diagnostic_with_fail_titles_at": [4291]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses forged/invalid anchors {\"quote\":\"two\"} without a revision change",
+        "log_line": 4291,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:255:17"
+        ],
+        "primary_diagnostic_log_line": 4292
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > supports round/file comments and absent/deleted text sides with explicit line bounds",
+        "log_line": 4309,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:270:17"
+        ],
+        "primary_diagnostic_log_line": 4310
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses role confusion, draft loss and changed target selection",
+        "log_line": 4327,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:295:17"
+        ],
+        "primary_diagnostic_log_line": 4328
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves BOM snapshot bytes across reads and payload retries",
+        "log_line": 4345,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f packages/core/test/feedback.test.ts:346:15"
+        ],
+        "primary_diagnostic_log_line": 4346
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > flushes the published state and newly created feedback parent on lost-ack retries",
+        "log_line": 4361,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'lost ack' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:372:7"
+        ],
+        "primary_diagnostic_log_line": 4362
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > refuses canonical JSON symlinks on reads and locked writes",
+        "log_line": 4377,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'Symlink' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:387:47"
+        ],
+        "primary_diagnostic_log_line": 4378
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > uses the same writer lock and refuses audit recovery or completed writes",
+        "log_line": 4393,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:392:17"
+        ],
+        "primary_diagnostic_log_line": 4394
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > fails closed on format corruption, changed snapshots and cross-project/symlink reads",
+        "log_line": 4411,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/core/test/feedback.test.ts:60:26",
+          "\u276f Object.open packages/core/test/feedback.test.ts:65:5",
+          "\u276f packages/core/test/feedback.test.ts:413:17"
+        ],
+        "primary_diagnostic_log_line": 4412
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves unacknowledged snapshots artifacts for explicit orphan recovery",
+        "log_line": 4429,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'injected failure' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:450:9"
+        ],
+        "primary_diagnostic_log_line": 4431,
+        "shared_diagnostic_with_fail_titles_at": [4430]
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > preserves unacknowledged ledger-flushed artifacts for explicit orphan recovery",
+        "log_line": 4430,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'injected failure' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:450:9"
+        ],
+        "primary_diagnostic_log_line": 4431
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > recovers a published-but-unacknowledged result by the same operation ID",
+        "log_line": 4446,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'ack lost' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:477:7"
+        ],
+        "primary_diagnostic_log_line": 4447
+      },
+      {
+        "test": "packages/core/test/feedback.test.ts > durable artifact feedback > rechecks sources inside the lock before acknowledging and enforces body/file/round counts",
+        "log_line": 4462,
+        "diagnostics": [
+          "AssertionError: expected [Function] to throw error including 'source drift' but got 'Path leaves the trusted workspace'",
+          "\u276f packages/core/test/feedback.test.ts:500:7"
+        ],
+        "primary_diagnostic_log_line": 4463
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > isolates snapshots and records comments, submission retries and resolution without canonical writes",
+        "log_line": 4478,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:92:19"
+        ],
+        "primary_diagnostic_log_line": 4479
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > rejects CSRF, role escalation, malformed anchors, oversized input and path escapes",
+        "log_line": 4495,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:160:19"
+        ],
+        "primary_diagnostic_log_line": 4496
+      },
+      {
+        "test": "packages/web/test/feedback-api.test.ts > retains closed history but rejects writes and leaves legacy packs unsupported",
+        "log_line": 4512,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.mutateFeedback packages/core/src/feedback/store.ts:636:15",
+          "\u276f fixture packages/web/test/feedback-api.test.ts:56:18",
+          "\u276f packages/web/test/feedback-api.test.ts:220:19"
+        ],
+        "primary_diagnostic_log_line": 4513
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > renders inert source, keyboard line selection, draft save and explicit Submit without owner writes",
+        "log_line": 4529,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:133:19"
+        ],
+        "primary_diagnostic_log_line": 4530
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > preserves local input and line range across remount and revision conflicts",
+        "log_line": 4547,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:165:19"
+        ],
+        "primary_diagnostic_log_line": 4548
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > shows first-run, unsupported and closed states with disabled writes",
+        "log_line": 4565,
+        "diagnostics": [
+          "AssertionError: expected 'FeedbackRefresh feedbackReview commen\u2026' to contain 'No review session'",
+          "\u276f packages/web/test/feedback-ui.test.ts:198:32"
+        ],
+        "primary_diagnostic_log_line": 4566
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > retains original anchor, shows stale/replies and explicitly reattaches to an open new round",
+        "log_line": 4581,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:218:19"
+        ],
+        "primary_diagnostic_log_line": 4582
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > paginates large source without silently dropping lines and keeps Markdown preview opaque",
+        "log_line": 4599,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:268:19"
+        ],
+        "primary_diagnostic_log_line": 4600
+      },
+      {
+        "test": "packages/web/test/feedback-ui.test.ts > shows explicit old and new diff sides without interpreting either as app markup",
+        "log_line": 4617,
+        "diagnostics": [
+          "FeedbackError: Path leaves the trusted workspace",
+          "\u276f fail packages/core/src/feedback/store.ts:42:9",
+          "\u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5",
+          "\u276f location packages/core/src/feedback/store.ts:108:15",
+          "\u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15",
+          "\u276f apply packages/web/test/feedback-ui.test.ts:39:26",
+          "\u276f fixture packages/web/test/feedback-ui.test.ts:44:7",
+          "\u276f packages/web/test/feedback-ui.test.ts:298:19"
+        ],
+        "primary_diagnostic_log_line": 4618
+      }
+    ],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 14,
+        "start_column": null,
+        "end_line": 14,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "No files were found with the provided path: /Users/runner/work/_temp/harness-smoke.json. No artifacts will be uploaded.",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:299:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resumes a bounded wait when a batch arrives without consuming it",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:274:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f Object.open packages/cli/test/feedback-cli.test.ts:84:83\n \u276f packages/cli/test/feedback-cli.test.ts:246:17\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays an identical diff open after a symbolic baseline moves and rejects changed request identity",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:226:20\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > replays open and round operations from original immutable bytes after live-source changes",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:196:24\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > refuses older or unavailable applications before publishing snapshots",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f packages/cli/test/feedback-cli.test.ts:190:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/core/src/feedback/store.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/core/src/feedback/store.ts",
+        "start_line": 42,
+        "start_column": null,
+        "end_line": 42,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns original cursor on an open retry after a submitted batch",
+        "message": "FeedbackError: Path leaves the trusted workspace\n \u276f fail packages/core/src/feedback/store.ts:42:9\n \u276f feedbackContainedPath packages/core/src/feedback/store.ts:81:5\n \u276f location packages/core/src/feedback/store.ts:108:15\n \u276f Module.readFeedback packages/core/src/feedback/store.ts:378:15\n \u276f Object.envelope packages/cli/test/feedback-cli.test.ts:81:24\n \u276f packages/cli/test/feedback-cli.test.ts:160:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'forbidden' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/feedback-cli.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/feedback-cli.test.ts",
+        "start_line": 123,
+        "start_column": null,
+        "end_line": 123,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > opens through capability detection, echoes selection and returns the precise project URL",
+        "message": "AssertionError: expected 1 to be +0 // Object.is equality\n\n- Expected\n+ Received\n\n- 0\n+ 1\n\n \u276f packages/cli/test/feedback-cli.test.ts:123:20\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/src/commands/feedback.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/src/commands/feedback.ts",
+        "start_line": 28,
+        "start_column": null,
+        "end_line": 28,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/feedback-cli.test.ts > portable CLI feedback > resolves only an enrolled canonical pack and rejects absent registry matches",
+        "message": "FeedbackError: Connect the explicit workspace first; feedback needs one enrolled project and canonical spec directory\n \u276f Module.feedbackProject packages/cli/src/commands/feedback.ts:28:11\n \u276f packages/cli/test/feedback-cli.test.ts:98:12\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\nSerialized Error: { code: 'unavailable' }\n",
+        "raw_details": ""
+      },
+      {
+        "path": "treadle/packages/cli/test/codex-project-paths.test.ts",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/treadle/packages/cli/test/codex-project-paths.test.ts",
+        "start_line": 158,
+        "start_column": null,
+        "end_line": 158,
+        "end_column": null,
+        "annotation_level": "failure",
+        "title": "packages/cli/test/codex-project-paths.test.ts > global hooks retain absolute payload paths and execute from an unrelated cwd",
+        "message": "SyntaxError: Unexpected end of JSON input\n \u276f packages/cli/test/codex-project-paths.test.ts:158:17\n\n",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "Due to capacity constraints, jobs targeting macOS arm64 runners may experience longer queue times.",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "id": 114569561326,
+    "name": "check (ubuntu-latest, 22)",
+    "conclusion": "success",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561326",
+    "failures": [],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+        "raw_details": ""
+      }
+    ]
+  },
+  {
+    "id": 114569561331,
+    "name": "check (ubuntu-latest, 24)",
+    "conclusion": "success",
+    "url": "https://github.com/phanijapps/wukong/actions/runs/38173060745/job/114569561331",
+    "failures": [],
+    "annotations": [
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 2,
+        "start_column": null,
+        "end_line": 2,
+        "end_column": null,
+        "annotation_level": "warning",
+        "title": "",
+        "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/upload-artifact@v4, pnpm/action-setup@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+        "raw_details": ""
+      },
+      {
+        "path": ".github",
+        "blob_href": "https://github.com/phanijapps/wukong/blob/18c527bd652847a2ae80c07212f4aaaaed9572e3/.github",
+        "start_line": 1,
+        "start_column": null,
+        "end_line": 1,
+        "end_column": null,
+        "annotation_level": "notice",
+        "title": "",
+        "message": "\"The ubuntu-latest label will migrate to Ubuntu 26 beginning October 19, 2026. For more information, see https://github.com/actions/runner-images/issues/14748\"",
+        "raw_details": ""
+      }
+    ]
+  }
+]
