@@ -9,7 +9,7 @@
 # Windows users can use install.ps1 without Bash.
 set -euo pipefail
 
-REPO_URL="https://github.com/phanijapps/engram-dev"
+REPO_URL="${HARNESS_REPO_URL:-https://github.com/phanijapps/engram-dev}"
 SRC_DIR="${ENGRAM_SRC:-$HOME/.engram-dev}"
 
 say() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
@@ -35,7 +35,7 @@ say "linking the CLI globally (pnpm link)"
 ( cd "$SRC_DIR/treadle/packages/cli" && pnpm link --global )
 
 say "verifying"
-treadle --version
+wukong --version
 
-say "installed. try: treadle init harness"
+say "installed. try: wukong init harness"
 say "uninstall: (cd $SRC_DIR/treadle/packages/cli && pnpm unlink --global) && rm -rf $SRC_DIR"

@@ -4,11 +4,13 @@
  * `pnpm brand:set`) — no other source file contains the name.
  */
 export const brand = {
-  name: 'treadle',
-  binName: 'treadle',
+  name: 'Wukong',
+  binName: 'wukong',
+  /** Stable storage identity preserves existing enrollment across public renames. */
+  stateDirectory: 'treadle',
   tagline: 'The human drives; the machine moves.',
   /** Lineage note kept for one release cycle after any rename. */
-  formerly: 'loom',
+  formerly: 'treadle',
   /** Format tags are CONTRACTS, never brands (naming doc, rule 3). */
   formatTags: { pack: 'specpack/0.3', events: 'specweb-events/0.1' },
 } as const;

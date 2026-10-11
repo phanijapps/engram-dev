@@ -1,0 +1,13 @@
+
+> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+
+/home/videogamer/code/memex_beta/treadle/scripts/brand-check.mjs
+  12:68  error  Unnecessary escape character: \"  no-useless-escape
+  12:81  error  Unnecessary escape character: \"  no-useless-escape
+  12:90  error  Unnecessary escape character: \"  no-useless-escape
+
+✖ 3 problems (3 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

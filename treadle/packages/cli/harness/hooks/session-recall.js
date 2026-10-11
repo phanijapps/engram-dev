@@ -2,9 +2,6 @@
 /** Legacy recall scripts plus the current pi lifecycle context extension. Core gates own admission. */
 import { eventContext, runtimeConfig } from './codex-context.js';
 import { execFile } from 'node:child_process';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
-import { existsSync } from 'node:fs';
 
 const CONTINUE_SHAPED =
   /^\s*(continue|go( on| ahead| darling)?|keep going|resume|pick (up|it up)|carry on|next)\b/i;
@@ -19,22 +16,12 @@ const OPEN_STAGES = new Set([
 ]);
 const STDIN_TIMEOUT_MS = 5000; // a manual TTY run must not hang the hook (R2 #15)
 
-function findCLI() {
-  const candidates = [
-    process.env.HARNESS_CLI,
-    join(homedir(), '.local', 'bin', 'treadle'),
-    '/usr/local/bin/treadle',
-  ].filter(Boolean);
-  for (const c of candidates) if (c && existsSync(c)) return c;
-  return 'treadle'; // PATH
-}
-
 function whereJSON(workspace) {
   return new Promise((resolve) => {
     let cli,
       prefix = [];
     if (process.env.HARNESS_CLI) {
-      cli = findCLI();
+      cli = process.env.HARNESS_CLI;
       if (/\.m?js$/i.test(cli)) {
         prefix = [cli];
         cli = process.execPath;
@@ -44,8 +31,9 @@ function whereJSON(workspace) {
         const runtime = runtimeConfig();
         cli = runtime.node;
         prefix = [runtime.entry];
-      } catch {
-        cli = findCLI();
+      } catch (error) {
+        resolve({ unavailable: error.message });
+        return;
       }
     }
     execFile(

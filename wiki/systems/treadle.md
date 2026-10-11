@@ -1,5 +1,5 @@
 ---
-title: "treadle: the active TypeScript harness"
+title: "Wukong: the active TypeScript harness"
 type: System
 description: "Six packages, portable localhost surfaces, the self-hosted corpus, and qualified verification."
 status: stable

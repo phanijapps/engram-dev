@@ -3,6 +3,9 @@ name: implement
 description: Execute the owner-approved specpack sequence one task at a time from machine handouts and frozen context. Run checks and record actual evidence. Use for implementation after start permission, not planning or independent review.
 ---
 
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
+
 # implement — approved sequence, one task at a time
 
 The plan's contract is load-bearing: the task, its context, its

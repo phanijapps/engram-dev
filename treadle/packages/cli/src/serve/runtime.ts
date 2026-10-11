@@ -45,7 +45,7 @@ export function stateDirectory(): string {
       : process.platform === 'darwin'
         ? join(homedir(), 'Library/Application Support')
         : (process.env['XDG_STATE_HOME'] ?? join(homedir(), '.local/state'));
-  return join(base, brand.binName);
+  return join(base, brand.stateDirectory);
 }
 export function privateDirectory(dir: string): void {
   mkdirSync(dir, { recursive: true, mode: 0o700 });

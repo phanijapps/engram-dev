@@ -45,10 +45,13 @@ document.getElementById('search').onsubmit = async (event) => {
 };
 (async () => {
   try {
+    const branding = await (await load('/branding')).json();
+    document.title = `${branding.name} — Project workspace`;
+    document.querySelector('h1').textContent = `${branding.name} projects`;
     const rows = await (await load('/projects')).json();
     status.textContent = rows.length
       ? `${rows.length} enrolled projects`
-      : 'Connect a project with treadle project connect <workspace>, or install its harness.';
+      : `Connect a project with ${branding.command} project connect <workspace>, or install its harness.`;
     for (const row of rows) {
       const card = document.createElement('article');
       card.className = 'card';

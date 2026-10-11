@@ -2,9 +2,20 @@
 /** White-label gate: the brand name appears ONLY in brand.ts (tokens),
  *  package names/bin fields, and the rebrand docs. Source code says tokens. */
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, relative } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const BRAND = 'treadle';
+const root = fileURLToPath(new URL('../', import.meta.url));
+
+const tokens = readFileSync(new URL('../packages/brand/src/brand.ts', import.meta.url), 'utf8');
+const productTokens = ['name', 'binName', 'formerly'].map((key) => {
+  const literal = new RegExp(`\\b${key}:\\s*('(?:\\\\.|[^'\\\\])*'|"(?:\\\\.|[^"\\\\])*")`).exec(
+    tokens,
+  )?.[1];
+  if (!literal) throw Error(`Missing brand token: ${key}`);
+  return literal.startsWith('"') ? JSON.parse(literal) : literal.slice(1, -1);
+});
+const BRANDS = [...new Set(productTokens.map((value) => value.toLowerCase()))];
 const ALLOW = [
   'packages/brand/src/brand.ts',
   'packages/brand/REBRAND.md',
@@ -30,23 +41,25 @@ function walk(dir, files = []) {
     if (['node_modules', 'dist', '.git'].includes(e.name)) continue;
     const p = join(dir, e.name);
     if (e.isDirectory()) walk(p, files);
-    else if (/\.(ts|tsx|md|json|yaml|yml|mjs)$/.test(e.name)) files.push(p);
+    else if (/\.(ts|tsx|md|json|yaml|yml|mjs|js|html)$/.test(e.name)) files.push(p);
   }
   return files;
 }
 
 const violations = [];
-for (const f of walk('.')) {
-  const rel = f.replaceAll('\\', '/').replace(/^\.\//, '');
+for (const f of walk(root)) {
+  const rel = relative(root, f).replaceAll('\\', '/');
   if (ALLOW.includes(rel)) continue;
   if (ALLOW_CONTAINS.some((re) => re.test(rel))) continue;
   // import specifiers carry package names (fenced via package.json) — strip them
   const src = readFileSync(f, 'utf8').replace(/@treadle\//g, '@brand/');
-  if (src.toLowerCase().includes(BRAND)) violations.push(rel);
+  if (BRANDS.some((name) => src.toLowerCase().includes(name))) violations.push(rel);
 }
 
 if (violations.length) {
-  console.error(`brand-check: "${BRAND}" leaked outside its fence:\n  ` + violations.join('\n  '));
+  console.error(
+    `brand-check: "${BRANDS.join(', ')}" leaked outside its fence:\n  ` + violations.join('\n  '),
+  );
   process.exit(1);
 }
-console.log(`brand-check: clean — "${BRAND}" lives only in its fence`);
+console.log(`brand-check: clean — "${BRANDS.join(', ')}" lives only in its fence`);

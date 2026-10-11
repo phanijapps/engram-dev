@@ -30,3 +30,12 @@ remain explicit owner actions. Source: `treadle/packages/cli/src/commands/do.ts:
 Build and verification commands are declared at `treadle/package.json:9`.
 See [engineering controls](/project/engineering-controls.md) and
 [security posture](/project/security-posture.md).
+
+# Public command rename
+
+The public product is Wukong and the executable is `wukong`. Internal workspace
+paths and packages retain their existing names. The relocated walkthrough
+retains historical install instructions; use the current repository README
+quickstart for the current command. Existing service state and project enrollment
+retain their storage identity across the rename.
+Source: `treadle/packages/brand/src/brand.ts` and `treadle/packages/cli/src/serve/runtime.ts`.

@@ -1,55 +1,65 @@
 #!/usr/bin/env node
-/** Rebrand in one command: rewrites brand.ts tokens, package names, bin fields.
- *  Usage: pnpm brand:set -- --name Acme --bin acme --tagline "..." [--formerly Old]
- *  After: pnpm brand:check && pnpm check must pass (REBRAND.md contract). */
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+/** Update public branding and the CLI bin; internal package/storage identities stay stable. */
+import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
-const args = process.argv.slice(2);
-const get = (k) => {
-  const i = args.indexOf(`--${k}`);
-  return i >= 0 ? args[i + 1] : undefined;
-};
-
-const name = get('name');
-const bin = get('bin') ?? name;
-if (!name) {
-  console.error('usage: set-brand --name Acme [--bin acme] [--tagline ...] [--formerly Old]');
+const root = fileURLToPath(new URL('../', import.meta.url));
+const args = process.argv.slice(2).filter((arg) => arg !== '--');
+const values = {};
+for (let i = 0; i < args.length; i += 2) {
+  const key = args[i]?.replace(/^--/, '');
+  if (
+    !['name', 'bin', 'tagline', 'formerly'].includes(key) ||
+    !args[i]?.startsWith('--') ||
+    !args[i + 1] ||
+    args[i + 1].startsWith('--') ||
+    Object.hasOwn(values, key)
+  ) {
+    console.error('usage: set-brand --name Acme --bin acme [--tagline ...] [--formerly Old]');
+    process.exit(1);
+  }
+  values[key] = args[i + 1];
+}
+if (!values.name?.trim() || /[\r\n\0]/.test(values.name)) {
+  console.error('A nonempty, single-line product name is required');
   process.exit(1);
 }
-const tagline = get('tagline') ?? 'The human drives; the machine moves.';
-const formerly = get('formerly') ?? 'treadle';
-
-const brandPath = 'packages/brand/src/brand.ts';
-let s = readFileSync(brandPath, 'utf8');
-s = s
-  .replace(/name: '[^']+'/, `name: '${name}'`)
-  .replace(/binName: '[^']+'/, `binName: '${bin}'`)
-  .replace(/tagline: '[^']+'/, `tagline: '${tagline}'`)
-  .replace(/formerly: '[^']+'/, `formerly: '${formerly}'`);
-writeFileSync(brandPath, s);
-
-function rewritePackage(dir) {
-  const p = join(dir, 'package.json');
-  const j = JSON.parse(readFileSync(p, 'utf8'));
-  if (j.name?.includes('treadle')) j.name = j.name.replace(/treadle/g, name.toLowerCase());
-  if (j.bin?.treadle) {
-    j.bin[bin] = j.bin.treadle;
-    delete j.bin.treadle;
-  }
-  if (j.dependencies)
-    for (const d of Object.keys(j.dependencies)) {
-      if (d.startsWith('@treadle/')) {
-        const renamed = d.replace(/treadle/g, name.toLowerCase());
-        j.dependencies[renamed] = j.dependencies[d];
-        delete j.dependencies[d];
-      }
-    }
-  writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
+const bin = values.bin ?? values.name.toLowerCase();
+if (!/^[a-z][a-z0-9-]*$/.test(bin)) {
+  console.error(
+    'CLI name must start with a lowercase letter and contain letters, digits or hyphens',
+  );
+  process.exit(1);
 }
-rewritePackage('.');
-for (const d of readdirSync('packages', { withFileTypes: true }))
-  if (d.isDirectory()) rewritePackage(join('packages', d.name));
+const brandPath = join(root, 'packages/brand/src/brand.ts');
+const cliPath = join(root, 'packages/cli/package.json');
+let source = readFileSync(brandPath, 'utf8');
+const cli = JSON.parse(readFileSync(cliPath, 'utf8'));
+const entries = Object.entries(cli.bin ?? {});
+if (entries.length !== 1 || typeof entries[0][1] !== 'string')
+  throw Error('Expected one managed CLI executable; no files changed');
+const oldName = /\bname:\s*('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")/.exec(source)?.[1];
+if (!oldName) throw Error('Cannot read current product name; no files changed');
+const previous = oldName.startsWith('"')
+  ? JSON.parse(oldName)
+  : oldName.slice(1, -1).replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+const updates = {
+  name: values.name,
+  binName: bin,
+  ...(values.tagline !== undefined ? { tagline: values.tagline } : {}),
+  formerly: values.formerly ?? previous,
+};
+for (const [key, value] of Object.entries(updates)) {
+  if (/[\r\n\0]/.test(value)) throw Error('Brand values must be single-line; no files changed');
+  const pattern = new RegExp(`(\\b${key}:\\s*)('(?:\\\\.|[^'\\\\])*'|"(?:\\\\.|[^"\\\\])*")`);
+  if (!pattern.test(source)) throw Error(`Missing brand token ${key}; no files changed`);
+  source = source.replace(pattern, (_match, prefix) => prefix + JSON.stringify(value));
+}
+cli.bin = { [bin]: entries[0][1] };
+writeFileSync(brandPath, source);
+writeFileSync(cliPath, JSON.stringify(cli, null, 2) + '\n');
+console.log(`Rebranded to ${values.name} (${bin}). Internal packages and service state retained.`);
 console.log(
-  `rebranded → ${name} (bin: ${bin}). Run: pnpm install && pnpm brand:check && pnpm check`,
+  'Update current usage docs, then run pnpm build, pnpm brand:check and pnpm check; relink the CLI and regenerate installed host artifacts.',
 );

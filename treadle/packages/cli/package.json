@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "bin": {
-    "treadle": "./dist/src/main.js"
+    "wukong": "./dist/src/main.js"
   },
   "dependencies": {
     "@treadle/brand": "workspace:*",

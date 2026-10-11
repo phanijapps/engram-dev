@@ -3,6 +3,9 @@ name: analyze
 description: Create bounded, evidence-grounded SDD analysis for a feature, spec, defect, spike, impact question, or knowledge gap. Register the initiative specpack before planning handoff; keep uncertainty explicit. Use for analyzing proposed or broken work, not implementation or review.
 ---
 
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
+
 # analyze — bounded analysis for spec-driven delivery
 
 One skill, six modes, **one spine**. The modes differ in the artifact they

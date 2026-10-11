@@ -5,6 +5,7 @@ import { join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
 import { createServer, request } from 'node:http';
+import { brand } from '@treadle/brand';
 import {
   ensureService,
   stopService,
@@ -14,6 +15,7 @@ import {
   readDescriptor,
   publicStatus,
   atomicJSON,
+  stateDirectory,
 } from '../src/serve/runtime.js';
 const disappearing = vi.hoisted(() => ({ path: '' }));
 vi.mock('node:fs', async (original) => {
@@ -45,6 +47,16 @@ afterEach(async () => {
   }
 });
 describe('shared service lifecycle', () => {
+  it('keeps the default storage identity independent of the public CLI name', () => {
+    const previous = process.env.HARNESS_STATE_DIR;
+    delete process.env.HARNESS_STATE_DIR;
+    try {
+      expect(stateDirectory().endsWith(brand.stateDirectory)).toBe(true);
+      expect(stateDirectory().endsWith(brand.binName)).toBe(false);
+    } finally {
+      if (previous !== undefined) process.env.HARNESS_STATE_DIR = previous;
+    }
+  });
   it('treats descriptor removal between stat and read as stopped', () => {
     const dir = scratch();
     const path = join(dir, 'service.json');

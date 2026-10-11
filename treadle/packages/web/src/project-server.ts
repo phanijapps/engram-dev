@@ -4,6 +4,7 @@ import { readFileSync, realpathSync } from 'node:fs';
 import { join, relative, sep, isAbsolute } from 'node:path';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { buildIndex, search, toDict } from '@treadle/knowledge';
+import { brand } from '@treadle/brand';
 import {
   libraryHandler,
   readWebAsset,
@@ -53,6 +54,10 @@ export function startProjects(projects: () => ProjectSource[], port = 0): Promis
           throw denied(415, 'Send JSON');
       }
       const url = new URL(req.url ?? '/', origin);
+      if (req.method === 'GET' && url.pathname === '/branding') {
+        json(200, { name: brand.name, command: brand.binName });
+        return;
+      }
       if (req.method === 'GET' && url.pathname === '/')
         return asset(res, 'projects.html', 'text/html; charset=utf-8');
       if (req.method === 'GET' && url.pathname === '/projects.js')

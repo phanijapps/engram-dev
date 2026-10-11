@@ -1,9 +1,10 @@
 # Native Windows source bootstrap. Requires Git, Node >=22 and pnpm 9.
-param([string]$Source = "$env:LOCALAPPDATA\engram-dev")
+param([string]$Source = "$env:LOCALAPPDATA\engram-dev",
+      [string]$Repository = "https://github.com/phanijapps/engram-dev")
 $ErrorActionPreference = "Stop"
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) { throw "Install Node 22+ first" }
 if (-not (Test-Path "$Source\.git")) {
-  git clone https://github.com/phanijapps/engram-dev "$Source"
+  git clone "$Repository" "$Source"
   if ($LASTEXITCODE -ne 0) { throw "Git clone failed" }
 }
 Push-Location "$Source\treadle"
@@ -16,4 +17,4 @@ try {
   try { pnpm link --global; if ($LASTEXITCODE -ne 0) { throw "Global link failed" } }
   finally { Pop-Location }
 } finally { Pop-Location }
-Write-Host "Installed. Run: treadle init harness"
+Write-Host "Installed. Run: wukong init harness"

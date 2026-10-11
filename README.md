@@ -1,4 +1,4 @@
-# treadle
+# Wukong
 
 **The human drives; the machine moves.**
 
@@ -10,9 +10,9 @@ knowledge available throughout the work.
 [Agent integrations](#agent-integrations) · [Documentation](#documentation) ·
 [Contributing](CONTRIBUTING.md)
 
-## What is Treadle?
+## What is Wukong?
 
-Treadle gives product owners, development leads, developers, and QA a shared way
+Wukong gives product owners, development leads, developers, and QA a shared way
 to work with an AI coding agent. The current model is one local machine, with
 participants taking turns in the same session.
 
@@ -28,6 +28,8 @@ The harness brings together:
   act on owner decisions from the spec library.
 - **Agent integration:** install skills, reviewers, and lifecycle hooks from one
   authoritative harness package; reconnect projects on supported session events.
+
+The public command is `wukong`; the source workspace remains `treadle/`.
 
 Knowledge lives in `wiki/`. Executable work lives in `specs/<slug>/`. Both stay
 with your repository so another session can read the recorded context.
@@ -62,7 +64,7 @@ See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
 
 ### 1. Install the runtime
 
-Treadle currently installs from source. Use **Node.js 22 or newer**, **pnpm
+Wukong currently installs from source. Use **Node.js 22 or newer**, **pnpm
 9.15.9**, and Git. From a checkout of this repository:
 
 ```sh
@@ -71,7 +73,7 @@ pnpm install --frozen-lockfile
 pnpm build
 pnpm --dir packages/cli link --global
 cd ..
-treadle --version
+wukong --version
 ```
 
 Ensure pnpm's global binary directory is on your `PATH`; `pnpm setup` can
@@ -85,7 +87,7 @@ Windows. For a runtime with bundled dependencies and assets, see
 In the project you want to work on, run:
 
 ```sh
-treadle init harness
+wukong init harness
 ```
 
 The interactive installer asks which agent to use and whether to install hooks
@@ -93,7 +95,7 @@ and reviewers. For an explicit project installation, replace the path below
 with your workspace; use `claude` or `pi` instead of `codex` as appropriate:
 
 ```sh
-treadle init harness --agent codex --scope project --root "/path/to/project"
+wukong init harness --agent codex --scope project --root "/path/to/project"
 ```
 
 Successful project hook installation starts the shared app and enrolls that
@@ -119,7 +121,7 @@ web spec library to inspect the work and perform owner actions.
 To create an empty owner-gated specpack directly, run this from your project root:
 
 ```sh
-treadle do init specs/email-alerts --owner-gated --title "Email alerts" --why "Notify users when work needs attention"
+wukong do init specs/email-alerts --owner-gated --title "Email alerts" --why "Notify users when work needs attention"
 ```
 
 This creates the record; requirements, design, and task planning still follow.
@@ -127,9 +129,9 @@ This creates the record; requirements, design, and task planning still follow.
 ## The background app
 
 ```sh
-treadle start serve
-treadle status serve
-treadle stop serve
+wukong start serve
+wukong status serve
+wukong stop serve
 ```
 
 One background service runs per operating-system user and can serve multiple
@@ -143,12 +145,12 @@ restarts.
 For manual connection and context, including when host hooks are unavailable:
 
 ```sh
-treadle project connect "/path/to/project"
-treadle context --workspace "/path/to/project" --json
+wukong project connect "/path/to/project"
+wukong context --workspace "/path/to/project" --json
 ```
 
 Context reads knowledge and spec state without admitting tasks or performing
-owner actions. Use `treadle project disconnect <id>` to remove enrollment.
+owner actions. Use `wukong project disconnect <id>` to remove enrollment.
 All listeners bind to `127.0.0.1`; serve trusted workspaces and keep ports local.
 Read [SECURITY.md](SECURITY.md) for the trust boundary and vulnerability reporting.
 
@@ -188,9 +190,9 @@ node "/path/to/new-runtime/dist/src/main.js" --help
 Generate a native host artifact with an installed runtime:
 
 ```sh
-treadle package harness --agent claude --out "/path/to/new-plugin"
-treadle package harness --agent codex --out "/path/to/new-plugin"
-treadle package harness --agent pi --out "/path/to/new-package"
+wukong package harness --agent claude --out "/path/to/new-plugin"
+wukong package harness --agent codex --out "/path/to/new-plugin"
+wukong package harness --agent pi --out "/path/to/new-package"
 ```
 
 Each output directory must be new. Native artifacts include a machine-local
@@ -211,8 +213,8 @@ create local artifacts; no registry publication is performed.
 | [Open work](wiki/project/open-work.md)                       | Known gaps and proposed follow-ups                             |
 | [Initiatives](wiki/initiatives/index.md)                     | Navigation to canonical work records                           |
 
-Explore commands with `treadle --help`, `treadle do --help`, and
-`treadle know --help`. `know` searches and validates the wiki; `do` manages
+Explore commands with `wukong --help`, `wukong do --help`, and
+`wukong know --help`. `know` searches and validates the wiki; `do` manages
 specpacks and task evidence.
 
 Freshness currently uses Git HEAD and Python-only fingerprints. A fresh stamp

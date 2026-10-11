@@ -3,6 +3,9 @@ name: build-kb
 description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives the harness CLI (know: search, read, validate, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
 ---
 
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
+
 # build-kb — build the project knowledge base
 
 The project wiki is an **knowledge bundle at `<repo>/wiki/`** — concepts as
