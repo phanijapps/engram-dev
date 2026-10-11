@@ -3,11 +3,15 @@
   "name": "copilot-hooks",
   "description": "Copilot lifecycle hook integration",
   "date": {
-    "updated": "2026-10-11T22:15:03.305Z"
+    "updated": "2026-10-11T22:19:13Z",
+    "closed": {
+      "at": "2026-10-11T22:19:13Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_review"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "analysis": {
@@ -34,6 +38,11 @@
       "ref": "plan.md",
       "type": "text/markdown",
       "sha256": "67834f543436855646441c3eb260b1eff4ed05ad13b8ab8853e8369a23e34d27"
+    },
+    "review": {
+      "ref": "implementation-review.md",
+      "type": "text/markdown",
+      "sha256": "b45ed5b9a2771503228679ff5d7be19f282194d22c3c80f767c8eab68df40b37"
     }
   },
   "spec": {
@@ -496,6 +505,13 @@
         "at": "2026-10-11T21:55:47Z",
         "revision": 7,
         "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194"
+      },
+      {
+        "id": "873cc054-1192-4bf7-9dd3-b197168e89de",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T22:19:13Z",
+        "revision": 17
       }
     ],
     "pending_audit": [],
@@ -505,6 +521,19 @@
       "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194"
     }
   },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:copilot_correction_review",
+        "at": "2026-10-11T22:18:45.023Z",
+        "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194",
+        "evidence_digest": "7a734860e359e50d8cef1bfba531055ff968dda888a4c00ad363e877a1dd8372",
+        "note": "Actual independent read-only implementation review, exact task re-runs and resolved defect probes; see implementation-review.md. Native Copilot, Windows hooks, cloud and Z.ai authentication remain unverified."
+      }
+    ]
+  },
   "format": "specpack/0.4",
-  "revision": 15
+  "revision": 17
 }

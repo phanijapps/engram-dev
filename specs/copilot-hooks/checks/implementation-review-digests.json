@@ -1,0 +1,151 @@
+{
+  "head": "e30014469b1d06d24058a840f2318fa3048de45a",
+  "revision": 15,
+  "planDigest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194",
+  "startDigest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194",
+  "evidenceDigest": "7a734860e359e50d8cef1bfba531055ff968dda888a4c00ad363e877a1dd8372",
+  "sourceDigest": "129e06f064df24d6a3237e3033e82c707024f21e81737b79a0ee73b478ff491f",
+  "sourceDigestMethod": "SHA-256 of JSON.stringify(sorted [{path,sha256}] for frozen task touch union, excluding wiki/.okf machine metadata)",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "abd4aa3daa3a1c4658c838977227ab1fff73f30b8d836e4aeb2c65e0388a8e72"
+    },
+    {
+      "path": "specs/copilot-hooks/verify-delivery.mjs",
+      "sha256": "0a87cc22e650e97640ef2050ee4ad23f353ff4d44784e52f54699a90f98f2b3c"
+    },
+    {
+      "path": "treadle/packages/cli/harness/harness.json",
+      "sha256": "ef336ff35f7da87b6e3630b4bf2d9255909e6bb09d2d966caa559e8790d00c77"
+    },
+    {
+      "path": "treadle/packages/cli/harness/hooks/README.md",
+      "sha256": "3b8d25334707834598337ec3ab6d4e305c349eebb5f9ddb60c82b46d5063eb50"
+    },
+    {
+      "path": "treadle/packages/cli/harness/hooks/codex-context.js",
+      "sha256": "c796605097b4599f9f5e6107ca691a42c7fe9b84a87ccecb38c5eb95fce48fff"
+    },
+    {
+      "path": "treadle/packages/cli/harness/hooks/copilot-context.js",
+      "sha256": "87267d2727e82385fa17440bf5712cf342a57c027fc74d3d8103d02d0fc53d85"
+    },
+    {
+      "path": "treadle/packages/cli/harness/skills/sdlc/analyze/resources/operations.md",
+      "sha256": "0c4d48876aae50120d6d1333a5b3fb182512cac80abc6b60b8ab82011f273532"
+    },
+    {
+      "path": "treadle/packages/cli/src/commands/init.ts",
+      "sha256": "f68e012751bfe3deea0f9f337e45412ce8779f81b9d3f96164bcebbee36005de"
+    },
+    {
+      "path": "treadle/packages/cli/src/harness/apply.ts",
+      "sha256": "c56e17f6daab144ec2862aada47eb650f44ed9553d0a3027bd3d9e5e4e348405"
+    },
+    {
+      "path": "treadle/packages/cli/src/harness/manifest.ts",
+      "sha256": "d4dbc7dfe8046131af7ff5103ebc30e9628af3485f677f441043bfe754f5bcca"
+    },
+    {
+      "path": "treadle/packages/cli/src/harness/paths.ts",
+      "sha256": "95293ef01d802a13b2e8edbb709bd2070c5418ea6bcfa2611a21a4dab257776b"
+    },
+    {
+      "path": "treadle/packages/cli/src/harness/plan.ts",
+      "sha256": "d9870085da8a2a213734006485d770744623706d4f6ec1421bb75509d3c773e9"
+    },
+    {
+      "path": "treadle/packages/cli/src/harness/types.ts",
+      "sha256": "fc541de682b8e7beed7b8893f7e4442e20e57d517932478beecfd2b65bc3871a"
+    },
+    {
+      "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+      "sha256": "594ddccd53aad012b11abfaea172999dee28282944867fbc594674d911368155"
+    },
+    {
+      "path": "treadle/packages/cli/test/init-engine.test.ts",
+      "sha256": "8cfe9cf729ee5a05517c3411d36cb5ce258313d7d5adde75d43976d768354f04"
+    },
+    {
+      "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+      "sha256": "ff53147d9cd0918b7d8ce5a342f32c7739114fdc4a702f0a4ca031469c2a4b68"
+    },
+    {
+      "path": "wiki/assets/guide/index.html",
+      "sha256": "604afd55443f2479224e9d40a1f035a48675bf1d52f3f66d23d53c63522acb98"
+    },
+    {
+      "path": "wiki/project/setup.md",
+      "sha256": "8bcce7dc71e6c25e11fb2871adf8fac7fe9afc6782c30e88165d216178ef99a0"
+    },
+    {
+      "path": "wiki/systems/copilot-hooks.md",
+      "sha256": "3de253cc7cb5ea6873690838ea71cc55cf994e8ec74e6c002a9f93db3528faca"
+    },
+    {
+      "path": "wiki/systems/index.md",
+      "sha256": "5157eb68c5b3c7df512767bdf9f3b138bd7ce4dceb401f2883ae987c617649b0"
+    }
+  ],
+  "artifactHashes": [
+    {
+      "id": "analysis",
+      "pass": true
+    },
+    {
+      "id": "brief",
+      "pass": true
+    },
+    {
+      "id": "spec",
+      "pass": true
+    },
+    {
+      "id": "design",
+      "pass": true
+    },
+    {
+      "id": "plan",
+      "pass": true
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T-1",
+      "status": "done",
+      "evidence": 1,
+      "last": {
+        "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts",
+        "exit": 0,
+        "at": "2026-10-11T22:01:46Z",
+        "by": "agent:codex",
+        "notes": "11 protocol child-process fixtures pass, including 20-second runtime timeout, bounded malformed input, prompt output and recovery. Earlier wrong-path test-selection failure retained in checks/T-1-path-failure.log; repaired check in checks/T-1.log."
+      }
+    },
+    {
+      "id": "T-2",
+      "status": "done",
+      "evidence": 2,
+      "last": {
+        "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+        "exit": 0,
+        "at": "2026-10-11T22:13:24.338Z",
+        "by": "agent:codex",
+        "notes": "Actual post-review repair re-verification exited 0; checks/T-2-review-repair.log. Original evidence and task state preserved; no owner act or repin."
+      }
+    },
+    {
+      "id": "T-3",
+      "status": "done",
+      "evidence": 2,
+      "last": {
+        "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+        "exit": 0,
+        "at": "2026-10-11T22:15:03.305Z",
+        "by": "agent:codex",
+        "notes": "Actual post-review repair re-verification exited 0; checks/delivery-1272f7f6-9f65-4f55-9217-eb8781693452/results.json. Original evidence and task state preserved; no owner act or repin."
+      }
+    }
+  ]
+}

@@ -41,3 +41,11 @@ Actual repair evidence was appended through the supported shared locked writer t
 The CLI has no completed-task evidence-append operation. This supplement changes no task state, definition, owner act, or context pin.
 The writer verified the current plan digest still matches the original Start receipt before each supplement.
 The independent reviewer separately rechecked T-1 and T-2 after repair, with 27 and 65 passing tests respectively.
+
+
+Final independent PACK PASS was supplied by `agent:copilot_correction_review` for source `e300144` and canonical revision 15.
+All 3 exact task commands were rerun after repair; all 18 delivery subprocess receipts passed.
+The actual review was recorded through the shared locked core writer at revision 16, bound to current plan and evidence digests.
+`do status` now reports `workflow: closure — Finish spec`.
+The library review page was queued in Codex. Only the owner may perform Finish; no agent performed it.
+See `implementation-review.md` and its retained source/digest and command logs.

@@ -1,0 +1,5 @@
+wired /tmp/copilot-delivery ü UjNQ40/project/.github/hooks/wukong.json (sessionStart)
+wired /tmp/copilot-delivery ü UjNQ40/project/.github/hooks/wukong.json (userPromptSubmitted)
+project enrolled; runtime running: http://127.0.0.1:40183/
+Host activation is pending until you enable/reload the integration and, for Codex, review and trust its hook definition.
+installed: 3 file(s) written, 0 same, 5 skipped — plan recorded
