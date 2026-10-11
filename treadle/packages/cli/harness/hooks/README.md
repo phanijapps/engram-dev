@@ -19,6 +19,27 @@ host; loading native and compatibility callbacks together is unsupported.
 Native custom-agent packaging is limited to Claude. Copilot has no lifecycle
 hook wiring in this manifest.
 
+## Pi extension sources
+
+Pi extensions belong to the harness. Shared script and extension payloads live in
+`hooks/`; `harness.json` declares their project destinations.
+
+| Installed Pi file                   | Authoritative source       | Manifest entry             |
+| ----------------------------------- | -------------------------- | -------------------------- |
+| `.pi/extensions/post-tool-check.js` | `hooks/post-tool-check.js` | `post-tool-check`          |
+| `.pi/extensions/session-recall.js`  | `hooks/session-recall.js`  | `session-recall`           |
+| `.pi/extensions/codex-context.js`   | `hooks/codex-context.js`   | `session-recall` companion |
+
+The installer also creates `.pi/extensions/runtime.json` for the current machine.
+Regenerate this local pointer after moving the checkout or runtime.
+The native package uses `extensions/project-context.ts` as its lifecycle entry.
+That wrapper exports the same `hooks/session-recall.js` callback.
+
+Refresh project extensions through `init harness --agent pi --scope project
+--hooks-only`, prefixed with the installed harness executable.
+Inspect its `--dry-run` plan before adding `--force` for differing files.
+Reload Pi after installation.
+
 The separate machine-managed guard retains its legacy argv JSON contract
 (exit 0 pass, 3 refusal, 1 malformed input) and pi tool_call blocking. Claude
 PostToolUse is an advisory after-the-fact check, not a write admission gate.

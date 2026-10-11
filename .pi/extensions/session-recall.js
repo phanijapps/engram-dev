@@ -1,33 +1,7 @@
 #!/usr/bin/env node
-/** session-recall (harness/0.1) — the loop remembers where work dangles.
- *
- *  Entries (one file, one contract):
- *  - script mode:   node session-recall.js <workspace>            → prints
- *                   the block (humans; claude SessionStart stdout context
- *                   with --claude-start, which reads the cwd from stdin).
- *  - claude gate:   node session-recall.js --claude-gate           → reads
- *                   Claude's UserPromptSubmit stdin JSON; exit 2 + stderr
- *                   = the ask (the run stops, the user sees the list);
- *                   exit 0 = allow.
- *  - extension mode: loaded by pi as an extension — session_start sends
- *                   the block as a custom message (the model SEES it),
- *                   and the HARD GATE fires on continue-shaped FIRST
- *                   user messages (no prior user entry in the transcript;
- *                   resumed sessions included) when more than one spec
- *                   is open: message_end replaces the message (role
- *                   preserved) with the original + the block + the ASK
- *                   directive; before_agent_start also injects the
- *                   ask-first guideline.
- *
- *  Engine-quoted: this payload shells out to `do where --json` and
- *  renders from the JSON (the open count comes from the data, never
- *  from string-matching prose). No CLI → the block says so and the
- *  gate stays inert (a gate without data is a guess; we do not guess).
- */
+/** Legacy recall scripts plus the current pi lifecycle context extension. Core gates own admission. */
+import { eventContext, runtimeConfig } from './codex-context.js';
 import { execFile } from 'node:child_process';
-import { homedir } from 'node:os';
-import { join } from 'node:path';
-import { existsSync } from 'node:fs';
 
 const CONTINUE_SHAPED =
   /^\s*(continue|go( on| ahead| darling)?|keep going|resume|pick (up|it up)|carry on|next)\b/i;
@@ -42,30 +16,42 @@ const OPEN_STAGES = new Set([
 ]);
 const STDIN_TIMEOUT_MS = 5000; // a manual TTY run must not hang the hook (R2 #15)
 
-function findCLI() {
-  const candidates = [
-    process.env.HARNESS_CLI,
-    join(homedir(), '.local', 'bin', 'treadle'),
-    '/usr/local/bin/treadle',
-  ].filter(Boolean);
-  for (const c of candidates) if (c && existsSync(c)) return c;
-  return 'treadle'; // PATH
-}
-
 function whereJSON(workspace) {
   return new Promise((resolve) => {
-    const cli = findCLI();
-    execFile(cli, ['do', 'where', workspace, '--json'], { timeout: 15000 }, (err, stdout) => {
-      if (err) {
-        resolve({ unavailable: String(err.message) });
+    let cli,
+      prefix = [];
+    if (process.env.HARNESS_CLI) {
+      cli = process.env.HARNESS_CLI;
+      if (/\.m?js$/i.test(cli)) {
+        prefix = [cli];
+        cli = process.execPath;
+      }
+    } else {
+      try {
+        const runtime = runtimeConfig();
+        cli = runtime.node;
+        prefix = [runtime.entry];
+      } catch (error) {
+        resolve({ unavailable: error.message });
         return;
       }
-      try {
-        resolve(JSON.parse(stdout));
-      } catch {
-        resolve({ unavailable: 'do where did not speak JSON' });
-      }
-    });
+    }
+    execFile(
+      cli,
+      [...prefix, 'do', 'where', workspace, '--json'],
+      { timeout: 15000 },
+      (err, stdout) => {
+        if (err) {
+          resolve({ unavailable: String(err.message) });
+          return;
+        }
+        try {
+          resolve(JSON.parse(stdout));
+        } catch {
+          resolve({ unavailable: 'do where did not speak JSON' });
+        }
+      },
+    );
   });
 }
 
@@ -97,18 +83,6 @@ export async function recall(workspace) {
   }
   if (open.length > 1) lines.push('more than one is open: ASK which one continues. never guess.');
   return { block: lines.join('\n'), openCount: open.length };
-}
-
-/** Real pi content is parts-shaped: [{type:'text',text},…] — extract the text. */
-function textOf(content) {
-  if (typeof content === 'string') return content;
-  if (Array.isArray(content)) {
-    return content
-      .filter((p) => p && typeof p === 'object' && p.type === 'text' && typeof p.text === 'string')
-      .map((p) => p.text)
-      .join('\n');
-  }
-  return '';
 }
 
 function readStdinJSON() {
@@ -174,56 +148,17 @@ if (invoked) {
   runScript();
 }
 
-// ── extension mode (pi) ──
+// pi lifecycle uses the host's current workspace on every event, including resume/new/fork.
+const installed = new WeakSet();
 export default function (pi) {
-  let openCount = 0;
-  let block = '';
-
-  pi.on('session_start', async () => {
-    const out = await recall(process.cwd());
-    block = out.block;
-    openCount = out.openCount;
-    if (block && !block.startsWith('work recall unavailable')) {
-      // sendMessage takes {customType, content, display} — a bare string is
-      // silently dropped (R2 #2); the model must SEE this
-      pi.sendMessage({ customType: 'session-recall', content: block, display: true });
-    }
+  if (installed.has(pi)) return;
+  installed.add(pi);
+  pi.on('session_start', async (_event, ctx) => {
+    const result = await eventContext(ctx?.cwd);
+    pi.sendMessage({ customType: 'project-context', content: result.block, display: true });
   });
-
-  pi.on('message_end', async (event) => {
-    const msg = event.message ?? {};
-    if (String(msg.role) !== 'user') return;
-    const prior = pi.sessionManager ? countUserEntries(pi) : firstUserSeen ? 1 : 0;
-    if (prior > 0) {
-      firstUserSeen = true;
-      return;
-    }
-    firstUserSeen = true;
-    const text = textOf(msg.content); // parts-shaped in real pi (R2 #1)
-    if (!CONTINUE_SHAPED.test(text)) return;
-    if (openCount < 2) return; // zero or one open: continue resolves — never fire
-    return {
-      message: { ...msg, content: [{ type: 'text', text: text + ASK_DIRECTIVE + '\n\n' + block }] },
-    };
+  pi.on('before_agent_start', async (_event, ctx) => {
+    const result = await eventContext(ctx?.cwd);
+    return { message: { customType: 'project-context', content: result.block, display: false } };
   });
-
-  pi.on('before_agent_start', async (event) => {
-    if (openCount < 2) return;
-    if (!CONTINUE_SHAPED.test(textOf(event.prompt ?? event.prompt?.content ?? ''))) return;
-    event.systemPromptOptions.promptGuidelines = [
-      ...(event.systemPromptOptions.promptGuidelines ?? []),
-      'HARD GATE: more than one spec is open. Ask the user which one continues before doing anything. Never guess.',
-    ];
-  });
-}
-
-let firstUserSeen = false;
-
-function countUserEntries(pi) {
-  try {
-    const entries = pi.sessionManager.entries ?? pi.sessionManager.getEntries?.() ?? [];
-    return entries.filter((e) => String(e?.message?.role ?? e?.role) === 'user').length;
-  } catch {
-    return 0;
-  }
 }

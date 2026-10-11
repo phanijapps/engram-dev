@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'node' '/home/videogamer/code/memex_beta/.harness/hooks/codex-context.js' '--host' 'codex' '--event' 'SessionStart'",
+            "commandWindows": "\"node\" \"/home/videogamer/code/memex_beta/.harness/hooks/codex-context.js\" \"--host\" \"codex\" \"--event\" \"SessionStart\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "'node' '/home/videogamer/code/memex_beta/.harness/hooks/codex-context.js' '--host' 'codex' '--event' 'UserPromptSubmit'",
+            "commandWindows": "\"node\" \"/home/videogamer/code/memex_beta/.harness/hooks/codex-context.js\" \"--host\" \"codex\" \"--event\" \"UserPromptSubmit\""
+          }
+        ]
+      }
+    ]
+  }
+}

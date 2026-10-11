@@ -168,6 +168,13 @@ avoid loading the same callbacks twice. Global installs require `--yes` and do
 not enroll a project automatically. Native custom-agent packaging is not
 asserted for Codex or pi.
 
+Pi's project extensions come from the manifest in `treadle/packages/cli/harness/`.
+Their shared payloads live under `hooks/`. See the
+[extension source map](treadle/packages/cli/harness/hooks/README.md#pi-extension-sources).
+Refresh installed Pi hooks with `wukong init harness --agent pi --scope project --hooks-only`.
+Inspect the `--dry-run` plan before adding `--force` for differing files, then reload Pi.
+The installer regenerates the local `.pi/extensions/runtime.json` pointer for each checkout.
+
 The runtime has passed native Linux, macOS, and Windows CI with Node 22 and 24.
 Full host activation journeys remain in the
 [host acceptance backlog](specs/harness-host-acceptance/harness-host-acceptance.json),
