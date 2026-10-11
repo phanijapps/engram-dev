@@ -40,3 +40,13 @@ acceptance claim. Closed packs and historical guide bytes were preserved.
 
 Implementation authorization did not supply a separate human Finish action.
 The executable record is ready for the owner's Finish after independent review.
+
+## Native CI supplement
+
+Run [38103822214](https://github.com/phanijapps/engram-dev/actions/runs/38103822214)
+passed all six Linux/macOS/Windows Node 22/24 rows for production source
+`33ebde12642fb3133238febcf495d95edebf6005`. Windows Node 22 passed on an
+identical-source retry after an inherited shutdown file-access failure.
+The original failed attempt and proposed follow-up are preserved under
+[native-ci](native-ci/follow-up.md); no shutdown fix or real host acceptance is
+claimed by that retry. This supplement changes evidence only.

@@ -3,7 +3,7 @@
   "name": "wukong-rename",
   "description": "Wukong product and CLI rename",
   "date": {
-    "updated": "2026-10-11T02:01:52Z"
+    "updated": "2026-10-11T02:09:15.391Z"
   },
   "status": {
     "lifecycle": "active",
@@ -332,6 +332,16 @@
         "evidence_digest": "5b626ce7e4621067cf65524dfebea20f974a0e819f231a8b86c002087a809ec3",
         "notes": "Independent read-only report: pack-review.md",
         "findings": []
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red_foreman_plan",
+        "at": "2026-10-11T02:08:27Z",
+        "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370",
+        "evidence_digest": "5b626ce7e4621067cf65524dfebea20f974a0e819f231a8b86c002087a809ec3",
+        "notes": "Native CI follow-up: native-ci/review.md. Inherited Windows shutdown defect disclosed separately; identical-source retry passed. No repair claimed.",
+        "findings": []
       }
     ]
   },
@@ -340,5 +350,5 @@
     "pnpm": "9.15.9"
   },
   "format": "specpack/0.4",
-  "revision": 10
+  "revision": 11
 }

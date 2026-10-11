@@ -1,0 +1,203 @@
+check (windows-latest, 22)	Run pnpm coverage	﻿2026-10-11T02:03:22.0401275Z ##[group]Run pnpm coverage
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.0401597Z [36;1mpnpm coverage[0m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.0458465Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.0458765Z env:
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.0458987Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.0459242Z ##[endgroup]
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.6755899Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.6756647Z > treadle-root@ coverage D:\a\engram-dev\engram-dev\treadle
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.6757389Z > vitest run --coverage
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:22.6757892Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:23.3044498Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:23.3046729Z [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mD:/a/engram-dev/engram-dev/treadle[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:23.3047281Z       [2mCoverage enabled with [22m[33mv8[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:23.3047448Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:27.9311304Z  [32m✓[39m packages/cli/test/serve-runtime.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 4048[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:27.9313146Z    [33m[2m✓[22m[39m shared service lifecycle[2m > [22mcold-starts once across callers, survives parent command and restarts after stop [33m 2221[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:27.9315453Z    [33m[2m✓[22m[39m shared service lifecycle[2m > [22mrefuses a live or incomplete startup lock rather than expiring it [33m 442[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:27.9316969Z    [33m[2m✓[22m[39m shared service lifecycle[2m > [22mrecovers proven dead startup and recovery owners; unfinished candidates hold no lock [33m 1124[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:28.0200949Z  [32m✓[39m packages/cli/test/codex-context.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4278[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:28.0202687Z    [33m[2m✓[22m[39m runs the documented stdin/context contract, event workspace and next-event restart without owner acts [33m 4210[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:29.8832675Z  [32m✓[39m packages/web/test/owner-workflow.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 5765[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:29.8834525Z    [33m[2m✓[22m[39m owner sequence across CLI and browser[2m > [22mexecutes two checked tasks under one start receipt, then requires independent review and human closure [33m 4739[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:29.8837143Z    [33m[2m✓[22m[39m browser owner admission[2m > [22mchecks held revisions for question answers in the room [33m 349[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:30.9861625Z  [32m✓[39m packages/web/test/room-keyboard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2603[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:30.9863669Z    [33m[2m✓[22m[39m the room keyboard (standalone harness)[2m > [22mdrives the ceremony: Enter submits, approve card reached [33m 2601[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:31.8576112Z  [32m✓[39m packages/cli/test/pi-context.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3567[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:31.8578012Z    [33m[2m✓[22m[39m registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown [33m 3565[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:32.1514547Z {"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:33.4034001Z  [31m❯[39m packages/cli/test/claude-context.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3166[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:33.4036503Z [31m   [31m×[31m connects startup/resume/preprompt workspace and never shuts down with session lifetime[39m[33m 3165[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:33.4037935Z [31m     → EPERM: operation not permitted, open 'C:\Users\RUNNER~1\AppData\Local\Temp\claude context ü 4llEVc\state\service.json'
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:33.4039137Z : expected 1 to be +0 // Object.is equality[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:33.9896424Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.0239986Z  [32m✓[39m packages/cli/test/harness-packages.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1788[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.0242549Z    [33m[2m✓[22m[39m generates deterministic, local host packages and truthful capability metadata [33m 1787[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2121877Z warning: in the working copy of 'a.txt', LF will be replaced by CRLF the next time Git touches it
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2453348Z  [32m✓[39m packages/cli/test/init-surfaces.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 2721[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2455133Z    [33m[2m✓[22m[39m the four surface adapters (T-3)[2m > [22mthe hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage [33m 322[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2456738Z    [33m[2m✓[22m[39m session-recall payload + wirings (T-1)[2m > [22mclaude: SessionStart AND UserPromptSubmit both wired (array wirings merge) [33m 920[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2458633Z    [33m[2m✓[22m[39m session-recall payload + wirings (T-1)[2m > [22mscript mode: the block prints and exits 0 (unpiped contract) [33m 368[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.2460334Z    [33m[2m✓[22m[39m session-recall payload + wirings (T-1)[2m > [22mclaude-gate allows specific requests and gates ambiguous continuation from isolated counts [33m 551[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.4473985Z warning: in the working copy of 'a.txt', LF will be replaced by CRLF the next time Git touches it
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.4475907Z warning: in the working copy of 'wiki/.okf/last-index.json', LF will be replaced by CRLF the next time Git touches it
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.4771868Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.5285597Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.6154751Z  [32m✓[39m packages/knowledge/test/ritual.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 647[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:34.6156962Z    [33m[2m✓[22m[39m the freshness stamp[2m > [22mfresh at HEAD, stale after motion [33m 563[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.1353151Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.1859036Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.2347703Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.2851989Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.3649917Z  [32m✓[39m packages/cli/test/where.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 937[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.3651931Z    [33m[2m✓[22m[39m do where (T-0)[2m > [22ma worktree carries its own row, labeled with its tree [33m 562[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:35.3743668Z  [32m✓[39m packages/cli/test/init-engine.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 332[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1518549Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1521047Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1522657Z [22m[39mREFUSED: decisions: D-1; T-1 needs D-1
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1523596Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-saWdmq\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1524815Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1525422Z recorded accept by human:owner; audit recorded
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1525982Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1526205Z recorded start by human:owner; audit recorded
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1527067Z task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1527639Z   D    D-1
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1528082Z   TASK T-1 — Work
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1528376Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1824110Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1827781Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1829565Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-Yrpqu4\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1831058Z [22m[39mREFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1831864Z asked Q-1 (revision 2)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1833712Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1834369Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.1835406Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.2331331Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mexplicitly adopts active legacy bytes without inventing earlier start consent
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.2363078Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-V6QLqb\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.2363994Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.2364243Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4124579Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4126684Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4127905Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-T6Jqwf\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4128590Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4128895Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4129121Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.4129377Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5576083Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5578046Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5579713Z [22m[39mREFUSED: A complete spec cannot be adopted
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5580682Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-WHs7IP\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5581979Z REFUSED: Adoption needs an owner claim
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5582235Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5582425Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5769232Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5771204Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5772980Z [22m[39mREFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5774502Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-dzzDdZ\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5775403Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5775431Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5857983Z  [32m✓[39m packages/web/test/project-security.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 564[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5920131Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.5921569Z    [33m[2m✓[22m[39m renders public branding and current CLI guidance in an empty project browser [33m 311[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6075567Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6077142Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6078206Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6079002Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-gr9DUB\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6079538Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:36.6209121Z  [32m✓[39m packages/cli/test/owner-workflow.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 596[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.0815523Z  [32m✓[39m packages/knowledge/test/debts.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 56[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.1768263Z  [32m✓[39m packages/cli/test/context.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 64[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.3534825Z  [32m✓[39m packages/web/test/project-library.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 458[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.3536327Z    [33m[2m✓[22m[39m renders public branding and current CLI guidance in an empty project browser [33m 367[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.7734108Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.8831675Z  [32m✓[39m packages/web/test/pages.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 69[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:37.8891088Z  [32m✓[39m packages/cli/test/know.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 248[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.0157152Z  [32m✓[39m packages/web/test/servers.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 418[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.4700913Z  [32m✓[39m packages/cli/test/project-registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 221[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.5189326Z  [32m✓[39m packages/brand/test/rebrand.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 233[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6831781Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mthe do plane (integration, in-process)[2m > [22m[2manswers, approves, records, closes — the whole ceremony through the CLI
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6833395Z [22m[39manswered Q-1 by human:owner
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6833964Z answered Q-2 by human:owner
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6836563Z approved by human:owner at 2026-10-10T12:00:00Z
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6837206Z {"task":"T-1","status":"done","fail_streak":0}
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6837758Z closed by human:owner: the record is frozen
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.6838205Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.7284963Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo next (the frozen handout)[2m > [22m[2mhands out the task, saves the doing state, then reports closure honestly
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.7385637Z [22m[39mtask T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.7495134Z   D    D-1
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.7496087Z   TASK T-1 — one
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.7496501Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.8345797Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo accept / reject (the human act, last to port)[2m > [22m[2maccept resolves the decision and its questions; reject keeps them open
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.8348118Z [22m[39maccepted D-9 by human:owner — resolved Q-1
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.8348854Z rejected D-8: wrong shape — the questions stay open
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.8349231Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.8675153Z  [32m✓[39m packages/cli/test/do.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 275[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.9426313Z  [32m✓[39m packages/core/test/owner-workflow.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 82[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:38.9889262Z  [32m✓[39m packages/knowledge/test/containment.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 64[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:39.3445833Z  [32m✓[39m packages/knowledge/test/knowledge.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 60[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:39.3957015Z  [32m✓[39m packages/conformance/test/corpus.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:39.6131833Z  [32m✓[39m packages/conformance/test/owner-schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:39.7481182Z  [32m✓[39m packages/core/test/core.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:39.8087750Z  [32m✓[39m packages/cli/test/init-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:40.1164370Z  [32m✓[39m packages/cli/test/banner.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 3[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:40.2100655Z  [32m✓[39m packages/brand/test/brand.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 3[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:40.3448945Z  [32m✓[39m packages/conformance/test/runner.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:42.8498650Z  [32m✓[39m packages/web/test/theme.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 727[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:42.8500803Z    [33m[2m✓[22m[39m the theme behavior (jsdom)[2m > [22mdefault is light when no key is stored [33m 312[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:42.8503244Z    [33m[2m✓[22m[39m the theme behavior (jsdom)[2m > [22mthe toggle flips the attribute and writes the shared key [33m 327[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:44.2775711Z  [32m✓[39m packages/web/test/workflow-ui.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2177[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:44.2777009Z    [33m[2m✓[22m[39m owner workflow UI[2m > [22mshows the ordered flow; decision approval does not start implementation [33m 907[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:44.2778432Z    [33m[2m✓[22m[39m owner workflow UI[2m > [22mrequires a current independent review, then a separate confirmation to finish [33m 645[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:44.2780208Z    [33m[2m✓[22m[39m owner workflow UI[2m > [22mfails closed when approval state cannot be read; retry restores the controls [33m 350[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:44.7447190Z  [32m✓[39m packages/web/test/dom.smoke.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 411[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:45.9186497Z  [32m✓[39m packages/web/test/inspector.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3784[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:45.9188821Z    [33m[2m✓[22m[39m the phase inspector (T-3)[2m > [22mrenders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only [33m 3781[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:46.4074500Z  [32m✓[39m packages/web/test/telemetry.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 475[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:46.4077063Z    [33m[2m✓[22m[39m the review telemetry + gate (T-8)[2m > [22mrenders the real counts, filters by severity, speaks the house sentence [33m 474[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:46.8810332Z  [32m✓[39m packages/web/test/library-skin.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 377[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:46.8812644Z    [33m[2m✓[22m[39m the library skin (live DOM)[2m > [22mthree panes render; the journey strip survives; serif titles apply [33m 371[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:47.5999748Z  [32m✓[39m packages/web/test/room-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 71[2mms[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2091812Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2092778Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2093036Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2094999Z [41m[1m FAIL [22m[49m packages/cli/test/claude-context.test.ts[2m > [22mconnects startup/resume/preprompt workspace and never shuts down with session lifetime
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2112564Z [31m[1mAssertionError[22m: EPERM: operation not permitted, open 'C:\Users\RUNNER~1\AppData\Local\Temp\claude context ü 4llEVc\state\service.json'
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2113208Z : expected 1 to be +0 // Object.is equality[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2113384Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2114778Z [32m- Expected[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2114997Z [31m+ Received[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2115101Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2115183Z [32m- 0[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2115355Z [31m+ 1[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2115436Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2115727Z [36m [2m❯[22m packages/cli/test/claude-context.test.ts:[2m46:46[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2136235Z     [90m 44| [39m    })[33m;[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2136643Z     [90m 45| [39m    [35mtry[39m {
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2137201Z     [90m 46| [39m      [34mexpect[39m(stopped[33m.[39mstatus[33m,[39m stopped[33m.[39mstderr)[33m.[39m[34mtoBe[39m([34m0[39m)[33m;[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2137771Z     [90m   | [39m                                             [31m^[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2138195Z     [90m 47| [39m    } [35mfinally[39m {
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2138585Z     [90m 48| [39m      // Windows can briefly retain filesystem handles after service s…
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2138834Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2139021Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2139177Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2140215Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2145009Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m38 passed[39m[22m[90m (39)[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2146247Z [2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m171 passed[39m[22m[90m (172)[39m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2147235Z [2m   Start at [22m 02:03:23
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2149588Z [2m   Duration [22m 24.90s[2m (transform 1.09s, setup 0ms, collect 6.38s, tests 41.33s, environment 8.28s, prepare 5.62s)[22m
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2149924Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2161505Z 
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2200401Z ##[error]AssertionError: EPERM: operation not permitted, open 'C:\Users\RUNNER~1\AppData\Local\Temp\claude context ü 4llEVc\state\service.json'
+check (windows-latest, 22)	Run pnpm coverage	: expected 1 to be +0 // Object.is equality
+check (windows-latest, 22)	Run pnpm coverage	
+check (windows-latest, 22)	Run pnpm coverage	- Expected
+check (windows-latest, 22)	Run pnpm coverage	+ Received
+check (windows-latest, 22)	Run pnpm coverage	
+check (windows-latest, 22)	Run pnpm coverage	- 0
+check (windows-latest, 22)	Run pnpm coverage	+ 1
+check (windows-latest, 22)	Run pnpm coverage	
+check (windows-latest, 22)	Run pnpm coverage	 ❯ packages/cli/test/claude-context.test.ts:46:46
+check (windows-latest, 22)	Run pnpm coverage	
+check (windows-latest, 22)	Run pnpm coverage	
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.2754852Z  ELIFECYCLE  Command failed with exit code 1.
+check (windows-latest, 22)	Run pnpm coverage	2026-10-11T02:03:48.3738083Z ##[error]Process completed with exit code 1.

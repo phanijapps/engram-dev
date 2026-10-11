@@ -20,3 +20,11 @@ CLI help exit 0; local delivery assert exit 0; pack load/digest/alignment assert
 exit 0; `node specs/wukong-rename/verify-review.mjs` exit 1 as expected before
 review record. Review gate simulation: current false, valid independent true,
 stale false, self false.
+
+## Native CI follow-up, 2026-10-11T02:08:27Z
+
+`agent:red_foreman_plan` independently confirmed that the rename PACK PASS
+remains appropriate after the unchanged Windows Node 22 retry passed, with the
+first failure disclosed as an inherited runtime defect. See
+[the final native review](native-ci/review.md). No shutdown fix is claimed.
+The plan and non-review evidence digests above remain unchanged.
