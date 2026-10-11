@@ -1,0 +1,19 @@
+flowchart LR
+  Human["Actor: Repository owner"]
+  Agent["External application: Claude, Codex or Pi"]
+  Git["External tool: Local Git"]
+  subgraph Wukong["System: Wukong local harness"]
+    Browser["Container: Existing browser application"]
+    Service["Container: Shared localhost service"]
+    CLI["Container: Wukong CLI"]
+    Store[("Container: Immutable snapshots and feedback ledger")]
+    Pack[("Container: Canonical specpack and owner receipts")]
+    Browser -->|"Guarded feedback HTTP requests"| Service
+    Service -->|"Revision-checked feedback writes"| Store
+    CLI -->|"Snapshot, wait, read and reply"| Store
+    Service -->|"Existing owner actions only"| Pack
+    CLI -->|"Existing task admission only"| Pack
+  end
+  Human -->|"Comment, submit and resolve"| Browser
+  Agent -->|"Run bounded CLI wait and process result"| CLI
+  CLI -->|"Selected-path diff snapshot"| Git

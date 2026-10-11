@@ -1,0 +1,53 @@
+{
+  "observed_at": "2026-10-11T12:07:15.684883+00:00",
+  "head": "98086783d996c563072e6f147045177c23d66310",
+  "source_state": " M .claude/settings.json\n M .pi/extensions/post-tool-check.js\n M treadle/packages/cli/harness/hooks/README.md\n M treadle/packages/cli/harness/hooks/post-tool-check.js\n M treadle/packages/cli/src/harness/plan.ts\n M treadle/packages/cli/test/init-engine.test.ts\n M treadle/packages/cli/test/init-surfaces.test.ts\n M wiki/.okf/fingerprints.json\n M wiki/.okf/last-index.json\n M wiki/systems/sdd-harness-architecture.md\n?? specs/browser-agent-feedback/\n?? specs/hooks-repair-evaluation.md\n?? specs/hooks-repair-evidence.json\n?? specs/hooks-repair-red-foreman.md\n?? treadle/packages/cli/test/claude-project-paths.test.ts\n?? treadle/packages/cli/test/machine-managed-guard.test.ts\n",
+  "sources": {
+    "SECURITY.md": "064cf8c2bf88ffeec211b3ff8d84da898cfa07a9fd35bd3eb97367fabe670f24",
+    "AGENTS.md": "a1759ef384e582d133e32d8c01c3ed1422c77d861f9d224603de5d81b51524ec",
+    "wiki/systems/owner-workflow.md": "5db5b6d8b4bf488ea6c5263aa61049c5289a5035f55ac396965f9085e85f3217",
+    "wiki/systems/sdd-harness-architecture.md": "24bab49684bc56e68809d15fa89031785c170aa1d96f9b7fe817a76d9a87cd35",
+    "wiki/domain/policy-no-session-capture-in-engine.md": "0efd13949f47d0dbc69383a4ccde55011396e0be60917479406ca8bf59c99bf0",
+    "treadle/packages/core/src/specpack/workflow.ts": "844d8a9f5e7f0f1f2b4cbaeff9fcc72bd35d0fef98174afee0cb33d9c4f022c5",
+    "treadle/packages/core/src/specpack/transaction.ts": "5927c5e726aa603cb8b8c01cc6af7c28ef91fde8825ef595cb8fef88d9aedc82",
+    "treadle/packages/core/src/specpack/loader.ts": "e93e5cbb6f3647b4cc27b60551378f14fd93d271877d59f779cccdff0efdd08b",
+    "treadle/packages/core/src/specpack/pins.ts": "a43979b25f3389f4019b146d7d5625662d6189b51b240aae5f294ccc82c41e8b",
+    "treadle/packages/cli/src/harness/context.ts": "1089f6a0e12a819bfcc159201aed273354718e8f702b07002687a07b9bab28ca",
+    "treadle/packages/cli/src/serve/projects.ts": "0e1d664d60e79c6fc9f3b496d70c5c4e36466a880de8cd39251c9fcb54564ff9",
+    "treadle/packages/cli/src/main.ts": "8fe30ac61d7262a48bc31487d15324758538261b7114974bffa07faf284008b0",
+    "treadle/packages/cli/src/commands/do.ts": "52cf80147a84e1c859e9c74de7c93bdbc9c9e4b24bbf7b3c33d3f5d0bd787f6a",
+    "treadle/packages/web/src/project-server.ts": "40ce05c8bc2cba701ffd60f7ea742c5c15b381814e1a5a636423b3df0d5720d5",
+    "treadle/packages/web/src/servers.ts": "042a6b31752644825decbc31112c95543aa04a804f4bd8d4fc9b185813b98cf3",
+    "treadle/packages/web/src/library.js": "009536e3aa73c67bfa9592de03fd8c8a1a12e2fe557bdfd6e850a6a1959b777b",
+    "treadle/packages/web/src/library.html": "6c6b84b4fa82098abdbda65d62c639f7f535823256c47d58631bab86a4518b8b",
+    "treadle/packages/cli/harness/harness.json": "c6139bc62abcfe4792ea7de463488de4870f291b00e218d7912c8aa3f516268c",
+    "treadle/packages/cli/harness/hooks/codex-context.js": "84c19840856263853ab5b96b19069a991b2f7850cd85f58621ffa053e4bc7818",
+    "treadle/packages/cli/harness/hooks/session-recall.js": "ea63416a44111a9ff1f7742c760b4eb7b679ecae844a211b99a0421e9c39cf2c",
+    "treadle/packages/core/src/specpack/record.ts": "35e379dba33877f665e5d0eb16b3aa6f1a71d37306ef8987ad36d896f2f9e781",
+    "treadle/packages/web/test/project-security.test.ts": "1396973a174cb57ce4bd24177c42c6bfba922c71f272aaddae083da4e6595fe3",
+    "treadle/packages/web/test/project-library.test.ts": "520a64abe9a3cf74b2dabd7f9cd155905d953081f7087f1dbcd32d6d8104a108"
+  },
+  "external_sources": [
+    {
+      "url": "https://crit.md/integrations/build-your-own",
+      "observation_date": "2026-10-11",
+      "claim": "Skill-directed shell wait and structured review-file loop; not a generic session-control API."
+    },
+    {
+      "url": "https://crit.md/integrations/codex",
+      "observation_date": "2026-10-11",
+      "claim": "Codex integration has separate skill-only and plan-hook paths."
+    },
+    {
+      "url": "https://crit.md/integrations/pi",
+      "observation_date": "2026-10-11",
+      "claim": "Pi integration offers a skill-driven browser review loop."
+    },
+    {
+      "url": "https://git-scm.com/docs/git-diff",
+      "observation_date": "2026-10-11",
+      "claim": "Git supports commit and worktree comparisons with explicit path selectors."
+    }
+  ],
+  "observed_supplement_at": "2026-10-11T12:18:59.788861+00:00"
+}

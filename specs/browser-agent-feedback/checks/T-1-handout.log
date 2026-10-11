@@ -1,0 +1,30 @@
+task T-1 — 29 items in the frozen slice (digest 3703592eab47…)
+  AC   AC-10
+  AC   AC-2
+  AC   AC-3
+  AC   AC-4
+  AC   AC-5
+  AC   AC-6
+  AC   AC-7
+  CON  CON-1
+  CON  CON-2
+  CON  CON-3
+  CON  CON-4
+  CON  CON-5
+  D    D-1
+  D    D-2
+  D    D-3
+  D    D-4
+  D    D-5
+  DES  DES-1 — Feedback state and immutable rounds
+  FR   FR-10
+  FR   FR-2
+  FR   FR-3
+  FR   FR-4
+  FR   FR-5
+  FR   FR-6
+  FR   FR-7
+  TASK T-1 — Define and persist the feedback contract
+  US   US-1
+  US   US-2
+  US   US-3

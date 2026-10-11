@@ -1,0 +1,40 @@
+[
+  {
+    "endpoint": "/spec/browser-agent-feedback",
+    "http": 200,
+    "revision": 24,
+    "observed_at": "2026-10-11T12:22:17.830581+00:00",
+    "tasks": 7,
+    "decisions": [
+      [
+        "D-1",
+        "accepted"
+      ],
+      [
+        "D-2",
+        "accepted"
+      ],
+      [
+        "D-3",
+        "accepted"
+      ],
+      [
+        "D-4",
+        "accepted"
+      ],
+      [
+        "D-5",
+        "accepted"
+      ]
+    ]
+  },
+  {
+    "endpoint": "/workflow/browser-agent-feedback",
+    "http": 200,
+    "revision": 24,
+    "observed_at": "2026-10-11T12:22:17.833946+00:00",
+    "phase": "start",
+    "can_start": true,
+    "can_close": false
+  }
+]

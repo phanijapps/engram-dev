@@ -1,0 +1,68 @@
+{
+  "observed_at": "2026-10-11T12:17:03.562969+00:00",
+  "checks": [
+    {
+      "label": "proposal",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "../specs/browser-agent-feedback/authoring/validate.ts"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "log": "specs/browser-agent-feedback/checks/red-foreman-proposal.log",
+      "output": "{\n  \"observed_at\": \"2026-10-11T12:16:58.250Z\",\n  \"revision\": 17,\n  \"schema\": \"specpack-owner-workflow.schema.json\",\n  \"schemaValid\": true,\n  \"violations\": [],\n  \"gaps\": 0,\n  \"requirements\": 11,\n  \"decisions\": 5,\n  \"tasks\": 7,\n  \"artifacts\": 12,\n  \"sourcePins\": 20,\n  \"structuralEntry\": [\n    \"T-1\"\n  ],\n  \"topologicalOrder\": [\n    \"T-1\",\n    \"T-2\",\n    \"T-3\",\n    \"T-4\",\n    \"T-5\",\n    \"T-6\",\n    \"T-7\"\n  ],\n  \"gate\": {\n    \"phase\": \"decisions\",\n    \"reasons\": [\n      \"D-1\",\n      \"D-2\",\n      \"D-3\",\n      \"D-4\",\n      \"D-5\",\n      \"T-1 needs D-1\",\n      \"T-1 needs D-3\",\n      \"T-1 needs D-4\",\n      \"T-2 needs D-1\",\n      \"T-2 needs D-2\",\n      \"T-2 needs D-3\",\n      \"T-2 needs D-4\",\n      \"T-3 needs D-1\",\n      \"T-3 needs D-4\",\n      \"T-3 needs D-5\",\n      \"T-4 needs D-3\",\n      \"T-4 needs D-4\",\n      \"T-4 needs D-5\",\n      \"T-5 needs D-2\",\n      \"T-5 needs D-4\",\n      \"T-6 needs D-1\",\n      \"T-6 needs D-2\",\n      \"T-6 needs D-3\",\n      \"T-6 needs D-4\",\n      \"T-6 needs D-5\",\n      \"T-7 needs D-4\"\n    ]\n  },\n  \"plan_digest\": \"e68b44e04b882c0682e3af284c981bb2e45c64ef8fb5dfd6cb5c160fcaa71cf1\",\n  \"ownerActs\": 0,\n  \"executionAdmitted\": false\n}\n"
+    },
+    {
+      "label": "alignment",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "check",
+        "../specs/browser-agent-feedback"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "log": "specs/browser-agent-feedback/checks/red-foreman-alignment.log",
+      "output": "alignment: 0 violation(s), 0 gap(s) \u2014 gaps are reported, never guessed\n"
+    },
+    {
+      "label": "status",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "status",
+        "../specs/browser-agent-feedback"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "log": "specs/browser-agent-feedback/checks/red-foreman-status.log",
+      "output": "workflow: decisions \u2014 D-1; D-2; D-3; D-4; D-5; T-1 needs D-1; T-1 needs D-3; T-1 needs D-4; T-2 needs D-1; T-2 needs D-2; T-2 needs D-3; T-2 needs D-4; T-3 needs D-1; T-3 needs D-4; T-3 needs D-5; T-4 needs D-3; T-4 needs D-4; T-4 needs D-5; T-5 needs D-2; T-5 needs D-4; T-6 needs D-1; T-6 needs D-2; T-6 needs D-3; T-6 needs D-4; T-6 needs D-5; T-7 needs D-4\ndeliverable: drafted \u00b7 7 tasks \u00b7 revision 17 \u00b7 0 open \u00b7 not approved\n"
+    },
+    {
+      "label": "compatibility",
+      "cmd": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/core/test/owner-workflow.test.ts",
+        "packages/web/test/project-security.test.ts",
+        "packages/web/test/project-library.test.ts",
+        "packages/web/test/owner-workflow.test.ts",
+        "packages/cli/test/context.test.ts"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "log": "specs/browser-agent-feedback/checks/red-foreman-compatibility.log",
+      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/core/test/owner-workflow.test.ts (9 tests) 28ms\n \u2713 packages/cli/test/context.test.ts (1 test) 20ms\n \u2713 packages/web/test/project-library.test.ts (2 tests) 254ms\n \u2713 packages/web/test/project-security.test.ts (3 tests) 304ms\n \u2713 packages/web/test/owner-workflow.test.ts (11 tests) 2011ms\n   \u2713 owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  1924ms\n\n Test Files  5 passed (5)\n      Tests  26 passed (26)\n   Start at  08:17:00\n   Duration  2.84s (transform 585ms, setup 0ms, collect 2.63s, tests 2.62s, environment 1ms, prepare 535ms)\n\n"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+workflow: decisions — D-1; D-2; D-3; D-4; D-5; T-1 needs D-1; T-1 needs D-3; T-1 needs D-4; T-2 needs D-1; T-2 needs D-2; T-2 needs D-3; T-2 needs D-4; T-3 needs D-1; T-3 needs D-4; T-3 needs D-5; T-4 needs D-3; T-4 needs D-4; T-4 needs D-5; T-5 needs D-2; T-5 needs D-4; T-6 needs D-1; T-6 needs D-2; T-6 needs D-3; T-6 needs D-4; T-6 needs D-5; T-7 needs D-4
+deliverable: drafted · 7 tasks · revision 17 · 0 open · not approved

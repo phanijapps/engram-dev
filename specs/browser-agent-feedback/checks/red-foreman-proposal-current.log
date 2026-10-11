@@ -1,0 +1,44 @@
+{
+  "observed_at": "2026-10-11T12:22:47.958Z",
+  "revision": 24,
+  "schema": "specpack-owner-workflow.schema.json",
+  "schemaValid": true,
+  "violations": [],
+  "gaps": 0,
+  "requirements": 11,
+  "decisions": 5,
+  "tasks": 7,
+  "artifacts": 12,
+  "sourcePins": 23,
+  "structuralEntry": [
+    "T-1"
+  ],
+  "topologicalOrder": [
+    "T-1",
+    "T-2",
+    "T-3",
+    "T-4",
+    "T-5",
+    "T-6",
+    "T-7"
+  ],
+  "gate": {
+    "phase": "start",
+    "reasons": [
+      "Give permission to start this plan"
+    ],
+    "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+  },
+  "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+  "ownerActs": 5,
+  "acceptedDecisions": [
+    "D-1",
+    "D-2",
+    "D-3",
+    "D-4",
+    "D-5"
+  ],
+  "startReceipt": null,
+  "executionPermitted": false,
+  "tasksAdmitted": []
+}

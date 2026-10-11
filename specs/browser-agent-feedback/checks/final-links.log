@@ -1,0 +1,5 @@
+
+> treadle-root@ links /home/videogamer/code/memex_beta/treadle
+> node scripts/link-check.mjs
+
+links gate: 104 live file(s), every markdown link resolves

@@ -1,0 +1,17 @@
+flowchart TD
+  Receive["Agent receives submitted feedback"] --> Fresh{"Snapshot matches current target?"}
+  Fresh -->|"No"| Stale["Reply stale and publish refreshed round; preserve original anchor"]
+  Fresh -->|"Yes"| Phase{"Change type and current workflow gate?"}
+  Phase -->|"Unapproved analysis or plan"| Draft["Revise proposal; refresh proposed artifact references"]
+  Phase -->|"Approved task, permitted source and same scope"| Work["Apply change; run declared checks; record actual task evidence"]
+  Phase -->|"Bound artifact, new scope or no permission"| Replan["Preserve bound record; draft successor; require new owner review"]
+  Draft --> Round["Reply and publish immutable next round"]
+  Work --> Round
+  Stale --> Attached["Owner reattaches on new round and submits draft"]
+  Attached --> Receive
+  Stale -->|"Snapshot refused"| Retry["Explicit retry or manual recovery; no inaccessible wait"]
+  Replan --> Wait["Wait for owner review"]
+  Round --> Resolve["Owner inspects and resolves comments"]
+  Resolve --> Gate["Existing decisions and separate Start gate remain authoritative"]
+  Gate --> Review["Independent PACK review after task evidence"]
+  Review --> Finish["Separate owner Finish freezes pack and feedback"]

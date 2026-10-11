@@ -1,0 +1,36 @@
+sequenceDiagram
+  actor Owner
+  participant Web as Wukong Feedback view
+  participant API as Shared local service
+  participant Store as Feedback store
+  participant Agent as Coding agent and CLI
+  Agent->>Store: Open immutable round for selected artifacts
+  Agent->>Store: Wait after known batch cursor
+  Owner->>Web: Add draft comments on snapshot lines
+  Web->>API: Submit feedback with revision and operation ID
+  API->>Store: Lock pack, validate, atomically commit batch
+  alt Durable commit succeeds
+    Store-->>API: Stable batch ID and cursor
+    API-->>Web: Submitted
+    Store-->>Agent: Wait returns submitted batch
+    Agent->>Agent: Verify current bytes and SDD gate
+    alt Snapshot stale
+      Agent->>Store: Reply stale and publish refreshed round
+      API-->>Web: New snapshot and preserved original thread
+      Owner->>Web: Reattach to new anchor and Submit
+      Web->>API: Commit reattachment draft as next batch
+      API->>Store: Lock and durably advance batch cursor
+      Store-->>Agent: Submitted reattachment item
+    else Change is permitted
+      Agent->>Store: Reply and publish next immutable round
+      Web->>API: Refresh rounds and replies
+      API-->>Web: Original anchors, diff and unresolved threads
+      Owner->>Web: Inspect and resolve threads
+    else Drift or new scope
+      Agent->>Store: Reply needs replan, preserve old artifacts
+      API-->>Web: Owner review required
+    end
+  else Stale revision or failed publication
+    Store-->>API: Conflict or explicit persistence failure
+    API-->>Web: Preserve draft, retry with same operation ID
+  end

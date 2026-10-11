@@ -1,0 +1,136 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  [
+    {
++     accepted_by: 'human:owner',
+      because: 'A separate file format avoids changing approved plan digests or legacy corpus bytes. SQLite adds a dependency and migration surface; putting comments in canonical JSON couples conversation to owner receipts.',
+      decision: 'Keep feedback/1 state and immutable round files under the active pack feedback/ directory, separate from the canonical specpack; use the existing pack writer lock and durable atomic publication.',
+      id: 'D-1',
++     status: 'accepted'
+-     status: 'proposed'
+    },
+    {
++     accepted_by: 'human:owner',
+      because: 'All named hosts can run commands and read files in the reference pattern. Native RPC/SDK session control has host-specific authority, lifecycle and trust costs outside the selected scope. Real-host witnesses remain mandatory.',
+      decision: 'Use a portable CLI open/wait/read/reply/round bridge plus an installed feedback skill; bounded cursor reads deliver submitted batches, with explicit next-prompt/manual fallback for idle hosts.',
+      id: 'D-2',
++     status: 'accepted'
+-     status: 'proposed'
+    },
+    {
++     accepted_by: 'human:owner',
+      because: 'Live line numbers and a whole-worktree diff can misaddress edits or capture unrelated changes. Explicit immutable snapshots give an auditable referent; heuristic auto-reattachment is deferred.',
+      decision: 'Snapshot explicit Markdown targets and selected Git diff paths with exact content hashes, baseline commit IDs and before/after line anchors; source changes make anchors stale rather than silently moving them.',
+      id: 'D-3',
++     status: 'accepted'
+-     status: 'proposed'
+    },
+    {
++     accepted_by: 'human:owner',
+      because: 'Crit-style feedback completion is insufficient for Wukong owner authority. Reusing core gates preserves frozen artifacts and makes scope drift require owner review; unresolved feedback remains visible rather than silently clearing.',
+      decision: 'Keep feedback submit, agent replies and owner resolution separate from the existing spec/decision/Start/PACK/Finish workflow. Expose pending feedback without creating a hidden execution permission or automatic approval.',
+      id: 'D-4',
++     status: 'accepted'
+-     status: 'proposed'
+    },
+    {
++     accepted_by: 'human:owner',
+      because: 'The shared application already provides enrolled-project routing and page-token guards. Crit embedding introduces a second service and protocol; exposing new writes in the legacy foreground server would require another security surface.',
+      decision: 'Add a Feedback view to the shared project-qualified Wukong library, with source line/diff anchors and existing sandboxed Markdown preview; keep legacy foreground views disabled for this feature.',
+      id: 'D-5',
++     status: 'accepted'
+-     status: 'proposed'
+    }
+  ]
+
+    at assert (/home/videogamer/code/memex_beta/specs/browser-agent-feedback/authoring/validate.ts:51:10)
+    at Object.<anonymous> (/home/videogamer/code/memex_beta/specs/browser-agent-feedback/authoring/validate.ts:155:1)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object.transformer (/home/videogamer/code/memex_beta/treadle/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-B1c7OH6V.cjs:22:2188)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at loadCJSModuleWithModuleLoad (node:internal/modules/esm/translators:372:15)
+    at ModuleWrap.<anonymous> (node:internal/modules/esm/translators:244:9)
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    {
+      id: 'D-1',
+      decision: 'Keep feedback/1 state and immutable round files under the active pack feedback/ directory, separate from the canonical specpack; use the existing pack writer lock and durable atomic publication.',
+      because: 'A separate file format avoids changing approved plan digests or legacy corpus bytes. SQLite adds a dependency and migration surface; putting comments in canonical JSON couples conversation to owner receipts.',
+      status: 'accepted',
+      accepted_by: 'human:owner'
+    },
+    {
+      id: 'D-2',
+      decision: 'Use a portable CLI open/wait/read/reply/round bridge plus an installed feedback skill; bounded cursor reads deliver submitted batches, with explicit next-prompt/manual fallback for idle hosts.',
+      because: 'All named hosts can run commands and read files in the reference pattern. Native RPC/SDK session control has host-specific authority, lifecycle and trust costs outside the selected scope. Real-host witnesses remain mandatory.',
+      status: 'accepted',
+      accepted_by: 'human:owner'
+    },
+    {
+      id: 'D-3',
+      decision: 'Snapshot explicit Markdown targets and selected Git diff paths with exact content hashes, baseline commit IDs and before/after line anchors; source changes make anchors stale rather than silently moving them.',
+      because: 'Live line numbers and a whole-worktree diff can misaddress edits or capture unrelated changes. Explicit immutable snapshots give an auditable referent; heuristic auto-reattachment is deferred.',
+      status: 'accepted',
+      accepted_by: 'human:owner'
+    },
+    {
+      id: 'D-4',
+      decision: 'Keep feedback submit, agent replies and owner resolution separate from the existing spec/decision/Start/PACK/Finish workflow. Expose pending feedback without creating a hidden execution permission or automatic approval.',
+      because: 'Crit-style feedback completion is insufficient for Wukong owner authority. Reusing core gates preserves frozen artifacts and makes scope drift require owner review; unresolved feedback remains visible rather than silently clearing.',
+      status: 'accepted',
+      accepted_by: 'human:owner'
+    },
+    {
+      id: 'D-5',
+      decision: 'Add a Feedback view to the shared project-qualified Wukong library, with source line/diff anchors and existing sandboxed Markdown preview; keep legacy foreground views disabled for this feature.',
+      because: 'The shared application already provides enrolled-project routing and page-token guards. Crit embedding introduces a second service and protocol; exposing new writes in the legacy foreground server would require another security surface.',
+      status: 'accepted',
+      accepted_by: 'human:owner'
+    }
+  ],
+  expected: [
+    {
+      id: 'D-1',
+      decision: 'Keep feedback/1 state and immutable round files under the active pack feedback/ directory, separate from the canonical specpack; use the existing pack writer lock and durable atomic publication.',
+      because: 'A separate file format avoids changing approved plan digests or legacy corpus bytes. SQLite adds a dependency and migration surface; putting comments in canonical JSON couples conversation to owner receipts.',
+      status: 'proposed'
+    },
+    {
+      id: 'D-2',
+      decision: 'Use a portable CLI open/wait/read/reply/round bridge plus an installed feedback skill; bounded cursor reads deliver submitted batches, with explicit next-prompt/manual fallback for idle hosts.',
+      because: 'All named hosts can run commands and read files in the reference pattern. Native RPC/SDK session control has host-specific authority, lifecycle and trust costs outside the selected scope. Real-host witnesses remain mandatory.',
+      status: 'proposed'
+    },
+    {
+      id: 'D-3',
+      decision: 'Snapshot explicit Markdown targets and selected Git diff paths with exact content hashes, baseline commit IDs and before/after line anchors; source changes make anchors stale rather than silently moving them.',
+      because: 'Live line numbers and a whole-worktree diff can misaddress edits or capture unrelated changes. Explicit immutable snapshots give an auditable referent; heuristic auto-reattachment is deferred.',
+      status: 'proposed'
+    },
+    {
+      id: 'D-4',
+      decision: 'Keep feedback submit, agent replies and owner resolution separate from the existing spec/decision/Start/PACK/Finish workflow. Expose pending feedback without creating a hidden execution permission or automatic approval.',
+      because: 'Crit-style feedback completion is insufficient for Wukong owner authority. Reusing core gates preserves frozen artifacts and makes scope drift require owner review; unresolved feedback remains visible rather than silently clearing.',
+      status: 'proposed'
+    },
+    {
+      id: 'D-5',
+      decision: 'Add a Feedback view to the shared project-qualified Wukong library, with source line/diff anchors and existing sandboxed Markdown preview; keep legacy foreground views disabled for this feature.',
+      because: 'The shared application already provides enrolled-project routing and page-token guards. Crit embedding introduces a second service and protocol; exposing new writes in the legacy foreground server would require another security surface.',
+      status: 'proposed'
+    }
+  ],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

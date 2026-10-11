@@ -1,0 +1,55 @@
+{
+  "tool": "mermaid.parse",
+  "version": "12.1.0",
+  "visualRender": false,
+  "results": [
+    {
+      "file": "specs/browser-agent-feedback/design.md",
+      "index": 1,
+      "ok": true,
+      "type": "flowchart-v2"
+    },
+    {
+      "file": "specs/browser-agent-feedback/design.md",
+      "index": 2,
+      "ok": true,
+      "type": "sequence"
+    },
+    {
+      "file": "specs/browser-agent-feedback/design.md",
+      "index": 3,
+      "ok": true,
+      "type": "flowchart-v2"
+    },
+    {
+      "file": "specs/browser-agent-feedback/plan.md",
+      "index": 1,
+      "ok": true,
+      "type": "flowchart-v2"
+    },
+    {
+      "file": "specs/browser-agent-feedback/diagrams/DG-1.mmd",
+      "index": 1,
+      "ok": true,
+      "type": "flowchart-v2"
+    },
+    {
+      "file": "specs/browser-agent-feedback/diagrams/DG-2.mmd",
+      "index": 1,
+      "ok": true,
+      "type": "sequence"
+    },
+    {
+      "file": "specs/browser-agent-feedback/diagrams/DG-3.mmd",
+      "index": 1,
+      "ok": true,
+      "type": "flowchart-v2"
+    },
+    {
+      "file": "specs/browser-agent-feedback/diagrams/DG-4.mmd",
+      "index": 1,
+      "ok": true,
+      "type": "flowchart-v2"
+    }
+  ]
+}
