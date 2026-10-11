@@ -149,7 +149,7 @@ An ANALYSIS review is separate from PLAN and PACK review, start permission, and 
 
 The manifest is the authority for active wiring.
 Current Pi, Claude, and Codex lifecycle routes supply context, rather than an analysis hard gate.
-Codex activation also requires host hook trust. Copilot has no lifecycle hook wiring in the manifest.
+Codex activation also requires host hook trust. Local Copilot CLI uses sessionStart context and userPromptSubmitted reconnection; prompt command output does not inject context. Cloud bootstrap is separate.
 The old `--claude-gate` compatibility branch is not the active Claude lifecycle route.
 
 When context reports ambiguity, verify canonical discovery through `do where` and the exact pack loader.

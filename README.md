@@ -88,7 +88,12 @@ wukong init harness --agent codex --scope project --root .
 Use `claude`, `pi`, or `copilot` for those agents. Project hook installation starts
 the local app and connects the project. Open the address printed by the installer.
 Reload your agent and complete its hook trust or activation steps.
-Copilot has no shared-service hooks; use `wukong project connect .` to connect it.
+GitHub Copilot CLI and cloud agent support hooks in `.github/hooks/*.json`.
+Wukong installs project hooks for local Copilot CLI. They supply context at session
+start and reconnect the local app on prompts. Cloud hooks run in a separate sandbox
+and need their own runtime; they cannot connect to your desktop's localhost service.
+See [GitHub's hook documentation](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks)
+and [the integration correction](wiki/systems/copilot-hooks.md).
 
 ### 3. Ask your agent to begin
 
@@ -163,12 +168,12 @@ See [browser feedback](wiki/initiatives/browser-agent-feedback.md) for the curre
 
 ## Supported agents
 
-| Agent          | Integration                                                | What you must activate                                      |
-| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
-| Claude Code    | Skills, reviewers, and hooks; optional native plugin       | Reload and enable the integration.                          |
-| Codex          | Skills, reviewers, and hooks; optional native plugin       | Trust the current hooks. Availability differs across hosts. |
-| pi             | Skills, reviewers, and extensions; optional native package | Reload the extensions or load the package.                  |
-| GitHub Copilot | Instructions, skills, and reviewers                        | Connect the project manually; no service hooks.             |
+| Agent          | Integration                                                | What you must activate                                             |
+| -------------- | ---------------------------------------------------------- | ------------------------------------------------------------------ |
+| Claude Code    | Skills, reviewers, and hooks; optional native plugin       | Reload and enable the integration.                                 |
+| Codex          | Skills, reviewers, and hooks; optional native plugin       | Trust the current hooks. Availability differs across hosts.        |
+| pi             | Skills, reviewers, and extensions; optional native package | Reload the extensions or load the package.                         |
+| GitHub Copilot | Instructions, skills, reviewers, and local CLI hooks       | Reload the local CLI integration. Cloud runtime setup is separate. |
 
 Use a native artifact or the project installer for each host.
 Avoid loading the same callbacks twice. Installation does not establish host activation.

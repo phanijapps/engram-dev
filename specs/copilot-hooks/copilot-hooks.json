@@ -3,11 +3,11 @@
   "name": "copilot-hooks",
   "description": "Copilot lifecycle hook integration",
   "date": {
-    "updated": "2026-10-11T22:06:56Z"
+    "updated": "2026-10-11T22:10:11Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_progress"
+    "deliverable": "in_review"
   },
   "metadata": {
     "analysis": {
@@ -337,7 +337,7 @@
     {
       "id": "T-3",
       "title": "Verify installation and refresh delivery documentation",
-      "status": "todo",
+      "status": "done",
       "phase": "polish",
       "needs": [
         "T-2"
@@ -362,31 +362,40 @@
       "context": {
         "touch": [
           {
-            "path": "README.md"
+            "path": "README.md",
+            "sha256": "5b77f98ae3fd9edf13d72bd5266399a12d2ec6dc142d14bf392fedca63ca1285"
           },
           {
-            "path": "wiki/assets/guide/index.html"
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "bdd006907796eb2bd1ff0df899302a4d0e6fff64de90fc0051243d8e25839120"
           },
           {
-            "path": "treadle/packages/cli/harness/hooks/README.md"
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "8957a6047cb3254a09a1ab21a48f920d1922f4a4d1313ff8db2e60453f6d777c"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/resources/operations.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/resources/operations.md",
+            "sha256": "45eefb770e85408a7b8b0a97165eb15a22989a3751043d2f167f6763aeed9a1a"
           },
           {
-            "path": "wiki/project/setup.md"
+            "path": "wiki/project/setup.md",
+            "sha256": "3b9e7cf12c944eafec00b20cd48368fd71a225666231b79a388251498d60a521"
           },
           {
-            "path": "wiki/systems/copilot-hooks.md"
+            "path": "wiki/systems/copilot-hooks.md",
+            "sha256": "ca0e21c724c5b00d019d8e0fa3687278e1030c7eb6d845a447f9a731c35203aa"
           },
           {
-            "path": "wiki/systems/index.md"
+            "path": "wiki/systems/index.md",
+            "sha256": "2f56b0266d6a59e699a3bb6dfc00f14a01f1372c879d43bd71eac8ecd4afc407"
           },
           {
-            "path": "wiki/.okf/fingerprints.json"
+            "path": "wiki/.okf/fingerprints.json",
+            "sha256": "3c404e7bba78030fb5e7c9771d7907efc5cf9a5d09ad15a8be9c983c43603f14"
           },
           {
-            "path": "wiki/.okf/last-index.json"
+            "path": "wiki/.okf/last-index.json",
+            "sha256": "2e8e13a1a7b204a662f905516e166505c8d682a143e1e50cf09decef1ed9c08c"
           },
           {
             "path": "specs/copilot-hooks/verify-delivery.mjs"
@@ -431,7 +440,16 @@
         "notes": [
           "No native host or cloud job success follows from fixtures. Keep owner actions separate. Task commands T-1/T-2 run from treadle; T-3 from repository root."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T22:10:11Z",
+          "by": "agent:codex",
+          "notes": "Exact delivery verifier exited 0: build, temporary CLI dry-run/install/repeat/remove, isolated local service and installed wrapper, six repository gates, wiki maintenance with 0 errors/warnings and 0 anchors needing review. Actual receipts checks/delivery-22950332-7cf1-4f7c-8d83-0f93c9914ae2/results.json. Native Copilot, Windows hook execution, cloud and authenticated Z.ai calls remain unverified."
+        }
+      ]
     }
   ],
   "workflow": {
@@ -474,5 +492,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 11
+  "revision": 13
 }

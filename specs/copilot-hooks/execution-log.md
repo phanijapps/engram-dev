@@ -18,3 +18,13 @@ Unix commands were executed after checkout relocation; native Windows host execu
 A preliminary brand gate exited 1 because the JSON filename contained a literal product name in source/tests.
 The implementation now derives that filename from `brand.binName`; the repaired brand check exits 0.
 Checks: `checks/T-2-pass.log`, `checks/T-2-brand.log`. Source typecheck and scoped ESLint exited 0.
+
+
+T-3 was admitted at revision 12. `node specs/copilot-hooks/verify-delivery.mjs` exited 0.
+The temporary CLI dry-run, install, repeated install, real isolated service callback, and recorded removal all passed.
+All 6 repository gates passed. Wiki validation returned 0 errors and warnings, 0 anchors needing review, and a fresh stamp.
+The verifier stopped its isolated service and removed its temporary project.
+Actual subprocess receipts: `checks/delivery-22950332-7cf1-4f7c-8d83-0f93c9914ae2/results.json`.
+Current docs explain local hooks and Z.ai BYOK for CLI and VS Code. No API key was obtained or provider request sent.
+The approved analysis/design/plan remain unchanged; their historical proposed status stays preserved.
+All 3 tasks now have actual evidence; independent current-plan PACK review and owner Finish remain separate.

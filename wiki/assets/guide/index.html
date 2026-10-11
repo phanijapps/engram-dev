@@ -626,7 +626,7 @@ cd packages/cli && pnpm link --global</code></pre></div>
               <tr><td><span class="chip ok">same</span></td><td>bytes already match — nothing to do</td></tr>
               <tr><td><span class="chip bad">refuse</span></td><td>differs and no <code>--force</code> — nothing is written, exit 3</td></tr>
               <tr><td><span class="chip">update</span></td><td>differs and <code>--force</code> is set</td></tr>
-              <tr><td><span class="chip">skip</span></td><td>the honest no — e.g. hooks on Copilot</td></tr>
+              <tr><td><span class="chip">skip</span></td><td>no wiring for this component in the installed manifest</td></tr>
             </tbody>
           </table>
           <div class="codewrap"><button class="copy">copy</button><pre><code><span class="cmt"># preview only — writes nothing</span>
@@ -663,10 +663,17 @@ treadle init harness --agent pi --scope project --yes</code></pre></div>
                 <td><strong>Copilot</strong></td>
                 <td><code>.github/skills/</code></td>
                 <td><code>.github/agents/</code></td>
-                <td>none — stated honestly in the plan</td>
+                <td>Local Copilot CLI: <code>.github/hooks/wukong.json</code>. Cloud runtime setup is separate.</td>
               </tr>
             </tbody>
           </table>
+          <p>
+            <strong>Copilot correction, 2026-10-11:</strong>
+            <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks">GitHub documents Copilot hooks</a>.
+            Wukong now installs local CLI session and prompt hooks.
+            Session hooks supply context; prompt hooks reconnect the local app.
+            Cloud hooks run in a separate sandbox; they cannot reach your desktop's localhost service.
+          </p>
         </div>
 
         <div class="step" data-n="4">
