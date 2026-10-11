@@ -3,7 +3,7 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T12:35:00Z"
+    "updated": "2026-10-11T12:45:35Z"
   },
   "status": {
     "lifecycle": "active",
@@ -612,7 +612,7 @@
       "title": "Build selected snapshots and the CLI bridge",
       "detail": "Document/Git selections, rename/delete/add sides, source drift, no external diff execution, JSON statuses, cursor redelivery, cancellation and timeout pass. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
       "phase": "integration",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-1"
       ],
@@ -673,7 +673,8 @@
           },
           {
             "path": "treadle/packages/cli/src/commands/do.ts",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "52cf80147a84e1c859e9c74de7c93bdbc9c9e4b24bbf7b3c33d3f5d0bd787f6a"
           },
           {
             "path": "treadle/packages/cli/test/feedback-cli.test.ts",
@@ -723,7 +724,16 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:45:35Z",
+          "by": "agent:codex",
+          "notes": "15 CLI/snapshot checks passed, including actual Git driver/filter execution traps, explicit selection, stale refs, original-byte retries, bounded waits and cancellation. Source typecheck and lint also passed. Log checks/T-2-attempt-1.log."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -1429,5 +1439,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 27
+  "revision": 29
 }

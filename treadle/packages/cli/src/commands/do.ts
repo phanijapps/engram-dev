@@ -5,6 +5,7 @@
  * the vocabulary is the API.
  */
 import type { Command } from 'commander';
+import { registerFeedback } from './feedback.js';
 import { where, recallBlock } from '../harness/where.js';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname as packDirFrom } from 'node:path';
@@ -98,6 +99,7 @@ function workflowOwner(
 }
 
 export function registerDo(doCmd: Command): void {
+  registerFeedback(doCmd);
   doCmd
     .command('answer <packDir>')
     .requiredOption('--q <id>', 'the question id')
