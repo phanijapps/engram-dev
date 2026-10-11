@@ -1,0 +1,16 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "phase": "verify",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "--input-type=module",
+    "-e",
+    "import{readFileSync}from'node:fs';import assert from'node:assert/strict';assert.ok(readFileSync(\"specs/browser-agent-feedback/checks/native-sources/codex.md\",'utf8').includes('Submitting feedback does not grant Start approval.'));console.log('Document fixture assertion passed');"
+  ],
+  "started_at": "2026-10-11T13:45:41.182Z",
+  "observed_at": "2026-10-11T13:45:41.234Z",
+  "exit": 1,
+  "output": ""
+}

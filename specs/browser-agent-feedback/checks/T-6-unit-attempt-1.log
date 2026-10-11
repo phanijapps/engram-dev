@@ -1,0 +1,48 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ❯ packages/cli/test/feedback-loop.test.ts (4 tests | 2 failed) 1530ms
+   × delivers only explicit submitted document feedback during wait and retains it across service restart 288ms
+     → Cannot read properties of undefined (reading 'at')
+   ✓ delivers stale reattachment only after another human Submit and preserves the original code anchor  1176ms
+   ✓ replays a durably submitted batch after a lost acknowledgement without duplication 19ms
+   × never supplies Start through feedback, invalidates an old Start on plan change, and keeps closed history read-only 46ms
+     → expected [Function] to throw error including 'complete' but got 'Completed packs are read-only'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart
+TypeError: Cannot read properties of undefined (reading 'at')
+ ❯ Module.feedbackThreadState packages/core/src/feedback/store.ts:805:27
+    803| ): { resolved: boolean; stale: boolean } {
+    804|   const resolved = t.events.at(-1)?.kind === 'resolve';
+    805|   const latest = s.rounds.at(-1);
+       |                           ^
+    806|   const target = latest?.targets.find((target) => target.id === t.curr…
+    807|   const stale =
+ ❯ packages/cli/test/feedback-loop.test.ts:159:12
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/cli/test/feedback-loop.test.ts > never supplies Start through feedback, invalidates an old Start on plan change, and keeps closed history read-only
+AssertionError: expected [Function] to throw error including 'complete' but got 'Completed packs are read-only'
+
+Expected: "complete"
+Received: "Completed packs are read-only"
+
+ ❯ packages/cli/test/feedback-loop.test.ts:327:7
+    325|     expect(() =>
+    326|       f.apply({ kind: 'reply', session: open.session, thread: comment.…
+    327|     ).toThrow('complete');
+       |       ^
+    328|     expect(
+    329|       readFeedbackSnapshot(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  09:29:34
+   Duration  2.65s (transform 461ms, setup 0ms, collect 604ms, tests 1.53s, environment 0ms, prepare 103ms)
+

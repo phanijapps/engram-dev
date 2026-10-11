@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-10-11T13:53:19.841489+00:00",
+  "scope": "Synthetic spawn-result injection into copied runner; no native/CLI process or real ledger mutation; fixtures removed.",
+  "source_sha256": "41b8a080934dc9061f8a7a95c6fdf31d0cc8408edde8dcd549502dbd76b8134d",
+  "variants": [
+    {
+      "name": "spawn_error",
+      "exit": 1,
+      "record_exit": 1,
+      "output": {
+        "unavailable": true,
+        "error": "synthetic EPERM"
+      },
+      "expected_admissible": false
+    },
+    {
+      "name": "non_json_exit_zero",
+      "exit": 0,
+      "record_exit": 0,
+      "output": {
+        "unavailable": true,
+        "error": "Non-JSON CLI output"
+      },
+      "expected_admissible": false
+    },
+    {
+      "name": "valid_pending",
+      "exit": 0,
+      "record_exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "status": "pending",
+        "session": "synthetic-case"
+      },
+      "expected_admissible": true
+    }
+  ]
+}

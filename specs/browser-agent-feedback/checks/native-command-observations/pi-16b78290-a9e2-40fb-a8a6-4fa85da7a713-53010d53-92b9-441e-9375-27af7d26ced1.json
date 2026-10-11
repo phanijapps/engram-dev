@@ -1,0 +1,16 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "pi",
+  "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+  "phase": "verify",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "--input-type=module",
+    "-e",
+    "import{readFileSync}from'node:fs';import assert from'node:assert/strict';assert.ok(readFileSync(\"specs/browser-agent-feedback/checks/native-sources/pi.md\",'utf8').includes('Submitting feedback does not grant Start approval.'));console.log('Document fixture assertion passed');"
+  ],
+  "started_at": "2026-10-11T13:44:15.610Z",
+  "observed_at": "2026-10-11T13:44:15.654Z",
+  "exit": 0,
+  "output": "Document fixture assertion passed"
+}

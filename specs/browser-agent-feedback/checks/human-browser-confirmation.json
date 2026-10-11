@@ -1,0 +1,147 @@
+{
+  "format": "feedback-human-confirmation/1",
+  "source": "Actual user async reply in this chat",
+  "observed_at": "2026-10-11T13:37:14.519Z",
+  "answer": "done",
+  "observed_batches": [
+    {
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "batch": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+      "cursor": 1,
+      "by": "human:owner"
+    },
+    {
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "batch": "43c183dd-6338-4d81-8ce4-ab04b35b8aaf",
+      "cursor": 1,
+      "by": "human:owner"
+    },
+    {
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "batch": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+      "cursor": 1,
+      "by": "human:owner"
+    }
+  ],
+  "missing_sessions": [
+    "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+    "bef9d411-b853-43fd-89c4-b48b59320d55",
+    "16b78290-a9e2-40fb-a8a6-4fa85da7a713"
+  ],
+  "followup": {
+    "source": "Actual user async reply for remaining three sessions",
+    "answer": "done",
+    "observed_at": "2026-10-11T13:47:49.274Z"
+  },
+  "stale_followup": {
+    "source": "Actual async user reply to stale reattachment request",
+    "answer": "continue",
+    "observed_at": "2026-10-11T13:49:09.450Z",
+    "observed_action": "New comment and Submit at cursor2; no reattachment event yet"
+  },
+  "followups": [
+    {
+      "source": "Actual user async reply to original-thread reattachment request",
+      "answer": "done",
+      "observed_at": "2026-10-11T14:39:36.493987+00:00",
+      "observed_action": "New Approved comment and Submit at cursor3; original thread still has no reattachment event",
+      "batch": "41159ffc-0a4e-460a-87c5-0914d16e7542"
+    }
+  ],
+  "reattachment_confirmation": {
+    "source": "Actual user async reply after two-button instructions",
+    "answer": "done",
+    "observed_at": "2026-10-11T14:52:21.681159+00:00",
+    "batch": "30fb0850-7729-4248-97fd-430cc2e52990",
+    "event": "49da1592-8cd9-4e8f-85ef-aeb13aed19b5",
+    "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+    "observed_action": "Original thread human Reattach and Submit at cursor4; original anchor retained"
+  },
+  "resolution_confirmation": {
+    "source": "Actual user async reply to eight-thread resolution request",
+    "answer": "done.. I might have left a few",
+    "observed_at": "2026-10-11T16:29:16.508290+00:00",
+    "resolved": [
+      {
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+        "event": {
+          "id": "2b73fc65-0c9f-44b7-b32c-e3c9d8b83b16",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:31.403Z"
+        }
+      },
+      {
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+        "event": {
+          "id": "15a126f7-9d9b-4759-9b42-0d45ce4d5498",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:49.705Z"
+        }
+      },
+      {
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "thread": "cd001460-eb31-4f59-8964-41137001c6ec",
+        "event": {
+          "id": "8e5d507c-1929-44b4-b01a-80e1f558bf39",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:08.495Z"
+        }
+      },
+      {
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+        "event": {
+          "id": "034c9ab5-f02b-4401-881e-33bf18ca8716",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:17.457Z"
+        }
+      },
+      {
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+        "event": {
+          "id": "e6c41c5a-e523-45d6-910f-ccd5de12e7b3",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:53.315Z"
+        }
+      },
+      {
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+        "event": {
+          "id": "de4ddf0a-a694-4c75-9a94-1148198c743d",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:01.106Z"
+        }
+      }
+    ],
+    "pending": [
+      {
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+        "body": "fdafd"
+      },
+      {
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "thread": "56cbe701-236d-4279-b273-7bc331135e6c",
+        "body": "asdfdsaf"
+      }
+    ]
+  },
+  "final_owner_instruction": {
+    "source": "Actual user async reply after remaining-two request",
+    "answer": "I think I finished all take them as trouth. if anything is remaining let us ignore",
+    "observed_at": "2026-10-11T16:32:20.955528+00:00",
+    "waiver_file": "checks/native-owner-test-waiver.json",
+    "observed_resolution_count": 7,
+    "thread_count": 8
+  }
+}

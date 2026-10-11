@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-10-11T16:33:27.629162+00:00",
+  "scope": "Read-only owner exception assessment; no fabricated event, evidence admission, PACK or owner Finish",
+  "waiver_sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+  "waiver_ledger_matches": true,
+  "start_digest_matches": true,
+  "actual_missing_resolution": [
+    {
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9"
+    }
+  ],
+  "sole_bound_thread_matches": true,
+  "qualified_claim": "Five complete host/mode journeys; one native delivery/revision journey with the remaining human Resolve step explicitly waived. Seven actual Resolve events; zero fabricated events.",
+  "admission_assessment": "A fixed bounded exception for this actual human instruction can satisfy remaining manual verification under the explicit owner override, with qualified exit/result notes. It cannot substitute for absent native host delivery, runtime guards, required technical checks, changed Start-bound artifacts, independent PACK or separate owner Finish."
+}

@@ -1,0 +1,150 @@
+{
+  "observed_at": "2026-10-11T16:31:35.965318+00:00",
+  "scope": "Preparatory read-only provenance/consistency checks; no native PASS and no final human-resolution claim",
+  "ledger_revision": 49,
+  "ledger_sha256": "d7a593e7e13baa2ade0b9232c12a8e781ab88ed04f46315f5fb5d26a3baed0f7",
+  "draft_ledger_hash_current": false,
+  "cases": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "batch": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+      "revised_round": "2ba041b5-66bf-4c9e-b09b-bc8388aeebab",
+      "command_file": "checks/native-commands-codex-documents.json",
+      "command_sha256": "711decbdca4c464690a5d4149cb9300b6b100e47726bdb7d756e38009a250fcf",
+      "aggregate_records_match_raw_observations": true,
+      "records": 24,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+      "fixture_sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "batch": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+      "revised_round": "b24f4ca5-cc8c-4b83-b82d-23afcf132e38",
+      "command_file": "checks/native-commands-codex-diff.json",
+      "command_sha256": "b9a8280ef34a1a2cfc59a907a6b8697e5dee82f4b457a5199def047d82e1b6a5",
+      "aggregate_records_match_raw_observations": true,
+      "records": 6,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "batch": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+      "revised_round": "971562a0-562e-44cd-9787-48f48ae6e72a",
+      "command_file": "checks/native-commands-claude-documents.json",
+      "command_sha256": "5cfa3ffe63427dfda43a841b34f208ab017318173541a46fc501d384ce989f34",
+      "aggregate_records_match_raw_observations": true,
+      "records": 9,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+      "fixture_sha256": "b051f21ec3000b3995cb5d069c627bb61741a11dbe90701f30453690ceff975f",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "batch": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+      "revised_round": "aeb62723-84b4-42c5-838b-41704b0f34aa",
+      "command_file": "checks/native-commands-claude-diff.json",
+      "command_sha256": "3b66ada053794b69b85284ff41f577e7ea15968d6d11bde16f5ec9ef84affb21",
+      "aggregate_records_match_raw_observations": true,
+      "records": 6,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "batch": "4fdddb48-b222-4804-be45-79404ab47c22",
+      "revised_round": "fc0dfe6a-efee-4339-a639-76d985c5c3f8",
+      "command_file": "checks/native-commands-pi-documents.json",
+      "command_sha256": "ada7049c1a8fbfba1b69bd4a0a59a5f25fdde20f6ba403d7f840e501fadc590d",
+      "aggregate_records_match_raw_observations": true,
+      "records": 5,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+      "fixture_sha256": "2fe8335c3f34fc3d5db5f9fe25bb30c89a5d9f4892c116c9bc1c1d8b1d8336cc",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "batch": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+      "revised_round": "4280cc42-c77c-4a89-8687-15180efd8040",
+      "command_file": "checks/native-commands-pi-diff.json",
+      "command_sha256": "753b095115887bb0e927b08fb89d838cde2adb5d844c311e651db4f60666716a",
+      "aggregate_records_match_raw_observations": true,
+      "records": 5,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true
+    }
+  ],
+  "installed_skill_checks": [
+    {
+      "host": "claude",
+      "file": ".claude/skills/feedback/SKILL.md",
+      "exists": true,
+      "canonical_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "installed_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches": true
+    },
+    {
+      "host": "codex",
+      "file": ".codex/skills/feedback/SKILL.md",
+      "exists": true,
+      "canonical_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "installed_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches": true
+    },
+    {
+      "host": "pi",
+      "file": ".pi/skills/feedback/SKILL.md",
+      "exists": true,
+      "canonical_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "installed_sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches": true
+    },
+    {
+      "host": "claude",
+      "file": ".claude/skills/feedback/resources/protocol.md",
+      "exists": true,
+      "canonical_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "installed_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches": true
+    },
+    {
+      "host": "codex",
+      "file": ".codex/skills/feedback/resources/protocol.md",
+      "exists": true,
+      "canonical_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "installed_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches": true
+    },
+    {
+      "host": "pi",
+      "file": ".pi/skills/feedback/resources/protocol.md",
+      "exists": true,
+      "canonical_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "installed_sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches": true
+    }
+  ],
+  "raw_observation_count": 57
+}

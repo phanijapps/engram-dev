@@ -1,0 +1,37 @@
+{
+  "synthetic_structural_negative_probe": true,
+  "native_processes_run": 0,
+  "real_human_actions": 0,
+  "verifier_source_sha256": "ef0c21edad5fd9ecbfa22130a828c2a9d793debb5866fa5c15f85cbf72187336",
+  "results": [
+    {
+      "variant": "structural_baseline",
+      "accepted": true,
+      "message": "Native matrix: six human browser / native agent revision / human resolution journeys verified\n"
+    },
+    {
+      "variant": "empty_command_argv",
+      "accepted": false,
+      "message": "Error: Missing actual wait command/exit for claude/documents"
+    },
+    {
+      "variant": "invalid_prompt_hash",
+      "accepted": false,
+      "message": "Error: Native command evidence missing"
+    },
+    {
+      "variant": "pending_wait_output",
+      "accepted": false,
+      "message": "Error: Native wait must deliver the exact recorded batch JSON"
+    },
+    {
+      "variant": "resolve_before_round",
+      "accepted": false,
+      "message": "Error: Human resolution required after revision"
+    },
+    {
+      "variant": "empty_recovery_file",
+      "accepted": false
+    }
+  ]
+}

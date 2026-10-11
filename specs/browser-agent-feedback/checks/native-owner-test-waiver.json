@@ -1,0 +1,19 @@
+{
+  "format": "feedback-owner-test-waiver/1",
+  "source": "Actual user async reply in this chat; owner instruction overrides remaining manual test steps",
+  "instruction": "I think I finished all take them as trouth. if anything is remaining let us ignore",
+  "observed_at": "2026-10-11T16:31:35.623465+00:00",
+  "by": "human:owner",
+  "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+  "ledger_sha256": "d7a593e7e13baa2ade0b9232c12a8e781ab88ed04f46315f5fb5d26a3baed0f7",
+  "pending": [
+    {
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+      "body": "fdafd",
+      "unverified": "Human browser Resolve after native revision"
+    }
+  ],
+  "scope": "Waive only remaining manual Resolve witness; native delivery/revision, source, recovery and technical checks still required. Does not synthesize a Resolve, Start, Finish or successful six-resolution claim.",
+  "ledger_revision": 49
+}

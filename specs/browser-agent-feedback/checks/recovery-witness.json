@@ -1,0 +1,38 @@
+{
+  "format": "feedback-recovery-witness/1",
+  "observed_at": "2026-10-11T13:42:26.259504+00:00",
+  "argv": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "packages/cli/test/feedback-loop.test.ts"
+  ],
+  "exit": 0,
+  "source_sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
+  "log_file": "checks/T-6-unit-recovery.log",
+  "log_sha256": "7458bde1add418ab62bbe37bd70c7530c85bd5d3f17b7d89ae83734e9e72cc39",
+  "events": [
+    {
+      "kind": "restart-redelivery",
+      "session": "ad2b0406-5186-4af4-b3f1-cde055392c72",
+      "before_cursor": 1,
+      "after_cursor": 1,
+      "before_batches": [
+        "e7677942-d964-492f-9969-b96b37cb74c3"
+      ],
+      "after_batches": [
+        "e7677942-d964-492f-9969-b96b37cb74c3"
+      ]
+    },
+    {
+      "kind": "lost-ack",
+      "session": "ab28ee82-ee10-4341-a623-a5b941a31b26",
+      "operation_id": "f3c46a63-6f90-4ed5-bf73-6cc8b8f87267",
+      "received_batch": "2c63229c-c263-4cbd-9acd-7572c9f556d4",
+      "replay_batch": "2c63229c-c263-4cbd-9acd-7572c9f556d4",
+      "committed_batches": 1
+    }
+  ],
+  "scope": "Synthetic integrated boundary/recovery tests; these do not replace native human-browser witnesses."
+}

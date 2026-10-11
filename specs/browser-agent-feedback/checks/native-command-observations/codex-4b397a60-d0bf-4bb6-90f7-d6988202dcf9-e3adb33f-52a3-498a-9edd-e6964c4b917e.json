@@ -1,0 +1,28 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "phase": "wait",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "wait",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "--after",
+    "0",
+    "--timeout",
+    "30",
+    "--json"
+  ],
+  "started_at": "2026-10-11T13:42:08.753Z",
+  "observed_at": "2026-10-11T13:42:08.970Z",
+  "exit": 0,
+  "output": {
+    "unavailable": true,
+    "error": "spawnSync /home/videogamer/.local/node-v24.19.0/bin/node EPERM"
+  }
+}

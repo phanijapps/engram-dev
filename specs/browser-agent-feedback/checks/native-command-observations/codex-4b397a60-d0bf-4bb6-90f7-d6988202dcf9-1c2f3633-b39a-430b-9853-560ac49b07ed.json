@@ -1,0 +1,76 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "phase": "wait",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "wait",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "--after",
+    "2",
+    "--timeout",
+    "30",
+    "--json"
+  ],
+  "started_at": "2026-10-11T14:38:33.034Z",
+  "observed_at": "2026-10-11T14:38:33.192Z",
+  "exit": 0,
+  "output": {
+    "format": "feedback-result/1",
+    "pack_id": "browser-agent-feedback",
+    "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "revision": 36,
+    "cursor": 3,
+    "status": "submitted",
+    "batches": [
+      {
+        "id": "41159ffc-0a4e-460a-87c5-0914d16e7542",
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+        "cursor": 3,
+        "by": "human:owner",
+        "at": "2026-10-11T14:35:09.458Z",
+        "items": [
+          {
+            "id": "c5e0c5a9-cfbf-4266-8739-a02f588d794c",
+            "kind": "comment",
+            "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+            "body": "Approved",
+            "by": "human:owner",
+            "at": "2026-10-11T14:35:06.076Z",
+            "anchor": {
+              "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+              "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "side": "after",
+              "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b"
+            }
+          }
+        ]
+      }
+    ],
+    "threads": [
+      {
+        "id": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+        "resolved": false,
+        "stale": true
+      },
+      {
+        "id": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+        "resolved": false,
+        "stale": true
+      },
+      {
+        "id": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+        "resolved": false,
+        "stale": false
+      }
+    ],
+    "project": "f69b47a23566ae2a3e86acb0"
+  }
+}

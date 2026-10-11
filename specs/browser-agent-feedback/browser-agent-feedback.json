@@ -3,7 +3,7 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T13:25:51Z"
+    "updated": "2026-10-11T16:41:39Z"
   },
   "status": {
     "lifecycle": "active",
@@ -1154,7 +1154,7 @@
       "title": "Witness document and code review through all three hosts",
       "detail": "Automated document/diff/restart/drift and SDD gate cases pass; host verifier separately requires actual Claude/Codex/Pi document and code witnesses, human submissions/resolution and commands/exits. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions. The single declared verification command must execute both required checks; steps are explanatory and cannot substitute a unit-only evidence row.",
       "phase": "integration",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-4",
         "T-5"
@@ -1225,15 +1225,18 @@
         "touch": [
           {
             "path": "treadle/packages/cli/test/feedback-loop.test.ts",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9"
           },
           {
             "path": "specs/browser-agent-feedback/verify-hosts.mjs",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "ef0c21edad5fd9ecbfa22130a828c2a9d793debb5866fa5c15f85cbf72187336"
           },
           {
             "path": "specs/browser-agent-feedback/host-witnesses.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "81a287fdfac560af341e74d4a411d5ae5d7cd7c50b91d0be116bcfa5742a8f9f"
           }
         ],
         "read": [
@@ -1275,7 +1278,23 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+          "exit": 1,
+          "at": "2026-10-11T13:31:58Z",
+          "by": "agent:codex",
+          "notes": "Four integrated loop tests pass; combined check refuses missing real native human submissions/revisions/resolutions. Six concrete URLs opened and user input requested; Codex native waits return pending. T-6 remains doing; no native/PACK completion claim."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+          "exit": 0,
+          "at": "2026-10-11T16:41:39Z",
+          "by": "agent:codex",
+          "notes": "Exact combined check exits0:4 integrated tests, UI witness and6 actual native deliveries/revisions. Qualified acceptance only:7/8 actual human Resolve; Claude diff Resolve explicitly owner-waived, unverified. Actual instruction/hash and independent pass_with_owner_waiver report retained; no fabricated event or full six-resolution claim. checks/T-6-final-qualified.log; native-witness.json; implementation-review-native.md."
+        }
+      ]
     },
     {
       "id": "T-7",
@@ -1479,5 +1498,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 36
+  "revision": 41
 }

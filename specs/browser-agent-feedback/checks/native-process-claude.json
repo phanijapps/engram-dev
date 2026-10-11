@@ -1,0 +1,23 @@
+{
+  "format": "feedback-native-process/1",
+  "host": "claude",
+  "version": "2.1.233 (Claude Code)",
+  "argv": [
+    "claude",
+    "-p",
+    "--no-session-persistence",
+    "--permission-mode",
+    "dontAsk",
+    "--allowedTools",
+    "Bash",
+    "Read",
+    "Edit",
+    "Write",
+    "--output-format",
+    "text"
+  ],
+  "exit": 0,
+  "observed_at": "2026-10-11T13:47:49.273Z",
+  "prompt_file": "checks/native-prompts/claude-revision.txt",
+  "prompt_sha256": "611609b5d8a62ffbf7b9fc030c1fe8d0c56c70fb685e995ed1561e04c908a5bd"
+}

@@ -1,0 +1,35 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "pi",
+  "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+  "phase": "round",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "round",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+    "--expected-revision",
+    "19",
+    "--operation-id",
+    "8f683ba0-89c7-416a-ab37-b8dd12d5d3ac",
+    "--json",
+    "--by",
+    "agent:pi"
+  ],
+  "started_at": "2026-10-11T13:44:05.328Z",
+  "observed_at": "2026-10-11T13:44:05.518Z",
+  "exit": 0,
+  "output": {
+    "format": "feedback-result/1",
+    "status": "pending",
+    "project": "f69b47a23566ae2a3e86acb0",
+    "operation_id": "8f683ba0-89c7-416a-ab37-b8dd12d5d3ac",
+    "revision": 20,
+    "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+    "round": "fc0dfe6a-efee-4339-a639-76d985c5c3f8"
+  }
+}

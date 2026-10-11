@@ -1,0 +1,64 @@
+{
+  "observed_at": "2026-10-11T16:35:37.427Z",
+  "scope": "In-memory overlays only: no real ledger, waiver, witness or independent verdict fabricated. Full current native admission body evaluated after initial file/UI guard; review metadata supplied synthetically only inside probe. Technical negative overlays update their declared hashes to test semantics beyond hash mismatch.",
+  "verifier_sha256": "4e922af0aa22c85aabee1a93b0037027b3580983453c13fef21584364cad0dff",
+  "actual_waiver_sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+  "actual_ledger_unchanged": true,
+  "results": [
+    {
+      "variant": "bound_baseline",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "extra_pending",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "missing_host",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "bad_prompt_hash",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "missing_verify_check",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "stale_waiver_hash",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "stale_ledger_binding",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "stale_start_digest",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "wrong_thread",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "reissued_waiver_time",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    },
+    {
+      "variant": "broadened_waiver_scope",
+      "accepted": false,
+      "message": "Owner exception must bind the actual remaining Claude diff Resolve, current ledger and Start receipt"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "format": "feedback-native-process/1",
+  "host": "codex",
+  "version": "codex-cli 0.162.1",
+  "argv": [
+    "codex",
+    "exec",
+    "--ephemeral",
+    "-s",
+    "danger-full-access",
+    "-C",
+    "/home/videogamer/code/memex_beta",
+    "-"
+  ],
+  "exit": 0,
+  "observed_at": "2026-10-11T14:55:32.466321+00:00",
+  "prompt_file": "checks/native-prompts/codex-document-reattach.txt",
+  "prompt_sha256": "f7fa2a9f494d280f915ee4d6c4255e72e0d4d17ec3f873203f6c9d08c707ea6e"
+}

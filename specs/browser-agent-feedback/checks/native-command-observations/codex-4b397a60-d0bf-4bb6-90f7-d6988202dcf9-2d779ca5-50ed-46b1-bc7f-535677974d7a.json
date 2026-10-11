@@ -1,0 +1,71 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "phase": "wait",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "wait",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "--after",
+    "1",
+    "--timeout",
+    "30",
+    "--json"
+  ],
+  "started_at": "2026-10-11T13:49:23.554Z",
+  "observed_at": "2026-10-11T13:49:23.712Z",
+  "exit": 0,
+  "output": {
+    "format": "feedback-result/1",
+    "pack_id": "browser-agent-feedback",
+    "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "revision": 32,
+    "cursor": 2,
+    "status": "submitted",
+    "batches": [
+      {
+        "id": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "6a829c77-d190-4203-b906-1729fa277987",
+        "cursor": 2,
+        "by": "human:owner",
+        "at": "2026-10-11T13:47:50.668Z",
+        "items": [
+          {
+            "id": "0802898a-ec8f-4633-883f-9dfb24192bb7",
+            "kind": "comment",
+            "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+            "body": "dfsdfdsa",
+            "by": "human:owner",
+            "at": "2026-10-11T13:47:47.327Z",
+            "anchor": {
+              "round": "6a829c77-d190-4203-b906-1729fa277987",
+              "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "side": "after",
+              "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec"
+            }
+          }
+        ]
+      }
+    ],
+    "threads": [
+      {
+        "id": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+        "resolved": false,
+        "stale": true
+      },
+      {
+        "id": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+        "resolved": false,
+        "stale": false
+      }
+    ],
+    "project": "f69b47a23566ae2a3e86acb0"
+  }
+}

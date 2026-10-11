@@ -1,0 +1,16 @@
+{
+  "format": "feedback-native-process/1",
+  "host": "pi",
+  "version": "1.1.0",
+  "argv": [
+    "pi",
+    "--approve",
+    "--no-session",
+    "-p",
+    "@specs/browser-agent-feedback/checks/native-prompts/pi-revision.txt"
+  ],
+  "exit": 0,
+  "observed_at": "2026-10-11T13:46:21.903Z",
+  "prompt_file": "checks/native-prompts/pi-revision.txt",
+  "prompt_sha256": "37ad4fa6a60f93f59f15fd6f839566bc189254296cc8ac8daa632f12b852051a"
+}

@@ -1,0 +1,38 @@
+{
+  "synthetic_structural_negative_probe": true,
+  "native_processes_run": 0,
+  "real_human_actions": 0,
+  "verifier_source_sha256": "dfd8c9082e47be94e55c54037177bb699bf54b42e54bc7f546ce7b15f3703446",
+  "results": [
+    {
+      "variant": "structural_baseline",
+      "accepted": false,
+      "message": "Error: Protocol command does not name its session/phase"
+    },
+    {
+      "variant": "empty_command_argv",
+      "accepted": false,
+      "message": "Error: Missing actual wait command/exit for claude/documents"
+    },
+    {
+      "variant": "invalid_prompt_hash",
+      "accepted": false,
+      "message": "Error: Native command evidence missing"
+    },
+    {
+      "variant": "pending_wait_output",
+      "accepted": false,
+      "message": "Error: Protocol command does not name its session/phase"
+    },
+    {
+      "variant": "resolve_before_round",
+      "accepted": false,
+      "message": "Error: Protocol command does not name its session/phase"
+    },
+    {
+      "variant": "empty_recovery_file",
+      "accepted": false,
+      "message": "Error: Protocol command does not name its session/phase"
+    }
+  ]
+}
