@@ -1,8 +1,9 @@
 {
-  "generated_at": "2026-10-11T19:23:03Z",
+  "generated_at": "2026-10-11T20:35:57Z",
   "workspace": "/home/videogamer/code/memex_beta",
-  "head": "44463ece92f3924851e79dc829e262f61a9c5f87",
+  "head": "0da8c8fe5201e627f221016e11e6cce084f77722",
   "fingerprints": {
+    "artifacts/wukong-logo/export.py": "1aeba2850e5e3b1b42a11b7fc6e921c0613fe5701b6b2ad511e2a41f6b06e755",
     "treadle/conformance/generators/gen_corpus.py": "4d7932a5f90d079a69330c74c9b94e1b09cefa64eed7e2d0440a065a5601f894"
   }
 }

@@ -1,175 +1,186 @@
 # Wukong
 
-```text
- __        __      _
- \ \      / /_   _| | _____  _ __   __ _
-  \ \ /\ / /| | | | |/ / _ \| '_ \ / _` |
-   \ V  V / | |_| |   < (_) | | | | (_| |
-    \_/\_/   \__,_|_|\_\___/|_| |_|\__, |
-                                   |___/
-          .-"""-.       |
-         /  o o  \      |
-        (   (_)   )     |
-         \  ___  /      |
-          '-----'       |
-          /|   |\-------|
-         / |___|        |
-           /   \        |
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="treadle/packages/brand/assets/wordmark-dark.svg">
+  <img src="treadle/packages/brand/assets/wordmark-light.svg" alt="Wukong" width="960">
+</picture>
 
 **The human drives; the machine moves.**
 
-Welcome to Wukong. Give your AI coding agent repository knowledge, a clear plan,
-and a reliable path from idea to reviewed code. You decide when work starts and
-when it is complete.
+Build with an AI coding agent that understands your repository and follows an
+agreed plan. Wukong connects a searchable wiki, verified tasks, browser feedback,
+and explicit human approval in one local workflow.
 
-Wukong runs on your machine. Your wiki, specs, decisions, and evidence stay with
-your repository. The local web app puts the current gate and next action in view.
+Your agent proposes and executes the work. You decide when implementation starts
+and when the result is complete. The records stay with your repository.
 
-[Install](#install) · [Connect your project](#connect-your-project) ·
-[Your first journey](#your-first-journey) · [Documentation](#documentation)
+[Get started](#getting-started) · [Choose a workflow](#choose-a-workflow) ·
+[Work through a change](#work-through-a-change) · [Documentation](#documentation)
 
-## Install
+## Choose a workflow
 
-You need **Git**, **Node.js 22 or newer**, and **pnpm 9.15.9**. Wukong currently
-installs from source. The scripts download the source, build it, and link the
-`wukong` command.
+| What you need                          | Start with                                  | What you get                                                                          |
+| -------------------------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Understand an existing repository      | `build-kb`                                  | Product context, architecture, dependencies, interfaces, and their documented history |
+| Shape a new product or prioritize work | `new-project` or `roadmap`                  | A product brief or an outcome-based sequence of initiatives                           |
+| Deliver a feature or repair a defect   | `analyze` → `plan` → `implement` → `review` | An agreed design, checked tasks, evidence, and independent review                     |
 
-This preview lives on `codex/background-harness`. The commands below use that
-branch until it reaches `main`. Use an empty destination directory for the clone.
+Knowledge and roadmap work can stand alone. A roadmap does not grant permission
+to implement. For code changes, agree the scope and plan before execution.
 
-If pnpm has no global binary directory, run `pnpm setup` first. Open a new
-terminal after it updates your `PATH`.
+## Getting started
 
-### macOS and Linux
+You need **Git**, **Node.js 22 or newer**, **pnpm 9.15.9**, and a supported coding
+agent. If pnpm's global commands are unavailable, run `pnpm setup` first.
+Open a new terminal after it updates your `PATH`.
 
-Run these commands in a Bash terminal:
+This is a **preview** on `codex/background-harness`. The commands below download
+that branch's installer. The installer selects the same branch for the source.
+
+### 1. Install Wukong
+
+**macOS and Linux**
+
+Run this in your terminal:
 
 ```sh
-git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git "$HOME/.engram-dev"
-bash "$HOME/.engram-dev/install.sh"
+curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/codex/background-harness/install.sh | bash
 ```
 
-The [Bash installer](install.sh) uses `$HOME/.engram-dev` by default.
+**Windows**
 
-### Windows
-
-Run these commands in PowerShell:
+Run this in PowerShell:
 
 ```powershell
-git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git "$env:LOCALAPPDATA\engram-dev"
-powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\engram-dev\install.ps1"
+powershell -NoProfile -Command "irm https://raw.githubusercontent.com/phanijapps/wukong/codex/background-harness/install.ps1 | iex"
 ```
 
-The [PowerShell installer](install.ps1) uses `$env:LOCALAPPDATA\engram-dev` by
-default. The execution policy option applies only to that PowerShell process.
-Both default directory names preserve the existing installation layout.
+The installers build the source and link the `wukong` command automatically.
+They use `$HOME/.engram-dev` on macOS and Linux, or `$env:LOCALAPPDATA\engram-dev`
+on Windows. These existing directory names preserve installation compatibility.
+An existing checkout on another branch stops the installer before it changes the
+source. See [installer options](#for-developers) to use a different directory.
 
-Check the installed command:
+Check the command:
 
 ```sh
 wukong --version
 ```
 
-<details>
-<summary>Install from your own checkout</summary>
+### 2. Connect your project
 
-```sh
-git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git
-cd wukong/treadle
-pnpm install --frozen-lockfile
-pnpm build
-pnpm --dir packages/cli link --global
-wukong --version
-```
-
-The public command is `wukong`. The source workspace remains `treadle/`.
-
-</details>
-
-## Connect your project
-
-Open a terminal in the project you want to work on. Run the interactive installer:
+Open a terminal in the project you want to work on. Run:
 
 ```sh
 wukong init harness
 ```
 
-Choose your agent, then select the hooks and reviewers you need.
-For an explicit project installation, replace the path below with your project:
+Choose your agent and the integration you need. For an explicit Codex installation,
+run this from your project root:
 
 ```sh
-wukong init harness --agent codex --scope project --root "/path/to/project"
+wukong init harness --agent codex --scope project --root .
 ```
 
-Use `claude`, `pi`, or `copilot` instead of `codex` for those agents.
-Successful project hook installation starts the shared app and connects your
-project. Open the browser address that the installer prints.
+Use `claude`, `pi`, or `copilot` for those agents. Project hook installation starts
+the local app and connects the project. Open the address printed by the installer.
+Reload your agent and complete its hook trust or activation steps.
+Copilot has no shared-service hooks; use `wukong project connect .` to connect it.
 
-Reload your agent and complete its trust or activation steps.
-Installation does not establish that the host has activated its hooks.
-Copilot has no shared-service hooks; connect its project manually:
+### 3. Ask your agent to begin
 
-```sh
-wukong project connect "/path/to/project"
-```
-
-Use `--dry-run` to inspect the installation first. Inspect differing files before
-using `--force`. Use `--hooks-only` to refresh hook adapters, or `--no-hooks` to
-install without automatic project connection.
-
-## Your first journey
-
-Start with a request like this:
+In your agent's chat, ask:
 
 ```text
-Build the knowledge base for this repository, then analyze adding email alerts.
+Use build-kb to understand this repository, then use analyze to investigate email alerts.
 ```
 
-The agent follows a clear sequence:
+Skill names belong in the agent's chat. The `wukong` commands belong in the terminal.
+Agent invocation syntax depends on the host.
+
+## Work through a change
+
+Wukong starts with knowledge, then follows a short delivery loop:
 
 ```text
-Know the code -> Analyze -> Plan -> Implement -> Review -> Finish
+Repository knowledge → Analyze → Plan → Implement → Review → Finish
 ```
 
-1. **Know the code.** `build-kb` documents the repository in a searchable wiki.
-   Use `new-project` to shape a new project.
-2. **Analyze.** Record the problem, requirements, questions, and relevant context.
-3. **Plan.** Review the design and tasks. Accept the decisions, then separately
-   authorize the exact plan with **Start Implementation**.
-4. **Implement.** The agent executes one admitted task at a time and records real
-   check results.
-5. **Review.** An independent reviewer checks the changes against the plan and
-   evidence. The agent repairs failures before another review.
-6. **Finish.** Inspect the result, then select **Finish spec** to complete and
-   freeze the record.
+**Understand and analyze.** The agent reads the code and related documents.
+It records the problem, requirements, unknowns, and affected components.
 
-Answer and approve spec questions when the plan contains them.
-One start approval covers the agreed task sequence. A changed plan needs new
-permission. Tests and review do not supply permission to finish.
-
-In browser feedback, save a draft before selecting **Submit feedback**.
-The agent can read your submitted comments and publish revised rounds.
-Resolve threads after you inspect the revisions. Feedback submission and thread
-resolution are separate from owner start and finish approval.
-
-Your repository keeps two useful records:
-
-| Record          | Purpose                                                                |
-| --------------- | ---------------------------------------------------------------------- |
-| `wiki/`         | Product context, architecture, rules, decisions, and source references |
-| `specs/<slug>/` | Requirements, design, tasks, checks, review, and owner actions         |
-
-To create an empty owner-gated specpack directly, run this from your project root:
-
-```sh
-wukong do init specs/email-alerts --owner-gated --title "Email alerts" --why "Notify users when work needs attention"
+```text
+Use analyze to investigate email alerts when a spec needs owner attention.
 ```
 
-This creates the record. Analysis and task planning still follow.
-See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
+**Plan.** Review a design and task sequence before the agent edits the code.
+Answer and approve spec questions when present. Accept the design decisions,
+then separately select **Start Implementation** for the exact plan.
 
-## Manage the local app
+```text
+Use plan to design the email alerts change and define its verification checks.
+```
+
+**Implement and review.** After you grant Start permission, ask the agent to
+execute the approved tasks. It runs each declared check and records the result.
+Independent review verifies the changes against the plan and current evidence.
+
+```text
+Use implement to execute the approved email alerts plan.
+Use review to independently verify the email alerts specpack.
+```
+
+Send those requests separately. Failed checks and unresolved findings need repair
+before another review. A changed plan needs new Start permission.
+One Start approval covers the agreed task sequence.
+
+**Finish.** Inspect the reviewed result in the local app.
+Select **Finish spec** to complete and freeze the record.
+Tests and agent review do not grant permission to finish.
+
+Start permission does not wake an idle coding agent. Continue in the agent's chat
+after approval. See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
+
+## Review in your browser
+
+Review selected documents or code diffs with the installed `feedback` skill:
+
+```text
+Use feedback to open browser review of the email alerts design and code diff.
+```
+
+Select a line, write a comment, and choose **Save draft**.
+Select **Submit feedback** when your comments are ready for the agent.
+The agent reads submitted feedback and publishes revised rounds through the CLI.
+Inspect the revision before you resolve a thread.
+
+Save, Submit, Resolve, and Reattach are separate actions.
+Feedback does not replace Start or Finish approval.
+See [browser feedback](wiki/initiatives/browser-agent-feedback.md) for the current behavior and limits.
+
+## Supported agents
+
+| Agent          | Integration                                                | What you must activate                                      |
+| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Claude Code    | Skills, reviewers, and hooks; optional native plugin       | Reload and enable the integration.                          |
+| Codex          | Skills, reviewers, and hooks; optional native plugin       | Trust the current hooks. Availability differs across hosts. |
+| pi             | Skills, reviewers, and extensions; optional native package | Reload the extensions or load the package.                  |
+| GitHub Copilot | Instructions, skills, and reviewers                        | Connect the project manually; no service hooks.             |
+
+Use a native artifact or the project installer for each host.
+Avoid loading the same callbacks twice. Installation does not establish host activation.
+Native custom-agent packages are not asserted for Codex or pi.
+See the [compatibility record](specs/background-harness/compatibility.md) and
+[host acceptance backlog](specs/harness-host-acceptance/harness-host-acceptance.json).
+
+## Your records and local app
+
+| Location        | Purpose                                                                                  |
+| --------------- | ---------------------------------------------------------------------------------------- |
+| `wiki/`         | Searchable product context, architecture, domain rules, decisions, and source references |
+| `specs/<slug>/` | Requirements, design, tasks, checks, review, and owner actions                           |
+
+Manage the app from your terminal:
 
 ```sh
 wukong start serve
@@ -177,96 +188,44 @@ wukong status serve
 wukong stop serve
 ```
 
-One background service runs per operating-system user and serves connected
-projects. The preferred port is **8788**. If that port is occupied, the service
-prints a different address.
+One service runs per operating-system user and serves connected projects.
+The preferred port is **8788**; the service prints another address if it is occupied.
+Project connections survive restarts. Closing an agent session leaves the app available.
+After an explicit stop, the next supported session event starts it again.
 
-Closing an agent session leaves the app available. After an explicit stop, the
-next supported session event starts it again. Project connections survive restarts.
-
-Inspect project context or remove a project connection:
-
-```sh
-wukong context --workspace "/path/to/project" --json
-wukong project disconnect <id>
-```
-
-Context reads wiki and spec state without executing tasks or owner actions.
-All listeners bind to `127.0.0.1`. Use trusted repositories and keep the ports
-local. See [SECURITY.md](SECURITY.md) for the trust boundary.
-
-## Agent support
-
-| Agent          | Installed integration                                      | Activation                                                  |
-| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
-| Claude Code    | Skills, reviewers, and hooks; optional native plugin       | Reload and enable the integration.                          |
-| Codex          | Skills, reviewers, and hooks; optional native plugin       | Trust the current hooks. Availability differs across hosts. |
-| pi             | Skills, reviewers, and extensions; optional native package | Reload the installed extensions or load the package.        |
-| GitHub Copilot | Instructions, skills, and reviewers                        | No shared-service hooks. Connect the project manually.      |
-
-Use either a native artifact or the project installer for each host. Avoid
-loading the same callbacks twice. Global installation needs `--yes` and does not
-connect a project automatically.
-
-Pi extensions come from the authoritative harness manifest. See the
-[extension source map](treadle/packages/cli/harness/hooks/README.md#pi-extension-sources).
-The installer regenerates their local runtime pointer for each checkout.
-
-Host activation and trust need actual host checks. See the
-[compatibility record](specs/background-harness/compatibility.md) and
-[host acceptance backlog](specs/harness-host-acceptance/harness-host-acceptance.json)
-for the observed boundaries. Native custom-agent packages are not asserted for
-Codex or pi.
-
-<details>
-<summary>Build a portable runtime or native agent package</summary>
-
-Build a runtime with bundled dependencies and assets into a new directory:
-
-```sh
-pnpm --dir treadle package:runtime "/path/to/new-runtime"
-node "/path/to/new-runtime/dist/src/main.js" --help
-```
-
-Create a native agent artifact with an installed runtime:
-
-```sh
-wukong package harness --agent claude --out "/path/to/new-plugin"
-wukong package harness --agent codex --out "/path/to/new-plugin"
-wukong package harness --agent pi --out "/path/to/new-package"
-```
-
-Each output directory must be new. Regenerate native artifacts if the runtime
-moves. These commands create local artifacts; they do not publish to a registry.
-
-</details>
+All listeners bind to `127.0.0.1`. Use trusted repositories and keep the ports local.
+See [SECURITY.md](SECURITY.md) for the trust boundary.
 
 ## Documentation
 
-| Start here                                                   | What you will find                                     |
-| ------------------------------------------------------------ | ------------------------------------------------------ |
-| [Project overview](wiki/project/overview.md)                 | Product scope and current state                        |
-| [Architecture](wiki/systems/sdd-harness-architecture.md)     | Knowledge, work, and web layers                        |
-| [Owner workflow](wiki/systems/owner-workflow.md)             | Questions, decisions, start permission, and completion |
-| [Documentation map](wiki/project/documentation-map.md)       | Current knowledge, executable specs, and history       |
-| [Engineering controls](wiki/project/engineering-controls.md) | Verification and evidence                              |
-| [Open work](wiki/project/open-work.md)                       | Known gaps and proposed follow-ups                     |
-| [Initiatives](wiki/initiatives/index.md)                     | Canonical work records                                 |
+- [Project overview](wiki/project/overview.md) and [architecture](wiki/systems/sdd-harness-architecture.md)
+- [Owner workflow](wiki/systems/owner-workflow.md) and [engineering controls](wiki/project/engineering-controls.md)
+- [Documentation map](wiki/project/documentation-map.md), [initiatives](wiki/initiatives/index.md), and [open work](wiki/project/open-work.md)
+- [Pi extension source map](treadle/packages/cli/harness/hooks/README.md#pi-extension-sources)
 
-Explore the commands with `wukong --help`, `wukong do --help`, and
-`wukong know --help`. `know` searches and validates the wiki. `do` manages specs
-and task evidence.
+Explore commands with `wukong --help`, `wukong do --help`, and `wukong know --help`.
+Use `--dry-run` to inspect a harness installation. Inspect differing files before
+using `--force`. `--hooks-only` refreshes adapters; `--no-hooks` skips automatic connection.
 
 Freshness currently uses Git HEAD and Python-only fingerprints. A fresh stamp
-cannot prove that dirty TypeScript or Markdown sources were detected.
-Legacy spec formats retain their original rules. New owner-gated work uses 0.4.
+cannot establish that dirty TypeScript or Markdown changes were detected.
+Legacy spec formats retain their original rules; new owner-gated work uses 0.4.
 
-## Contribute
+## For developers
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md) before changing
-the harness. Maintain installable agent content in `treadle/packages/cli/harness/`.
+Clone and build the preview if you want to change Wukong itself:
 
-Run these checks from `treadle/`:
+```sh
+git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git
+cd wukong/treadle
+pnpm install --frozen-lockfile
+pnpm build
+pnpm --dir packages/cli link --global
+```
+
+The public command is `wukong`; the source workspace remains `treadle/`.
+Maintain installable agent content in `treadle/packages/cli/harness/`.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md) before making changes.
 
 ```sh
 pnpm check
@@ -278,12 +237,50 @@ pnpm links
 ```
 
 Coverage floors are 75% for statements, lines, and functions, and 65% for branches.
-Review contract corpus changes deliberately. Record actual results and preserve
-unrelated work.
+Review contract changes deliberately. Record actual results and preserve unrelated work.
 
-Have a bug or an idea? [Open an issue](https://github.com/phanijapps/wukong/issues).
+<details>
+<summary>Installer options</summary>
+
+Use `ENGRAM_SRC` for a new source directory and `HARNESS_REF` to select a Bash
+installer ref. The PowerShell installer accepts `-Source`, `-Repository`, and `-Ref`
+when you run a downloaded script. Both installers stop on a different existing branch.
+
+```sh
+ENGRAM_SRC="/path/to/new-source" bash install.sh
+```
+
+```powershell
+.\install.ps1 -Source "C:\path\to\new-source"
+```
+
+</details>
+
+<details>
+<summary>Portable runtime and native packages</summary>
+
+Run from the repository root to build a runtime into a new directory:
+
+```sh
+pnpm --dir treadle package:runtime "/path/to/new-runtime"
+node "/path/to/new-runtime/dist/src/main.js" --help
+```
+
+Use an installed runtime to create native agent artifacts:
+
+```sh
+wukong package harness --agent claude --out "/path/to/new-plugin"
+wukong package harness --agent codex --out "/path/to/new-plugin"
+wukong package harness --agent pi --out "/path/to/new-package"
+```
+
+Output directories must be new. Regenerate native artifacts if the runtime moves.
+These commands create local artifacts; they do not publish to a registry.
+
+</details>
+
+## Support and license
+
+[Report a bug or suggest a feature](https://github.com/phanijapps/wukong/issues).
 Report security issues through [the security policy](SECURITY.md).
-
-## License
-
-[MIT](LICENSE).
+Wukong is [MIT licensed](LICENSE).
