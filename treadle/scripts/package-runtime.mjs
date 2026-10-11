@@ -7,10 +7,11 @@ import {
   readdirSync,
   lstatSync,
   realpathSync,
+  readlinkSync,
   symlinkSync,
 } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { resolve, join, relative, dirname } from 'node:path';
+import { resolve, join, relative, dirname, basename } from 'node:path';
 import { spawnSync } from 'node:child_process';
 export const workspace = fileURLToPath(new URL('..', import.meta.url));
 function run(args) {
@@ -36,7 +37,15 @@ function run(args) {
     throw Error(`Package command failed: ${args.join(' ')} (${r.status ?? r.error?.message})`);
 }
 export function packageRuntime(destination) {
-  const target = resolve(destination);
+  const requested = resolve(destination);
+  mkdirSync(dirname(requested), { recursive: true });
+  // pnpm must calculate dependency links from the same physical root as its store.
+  const parent =
+    process.platform === 'win32'
+      ? realpathSync.native(dirname(requested))
+      : realpathSync(dirname(requested));
+  const target = join(parent, basename(requested));
+  const sourceCli = realpathSync(join(workspace, 'packages/cli'));
   if (existsSync(target)) {
     if (!existsSync(join(target, '.runtime-package.json')))
       throw Error('Output exists and is not a managed runtime package');
@@ -52,10 +61,16 @@ export function packageRuntime(destination) {
       const file = join(dir, name),
         st = lstatSync(file);
       if (st.isDirectory()) localize(file);
-      else if (
-        st.isSymbolicLink() &&
-        realpathSync(file) === realpathSync(join(workspace, 'packages/cli'))
-      ) {
+      else if (st.isSymbolicLink()) {
+        let real;
+        try {
+          real = realpathSync(file);
+        } catch (cause) {
+          throw Error(`Broken deployed dependency link: ${file} -> ${readlinkSync(file)}`, {
+            cause,
+          });
+        }
+        if (real !== sourceCli) continue;
         rmSync(file);
         symlinkSync(
           process.platform === 'win32' ? target : relative(dirname(file), target),

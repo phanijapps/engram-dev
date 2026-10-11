@@ -79,3 +79,17 @@ fixture owns a unique sandbox with both sibling checkouts. Independent final
 red-foreman verdict: **PASS — nothing to fix**; 7 worktree tests passed. The final
 local `pnpm check` (167 tests) is retained in final-check.log. Native CI still
 supplies the Windows witness separately.
+
+The fifth native run exposed packaging failures after successful macOS tests,
+and an intermittent Windows Node 22 missing host asset. A preliminary macOS
+full-pass report was corrected; ci-fourth-run.json and ci-fifth-run.json retain
+the actual failures. Windows Node 24 also reached and failed the legacy brand
+gate because its slash-based exemptions did not match native path separators.
+
+After repair, independent packaging review returned **PASS — nothing to fix**
+and reran host package generation plus the aliased standalone runtime verifier.
+Independent brand-gate follow-up returned **PASS — nothing to fix**, with
+`pnpm brand:check` exit 0. Host assets are now compared with source hashes before
+the package descriptor is written; runtime deployment canonicalizes its parent
+and refuses broken links with explicit diagnostics. Windows native rows must
+confirm the platform copy workaround; no native success is inferred locally.

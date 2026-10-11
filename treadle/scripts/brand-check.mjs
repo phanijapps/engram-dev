@@ -37,7 +37,7 @@ function walk(dir, files = []) {
 
 const violations = [];
 for (const f of walk('.')) {
-  const rel = f.replace(/^\.\//, '');
+  const rel = f.replaceAll('\\', '/').replace(/^\.\//, '');
   if (ALLOW.includes(rel)) continue;
   if (ALLOW_CONTAINS.some((re) => re.test(rel))) continue;
   // import specifiers carry package names (fenced via package.json) — strip them

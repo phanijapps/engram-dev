@@ -1,6 +1,6 @@
 /** Local host packages generated from the same harness authority as the installer. */
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, resolve, dirname, basename } from 'node:path';
+import { join, resolve, dirname, basename, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { brand } from '@treadle/brand';
 import { defaultManifestPath, loadManifest } from './manifest.js';
@@ -15,6 +15,21 @@ export function packageHarness(surface: NativeSurface, output: string, entry = r
   if (existsSync(destination))
     throw Error('Package destination already exists; choose a new directory');
   const { manifest, root } = loadManifest(defaultManifestPath());
+  const expected: Record<string, string> = {};
+  const digest = (file: string) => createHash('sha256').update(readFileSync(file)).digest('hex');
+  function expectAsset(source: string, target: string): void {
+    if (readdirIsDirectory(source)) {
+      for (const file of readdirSync(source)) expectAsset(join(source, file), join(target, file));
+    } else expected[relative(destination, target).split('\\').join('/')] = digest(source);
+  }
+  function copyAsset(source: string, target: string): void {
+    expectAsset(source, target);
+    cpSync(source, target, {
+      recursive: true,
+      // Use JS traversal on Windows to avoid the Node 22 native directory-copy fast path.
+      filter: process.platform === 'win32' ? () => true : undefined,
+    });
+  }
   mkdirSync(destination, { recursive: true });
   const json = (file: string, value: unknown): void => {
     const path = join(destination, file);
@@ -41,21 +56,19 @@ export function packageHarness(surface: NativeSurface, output: string, entry = r
     if (!source) continue;
     // Only Claude's native plugin agent format is witnessed. Codex/pi custom agents use compatibility install.
     if (c.kind === 'agent' && surface !== 'claude') continue;
-    cpSync(
+    copyAsset(
       join(root, source),
       join(destination, c.kind === 'skill' ? `skills/${c.id}` : `agents/${basename(source)}`),
-      { recursive: true },
     );
   }
   mkdirSync(join(destination, 'hooks'));
   for (const h of manifest.hooks)
     if (h.wiring[surface]) {
-      cpSync(join(root, h.file), join(destination, 'hooks', basename(h.file)));
+      copyAsset(join(root, h.file), join(destination, 'hooks', basename(h.file)));
       for (const companion of h.companions ?? [])
-        cpSync(join(root, companion), join(destination, 'hooks', basename(companion)));
+        copyAsset(join(root, companion), join(destination, 'hooks', basename(companion)));
     }
-  if (surface === 'pi')
-    cpSync(join(root, 'extensions'), join(destination, 'extensions'), { recursive: true });
+  if (surface === 'pi') copyAsset(join(root, 'extensions'), join(destination, 'extensions'));
   json('hooks/runtime.json', {
     format: 'runtime-pointer/1',
     node: process.execPath,
@@ -109,6 +122,9 @@ export function packageHarness(surface: NativeSurface, output: string, entry = r
     }
   }
   walk(destination);
+  const incomplete = Object.keys(expected).filter((file) => hashes[file] !== expected[file]);
+  if (incomplete.length)
+    throw Error(`Incomplete harness package: missing or changed assets: ${incomplete.join(', ')}`);
   json('.harness-package.json', {
     format: 'harness-package/1',
     generator: 1,

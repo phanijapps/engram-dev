@@ -12,7 +12,10 @@ it('generates deterministic, local host packages and truthful capability metadat
       expect(readFileSync(join(first, '.harness-package.json'), 'utf8')).toBe(
         readFileSync(join(second, '.harness-package.json'), 'utf8'),
       );
-      expect(existsSync(join(first, 'skills/analyze/SKILL.md'))).toBe(true);
+      expect(
+        existsSync(join(first, 'skills/analyze/SKILL.md')),
+        readFileSync(join(first, '.harness-package.json'), 'utf8'),
+      ).toBe(true);
       const pointer = JSON.parse(readFileSync(join(first, 'hooks/runtime.json'), 'utf8'));
       expect(pointer.protocol).toBe(1);
       expect(existsSync(pointer.entry)).toBe(true);

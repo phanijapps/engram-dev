@@ -1,11 +1,24 @@
-import { mkdtempSync, rmSync, existsSync, readdirSync, lstatSync, realpathSync } from 'node:fs';
+import {
+  mkdtempSync,
+  rmSync,
+  existsSync,
+  readdirSync,
+  lstatSync,
+  realpathSync,
+  mkdirSync,
+  symlinkSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, sep, relative, isAbsolute } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { packageRuntime } from './package-runtime.mjs';
 const scratch = mkdtempSync(join(tmpdir(), 'runtime package ü '));
 try {
-  const root = packageRuntime(join(scratch, 'installed'));
+  const physical = join(scratch, 'physical');
+  const alias = join(scratch, 'alias');
+  mkdirSync(physical);
+  symlinkSync(physical, alias, process.platform === 'win32' ? 'junction' : 'dir');
+  const root = packageRuntime(join(alias, 'installed'));
   function walk(dir) {
     for (const f of readdirSync(dir)) {
       const path = join(dir, f),

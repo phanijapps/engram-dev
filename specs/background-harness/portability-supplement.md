@@ -48,9 +48,9 @@ Worktree identity uses realpaths and handles CRLF records. Tests compare canonic
 registry roots and isolate the native home variable, and the pi privacy assertion
 uses a unique prompt token so the macOS system path cannot masquerade as a leak.
 
-Fourth native run 38099542276 passes all Linux/macOS rows, including package
-and detached lifecycle smoke. Windows now has one failure: duplicate current
-worktree reporting. `ci-fourth-run.json` records the actual result. The source
+Fourth native run 38099542276 passes the Linux rows and macOS tests, but
+macOS portable packaging fails on a dangling pnpm self-reference. Windows
+still fails duplicate current worktree reporting. `ci-fourth-run.json` records the actual result. The source
 reviewer rejected raw-string directory identity. The repair uses NUL-separated,
 unquoted Git records, Windows native final-path handles, and bigint device/inode
 comparison before a canonical-path fallback. The linked-worktree fixture includes
@@ -58,3 +58,30 @@ Unicode and spaces and reports paths on failure. Native confirmation follows.
 
 Primary implementation references: [Node filesystem API](https://nodejs.org/download/release/latest-jod/docs/api/fs.html#fsrealpathsyncnativepath-options)
 and [libuv Windows final-path implementation](https://github.com/libuv/libuv/blob/v1.x/src/win/fs.c#L2821).
+
+
+Correction to the preliminary status: macOS test success did not establish a
+full row pass. Actual fifth run 38099859100 confirms the packaging failure
+after tests; ci-fourth-run.json and ci-fifth-run.json retain the failed rows.
+The fifth run fixes native worktree reporting but exposes an intermittent
+Windows Node 22 incomplete host asset copy.
+
+Runtime deployment now canonicalizes its destination parent before pnpm
+calculates links, computes the source self-reference once, and reports broken
+links explicitly rather than skipping them. The standalone verifier uses an
+aliased parent on every OS. Host packaging captures every expected asset hash
+before copying and refuses incomplete output before its package descriptor is
+written. Windows uses Node's JS directory traversal through an explicit copy
+filter, avoiding the native fast path with upstream Windows regressions. This
+last choice is an inference from the observed missing asset and upstream
+implementation; native CI must confirm it.
+
+Sources: [Node directory-copy implementation](https://github.com/nodejs/node/blob/v22.x/lib/internal/fs/cp/cp-sync.js#L129)
+and [upstream Windows copy regressions](https://github.com/nodejs/node/issues/59636).
+
+Windows Node 24 in the fifth run reached the brand gate and exposed a legacy
+separator bug: legitimate fenced paths and generated corpus/coverage files were
+flagged because the whitelist compared forward slashes to native backslashes.
+The checker now normalizes only its comparison path; source reads and allowed
+rules are unchanged. Independent follow-up and `pnpm brand:check` exited 0.
+Final local check and aliased standalone packaging also exited 0 after repairs.
