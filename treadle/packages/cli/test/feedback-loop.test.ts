@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { randomUUID } from 'node:crypto';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { realpathSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, expect, it } from 'vitest';
@@ -26,7 +26,7 @@ afterEach(() => {
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true });
 });
 async function fixture() {
-  const root = mkdtempSync(join(tmpdir(), 'feedback-loop-'));
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-loop-')));
   roots.push(root);
   const dir = join(root, 'specs/loop'),
     path = join(dir, 'loop.json');
@@ -193,6 +193,7 @@ it('delivers stale reattachment only after another human Submit and preserves th
         { cwd: f.root, stdio: ['ignore', 'pipe', 'pipe'] },
       );
     git('init', '-q');
+    git('config', 'core.autocrlf', 'false');
     git('config', 'user.name', 'fixture');
     git('config', 'user.email', 'fixture@example.invalid');
     git('add', 'doc.md');

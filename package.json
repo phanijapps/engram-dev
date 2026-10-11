@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@9.15.9",
-  "workspaces": [
-    "treadle"
-  ],
   "description": "The SDD harness \u2014 knowledge first, then a tight loop. Install: curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash (corepack + pnpm under the hood)",
   "dependencies": {
     "@treadle/brand": "file:treadle/packages/brand",

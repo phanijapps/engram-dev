@@ -5,6 +5,9 @@
   <img src="treadle/packages/brand/assets/wordmark-light.svg" alt="Wukong" width="960">
 </picture>
 
+[![CI checks (main)](https://github.com/phanijapps/wukong/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/phanijapps/wukong/actions/workflows/ci.yml)
+[![pnpm 9.15.9](https://img.shields.io/badge/pnpm-9.15.9-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/installation)
+
 **The human drives; the machine moves.**
 
 Build with an AI coding agent that understands your repository and follows an
@@ -212,6 +215,10 @@ cannot establish that dirty TypeScript or Markdown changes were detected.
 Legacy spec formats retain their original rules; new owner-gated work uses 0.4.
 
 ## For developers
+
+Use Node.js **22.22.2 or newer in the 22.x line, or 24.15+ in 24.x** for the development
+checks. The test stack and its DOM dependencies require these newer patch releases;
+the Wukong runtime still targets Node 22 or newer.
 
 Clone and build the preview if you want to change Wukong itself:
 

@@ -1,0 +1,31 @@
+{
+  "run": "https://github.com/phanijapps/wukong/actions/runs/38173060745",
+  "runHead": "18c527bd652847a2ae80c07212f4aaaaed9572e3",
+  "workspaceHead": "a615746a89efd9ebd9c1b7278532560fc24118d2",
+  "sourceSha256": {
+    ".github/workflows/ci.yml": "fbef6a0550a29c955db833a00a17e2ffc55bae137281c57376c387330a62d9c4",
+    "package.json": "8fd61d411ff4e304d07c3e37bc3fcc99e1f54f5379abc9aab0bfa38b1fe585c1",
+    "treadle/package.json": "b18a394fbdecbf216c99066bf8f98874ad125c57b728868d3eb640cb4b973eec",
+    "treadle/pnpm-lock.yaml": "8fa10ff24f8a821b99bdbf4d4671f69cc2c2b865c59904e265837ecfd3d4d913",
+    "treadle/packages/core/src/feedback/store.ts": "89b96dc31fb5fd13fde0e74ea6547fe1ac09c837afe3783833e2b268f41fbbea",
+    "treadle/packages/cli/src/harness/feedback-snapshot.ts": "ef03e002757bf75dcf9bdf0276d0deb77744419ce5e142f9810eb64b9e7b92ff",
+    "treadle/packages/cli/harness/hooks/codex-context.js": "84c19840856263853ab5b96b19069a991b2f7850cd85f58621ffa053e4bc7818",
+    "treadle/packages/cli/harness/hooks/post-tool-check.js": "b06b32a3bdc10bc6115c85360fd8fa1084e7e3555ffee0c2c5d0a5d51abae2cc",
+    "treadle/packages/cli/src/commands/feedback.ts": "9dd4d3b567b6a84e1ba81ebc97cc84540b3cf805d768bdeb6070c66e29747fd0",
+    "treadle/packages/cli/src/serve/projects.ts": "0e1d664d60e79c6fc9f3b496d70c5c4e36466a880de8cd39251c9fcb54564ff9",
+    "treadle/packages/cli/test/feedback-snapshot.test.ts": "fd0d6ca3d51170550d935113ef1abce4f7d0fcf493e648934e74911a2488cee8",
+    "treadle/packages/cli/test/feedback-cli.test.ts": "3c2e4e9d3b8105ee5a718851be607e2b6718593d28d47576246b9c8a39a93ccf",
+    "treadle/packages/cli/test/feedback-loop.test.ts": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
+    "treadle/packages/cli/test/codex-project-paths.test.ts": "86e1925500691f2ba1b899f2001f6f1174b9603755339542086d55fbee002a54",
+    "treadle/scripts/harness-smoke.mjs": "c563f84e175521e7fafb756985f4bf0b41134db7e268561f609b26bfc8028fa9",
+    "SECURITY.md": "064cf8c2bf88ffeec211b3ff8d84da898cfa07a9fd35bd3eb97367fabe670f24",
+    "treadle/packages/conformance/package.json": "c0181c2a42a858f117e09b854e761f3857448d20f682c42759066eb9450b53dd",
+    "treadle/scripts/corpus-check.mjs": "d7a885f2a97184718cc13f13f275323655990b59a8a4b61230e75c3040482cc0",
+    "treadle/scripts/link-check.mjs": "17512c71c2eb10ac8a81acd0debb078c76a089e59d5b083afe63e89725fc9a17"
+  },
+  "retrievedLogSha256": "20a4b28751cb308201c10e76d0575b78a6e85b45edb79bf332c24fea9f715f6b",
+  "note": "Git tree diff workspace HEAD versus run merge HEAD was empty. Only pre-existing wiki/.okf/last-index.json is dirty; no runtime edits during analysis.",
+  "preexistingDirtyInputs": {
+    "wiki/.okf/last-index.json": "df42ff5bad33752f2baf131b94712d170c381d5fde38e5086a7da9b95cde2d87"
+  }
+}

@@ -1,5 +1,6 @@
 # Concepts
 
+- [CI verification and platform evidence](ci-verification.md)
 - [Proposed documentation and retrospective lifecycle](documentation-lifecycle.md)
 - [Documentation authority and consolidation map](documentation-map.md)
 - [Engineering controls actually present](engineering-controls.md)

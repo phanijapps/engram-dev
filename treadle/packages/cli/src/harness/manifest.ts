@@ -15,7 +15,7 @@ export function loadManifest(path: string): LoadedManifest {
   try {
     raw = JSON.parse(readFileSync(file, 'utf8'));
   } catch (e) {
-    throw new Error(`manifest unreadable (${file}): ${(e as Error).message}`);
+    throw new Error(`manifest unreadable (${file}): ${(e as Error).message}`, { cause: e });
   }
   const m = raw as HarnessManifest;
   if (m.format !== 'harness/0.1') {

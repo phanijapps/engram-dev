@@ -1,0 +1,71 @@
+      24  project/ci-verification — CI verification and platform evidence
+          # What CI verifies
+
+GitHub Actions runs Node 22…
+      14  research/specagent — SpecAgent — agentic synthesis of formal specifications (arXiv 2610.05132)
+          …ic framework that writes formal ACSL specifications for
+real-world C programs an…
+      13  research/misfit-governed-development — Misfit-Governed Development — a design theory for AI-assisted software (arXiv 2610.01372)
+          …ver be
+seen directly. Only misfits — specific, enumerable failures — can be
+seen…
+      10  research/nodejs-engineering-standards — Node engineering standards: proposed rules versus observed controls
+          …escribes desired tooling as well as principles. The list is not proof that
+all t…
+       9  project/engineering-controls — Engineering controls actually present
+          …nd | `treadle/package.json:10` |
+| Explicit-any and unused-private-member lint r…
+       9  retrospectives/2026-10-10-owner-gates — Owner approval repair: observed work on 2026-10-10
+          …tiatives.
+The owner accepted the four decisions and separately authorized Plan 1…
+       8  systems/treadle — Wukong: the active TypeScript harness
+          …pus.ts:1` |
+| `@treadle/brand` | User-facing naming configuration | `treadle/pac…
+       7  retrospectives/2026-10-10-docs-root-migration — Root specs migration: observed session retrospective
+          …-migration/relocations.json:1`.
+
+# What verification exposed
+
+Discovery and reca…
+       7  retrospectives/2026-10-10-documentation-consolidation — Documentation consolidation retrospective — 2026-10-10
+          …ecs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
+
+The owner w…
+       6  project/security-posture — Security posture and claim boundaries
+          …udit also exited 0.
+Sources: `artifacts/ci-cleanup/checks/audit-all.json` and
+`a…
+       5  initiatives/browser-agent-feedback — Browser feedback for coding agents
+          …the capability.
+
+An agent opens an explicitly selected document or Git diff sess…
+       5  systems/sdd-harness-architecture — SDD harness architecture
+          …ecs/documentation-consolidation/owner-decision-revision.md:1`, D-3.
+Automatic re…
+       4  project/open-work — Open work and evidence gaps
+          …G4  | Shared browser now navigates explicitly enrolled projects; automatic workt…
+       4  research/golden-conformance-suite — Golden conformance: design lineage and current witness
+          …s-check.mjs:1`.
+See [the self-hosting decision](/decisions/corpus-self-hosting.m…
+       3  research/python-vs-node-the-harness — Python versus Node: historical research and current outcome
+          …e
+split, and a TypeScript port. It explicitly was not a migration decision.
+Sour…
+       2  domain/pattern-content-hash-change-detection — Content hashes and the current freshness gap
+          …t is `specs/documentation-consolidation/verification.json`.
+The migration audit …
+       2  initiatives/spec-completion-handoff — Owner decision gates and completion: delivered
+          …allenged implementation before design decision approval. The agent
+implemented t…
+       2  project/setup — Installation and workspace setup
+          …/guide/index.html:1`.
+
+# Local work and verification
+
+From `treadle`, serve curr…
+       1  decisions/graph-engineering-fast-track — A packagable harness that fast-tracks graph engineering without the waterfall trap (accepted 2026-10-08)
+          # Decision (ACCEPTED 2026-10-08 — finding `g…
+       1  decisions/specpack-owner-gates — Contract change: owner gates in specpack 0.4
+          # Decision and authority
+
+The owner accepted…

@@ -1,0 +1,77 @@
+{
+  "observed_at": "2026-10-11T21:26:23.980094+00:00",
+  "held_head": "76e2486c025de56df3ad795c508e5f75512eb3af",
+  "source_pins": "../source-pins.json",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "cwd": "treadle",
+  "results": [
+    {
+      "command": "pnpm check",
+      "exit": 0,
+      "log": "final-check.log"
+    },
+    {
+      "command": "pnpm coverage",
+      "exit": 0,
+      "log": "final-coverage.log"
+    },
+    {
+      "command": "pnpm corpus:check",
+      "exit": 0,
+      "log": "final-corpus.log"
+    },
+    {
+      "command": "pnpm brand:check",
+      "exit": 0,
+      "log": "final-brand.log"
+    },
+    {
+      "command": "pnpm audit:prod",
+      "exit": 0,
+      "log": "final-audit-prod.log"
+    },
+    {
+      "command": "pnpm links",
+      "exit": 0,
+      "log": "final-links.log"
+    }
+  ],
+  "tests": {
+    "passed": 267,
+    "skipped": 9,
+    "total": 276
+  },
+  "coverage": {
+    "lines": {
+      "total": 4080,
+      "covered": 3556,
+      "skipped": 0,
+      "pct": 87.15
+    },
+    "statements": {
+      "total": 4708,
+      "covered": 3970,
+      "skipped": 0,
+      "pct": 84.32
+    },
+    "functions": {
+      "total": 744,
+      "covered": 658,
+      "skipped": 0,
+      "pct": 88.44
+    },
+    "branches": {
+      "total": 3998,
+      "covered": 3045,
+      "skipped": 0,
+      "pct": 76.16
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  }
+}

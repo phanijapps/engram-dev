@@ -4,13 +4,16 @@ type: Project
 description: "Localhost and trusted-on-disk posture, with caller claims distinguished from authentication."
 status: stable
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-10-11
 sources:
-  - {"id": "s1", "resource": "SECURITY.md"}
-  - {"id": "s2", "resource": "treadle/packages/web/src/servers.ts"}
-  - {"id": "s3", "resource": "treadle/packages/core/src/specpack/admission.ts"}
-  - {"id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts"}
-  - {"id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts"}
+  - { "id": "s1", "resource": "SECURITY.md" }
+  - { "id": "s2", "resource": "treadle/packages/web/src/servers.ts" }
+  - {
+      "id": "s3",
+      "resource": "treadle/packages/core/src/specpack/admission.ts",
+    }
+  - { "id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts" }
+  - { "id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts" }
 ---
 
 # Operating authority
@@ -43,5 +46,9 @@ See [findings enforcement](/domain/rule-declined-findings-immutable.md).
 
 Audit claims need a run date and output. The current command is
 `pnpm audit:prod`, defined at `treadle/package.json:17`.
-This repair does not independently establish the current vulnerability count.
-The reporting policy retains its separately documented accepted risks.
+On 2026-10-11, the cleanup's full `pnpm audit --json` reported 0 advisories
+after the development toolchain update. The production audit also exited 0.
+Sources: `artifacts/ci-cleanup/checks/audit-all.json` and
+`artifacts/ci-cleanup/checks/results.json`. Those are dated observations, not a
+future guarantee. The reporting policy retains its separately documented
+accepted risks. See [CI verification](/project/ci-verification.md).

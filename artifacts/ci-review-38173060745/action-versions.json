@@ -1,0 +1,26 @@
+[
+  {
+    "repository": "actions/checkout",
+    "tag": "v7.0.1",
+    "release": "https://github.com/actions/checkout/releases/tag/v7.0.1",
+    "runtime": ["using: node24"]
+  },
+  {
+    "repository": "actions/setup-node",
+    "tag": "v7.1.0",
+    "release": "https://github.com/actions/setup-node/releases/tag/v7.1.0",
+    "runtime": ["using: 'node24'"]
+  },
+  {
+    "repository": "actions/upload-artifact",
+    "tag": "v7.0.2",
+    "release": "https://github.com/actions/upload-artifact/releases/tag/v7.0.2",
+    "runtime": ["using: 'node24'"]
+  },
+  {
+    "repository": "pnpm/action-setup",
+    "tag": "v6.1.0",
+    "release": "https://github.com/pnpm/action-setup/releases/tag/v6.1.0",
+    "runtime": ["using: node24"]
+  }
+]

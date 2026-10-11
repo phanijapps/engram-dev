@@ -137,8 +137,8 @@ export function buildFeedbackSnapshots(
   request: SnapshotRequest,
   previous?: FeedbackSession,
 ): BuiltFeedbackSnapshots {
-  const workspace = realpathSync(workspaceInput);
-  const packDir = feedbackContainedPath(workspace, packInput);
+  const workspace = realpathSync.native(workspaceInput);
+  const packDir = feedbackContainedPath(workspaceInput, packInput);
   const paths = [...(request.paths ?? [])].map(normalized);
   const artifacts = [...(request.artifacts ?? [])];
   if (!['documents', 'diff'].includes(request.mode) || (!paths.length && !artifacts.length))
@@ -203,7 +203,7 @@ export function buildFeedbackSnapshots(
     if (artifacts.length || !request.base)
       refuse('invalid', 'Diff review needs selected paths and an explicit Git baseline');
     const gitRoot = git(workspace, ['rev-parse', '--show-toplevel']).toString('utf8').trim();
-    if (realpathSync(gitRoot) !== workspace)
+    if (realpathSync.native(gitRoot) !== workspace)
       refuse('forbidden', 'Diff paths resolve from the enrolled Git root');
     const baseline = resolveFeedbackCommit(workspace, request.base);
     selection.base = baseline;

@@ -74,9 +74,14 @@ function body(value: unknown): asserts value is string {
 
 /** No symlink below the trusted real root may redirect storage or snapshot reads. */
 export function feedbackContainedPath(root: string, path: string): string {
-  const realRoot = realpathSync(root);
-  const candidate = resolve(realRoot, path);
-  const rel = relative(realRoot, candidate);
+  const lexicalRoot = resolve(root);
+  const realRoot = realpathSync.native(lexicalRoot);
+  const input = resolve(lexicalRoot, path);
+  // Map only the explicitly trusted root alias. Descendants are still walked
+  // with lstat before any realpath so redirects below that boundary stay forbidden.
+  let rel = relative(lexicalRoot, input);
+  if (isAbsolute(rel) || rel === '..' || rel.startsWith(`..${sep}`))
+    rel = relative(realRoot, input);
   if (isAbsolute(rel) || rel === '..' || rel.startsWith(`..${sep}`))
     fail('forbidden', 'Path leaves the trusted workspace');
   let current = realRoot;
@@ -95,11 +100,21 @@ export function feedbackContainedPath(root: string, path: string): string {
     ) {
       if (lstatSync(current).isSymbolicLink())
         fail('forbidden', 'Symlink paths are not feedback targets');
-      const actual = realpathSync(current);
-      if (actual !== current) fail('forbidden', 'Path changed its real location');
+      const actual = realpathSync.native(current);
+      if (actual !== current) {
+        const requested = statSync(current, { bigint: true });
+        const canonical = statSync(actual, { bigint: true });
+        if (
+          relative(current, actual) !== '' ||
+          requested.dev !== canonical.dev ||
+          requested.ino !== canonical.ino
+        )
+          fail('forbidden', 'Path changed its real location');
+      }
+      current = actual;
     }
   }
-  return candidate;
+  return current;
 }
 function location(
   packDir: string,

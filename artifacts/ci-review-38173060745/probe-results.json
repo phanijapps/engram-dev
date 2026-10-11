@@ -1,0 +1,28 @@
+{
+  "started": "2026-10-11T20:45:06.581Z",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "physical": "/tmp/wukong-ci-probe-Bufczf/physical/specs/example",
+  "alias": {
+    "code": "forbidden",
+    "message": "Path leaves the trusted workspace"
+  },
+  "hookPhysical": {
+    "status": 0,
+    "stdout": "{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Harness connected: http://127.0.0.1:1/projects/fixture/library/\\nWorkspace: /tmp/wukong-ci-probe-Bufczf/physical\\nKnowledge: /tmp/wukong-ci-probe-Bufczf/physical/wiki (missing; freshness unavailable)\\nfixture\\nSpecs: /tmp/wukong-ci-probe-Bufczf/physical/specs\\nfixture\\nfixture\"}}\n",
+    "stderr": ""
+  },
+  "hookAlias": {
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "aliasHookRealpath": "/home/videogamer/code/memex_beta/treadle/packages/cli/harness/hooks/codex-context.js",
+  "windowsIllustration": {
+    "caveat": "Path-function example on Linux; not native filesystem or Git measurements.",
+    "caseRelative": "",
+    "shortLongRelative": "..\\..\\runneradmin\\repo"
+  },
+  "exit": 0,
+  "elapsedMs": 198
+}

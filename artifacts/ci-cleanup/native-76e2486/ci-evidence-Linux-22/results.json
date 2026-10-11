@@ -1,0 +1,164 @@
+{
+  "format": "ci-evidence/1",
+  "commit": "400c231cfed503e5cfaf290ee97d9c069bf96750",
+  "platform": "linux",
+  "node": "v22.23.3",
+  "image": "20261004.327.1",
+  "steps": {
+    "install": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "check": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "coverage": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "corpus": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "brand": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "audit": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "links": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "package": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    },
+    "smoke": {
+      "outputs": {},
+      "outcome": "success",
+      "conclusion": "success"
+    }
+  },
+  "smoke": {
+    "format": "harness-smoke/1",
+    "platform": "linux",
+    "node": "v22.23.3",
+    "at": "2026-10-11T21:21:28.420Z",
+    "exit": 0,
+    "commands": [
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "start",
+          "serve",
+          "--port",
+          "0",
+          "--json"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "start",
+          "serve",
+          "--json"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "project",
+          "connect",
+          "/tmp/harness journey ü jaD5WS/project with spaces",
+          "--json"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "context",
+          "--workspace",
+          "/tmp/harness journey ü jaD5WS/project with spaces",
+          "--json"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "stop",
+          "serve"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "status",
+          "serve"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "project",
+          "connect",
+          "/tmp/harness journey ü jaD5WS/project with spaces",
+          "--json"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "status",
+          "serve"
+        ],
+        "exit": 0
+      },
+      {
+        "command": [
+          "node",
+          "<built-cli>",
+          "stop",
+          "serve"
+        ],
+        "exit": 0
+      }
+    ],
+    "checks": [
+      "shared-instance",
+      "project-wiki-library",
+      "read-only-context",
+      "stop-next-event-restart",
+      "persistent-enrollment",
+      "parent-exit-survival"
+    ],
+    "error": null,
+    "scope": "Runtime fixture on actual OS; host trust/activation and actual host prompts are separate witnesses."
+  }
+}

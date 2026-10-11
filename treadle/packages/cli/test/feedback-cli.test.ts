@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { realpathSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -35,7 +35,7 @@ afterEach(() => {
   for (const p of roots.splice(0)) rmSync(p, { recursive: true, force: true });
 });
 function fixture() {
-  const root = mkdtempSync(join(tmpdir(), 'feedback-cli-'));
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-cli-')));
   roots.push(root);
   const dir = join(root, 'specs', 'test');
   mkdirSync(dir, { recursive: true });
@@ -218,6 +218,7 @@ describe('portable CLI feedback', () => {
         { cwd: f.root, stdio: ['ignore', 'pipe', 'pipe'] },
       );
     git('init', '-q');
+    git('config', 'core.autocrlf', 'false');
     git('config', 'user.name', 'test');
     git('config', 'user.email', 'test@example.invalid');
     git('add', 'doc.md');

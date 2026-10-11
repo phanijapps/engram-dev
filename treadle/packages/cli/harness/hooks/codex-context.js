@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /** Shared lifecycle callback. No prompt/transcript persistence and no owner acts. */
 import { execFile } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 export function runtimeConfig() {
@@ -137,7 +137,17 @@ export async function runEvent(host, expectedEvent) {
     }),
   );
 }
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+const invoked = (() => {
+  try {
+    return (
+      process.argv[1] &&
+      realpathSync.native(process.argv[1]) === realpathSync.native(fileURLToPath(import.meta.url))
+    );
+  } catch {
+    return false;
+  }
+})();
+if (invoked) {
   const event = process.argv[process.argv.indexOf('--event') + 1];
   await runEvent('codex', event);
 }

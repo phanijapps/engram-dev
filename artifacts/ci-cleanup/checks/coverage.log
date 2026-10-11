@@ -1,0 +1,111 @@
+
+> treadle-root@ coverage /home/videogamer/code/memex_beta/treadle
+> vitest run --coverage
+
+
+ RUN  v5.0.3 /home/videogamer/code/memex_beta/treadle
+      Coverage enabled with v8
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+
+ Test Files  57 passed | 1 skipped (58)
+      Tests  266 passed | 9 skipped (275)
+   Start at  17:20:36
+   Duration  6.53s (tests 48%, transform 32%, import 10%, environment 8%, worker 3%)
+
+  Transform  transforming modules took 29.30s · 32% of tracked time, re-done on every run
+             persist transforms across runs with fsModuleCache: true
+             learn more: https://vitest.dev/guide/improving-performance#caching-between-reruns
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   84.32 |    76.16 |   88.44 |   87.15 |                   
+ cli/src           |   83.33 |       75 |   66.66 |   83.33 |                   
+  main.ts          |   83.33 |       75 |   66.66 |   83.33 | 55-59             
+ cli/src/commands  |   63.62 |    55.84 |   62.29 |   67.34 |                   
+  context.ts       |   33.33 |        0 |      50 |   33.33 | 9-10              
+  do.ts            |   68.54 |    58.44 |   63.26 |    76.4 | ...63-664,683-685 
+  feedback.ts      |   80.85 |    77.17 |      88 |   83.52 | ...52-268,297-313 
+  init.ts          |      25 |    28.75 |      50 |   25.88 | ...95-201,232-239 
+  know.ts          |   82.65 |     65.9 |   65.21 |   82.55 | ...63-164,175-188 
+  package.ts       |      50 |      100 |      50 |      50 | 11                
+  project.ts       |   23.52 |        0 |      20 |      25 | ...24,29-31,34-35 
+  serve.ts         |      25 |        0 |    12.5 |   26.66 | 18-21,26,35,40-47 
+ cli/src/harness   |   85.19 |    77.96 |   90.15 |   86.78 |                   
+  apply.ts         |   88.42 |    79.31 |   95.65 |   89.47 | ...89-302,353,367 
+  content.ts       |      75 |      100 |   66.66 |      75 | 17                
+  context.ts       |   81.81 |    68.25 |      70 |   85.71 | ...43,101-105,113 
+  ...k-snapshot.ts |   91.01 |    89.44 |     100 |   91.33 | ...07,231,279,314 
+  manifest.ts      |   74.57 |    79.41 |    87.5 |   81.25 | ...3,56,70,88,101 
+  packages.ts      |    92.3 |     86.2 |      90 |   92.98 | 11,13,30,127      
+  paths.ts         |    87.5 |       75 |     100 |    87.5 | 29                
+  plan.ts          |   92.98 |    85.21 |     100 |      95 | ...37-146,193-202 
+  skin.ts          |   10.81 |      5.4 |      25 |    9.37 | 19-69,85-99       
+  where.ts         |    92.3 |    72.05 |     100 |   93.33 | 50-60,114,126-129 
+ cli/src/serve     |   83.72 |     77.2 |   93.47 |   86.38 |                   
+  projects.ts      |    87.5 |       80 |     100 |   89.09 | 53,73,85,120-122  
+  runtime.ts       |   82.68 |    76.32 |   90.62 |   85.64 | ...28,433,451-452 
+ conformance/src   |   86.46 |     71.5 |    90.9 |   90.14 |                   
+  corpus.ts        |   85.71 |       50 |     100 |     100 | 16-19             
+  runner.ts        |   86.51 |    71.97 |      90 |   89.52 | ...44,456,474,486 
+ core/src          |   93.33 |       75 |   83.33 |   92.85 |                   
+  events.ts        |      50 |      100 |       0 |      50 | 26                
+  ids.ts           |     100 |       75 |     100 |     100 | 38                
+ core/src/feedback |   94.84 |    89.16 |   98.46 |   95.98 |                   
+  store.ts         |   94.79 |    89.16 |   98.43 |   95.94 | ...86,596,613,798 
+ core/src/specpack |   85.53 |    76.12 |      91 |   88.34 |                   
+  admission.ts     |   91.48 |    79.06 |   85.71 |   95.34 | 81,115            
+  alignment.ts     |   89.04 |    73.91 |   93.02 |   95.08 | ...,78,84,110,226 
+  audit.ts         |   85.93 |       80 |     100 |   92.59 | 36,71,105-106     
+  close.ts         |   85.71 |    80.76 |   66.66 |   89.65 | 38,43,59          
+  decisions.ts     |   88.09 |    73.68 |   83.33 |   94.59 | 77,106            
+  derive.ts        |   97.43 |    85.71 |    90.9 |   96.29 | 17                
+  durability.ts    |     100 |       50 |     100 |     100 | 8-9               
+  emit.ts          |   98.38 |    92.72 |     100 |     100 | 39,44,55-56       
+  events.ts        |    82.5 |       75 |     100 |   86.11 | 33,36,40,43,77    
+  loader.ts        |   82.14 |    71.05 |   83.33 |   78.72 | ...,75,88,104-107 
+  next.ts          |   71.22 |    58.42 |      84 |   74.78 | ...40-242,251-254 
+  normalize.ts     |   98.07 |    80.76 |     100 |     100 | ...41,44-45,49-50 
+  pins.ts          |    64.7 |    43.07 |     100 |   69.01 | ...5-76,88,95,121 
+  record.ts        |   84.37 |    78.66 |      70 |   85.45 | ...7,81,92-93,127 
+  save.ts          |   91.66 |    71.42 |     100 |   95.65 | 36                
+  transaction.ts   |   88.57 |    85.71 |     100 |   87.87 | 24,42,49,63       
+  workflow.ts      |   91.27 |    86.95 |    97.5 |   92.36 | ...82,289,301,323 
+ knowledge/src     |   91.05 |     82.1 |    98.9 |   93.96 |                   
+  findings.ts      |   96.15 |     75.4 |     100 |   95.83 | 61,66,177         
+  fingerprints.ts  |    93.9 |    86.56 |     100 |   97.18 | 46,101            
+  links.ts         |   88.63 |    73.68 |     100 |   97.18 | 53,84             
+  parse.ts         |   76.92 |     66.1 |   91.66 |   83.87 | ...05-112,137,152 
+  read.ts          |   85.93 |    59.25 |     100 |    87.5 | 54-55,62-65,99    
+  search.ts        |    98.8 |    91.25 |     100 |     100 | 130,156-172       
+  stamp.ts         |    86.2 |    73.33 |     100 |   91.66 | 33,82             
+  validate.ts      |   94.04 |    89.67 |     100 |   94.26 | ...55,164,326,379 
+ web/src           |   86.77 |    76.82 |   98.52 |   91.72 |                   
+  ...ect-server.ts |   89.36 |    81.21 |   96.55 |   95.03 | ...19,249,266,324 
+  servers.ts       |    85.2 |    74.16 |     100 |   89.78 | ...24,527,530-533 
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 84.32% ( 3970/4708 )
+Branches     : 76.16% ( 3045/3998 )
+Functions    : 88.44% ( 658/744 )
+Lines        : 87.15% ( 3556/4080 )
+================================================================================

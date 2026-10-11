@@ -1,6 +1,14 @@
 import * as durability from '../src/specpack/durability.js';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync, symlinkSync } from 'node:fs';
+import {
+  mkdtempSync,
+  mkdirSync,
+  readFileSync,
+  writeFileSync,
+  rmSync,
+  symlinkSync,
+  realpathSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -372,10 +380,10 @@ describe('durable artifact feedback', () => {
     ).toThrow('lost ack');
     flush.mockClear();
     mutateFeedback(f.dir, f.root, envelope);
+    const published = realpathSync.native(join(f.dir, 'feedback/state.json'));
+    const parent = realpathSync.native(join(f.dir, 'feedback'));
     expect(flush.mock.calls.map(([p]) => p)).toEqual(
-      process.platform === 'win32'
-        ? [join(f.dir, 'feedback/state.json')]
-        : [join(f.dir, 'feedback/state.json'), join(f.dir, 'feedback')],
+      process.platform === 'win32' ? [published] : [published, parent],
     );
   });
   it('refuses canonical JSON symlinks on reads and locked writes', () => {

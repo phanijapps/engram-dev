@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
+import { realpathSync, mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
@@ -21,7 +21,7 @@ const manifestPath = join(import.meta.dirname, '../harness/harness.json');
 it('installs only feedback from canonical source on three surfaces, preserves foreign files and is idempotent', () => {
   const { manifest, root: source } = loadManifest(manifestPath);
   for (const surface of ['claude', 'codex', 'pi'] as const) {
-    const root = mkdtempSync(join(tmpdir(), 'feedback-install-'));
+    const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-install-')));
     roots.push(root);
     mkdirSync(join(root, '.' + surface), { recursive: true });
     writeFileSync(join(root, '.' + surface, 'foreign.txt'), 'preserve');
@@ -54,7 +54,7 @@ it('installs only feedback from canonical source on three surfaces, preserves fo
   }
 });
 function fixture() {
-  const root = mkdtempSync(join(tmpdir(), 'feedback-context-'));
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-context-')));
   roots.push(root);
   const dir = join(root, 'specs/test'),
     registry = join(root, 'registry');

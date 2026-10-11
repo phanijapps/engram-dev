@@ -15,6 +15,9 @@ export default defineConfig({
     },
   },
   test: {
+    ...(process.env.CI
+      ? { reporters: ['default', 'json'], outputFile: { json: 'test-results.json' } }
+      : {}),
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json-summary'],

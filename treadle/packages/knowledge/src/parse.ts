@@ -78,7 +78,7 @@ export function parseConcept(absPath: string, root: string): Concept {
   const rel = relative(root, absPath).split('\\').join('/');
   const cid = rel.endsWith('.md') ? rel.slice(0, -3) : rel;
   const reserved = RESERVED[rel.split('/').pop() ?? ''] ?? null;
-  let size = 0;
+  let size: number;
   try {
     size = statSync(absPath).size;
   } catch (e) {

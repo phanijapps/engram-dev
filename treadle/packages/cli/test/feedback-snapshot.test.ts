@@ -1,5 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
+  realpathSync,
   mkdtempSync,
   mkdirSync,
   writeFileSync,
@@ -21,7 +22,7 @@ afterEach(() => {
   for (const p of roots.splice(0)) rmSync(p, { recursive: true, force: true });
 });
 function fixture(gitRepo = false) {
-  const root = mkdtempSync(join(tmpdir(), 'feedback-snapshot-'));
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-snapshot-')));
   roots.push(root);
   const dir = join(root, 'specs', 'test');
   mkdirSync(dir, { recursive: true });
@@ -52,6 +53,7 @@ function fixture(gitRepo = false) {
       .trim();
   if (gitRepo) {
     git('init', '-q');
+    git('config', 'core.autocrlf', 'false');
     git('config', 'user.name', 'test');
     git('config', 'user.email', 'test@example.invalid');
   }
@@ -276,28 +278,53 @@ describe('selected feedback snapshots', () => {
     ).toThrow('unavailable');
     expect(existsSync(marker)).toBe(false);
   });
-  it('detects moving refs, literal path names and unsupported/no Git selections', () => {
+  it('selects a portable wildcard-sensitive filename literally and detects moving refs', () => {
     const f = fixture(true);
-    const odd = ':(glob)*.ts';
+    const odd = '[literal].ts';
     writeFileSync(join(f.root, odd), 'literal');
-    const base = f.commit();
+    writeFileSync(join(f.root, 'l.ts'), 'decoy');
+    f.commit();
     const result = buildFeedbackSnapshots(f.root, f.dir, {
       mode: 'diff',
       paths: [odd],
       base: 'HEAD',
     });
-    expect(result.snapshots).toHaveLength(1);
-    expect(result.snapshots[0]!.path).toBe(odd);
+    expect(result.snapshots.map((s) => s.path)).toEqual([odd]);
+    expect(result.snapshots[0]!.before).toBe('literal');
     writeFileSync(join(f.root, 'extra.ts'), 'new');
     f.commit();
     expect(() => result.verify()).toThrow('reference moved');
+  });
+  it.skipIf(process.platform === 'win32')(
+    'treats POSIX Git magic names as literal filenames',
+    () => {
+      const f = fixture(true);
+      const odd = ':(glob)*.ts';
+      writeFileSync(join(f.root, odd), 'literal');
+      f.commit();
+      expect(
+        buildFeedbackSnapshots(f.root, f.dir, { mode: 'diff', paths: [odd], base: 'HEAD' })
+          .snapshots[0]!.path,
+      ).toBe(odd);
+    },
+  );
+  it('refuses missing baselines and unavailable Git independently of literal filenames', () => {
+    const f = fixture(true);
     expect(() =>
       buildFeedbackSnapshots(f.root, f.dir, { mode: 'diff', paths: ['source.ts'] }),
     ).toThrow('baseline');
     const noGit = fixture();
     expect(() =>
-      buildFeedbackSnapshots(noGit.root, noGit.dir, { mode: 'diff', paths: ['doc.md'], base }),
+      buildFeedbackSnapshots(noGit.root, noGit.dir, {
+        mode: 'diff',
+        paths: ['doc.md'],
+        base: 'HEAD',
+      }),
     ).toThrow('Git comparison');
+  });
+  it('refuses symlink diff targets without following their text', () => {
+    const f = fixture(true);
+    const base = f.commit();
     symlinkSync(join(f.dir, 'plan.md'), join(f.root, 'link.ts'));
     expect(() =>
       buildFeedbackSnapshots(f.root, f.dir, { mode: 'diff', paths: ['link.ts'], base }),

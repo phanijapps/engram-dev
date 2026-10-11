@@ -4,31 +4,42 @@ type: Project
 description: "Observed build and runtime controls, separated from the forty-rule historical standards proposal."
 status: stable
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-10-11
 sources:
-  - {"id": "s1", "resource": "treadle/package.json"}
-  - {"id": "s2", "resource": "treadle/tsconfig.base.json"}
-  - {"id": "s3", "resource": "treadle/eslint.config.mjs"}
-  - {"id": "s4", "resource": "treadle/vitest.config.ts"}
-  - {"id": "s5", "resource": ".github/workflows/ci.yml"}
-  - {"id": "s6", "resource": "treadle/packages/knowledge/package.json"}
-  - {"id": "s7", "resource": "specs/archive/research/nodejs-engineering-standards.md"}
+  - { "id": "s1", "resource": "treadle/package.json" }
+  - { "id": "s2", "resource": "treadle/tsconfig.base.json" }
+  - { "id": "s3", "resource": "treadle/eslint.config.mjs" }
+  - { "id": "s4", "resource": "treadle/vitest.config.ts" }
+  - { "id": "s5", "resource": ".github/workflows/ci.yml" }
+  - { "id": "s6", "resource": "treadle/packages/knowledge/package.json" }
+  - {
+      "id": "s7",
+      "resource": "specs/archive/research/nodejs-engineering-standards.md",
+    }
 ---
 
 # Observed controls
 
-| Control | Evidence |
-| --- | --- |
-| pnpm workspace and Node minimum | `treadle/package.json:5` |
-| Strict TypeScript options | `treadle/tsconfig.base.json:1` |
-| Types, lint, format, tests in one command | `treadle/package.json:10` |
-| Explicit-any and unused-private-member lint rules | `treadle/eslint.config.mjs:26` |
-| Coverage floors, including 75% lines and 65% branches | `treadle/vitest.config.ts:11` |
-| CI declaration for two Node floors and three operating systems | `.github/workflows/ci.yml:10` |
-| Corpus, brand, audit, and links commands | `treadle/package.json:15` |
+| Control                                                        | Evidence                       |
+| -------------------------------------------------------------- | ------------------------------ |
+| pnpm workspace and Node minimum                                | `treadle/package.json:5`       |
+| Strict TypeScript options                                      | `treadle/tsconfig.base.json:1` |
+| Types, lint, format, tests in one command                      | `treadle/package.json:10`      |
+| Explicit-any and unused-private-member lint rules              | `treadle/eslint.config.mjs:26` |
+| Coverage floors, including 75% lines and 65% branches          | `treadle/vitest.config.ts:11`  |
+| CI declaration for two Node floors and three operating systems | `.github/workflows/ci.yml:10`  |
+| Corpus, brand, audit, and links commands                       | `treadle/package.json:15`      |
 
 These are implementation-supported configurations. Their presence does not prove
 that the latest run passed. Current execution evidence belongs in dated records.
+
+The 2026-10-11 CI cleanup makes all installed-workspace gates attempt execution
+after an earlier check fails, runs corpus byte comparison and documentation
+links, and uploads actual outcomes, test diagnostics and coverage per job.
+Development tooling now uses ESLint 10, Vitest 5 and Vite 8. Sources:
+`.github/workflows/ci.yml`; `treadle/package.json`; `treadle/scripts/ci-report.mjs`.
+See [CI verification](/project/ci-verification.md) for chronology, evidence and
+the distinction between native installer contracts and real host acceptance.
 
 # Historical standards proposal
 

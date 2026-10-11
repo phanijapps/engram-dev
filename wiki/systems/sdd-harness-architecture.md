@@ -18,9 +18,15 @@ sources:
   - { id: service, resource: treadle/packages/cli/src/serve/runtime.ts }
   - { id: projects, resource: treadle/packages/web/src/project-server.ts }
   - { id: context, resource: treadle/packages/cli/src/harness/context.ts }
-  - { id: planning, resource: treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md }
+  - {
+      id: planning,
+      resource: treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md,
+    }
   - { id: hook-paths, resource: treadle/packages/cli/src/harness/plan.ts }
-  - { id: hook-guard, resource: treadle/packages/cli/harness/hooks/post-tool-check.js }
+  - {
+      id: hook-guard,
+      resource: treadle/packages/cli/harness/hooks/post-tool-check.js,
+    }
   - {
       id: owner,
       resource: specs/documentation-consolidation/owner-decision-revision.md,
@@ -142,7 +148,6 @@ Sessions below the repository root look for their own wiki and specs directories
 Use a repository-root session for the canonical knowledge and work context.
 Source: `treadle/packages/cli/harness/hooks/codex-context.js`.
 
-
 # Browser feedback plane — observed 2026-10-11
 
 The local library supports selected Markdown documents and Git diffs for active
@@ -152,13 +157,13 @@ The feedback skill is installed for Claude, Codex and Pi from the canonical harn
 Sources: `treadle/packages/cli/src/commands/feedback.ts:195`;
 `treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md:1`.
 
-| Provider | Consumer | Exchanged contract |
-| --- | --- | --- |
-| CLI snapshot builder | Core feedback store | Explicit document targets or Git before/after bytes, selection and hashes |
-| Core feedback store | Project-qualified web API | `feedback/1` state, immutable snapshots, revision and operation receipts |
-| Human browser | Core feedback store | Draft comment, Submit batch, Resolve or Reattach with held feedback revision |
-| Core read API | Active agent CLI | `feedback-result/1`, session cursor and stable submitted batch IDs |
-| Lifecycle context | Claude, Codex and Pi | Bounded session IDs and counts; comment bodies stay in explicit feedback reads |
+| Provider             | Consumer                  | Exchanged contract                                                             |
+| -------------------- | ------------------------- | ------------------------------------------------------------------------------ |
+| CLI snapshot builder | Core feedback store       | Explicit document targets or Git before/after bytes, selection and hashes      |
+| Core feedback store  | Project-qualified web API | `feedback/1` state, immutable snapshots, revision and operation receipts       |
+| Human browser        | Core feedback store       | Draft comment, Submit batch, Resolve or Reattach with held feedback revision   |
+| Core read API        | Active agent CLI          | `feedback-result/1`, session cursor and stable submitted batch IDs             |
+| Lifecycle context    | Claude, Codex and Pi      | Bounded session IDs and counts; comment bodies stay in explicit feedback reads |
 
 Sources: `treadle/packages/cli/src/harness/feedback-snapshot.ts:134`;
 `treadle/packages/core/src/feedback/model.ts:1`;
@@ -202,3 +207,17 @@ Sources: `treadle/packages/cli/src/commands/feedback.ts:98`;
 See [browser feedback evidence and chronology](/initiatives/browser-agent-feedback.md)
 and [owner authority](/systems/owner-workflow.md). Canonical specpacks retain
 execution state; this page does not become a second task ledger.
+
+## Native path identity — observed 2026-10-11
+
+Feedback accepts the explicitly trusted root alias and its physical root, then
+walks descendants without allowing symlinks or junctions. Git workspace identity
+uses native realpaths so Windows short directory names and macOS temporary-root
+aliases do not reject the same workspace. Hook direct-entry checks likewise use
+physical paths while Pi imports remain silent. Sources:
+`treadle/packages/core/src/feedback/store.ts`;
+`treadle/packages/cli/src/harness/feedback-snapshot.ts`;
+`treadle/packages/cli/harness/hooks/codex-context.js`;
+`treadle/packages/cli/harness/hooks/post-tool-check.js`.
+See [CI verification and chronology](/project/ci-verification.md) for platform
+evidence and the distinction between automated checks and human host acceptance.

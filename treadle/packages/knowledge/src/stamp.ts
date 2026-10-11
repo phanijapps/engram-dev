@@ -23,8 +23,11 @@ export interface FreshnessStamp {
 function gitHead(repoRoot: string): string {
   try {
     return (
-      execFileSync('git', ['rev-parse', 'HEAD'], { cwd: repoRoot, encoding: 'utf8' }).trim() ||
-      'unknown'
+      execFileSync('git', ['rev-parse', 'HEAD'], {
+        cwd: repoRoot,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      }).trim() || 'unknown'
     );
   } catch {
     return 'unknown';

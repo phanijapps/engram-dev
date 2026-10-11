@@ -2,10 +2,11 @@ name: ci
 on:
   push: { branches: [main] }
   pull_request:
+permissions:
+  contents: read
 defaults:
   run:
     working-directory: treadle
-
 jobs:
   check:
     strategy:
@@ -15,28 +16,59 @@ jobs:
         node: [22, 24]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
         with: { version: 9.15.9, package_json_file: treadle/package.json }
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "${{ matrix.node }}"
           cache: pnpm
           cache-dependency-path: treadle/pnpm-lock.yaml
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm check
-      - run: pnpm coverage
-      - run: pnpm brand:check
-      - run: pnpm audit:prod
-      - name: conformance
-        run: pnpm --filter @treadle/conformance test
-      - name: portable runtime package
+      - name: Install frozen workspace
+        id: install
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck, lint, format and tests
+        id: check
+        run: pnpm check
+      - name: Coverage floors
+        id: coverage
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm coverage
+      - name: Corpus byte comparison
+        id: corpus
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm corpus:check
+      - name: Brand fence
+        id: brand
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm brand:check
+      - name: Production dependency audit
+        id: audit
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm audit:prod
+      - name: Documentation links
+        id: links
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: pnpm links
+      - name: Portable runtime package
+        id: package
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node scripts/verify-runtime-package.mjs
-      - name: background harness journey
+      - name: Background harness journey
+        id: smoke
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: node scripts/harness-smoke.mjs
-      - uses: actions/upload-artifact@v4
+      - name: Record actual gate outcomes
+        if: always()
+        env:
+          CI_STEP_RESULTS: ${{ toJSON(steps) }}
+        run: node scripts/ci-report.mjs
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()
         with:
-          name: harness-smoke-${{ runner.os }}-${{ matrix.node }}
-          path: ${{ runner.temp }}/harness-smoke.json
-          if-no-files-found: warn
+          name: ci-evidence-${{ runner.os }}-${{ matrix.node }}
+          path: |
+            treadle/ci-evidence/
+            treadle/test-results.json
+            treadle/coverage/coverage-summary.json
+          if-no-files-found: error
