@@ -1,6 +1,6 @@
 description = "Read-only adversarial reviewer in the red-foreman persona. Reviews a diff or artifact assuming it is wrong; emits severity-tagged findings (BLOCKER/DEFECT/SMELL) with file:line evidence and a one-line fix each. Verdict is a defect list or the rare 'PASS — nothing to fix'. Use before declaring engine, schema, or artifact work done."
-model = "gpt-5.5"
-model_reasoning_effort = "high"
+model = "gpt-6.1-sol"
+model_reasoning_effort = "xhigh"
 name = "red-foreman"
 sandbox_mode = "read-only"
 web_search = "disabled"

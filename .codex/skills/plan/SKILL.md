@@ -3,6 +3,9 @@ name: plan
 description: Turn SDD analysis into a technical design, a populated JSON specpack, and an executable task DAG. Register requirements, dependencies, verification expectations, and frozen context before implementation handoff. Use for planning an analyzed change, not investigation or execution.
 ---
 
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
+
 # plan — technical design + task DAG from analysis
 
 One skill, two artifacts, depth-scaled. `design.md` answers _how the

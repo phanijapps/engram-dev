@@ -3,11 +3,15 @@
   "name": "wukong-rename",
   "description": "Wukong product and CLI rename",
   "date": {
-    "updated": "2026-10-11T02:09:15.391Z"
+    "updated": "2026-10-11T02:09:54Z",
+    "closed": {
+      "at": "2026-10-11T02:09:54Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "brief": {
@@ -312,6 +316,13 @@
         "at": "2026-10-11T01:50:44.466Z",
         "revision": 3,
         "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370"
+      },
+      {
+        "id": "ac7991b9-df51-43d6-bd9e-a2aad1564811",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T02:09:54Z",
+        "revision": 12
       }
     ],
     "pending_audit": [],
@@ -350,5 +361,5 @@
     "pnpm": "9.15.9"
   },
   "format": "specpack/0.4",
-  "revision": 11
+  "revision": 12
 }

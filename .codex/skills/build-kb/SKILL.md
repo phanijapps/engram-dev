@@ -1,17 +1,20 @@
 ---
 name: build-kb
-description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives the okf CLI (bundle init, tree-sitter code indexing, search, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
+description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives the harness CLI (know: search, read, validate, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
 ---
+
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
 
 # build-kb — build the project knowledge base
 
-The project wiki is an **OKF bundle at `<repo>/wiki/`** — concepts as
+The project wiki is an **knowledge bundle at `<repo>/wiki/`** — concepts as
 Markdown, git-versioned with the code. All engine operations go through
-the **`okf` CLI** (run from the repo root; `uv run okf …`). Never hand-edit generated sections inside `wiki/code/**`.
+the harness CLI (the `know` pedal, run from the workspace root). Never hand-edit generated sections inside `wiki/code/**`.
 
 ## 1. Understand the repo (always, read-only)
 
-Anchor first: `okf validate wiki` (health) and the freshness check —
+Anchor first: `know validate wiki` (health) and the freshness check —
 compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
 Record:
 
@@ -29,14 +32,15 @@ If `stale`, run §3 then §5.
 
 ## 2. Knowledge base shape (create or adopt)
 
-- No wiki → `okf init wiki` (creates `<repo>/wiki/` as an OKF bundle,
-  `.okf/` state dir). Then §3.
+- No wiki yet → scaffold `<repo>/wiki/` by hand (frontmatter per the
+  wiki contract: type, title, description, sources); the `.okf/` state
+  dir is born on the first `know stamp`. Then §3.
 - Wiki exists → never re-init; adopt it: read `wiki/index.md` and the
   newest concepts, then §3 (update is incremental and fingerprint-safe).
 
 ## 3. Deterministic index (tree-sitter, no LLM)
 
-`okf code index . wiki` with the strategy's `--include`/`--exclude`
+code indexing is delegated in the current era — the wiki anchors curated pages; machine code indexes are out (recorded gap)
 globs. This writes managed `wiki/code/**` concepts (modules, symbols,
 imports) and stamps `.okf/last-index.json` — which is what makes the
 freshness check report freshness. Re-runs re-extract only what changed; unchanged sources are
@@ -52,7 +56,7 @@ concepts. The graph supplements the wiki; it never replaces it.
 ## 5. Curated concepts (the layer agents actually read)
 
 Authored concepts live beside the generated ones — one page per idea,
-OKF front matter (`type`, `title`, `description`, `tags`), body sections
+bundle front matter (`type`, `title`, `description`, `tags`), body sections
 `# Overview`, `# Relationships`, `# Evidence` when applicable. Write for a
 new engineer: systems first (`type: System`), then rules, decisions, and
 workflows. Every factual claim cites a path (and revision when it matters).
@@ -63,20 +67,20 @@ must conform to") is **never written directly as settled truth**: author it
 as `status: draft` and route acceptance through the findings ledger:
 
 ```
-okf findings propose wiki --source <evidence-path> \
+know findings propose wiki <source-path> <destination-cid> <kind> \
   --destination wiki/<concept>.md --kind golden-path --rationale "…"
 ```
 
-A human accepts or declines (`okf findings resolve wiki <id> --decision
+A human accepts or declines (`know findings resolve wiki <id> <decision>
 accepted|declined`). Declined findings are never re-proposed.
 
 ## 6. Validate, record, commit
 
-1. `uv run okf validate wiki` (conformance) and the freshness check
-   (stamp `repo_head` == HEAD); `okf findings list wiki --status pending`
+1. `know validate wiki` (conformance) and the freshness check
+   (stamp `repo_head` == HEAD); `know findings list wiki`
    must be 0 or known.
 2. Commit the wiki with the code it describes — git history is the
-   durable record (project memory back-burnered, okf-only-engine D5).
+   durable record (project memory back-burnered, knowledge-engine decision D5).
 3. Commit `wiki/` **with the code it describes** (same commit or an
    adjacent one). The wiki travels with the repo.
 

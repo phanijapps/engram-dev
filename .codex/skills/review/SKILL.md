@@ -3,6 +3,9 @@ name: review
 description: Independently verify registered specpack tasks against their plan, source changes, and current evidence. Re-run task verification and record findings without applying implementation fixes. Use for reviewing landed SDD work or checking completion claims.
 ---
 
+CLI examples below use `do` and `know` subcommands. Prefix them with the installed
+harness executable; check its `--help` output or use the documented Node entry.
+
 # review — re-run, don't trust
 
 Verification is observation, not assertion. A `done` in the ledger is a
