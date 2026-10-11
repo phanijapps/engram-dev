@@ -999,11 +999,15 @@ async function paintDetail() {
       `<div class="empty">Choose a spec on the left.<br><br>What waits on you sits on top.</div>`;
     return;
   }
+  const name = S.sel;
   try {
-    const name = S.sel;
     $('owner-status').textContent = 'Loading spec…';
     if (renderedSelection !== name) {
+      S.spec = null;
+      S.workflow = null;
+      S.docs = [];
       $('detail').innerHTML = '<div class="empty" role="status">Loading spec…</div>';
+      $('inspector').innerHTML = '<div class="empty">Loading approval steps…</div>';
     } else {
       S.workflow = null;
       paintOwner();
@@ -1034,9 +1038,18 @@ async function paintDetail() {
     renderedSelection = name;
     $('owner-status').textContent = '';
   } catch (e) {
+    if (S.sel !== name) return;
     S.workflow = null;
     showError(e);
-    if (renderedSelection === S.sel) paintOwner();
+    if (renderedSelection === name) {
+      paintOwner();
+      $('owner-status').textContent = 'Refresh was not completed.';
+    } else {
+      $('detail').innerHTML =
+        '<div class="empty">This spec could not be loaded. Use Refresh spec to try again.</div>';
+      $('inspector').innerHTML = '<div class="empty">Approval steps unavailable.</div>';
+      $('owner-status').textContent = 'Spec could not be loaded.';
+    }
   }
 }
 

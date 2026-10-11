@@ -247,11 +247,19 @@ if (process.argv.includes("--audit-rendered")) {
     "archived-history",
     "no-results",
   ];
+  const currentStates = {
+    plan: "plan-current",
+    implementation: "implementation-current",
+    blocked: "blocked-current",
+    review: "review-current",
+    unavailable: "unavailable-current",
+  };
   for (const state of requiredStates)
     if (
       !manifest.captures?.some(
         (c) =>
-          c.state === state &&
+          c.state === (currentStates[state] || state) &&
+          !c.historical &&
           c.inspected &&
           c.png_base64 &&
           c.viewport &&

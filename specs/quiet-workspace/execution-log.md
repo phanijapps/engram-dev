@@ -158,3 +158,27 @@ HTML/a11y reports and failed/successful command logs are in frontend-evidence.js
 T-4 pass was admitted against held canonical revision16. This records execution,
 not independent PACK PASS or owner Finish. The owner-approved artifact bytes,
 plan digest and real Start receipt are unchanged.
+
+
+## Final independent recovery finding and repair
+
+The independent reviewer found that the historical unavailable capture showed
+a failed new selection still saying Loading and retaining the prior inspector.
+Within the original library.js/approval-ux.test.ts context, a new selection now
+clears prior spec/approval state and shows pending inspector state. Failure
+ends loading, displays an unavailable placeholder and preserves explicit
+Refresh spec; errors from a no-longer-selected request are ignored. Same-spec
+failed refresh still retains its existing content. The focused7test suite
+passed, exit0. An actual disposable source disappearance and restore witness
+shows the repaired unavailable state and successful Refresh; no owner act.
+
+Earlier affected screenshots remain historical. Current plan, implementation,
+blocked and review captures show the repaired disclosure cues. Actual screenshot
+encoding is JPEG despite the legacy png_base64 field and temporary .png suffix;
+encoding and pixel dimensions are explicit per capture. CSS viewport dimensions
+remain separate from image scaling. The distorted zoom frame is marked
+superseded. No old frame is presented as proof of a later repair.
+
+T-4's admitted pass remains a historical actual run. Subsequent bounded review
+repairs do not reset task status or change approved plan definitions; the final
+independent exactcheck rerun supplies current review evidence.

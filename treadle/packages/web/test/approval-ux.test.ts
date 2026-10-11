@@ -161,6 +161,32 @@ describe('Quiet Workspace approval behavior', () => {
       h.window.close();
     }
   });
+  it('ends failed new-selection loading and clears the previous approval inspector', async () => {
+    const { h } = await page();
+    try {
+      const fetch = h.window.fetch;
+      h.window.fetch = (async (url: string | URL | Request, init?: RequestInit) => {
+        if (String(url).includes('/spec/other')) throw new Error('Offline');
+        return fetch(url, init);
+      }) as typeof h.window.fetch;
+      h.window.location.hash = '#/other/tasks';
+      await h.waitFor(
+        () =>
+          h.window.document.querySelector('#owner-status')?.textContent ===
+          'Spec could not be loaded.',
+      );
+      expect(h.window.document.querySelector('#detail')?.textContent).toContain('Refresh spec');
+      expect(h.window.document.querySelector('#detail')?.textContent).not.toContain('Loading');
+      expect(h.window.document.querySelector('#inspector')?.textContent).toBe(
+        'Approval steps unavailable.',
+      );
+      expect(h.window.document.querySelector('.phase-row')).toBeNull();
+      expect(h.window.document.querySelector('#owner-start')).toBeNull();
+      expect((h.window.document.querySelector('#owner-refresh') as HTMLElement).hidden).toBe(false);
+    } finally {
+      h.window.close();
+    }
+  });
   it('shows a useful no-results state and preserves the current detail', async () => {
     const { h } = await page();
     try {
