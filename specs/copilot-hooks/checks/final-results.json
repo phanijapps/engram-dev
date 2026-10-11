@@ -1,0 +1,106 @@
+[
+  {
+    "name": "schema",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "/tmp/copilot-plan-validate.mts"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "alignment",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "check",
+      "../specs/copilot-hooks"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "status",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "status",
+      "../specs/copilot-hooks"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "anchors",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "validate",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "knowledge-status",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "links",
+    "command": [
+      "pnpm",
+      "links"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "diff",
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  }
+]

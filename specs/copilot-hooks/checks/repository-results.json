@@ -1,0 +1,38 @@
+[
+  {
+    "command": "pnpm check",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "check.log"
+  },
+  {
+    "command": "pnpm coverage",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "coverage.log"
+  },
+  {
+    "command": "pnpm corpus:check",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "corpus.log"
+  },
+  {
+    "command": "pnpm brand:check",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "brand.log"
+  },
+  {
+    "command": "pnpm audit:prod",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "audit.log"
+  },
+  {
+    "command": "pnpm links",
+    "cwd": "treadle",
+    "exit": 0,
+    "log": "links.log"
+  }
+]

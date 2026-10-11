@@ -1,0 +1,9 @@
+
+ RUN  v5.0.3 /home/videogamer/code/memex_beta/treadle
+
+No test files found, exiting with code 1
+
+filter: packages/cli/test/copilot-hooks.test.ts
+include: **/*.{test,spec}.?(c|m)[jt]s?(x)
+exclude:  **/node_modules/**, **/.git/**
+
