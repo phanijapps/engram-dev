@@ -1,0 +1,22 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+ ✓ packages/cli/test/where.test.ts (7 tests) 95ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  20:49:21
+   Duration  896ms (transform 222ms, setup 0ms, collect 267ms, tests 95ms, environment 0ms, prepare 97ms)
+

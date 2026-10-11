@@ -65,3 +65,17 @@ The results are retained in ci-third-run.json. It exposed macOS /var realpath
 aliases, Windows short-path/line-ending worktree identities and home-directory
 fixture assumptions. The aliased-bundle regression in alias-regression-before.log
 reproduced the knowledge defect on Linux before its repair (exit 1).
+
+The alias/worktree repair at a0defcb received an independent read-only
+red-foreman verdict: **PASS — nothing to fix**. The reviewer reran 45 focused
+containment, worktree, registry, pi and installer tests, then rechecked 15
+alias/worktree/registry tests after CRLF parsing. Native CI/PACK completion
+remains outside that source verdict.
+
+The final worktree identity review first required replacing raw path comparison,
+then found that the renamed fixture's failure cleanup still used its old name.
+Both findings were repaired: native/NUL/filesystem identity is used, and each
+fixture owns a unique sandbox with both sibling checkouts. Independent final
+red-foreman verdict: **PASS — nothing to fix**; 7 worktree tests passed. The final
+local `pnpm check` (167 tests) is retained in final-check.log. Native CI still
+supplies the Windows witness separately.

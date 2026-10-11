@@ -3,7 +3,7 @@
  *  that carries its own specs. Engine-quoted lines only; a report,
  *  not a gate — exit 0 always. */
 import { execSync } from 'node:child_process';
-import { existsSync, readdirSync, realpathSync } from 'node:fs';
+import { existsSync, readdirSync, realpathSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { loadPackWithMeta } from '@treadle/core';
 
@@ -108,10 +108,25 @@ function lastEvidenceAt(doc: { tasks?: { evidence?: { at?: string }[] }[] }): st
 
 function canonicalPath(path: string): string {
   try {
-    return realpathSync(path);
+    // The Windows native handle path also expands 8.3 names; the JS walker does not.
+    return process.platform === 'win32' ? realpathSync.native(path) : realpathSync(path);
   } catch {
     return resolve(path);
   }
+}
+
+function sameDirectory(a: string, b: string): boolean {
+  if (a === b) return true;
+  try {
+    const first = statSync(a, { bigint: true });
+    const second = statSync(b, { bigint: true });
+    if (first.ino !== 0n && second.ino !== 0n)
+      return first.dev === second.dev && first.ino === second.ino;
+  } catch {
+    return false;
+  }
+  // Filesystems without inode identities retain the native canonical-path fallback.
+  return process.platform === 'win32' && a.toLowerCase() === b.toLowerCase();
 }
 
 export function where(workspace: string): WhereReport {
@@ -119,12 +134,12 @@ export function where(workspace: string): WhereReport {
   const packs = scanSpecsDir(specsRoot(root), '');
   const report: WhereReport = { root, packs, worktrees: [] };
   try {
-    const out = execSync('git worktree list --porcelain', { cwd: root, encoding: 'utf8' });
+    const out = execSync('git worktree list --porcelain -z', { cwd: root, encoding: 'utf8' });
     const trees = out
-      .split(/\r?\n/)
+      .split('\0')
       .filter((l) => l.startsWith('worktree '))
       .map((l) => canonicalPath(l.slice('worktree '.length)))
-      .filter((p) => p !== root);
+      .filter((p) => !sameDirectory(p, root));
     for (const p of trees) {
       const treePacks = scanSpecsDir(specsRoot(p), p);
       report.worktrees.push({ path: p, packs: treePacks });

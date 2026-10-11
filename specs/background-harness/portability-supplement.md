@@ -47,3 +47,14 @@ paths. A root-alias regression failed on Linux before the change, then passed.
 Worktree identity uses realpaths and handles CRLF records. Tests compare canonical
 registry roots and isolate the native home variable, and the pi privacy assertion
 uses a unique prompt token so the macOS system path cannot masquerade as a leak.
+
+Fourth native run 38099542276 passes all Linux/macOS rows, including package
+and detached lifecycle smoke. Windows now has one failure: duplicate current
+worktree reporting. `ci-fourth-run.json` records the actual result. The source
+reviewer rejected raw-string directory identity. The repair uses NUL-separated,
+unquoted Git records, Windows native final-path handles, and bigint device/inode
+comparison before a canonical-path fallback. The linked-worktree fixture includes
+Unicode and spaces and reports paths on failure. Native confirmation follows.
+
+Primary implementation references: [Node filesystem API](https://nodejs.org/download/release/latest-jod/docs/api/fs.html#fsrealpathsyncnativepath-options)
+and [libuv Windows final-path implementation](https://github.com/libuv/libuv/blob/v1.x/src/win/fs.c#L2821).
