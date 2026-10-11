@@ -88,7 +88,12 @@ it('isolates equal spec/concept slugs and preserves existing library routes', as
       expect(await (await fetch(base + '/wiki/read?cid=guide')).text()).toContain(
         p.label + ' exclusive content',
       );
-      expect(await (await fetch(base + '/library/')).text()).toContain('"safeMarkdown":true');
+      const html = await (await fetch(base + '/library/')).text();
+      expect(html).toContain('"safeMarkdown":true');
+      const page = new JSDOM(html);
+      expect(page.window.document.title).toBe(brand.name);
+      expect(page.window.document.querySelector('h1')!.textContent).toBe(brand.name);
+      page.window.close();
     }
     projects[0]!.available = false;
     expect((await fetch(ui.url + `projects/${projects[0]!.id}/library/specs`)).status).toBe(409);

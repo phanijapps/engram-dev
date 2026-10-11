@@ -3,11 +3,15 @@
   "name": "quiet-workspace",
   "description": "Quiet Workspace frontend",
   "date": {
-    "updated": "2026-10-11T18:48:58Z"
+    "updated": "2026-10-11T19:13:26Z",
+    "closed": {
+      "at": "2026-10-11T19:13:26Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "brief": {
@@ -771,6 +775,13 @@
         "at": "2026-10-11T17:56:40Z",
         "revision": 9,
         "plan_digest": "e09ea3bb11d7b8d9708ec9913cfc462729ee57eb40043d7d6bd4747d363d2e55"
+      },
+      {
+        "id": "e327d632-9f8e-4e06-8c92-0ee05ed60dc0",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T19:13:26Z",
+        "revision": 19
       }
     ],
     "pending_audit": [],
@@ -806,5 +817,5 @@
     "mode": "owner-gated frontend-only proposal"
   },
   "format": "specpack/0.4",
-  "revision": 18
+  "revision": 19
 }

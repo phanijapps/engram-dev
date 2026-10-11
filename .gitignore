@@ -17,5 +17,5 @@ graphify-out/
 /.pi/extensions/runtime.json
 
 # the git-install orchestrator must never commit its build trees
-node_modules/
+node_modules
 package-lock.json

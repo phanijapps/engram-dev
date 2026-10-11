@@ -10,6 +10,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync, realpathSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join, resolve, dirname, sep, relative, isAbsolute } from 'node:path';
+import { brand } from '@treadle/brand';
 import {
   alignment,
   withPackLock,
@@ -79,8 +80,16 @@ export const SECURITY_HEADERS: Record<string, string> = {
   'Referrer-Policy': 'no-referrer',
 };
 
-export function readWebAsset(file: string): Promise<Buffer> {
-  return readFile(join(WEB, file));
+export async function readWebAsset(file: string): Promise<Buffer> {
+  const bytes = await readFile(join(WEB, file));
+  if (file !== 'library.html') return bytes;
+  const name = brand.name
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+  return Buffer.from(bytes.toString('utf8').replaceAll('{{PRODUCT_NAME}}', () => name));
 }
 
 export async function asset(res: ServerResponse, file: string, type: string): Promise<void> {

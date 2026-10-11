@@ -45,7 +45,7 @@ describe('the room page contract (absorbed)', () => {
   it('never binds the engine (portability contract)', () => {
     for (const asset of [PAGE_HTML, PAGE_JS, LIB_HTML, LIB_JS]) {
       expect(asset.toLowerCase()).not.toContain('loom');
-      expect(asset.toLowerCase()).not.toContain(brand.name);
+      expect(asset.toLowerCase()).not.toContain(brand.name.toLowerCase());
     }
   });
 
@@ -132,6 +132,8 @@ describe('the route contract (the wound, closed)', () => {
     const lib = await startLibrary(join(tmp, 'specs'));
     try {
       const html = await (await fetch(lib.url)).text();
+      expect(html).toContain(`<title>${brand.name}</title>`);
+      expect(html).toContain(`<h1>${brand.name}</h1>`);
       const srcs = [...html.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1]);
       expect(srcs.length).toBeGreaterThanOrEqual(2);
       for (const src of srcs) {
