@@ -69,3 +69,16 @@ Declared command: `pnpm exec vitest run packages/web/test/workflow-ui.test.ts pa
 Actual exit: 0. Outcome: 22 tests in 4 files passed, including 6 new focused regressions. Rerun after native-button and refresh refinements passed.
 The independent planning verdict is in `checks/plan-red-foreman.md`; it does not certify implementation.
 No backend, API, core, model or dependency file changed.
+
+## T-3 observation
+
+Review source and discussion share a wide-layout workspace and stack on narrower layouts.
+Save draft is primary while a local comment exists; Submit is disabled until that comment is saved.
+Empty submission remains available under the existing contract. Drafts, batches, ranges and original history remain reachable.
+Selected source ranges have written line context and pressed state. Delayed mutations disable selection and prevent duplicate requests.
+The interview preserves refused answers, guards delayed requests and keeps radio selection and focus together.
+Its existing keyboard ceremony still passes. Ring colors now use the shared roles rather than embedded palette literals.
+
+Declared command: `pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts`.
+Actual exit: 0. Outcome: 11 tests in 3 files passed, including 4 new focused regressions.
+No backend, API, core, model or dependency file changed.

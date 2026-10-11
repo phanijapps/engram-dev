@@ -36,7 +36,7 @@
     };
     mounted = view;
     host.replaceChildren();
-    const heading = el('h3', 'Feedback'),
+    const heading = el('h2', 'Feedback'),
       notice = el(
         'p',
         'Review comments guide revisions. Approval, Start and Finish remain separate owner actions.',
@@ -51,7 +51,9 @@
     const refresh = button('Refresh feedback', () => load());
     refresh.id = 'feedback-refresh';
     const content = el('div', undefined, { class: 'feedback-content' });
-    host.append(heading, notice, status, error, refresh, content);
+    const header = el('div', undefined, { class: 'feedback-header' });
+    header.append(heading, refresh);
+    host.append(header, notice, status, error, content);
     if (
       !window.LIBRARY_CONFIG?.base ||
       spec.format !== 'specpack/0.4' ||
@@ -136,6 +138,18 @@
       if (view.busy || view.state.closed) return false;
       view.busy = true;
       content.setAttribute('aria-busy', 'true');
+      const controls = [...host.querySelectorAll('button, input, textarea, select')];
+      const previousDisabled = controls.map((node) => node.disabled);
+      controls.forEach((node) => {
+        node.disabled = true;
+      });
+      status.textContent =
+        {
+          comment: 'Saving draft…',
+          submit: 'Submitting feedback…',
+          resolve: 'Resolving thread…',
+          reattach: 'Saving reattachment…',
+        }[kind] || 'Saving…';
       const body = { session: view.session.id, by: 'human:owner', ...fields };
       const identity = JSON.stringify({ kind, body });
       const payload =
@@ -154,6 +168,9 @@
       } finally {
         view.busy = false;
         content.removeAttribute('aria-busy');
+        controls.forEach((node, index) => {
+          node.disabled = previousDisabled[index];
+        });
       }
     }
     async function load(message) {
@@ -295,9 +312,21 @@
         'feedback-target',
       );
       const writable = !view.state.closed && !round.sealed && round.id === session.rounds.at(-1).id;
+      const workspace = el('div', undefined, { class: 'feedback-workspace' });
+      const sourcePane = el('section', undefined, {
+        class: 'feedback-source-pane',
+        'aria-label': 'Selected source',
+      });
+      const discussion = el('section', undefined, {
+        class: 'feedback-discussion',
+        'aria-label': 'Comments and threads',
+      });
+      workspace.append(sourcePane, discussion);
+      content.append(workspace);
       const sources = el('div', undefined, { class: 'feedback-sources' });
-      content.append(sources);
+      sourcePane.append(sources);
       const range = el('div', undefined, { class: 'feedback-controls' });
+      const rangeDetails = el('details', undefined, { class: 'feedback-range' });
       if (draft().anchor?.start)
         view.anchor = { start: draft().anchor.start, end: draft().anchor.end };
       const start = label(
@@ -394,10 +423,30 @@
               start.value = view.anchor.start;
               end.value = view.anchor.end;
               save(draft().body, selectedAnchor());
+              rangeDetails.open = true;
+              host.querySelectorAll('.feedback-line').forEach((node) => {
+                const n = Number(node.dataset.line);
+                node.setAttribute(
+                  'aria-pressed',
+                  String(
+                    node.dataset.side === name && n >= view.anchor.start && n <= view.anchor.end,
+                  ),
+                );
+              });
               host.querySelector('#feedback-comment')?.focus();
             });
             line.className = 'feedback-line';
+            line.dataset.side = name;
+            line.dataset.line = String(i + 1);
             line.disabled = !writable;
+            line.setAttribute(
+              'aria-pressed',
+              String(
+                view.side === name &&
+                  i + 1 >= (view.anchor?.start || Infinity) &&
+                  i + 1 <= (view.anchor?.end || -1),
+              ),
+            );
             line.setAttribute('aria-label', `Comment on ${name} line ${i + 1} ${lines[i]}`);
             line.append(
               el('span', String(i + 1) + ' ', { class: 'feedback-number', 'aria-hidden': 'true' }),
@@ -444,8 +493,11 @@
       previous.disabled = view.page === 0;
       next.disabled = view.page >= pages - 1;
       paging.append(previous, el('span', `Page ${view.page + 1} of ${pages}`), next);
-      content.append(paging, range);
-      const form = el('form'),
+      sourcePane.append(paging);
+      if (view.anchor) rangeDetails.open = true;
+      rangeDetails.append(el('summary', 'Anchor and comment side'), range);
+      discussion.append(rangeDetails);
+      const form = el('form', undefined, { class: 'feedback-composer' }),
         body = label(
           form,
           'Comment',
@@ -461,6 +513,7 @@
       body.oninput = () => {
         save(body.value, selectedAnchor());
         view.pending = null;
+        updateActions();
       };
       const add = el('button', 'Save draft comment', {
         type: 'submit',
@@ -494,9 +547,17 @@
           );
       });
       submit.id = 'feedback-submit';
-      submit.disabled = !writable;
-      content.append(
-        form,
+      function updateActions() {
+        const local = !!body.value.trim();
+        add.disabled = !writable || !local;
+        submit.disabled = !writable || local;
+        add.classList.toggle('primary', local);
+        submit.classList.toggle('primary', !local);
+      }
+      updateActions();
+      const actions = el('div', undefined, { class: 'feedback-submit-area' });
+      discussion.append(form, actions);
+      actions.append(
         submit,
         el(
           'p',
@@ -508,21 +569,22 @@
         ),
       );
       if (!session.cursor)
-        content.append(
+        actions.append(
           el(
             'p',
             'Waiting for your first submission. Your agent receives saved drafts only after Submit feedback.',
           ),
         );
       else
-        content.append(
+        actions.append(
           el(
             'p',
             'Submitted feedback is retained. If your agent is idle, prompt it to read this session.',
           ),
         );
       const history = el('section', undefined, { 'aria-label': 'Feedback threads' });
-      content.append(history, el('h4', 'Threads'));
+      history.append(el('h3', 'Threads'));
+      discussion.append(history);
       if (!threads.length) history.append(el('p', 'No comments yet.'));
       for (const thread of threads) {
         const card = el('article', undefined, { class: 'feedback-thread' });
@@ -543,7 +605,10 @@
           ),
         );
         if (anchor.quote) card.append(el('blockquote', anchor.quote));
-        card.append(
+        const originalDetails = el('details', undefined, { class: 'feedback-original' });
+        originalDetails.append(el('summary', 'Original anchor and history'));
+        card.append(originalDetails);
+        originalDetails.append(
           button('View original anchor', () => {
             view.round = original;
             view.target =
@@ -556,7 +621,8 @@
         );
         for (const reply of thread.replies)
           card.append(el('p', 'Agent response · ' + reply.by + ': ' + reply.body));
-        for (const event of thread.events) card.append(el('p', event.kind + ' · ' + event.by));
+        for (const event of thread.events)
+          originalDetails.append(el('p', event.kind + ' · ' + event.by));
         const resolve = button('Resolve', async () => {
           if (await mutate('resolve', { thread: thread.id }))
             await load('Thread resolved. Submitted batches remain recorded.');
@@ -579,9 +645,12 @@
           );
         }
       }
-      for (const item of session.drafts) content.append(el('p', 'Draft · ' + item.body));
+      const records = el('details', undefined, { class: 'feedback-records' });
+      records.append(el('summary', 'Saved drafts and submitted batches'));
+      discussion.append(records);
+      for (const item of session.drafts) records.append(el('p', 'Draft · ' + item.body));
       for (const batch of view.state.batches.filter((b) => b.session === session.id))
-        content.append(
+        records.append(
           el('p', `Submitted batch ${batch.cursor} · ${batch.items.length} items · ${batch.by}`),
         );
     }

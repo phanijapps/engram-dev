@@ -3,7 +3,7 @@
   "name": "quiet-workspace",
   "description": "Quiet Workspace frontend",
   "date": {
-    "updated": "2026-10-11T18:08:56Z"
+    "updated": "2026-10-11T18:12:29Z"
   },
   "status": {
     "lifecycle": "active",
@@ -502,7 +502,7 @@
         "CON-3",
         "CON-4"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts",
         "expect": "Exit 0; visual expectations match the approved design and existing behavior, revisions, owner authority and keyboard expectations remain true."
@@ -511,27 +511,33 @@
         "touch": [
           {
             "path": "treadle/packages/web/src/library.html",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "441489b61edab1fac0bb5fb4ae3a0a558cf07b2933fb2d2cc65f1e9788c82b1c"
           },
           {
             "path": "treadle/packages/web/src/feedback.js",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636"
           },
           {
             "path": "treadle/packages/web/src/page.html",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9ad8f9aaace487dbea751892e166b7605281f801906bc3eeec4f52b11d179694"
           },
           {
             "path": "treadle/packages/web/src/page.js",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "796c36dfdfc03af01d620eabe005610bb89737d92a249bef73464aa93bdb2f1e"
           },
           {
             "path": "treadle/packages/web/test/feedback-ui.test.ts",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "3c8574936d166d0b1c079b2113dc274ee5cbb4d21cf360cd4b38e9983d120710"
           },
           {
             "path": "treadle/packages/web/test/room-keyboard.test.ts",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "6c3ec37abfe66c245f7209b04532c399b4de80b77ff6fc6ad72b2e2054ba2c9d"
           },
           {
             "path": "treadle/packages/web/test/approval-feedback-ux.test.ts",
@@ -539,7 +545,8 @@
           },
           {
             "path": "specs/quiet-workspace/execution-log.md",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9c01310af7d685816d23ea969e6268a3d80417fb8fed794de04ffc20f55040f8"
           }
         ],
         "read": [
@@ -601,7 +608,16 @@
           "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
           "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T18:12:29Z",
+          "by": "agent:codex",
+          "notes": "11 tests in3 files pass, including4 new feedback/room regressions. Separate Save and Submit; side-by-side source/discussion; retained drafts, duplicate-request guards and labeled choice focus. No backend/model changes."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -757,5 +773,5 @@
     "mode": "owner-gated frontend-only proposal"
   },
   "format": "specpack/0.4",
-  "revision": 13
+  "revision": 15
 }

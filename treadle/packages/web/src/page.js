@@ -35,7 +35,9 @@ const BY = (window.INTERVIEW_CONFIG && window.INTERVIEW_CONFIG.by) || 'human:own
 let S = null; // the spec, emitted layout
 let i = 0,
   sel = 0,
-  curQid = ''; // wizard cursor, selected option, question-change guard
+  curQid = '';
+let saving = false;
+const localAnswers = new Map(); // wizard cursor, selected option, question-change guard
 
 function selFor(q) {
   /* AC-13: the declared default is preselected */
@@ -90,7 +92,7 @@ function ringSVG(stage) {
     };
     const [x0, y0] = p(a0),
       [x1, y1] = p(a1);
-    segs += `<path d="M ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}" stroke="${s <= idx ? '#0f6b5f' : '#dfe3de'}" stroke-width="5.5" fill="none" stroke-linecap="round"/>`;
+    segs += `<path d="M ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}" stroke="${s <= idx ? 'var(--primary)' : 'var(--surface-4)'}" stroke-width="5.5" fill="none" stroke-linecap="round"/>`;
   }
   return `<svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">${segs}</svg>`;
 }
@@ -121,7 +123,7 @@ function dossierHTML() {
   part.status = () => {
     const st = S.status || {};
     const stage = st.deliverable || 'drafted';
-    return `<div class="card"><div class="ring">${ringSVG(stage)}<div class="stage">${esc(stage)}<small>derived · never hand-set</small></div></div></div>`;
+    return `<div class="card"><div class="ring">${ringSVG(stage)}<div class="stage">${esc(stage)}<small>Current status</small></div></div></div>`;
   };
   part.metadata = () => {
     const md = S.metadata || {};
@@ -305,32 +307,39 @@ function paintInterview(err) {
             (
               o,
               n,
-            ) => `<div class="opt ${n === sel ? 'sel' : ''}" data-n="${n}" tabindex="0" role="radio" aria-checked="${n === sel}">
+            ) => `<div class="opt ${n === sel ? 'sel' : ''}" data-n="${n}" tabindex="${n === sel ? '0' : '-1'}" role="radio" aria-checked="${n === sel}">
         <span class="dot"></span><span class="lbl">${esc(o)}</span><span class="key">${n + 1}</span></div>`,
           )
           .join('')
-      : `<textarea id="open" placeholder="type your answer — Enter submits, Shift+Enter for a new line"></textarea>`;
+      : `<textarea id="open" aria-labelledby="current-question" placeholder="type your answer — Enter submits, Shift+Enter for a new line"></textarea>`;
   host.innerHTML = `<div class="qcard">
     <div><span class="idchip">${esc(q.id)}</span><span class="st ${q.unknown ? 'st-unk' : 'st-open'}">${q.unknown ? 'unknown' : 'open'}</span></div>
-    <div class="qtext">${esc(q.question)}</div>
+    <div class="qtext" id="current-question" role="heading" aria-level="2">${esc(q.question)}</div>
     <div class="blocks">owner: ${esc(q.owner || 'human:owner')}${q.unknown ? ' · answered unknown; still gating' : ''}</div>
-    ${opts}
+    <div ${q.kind === 'choice' ? 'role="radiogroup" aria-labelledby="current-question"' : ''}>${opts}</div>
     ${q.unknown ? `<div class="ansline"><span class="st st-unk">unknown</span> <span class="note">recorded honestly — you may answer for real below</span></div>` : ''}
-    ${err ? `<div class="err">${esc(err)}</div>` : ''}
+    ${err ? `<div class="err" role="alert">${esc(err)}</div>` : ''}
     <div class="qnav">
       <button class="act b-back" id="bBack">← back</button>
-      <button class="act b-next" id="bSubmit">submit</button>
       <button class="act b-idk" id="bIdk">I don't know</button>
+      <button class="act b-next" id="bSubmit">Submit answer</button>
     </div>
   </div>`;
   document.querySelectorAll('.opt').forEach((o) =>
     o.addEventListener('click', () => {
+      if (saving) return;
       sel = +o.dataset.n;
       paintInterview();
+      document.querySelector('.opt.sel')?.focus();
     }),
   );
   const ta = document.getElementById('open');
-  if (ta) ta.focus();
+  if (ta) {
+    ta.value = localAnswers.get(q.id) || '';
+    ta.oninput = () => localAnswers.set(q.id, ta.value);
+    ta.focus();
+  }
+  document.getElementById('bBack').disabled = i === 0;
   document.getElementById('bBack').addEventListener('click', () => {
     if (i > 0) {
       i--;
@@ -342,15 +351,28 @@ function paintInterview(err) {
   document.getElementById('bIdk').addEventListener('click', () => act('unknown', q));
 }
 
+function setSaving(on) {
+  saving = on;
+  document.getElementById('qhost').setAttribute('aria-busy', String(on));
+  document.querySelectorAll('#qhost button, #qhost textarea').forEach((node) => {
+    if (on) node.disabled = true;
+  });
+  document.getElementById('room-status').textContent = on ? 'Saving…' : '';
+}
 async function act(kind, q, extra) {
+  if (saving) return;
+  setSaving(true);
   try {
     const ev = { kind, by: BY, q: q.id };
     Object.assign(ev, extra || {});
     await emit(ev);
+    localAnswers.delete(q.id);
     sel = 0;
     paintInterview();
   } catch (e) {
     paintInterview(e.message);
+  } finally {
+    setSaving(false);
   }
 }
 async function submit(typed) {
@@ -368,17 +390,21 @@ async function submit(typed) {
   }
 }
 async function doApprove() {
+  if (saving) return;
+  setSaving(true);
   try {
     await emit({ kind: 'approve', by: BY });
     paintInterview();
   } catch (e) {
     paintInterview(e.message);
+  } finally {
+    setSaving(false);
   }
 }
 
 /* ── keyboard: j/k move, 1-9 pick, Enter submit/approve ── */
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Tab') return;
+  if (e.key === 'Tab' || saving) return;
   const qs = openQs();
   const inTa = document.activeElement && document.activeElement.tagName === 'TEXTAREA';
   if (approved()) return;
@@ -397,7 +423,16 @@ document.addEventListener('keydown', (e) => {
   }
   if (inTa) return; // typing: arrows and digits belong to the text
   const q = qs[Math.min(i, qs.length - 1)];
-  if (e.key === 'ArrowRight' || e.key === 'k') {
+  if (
+    (e.key === 'ArrowUp' || e.key === 'ArrowDown') &&
+    q?.kind === 'choice' &&
+    document.activeElement?.classList.contains('opt')
+  ) {
+    sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + q.options.length) % q.options.length;
+    paintInterview();
+    document.querySelector('.opt.sel')?.focus();
+    e.preventDefault();
+  } else if (e.key === 'ArrowRight' || e.key === 'k') {
     if (i < qs.length - 1) {
       i++;
       paintInterview();
