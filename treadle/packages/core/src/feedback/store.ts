@@ -110,7 +110,17 @@ function location(
     fail('missing', 'Pack directory is missing');
   const home = feedbackContainedPath(dir, 'feedback');
   const file = feedbackContainedPath(dir, 'feedback/state.json');
-  return { dir, home, file, pack: loadPackWithMeta(dir) };
+  return { dir, home, file, pack: loadFeedbackPack(dir, workspace) };
+}
+/** Refuse canonical JSON symlinks before the loader follows them, on every read. */
+export function loadFeedbackPack(
+  packDir: string,
+  workspace: string,
+): ReturnType<typeof loadPackWithMeta> {
+  const dir = feedbackContainedPath(workspace, packDir);
+  for (const file of readdirSync(dir).filter((file) => file.endsWith('.json')))
+    feedbackContainedPath(dir, file);
+  return loadPackWithMeta(dir);
 }
 function compatible(pack: ReturnType<typeof loadPackWithMeta>, writing: boolean): string {
   if (!pack.ok) fail('unavailable', pack.message);
@@ -619,7 +629,7 @@ export function mutateFeedback(
   if (!claim(input.by, role)) fail('forbidden', `This feedback action needs a ${role} claim`);
   const loc = location(packDir, workspace);
   const result = withPackLock(loc.dir, () => {
-    const packId = compatible(loadPackWithMeta(loc.dir), true);
+    const packId = compatible(loadFeedbackPack(loc.dir, workspace), true);
     const state: FeedbackLedger = readFeedback(loc.dir, workspace) ?? {
       format: 'feedback/1',
       pack_id: packId,
@@ -823,7 +833,7 @@ export function feedbackReadResult(
 export function recoverFeedbackOrphans(packDir: string, workspace: string): string[] {
   const loc = location(packDir, workspace);
   const result = withPackLock(loc.dir, () => {
-    compatible(loadPackWithMeta(loc.dir), true);
+    compatible(loadFeedbackPack(loc.dir, workspace), true);
     const state = readFeedback(packDir, workspace);
     const referenced = new Set(state?.sessions.flatMap((s) => s.rounds.map((r) => r.id)) ?? []);
     const removed: string[] = [];

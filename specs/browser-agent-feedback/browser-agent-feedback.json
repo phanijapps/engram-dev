@@ -3,7 +3,7 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T12:45:35Z"
+    "updated": "2026-10-11T12:55:15Z"
   },
   "status": {
     "lifecycle": "active",
@@ -740,7 +740,7 @@
       "title": "Expose guarded feedback browser APIs",
       "detail": "Existing shared guards, project isolation, snapshot allowlist, feedback role actions, conflict and recovery behavior pass without source or owner-state writes. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
       "phase": "integration",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-1"
       ],
@@ -792,7 +792,8 @@
           },
           {
             "path": "treadle/packages/web/src/project-server.ts",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "40ce05c8bc2cba701ffd60f7ea742c5c15b381814e1a5a636423b3df0d5720d5"
           },
           {
             "path": "treadle/packages/web/test/feedback-api.test.ts",
@@ -838,7 +839,23 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 1,
+          "at": "2026-10-11T12:55:14Z",
+          "by": "agent:codex",
+          "notes": "First test attempt: 2 fixture/expectation failures; retained checks/T-3-attempt-1.log. Corrected closed fixture to use normalized PackDoc and symlink/conflict status expectations."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:55:15Z",
+          "by": "agent:codex",
+          "notes": "8 API/project/security tests passed, log checks/T-3-attempt-2.log. Source typecheck and focused lint exited 0. Shared CSRF/revision/role/path guards retain canonical owner bytes; closed history is read-only."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -1439,5 +1456,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 29
+  "revision": 32
 }

@@ -5,6 +5,7 @@ import { join, relative, sep, isAbsolute } from 'node:path';
 import { randomBytes, timingSafeEqual } from 'node:crypto';
 import { buildIndex, search, toDict } from '@treadle/knowledge';
 import { brand } from '@treadle/brand';
+import { feedbackRoute } from './feedback.js';
 import {
   libraryHandler,
   readWebAsset,
@@ -142,6 +143,23 @@ export function startProjects(projects: () => ProjectSource[], port = 0): Promis
         size += (chunk as Buffer).length;
         if (size > 65536) throw denied(413, 'Request too large');
         chunks.push(chunk as Buffer);
+      }
+      const feedback = feedbackRoute(
+        project,
+        match[3] ?? '/',
+        url.searchParams,
+        req.method,
+        Buffer.concat(chunks).toString('utf8'),
+      );
+      if (feedback) {
+        if (feedback.text) {
+          res.writeHead(feedback.status, {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'no-store',
+          });
+          res.end(String(feedback.body));
+        } else json(feedback.status, feedback.body);
+        return;
       }
       req.url = (match[3] ?? '/') + url.search;
       await libraryHandler(project.specs)(req, res, Buffer.concat(chunks).toString('utf8'));
