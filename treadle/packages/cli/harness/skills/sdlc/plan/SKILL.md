@@ -1,182 +1,139 @@
 ---
 name: plan
-description: Turn SDD analysis into a technical design, a populated JSON specpack, and an executable task DAG. Register requirements, dependencies, verification expectations, and frozen context before implementation handoff. Use for planning an analyzed change, not investigation or execution.
+description: Turn SDD analysis into a technical design, Mermaid views where useful, a populated JSON specpack, and a verified task DAG. Register requirements, decisions, dependencies, checks, and context before owner start permission. Use for planning an analyzed change or revising a proposal, not investigation or execution.
 ---
 
-CLI examples below use `do` and `know` subcommands. Prefix them with the installed
-harness executable; check its `--help` output or use the documented Node entry.
+# Plan an analyzed change
 
-# plan — technical design + task DAG from analysis
+Produce `design.md` and `plan.md` under `specs/<slug>/`, at a depth suited to the change.
+The design explains contracts, choices, failure behavior, and useful visual views.
+The plan explains delivery slices and their checks. The canonical JSON pack owns executable state.
+Approved artifacts stay unchanged. Progress belongs in `execution-log.md` and recorded task evidence.
 
-One skill, two artifacts, depth-scaled. `design.md` answers _how the
-system should change and why that way_ — it stabilizes early and is
-reviewed once. `plan.md` is the executable consequence — a DAG of small,
-independently verifiable slices. Keep approved plan artifacts unchanged.
-Progress belongs in execution-log.md and the canonical JSON pack. Design depth
-scales with blast radius: the analysis's impact artifact already says
-whether you owe a full design or a paragraph.
+CLI examples use `do` and `know`. Prefix them with the installed harness executable.
+Check its help and current core exports before authoring machine fields.
 
-The gate: **plan consumes analysis, it does not re-do it.** Every design
-choice traces to an R/Q/A/D id from `specs/<slug>/`. If you find
-yourself analyzing, stop — that is the analyze skill's job; run it and
-come back.
+## 1. Read the analysis and current state
 
-## 0. The planning contract
+Read the initiative's requirement, brief, analysis Handoff, impact evidence, and canonical pack.
+Use only Ready-now slices unless the user explicitly widens the proposal.
+Keep blocked slices in a follow-up register with their actual Q, A, or D IDs and unblock actions.
+Do not invent answers or executable tasks for unresolved behavior.
 
-1. **Analysis-gated.** Inputs are the initiative's artifacts under
-   `specs/<slug>/` (read them all). Plan **only the Handoff's
-   Ready-now slices** unless the operator explicitly widens scope.
-   Blocked slices may appear as placeholders marked `blocked-on: <Q/D
-id>` — never designed around with invented answers.
-2. **Ground before designing.** Same spine as analyze: resolve →
-   freshness gate → compile/search the affected surfaces → read the
-   load-bearing source. A design that cites no wiki concept or source
-   path is an opinion.
-3. **Bounded design.** Design just enough for the ready slices. Contracts
-   (interfaces, data shapes, failure behavior) before mechanism. No
-   speculative generality; out-of-scope register mandatory.
-4. **Decisions are the deliverable.** Each design decision: choice,
-   alternatives considered, two-way/one-way door, evidence status, and
-   the question/assumption it resolves or carries. Insufficient evidence
-   = the question stays open and the slice stays blocked. Every design choice needs explicit owner acceptance before implementation.
-   Reversibility does not remove this requirement.
-5. **Tasks are the unit of delivery.** Small (one sitting / one reviewable
-   change), independently verifiable, leaves the repo coherent. Real
-   prerequisites only — a prereq is something whose _output_ you need,
-   not something that merely feels earlier. AND-only, acyclic
-   (self-prereq or cycle = defect in the plan).
-6. **No task without an observable verification expectation.** "Tests
-   pass", a command, a measurable observation — never "looks right".
-   Expectations are plans; observed outcomes are recorded by implement/
-   review with evidence, never asserted here.
-7. **Frozen context per task.** Each task names its compile query, wiki
-   concepts, and exact analysis/design refs. Implement loads exactly
-   that — no browsing, no drift.
-8. **Status is evidence, not hope.** The status column changes only to
-   reflect observed evidence (command output, commit, review artifact).
-   Plan revisions supersede slices, never silently rewrite them.
+An ambiguous request to resume requires a selected spec. An explicit bounded request supplies its own scope.
+Use `do where <workspace>` and the exact core loader to confirm discovery and pack identity.
+Lifecycle context can refuse directories with extra root JSON files; preserve those files and disclose the discrepancy.
 
-## 1. Inputs & gate (read-only first)
+If nontrivial work has no analysis, route to `analyze` before design.
+A trivial local change may use a micro-plan with a mini-design and an explicit reason for skipping analysis.
+That exception does not skip machine registration or applicable owner gates.
+Keep legacy formats under their existing contract. Never silently adopt an active pack or modify a closed pack.
 
-1. Locate `specs/<slug>/`; read every artifact's **Handoff** block.
-   No artifacts there → offer to run the analyze skill; a trivial
-   one-liner may proceed as a **micro-plan** (single plan.md, mini-design
-   section, stated rationale for skipping analysis).
-2. Extract: Ready-now slices, Blocked-on register (Q/A/D ids), route
-   hints (needs impact? needs spike?).
-3. **Ground:** freshness check (stamp `repo_head` vs `git rev-parse
-HEAD`; fingerprints + stamp, or stale-pin) → `know search "<design
-question>"` + `know read <cid>` per affected surface → open
-   the cited wiki concepts and source files
-   for anything load-bearing. Residual unknowns → ONE batched question
-   round, recorded as new Q-ids in the artifact they belong to.
+Ground choices in the affected wiki concepts and cited source files.
+Run relevant `know search` and `know read` commands, then inspect load-bearing source directly.
+Check freshness, and report its actual limits. In this harness, HEAD freshness does not prove dirty TypeScript or Markdown freshness.
+If there is no wiki, use source evidence and state that limit.
+A new behavior question or missing impact analysis returns to `analyze`; a local design clarification can stay here.
+Batch questions that evidence cannot answer. Never reopen settled behavior merely to fill a template.
 
-## 2. Route the depth
+## 2. Choose the design depth
 
-| The analysis says…                                          | Design output                                                            |
-| ----------------------------------------------------------- | ------------------------------------------------------------------------ |
-| impact artifact lists shared-contract effects / 2+ surfaces | full `design.md` + `plan.md`                                             |
-| feature/spec touching one subsystem, no shared contracts    | compact `design.md` (contracts + decisions only) + `plan.md`             |
-| bug with confirmed root cause, local fix                    | mini-design section inside `plan.md` (approach + fix options considered) |
-| micro-plan (trivial)                                        | single `plan.md`, 1–3 tasks                                              |
+| Evidence about the change                                                        | Output                                           |
+| -------------------------------------------------------------------------------- | ------------------------------------------------ |
+| Shared contracts, storage migration, multiple systems, or material failure risks | Full `design.md` and `plan.md`                   |
+| One subsystem with bounded interfaces                                            | Compact `design.md` and `plan.md`                |
+| Confirmed local defect                                                           | Mini-design within `plan.md`                     |
+| Trivial local change                                                             | Micro-plan with mini-design and usually one task |
 
-State the chosen depth and why in the plan header. Depth is about
-blast-radius honesty, not ceremony.
+State the depth and rationale. Multiple tasks alone do not require a full architecture document.
+For revisions, inspect existing approvals, receipts, evidence, and artifact hashes before changing any proposal.
+Preserve bound artifacts and record a dated successor for owner review when agreed work changes.
 
-## 3. Author the design (assets/design.tmpl.md)
+## 3. Design contracts and explain the change
 
-Approach selected against the analysis's constraints (alternatives
-recorded, not strawmen) · change by surface (which modules/contracts move,
-pinned to wiki cids) · external contracts & data shapes (before/after,
-compatibility posture) · failure behavior (new failure modes, rollback
-story) · decisions ledger continuing the analysis's D-numbering · open
-questions/assumptions carried (never resolved by vibes) · out of scope.
-Record every choice as proposed until the owner accepts it.
-Link each dependent task through `requires_decisions` to its actual D-ids.
-A rejected required choice blocks the affected work.
+Use [the design template](assets/design.tmpl.md) for full or compact designs.
+Describe the selected approach, real alternatives, affected surfaces, and compatibility behavior.
+Specify interface and data changes before implementation mechanisms.
+Include relevant failure cases, retries, authorization boundaries, migration, rollout, and rollback behavior.
+Link each claim to observed evidence or mark it as proposed, inferred, conflicting, or unknown.
+Keep exclusions and unresolved assumptions explicit.
 
-## 4. Author the task DAG (assets/plan.tmpl.md)
+Continue the analysis's decision IDs. Each proposed decision states its alternatives, rationale, consequences, and reversibility.
+Every proposed design decision needs owner acceptance, including reversible choices.
+Use `requires_decisions` on tasks that depend on those choices. Do not manufacture an acceptance actor or timestamp.
 
-### Persist the machine plan
+### Select useful Mermaid views
 
-Load `specs/<slug>/<slug>.json`; create it through `do init --owner-gated` if a legacy
-analysis lacks a pack. Keep Markdown as the design rationale and readable plan.
-The JSON pack owns executable requirements, decisions, designs, task dependencies,
-verification expectations, and frozen context. Register these before handoff.
+Read [diagram guidance](resources/diagrams.md) when a visual explains architecture, behavior, or task dependencies.
+Choose diagrams by the question they answer, rather than adding every diagram type.
 
-Use `do add decision` and `do add task` for the fields those commands expose.
-For remaining authored fields, use the existing core loader/writer API and check
-alignment with `do check`. Do not hand-set derived stages, evidence-driven task
-states, or human acceptance. Map prose IDs to canonical IDs explicitly when needed
-(for example, R1 → FR-1 and T1 → T-1).
+- Use C4 context or container views for system boundaries and upstream or downstream dependencies.
+- Use a process flowchart for branches, validation, gates, failure paths, or recovery.
+- Use a sequence diagram when message order, sync or async calls, events, retries, or persistence matters.
+- Use a task dependency flowchart for a branching or nontrivial delivery DAG.
 
-Before returning the ready set, `do check <packDir>` must succeed and
-`do where <workspace>` must discover the pack. An empty shell pack is not a
-completed plan: its tasks, dependencies, verification, and context must be present.
-Future questions outside the current slice remain follow-ups, rather than
-invented answers or unrelated closure blockers.
+Put architecture and behavior views beside the relevant design text.
+Put delivery DAGs in `plan.md`. A mini-design can hold a local behavior view.
+Distinguish current behavior from the proposed design. Label IDs, boundaries, protocols, and important failure paths.
+Each view needs a caption, its question, trace IDs, and evidence or uncertainty notes.
+Retain a plain-text explanation for readers without Mermaid support.
+For a small change with no useful visual, state the omission reason once.
+Validate syntax using an available renderer or parser. Record its version and result, or disclose unavailable validation.
+Parser success does not establish semantic correctness or visual readability.
+Do not add product dependencies or a renderer feature to complete a planning document.
 
-Per task: goal (one line, slice-shaped) · implements (R/D refs) ·
-prereqs (task ids) · verification expectation (command/observation) ·
-size (S/M/L) · status (todo). Frozen context per task listed in its own
-block. Then:
+## 4. Register the complete machine plan
 
-1. **Walk the DAG**: topological order, cycle/self-prereq check, every
-   blocked-on reference resolves to a real Q/D id or task.
-2. **Traceability matrix**: R → design section → task(s) → verification
-   expectation. Any R in the planned scope with no task = hole; any task
-   implementing nothing = creep.
-3. **Ready set**: use machine admission to identify tasks with evidenced prerequisites.
-   A task remains unavailable until the current plan has owner start permission.
+Read [machine operations](resources/operations.md) before pack mutation.
+Use `do init <slug> --owner-gated` for new packs, not the legacy default.
+Register requirements and acceptance criteria, design elements, proposed decisions, artifact references, and tasks.
+Keep exact prose-to-canonical ID mappings when older analysis uses different IDs.
 
-## Owner decision and start gates
+Use [the plan template](assets/plan.tmpl.md) for the readable proposal.
+Each task needs a bounded outcome, real prerequisites, requirement links, decision dependencies,
+a declared verification command and expected observation, allowed file changes, and sufficient context.
+Prefer a coherent slice that a reviewer can verify independently.
+`needs` expresses task prerequisites; `implements` references DES IDs; `satisfies` references FR IDs.
+Question IDs and decision IDs are not task prerequisite IDs.
+Register blocked future scope as follow-ups, rather than placeholder tasks with invented checks.
 
-Use the writer skill. Explain each choice, alternative and consequence in plain words.
-Show the brief, spec, design and complete task plan in the spec library.
-Let the owner accept or reject each proposed design decision.
-Wait for all decisions in this plan before starting any task.
-A generic approval does not accept decisions or give permission to start.
+Separate source files the task may change from advisory reference files.
+Use canonical `context.touch`, `read`, `wiki`, `links`, `notes`, and `commands` fields as needed.
+Put a knowledge query in context commands or notes when useful; do not invent a required compile API.
+Touch paths resolve from the Git root containing the pack. Artifact paths resolve from the pack directory.
+The machine pins touch files at handout time; read and wiki entries are advisory.
+Do not describe every context entry as hash-frozen.
 
-After the decisions are accepted, show all tasks and their checks.
-Ask for the separate Start implementation action for that exact plan.
-The engine binds the start receipt to the plan digest.
-The browser checks its held revision. CLI start uses
-`do start <packDir> --by human:<owner> --expected-revision <held revision>`.
-Only record this claim from an actual owner act. Never perform it for them.
-The owner can approve a bounded sequence of tasks; do not ask again per task.
+Walk the dependency graph in topological order. Reject cycles, self-prerequisites, missing IDs, and redundant ordering without an output dependency.
+Trace each planned requirement through a design element or direct task link to an observable check.
+Inspect coverage gaps even when alignment succeeds. Explain deferred requirements outside this slice.
+Register useful load-bearing diagrams through the supported DG artifact references; inline Mermaid alone is explanatory Markdown.
 
-Keep brief.md, spec.md, design.md and plan.md unchanged after start approval.
-Append observations to execution-log.md. Evidence changes do not amend the plan.
-A requirement, decision, dependency, check or scope change needs owner review again.
-Preserve the previous artifacts and receipt. Publish the changed plan as a new proposal.
-Do not refresh the digest or start receipt silently.
+Run `do check`, `do status`, and `do where` for the exact pack.
+Check the actual tasks, dependencies, verification fields, context, and referenced artifact bytes after reload.
+When the matching schema is available, validate canonical JSON against it; alignment alone is not full schema validation.
+Do not call `do next` to preview a proposal: it admits work and can pin files or advance task state.
+Derive a clearly labeled structural entry set from the proposed DAG.
+Report the separate machine workflow gate; an entry task is not permission to execute.
 
-## 5. Close: record, hand off
+## 5. Present decisions and hand off
 
-1. Commit the artifacts — the git history is the durable record
-   (project memory back-burnered, knowledge-engine decision D5).
-2. Normative discoveries ("new code in X must…") → `know findings
-propose wiki <evidence> wiki/<concept>.md <kind> --rationale "…"`,
-   never written as settled truth.
-3. Commit both artifacts. **Handoff**: ready set with per-task frozen
-   context → `implement`; blocked set with owners → the analysis's
-   question register.
+Use the writer guidance when available. Explain choices and consequences in plain words.
+Show the brief, spec, design, and complete task plan in the spec library.
+Keep decisions proposed until actual owner actions accept them.
+Decision acceptance and permission to start are distinct acts.
+The separate Start implementation action binds the exact plan digest.
+Do not issue owner commands or click approval controls on the owner's behalf.
+One start receipt covers the approved sequence; do not request permission again for each task.
 
-## Rules
+Return the pack path, held revision, registered artifacts, chosen depth, structural entry set,
+current machine gate, follow-ups, and actual validation outcomes.
+Before start permission, the next action is owner review, not `implement`.
+After a valid receipt, `implement` obtains the admitted task and context through the machine handout.
+Keep observed progress in `execution-log.md` and canonical evidence. Do not maintain a second task ledger in the plan.
+A changed requirement, decision, dependency, check, scope, or bound artifact needs owner review and renewed start permission.
+Preserve prior receipts and artifacts. Do not repin approved work silently.
 
-- No analysis, no plan (micro-plan exception stated in-plan).
-- Design choices trace to R/Q/A/D ids or are marked `unrequested` and cut.
-- Verification expectations are observable; no task ships without one.
-- The DAG is validated by walking it, not by eyeballing it.
-- Plan revisions: new slice statuses supersede old ones; the design is
-  amended via new dated decision entries, never rewritten history.
-- Statuses move only on evidence (output refs, commits, review artifacts).
-
-## The ask-first rule (the hard gate's human contract)
-
-When the session opens with a recall block showing MORE THAN ONE spec
-in flight, and the user says "continue" (or go on / resume / pick up),
-you do not choose. You list the open specs and ask which one. The
-recall block is the source of truth (`do where <workspace>`); never
-memory. On pi and Claude Code a hard gate enforces this; on you it is
-discipline — the same rule either way.
+Commit planning artifacts when the user or repository workflow authorizes it.
+Submit normative discoveries through the findings ledger; pending proposals are not accepted rules.
+Planning does not mark tasks done, run implementation, grant owner consent, or complete a spec.

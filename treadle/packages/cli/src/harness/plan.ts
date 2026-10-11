@@ -230,12 +230,12 @@ export function compilePlan(
           mode: modeForFile(src, destAbs, choices.force),
         });
         // config-notify wires at user level — the payload path must be absolute;
-        // settings-hooks runs from the project root — the manifest command stands
+        // project Codex hooks resolve their relative payload from the nearest config root
         const detail =
           w.kind === 'config-notify'
             ? `node ${destAbs}`
             : w.matcher
-              ? `${w.matcher} → ${hookCommand(w, destAbs)}`
+              ? `${w.matcher} → ${hookCommand(w, destAbs, scope, choices.root)}`
               : (w.command ?? '');
         wirings.push({
           surface: agent,
@@ -267,7 +267,7 @@ export function compilePlan(
             surface: agent,
             kind: extra.kind,
             target: wiringTarget(agent, scope, choices.root, extra.kind),
-            detail: `${extra.matcher} → ${hookCommand(extra, join(roots.runtime, 'hooks', h.file.split('/').pop()!))}`,
+            detail: `${extra.matcher} → ${hookCommand(extra, join(roots.runtime, 'hooks', h.file.split('/').pop()!), scope, choices.root)}`,
           });
         }
       }
@@ -288,7 +288,23 @@ export function planSummary(plan: Plan): {
   return s;
 }
 
-function hookCommand(w: HookWiring, path: string): string {
+// A session can start below the project root. Resolve the nearest Codex config,
+// then its relative payload; no checkout path is embedded in project wiring.
+// Keep the original cwd and inherited stdin for the lifecycle callback.
+const codexProjectLauncher = [
+  "const fs=require('node:fs'),p=require('node:path');",
+  'let root=process.cwd();',
+  "while(!fs.existsSync(p.join(root,'.codex','hooks.json'))){",
+  'const parent=p.dirname(root);',
+  "if(parent===root)throw Error('Project Codex hook configuration not found');",
+  'root=parent;}',
+  'const hook=p.resolve(root,process.argv[1]);',
+  "const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});",
+  'if(result.error)throw result.error;',
+  'process.exit(result.status??1);',
+].join('');
+
+function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): string {
   const suffix = (w.command ?? '')
     .replace(/^node\s+\S+/, '')
     .trim()
@@ -297,11 +313,20 @@ function hookCommand(w: HookWiring, path: string): string {
   if (w.kind === 'settings-hooks')
     return JSON.stringify({ type: 'command', command: process.execPath, args: [path, ...suffix] });
   const quote = (s: string): string => "'" + s.replaceAll("'", "'" + '"' + "'" + '"' + "'") + "'";
+  const argv =
+    scope === 'project'
+      ? [
+          'node',
+          '-e',
+          codexProjectLauncher,
+          '--',
+          relative(root, path).split('\\').join('/'),
+          ...suffix,
+        ]
+      : [process.execPath, path, ...suffix];
   return JSON.stringify({
     type: 'command',
-    command: [process.execPath, path, ...suffix].map(quote).join(' '),
-    commandWindows: [process.execPath, path, ...suffix]
-      .map((s) => '"' + s.replaceAll('"', '\\"') + '"')
-      .join(' '),
+    command: argv.map(quote).join(' '),
+    commandWindows: argv.map((s) => '"' + s.replaceAll('"', '\\"') + '"').join(' '),
   });
 }

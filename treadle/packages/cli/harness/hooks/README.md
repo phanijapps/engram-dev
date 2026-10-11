@@ -19,6 +19,23 @@ host; loading native and compatibility callbacks together is unsupported.
 Native custom-agent packaging is limited to Claude. Copilot has no lifecycle
 hook wiring in this manifest.
 
+## Codex project paths
+
+Project Codex wiring uses `node` from PATH and a project-relative payload path.
+The launcher walks from the session directory to the nearest `.codex/hooks.json`,
+then invokes `.harness/hooks/codex-context.js` under that root.
+It preserves the event stdin and working directory, including sessions started in subdirectories.
+It does not depend on Git or embed a checkout-specific absolute path.
+A nearer Codex config defines a separate project boundary; a missing payload fails there.
+Global installations retain absolute runtime paths because they serve unrelated project directories.
+The machine-local runtime pointer still needs regeneration if the installed runtime moves.
+Native packaged hooks continue to use the plugin-root entry; this compatibility path change does not alter native packaging.
+
+Refresh Codex project wiring through `init harness --agent codex --scope project --hooks-only`.
+Inspect `--dry-run` before using `--force`. Installer-owned prior commands are replaced;
+foreign hook commands remain. If ownership records are missing, inspect retained legacy commands manually.
+Codex hook trust and host activation still need the host's normal action.
+
 ## Pi extension sources
 
 Pi extensions belong to the harness. Shared script and extension payloads live in

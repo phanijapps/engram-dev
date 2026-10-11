@@ -18,6 +18,8 @@ sources:
   - { id: service, resource: treadle/packages/cli/src/serve/runtime.ts }
   - { id: projects, resource: treadle/packages/web/src/project-server.ts }
   - { id: context, resource: treadle/packages/cli/src/harness/context.ts }
+  - { id: planning, resource: treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md }
+  - { id: hook-paths, resource: treadle/packages/cli/src/harness/plan.ts }
   - {
       id: owner,
       resource: specs/documentation-consolidation/owner-decision-revision.md,
@@ -103,3 +105,20 @@ require direct inspection. Source: `treadle/packages/cli/src/harness/context.ts`
 Native artifacts and compatibility wiring come from one authoritative tree;
 activation/trust remains a host action. Actual native OS/host release coverage
 is tracked in `specs/background-harness/`, not inferred from a CI declaration.
+
+# Planning views and portable Codex wiring — 2026-10-11
+
+The plan skill selects Mermaid views for questions about boundaries, process branches,
+interaction order, or delivery dependencies. C4 views stay at a stated abstraction level.
+Flowchart notation provides a fallback when the target renderer lacks native C4 support.
+The plan reports diagram validation limits and traces visual claims to the proposed design.
+The canonical pack still owns task definitions and evidence; diagrams do not grant execution permission.
+Source: `treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md` and its `resources/diagrams.md`.
+
+Project Codex compatibility hooks resolve the relative payload from the nearest ancestor
+`.codex/hooks.json`, preserving the session directory and stdin. The generated commands
+contain no absolute checkout path. Global hooks retain absolute payload locations.
+The runtime pointer remains machine-local; moving the runtime needs reinstallation.
+Native packaged hooks keep their plugin-root entry. Host trust and activation remain host actions.
+Source: `treadle/packages/cli/src/harness/plan.ts` and
+`treadle/packages/cli/harness/hooks/README.md`.
