@@ -1,0 +1,1123 @@
+{
+  "reviewer": "agent:red-foreman:/root/roadmap_eval_revision",
+  "observed_at": "2026-10-11T16:57:14.996132+00:00",
+  "source_commit": "05253ebdba634c119b2836201d2643697600b2f1",
+  "base": "98086783d996c563072e6f147045177c23d66310",
+  "pack_revision": 43,
+  "pack_sha256": "594b014d85f1957979430afcd7b367396881bfd5c2011fe30accad823ae50fcd",
+  "digests": {
+    "revision": 43,
+    "plan_digest": {
+      "ok": true,
+      "value": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+    },
+    "evidence_digest": "57e68d9760ef22c8d1b6583fbb4f60f7d97c0545fa9f362e29dcc202e55d0a88",
+    "gate": {
+      "phase": "review",
+      "reasons": [
+        "Independent review must pass for the current plan and evidence"
+      ],
+      "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+    }
+  },
+  "metadata": [
+    {
+      "id": "brief",
+      "file": "brief.md",
+      "expected": "c93da1f97d93ed7f69fabcec20882b44e1190f2ce9746e1738c8554940ed1769",
+      "observed": "c93da1f97d93ed7f69fabcec20882b44e1190f2ce9746e1738c8554940ed1769",
+      "match": true
+    },
+    {
+      "id": "analysis",
+      "file": "feature.md",
+      "expected": "b2655d36d52dc1264ef05e799df956fffddd90984b39f8f544438f33f8bcfb84",
+      "observed": "b2655d36d52dc1264ef05e799df956fffddd90984b39f8f544438f33f8bcfb84",
+      "match": true
+    },
+    {
+      "id": "spec",
+      "file": "spec.md",
+      "expected": "ddf92dcdee71ad633e669dcd69dc2f359431c5824c6b785f665f4867d6607436",
+      "observed": "ddf92dcdee71ad633e669dcd69dc2f359431c5824c6b785f665f4867d6607436",
+      "match": true
+    },
+    {
+      "id": "research",
+      "file": "research.md",
+      "expected": "e4dcd4fb38b03d3cb788920232e4b35d936258efad51224e1cfdb2f85786b5cb",
+      "observed": "e4dcd4fb38b03d3cb788920232e4b35d936258efad51224e1cfdb2f85786b5cb",
+      "match": true
+    },
+    {
+      "id": "owner-inputs",
+      "file": "owner-inputs.md",
+      "expected": "7a41100c6efe7f8f044f54f4074af9871127b1faefc453c7d95b791be3fbdd78",
+      "observed": "7a41100c6efe7f8f044f54f4074af9871127b1faefc453c7d95b791be3fbdd78",
+      "match": true
+    },
+    {
+      "id": "source-pins",
+      "file": "authoring/source-pins.json",
+      "expected": "758ea60cc94bb82c5fa97179624b4982b64f20708838fc7bcfd36fcd765ee82c",
+      "observed": "758ea60cc94bb82c5fa97179624b4982b64f20708838fc7bcfd36fcd765ee82c",
+      "match": true
+    },
+    {
+      "id": "design",
+      "file": "design.md",
+      "expected": "57a22572679a332bcd89e85523c4c3e1466b06315e8c61c063dbc9e029f78c44",
+      "observed": "57a22572679a332bcd89e85523c4c3e1466b06315e8c61c063dbc9e029f78c44",
+      "match": true
+    },
+    {
+      "id": "plan",
+      "file": "plan.md",
+      "expected": "9238ee403eead69f7fa907b0877f261035d7c43c27a2dd344f40f742e3ded732",
+      "observed": "9238ee403eead69f7fa907b0877f261035d7c43c27a2dd344f40f742e3ded732",
+      "match": true
+    },
+    {
+      "id": "DG-1",
+      "file": "diagrams/DG-1.mmd",
+      "expected": "574a3304f1d8fbe5ecb5d519bfb04bcce7f2e1f053481b7662ef1e0d733af602",
+      "observed": "574a3304f1d8fbe5ecb5d519bfb04bcce7f2e1f053481b7662ef1e0d733af602",
+      "match": true
+    },
+    {
+      "id": "DG-2",
+      "file": "diagrams/DG-2.mmd",
+      "expected": "4c4b4f22eb5e3aa86e278242bb3c4c573cc4b98d6f47badc952771d70891584d",
+      "observed": "4c4b4f22eb5e3aa86e278242bb3c4c573cc4b98d6f47badc952771d70891584d",
+      "match": true
+    },
+    {
+      "id": "DG-3",
+      "file": "diagrams/DG-3.mmd",
+      "expected": "571f98b29632883b39ffc73bac0a4214ecded952b75efd9d941746e6e709966c",
+      "observed": "571f98b29632883b39ffc73bac0a4214ecded952b75efd9d941746e6e709966c",
+      "match": true
+    },
+    {
+      "id": "DG-4",
+      "file": "diagrams/DG-4.mmd",
+      "expected": "5bae2e82cfadc74b62f0b5c16c0d0b06610026b1747a20efabd2659aa92a22af",
+      "observed": "5bae2e82cfadc74b62f0b5c16c0d0b06610026b1747a20efabd2659aa92a22af",
+      "match": true
+    }
+  ],
+  "scope": {
+    "changed_count": 431,
+    "touch_count": 40,
+    "changed_paths": [
+      ".claude/skills/feedback/SKILL.md",
+      ".claude/skills/feedback/resources/protocol.md",
+      ".codex/skills/feedback/SKILL.md",
+      ".codex/skills/feedback/resources/protocol.md",
+      ".pi/skills/feedback/SKILL.md",
+      ".pi/skills/feedback/resources/protocol.md",
+      "specs/browser-agent-feedback/authoring/proposal.json",
+      "specs/browser-agent-feedback/authoring/register.ts",
+      "specs/browser-agent-feedback/authoring/source-pins.json",
+      "specs/browser-agent-feedback/authoring/validate.ts",
+      "specs/browser-agent-feedback/brief.md",
+      "specs/browser-agent-feedback/browser-agent-feedback.json",
+      "specs/browser-agent-feedback/checks/T-1-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-1-context.json",
+      "specs/browser-agent-feedback/checks/T-1-handout.log",
+      "specs/browser-agent-feedback/checks/T-1-repair-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-2-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-2-context.json",
+      "specs/browser-agent-feedback/checks/T-2-handout.log",
+      "specs/browser-agent-feedback/checks/T-2-reference-repair.log",
+      "specs/browser-agent-feedback/checks/T-2-repair-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-2-repair-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-2-snapshot-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-3-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-3-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-3-context.json",
+      "specs/browser-agent-feedback/checks/T-3-handout.log",
+      "specs/browser-agent-feedback/checks/T-4-a11y-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-4-a11y-attempt-3.log",
+      "specs/browser-agent-feedback/checks/T-4-a11y-results-attempt-1.json",
+      "specs/browser-agent-feedback/checks/T-4-a11y-results-attempt-2.json",
+      "specs/browser-agent-feedback/checks/T-4-a11y-results.json",
+      "specs/browser-agent-feedback/checks/T-4-a11y-tool-install.log",
+      "specs/browser-agent-feedback/checks/T-4-a11y.mjs",
+      "specs/browser-agent-feedback/checks/T-4-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-4-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-4-build-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-4-build-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-4-build-attempt-3.log",
+      "specs/browser-agent-feedback/checks/T-4-capture.mjs",
+      "specs/browser-agent-feedback/checks/T-4-context.json",
+      "specs/browser-agent-feedback/checks/T-4-html-validation.log",
+      "specs/browser-agent-feedback/checks/T-4-render-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-4-render-attempt-3.log",
+      "specs/browser-agent-feedback/checks/T-4-render-server.mjs",
+      "specs/browser-agent-feedback/checks/T-4-unit-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-4-unit-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-4-unit-attempt-3.log",
+      "specs/browser-agent-feedback/checks/T-4-unit-attempt-4.log",
+      "specs/browser-agent-feedback/checks/T-4-unit-attempt-5.log",
+      "specs/browser-agent-feedback/checks/T-5-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-5-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-5-build.log",
+      "specs/browser-agent-feedback/checks/T-5-context.json",
+      "specs/browser-agent-feedback/checks/T-5-handout.log",
+      "specs/browser-agent-feedback/checks/T-5-install-claude-repaired.log",
+      "specs/browser-agent-feedback/checks/T-5-install-claude.log",
+      "specs/browser-agent-feedback/checks/T-5-install-codex-repaired.log",
+      "specs/browser-agent-feedback/checks/T-5-install-codex.log",
+      "specs/browser-agent-feedback/checks/T-5-install-pi-repaired.log",
+      "specs/browser-agent-feedback/checks/T-5-install-pi.log",
+      "specs/browser-agent-feedback/checks/T-5-live-service.json",
+      "specs/browser-agent-feedback/checks/T-6-context.json",
+      "specs/browser-agent-feedback/checks/T-6-final-qualified.log",
+      "specs/browser-agent-feedback/checks/T-6-handout.log",
+      "specs/browser-agent-feedback/checks/T-6-host-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-6-rebase-proposal.json",
+      "specs/browser-agent-feedback/checks/T-6-rebase-receipt.json",
+      "specs/browser-agent-feedback/checks/T-6-rebased-handout.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-audit-prod.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-brand-check.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-check.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-corpus-check.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-coverage.log",
+      "specs/browser-agent-feedback/checks/T-6-repository-links.log",
+      "specs/browser-agent-feedback/checks/T-6-resume-handout.log",
+      "specs/browser-agent-feedback/checks/T-6-unit-attempt-1.log",
+      "specs/browser-agent-feedback/checks/T-6-unit-attempt-2.log",
+      "specs/browser-agent-feedback/checks/T-6-unit-recovery.log",
+      "specs/browser-agent-feedback/checks/T-6-wiki-validation.log",
+      "specs/browser-agent-feedback/checks/T-7-context.json",
+      "specs/browser-agent-feedback/checks/T-7-handout.log",
+      "specs/browser-agent-feedback/checks/baseline-01.log",
+      "specs/browser-agent-feedback/checks/baseline-02.log",
+      "specs/browser-agent-feedback/checks/baseline-03.log",
+      "specs/browser-agent-feedback/checks/baseline-04.log",
+      "specs/browser-agent-feedback/checks/baseline-05.log",
+      "specs/browser-agent-feedback/checks/baseline-06.log",
+      "specs/browser-agent-feedback/checks/baseline-07.log",
+      "specs/browser-agent-feedback/checks/baseline-08.log",
+      "specs/browser-agent-feedback/checks/baseline-09.log",
+      "specs/browser-agent-feedback/checks/baseline-10.log",
+      "specs/browser-agent-feedback/checks/baseline-11.log",
+      "specs/browser-agent-feedback/checks/baseline-12.log",
+      "specs/browser-agent-feedback/checks/baseline-13.log",
+      "specs/browser-agent-feedback/checks/commands.json",
+      "specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/check.log",
+      "specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/head.log",
+      "specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/results.json",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/anchors.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/audit-prod.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/brand-check.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/check.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/corpus-check.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/coverage.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/fingerprints.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/head.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/links.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/native.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/results.json",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/stamp.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/status.log",
+      "specs/browser-agent-feedback/checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/validate.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/anchors.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/audit-prod.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/brand-check.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/check.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/corpus-check.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/coverage.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/fingerprints.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/head.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/links.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/native.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/results.json",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/stamp.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/status.log",
+      "specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/validate.log",
+      "specs/browser-agent-feedback/checks/diagrams-attempt-1.json",
+      "specs/browser-agent-feedback/checks/diagrams-attempt-2.json",
+      "specs/browser-agent-feedback/checks/diagrams.json",
+      "specs/browser-agent-feedback/checks/final-links.log",
+      "specs/browser-agent-feedback/checks/human-browser-confirmation.json",
+      "specs/browser-agent-feedback/checks/implementation-red-canonical-probe-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-canonical-probe-repaired.log",
+      "specs/browser-agent-feedback/checks/implementation-red-canonical-probe.json",
+      "specs/browser-agent-feedback/checks/implementation-red-canonical-probe.log",
+      "specs/browser-agent-feedback/checks/implementation-red-cli.log",
+      "specs/browser-agent-feedback/checks/implementation-red-core.log",
+      "specs/browser-agent-feedback/checks/implementation-red-git-probes-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-git-probes-repaired.log",
+      "specs/browser-agent-feedback/checks/implementation-red-git-probes.json",
+      "specs/browser-agent-feedback/checks/implementation-red-git-probes.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-fixed-head.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-fixed-head.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-forward.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-help.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-plan.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-plan.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-quick-validate.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-quick-validate.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-repaired-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-repaired-format.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-repaired-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-harness-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-final-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-final-declared.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-final-negative-probes.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-final-negative-probes.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-audit.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-guard-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-override.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-refusal.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-repaired-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-native-runner-probes.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-negative-probe.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-negative-probe.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-reattach-actual-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-reattach-delta-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-repaired-negative-probes.json",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-repaired-negative-probes.log",
+      "specs/browser-agent-feedback/checks/implementation-red-loop-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-native-final-command-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-final-identities.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-final-loop-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-native-owner-exception-assessment.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-owner-exception-negative-1.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-owner-exception-negative-final.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-preparatory-provenance.json",
+      "specs/browser-agent-feedback/checks/implementation-red-native-preparatory-reads.json",
+      "specs/browser-agent-feedback/checks/implementation-red-packaged-route.json",
+      "specs/browser-agent-feedback/checks/implementation-red-packaged-route.log",
+      "specs/browser-agent-feedback/checks/implementation-red-probes-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-probes-repaired.log",
+      "specs/browser-agent-feedback/checks/implementation-red-probes.json",
+      "specs/browser-agent-feedback/checks/implementation-red-probes.log",
+      "specs/browser-agent-feedback/checks/implementation-red-reference-retry-repaired.json",
+      "specs/browser-agent-feedback/checks/implementation-red-reference-retry-repaired.log",
+      "specs/browser-agent-feedback/checks/implementation-red-reference-retry.json",
+      "specs/browser-agent-feedback/checks/implementation-red-reference-retry.log",
+      "specs/browser-agent-feedback/checks/implementation-red-repaired-checks.json",
+      "specs/browser-agent-feedback/checks/implementation-red-repaired-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-scope.json",
+      "specs/browser-agent-feedback/checks/implementation-red-supplement-scope.json",
+      "specs/browser-agent-feedback/checks/implementation-red-tests.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-observations.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-repaired-observations.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-repaired-tests-attempt-2.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-repaired-tests-attempt-2.log",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-repaired-tests.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-repaired-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-tests.json",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-tests.log",
+      "specs/browser-agent-feedback/checks/implementation-red-ui-witness-hashes.json",
+      "specs/browser-agent-feedback/checks/library.json",
+      "specs/browser-agent-feedback/checks/native-availability.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-14724d9b-b0e9-4644-8f3e-e3f560640e02.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-3f6fa190-c3d9-4f49-925d-c8705b359d74.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-6e29ff3c-27a0-4433-88a5-38e0f5dd4fd9.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-9c934628-9e29-44a2-8767-fb123966cb6f.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-a704f3f3-3f2a-45b7-83f3-3b35b23c7014.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-a84b9b3a-2e34-4a10-8451-155ee83a0cc3-e14c210b-eb62-44b1-a275-752fb0dc4098.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-02632619-2817-4895-9bca-15d67d122822.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-24df8370-8f37-451e-a4bd-77264cf0f6f0.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-37478b33-a4a6-4bc3-9a6d-c45fb8d5bf09.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-56019caa-508b-4d1c-9e02-5fe854883bef.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-6e62d329-a8bf-4d88-b7c1-71751231bcf5.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-aa02b927-eee0-4bf0-b408-c5deab727684.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-b71179e1-df8c-4590-9a00-ba5433eff6fb.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-e990f062-8743-46b9-a15d-18dd2af94cc4.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/claude-bef9d411-b853-43fd-89c4-b48b59320d55-f186faf6-3046-4720-b885-50b2493a47cf.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-016d761a-b515-4e07-b651-54723911929d.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-038189d8-ab96-4d02-ae12-6f6aaa556558.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-187557dc-1407-4135-aaa2-0d07f5fb0455.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-1a2d2480-9876-4e1f-9bee-36f33e5713c2.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-1c2f3633-b39a-430b-9853-560ac49b07ed.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-21f31e8e-60af-4297-aee4-1655602ea9e1.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-2788565e-2f10-49d7-b504-0824162de970.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-2d73eb4a-a0f7-4bbb-9d40-8d2c928659c6.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-2d779ca5-50ed-46b1-bc7f-535677974d7a.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-36de12f7-860b-4ed3-9f5a-b96bbf0a5da1.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-3c14d24d-1842-48e9-89e6-fa4a46b2269e.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-603cb7e6-14f5-4054-9afe-e02f66f8b3ef.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-656d1fde-3bae-4aa5-82ff-3c754c64f496.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-821c9ce8-8907-4999-b468-56c34696d8f8.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-8a234eb8-2268-45df-b0ae-1adf4b2357c7.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-9331e395-c562-4cb3-b31f-21b70a690c7a.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-9f5c8d69-ceb2-4421-b758-9fc0513c21f4.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-a923615a-a332-4a05-aaa5-58273ffd66bc.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-acf396d2-cade-4aec-a8db-076c5f498295.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-be017a75-6373-4d72-8282-7df77174336c.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-cd25b198-9f63-45a8-aad2-fd5255f8d895.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-d14522b9-20cc-462f-9222-78d500c20d76.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-d205e43b-2988-48f3-831e-448a140a6c18.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-e3adb33f-52a3-498a-9edd-e6964c4b917e.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-eb714e3a-f05d-4d22-9491-92bb51cafeae.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-2686892e-bb3d-4861-abef-61055b9908cb.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-42260589-1f0b-41fe-a977-2384c7f38392.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-470e6b5e-c68b-498c-b064-a50f43eb59af.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-77637ff5-45f5-4b75-94f5-afbeb076135b.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-94b7b745-ef06-4331-a319-1ac45143f545.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-f5e4bd1e-c663-49d5-b696-fd97e8f03eb2.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-fa98787a-20d9-4204-8717-1bc0d2d25e15.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-16b78290-a9e2-40fb-a8a6-4fa85da7a713-09d4babd-9d71-4e8e-8c91-efb51e5307c6.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-16b78290-a9e2-40fb-a8a6-4fa85da7a713-2446b7df-be5a-4bd5-95b0-c5522eda8b28.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-16b78290-a9e2-40fb-a8a6-4fa85da7a713-53010d53-92b9-441e-9375-27af7d26ced1.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-16b78290-a9e2-40fb-a8a6-4fa85da7a713-73cfbf3d-6400-4aae-9550-fb16d11cb219.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-16b78290-a9e2-40fb-a8a6-4fa85da7a713-a862be6a-afdd-46d3-81bc-cfa8be8d38aa.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-2053a9ce-4b37-43bb-a996-43935cb46444-5665c6e7-f1bb-4e74-a5dc-385b4ae03036.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-2053a9ce-4b37-43bb-a996-43935cb46444-a0eaf0be-fbe5-44f7-85f4-5c56ab4664d4.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-2053a9ce-4b37-43bb-a996-43935cb46444-ca7da73e-3870-400f-8dcd-a8fb5dbfda42.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-2053a9ce-4b37-43bb-a996-43935cb46444-f12b8bb6-335d-4f26-b68e-fd9d80a0e38a.json",
+      "specs/browser-agent-feedback/checks/native-command-observations/pi-2053a9ce-4b37-43bb-a996-43935cb46444-f7019df1-ce4e-450d-8409-04c6f12b6141.json",
+      "specs/browser-agent-feedback/checks/native-command-runner.mjs",
+      "specs/browser-agent-feedback/checks/native-commands-claude-diff.json",
+      "specs/browser-agent-feedback/checks/native-commands-claude-documents.json",
+      "specs/browser-agent-feedback/checks/native-commands-codex-diff.json",
+      "specs/browser-agent-feedback/checks/native-commands-codex-documents.json",
+      "specs/browser-agent-feedback/checks/native-commands-pi-diff.json",
+      "specs/browser-agent-feedback/checks/native-commands-pi-documents.json",
+      "specs/browser-agent-feedback/checks/native-observer-guard-check.json",
+      "specs/browser-agent-feedback/checks/native-owner-test-waiver.json",
+      "specs/browser-agent-feedback/checks/native-preparation.json",
+      "specs/browser-agent-feedback/checks/native-process-claude.json",
+      "specs/browser-agent-feedback/checks/native-process-codex-batch3.json",
+      "specs/browser-agent-feedback/checks/native-process-codex-document.json",
+      "specs/browser-agent-feedback/checks/native-process-codex-reattach.json",
+      "specs/browser-agent-feedback/checks/native-process-codex.json",
+      "specs/browser-agent-feedback/checks/native-process-pi.json",
+      "specs/browser-agent-feedback/checks/native-prompts/claude-revision.txt",
+      "specs/browser-agent-feedback/checks/native-prompts/codex-document-batch3.txt",
+      "specs/browser-agent-feedback/checks/native-prompts/codex-document-reattach.txt",
+      "specs/browser-agent-feedback/checks/native-prompts/codex-document-revision.txt",
+      "specs/browser-agent-feedback/checks/native-prompts/codex-revision.txt",
+      "specs/browser-agent-feedback/checks/native-prompts/pi-revision.txt",
+      "specs/browser-agent-feedback/checks/native-round-baseline.json",
+      "specs/browser-agent-feedback/checks/native-sources/claude.js",
+      "specs/browser-agent-feedback/checks/native-sources/claude.md",
+      "specs/browser-agent-feedback/checks/native-sources/codex.js",
+      "specs/browser-agent-feedback/checks/native-sources/codex.md",
+      "specs/browser-agent-feedback/checks/native-sources/pi.js",
+      "specs/browser-agent-feedback/checks/native-sources/pi.md",
+      "specs/browser-agent-feedback/checks/native-witness-draft.json",
+      "specs/browser-agent-feedback/checks/native-witness.json",
+      "specs/browser-agent-feedback/checks/next-after-T3.log",
+      "specs/browser-agent-feedback/checks/proposal-current.json",
+      "specs/browser-agent-feedback/checks/proposal.json",
+      "specs/browser-agent-feedback/checks/recovery-witness.json",
+      "specs/browser-agent-feedback/checks/red-foreman-alignment.log",
+      "specs/browser-agent-feedback/checks/red-foreman-checks.json",
+      "specs/browser-agent-feedback/checks/red-foreman-compatibility.log",
+      "specs/browser-agent-feedback/checks/red-foreman-diagrams-final.log",
+      "specs/browser-agent-feedback/checks/red-foreman-final.json",
+      "specs/browser-agent-feedback/checks/red-foreman-proposal-current.log",
+      "specs/browser-agent-feedback/checks/red-foreman-proposal-final.log",
+      "specs/browser-agent-feedback/checks/red-foreman-proposal.log",
+      "specs/browser-agent-feedback/checks/red-foreman-status-current.log",
+      "specs/browser-agent-feedback/checks/red-foreman-status.log",
+      "specs/browser-agent-feedback/checks/red-foreman-where.log",
+      "specs/browser-agent-feedback/checks/registration.json",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/375-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/375-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/375-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/375-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/600-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/600-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/600-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/600-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/601-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/601-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/601-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/601-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/901-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/901-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/901-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered-attempt-1/901-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered-captures-attempt-1.json",
+      "specs/browser-agent-feedback/checks/rendered-captures.json",
+      "specs/browser-agent-feedback/checks/rendered/1280-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/1280-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/1280-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/1280-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/375-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/375-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/375-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/375-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/600-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/600-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/600-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/600-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/601-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/601-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/601-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/601-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/901-600-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/901-600-scrolled.png",
+      "specs/browser-agent-feedback/checks/rendered/901-900-rest.png",
+      "specs/browser-agent-feedback/checks/rendered/901-900-scrolled.png",
+      "specs/browser-agent-feedback/checks/ui-witness.json",
+      "specs/browser-agent-feedback/design.md",
+      "specs/browser-agent-feedback/diagrams/DG-1.mmd",
+      "specs/browser-agent-feedback/diagrams/DG-2.mmd",
+      "specs/browser-agent-feedback/diagrams/DG-3.mmd",
+      "specs/browser-agent-feedback/diagrams/DG-4.mmd",
+      "specs/browser-agent-feedback/evaluation.md",
+      "specs/browser-agent-feedback/execution-log.md",
+      "specs/browser-agent-feedback/feature.md",
+      "specs/browser-agent-feedback/feedback/rounds/17eba892-7700-4d97-886d-a2f1a078d092/fe01a0d3-db5e-4546-939e-1293db049b68-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/2ba041b5-66bf-4c9e-b09b-bc8388aeebab/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/2ba041b5-66bf-4c9e-b09b-bc8388aeebab/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/4280cc42-c77c-4a89-8687-15180efd8040/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/4280cc42-c77c-4a89-8687-15180efd8040/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/6a829c77-d190-4203-b906-1729fa277987/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/6a829c77-d190-4203-b906-1729fa277987/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/7190d810-fada-440d-9461-6f8fad1e9fb6/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/7190d810-fada-440d-9461-6f8fad1e9fb6/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/823e8f67-2ab6-4ffb-898c-10a7d4a64145/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/823e8f67-2ab6-4ffb-898c-10a7d4a64145/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/86e1ef4d-b386-4140-821d-ec5671330420/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/8b161506-0be0-43cd-874b-78d91a3e4355/30331557-20f7-4d2a-a18c-5d3ad79eb42a-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/8b161506-0be0-43cd-874b-78d91a3e4355/30331557-20f7-4d2a-a18c-5d3ad79eb42a-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/971562a0-562e-44cd-9787-48f48ae6e72a/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/971562a0-562e-44cd-9787-48f48ae6e72a/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/aeb62723-84b4-42c5-838b-41704b0f34aa/a537075d-b79d-4451-803b-4a0f84b45b5a-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/aeb62723-84b4-42c5-838b-41704b0f34aa/a537075d-b79d-4451-803b-4a0f84b45b5a-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/b24f4ca5-cc8c-4b83-b82d-23afcf132e38/30331557-20f7-4d2a-a18c-5d3ad79eb42a-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/b24f4ca5-cc8c-4b83-b82d-23afcf132e38/30331557-20f7-4d2a-a18c-5d3ad79eb42a-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/b5df4c15-8209-46af-8ad1-bcce3e4eb4d3/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/b7bb31ea-d368-430d-a567-1ab08e3d9be0/a537075d-b79d-4451-803b-4a0f84b45b5a-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/b7bb31ea-d368-430d-a567-1ab08e3d9be0/a537075d-b79d-4451-803b-4a0f84b45b5a-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/cb346f3a-ea1b-41bb-9f64-fa165bd7cabc/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/cb346f3a-ea1b-41bb-9f64-fa165bd7cabc/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+      "specs/browser-agent-feedback/feedback/rounds/fc0dfe6a-efee-4339-a639-76d985c5c3f8/fe01a0d3-db5e-4546-939e-1293db049b68-after.txt",
+      "specs/browser-agent-feedback/feedback/rounds/fc0dfe6a-efee-4339-a639-76d985c5c3f8/fe01a0d3-db5e-4546-939e-1293db049b68-before.txt",
+      "specs/browser-agent-feedback/feedback/state.json",
+      "specs/browser-agent-feedback/host-witnesses.md",
+      "specs/browser-agent-feedback/implementation-review-harness.md",
+      "specs/browser-agent-feedback/implementation-review-loop.md",
+      "specs/browser-agent-feedback/implementation-review-native.md",
+      "specs/browser-agent-feedback/implementation-review-ui-repaired.md",
+      "specs/browser-agent-feedback/implementation-review-ui.md",
+      "specs/browser-agent-feedback/implementation-review.md",
+      "specs/browser-agent-feedback/owner-inputs.md",
+      "specs/browser-agent-feedback/plan.md",
+      "specs/browser-agent-feedback/research.md",
+      "specs/browser-agent-feedback/review.md",
+      "specs/browser-agent-feedback/spec.md",
+      "specs/browser-agent-feedback/verify-delivery.mjs",
+      "specs/browser-agent-feedback/verify-hosts.mjs",
+      "specs/browser-agent-feedback/workflow.jsonl",
+      "treadle/packages/cli/harness/harness.json",
+      "treadle/packages/cli/harness/hooks/README.md",
+      "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+      "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+      "treadle/packages/cli/src/commands/do.ts",
+      "treadle/packages/cli/src/commands/feedback.ts",
+      "treadle/packages/cli/src/harness/context.ts",
+      "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+      "treadle/packages/cli/test/feedback-cli.test.ts",
+      "treadle/packages/cli/test/feedback-harness.test.ts",
+      "treadle/packages/cli/test/feedback-loop.test.ts",
+      "treadle/packages/cli/test/feedback-snapshot.test.ts",
+      "treadle/packages/core/src/feedback/index.ts",
+      "treadle/packages/core/src/feedback/model.ts",
+      "treadle/packages/core/src/feedback/store.ts",
+      "treadle/packages/core/src/index.ts",
+      "treadle/packages/core/test/feedback.test.ts",
+      "treadle/packages/web/src/feedback.js",
+      "treadle/packages/web/src/feedback.ts",
+      "treadle/packages/web/src/library.html",
+      "treadle/packages/web/src/library.js",
+      "treadle/packages/web/src/project-server.ts",
+      "treadle/packages/web/test/feedback-api.test.ts",
+      "treadle/packages/web/test/feedback-ui.test.ts",
+      "wiki/.okf/fingerprints.json",
+      "wiki/.okf/last-index.json",
+      "wiki/initiatives/browser-agent-feedback.md",
+      "wiki/initiatives/index.md",
+      "wiki/systems/owner-workflow.md",
+      "wiki/systems/sdd-harness-architecture.md"
+    ],
+    "outside_touch_except_initiative_artifacts": [],
+    "missing_touch_changes": []
+  },
+  "traceability": [
+    {
+      "requirement": "FR-1",
+      "acceptance": "AC-1",
+      "tasks": ["T-2", "T-4", "T-6"]
+    },
+    {
+      "requirement": "FR-2",
+      "acceptance": "AC-2",
+      "tasks": ["T-1", "T-3", "T-4", "T-6"]
+    },
+    {
+      "requirement": "FR-3",
+      "acceptance": "AC-3",
+      "tasks": ["T-1", "T-2", "T-3", "T-6"]
+    },
+    {
+      "requirement": "FR-4",
+      "acceptance": "AC-4",
+      "tasks": ["T-1", "T-2", "T-4", "T-6"]
+    },
+    {
+      "requirement": "FR-5",
+      "acceptance": "AC-5",
+      "tasks": ["T-1", "T-2", "T-3", "T-4", "T-5", "T-6", "T-7"]
+    },
+    {
+      "requirement": "FR-6",
+      "acceptance": "AC-6",
+      "tasks": ["T-1", "T-2", "T-3", "T-6"]
+    },
+    {
+      "requirement": "FR-7",
+      "acceptance": "AC-7",
+      "tasks": ["T-1", "T-3", "T-6"]
+    },
+    {
+      "requirement": "FR-8",
+      "acceptance": "AC-8",
+      "tasks": ["T-2", "T-5", "T-6"]
+    },
+    {
+      "requirement": "FR-9",
+      "acceptance": "AC-9",
+      "tasks": ["T-4", "T-6"]
+    },
+    {
+      "requirement": "FR-10",
+      "acceptance": "AC-10",
+      "tasks": ["T-1", "T-2", "T-3", "T-6", "T-7"]
+    },
+    {
+      "requirement": "FR-11",
+      "acceptance": "AC-11",
+      "tasks": ["T-6", "T-7"]
+    }
+  ],
+  "task_definitions": [
+    {
+      "id": "T-1",
+      "status": "done",
+      "implements": ["DES-1"],
+      "decisions": ["D-1", "D-3", "D-4"],
+      "needs": []
+    },
+    {
+      "id": "T-2",
+      "status": "done",
+      "implements": ["DES-2"],
+      "decisions": ["D-1", "D-2", "D-3", "D-4"],
+      "needs": ["T-1"]
+    },
+    {
+      "id": "T-3",
+      "status": "done",
+      "implements": ["DES-3"],
+      "decisions": ["D-1", "D-4", "D-5"],
+      "needs": ["T-1"]
+    },
+    {
+      "id": "T-4",
+      "status": "done",
+      "implements": ["DES-4"],
+      "decisions": ["D-3", "D-4", "D-5"],
+      "needs": ["T-3"]
+    },
+    {
+      "id": "T-5",
+      "status": "done",
+      "implements": ["DES-5"],
+      "decisions": ["D-2", "D-4"],
+      "needs": ["T-2"]
+    },
+    {
+      "id": "T-6",
+      "status": "done",
+      "implements": ["DES-6"],
+      "decisions": ["D-1", "D-2", "D-3", "D-4", "D-5"],
+      "needs": ["T-4", "T-5"]
+    },
+    {
+      "id": "T-7",
+      "status": "done",
+      "implements": ["DES-6"],
+      "decisions": ["D-4"],
+      "needs": ["T-6"]
+    }
+  ],
+  "evidence": [
+    {
+      "task": "T-1",
+      "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T12:35:00Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-1-attempt-1.log",
+          "exists": true,
+          "sha256": "daaba0f70abae701284a6aa34c172e00d8bc7d09b6f68a1db4fd70ca35ac9826"
+        }
+      ]
+    },
+    {
+      "task": "T-2",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T12:45:35Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-2-attempt-1.log",
+          "exists": true,
+          "sha256": "922744dd34be323e834b5c7305982c94e69c7eba8c118e3d3f59edb3c04a4dd1"
+        }
+      ]
+    },
+    {
+      "task": "T-3",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+      "cmd_match": true,
+      "exit": 1,
+      "by": "agent:codex",
+      "at": "2026-10-11T12:55:14Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-3-attempt-1.log",
+          "exists": true,
+          "sha256": "2d837ec772d39f6f50a819840862902b6b069aef565f3e54a47cffd9539d2f45"
+        }
+      ]
+    },
+    {
+      "task": "T-3",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T12:55:15Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-3-attempt-2.log",
+          "exists": true,
+          "sha256": "78782d6aa6133f336312141b6ac963555b68a8e806852e884ed627ced385fb0b"
+        }
+      ]
+    },
+    {
+      "task": "T-4",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T13:14:50Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-4-attempt-2.log",
+          "exists": true,
+          "sha256": "2447d353cd2f59424d97f2a65de11d9a2a72c7026edca03972abb78796d51ccc"
+        }
+      ]
+    },
+    {
+      "task": "T-5",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T13:25:51Z",
+      "referenced_logs": []
+    },
+    {
+      "task": "T-6",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+      "cmd_match": true,
+      "exit": 1,
+      "by": "agent:codex",
+      "at": "2026-10-11T13:31:58Z",
+      "referenced_logs": []
+    },
+    {
+      "task": "T-6",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T16:41:39Z",
+      "referenced_logs": [
+        {
+          "file": "checks/T-6-final-qualified.log",
+          "exists": true,
+          "sha256": "f92d227661a06b4dbad9f35884d07c86a250a4a1d8729958dc5981da64acd0aa"
+        }
+      ]
+    },
+    {
+      "task": "T-7",
+      "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+      "cmd_match": true,
+      "exit": 0,
+      "by": "agent:codex",
+      "at": "2026-10-11T16:52:06Z",
+      "referenced_logs": [
+        {
+          "file": "checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/results.json",
+          "exists": true,
+          "sha256": "c69c97daf957b921822300a17a2af53b9639c47b8106c309fe0d9bbf27bcb9c0"
+        }
+      ]
+    }
+  ],
+  "commits": [
+    {
+      "ref": "f972f33",
+      "exit": 0,
+      "observed": "f972f333a425457e1e03d55399b3471b01e0c6cb browser-agent-feedback T1: persist revision-bound feedback rounds"
+    },
+    {
+      "ref": "74ceab0",
+      "exit": 0,
+      "observed": "74ceab024eead574d49557993d0e91e12d18dc55 browser-agent-feedback T2: add selected snapshots and CLI wait bridge"
+    },
+    {
+      "ref": "891a911",
+      "exit": 0,
+      "observed": "891a91122d99c5292855ab4887466e7c55c35924 browser-agent-feedback T3: guard project-qualified browser feedback API"
+    },
+    {
+      "ref": "ccea33f",
+      "exit": 0,
+      "observed": "ccea33fddd09f445e5dc01295159e20f645174a2 browser-agent-feedback T1 T2: repair independently reviewed isolation and retry defects"
+    },
+    {
+      "ref": "c935f36",
+      "exit": 0,
+      "observed": "c935f36a9980d6eb74384b1340a8767c946eb997 browser-agent-feedback T4: add revision-bound browser review and verified responsive UI"
+    },
+    {
+      "ref": "00e5e77",
+      "exit": 0,
+      "observed": "00e5e77012e18905dac0f599734e3ede420a80c7 browser-agent-feedback T5: install portable feedback skill and bounded context"
+    },
+    {
+      "ref": "d919603",
+      "exit": 0,
+      "observed": "d919603f84223c1502558738f1dd7e2e700521ab browser-agent-feedback T6: checkpoint native review fixtures"
+    },
+    {
+      "ref": "bf72a87",
+      "exit": 0,
+      "observed": "bf72a87ed4be9c96fd508d93f92d57b0b881ec08 browser-agent-feedback T6: witness native feedback with owner test exception"
+    },
+    {
+      "ref": "f9eb0f1",
+      "exit": 0,
+      "observed": "f9eb0f17257bff1d24bfc644db69134fcccce17d browser-agent-feedback T7: verify delivery and document feedback contracts"
+    },
+    {
+      "ref": "05253eb",
+      "exit": 0,
+      "observed": "05253ebdba634c119b2836201d2643697600b2f1 browser-agent-feedback: preserve Markdown section spacing in scoped staging"
+    }
+  ],
+  "unchanged_surfaces": [
+    {
+      "file": "treadle/packages/core/src/specpack/workflow.ts",
+      "base_to_head_unchanged": true
+    },
+    {
+      "file": "treadle/packages/core/src/specpack/record.ts",
+      "base_to_head_unchanged": true
+    },
+    {
+      "file": "treadle/package.json",
+      "base_to_head_unchanged": true
+    },
+    {
+      "file": "treadle/pnpm-lock.yaml",
+      "base_to_head_unchanged": true
+    },
+    {
+      "file": "SECURITY.md",
+      "base_to_head_unchanged": true
+    }
+  ],
+  "source_files": [
+    {
+      "file": ".claude/skills/feedback/SKILL.md",
+      "sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": ".claude/skills/feedback/resources/protocol.md",
+      "sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": ".codex/skills/feedback/SKILL.md",
+      "sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": ".codex/skills/feedback/resources/protocol.md",
+      "sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": ".pi/skills/feedback/SKILL.md",
+      "sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": ".pi/skills/feedback/resources/protocol.md",
+      "sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "specs/browser-agent-feedback/execution-log.md",
+      "sha256": "799d9f050b87b703e9b00141c652cfd3eafa7caa44b3cbfca82b0eda307dc2ef",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "specs/browser-agent-feedback/host-witnesses.md",
+      "sha256": "219ec43692a7820ab8b8995943cb0a487742cdd599e8a12a742fad156d33615c",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "specs/browser-agent-feedback/verify-delivery.mjs",
+      "sha256": "c8f5ab4e5f2d143afa77a43e73c5f9d44a1e84ecefebe7512e0e66387daac773",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "specs/browser-agent-feedback/verify-hosts.mjs",
+      "sha256": "4e922af0aa22c85aabee1a93b0037027b3580983453c13fef21584364cad0dff",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/harness/harness.json",
+      "sha256": "0ce6fc3bbfc899f44a70f1aee701f6317d337ab671e79aac7d51642c93274235",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/harness/hooks/README.md",
+      "sha256": "2b0f04405ad1f09264a475f3dbeb9a1a5c81b596936027a80272d88e6add70a8",
+      "matches_committed_bytes": false
+    },
+    {
+      "file": "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+      "sha256": "dbe34b0cac64a5e22bbb9966a680278e9d94ccec254be04daaab3fba98a2923b",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+      "sha256": "f08cfbd43898036a96a1cf2b607f6138a452409debdcfba5b90ed7b21e9bb513",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/src/commands/do.ts",
+      "sha256": "3995224ae925a0bfe6fb689cc3d97aa89c0f29f615b357d5f21c6b38eaa52951",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/src/commands/feedback.ts",
+      "sha256": "9dd4d3b567b6a84e1ba81ebc97cc84540b3cf805d768bdeb6070c66e29747fd0",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/src/harness/context.ts",
+      "sha256": "3cb7867aecf32c9591eaf536998cc2181e1d4eea70c2d514ab1a18cdaadfb327",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+      "sha256": "ef03e002757bf75dcf9bdf0276d0deb77744419ce5e142f9810eb64b9e7b92ff",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/test/feedback-cli.test.ts",
+      "sha256": "3c2e4e9d3b8105ee5a718851be607e2b6718593d28d47576246b9c8a39a93ccf",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/test/feedback-harness.test.ts",
+      "sha256": "f8c5bf0d155ef2c34260a99733b1c99f45ef32510d69e62feacefca75f76eea8",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/test/feedback-loop.test.ts",
+      "sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+      "sha256": "fd0d6ca3d51170550d935113ef1abce4f7d0fcf493e648934e74911a2488cee8",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/core/src/feedback/index.ts",
+      "sha256": "c6b1dc7cf1e5527179454d36a95142c47277515b958e26a0d7ad588d495ab144",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/core/src/feedback/model.ts",
+      "sha256": "d2e5b0111a5ef3ab1861586f323f08d6751dced4f6a24bf71a1026c3f5a0f5d1",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/core/src/feedback/store.ts",
+      "sha256": "89b96dc31fb5fd13fde0e74ea6547fe1ac09c837afe3783833e2b268f41fbbea",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/core/src/index.ts",
+      "sha256": "97b5421822f26aa2ba4311461f8be9569fb1a1c2632e5d6f0943bce0660dc0f2",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/core/test/feedback.test.ts",
+      "sha256": "6288ad0bef1dccd075bb672efcda20019dce28e87066e6525e61a17b71fbde1c",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/src/feedback.js",
+      "sha256": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/src/feedback.ts",
+      "sha256": "fe3ebcb8dc6c0fd2144f6c95588ea2ddf18bd46d6e5d0072f8d4ab95620a95bb",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/src/library.html",
+      "sha256": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/src/library.js",
+      "sha256": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/src/project-server.ts",
+      "sha256": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/test/feedback-api.test.ts",
+      "sha256": "06b888fa4d10099921d7bb3544aedaac3d63837cb9eab37c9f3b788ab8b0c46c",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "treadle/packages/web/test/feedback-ui.test.ts",
+      "sha256": "3c8574936d166d0b1c079b2113dc274ee5cbb4d21cf360cd4b38e9983d120710",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "wiki/.okf/fingerprints.json",
+      "sha256": "940e9a2616fa0f78b57d9d8f10478f18e3ef87916d20671f4c1cada4cae8b2d5",
+      "matches_committed_bytes": false
+    },
+    {
+      "file": "wiki/.okf/last-index.json",
+      "sha256": "ceacb23f2c553866b35d247a6775424ed6e45036079ab6911983e06a0ae129b4",
+      "matches_committed_bytes": false
+    },
+    {
+      "file": "wiki/initiatives/browser-agent-feedback.md",
+      "sha256": "6f161ddcad6c4ba74b9f30a19db835d9491b000b6ecabcd9a6150b08202086dc",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "wiki/initiatives/index.md",
+      "sha256": "198095f7077a58b30c633aa23cb5c42699cb76b980caceec616cdf69aa7975a6",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "wiki/systems/owner-workflow.md",
+      "sha256": "9608d88132aa4bb90c229d0fb7b2d4f350be75ca0a4569dc4e56e34926415493",
+      "matches_committed_bytes": true
+    },
+    {
+      "file": "wiki/systems/sdd-harness-architecture.md",
+      "sha256": "389f301d6d797b4c27f037ce257040a48d4c03546e86cd48c9067112e8ef0f45",
+      "matches_committed_bytes": false
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "check",
+        "../specs/browser-agent-feedback"
+      ],
+      "exit": 0,
+      "log": "checks/implementation-red-pack-alignment.log",
+      "sha256": "2798381039db495d4f56dd7f4a51837745bfabc4665096cb4665dee38fdd752b",
+      "output": "alignment: 0 violation(s), 0 gap(s) \u2014 gaps are reported, never guessed\n"
+    },
+    {
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "-e",
+        "import {loadPackWithMeta,planDigest,evidenceDigest,workflowGate} from './packages/core/src/index.ts'; const x=loadPackWithMeta('../specs/browser-agent-feedback'); if(!x.ok) throw Error(JSON.stringify(x)); const p=planDigest(x.value.doc,x.value.path); console.log(JSON.stringify({revision:x.value.doc.revision,plan_digest:p,evidence_digest:evidenceDigest(x.value.doc),gate:workflowGate(x.value.doc,x.value.path)},null,2));"
+      ],
+      "exit": 0,
+      "log": "checks/implementation-red-pack-digests.log",
+      "sha256": "50f7c2242ea89b20cad44ee555d0d438e61cc932f4838186d306c1653e0cda3b",
+      "output": "{\n  \"revision\": 43,\n  \"plan_digest\": {\n    \"ok\": true,\n    \"value\": \"a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f\"\n  },\n  \"evidence_digest\": \"57e68d9760ef22c8d1b6583fbb4f60f7d97c0545fa9f362e29dcc202e55d0a88\",\n  \"gate\": {\n    \"phase\": \"review\",\n    \"reasons\": [\n      \"Independent review must pass for the current plan and evidence\"\n    ],\n    \"plan_digest\": \"a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f\"\n  }\n}\n"
+    },
+    {
+      "argv": ["git", "diff", "--check"],
+      "exit": 0,
+      "log": "checks/implementation-red-pack-diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "output": ""
+    }
+  ],
+  "bound_native_report": {
+    "file": "implementation-review-native.md",
+    "sha256": "286139921444a030eea53a432383297e5c319dc893269600b8abfad602809b42"
+  },
+  "owner_test_exception": {
+    "file": "checks/native-owner-test-waiver.json",
+    "sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+    "value": {
+      "format": "feedback-owner-test-waiver/1",
+      "source": "Actual user async reply in this chat; owner instruction overrides remaining manual test steps",
+      "instruction": "I think I finished all take them as trouth. if anything is remaining let us ignore",
+      "observed_at": "2026-10-11T16:31:35.623465+00:00",
+      "by": "human:owner",
+      "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+      "ledger_sha256": "d7a593e7e13baa2ade0b9232c12a8e781ab88ed04f46315f5fb5d26a3baed0f7",
+      "pending": [
+        {
+          "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+          "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+          "body": "fdafd",
+          "unverified": "Human browser Resolve after native revision"
+        }
+      ],
+      "scope": "Waive only remaining manual Resolve witness; native delivery/revision, source, recovery and technical checks still required. Does not synthesize a Resolve, Start, Finish or successful six-resolution claim.",
+      "ledger_revision": 49
+    }
+  },
+  "dirty_status": " M .claude/settings.json\n M .pi/extensions/post-tool-check.js\n M specs/harness-host-acceptance/harness-host-acceptance.json\n M treadle/packages/cli/harness/hooks/README.md\n M treadle/packages/cli/harness/hooks/post-tool-check.js\n M treadle/packages/cli/src/harness/plan.ts\n M treadle/packages/cli/test/init-engine.test.ts\n M treadle/packages/cli/test/init-surfaces.test.ts\n M wiki/.okf/fingerprints.json\n M wiki/.okf/last-index.json\n M wiki/systems/sdd-harness-architecture.md\n?? specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-1.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-2.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-3.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-4.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-5.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-6.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-T-7.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-alignment.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-commands.json\n?? specs/browser-agent-feedback/checks/implementation-red-pack-diff-check.log\n?? specs/browser-agent-feedback/checks/implementation-red-pack-digests.log\n?? specs/harness-host-acceptance/workflow.jsonl\n?? specs/hooks-repair-evaluation.md\n?? specs/hooks-repair-evidence.json\n?? specs/hooks-repair-red-foreman.md\n?? treadle/packages/cli/test/claude-project-paths.test.ts\n?? treadle/packages/cli/test/machine-managed-guard.test.ts\n",
+  "head_after": "05253ebdba634c119b2836201d2643697600b2f1"
+}

@@ -1,0 +1,138 @@
+{
+  "format": "independent-pack-review/1",
+  "on": "PACK",
+  "verdict": "PASS",
+  "by": "agent:red-foreman:/root/roadmap_eval_revision",
+  "at": "2026-10-11T17:00:34.290594+00:00",
+  "independent_of_implementation": true,
+  "implementing_actor": "agent:codex",
+  "source_commit": "05253ebdba634c119b2836201d2643697600b2f1",
+  "diff_base": "98086783d996c563072e6f147045177c23d66310",
+  "held_revision": 43,
+  "canonical_sha256": "594b014d85f1957979430afcd7b367396881bfd5c2011fe30accad823ae50fcd",
+  "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+  "evidence_digest": "57e68d9760ef22c8d1b6583fbb4f60f7d97c0545fa9f362e29dcc202e55d0a88",
+  "artifact": {
+    "file": "implementation-review-pack.md",
+    "sha256": "749c89e0f3c5b4724b2b8685b298c5d665b5f5dafea630b701ee33e491a69b6d"
+  },
+  "logs": {
+    "commands": {
+      "file": "checks/implementation-red-pack-commands.json",
+      "sha256": "82b7b8fa2d09bd2f309e77fbe0e5491b3aaaf1547efb56982e9221df10261fc3"
+    },
+    "audit": {
+      "file": "checks/implementation-red-pack-audit.json",
+      "sha256": "d4005215dae62f666f4e2939940a2ea927434410a45e47ce00dfec890c6fd30e"
+    },
+    "delivery": {
+      "file": "checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/results.json",
+      "sha256": "79bd5ace4b36a9f44eededb6022bf99274d84db9643af0cf13040faceda85b35"
+    }
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-1.log",
+      "sha256": "2c1034ca3f6845f1786c3266d5faeea9be13bec9b6e5692a614078b5eaed5201"
+    },
+    {
+      "id": "T-2",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-2.log",
+      "sha256": "08d57e4b8af8823a333af7e1a2cd356aedcdbb8ffad6165002daa4ba6e0c283c"
+    },
+    {
+      "id": "T-3",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-3.log",
+      "sha256": "24d727e75ce96ecc56db6cacafa07d6ca63c4e25eb9761e9f4d9a35f6fa69cda"
+    },
+    {
+      "id": "T-4",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-4.log",
+      "sha256": "c61bcaeff65f80069912a9db04a3da902e6f76db0a0d09f25383658244ea3954"
+    },
+    {
+      "id": "T-5",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-5.log",
+      "sha256": "777227be77112e17ca43908ad8f87449cbbe955d0313d58aacd7c13e6941dcb8"
+    },
+    {
+      "id": "T-6",
+      "verdict": "PASS",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-6.log",
+      "sha256": "840fe26848f8f0644f8e66e22c244ce893d674d560ddb75dc3576513c722d2aa"
+    },
+    {
+      "id": "T-7",
+      "verdict": "PASS",
+      "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-7.log",
+      "sha256": "1349ea61200dc6f2223c90a283b65e2d2467127fcaf8d36dd8ed89ec2c39aff3"
+    }
+  ],
+  "findings": [],
+  "native_qualification": {
+    "verdict": "pass_with_owner_waiver",
+    "actual_submissions_deliveries_revisions": 6,
+    "complete_human_resolution_journeys": 5,
+    "actual_resolved_threads": 7,
+    "total_threads": 8,
+    "waived_unverified_resolution": {
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9"
+    },
+    "waiver_file": "checks/native-owner-test-waiver.json",
+    "waiver_sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+    "stable_native_review_sha256": "286139921444a030eea53a432383297e5c319dc893269600b8abfad602809b42",
+    "native_witness_sha256": "eb76dc5702d8639b0b3270303ca125ea0daf40df8f9f5c482468d0e589966329"
+  },
+  "final_checks": [
+    {
+      "argv": ["pnpm", "links"],
+      "exit": 0,
+      "log": "checks/implementation-red-pack-final-links.log",
+      "sha256": "2e87990e3c1307b44d488c60c81323ddc1f1a706c02119efd5088b9d7ebeb2ea"
+    },
+    {
+      "argv": [
+        "pnpm",
+        "exec",
+        "prettier",
+        "--check",
+        "../specs/browser-agent-feedback/implementation-review-pack.md",
+        "../specs/browser-agent-feedback/checks/implementation-red-pack-audit.json",
+        "../specs/browser-agent-feedback/checks/implementation-red-pack-commands.json"
+      ],
+      "exit": 0,
+      "log": "checks/implementation-red-pack-final-review-format.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "gate_before_record": "review",
+  "canonical_write_performed": false,
+  "owner_finish_performed": false,
+  "limits": [
+    "Observed workspace carries unrelated dirty hook repairs and a separate owner record; no clean-checkout or remote CI claim.",
+    "Actor claims and saved evidence are not authentication or cryptographic process attestation.",
+    "Native Linux modes and bounded Chromium UI subset do not establish Windows, broad sandbox, idle wake, full WCAG or power-loss certification.",
+    "Python-only fingerprints and HEAD stamp do not prove dirty TypeScript/Markdown detection."
+  ]
+}

@@ -1,0 +1,20 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+stdout | packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart
+FEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"cd355b95-b145-4fbe-9fb7-b944368aaa71","before_cursor":1,"after_cursor":1,"before_batches":["d2e3b241-d636-4f5b-8bdf-c1a740339f28"],"after_batches":["d2e3b241-d636-4f5b-8bdf-c1a740339f28"]}
+
+stdout | packages/cli/test/feedback-loop.test.ts > replays a durably submitted batch after a lost acknowledgement without duplication
+FEEDBACK_RECOVERY {"kind":"lost-ack","session":"90fce0b4-1849-44d7-8e78-e7e5568a2b75","operation_id":"cb01f05a-0a6a-419e-a98d-9e4f694cb2ac","received_batch":"c3885a56-853f-4357-84b7-8f71b7442e6e","replay_batch":"c3885a56-853f-4357-84b7-8f71b7442e6e","committed_batches":1}
+
+ ✓ packages/cli/test/feedback-loop.test.ts (4 tests) 1545ms
+   ✓ delivers only explicit submitted document feedback during wait and retains it across service restart  308ms
+   ✓ delivers stale reattachment only after another human Submit and preserves the original code anchor  1169ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  12:55:48
+   Duration  2.61s (transform 434ms, setup 0ms, collect 559ms, tests 1.54s, environment 0ms, prepare 103ms)
+
+UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified
+Native matrix: six human submissions/native revisions verified; seven of eight human thread resolutions observed; Claude diff Resolve explicitly owner-waived and unverified
