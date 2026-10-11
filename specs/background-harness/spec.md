@@ -28,3 +28,8 @@ Context identifies the exact checkout and asks which spec continues when several
 Existing spec question/approval ceremony applies only when spec questions exist. Existing decision acceptance, exact-plan start permission, independent PACK review and separate human Finish remain distinct. This proposal has no new unanswered product questions; implementation choices are proposed decisions below.
 
 Out of scope: remote collaboration/RBAC, autonomous background task execution, browser spec-authoring wizard, concurrent execution of one task, new QA approval state, automatic retrospectives/knowledge upkeep, TypeScript/Markdown freshness redesign, Copilot service support, registry publication and license selection.
+
+
+## Owner-authorized acceptance amendment (2026-10-11T01:29:33.198Z)
+
+The owner instructed: “finish the spec but add the tests to backlog”. Plan 4 supersedes the original full-host closure boundary: accept the six actual native runtime witnesses, transfer all unrun real host journeys to [harness-host-acceptance](../harness-host-acceptance/harness-host-acceptance.json), obtain independent PACK review of this revised scope, then record the explicitly requested Finish. The prior pack and approved documents are preserved byte-for-byte in history/revision-46/. No missing host test is passed or waived; the unchanged strict verify-matrix.mjs and release-verification.json continue to describe incomplete full host acceptance. T-12 now checks runtime evidence and complete backlog transfer; its earlier failed evidence remains. T-14 still requires independent review. The current instruction authorizes this scope amendment and finishing; no human host trust is inferred.

@@ -259,3 +259,8 @@ T-14 is phase review. PACK review is scoped to the current plan digest and non-r
 ## Authorized execution refinement
 
 The current user instruction delegates best judgment and authorizes implementation on a new branch; see execution-authorization.md. Plan 2 moves unavailable real-platform/desktop/IDE evidence from the early compatibility spike to the release matrix T-12. T-13 runs after T-5/T-9/T-10/T-11 and before T-12 so the implementation is documented and locally checked before external release witnesses. All platform requirements remain. No unavailable witness is counted as passed. The canonical tasks own the amended dependencies and T-1 expectation.
+
+
+## Owner-authorized acceptance amendment (2026-10-11T01:29:33.198Z)
+
+The owner instructed: “finish the spec but add the tests to backlog”. Plan 4 supersedes the original full-host closure boundary: accept the six actual native runtime witnesses, transfer all unrun real host journeys to [harness-host-acceptance](../harness-host-acceptance/harness-host-acceptance.json), obtain independent PACK review of this revised scope, then record the explicitly requested Finish. The prior pack and approved documents are preserved byte-for-byte in history/revision-46/. No missing host test is passed or waived; the unchanged strict verify-matrix.mjs and release-verification.json continue to describe incomplete full host acceptance. T-12 now checks runtime evidence and complete backlog transfer; its earlier failed evidence remains. T-14 still requires independent review. The current instruction authorizes this scope amendment and finishing; no human host trust is inferred.

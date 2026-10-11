@@ -3,27 +3,31 @@
   "name": "background-harness",
   "description": "Shared background harness and project context",
   "date": {
-    "updated": "2026-10-11T00:31:44.263Z"
+    "updated": "2026-10-11T01:33:29Z",
+    "closed": {
+      "at": "2026-10-11T01:33:29Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "brief": {
       "ref": "brief.md",
       "type": "text/markdown",
-      "sha256": "896437ef1080ddbede282d6d31445d6f5013526b2e6f7b7a9d474eeab40b77b0"
+      "sha256": "99322a9f9debf20a5fbb4a82d439ff7a7376d15d57b73f7998034bc657f099a5"
     },
     "spec": {
       "ref": "spec.md",
       "type": "text/markdown",
-      "sha256": "51cbdff804366cf86ff184abf88cbe9add75f5ca98ae481fc9c62cb0f4ed330b"
+      "sha256": "4252bf410413641020a97253578a1729a95593c7ab9ae911553da32c1795206e"
     },
     "owner-flow": {
       "ref": "owner-flow.md",
       "type": "text/markdown",
-      "sha256": "8d4037b411dbb0859d8dcbf0bbede3d010c8d00eab625802a3b23ccdede5970d"
+      "sha256": "51f86d2d9e3a880b7fb02c5fc22f1442e235a1c182aebf52c33cb4fdfc4ef472"
     },
     "analysis": {
       "ref": "analysis.md",
@@ -33,12 +37,12 @@
     "design": {
       "ref": "design.md",
       "type": "text/markdown",
-      "sha256": "c4c89958e15008caee3307de340f95b62f4f119da039e3c94ada8b74df314489"
+      "sha256": "fd6e5dca88baac498d6c18fca840ee9f032fac752660ebe0e3629b785a642fe6"
     },
     "plan": {
       "ref": "plan.md",
       "type": "text/markdown",
-      "sha256": "a0391b32902c49a7e3ce26b5aa553f4cc138302d17c372a183287d75e9536d6c"
+      "sha256": "a604636c60cf6e6fbc550cda61f9a4ca7350e996cf27e17a4de4ce3c4e57e570"
     },
     "plan-review": {
       "ref": "plan-review.md",
@@ -62,6 +66,20 @@
     },
     "execution-authorization": {
       "ref": "execution-authorization.md",
+      "type": "text/markdown"
+    },
+    "closure-authorization": {
+      "ref": "closure-authorization.md",
+      "type": "text/markdown",
+      "sha256": "bee0721c4978493ffb4bbe6c679100f3ee6b91f83bdf735a8360a8a5512a33df"
+    },
+    "pre-amendment-pack": {
+      "ref": "history/revision-46/background-harness.json",
+      "type": "application/json",
+      "sha256": "4fcbd0268f94f6ba5a00910e279e75d8557ae66d077f1454bc1fbb21ea8dd7a8"
+    },
+    "pack-review": {
+      "ref": "pack-review.md",
       "type": "text/markdown"
     }
   },
@@ -133,7 +151,7 @@
       },
       {
         "id": "FR-10",
-        "text": "Verify the connection and SDD journey across the three operating systems and supported host surfaces; record actual commands/versions/results and keep unsupported or unrun combinations explicit.",
+        "text": "Verify native runtime on Linux, macOS and native Windows with actual evidence; preserve unrun supported-host acceptance as explicit executable backlog in harness-host-acceptance.",
         "serves": [
           "US-1"
         ]
@@ -147,7 +165,8 @@
       "Automatic retrospectives or knowledge upkeep",
       "TS/Markdown freshness redesign",
       "Native registry publication and license choice",
-      "Copilot service integration"
+      "Copilot service integration",
+      "Full real-host acceptance journeys are deferred to specs/harness-host-acceptance by the explicit closure instruction; they remain unverified."
     ],
     "stories": [
       {
@@ -215,6 +234,13 @@
         "id": "D-5",
         "decision": "Publish a capability matrix and prove adapters in real hosts, including Codex CLI/desktop separately and IDE compatibility configuration.",
         "because": "Current Codex plugin support excludes IDE; pi package metadata does not promise custom-agent installation. Trust/reload are user host actions.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-6",
+        "decision": "Close the runtime implementation scope and transfer all unrun host acceptance to the harness-host-acceptance backlog.",
+        "because": "Actual owner instruction: finish the spec but add the tests to backlog. Preserve the prior scope and failed matrix evidence, verify native runtime/backlog transfer and require independent current PACK review before Finish.",
         "status": "accepted",
         "accepted_by": "human:owner"
       }
@@ -1079,9 +1105,9 @@
     },
     {
       "id": "T-12",
-      "title": "Verify the complete journey on all required environments",
-      "detail": "Implement portable smoke fixtures and CI runtime jobs; collect versioned real-host witnesses locally or on available machines with disposable fixture owner actions clearly labelled. Include two simultaneous session connections and stop races without concurrent same-task execution, equal slugs, server crash, packed assets and hostile-browser tests. Preserve closed real packs. Any claimed absent capability requires changed scope and owner reapproval.",
-      "status": "todo",
+      "title": "Verify native runtime and transfer host acceptance to backlog",
+      "detail": "Validate all six retained native runtime witnesses against provenance and require the four proposed host backlog tasks to preserve every missing platform/surface journey. This revised scope does not pass full host acceptance. Preserve earlier failed full-matrix evidence.",
+      "status": "done",
       "phase": "core",
       "needs": [
         "T-5",
@@ -1118,34 +1144,26 @@
         "D-2",
         "D-3",
         "D-4",
-        "D-5"
+        "D-5",
+        "D-6"
       ],
       "verify": {
-        "cmd": "node specs/background-harness/verify-matrix.mjs",
-        "expect": "Actual Linux, macOS and native Windows runtime results plus real-host results for each supported OS/surface pass: clean install, trust, project selection, new/continue spec, stop/next-event restart, session exit, upgrade/removal and owner flow. Missing/unrun combinations fail the release verifier; a CI matrix declaration is not evidence."
+        "cmd": "node specs/background-harness/verify-runtime-matrix.mjs",
+        "expect": "All six actual Linux/macOS/Windows Node 22/24 runtime witnesses match provenance and pass required lifecycle checks; all four unrun host groups remain todo in the follow-up backlog with complete OS/surface/check coverage."
       },
       "context": {
         "touch": [
           {
-            "path": "specs/background-harness/verify-matrix.mjs",
-            "sha256": "1edc9b6e2c0e6d6114bfab34493be18b04f9be0716556439530bbd601659eb16"
+            "path": "specs/background-harness/verify-runtime-matrix.mjs",
+            "sha256": "0c9509f21e31eec2f123ccd1f6a7031fe04908b2f0464c16b0ae14030937b0be"
           },
           {
-            "path": "specs/background-harness/platform-evidence.json",
-            "sha256": "53ff17b43c75ff5d88f72e2c428d37d7d3763d72e8a6d0967c70cefa6ce81528"
-          },
-          {
-            "path": "treadle/scripts/harness-smoke.mjs",
-            "sha256": "c563f84e175521e7fafb756985f4bf0b41134db7e268561f609b26bfc8028fa9"
-          },
-          {
-            "path": ".github/workflows/ci.yml",
-            "sha256": "e61ac1b1092cfe0ef1b9991656e7c1cf1da623180c97e0b519ee96075e38e7d1"
+            "path": "specs/harness-host-acceptance/harness-host-acceptance.json",
+            "sha256": "9f2c8914debc33b97cada417cb29324915464af2dfa7635a30669dbb7b7128d1"
           }
         ],
         "notes": [
-          "Read brief.md, spec.md, design.md and plan.md T-12; preserve existing owner gates and unrelated edits.",
-          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+          "Owner-authorized Plan 4 replaces only pending T-12 scope; previous failed check and pinned source snapshot are preserved."
         ]
       },
       "evidence": [
@@ -1155,6 +1173,13 @@
           "at": "2026-10-11T00:31:44.260Z",
           "by": "agent:codex",
           "notes": "Actual command result; see T-12-verification.log"
+        },
+        {
+          "cmd": "node specs/background-harness/verify-runtime-matrix.mjs",
+          "exit": 0,
+          "at": "2026-10-11T01:30:13Z",
+          "by": "agent:codex",
+          "notes": "Plan 4 runtime/backlog acceptance: all six original native witnesses pass; four unrun host acceptance groups transferred as todo. Prior full-matrix exit 1 remains; see T-12-runtime-verification.log."
         }
       ]
     },
@@ -1251,7 +1276,7 @@
       "id": "T-14",
       "title": "Obtain independent PACK review",
       "detail": "Implement only the artifact verifier, obtain an independent review, repair within approved scope and return to review. Phase review avoids digest recursion. Separate human Finish spec remains pending after this task; no reviewer or agent may synthesize that owner act.",
-      "status": "todo",
+      "status": "done",
       "phase": "review",
       "needs": [
         "T-13"
@@ -1284,7 +1309,8 @@
         "D-2",
         "D-3",
         "D-4",
-        "D-5"
+        "D-5",
+        "D-6"
       ],
       "verify": {
         "cmd": "node specs/background-harness/verify-review.mjs",
@@ -1293,22 +1319,33 @@
       "context": {
         "touch": [
           {
-            "path": "specs/background-harness/delivery-review.md"
+            "path": "specs/background-harness/delivery-review.md",
+            "sha256": "212bc18996324d30d68820fa6a05fa3ae690396641f8094c0d125cfc1574a202"
           },
           {
-            "path": "specs/background-harness/verify-review.mjs"
+            "path": "specs/background-harness/verify-review.mjs",
+            "sha256": "85edbfa9ca02ac251b3cab047442df2ede5131fd405bd7b9011fcde8cd7f5d4e"
           }
         ],
         "notes": [
           "Read brief.md, spec.md, design.md and plan.md T-14; preserve existing owner gates and unrelated edits.",
           "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/background-harness/verify-review.mjs",
+          "exit": 0,
+          "at": "2026-10-11T01:33:14Z",
+          "by": "agent:codex",
+          "notes": "Executed verifier exit0 against independent red-foreman PACK PASS for Plan 4/current non-review evidence. See pack-review.md and T-14-verification.log."
+        }
+      ]
     }
   ],
   "workflow": {
     "policy": "owner-gated/1",
-    "plan": 3,
+    "plan": 4,
     "phase_questions": {
       "spec": []
     },
@@ -1368,13 +1405,36 @@
         "at": "2026-10-10T23:56:40.504Z",
         "revision": 18,
         "plan_digest": "44d499709bad8442b706d25d89c9e09102d7a94d6d5836ecf6cb529158909f7d"
+      },
+      {
+        "id": "d374f8a1-ab5f-4938-be6f-30f2ba6ca848",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T01:29:33.198Z",
+        "revision": 48,
+        "decision": "D-6"
+      },
+      {
+        "id": "07cabddd-61cc-422f-b2b6-5532e136af66",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-11T01:29:33.198Z",
+        "revision": 49,
+        "plan_digest": "94b51716444a8f3612f56bbcded9991ac17e4a77e6486e014474310bb9b9ebbe"
+      },
+      {
+        "id": "dfc7bd45-d8ac-4c77-9c9b-04e0963fe7a4",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T01:33:29Z",
+        "revision": 55
       }
     ],
     "pending_audit": [],
     "start_receipt": {
       "by": "human:owner",
-      "at": "2026-10-10T23:56:40.504Z",
-      "plan_digest": "44d499709bad8442b706d25d89c9e09102d7a94d6d5836ecf6cb529158909f7d"
+      "at": "2026-10-11T01:29:33.198Z",
+      "plan_digest": "94b51716444a8f3612f56bbcded9991ac17e4a77e6486e014474310bb9b9ebbe"
     }
   },
   "review": {
@@ -1385,6 +1445,15 @@
         "by": "agent:red_foreman_plan",
         "at": "2026-10-10T23:45:17.543Z",
         "note": "Actual independent read-only proposal review: PASS — nothing to fix. See plan-review.md. This is planning quality only, not owner acceptance/start permission or delivery PACK review."
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red_foreman_plan",
+        "at": "2026-10-11T01:32:22Z",
+        "plan_digest": "94b51716444a8f3612f56bbcded9991ac17e4a77e6486e014474310bb9b9ebbe",
+        "evidence_digest": "227c080bdd1813f0654912a037b6fc3931024759efd26cbb6fe66cdc7ca9519a",
+        "note": "Independent Plan 4 PACK PASS — nothing to fix. See pack-review.md. Covers verified native runtime and explicit host-acceptance backlog transfer; full host acceptance remains INCOMPLETE."
       }
     ]
   },
@@ -1395,5 +1464,5 @@
     "source_state": "Current user delegated best judgment and implementation; receipts bind Plan 2. No Finish act."
   },
   "format": "specpack/0.4",
-  "revision": 46
+  "revision": 55
 }

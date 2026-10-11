@@ -22,6 +22,7 @@ sources:
     }
   - { id: shared, resource: treadle/packages/web/src/project-server.ts }
   - { id: migration, resource: specs/docs-root-migration/plan.md }
+  - { id: host-acceptance, resource: specs/harness-host-acceptance/harness-host-acceptance.json }
 ---
 
 # Gap register — 2026-10-10
@@ -64,6 +65,14 @@ Source: `specs/guided-loop/guided-loop.json:1`, `review.verdicts[on=PACK].note`.
 This report does not imply attested computation execution exists.
 
 # Verification boundary
+
+The owner deferred the remaining background harness host journeys to
+`specs/harness-host-acceptance/harness-host-acceptance.json`. That canonical
+backlog preserves the platform and surface acceptance requirements; runtime
+CI success does not establish real host activation or human hook trust.
+The scope instruction and original pack are preserved in
+`specs/background-harness/closure-authorization.md` and
+`specs/background-harness/history/revision-46/background-harness.json`.
 
 The previous documentation repair failed the obsolete G3 workspace assumption.
 That dated failure and its coverage limitation remain recorded in the

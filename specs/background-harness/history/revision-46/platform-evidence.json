@@ -1,0 +1,23 @@
+{
+  "format": "release-matrix/1",
+  "runtimeFiles": [
+    "native-runtime/run-38101187204/harness-smoke-Linux-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Linux-24/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Windows-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-Windows-24/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-macOS-22/harness-smoke.json",
+    "native-runtime/run-38101187204/harness-smoke-macOS-24/harness-smoke.json"
+  ],
+  "hostObservations": "host-observations.json",
+  "requiredRuntimePlatforms": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "pendingHostJourneys": [
+    "Claude Code lifecycle, reload/removal and user activation on each required OS",
+    "Codex CLI lifecycle with human exact-file hook trust on each required OS",
+    "Codex desktop lifecycle and IDE fallback separately",
+    "pi native package install/update/removal and session events on each required OS"
+  ]
+}

@@ -109,7 +109,10 @@ installation remains available for host-specific configuration. Runtime,
 packaging and lifecycle checks passed in native CI on Linux, macOS and Windows
 with Node 22 and 24. Full host activation journeys remain pending,
 including Codex desktop/IDE and human hook trust. See the
-[compatibility record](specs/background-harness/compatibility.md).
+[compatibility record](specs/background-harness/compatibility.md). The owner
+deferred those unrun journeys to the
+[host acceptance backlog](specs/harness-host-acceptance/harness-host-acceptance.json)
+so the runtime implementation spec can finish without claiming host acceptance.
 
 For a portable production runtime, run `pnpm --dir treadle package:runtime
 /absolute/path/to/new-runtime`, then invoke `node <runtime>/dist/src/main.js`.
