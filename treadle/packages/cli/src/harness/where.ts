@@ -3,7 +3,7 @@
  *  that carries its own specs. Engine-quoted lines only; a report,
  *  not a gate — exit 0 always. */
 import { execSync } from 'node:child_process';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, realpathSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { loadPackWithMeta } from '@treadle/core';
 
@@ -106,16 +106,24 @@ function lastEvidenceAt(doc: { tasks?: { evidence?: { at?: string }[] }[] }): st
   return last;
 }
 
+function canonicalPath(path: string): string {
+  try {
+    return realpathSync(path);
+  } catch {
+    return resolve(path);
+  }
+}
+
 export function where(workspace: string): WhereReport {
-  const root = resolve(workspace); // git prints absolute paths — compare like for like (R2 #5)
+  const root = canonicalPath(workspace); // Include native aliases and Windows short paths.
   const packs = scanSpecsDir(specsRoot(root), '');
   const report: WhereReport = { root, packs, worktrees: [] };
   try {
     const out = execSync('git worktree list --porcelain', { cwd: root, encoding: 'utf8' });
     const trees = out
-      .split('\n')
+      .split(/\r?\n/)
       .filter((l) => l.startsWith('worktree '))
-      .map((l) => resolve(l.slice('worktree '.length)))
+      .map((l) => canonicalPath(l.slice('worktree '.length)))
       .filter((p) => p !== root);
     for (const p of trees) {
       const treePacks = scanSpecsDir(specsRoot(p), p);

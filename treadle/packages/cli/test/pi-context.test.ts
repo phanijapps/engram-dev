@@ -35,13 +35,15 @@ it('registers once, uses ctx.cwd and reconnects before prompts without message m
       0,
     );
     const message = await handlers.get('before_agent_start')!(
-      { prompt: 'private' },
+      { prompt: 'CONFIDENTIAL_PROMPT_NOT_FOR_REGISTRY' },
       { cwd: workspace },
     );
     expect(message.message.customType).toBe('project-context');
     expect(message.message.content).toContain(workspace);
     expect(JSON.parse(readFileSync(join(state, 'service.json'), 'utf8')).instance).not.toBe(before);
-    expect(readFileSync(join(state, 'projects.json'), 'utf8')).not.toContain('private');
+    expect(readFileSync(join(state, 'projects.json'), 'utf8')).not.toContain(
+      'CONFIDENTIAL_PROMPT_NOT_FOR_REGISTRY',
+    );
   } finally {
     spawnSync(process.execPath, [cli, 'stop', 'serve'], { env: process.env });
     if (original === undefined) delete process.env.HARNESS_STATE_DIR;

@@ -54,3 +54,14 @@ colon-bearing gate log names; pnpm setup's version 9 conflicted with the pinned
 9.15.9 on Linux/macOS. Log filenames and future runner output now replace colons
 with dashes (bytes preserved), and CI selects the exact workspace pin. The
 failed jobs are retained in ci-first-run.json; they establish no runtime pass.
+
+The native receipt/fixture repair at c263caf received an independent read-only
+red-foreman verdict: **PASS — nothing to fix**. The reviewer reran 41 focused
+owner, where, installer, keyboard and corpus tests. This verdict covers source
+repairs; it does not supply native host activation or PACK completion.
+
+Actual CI run 38099342799 passed both Linux rows and failed macOS/Windows rows.
+The results are retained in ci-third-run.json. It exposed macOS /var realpath
+aliases, Windows short-path/line-ending worktree identities and home-directory
+fixture assumptions. The aliased-bundle regression in alias-regression-before.log
+reproduced the knowledge defect on Linux before its repair (exit 1).

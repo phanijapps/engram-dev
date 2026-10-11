@@ -11,6 +11,16 @@ import { applyPlan, removeInstall, statePath } from '../src/harness/apply.js';
 import { UsageError } from '../src/harness/types.ts';
 import type { InstallChoices } from '../src/harness/types.ts';
 
+function isolateHome(path: string): () => void {
+  const key = process.platform === 'win32' ? 'USERPROFILE' : 'HOME';
+  const previous = process.env[key];
+  process.env[key] = path;
+  return () => {
+    if (previous === undefined) delete process.env[key];
+    else process.env[key] = previous;
+  };
+}
+
 function harnessFixture(): { root: string; manifestPath: string } {
   const root = mkdtempSync(join(tmpdir(), 'hengine-'));
   const h = join(root, 'harness');
@@ -211,10 +221,9 @@ describe('the installer engine (T-1)', () => {
         join('.harness', 'hooks', 'check.js'),
       );
 
-      // BLOCKER 3 (R2): HOME isolated — the suite must NEVER touch the real ~/.codex
+      // BLOCKER 3 (R2): Native home isolated — the suite must NEVER touch the real ~/.codex
       const fakeHome = mkdtempSync(join(tmpdir(), 'hh-'));
-      const origHome = process.env.HOME;
-      process.env.HOME = fakeHome;
+      const restoreHome = isolateHome(fakeHome);
       try {
         const c2 = choices(root, manifestPath, { agent: 'codex' });
         const out2 = applyPlan(compilePlan(lm.manifest, lm.root, c2), c2, lm.root, 't');
@@ -222,7 +231,7 @@ describe('the installer engine (T-1)', () => {
         const cfg = readFileSync(join(fakeHome, '.codex', 'config.toml'), 'utf8');
         expect(cfg).toMatch(/^notify\s*=/m);
       } finally {
-        process.env.HOME = origHome;
+        restoreHome();
         rmSync(fakeHome, { recursive: true, force: true });
       }
     } finally {
@@ -257,8 +266,7 @@ describe('the installer engine (T-1)', () => {
 
   it('R2 #1: per-agent state files — two agents never clobber each other', () => {
     const { root, manifestPath } = harnessFixture();
-    const previousHome = process.env.HOME;
-    process.env.HOME = root;
+    const restoreHome = isolateHome(root);
     try {
       const lm = loadManifest(manifestPath);
       const cPi = choices(root, manifestPath, { agent: 'pi' });
@@ -274,7 +282,7 @@ describe('the installer engine (T-1)', () => {
       expect(existsSync(join(root, '.codex/skills/alpha/SKILL.md'))).toBe(true);
       expect(existsSync(join(root, '.harness/harness-install.codex.json'))).toBe(true);
     } finally {
-      process.env.HOME = previousHome;
+      restoreHome();
       rmSync(root, { recursive: true, force: true });
     }
   });
@@ -410,8 +418,7 @@ expect(UsageError).toBeDefined();
 
 it('preserves foreign notify and nested hook metadata; shared payload survives removal of one surface', () => {
   const { root, manifestPath } = harnessFixture();
-  const oldHome = process.env.HOME;
-  process.env.HOME = root;
+  const restoreHome = isolateHome(root);
   try {
     const lm = loadManifest(manifestPath),
       claude = choices(root, manifestPath, { agent: 'claude' }),
@@ -440,7 +447,7 @@ it('preserves foreign notify and nested hook metadata; shared payload survives r
     expect(out.wiringRefused).toHaveLength(1);
     expect(readFileSync(join(root, '.codex/config.toml'), 'utf8')).toBe('notify = ["foreign"]\n');
   } finally {
-    process.env.HOME = oldHome;
+    restoreHome();
     rmSync(root, { recursive: true, force: true });
   }
 });

@@ -6,43 +6,27 @@
  RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
       Coverage enabled with v8
 
- ✓ packages/conformance/test/corpus.test.ts (1 test) 6ms
- ✓ packages/brand/test/brand.test.ts (2 tests) 4ms
- ✓ packages/cli/test/banner.test.ts (1 test) 5ms
- ✓ packages/cli/test/init-skin.test.ts (3 tests) 8ms
- ✓ packages/cli/test/harness-packages.test.ts (1 test) 53ms
+ ✓ packages/cli/test/init-skin.test.ts (3 tests) 5ms
+ ✓ packages/conformance/test/corpus.test.ts (1 test) 9ms
+ ✓ packages/brand/test/brand.test.ts (2 tests) 5ms
+ ✓ packages/cli/test/banner.test.ts (1 test) 4ms
+ ✓ packages/cli/test/harness-packages.test.ts (1 test) 56ms
  ✓ packages/conformance/test/owner-schema.test.ts (2 tests) 15ms
- ✓ packages/cli/test/project-registry.test.ts (3 tests) 133ms
- ✓ packages/knowledge/test/debts.test.ts (5 tests) 49ms
- ✓ packages/knowledge/test/knowledge.test.ts (4 tests) 43ms
- ✓ packages/knowledge/test/containment.test.ts (4 tests) 45ms
- ✓ packages/cli/test/init-engine.test.ts (17 tests) 111ms
- ✓ packages/knowledge/test/ritual.test.ts (5 tests) 134ms
- ✓ packages/core/test/core.test.ts (5 tests) 8ms
- ✓ packages/core/test/owner-workflow.test.ts (9 tests) 37ms
- ✓ packages/web/test/pages.test.ts (11 tests) 77ms
- ✓ packages/cli/test/context.test.ts (1 test) 26ms
- ✓ packages/cli/test/where.test.ts (7 tests) 159ms
+ ✓ packages/cli/test/project-registry.test.ts (3 tests) 108ms
+ ✓ packages/knowledge/test/debts.test.ts (5 tests) 53ms
+ ✓ packages/knowledge/test/knowledge.test.ts (4 tests) 40ms
+ ✓ packages/knowledge/test/containment.test.ts (5 tests) 44ms
+ ✓ packages/cli/test/init-engine.test.ts (17 tests) 110ms
+ ✓ packages/knowledge/test/ritual.test.ts (5 tests) 123ms
+ ✓ packages/core/test/core.test.ts (5 tests) 9ms
+ ✓ packages/core/test/owner-workflow.test.ts (9 tests) 38ms
+ ✓ packages/web/test/pages.test.ts (11 tests) 106ms
+ ✓ packages/cli/test/context.test.ts (1 test) 33ms
+ ✓ packages/cli/test/where.test.ts (7 tests) 153ms
+ ✓ packages/web/test/project-security.test.ts (2 tests) 176ms
  ✓ packages/web/test/project-library.test.ts (1 test) 103ms
- ✓ packages/conformance/test/runner.test.ts (3 tests) 7ms
- ✓ packages/web/test/project-security.test.ts (2 tests) 195ms
- ✓ packages/web/test/servers.test.ts (6 tests) 208ms
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
-born: /tmp/cli-owner-aJdyWi/p/p.json (revision 1, stage awaiting_owner)
-recorded accept by human:owner; audit recorded
-recorded start by human:owner; audit recorded
-task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
-  D    D-1
-  TASK T-1 — Work
-
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
-born: /tmp/cli-owner-YNEfef/p/p.json (revision 1, stage awaiting_owner)
-asked Q-1 (revision 2)
-
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > explicitly adopts active legacy bytes without inventing earlier start consent
-born: /tmp/cli-owner-XkA0fT/p/p.json (revision 1, stage awaiting_owner)
-adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
-
+ ✓ packages/web/test/servers.test.ts (6 tests) 211ms
+ ✓ packages/conformance/test/runner.test.ts (3 tests) 5ms
 stdout | packages/cli/test/do.test.ts > the do plane (integration, in-process) > answers, approves, records, closes — the whole ceremony through the CLI
 answered Q-1 by human:owner
 answered Q-2 by human:owner
@@ -50,71 +34,89 @@ approved by human:owner at 2026-10-10T12:00:00Z
 {"task":"T-1","status":"done","fail_streak":0}
 closed by human:owner: the record is frozen
 
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
-born: /tmp/cli-owner-9S7KGZ/p/p.json (revision 1, stage awaiting_owner)
-adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+born: /tmp/cli-owner-ybtcTd/p/p.json (revision 1, stage awaiting_owner)
+recorded accept by human:owner; audit recorded
+recorded start by human:owner; audit recorded
+task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+  D    D-1
+  TASK T-1 — Work
 
 stdout | packages/cli/test/do.test.ts > do next (the frozen handout) > hands out the task, saves the doing state, then reports closure honestly
 task T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
   D    D-1
   TASK T-1 — one
 
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
-born: /tmp/cli-owner-ohJnjo/p/p.json (revision 1, stage awaiting_owner)
-
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
-born: /tmp/cli-owner-gq1iNk/p/p.json (revision 1, stage awaiting_owner)
-
-stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
-born: /tmp/cli-owner-6iEeFd/p/p.json (revision 1, stage awaiting_owner)
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+born: /tmp/cli-owner-L6uX6n/p/p.json (revision 1, stage awaiting_owner)
+asked Q-1 (revision 2)
 
 stdout | packages/cli/test/do.test.ts > do accept / reject (the human act, last to port) > accept resolves the decision and its questions; reject keeps them open
 accepted D-9 by human:owner — resolved Q-1
 rejected D-8: wrong shape — the questions stay open
 
- ✓ packages/cli/test/owner-workflow.test.ts (7 tests) 57ms
- ✓ packages/cli/test/do.test.ts (5 tests) 47ms
- ✓ packages/cli/test/know.test.ts (7 tests) 96ms
- ✓ packages/web/test/room-skin.test.ts (3 tests) 61ms
- ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1110ms
-   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  376ms
- ✓ packages/cli/test/serve-runtime.test.ts (6 tests) 1278ms
-   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  566ms
-   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  304ms
-   ✓ shared service lifecycle > recovers proven dead startup and recovery owners; unfinished candidates hold no lock  342ms
- ✓ packages/web/test/library-skin.test.ts (4 tests) 334ms
-   ✓ the library skin (live DOM) > three panes render; the journey strip survives; serif titles apply  328ms
- ✓ packages/web/test/dom.smoke.test.ts (2 tests) 421ms
-   ✓ the DOM harness (T-0 smoke) > loads library.js, boots against the live server, and a click drives the router  310ms
- ✓ packages/cli/test/claude-context.test.ts (1 test) 1549ms
-   ✓ connects startup/resume/preprompt workspace and never shuts down with session lifetime  1547ms
- ✓ packages/web/test/theme.test.ts (5 tests) 490ms
- ✓ packages/web/test/room-keyboard.test.ts (1 test) 1690ms
-   ✓ the room keyboard (standalone harness) > drives the ceremony: Enter submits, approve card reached  1688ms
- ✓ packages/cli/test/pi-context.test.ts (1 test) 2124ms
-   ✓ registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown  2122ms
- ✓ packages/cli/test/codex-context.test.ts (2 tests) 2196ms
-   ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  2144ms
- ✓ packages/web/test/workflow-ui.test.ts (4 tests) 1327ms
-   ✓ owner workflow UI > shows the ordered flow; decision approval does not start implementation  635ms
-   ✓ owner workflow UI > requires a current independent review, then a separate confirmation to finish  374ms
- ✓ packages/web/test/owner-workflow.test.ts (11 tests) 2335ms
-   ✓ owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  2245ms
- ✓ packages/web/test/inspector.test.ts (1 test) 3443ms
-   ✓ the phase inspector (T-3) > renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only  3441ms
- ✓ packages/web/test/telemetry.test.ts (1 test) 3479ms
-   ✓ the review telemetry + gate (T-8) > renders the real counts, filters by severity, speaks the house sentence  3477ms
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > explicitly adopts active legacy bytes without inventing earlier start consent
+born: /tmp/cli-owner-hcxTG1/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+born: /tmp/cli-owner-yA8J4o/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+born: /tmp/cli-owner-LIVSXG/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+born: /tmp/cli-owner-Q4o1Ny/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+born: /tmp/cli-owner-4dQYzN/p/p.json (revision 1, stage awaiting_owner)
+
+ ✓ packages/cli/test/do.test.ts (5 tests) 57ms
+ ✓ packages/cli/test/owner-workflow.test.ts (7 tests) 77ms
+ ✓ packages/cli/test/know.test.ts (7 tests) 121ms
+ ✓ packages/web/test/room-skin.test.ts (3 tests) 57ms
+ ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1102ms
+   ✓ the four surface adapters (T-3) > the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage  308ms
+   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  368ms
+ ✓ packages/cli/test/serve-runtime.test.ts (6 tests) 1246ms
+   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  546ms
+   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  305ms
+   ✓ shared service lifecycle > recovers proven dead startup and recovery owners; unfinished candidates hold no lock  335ms
+ ✓ packages/web/test/library-skin.test.ts (4 tests) 305ms
+   ✓ the library skin (live DOM) > three panes render; the journey strip survives; serif titles apply  300ms
+ ✓ packages/web/test/dom.smoke.test.ts (2 tests) 388ms
+ ✓ packages/web/test/room-keyboard.test.ts (1 test) 1584ms
+   ✓ the room keyboard (standalone harness) > drives the ceremony: Enter submits, approve card reached  1581ms
+ ✓ packages/web/test/theme.test.ts (5 tests) 488ms
+ ✓ packages/cli/test/claude-context.test.ts (1 test) 1608ms
+   ✓ connects startup/resume/preprompt workspace and never shuts down with session lifetime  1606ms
+ ✓ packages/cli/test/pi-context.test.ts (1 test) 1995ms
+   ✓ registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown  1993ms
+ ✓ packages/cli/test/codex-context.test.ts (2 tests) 2200ms
+   ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  2147ms
+ ✓ packages/web/test/owner-workflow.test.ts (11 tests) 2214ms
+   ✓ owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  2120ms
+ ✓ packages/web/test/inspector.test.ts (1 test) 3381ms
+   ✓ the phase inspector (T-3) > renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only  3380ms
+ ✓ packages/web/test/telemetry.test.ts (1 test) 3416ms
+   ✓ the review telemetry + gate (T-8) > renders the real counts, filters by severity, speaks the house sentence  3414ms
+ ✓ packages/web/test/workflow-ui.test.ts (4 tests) 7415ms
+   ✓ owner workflow UI > shows the ordered flow; decision approval does not start implementation  575ms
+   ✓ owner workflow UI > requires a current independent review, then a separate confirmation to finish  373ms
+   ✓ owner workflow UI > preserves content on a stale action and refreshes without inventing permission  3151ms
+   ✓ owner workflow UI > fails closed when approval state cannot be read; retry restores the controls  3313ms
 
  Test Files  38 passed (38)
-      Tests  166 passed (166)
-   Start at  20:41:12
-   Duration  5.88s (transform 4.85s, setup 0ms, collect 18.75s, tests 23.46s, environment 6.15s, prepare 7.00s)
+      Tests  167 passed (167)
+   Start at  20:45:39
+   Duration  9.94s (transform 5.43s, setup 0ms, collect 20.03s, tests 29.06s, environment 6.25s, prepare 6.88s)
 
  % Coverage report from v8
 -------------------|---------|----------|---------|---------|-------------------
 File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 -------------------|---------|----------|---------|---------|-------------------
-All files          |   86.12 |     76.1 |   94.59 |   86.12 |                   
+All files          |    86.1 |    76.07 |   94.61 |    86.1 |                   
  brand/src         |     100 |      100 |     100 |     100 |                   
   brand.ts         |     100 |      100 |     100 |     100 |                   
   index.ts         |     100 |      100 |     100 |     100 |                   
@@ -128,7 +130,7 @@ All files          |   86.12 |     76.1 |   94.59 |   86.12 |
   package.ts       |   91.66 |      100 |     100 |   91.66 | 11                
   project.ts       |   38.23 |      100 |      50 |   38.23 | ...26,29-31,34-40 
   serve.ts         |    52.5 |      100 |     100 |    52.5 | ...26-30,35,40-48 
- cli/src/harness   |   84.06 |    77.93 |   90.56 |   84.06 |                   
+ cli/src/harness   |   83.98 |     77.8 |   90.74 |   83.98 |                   
   apply.ts         |   92.78 |    79.06 |     100 |   92.78 | ...87,290-303,361 
   content.ts       |   81.81 |      100 |   66.66 |   81.81 | 17-18             
   context.ts       |   84.25 |    48.38 |     100 |   84.25 | ...31-37,56,74-75 
@@ -138,7 +140,7 @@ All files          |   86.12 |     76.1 |   94.59 |   86.12 |
   plan.ts          |   88.84 |    87.87 |    90.9 |   88.84 | ...47,193-203,239 
   skin.ts          |   15.85 |       10 |   33.33 |   15.85 | ...9,41-74,81-100 
   types.ts         |     100 |      100 |     100 |     100 |                   
-  where.ts         |   88.88 |    79.24 |     100 |   88.88 | 50-61,75,157      
+  where.ts         |   87.96 |    78.18 |     100 |   87.96 | ...75,113-114,165 
  cli/src/serve     |   90.38 |     78.1 |   96.55 |   90.38 |                   
   projects.ts      |   97.05 |    84.21 |     100 |   97.05 | 120-122           
   runtime.ts       |   88.63 |    75.69 |   95.23 |   88.63 | ...22-423,440-442 
@@ -152,8 +154,8 @@ All files          |   86.12 |     76.1 |   94.59 |   86.12 |
   index.ts         |     100 |      100 |     100 |     100 |                   
   refusals.ts      |     100 |      100 |     100 |     100 |                   
   stages.ts        |     100 |      100 |     100 |     100 |                   
- core/src/specpack |   89.31 |     79.8 |   95.34 |   89.31 |                   
-  admission.ts     |   91.75 |    76.31 |      75 |   91.75 | 81-85,114-116     
+ core/src/specpack |   89.31 |    79.78 |   95.34 |   89.31 |                   
+  admission.ts     |   91.75 |    75.67 |      75 |   91.75 | 81-85,114-116     
   alignment.ts     |   96.36 |    84.07 |     100 |   96.36 | 54-56,110-113,235 
   audit.ts         |   95.65 |    71.42 |     100 |   95.65 | 59,105-107        
   close.ts         |   93.33 |       84 |      50 |   93.33 | 58-60             
@@ -172,11 +174,11 @@ All files          |   86.12 |     76.1 |   94.59 |   86.12 |
   save.ts          |   95.91 |       60 |     100 |   95.91 | 36-37             
   transaction.ts   |   93.84 |    76.19 |     100 |   93.84 | 42-43,49-50       
   workflow.ts      |   98.95 |    88.54 |     100 |   98.95 | 133-134,323       
- knowledge/src     |   90.04 |    80.99 |   98.41 |   90.04 |                   
+ knowledge/src     |   90.04 |    80.95 |   98.41 |   90.04 |                   
   findings.ts      |    95.1 |    72.72 |     100 |    95.1 | ...-67,85,177-178 
   fingerprints.ts  |   96.89 |    83.01 |     100 |   96.89 | 46-47,101-102     
   index.ts         |     100 |      100 |     100 |     100 |                   
-  links.ts         |   96.46 |    79.62 |     100 |   96.46 | 53-54,84-85       
+  links.ts         |   96.46 |    79.24 |     100 |   96.46 | 53-54,84-85       
   parse.ts         |    75.2 |    65.95 |   85.71 |    75.2 | ...37-138,152-153 
   read.ts          |   86.36 |       75 |     100 |   86.36 | ...6,62-68,99-100 
   search.ts        |     100 |    91.35 |     100 |     100 | ...60-161,171-172 

@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-11T00:43:05.980Z",
+  "command": [
+    "node",
+    ".harness/hooks/codex-context.js",
+    "--host",
+    "codex",
+    "--event",
+    "SessionStart"
+  ],
+  "exit": 0,
+  "hostEvent": "SessionStart",
+  "contextBytes": 21656,
+  "connected": true,
+  "packHashBefore": "4fcbd0268f94f6ba5a00910e279e75d8557ae66d077f1454bc1fbb21ea8dd7a8",
+  "packHashAfter": "4fcbd0268f94f6ba5a00910e279e75d8557ae66d077f1454bc1fbb21ea8dd7a8",
+  "scope": "Manual installed callback invocation; does not establish host activation or human hook trust."
+}

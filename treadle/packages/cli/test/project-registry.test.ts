@@ -27,11 +27,11 @@ it('persists canonical identities and never merges canonical-empty with legacy',
   mkdirSync(join(root, 'docs/specs'), { recursive: true });
   symlinkSync(root, alias, process.platform === 'win32' ? 'junction' : 'dir');
   const first = connectProject(state, root);
-  expect(first.specs).toBe(join(root, 'docs/specs'));
+  expect(first.specs).toBe(join(first.workspace, 'docs/specs'));
   expect(connectProject(state, alias).id).toBe(first.id);
   expect(listProjects(state)).toHaveLength(1);
   mkdirSync(join(root, 'specs'));
-  expect(listProjects(state)[0]!.specs).toBe(join(root, 'specs'));
+  expect(listProjects(state)[0]!.specs).toBe(join(first.workspace, 'specs'));
   const second = connectProject(state, scratch());
   expect(second.id).not.toBe(first.id);
   rmSync(root, { recursive: true });

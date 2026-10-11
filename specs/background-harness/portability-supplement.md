@@ -34,3 +34,16 @@ and `pnpm links` all exited 0. Exact commands, times and exits are retained in
 exited 0 (`portability-package.log`), and the isolated Linux lifecycle smoke
 exited 0 (`linux-smoke.json`). Source whitespace verification exited 0; raw
 logs retain original output whitespace.
+
+Third native run 38099342799 passed Linux Node 22/24. macOS exposed root aliases
+(`/var` and `/private/var`) breaking relative concept ids, links and worktree
+identity. Windows exposed native-home fixture assumptions and worktree path
+normalization. These are recorded actual failures, not successful release
+witnesses. The owner receipt tests now pass on Windows in this run.
+
+Enumeration now expresses a contained, deduplicated real target relative to the
+caller's bundle-root spelling. Realpath still guards containment and excluded
+paths. A root-alias regression failed on Linux before the change, then passed.
+Worktree identity uses realpaths and handles CRLF records. Tests compare canonical
+registry roots and isolate the native home variable, and the pi privacy assertion
+uses a unique prompt token so the macOS system path cannot masquerade as a leak.

@@ -2,7 +2,7 @@
  *  worktree), no-git degradation, --json shape, archive exclusion. */
 import { describe, expect, it } from 'vitest';
 import { execSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { recallBlock, where, isOpen } from '../src/harness/where.js';
@@ -147,7 +147,7 @@ describe('do where (T-0)', () => {
       expect(r.worktrees[0]?.packs.map((p: { name: string }) => p.name)).toEqual(['side-pack']);
       const block = recallBlock(r);
       expect(block).toContain('side-pack');
-      expect(block).toContain(wt); // the tree label
+      expect(block).toContain(realpathSync(wt)); // the canonical tree label
       expect(block).toContain('ASK which one continues'); // two open across trees
       execSync(`git worktree remove --force "${wt}"`, { cwd: root });
     } finally {

@@ -156,7 +156,9 @@ export function iterConceptFiles(
         if (rel.split(sep).some((part) => excludedDirectories.includes(part))) continue;
         if (seen.has(real)) continue; // dupe: once
         seen.add(real);
-        out.push(real);
+        // Preserve the caller's root spelling for ids/links (macOS /var aliases),
+        // while containment and deduplication remain based on the real path.
+        out.push(join(rootResolved, rel));
       }
     }
   };
