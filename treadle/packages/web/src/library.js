@@ -852,7 +852,7 @@ function paintInspector() {
         (i === currentStep ? 'aria-current="step" ' : '') +
         'data-tab="' +
         p.tab +
-        '" tabindex="0" role="button" title="Focus ' +
+        '" title="Focus ' +
         p.tab +
         '">' +
         '<span class="phase-n">' +
@@ -907,7 +907,7 @@ function paintInspector() {
     '<div id="findingList" style="margin-top:8px"></div>' +
     '</div></details>' +
     '<details class="inspector-details"><summary>Alignment details</summary><div id="gatePanel" class="empty" style="padding:10px 8px;font-size:12px">loading…</div>' +
-    '<div class="note" style="font-size:10px;color:var(--ink-2);padding:0 8px 8px">Refreshes when you return to this window.</div></details>';
+    '<div class="note" style="font-size:10px;color:var(--ink-2);padding:0 8px 8px">Refreshes when you return to this window; no live socket in v1.</div></details>';
   host.querySelectorAll('.sev-filter').forEach((btn) => {
     btn.onclick = () => {
       const sev = btn.dataset.sev;

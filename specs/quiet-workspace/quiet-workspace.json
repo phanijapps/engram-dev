@@ -3,11 +3,11 @@
   "name": "quiet-workspace",
   "description": "Quiet Workspace frontend",
   "date": {
-    "updated": "2026-10-11T18:12:29Z"
+    "updated": "2026-10-11T18:37:17Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_progress"
+    "deliverable": "in_review"
   },
   "metadata": {
     "brief": {
@@ -641,7 +641,7 @@
         "CON-3",
         "CON-4"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "node ../specs/quiet-workspace/verify-delivery.mjs",
         "expect": "Exit 0; all named behavior expectations pass. For T-4, all six repository gates, coverage floors and five wiki checks pass; frontend evidence records actual rendered-state inspection and zero backend/model changes."
@@ -650,7 +650,8 @@
         "touch": [
           {
             "path": "wiki/systems/owner-workflow.md",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9608d88132aa4bb90c229d0fb7b2d4f350be75ca0a4569dc4e56e34926415493"
           },
           {
             "path": "wiki/initiatives/quiet-workspace.md",
@@ -658,15 +659,18 @@
           },
           {
             "path": "wiki/initiatives/index.md",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "198095f7077a58b30c633aa23cb5c42699cb76b980caceec616cdf69aa7975a6"
           },
           {
             "path": "wiki/.okf/fingerprints.json",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "d9d579000100d2665764359e881526773ae5c3c8e04d0b5aa39cee310d2367a2"
           },
           {
             "path": "wiki/.okf/last-index.json",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "c6f84078b9debee217ef0a376975840500a90eb0e0b1351d40d36c2380006caf"
           },
           {
             "path": "specs/quiet-workspace/verify-delivery.mjs",
@@ -678,7 +682,8 @@
           },
           {
             "path": "specs/quiet-workspace/execution-log.md",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "d8aefb44570460478af5af989f71536d7903f22757a0c2937ebc200e829807b1"
           }
         ],
         "read": [
@@ -740,7 +745,16 @@
           "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
           "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/quiet-workspace/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T18:37:17Z",
+          "by": "agent:codex",
+          "notes": "Delivery rerun2 exits0:247tests/51files, all6repository gates and5wiki commands pass; coverage88.5statements/lines95.39functions78.4branches. Wiki0errors0warnings167anchors0reviewfresh. 23existing states plusresponsive/theme/focus/longsource captures, HTMLvalid3surfaces andaxe subset0violations; source5hashes/served3JS hashes match. Prior failedtelemetry check/coverage preserved; restored existing refreshnote in approvedfrontend scope. FullWCAG/CWV/zoom limits and contextinventory multiJSON limit recorded in frontend-evidence.json; nobackend/API/model changes."
+        }
+      ]
     }
   ],
   "workflow": {
@@ -773,5 +787,5 @@
     "mode": "owner-gated frontend-only proposal"
   },
   "format": "specpack/0.4",
-  "revision": 15
+  "revision": 17
 }

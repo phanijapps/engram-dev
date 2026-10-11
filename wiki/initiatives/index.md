@@ -10,3 +10,5 @@
 - [Owner decision gates and spec completion: approved repair](spec-completion-handoff.md)
 
 - [Browser feedback for coding agents](browser-agent-feedback.md)
+
+- [Quiet Workspace approval interface](quiet-workspace.md)

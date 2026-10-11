@@ -82,3 +82,79 @@ Its existing keyboard ceremony still passes. Ring colors now use the shared role
 Declared command: `pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts`.
 Actual exit: 0. Outcome: 11 tests in 3 files passed, including 4 new focused regressions.
 No backend, API, core, model or dependency file changed.
+
+## Independent implementation findings and bounded repairs
+
+The reviewer reran the combined UI expectations and observed 44 pass / 1 fail.
+The remaining no-border skin assertion encoded an obsolete visual rule; it now checks distinguishable inputs and unboxed panes.
+The reviewer also reproduced a stale Saving status after refusal and a stale selected-line highlight after typing a range.
+Both presentation defects were repaired in the original T-3 scope with new regression assertions.
+Task disclosures now have a visible collapsed/expanded cue within original T-2 scope.
+These are repairs inside the approved frontend work, with no changed plan, contract, pin or owner receipt.
+Historical task evidence remains preserved; the final combined rerun and delivery checks establish current conformance.
+
+
+## T-4 current browser and accessibility observations
+
+The final combined T-1/T-2/T-3 expectation rerun passed 45 tests in 10 files,
+exit 0, 4.88 seconds. An earlier extra selection named nonexistent
+owner-flow.test.ts and ran only 34 tests; that partial run was not accepted.
+The correctly named owner-workflow.test.ts is included in the final rerun.
+A shell edit initially used a wrong relative working-directory path and made
+no changes; it was corrected before verification.
+
+Rendered library, feedback and interview HTML passed html-validate. The
+axe-core 4.14.0 WCAG 2.0/2.1 tagged subset found 0 violations in all three
+exported DOMs; JSDOM cannot measure canvas or layout color contrast and emitted
+its known canvas limitation. Token contrast and actual visible keyboard focus
+are recorded separately. Label-content-name-mismatch remains incomplete in
+JSDOM; full assistive technology and WCAG 2.2 AA conformance are not claimed.
+Native inspector buttons now omit redundant role/tabindex attributes; existing
+room buttons state their type explicitly. These are bounded frontend repairs.
+
+Screenshots cover all 23 approved existing states plus narrow, middle, wide,
+light/dark, keyboard and long-source views. The last source line 113 and paging
+are visible in feedback-last-source. The 390px interview Submit control remains
+44px high and reachable. Browser zoom changes rendered scale while the reported
+CSS viewport stays fixed; the exact high-zoom percentage is not verified.
+Ctrl+0 reset is observed. Motion suppression is present in CSS; preference
+emulation and browser LCP/INP/CLS measurement were unavailable. Local asset
+fetch status, byte count, elapsed time and current served-source hashes are
+recorded without presenting them as browser performance metrics.
+
+Temporary synthetic display packs do not prove human authority. One interview
+fixture acquired an unexpected human:owner answer while testing; this was
+observed, not attributed or promoted to real owner evidence. Only disposable
+fixture data was reset. The real approved Start receipt remains untouched.
+
+The required root frontend-evidence.json exposes an existing harness context
+inventory limit: that reader refuses multiple root JSON files. The core loader
+uses the canonical slug.json convention. No selector/backend repair is included
+in this frontend plan; current library access is verified separately. Original
+user-dirty wiki stamp bytes are preserved in the evidence manifest before upkeep.
+
+
+The first delivery preflight exited1 because later capture writes had replaced
+the in-memory accessibility report. The audit was rerun against the same
+current HTML exports and its actual report was restored before gates ran.
+The first full delivery run failed check and coverage on telemetry.test.ts:50:
+the existing refresh posture note was omitted from the redesigned disclosure.
+The missing fact is restored inside that disclosure within T-2 library.js
+scope; the unchanged regression test remains authoritative. Failed command
+logs are retained in frontend-evidence.json. No task completion was recorded.
+
+
+## T-4 delivery result
+
+Exact declared command `node ../specs/quiet-workspace/verify-delivery.mjs`
+rerun exited0. All six repository gates and five wiki commands passed.
+247 tests in51 files passed. Coverage:88.5% statements/lines,95.39% functions,
+78.4% branches; configured75/75/75/65 floors passed. Wiki validation:0 errors,
+0 warnings;167 anchors checked,0 needing review, fresh HEAD stamp. Unbaselined
+TypeScript/Markdown sources remain an explicit scanner limitation.
+
+Current source hashes, actual served JS hashes, inspected PNG bytes and digests,
+HTML/a11y reports and failed/successful command logs are in frontend-evidence.json.
+T-4 pass was admitted against held canonical revision16. This records execution,
+not independent PACK PASS or owner Finish. The owner-approved artifact bytes,
+plan digest and real Start receipt are unchanged.

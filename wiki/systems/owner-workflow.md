@@ -110,3 +110,28 @@ Sources: `treadle/packages/web/src/project-server.ts:319`;
 Read the [browser feedback initiative](/initiatives/browser-agent-feedback.md)
 for actual native-host witnesses and the explicit remaining manual-test exception.
 That test exception is not a fabricated Resolve event or owner completion action.
+
+
+# Quiet Workspace presentation — observed 2026-10-11
+
+The library groups gated packs by their current workflow phase and places the
+current gate above the existing tabs. Eligible Start and Finish actions appear
+in a dedicated action area. Task checks, record metadata and review details
+remain available through disclosures; active or blocked task details open first.
+Finish keeps its separate confirmation and server eligibility.
+Sources: `treadle/packages/web/src/library.js:1`;
+`treadle/packages/web/src/library.html:1`.
+
+Feedback places source and discussion beside each other on wide layouts and
+stacks them on narrow layouts. Save draft is primary while a local comment is
+unsaved; Submit becomes available after saving. Refused writes keep the local
+draft and focus the error. The interview keeps typed answers after refusal and
+keeps keyboard focus together with radio selection. These are frontend changes
+to existing screens and controls; request fields and engine authority are
+unchanged.
+Sources: `treadle/packages/web/src/feedback.js:1`;
+`treadle/packages/web/src/page.js:1`;
+`treadle/packages/web/test/approval-feedback-ux.test.ts:1`.
+
+See [Quiet Workspace](/initiatives/quiet-workspace.md) for design and verification
+limits.

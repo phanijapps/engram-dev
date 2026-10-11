@@ -35,9 +35,9 @@ const BY = (window.INTERVIEW_CONFIG && window.INTERVIEW_CONFIG.by) || 'human:own
 let S = null; // the spec, emitted layout
 let i = 0,
   sel = 0,
-  curQid = '';
+  curQid = ''; // wizard cursor, selected option, question-change guard
 let saving = false;
-const localAnswers = new Map(); // wizard cursor, selected option, question-change guard
+const localAnswers = new Map(); // retain typed answers when a write is refused
 
 function selFor(q) {
   /* AC-13: the declared default is preselected */
@@ -288,7 +288,7 @@ function paintInterview(err) {
     host.innerHTML = `<div class="qcard approve-card">
       <div class="qtext">All questions resolved.</div>
       <p class="note">one act remains: approve the spec as a whole.<br>recorded with a human claim and a timestamp.</p>
-      <div class="qnav" style="justify-content:center"><button class="act b-approve" id="bApprove">approve this spec ⏎</button></div>
+      <div class="qnav" style="justify-content:center"><button type="button" class="act b-approve" id="bApprove">approve this spec ⏎</button></div>
     </div>`;
     document.getElementById('bApprove').addEventListener('click', doApprove);
     return;
@@ -320,9 +320,9 @@ function paintInterview(err) {
     ${q.unknown ? `<div class="ansline"><span class="st st-unk">unknown</span> <span class="note">recorded honestly — you may answer for real below</span></div>` : ''}
     ${err ? `<div class="err" role="alert">${esc(err)}</div>` : ''}
     <div class="qnav">
-      <button class="act b-back" id="bBack">← back</button>
-      <button class="act b-idk" id="bIdk">I don't know</button>
-      <button class="act b-next" id="bSubmit">Submit answer</button>
+      <button type="button" class="act b-back" id="bBack">← back</button>
+      <button type="button" class="act b-idk" id="bIdk">I don't know</button>
+      <button type="button" class="act b-next" id="bSubmit">Submit answer</button>
     </div>
   </div>`;
   document.querySelectorAll('.opt').forEach((o) =>

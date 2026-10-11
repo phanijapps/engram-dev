@@ -84,6 +84,14 @@ it('keeps source and discussion in existing review, with explicit draft and Subm
     expect(add.classList.contains('primary')).toBe(true);
     submit.click();
     expect(f.posts).toHaveLength(0);
+    (f.host.querySelector('[aria-label^="Comment on after line 1"]') as HTMLElement).click();
+    const start = f.host.querySelector('#feedback-start') as HTMLInputElement;
+    const end = f.host.querySelector('#feedback-end') as HTMLInputElement;
+    start.value = '2';
+    end.value = '2';
+    end.dispatchEvent(new f.dom.window.Event('input'));
+    expect(f.host.querySelector('[data-line="1"]')?.getAttribute('aria-pressed')).toBe('false');
+    expect(f.host.querySelector('[data-line="2"]')?.getAttribute('aria-pressed')).toBe('true');
     (f.host.querySelector('[aria-label^="Comment on after line 2"]') as HTMLElement).click();
     expect(f.dom.window.document.activeElement?.id).toBe('feedback-comment');
     expect((f.host.querySelector('.feedback-range') as HTMLDetailsElement).open).toBe(true);
@@ -107,6 +115,9 @@ it('blocks duplicate mutation and selection while saving, retaining the conflict
       'Keep this draft',
     );
     expect(f.dom.window.document.activeElement?.id).toBe('feedback-error');
+    expect(f.host.querySelector('#feedback-status')?.textContent).toBe(
+      'Action not completed. Your local draft is retained.',
+    );
     expect(f.posts[0]).toMatchObject({
       expected_revision: 1,
       session: 'session',

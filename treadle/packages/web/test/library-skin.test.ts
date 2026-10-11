@@ -16,9 +16,13 @@ describe('the library skin (structural)', () => {
   const html = readFileSync(join(WEB, 'library.html'), 'utf8');
   const style = html.slice(html.indexOf('<style>'), html.indexOf('</style>'));
 
-  it('the no-line rule: no 1px structural borders in the layer', () => {
-    expect(style).not.toMatch(/border:\s*1px\s*solid/);
-    expect(style).not.toMatch(/border:\s*1px/);
+  it('keeps inputs distinguishable without boxing every workspace pane', () => {
+    expect(style).toContain('.feedback-composer textarea');
+    expect(style).toContain('border: 1px solid var(--ink-2)');
+    for (const selector of ['#pane', '#detail', '#inspector']) {
+      const rule = style.slice(style.indexOf(selector + ' {')).split('}')[0]!;
+      expect(rule).not.toMatch(/border:\s*1px\s*solid/);
+    }
   });
 
   it('uses system typography and flat, readable primary actions', () => {

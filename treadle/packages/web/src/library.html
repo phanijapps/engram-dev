@@ -851,6 +851,16 @@
         gap: var(--space-3);
         font-weight: 600;
       }
+      .task-row > summary::before {
+        content: '▸';
+        color: var(--ink-2);
+      }
+      .task-row[open] > summary::before {
+        content: '▾';
+      }
+      .task-row > summary > span:first-child {
+        flex: 1;
+      }
       .task-details {
         padding: var(--space-3) 0;
       }

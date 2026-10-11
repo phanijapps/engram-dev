@@ -132,6 +132,7 @@
           : 'Feedback unavailable. Retry after recovery. ') +
         e.message +
         ' Your local draft is retained.';
+      status.textContent = 'Action not completed. Your local draft is retained.';
       error.focus();
     }
     async function mutate(kind, fields) {
@@ -361,12 +362,26 @@
         view.side = view.target?.after ? 'after' : 'before';
         side.value = view.side;
       }
+      function syncSelection() {
+        host.querySelectorAll('.feedback-line').forEach((node) => {
+          const n = Number(node.dataset.line);
+          node.setAttribute(
+            'aria-pressed',
+            String(
+              node.dataset.side === view.side &&
+                n >= (view.anchor?.start || Infinity) &&
+                n <= (view.anchor?.end || -1),
+            ),
+          );
+        });
+      }
       function readRange() {
         view.anchor =
           start.value || end.value
             ? { start: Number(start.value), end: Number(end.value || start.value) }
             : null;
         save(draft().body, selectedAnchor());
+        syncSelection();
       }
       start.oninput = end.oninput = readRange;
       const target = view.target;
@@ -424,15 +439,7 @@
               end.value = view.anchor.end;
               save(draft().body, selectedAnchor());
               rangeDetails.open = true;
-              host.querySelectorAll('.feedback-line').forEach((node) => {
-                const n = Number(node.dataset.line);
-                node.setAttribute(
-                  'aria-pressed',
-                  String(
-                    node.dataset.side === name && n >= view.anchor.start && n <= view.anchor.end,
-                  ),
-                );
-              });
+              syncSelection();
               host.querySelector('#feedback-comment')?.focus();
             });
             line.className = 'feedback-line';
