@@ -1,0 +1,11 @@
+import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';import {join} from 'node:path';import {randomUUID} from 'node:crypto';
+import {emitBytes,mutateFeedback} from '../../../treadle/packages/core/dist/src/index.js';
+import {startProjects} from '../../../treadle/packages/web/dist/src/project-server.js';
+const root=mkdtempSync(join(tmpdir(),'feedback-rendered-')),dir=join(root,'specs/test'),wiki=join(root,'wiki');mkdirSync(dir,{recursive:true});mkdirSync(wiki);
+writeFileSync(join(dir,'test.json'),emitBytes({name:'test',title:'Browser feedback fixture',format:'specpack/0.4',revision:1,spec:{requirements:[],clarifications:[]},plan:{decisions:[]},tasks:[],workflow:{policy:'owner-gated/1',plan:1,phase_questions:{spec:[]},acts:[],pending_audit:[]}}));
+const after='# Review this selected document\n\n'+Array.from({length:18},(_,i)=>`Line ${i+1}: source text remains selectable and wraps on narrow layouts.`).join('\n');
+const receipt=mutateFeedback(dir,root,{by:'agent:render-fixture',operation_id:randomUUID(),expected_revision:0,action:{kind:'open',selection:{mode:'documents',paths:['example/long-but-explicitly-selected-document.md'],artifacts:[]},snapshots:[{key:'example',path:'example/long-but-explicitly-selected-document.md',before:null,after}]}});
+const ui=await startProjects(()=>[{id:'a'.repeat(24),label:'Seeded review fixture',workspace:root,wiki,specs:join(root,'specs'),available:true,wikiAvailable:true,specsAvailable:true}]);
+console.log(JSON.stringify({url:ui.url+'projects/'+ 'a'.repeat(24)+'/library/#/test/feedback?session='+receipt.session,workspace:root,session:receipt.session}));
+process.once('SIGTERM',async()=>{await ui.close();rmSync(root,{recursive:true,force:true});process.exit(0);});

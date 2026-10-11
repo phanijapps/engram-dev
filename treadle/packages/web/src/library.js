@@ -359,16 +359,23 @@ const TABS = [
   ['design', 'Design'],
   ['tasks', 'Tasks'],
   ['review', 'Review'],
+  ['feedback', 'Feedback'],
 ];
 function paintTabs() {
+  document.body.classList.toggle('feedback-active', S.tab === 'feedback');
   const mk = (id, label) =>
     `<button type="button" id="tab-${id}" class="tab" role="tab" aria-selected="${S.tab === id}" aria-controls="tabbody" tabindex="${S.tab === id ? '0' : '-1'}" data-tab="${id}">${label}</button>`;
   $('detail').innerHTML =
     `<div id="owner-panel"></div><div class="tabs" role="tablist" aria-label="Spec sections">${TABS.map(([i, l]) => mk(i, l)).join('')}</div><div id="tabbody" role="tabpanel" aria-labelledby="tab-${S.tab}" tabindex="0"></div>`;
   const body =
-    { overview: tabOverview, spec: tabSpec, design: tabDesign, tasks: tabTasks, review: tabReview }[
-      S.tab
-    ] || tabOverview;
+    {
+      overview: tabOverview,
+      spec: tabSpec,
+      design: tabDesign,
+      tasks: tabTasks,
+      review: tabReview,
+      feedback: () => '<div id="feedback-host"></div>',
+    }[S.tab] || tabOverview;
   $('tabbody').innerHTML = body();
   document.querySelectorAll('[data-tab]').forEach(
     (b) =>
@@ -383,6 +390,13 @@ function paintTabs() {
   renderDocs();
   paintActs();
   paintOwner();
+  if (S.tab === 'feedback') {
+    if (window.renderFeedback)
+      window.renderFeedback($('feedback-host'), S.sel, S.spec, libraryFetch);
+    else
+      $('feedback-host').textContent =
+        'Feedback is available in the connected shared project application. Ask your agent to open it.';
+  }
 }
 
 /* ── markdown docs (D-1) ─────────────────────────────────────────── */
@@ -880,7 +894,8 @@ function route() {
     S.tab = 'overview';
   } else if (parts[0]) {
     S.sel = parts[0];
-    S.tab = TABS.some(([t]) => t === parts[1]) ? parts[1] : 'overview';
+    const tab = (parts[1] || '').split('?')[0];
+    S.tab = TABS.some(([t]) => t === tab) ? tab : 'overview';
   } else S.sel = null;
   const onlyTab = S.sel === lastSel && S.spec; /* S-12: a tab switch never refetches */
   paintPane();

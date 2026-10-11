@@ -15,6 +15,8 @@ export interface FeedbackSelection {
   artifacts: string[];
   base?: string;
   head?: string;
+  base_ref?: string;
+  head_ref?: string;
 }
 export interface FeedbackSnapshotInput {
   key: string;

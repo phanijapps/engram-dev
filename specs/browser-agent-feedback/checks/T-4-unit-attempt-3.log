@@ -1,0 +1,36 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ❯ packages/web/test/feedback-ui.test.ts (6 tests | 1 failed) 1030ms
+   ✓ renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  448ms
+   ✓ preserves local input and line range across remount and revision conflicts 156ms
+   ✓ shows first-run, unsupported and closed states with disabled writes 109ms
+   ✓ retains original anchor, shows stale/replies and explicitly reattaches to an open new round 127ms
+   ✓ paginates large source without silently dropping lines and keeps Markdown preview opaque 133ms
+   × shows explicit old and new diff sides without interpreting either as app markup 55ms
+     → expected 'FeedbackReview comments guide revisio…' to contain 'diff review'
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/web/test/feedback-ui.test.ts > shows explicit old and new diff sides without interpreting either as app markup
+AssertionError: expected 'FeedbackReview comments guide revisio…' to contain 'diff review'
+
+Expected: "diff review"
+Received: "FeedbackReview comments guide revisions. Approval, Start and Finish remain separate owner actions.documents review · 0 unresolved · 0 stale · 0 drafts · 0 submitted batchesRefresh feedbackSelected targets: doc.mdReview sessiondocuments · 4010a467RoundRound 1 · openFiledoc.mdBeforeLines 1–1 of 11 original sourceMarkdown previewAfterLines 1–2 of 21 <img src=x onerror=alert(1)>2 oneMarkdown previewPrevious linesPage 1 of 1Next linesFirst line (optional)Last line (optional)Comment sideBeforeAfterCommentSave draft commentSubmit feedbackAn empty submission means no changes requested. It grants no approval permission.Waiting for your first submission. Your agent receives saved drafts only after Submit feedback.No comments yet.Threads"
+
+ ❯ packages/web/test/feedback-ui.test.ts:289:32
+    287|   const f = await fixture(true, 'diff');
+    288|   try {
+    289|     expect(f.host.textContent).toContain('diff review');
+       |                                ^
+    290|     expect(f.host.textContent).toContain('original source');
+    291|     expect(f.host.querySelector('[aria-label="before source"]')).not.t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  09:10:45
+   Duration  2.69s (transform 439ms, setup 0ms, collect 1.11s, tests 1.03s, environment 0ms, prepare 99ms)
+

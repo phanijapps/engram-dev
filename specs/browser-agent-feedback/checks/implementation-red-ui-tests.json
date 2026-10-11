@@ -1,0 +1,28 @@
+{
+  "command": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "packages/core/test/feedback.test.ts",
+    "packages/cli/test/feedback-cli.test.ts",
+    "packages/cli/test/feedback-snapshot.test.ts",
+    "packages/web/test/feedback-api.test.ts",
+    "packages/web/test/feedback-ui.test.ts",
+    "packages/web/test/project-security.test.ts",
+    "packages/web/test/project-library.test.ts"
+  ],
+  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "exit": 0,
+  "tests": 55,
+  "files": 7,
+  "log": "implementation-red-ui-tests.log",
+  "source_hashes": {
+    "treadle/packages/cli/src/commands/feedback.ts": "9dd4d3b567b6a84e1ba81ebc97cc84540b3cf805d768bdeb6070c66e29747fd0",
+    "treadle/packages/cli/src/harness/feedback-snapshot.ts": "ef03e002757bf75dcf9bdf0276d0deb77744419ce5e142f9810eb64b9e7b92ff",
+    "treadle/packages/core/src/feedback/model.ts": "d2e5b0111a5ef3ab1861586f323f08d6751dced4f6a24bf71a1026c3f5a0f5d1",
+    "treadle/packages/core/src/feedback/store.ts": "89b96dc31fb5fd13fde0e74ea6547fe1ac09c837afe3783833e2b268f41fbbea",
+    "treadle/packages/web/src/feedback.js": "cdcc4ffd33567420e873beda1e4ace7693f906595278f3d87245cb71416de54c",
+    "treadle/packages/web/src/library.html": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b"
+  }
+}

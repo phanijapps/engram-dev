@@ -152,6 +152,7 @@ export function buildFeedbackSnapshots(
   const checks: (() => void)[] = [];
   let snapshots: FeedbackSnapshotInput[];
   if (request.mode === 'documents') {
+    if (request.base || request.head) refuse('invalid', 'Git references apply only to diff review');
     const loaded = loadFeedbackPack(packDir, workspace);
     if (!loaded.ok) refuse('unavailable', loaded.message);
     const selected = [
@@ -206,8 +207,12 @@ export function buildFeedbackSnapshots(
       refuse('forbidden', 'Diff paths resolve from the enrolled Git root');
     const baseline = resolveFeedbackCommit(workspace, request.base);
     selection.base = baseline;
+    selection.base_ref = previous?.selection.base_ref ?? request.base;
     const head = request.head ? resolveFeedbackCommit(workspace, request.head) : undefined;
-    if (head) selection.head = head;
+    if (head) {
+      selection.head = head;
+      selection.head_ref = previous?.selection.head_ref ?? request.head!;
+    }
     checks.push(() => {
       if (
         resolveFeedbackCommit(workspace, request.base!) !== baseline ||

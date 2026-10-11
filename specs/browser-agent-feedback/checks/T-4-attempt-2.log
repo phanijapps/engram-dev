@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ ✓ packages/web/test/feedback-ui.test.ts (6 tests) 1043ms
+   ✓ renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  436ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  09:14:18
+   Duration  2.61s (transform 393ms, setup 0ms, collect 1.02s, tests 1.04s, environment 0ms, prepare 91ms)
+
+UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified
+exit: 0

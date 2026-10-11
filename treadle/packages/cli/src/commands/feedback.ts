@@ -17,11 +17,7 @@ import {
 } from '@treadle/core';
 import { stateDirectory, serviceStatus } from '../serve/runtime.js';
 import { listProjects, type ProjectView } from '../serve/projects.js';
-import {
-  buildFeedbackSnapshots,
-  resolveFeedbackCommit,
-  type SnapshotRequest,
-} from '../harness/feedback-snapshot.js';
+import { buildFeedbackSnapshots, type SnapshotRequest } from '../harness/feedback-snapshot.js';
 
 export function feedbackProject(packDir: string, registry = stateDirectory()): ProjectView {
   const path = realpathSync(packDir);
@@ -66,9 +62,19 @@ export function publishFeedbackSnapshots(
       mode: request.mode,
       paths: request.paths ?? [],
       artifacts: request.artifacts ?? [],
-      ...(request.base ? { base: resolveFeedbackCommit(workspace, request.base) } : {}),
-      ...(request.head ? { head: resolveFeedbackCommit(workspace, request.head) } : {}),
+      ...(request.base ? { base: s.selection.base!, base_ref: request.base } : {}),
+      ...(request.head ? { head: s.selection.head!, head_ref: request.head } : {}),
     };
+    if (previous) {
+      if (
+        JSON.stringify(request.paths ?? []) !== JSON.stringify(s.selection.paths) ||
+        JSON.stringify(request.artifacts ?? []) !== JSON.stringify(s.selection.artifacts) ||
+        request.mode !== s.selection.mode ||
+        request.base !== s.selection.base ||
+        request.head !== s.selection.head
+      )
+        throw new FeedbackError('conflict', 'Round retry changed its immutable selection');
+    }
     return mutateFeedback(packDir, workspace, {
       ...envelope,
       action: previous

@@ -1,0 +1,16 @@
+{
+  "observed_at": "2026-10-11T13:05:36.316037+00:00",
+  "head": "ccea33fddd09f445e5dc01295159e20f645174a2",
+  "hashes": {
+    "treadle/packages/core/src/feedback/store.ts": "89b96dc31fb5fd13fde0e74ea6547fe1ac09c837afe3783833e2b268f41fbbea",
+    "treadle/packages/cli/src/commands/feedback.ts": "9dd4d3b567b6a84e1ba81ebc97cc84540b3cf805d768bdeb6070c66e29747fd0",
+    "treadle/packages/cli/src/harness/feedback-snapshot.ts": "ef03e002757bf75dcf9bdf0276d0deb77744419ce5e142f9810eb64b9e7b92ff",
+    "treadle/packages/web/src/project-server.ts": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441",
+    "treadle/packages/web/src/feedback.ts": "fe3ebcb8dc6c0fd2144f6c95588ea2ddf18bd46d6e5d0072f8d4ab95620a95bb",
+    "treadle/packages/web/src/feedback.js": "da59a901816321708be9409f51534a48b5ef26192ed90b57dafc7c641750e105",
+    "treadle/packages/web/dist/src/project-server.js": "2f363fdb00288a498e58e16b0c035705795134d10d4b0a15718b70ca255c6a2d",
+    "treadle/packages/web/dist/src/feedback.js": "da59a901816321708be9409f51534a48b5ef26192ed90b57dafc7c641750e105"
+  },
+  "canonical_revision": 33,
+  "verdict": "FIX BEFORE DELIVERY \u2014 one CLI retry DEFECT; not PACK"
+}

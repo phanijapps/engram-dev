@@ -3,7 +3,7 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T12:55:15Z"
+    "updated": "2026-10-11T13:14:50Z"
   },
   "status": {
     "lifecycle": "active",
@@ -862,7 +862,7 @@
       "title": "Build the browser Feedback view",
       "detail": "All specified review states, keyboard selection, focus/labels, draft preservation, inert malicious text and separate owner controls pass; rendered responsive/manual evidence is attached. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions. The single declared verification command must execute both required checks; steps are explanatory and cannot substitute a unit-only evidence row.",
       "phase": "integration",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-3"
       ],
@@ -926,15 +926,18 @@
           },
           {
             "path": "treadle/packages/web/src/library.js",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "009536e3aa73c67bfa9592de03fd8c8a1a12e2fe557bdfd6e850a6a1959b777b"
           },
           {
             "path": "treadle/packages/web/src/library.html",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "6c6b84b4fa82098abdbda65d62c639f7f535823256c47d58631bab86a4518b8b"
           },
           {
             "path": "treadle/packages/web/src/project-server.ts",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "2d630f728a723cdd00de6f99d53a18abfda22d9bced4a85f6df1d627f3ec7af0"
           },
           {
             "path": "treadle/packages/web/test/feedback-ui.test.ts",
@@ -988,7 +991,16 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+          "exit": 0,
+          "at": "2026-10-11T13:14:50Z",
+          "by": "agent:codex",
+          "notes": "6 UI tests and UI witness verifier pass. HTML validation and axe subset0 violations;20 Chromium captures independently reviewed completed/pass, original failures retained. Actual logs checks/T-4-attempt-2.log, ui-witness.json and implementation-review-ui-repaired.md. No native human/PACK claim."
+        }
+      ]
     },
     {
       "id": "T-5",
@@ -1456,5 +1468,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 32
+  "revision": 34
 }

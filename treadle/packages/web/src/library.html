@@ -620,6 +620,104 @@
           transition: none !important;
         }
       }
+      :root {
+        --feedback-gap: var(--owner-gap);
+        --feedback-target: 36px;
+        --feedback-radius: 8px;
+        --feedback-pad: 8px;
+        --feedback-preview-height: 320px;
+      }
+      .feedback-active header {
+        position: static;
+      }
+      .feedback-content {
+        overflow-wrap: anywhere;
+      }
+      .feedback-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--feedback-gap);
+        align-items: end;
+        margin-block: var(--feedback-gap);
+      }
+      .feedback-controls label {
+        flex: 1 1 12rem;
+        min-width: 0;
+      }
+      .feedback-controls select,
+      .feedback-controls input {
+        width: 100%;
+        min-height: var(--feedback-target);
+        background: var(--surface-1);
+        color: var(--ink);
+      }
+      .feedback-sources {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+        gap: var(--feedback-gap);
+      }
+      .feedback-source {
+        min-width: 0;
+      }
+      .feedback-line {
+        display: flex;
+        gap: var(--feedback-gap);
+        min-height: var(--feedback-target);
+        width: 100%;
+        text-align: left;
+        padding: var(--feedback-pad);
+        background: var(--surface-1);
+        color: var(--ink);
+        border: 0;
+        border-radius: var(--feedback-radius);
+        margin-block: 2px;
+      }
+      .feedback-line:disabled {
+        opacity: 1;
+        cursor: default;
+      }
+      .feedback-line code {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        min-width: 0;
+        font-family: var(--voice-mono);
+      }
+      .feedback-number {
+        color: var(--ink-2);
+        flex: 0 0 3ch;
+      }
+      .feedback-content textarea {
+        width: 100%;
+        background: var(--surface-1);
+        color: var(--ink);
+      }
+      .feedback-preview {
+        width: 100%;
+        height: var(--feedback-preview-height);
+        border: 0;
+        background: var(--surface-1);
+      }
+      .feedback-thread {
+        padding: var(--feedback-gap);
+        border-radius: var(--feedback-radius);
+        background: var(--surface-2);
+        margin-block: var(--feedback-gap);
+      }
+      .feedback-thread .btn {
+        margin: var(--feedback-pad);
+      }
+      #feedback-error {
+        color: var(--error);
+      }
+      .feedback-content button,
+      .feedback-content summary {
+        min-height: var(--feedback-target);
+      }
+      @media (max-width: 900px) {
+        .feedback-sources {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
     </style>
   </head>
   <body>

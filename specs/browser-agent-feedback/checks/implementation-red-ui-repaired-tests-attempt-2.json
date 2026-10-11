@@ -1,0 +1,17 @@
+{
+  "observed_at": "2026-10-11T13:11:20.418783+00:00",
+  "command": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "packages/web/test/feedback-ui.test.ts",
+    "packages/web/test/feedback-api.test.ts",
+    "packages/web/test/project-security.test.ts",
+    "packages/web/test/project-library.test.ts"
+  ],
+  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "exit": 0,
+  "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/web/test/feedback-api.test.ts (3 tests) 186ms\n \u2713 packages/web/test/project-library.test.ts (2 tests) 257ms\n \u2713 packages/web/test/project-security.test.ts (3 tests) 300ms\n \u2713 packages/web/test/feedback-ui.test.ts (6 tests) 1020ms\n   \u2713 renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  441ms\n\n Test Files  4 passed (4)\n      Tests  14 passed (14)\n   Start at  09:11:17\n   Duration  2.21s (transform 521ms, setup 0ms, collect 2.98s, tests 1.76s, environment 1ms, prepare 393ms)\n\n",
+  "stderr": ""
+}

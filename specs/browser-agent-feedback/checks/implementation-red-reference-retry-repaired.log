@@ -1,0 +1,28 @@
+{
+  "movingBaseline": {
+    "first": {
+      "operation_id": "37b3b7be-4b97-4e9e-bfd2-5b75a4663bd5",
+      "revision": 1,
+      "session": "40ca100b-e8d7-45b2-ba35-702e1c50e529",
+      "round": "922e80ef-608a-4811-8be8-0154ffa2f1c5"
+    },
+    "replay": {
+      "operation_id": "37b3b7be-4b97-4e9e-bfd2-5b75a4663bd5",
+      "revision": 1,
+      "session": "40ca100b-e8d7-45b2-ba35-702e1c50e529",
+      "round": "922e80ef-608a-4811-8be8-0154ffa2f1c5"
+    },
+    "sameReceipt": true
+  },
+  "changedRef": {
+    "code": "conflict",
+    "message": "Operation ID was reused with another payload"
+  },
+  "documentExtraBaseline": {
+    "error": {
+      "code": "invalid",
+      "message": "Git references apply only to diff review"
+    },
+    "ledgerCreated": false
+  }
+}

@@ -1,0 +1,53 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 168ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 286ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 359ms
+ ❯ packages/web/test/feedback-ui.test.ts (6 tests | 2 failed) 2167ms
+   × renders inert source, keyboard line selection, draft save and explicit Submit without owner writes 1537ms
+     → UI did not settle
+   ✓ preserves local input and line range across remount and revision conflicts 167ms
+   ✓ shows first-run, unsupported and closed states with disabled writes 133ms
+   ✓ retains original anchor, shows stale/replies and explicitly reattaches to an open new round 129ms
+   ✓ paginates large source without silently dropping lines and keeps Markdown preview opaque 147ms
+   × shows explicit old and new diff sides without interpreting either as app markup 54ms
+     → expected 'FeedbackReview comments guide revisio…' to contain 'diff review'
+
+ Test Files  1 failed | 3 passed (4)
+      Tests  2 failed | 12 passed (14)
+   Start at  09:10:47
+   Duration  3.39s (transform 526ms, setup 0ms, collect 3.09s, tests 2.98s, environment 1ms, prepare 418ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/web/test/feedback-ui.test.ts > renders inert source, keyboard line selection, draft save and explicit Submit without owner writes
+Error: UI did not settle
+ ❯ until packages/web/test/feedback-ui.test.ts:117:9
+    115|     await new Promise((r) => setTimeout(r, 10));
+    116|   }
+    117|   throw Error('UI did not settle');
+       |         ^
+    118| }
+    119| function click(f: Awaited<ReturnType<typeof fixture>>, id: string) {
+ ❯ packages/web/test/feedback-ui.test.ts:146:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/web/test/feedback-ui.test.ts > shows explicit old and new diff sides without interpreting either as app markup
+AssertionError: expected 'FeedbackReview comments guide revisio…' to contain 'diff review'
+
+Expected: "diff review"
+Received: "FeedbackReview comments guide revisions. Approval, Start and Finish remain separate owner actions.documents review · 0 unresolved · 0 stale · 0 drafts · 0 submitted batchesRefresh feedbackSelected targets: doc.mdReview sessiondocuments · 98c2c68aRoundRound 1 · openFiledoc.mdBeforeLines 1–1 of 11 original sourceMarkdown previewAfterLines 1–2 of 21 <img src=x onerror=alert(1)>2 oneMarkdown previewPrevious linesPage 1 of 1Next linesFirst line (optional)Last line (optional)Comment sideBeforeAfterCommentSave draft commentSubmit feedbackAn empty submission means no changes requested. It grants no approval permission.Waiting for your first submission. Your agent receives saved drafts only after Submit feedback.No comments yet.Threads"
+
+ ❯ packages/web/test/feedback-ui.test.ts:289:32
+    287|   const f = await fixture(true, 'diff');
+    288|   try {
+    289|     expect(f.host.textContent).toContain('diff review');
+       |                                ^
+    290|     expect(f.host.textContent).toContain('original source');
+    291|     expect(f.host.querySelector('[aria-label="before source"]')).not.t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+

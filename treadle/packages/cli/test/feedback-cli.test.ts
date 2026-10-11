@@ -1,3 +1,4 @@
+import { execFileSync } from 'node:child_process';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
@@ -207,6 +208,38 @@ describe('portable CLI feedback', () => {
     expect(() =>
       publishFeedbackSnapshots(f.dir, f.root, { ...request, paths: ['different.md'] }, envelope),
     ).toThrow('another payload');
+  });
+  it('replays an identical diff open after a symbolic baseline moves and rejects changed request identity', () => {
+    const f = fixture();
+    const git = (...args: string[]) =>
+      execFileSync(
+        'git',
+        ['-c', 'core.hooksPath=/dev/null', '-c', 'commit.gpgsign=false', ...args],
+        { cwd: f.root, stdio: ['ignore', 'pipe', 'pipe'] },
+      );
+    git('init', '-q');
+    git('config', 'user.name', 'test');
+    git('config', 'user.email', 'test@example.invalid');
+    git('add', 'doc.md');
+    git('commit', '-qm', 'baseline');
+    const request = { mode: 'diff' as const, paths: ['doc.md'], base: 'HEAD' },
+      envelope = f.envelope();
+    const first = publishFeedbackSnapshots(f.dir, f.root, request, envelope);
+    writeFileSync(join(f.root, 'other.txt'), 'unrelated');
+    git('add', 'other.txt');
+    git('commit', '-qm', 'unrelated');
+    expect(publishFeedbackSnapshots(f.dir, f.root, request, envelope)).toEqual(first);
+    expect(() =>
+      publishFeedbackSnapshots(f.dir, f.root, { ...request, base: 'HEAD~1' }, envelope),
+    ).toThrow('another payload');
+    expect(() =>
+      publishFeedbackSnapshots(
+        f.dir,
+        f.root,
+        { mode: 'documents', paths: ['doc.md'], base: 'HEAD' },
+        f.envelope(),
+      ),
+    ).toThrow('only to diff');
   });
   it('does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs', async () => {
     const f = fixture();

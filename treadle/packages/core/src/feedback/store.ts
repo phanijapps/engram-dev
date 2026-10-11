@@ -169,6 +169,12 @@ function selection(value: FeedbackSelection): void {
     );
   if (value.head !== undefined)
     requireValue(/^[0-9a-f]{40,64}$/.test(value.head), 'Head must be a resolved commit');
+  for (const ref of [value.base_ref, value.head_ref])
+    if (ref !== undefined)
+      requireValue(
+        typeof ref === 'string' && ref.length > 0 && ref.length <= 4096 && !ref.includes('\0'),
+        'Invalid original Git reference',
+      );
 }
 function contentValid(
   content: FeedbackContent | null,

@@ -1,0 +1,7 @@
+{
+  "refusal": {
+    "code": "forbidden",
+    "message": "Symlink paths are not feedback targets"
+  },
+  "localLedgerCreated": false
+}

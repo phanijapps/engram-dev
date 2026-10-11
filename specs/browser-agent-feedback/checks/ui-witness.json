@@ -1,0 +1,40 @@
+{
+  "format": "feedback-ui-witness/1",
+  "observed_at": "2026-10-11T13:12:03.194485+00:00",
+  "sources": {
+    "treadle/packages/web/src/feedback.js": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+    "treadle/packages/web/src/library.js": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+    "treadle/packages/web/src/library.html": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+    "treadle/packages/web/src/project-server.ts": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441"
+  },
+  "inspection": {
+    "state": "completed",
+    "verdict": "pass"
+  },
+  "review": {
+    "by": "agent:red-foreman",
+    "file": "implementation-review-ui-repaired.md"
+  },
+  "html": {
+    "command": "html-validate --preset standard,a11y --max-warnings 0 treadle/packages/web/src/library.html",
+    "exit": 0,
+    "log": "checks/T-4-html-validation.log"
+  },
+  "a11y": {
+    "violations": 0,
+    "incomplete": 0,
+    "file": "checks/T-4-a11y-results.json",
+    "manual_target_size": "all enabled fixture controls at least24x24 CSS pixels",
+    "manual_focus": "keyboard reaches source and comment; 3px solid primary outline with3px offset observed",
+    "gap": "Full WCAG2.2AA unverified:2.4.11,2.5.7,3.2.6,3.3.7,3.3.8;2.4.13Focus Appearance is AAA enhancement"
+  },
+  "keyboard": {
+    "focus": {
+      "active": "feedback-comment",
+      "outline": "rgb(9, 76, 178) solid 3px",
+      "offset": "3px"
+    },
+    "submitted": true
+  },
+  "native_human_witness": false
+}

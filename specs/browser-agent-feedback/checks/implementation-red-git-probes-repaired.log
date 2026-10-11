@@ -1,0 +1,16 @@
+{
+  "ambientGitRouting": {
+    "ownHead": "9f57151788fd88e71e0af48c6b819408c1ae6ec0",
+    "foreignHead": "c3573af6a771ff6984de7bfc129669a00adee797",
+    "selectedBaseline": "9f57151788fd88e71e0af48c6b819408c1ae6ec0",
+    "before": "OWN selected baseline\n",
+    "after": "OWN selected baseline\n"
+  },
+  "lazyFetch": {
+    "configuredUploadpackExecuted": false,
+    "error": {
+      "code": "unavailable",
+      "message": "Git comparison is unavailable or exceeds its output bound"
+    }
+  }
+}
