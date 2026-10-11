@@ -1,0 +1,115 @@
+{
+  "scope": "Disposable Linux fixtures only; no prompts, no human owner actions, no Codex hook trust approval",
+  "results": [
+    {
+      "at": "2026-10-11T00:25:45.504Z",
+      "platform": "linux",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "package",
+        "harness",
+        "--agent",
+        "claude",
+        "--out",
+        "/tmp/harness-host-witness-g6mwG0/claude-fixed"
+      ],
+      "exit": 0,
+      "stdout": "/tmp/harness-host-witness-g6mwG0/claude-fixed\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-11T00:25:46.080Z",
+      "platform": "linux",
+      "command": [
+        "claude",
+        "plugin",
+        "validate",
+        "/tmp/harness-host-witness-g6mwG0/claude-fixed"
+      ],
+      "exit": 0,
+      "stdout": "Validating plugin manifest: /tmp/harness-host-witness-g6mwG0/claude-fixed/.claude-plugin/plugin.json\n\n⚠ Found 1 warning:\n\n  ❯ author: No author information provided. Consider adding author details for plugin attribution\n\nValidating skill: /tmp/harness-host-witness-g6mwG0/claude-fixed/skills/writer/SKILL.md\n\n⚠ Found 1 warning:\n\n  ❯ metadata: 'metadata' must be a mapping (key: value pairs); got array. It is dropped at load time.\n\nValidating skill: /tmp/harness-host-witness-g6mwG0/claude-fixed/skills/nodejs-craft/SKILL.md\n\n⚠ Found 1 warning:\n\n  ❯ metadata: 'metadata' must be a mapping (key: value pairs); got array. It is dropped at load time.\n\nValidating skill: /tmp/harness-host-witness-g6mwG0/claude-fixed/skills/nodejs-architecture/SKILL.md\n\n⚠ Found 1 warning:\n\n  ❯ metadata: 'metadata' must be a mapping (key: value pairs); got array. It is dropped at load time.\n\nValidating skill: /tmp/harness-host-witness-g6mwG0/claude-fixed/skills/boy-scout/SKILL.md\n\n⚠ Found 1 warning:\n\n  ❯ metadata: 'metadata' must be a mapping (key: value pairs); got array. It is dropped at load time.\n\n✔ Validation passed with warnings\n",
+      "stderr": ""
+    },
+    {
+      "at": "2026-10-11T00:25:46.117Z",
+      "platform": "linux",
+      "command": [
+        "codex",
+        "plugin",
+        "marketplace",
+        "add",
+        "/tmp/harness-host-witness-g6mwG0/codex",
+        "--json"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"marketplaceName\": \"treadle-local\",\n  \"installedRoot\": \"/tmp/harness-host-witness-g6mwG0/codex\",\n  \"alreadyAdded\": false\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/harness-host-witness-g6mwG0/codex-home\"))\n"
+    },
+    {
+      "at": "2026-10-11T00:25:46.150Z",
+      "platform": "linux",
+      "command": [
+        "codex",
+        "plugin",
+        "add",
+        "treadle-harness@treadle-local",
+        "--json"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"pluginId\": \"treadle-harness@treadle-local\",\n  \"name\": \"treadle-harness\",\n  \"marketplaceName\": \"treadle-local\",\n  \"version\": \"0.2.0\",\n  \"installedPath\": \"/tmp/harness-host-witness-g6mwG0/codex-home/plugins/cache/treadle-local/treadle-harness/0.2.0\",\n  \"authPolicy\": \"ON_INSTALL\"\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/harness-host-witness-g6mwG0/codex-home\"))\n"
+    },
+    {
+      "at": "2026-10-11T00:25:46.181Z",
+      "platform": "linux",
+      "command": [
+        "codex",
+        "plugin",
+        "list",
+        "--json"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"installed\": [\n    {\n      \"pluginId\": \"treadle-harness@treadle-local\",\n      \"name\": \"treadle-harness\",\n      \"marketplaceName\": \"treadle-local\",\n      \"version\": \"0.2.0\",\n      \"installed\": true,\n      \"enabled\": true,\n      \"source\": {\n        \"source\": \"local\",\n        \"path\": \"/tmp/harness-host-witness-g6mwG0/codex\"\n      },\n      \"marketplaceSource\": {\n        \"sourceType\": \"local\",\n        \"source\": \"/tmp/harness-host-witness-g6mwG0/codex\"\n      },\n      \"installPolicy\": \"AVAILABLE\",\n      \"authPolicy\": \"ON_INSTALL\"\n    }\n  ],\n  \"available\": []\n}\n",
+      "stderr": "WARNING: proceeding, even though we could not create PATH aliases: Refusing to create helper binaries under temporary dir \"/tmp\" (codex_home: AbsolutePathBuf(\"/tmp/harness-host-witness-g6mwG0/codex-home\"))\n"
+    },
+    {
+      "at": "2026-10-11T00:25:46.185Z",
+      "platform": "linux",
+      "command": [
+        "pi",
+        "--mode",
+        "rpc",
+        "--no-session",
+        "--offline",
+        "--no-extensions",
+        "--no-skills",
+        "--no-prompt-templates",
+        "--no-context-files",
+        "--no-mcp",
+        "--no-tools",
+        "-e",
+        "/tmp/harness-host-witness-g6mwG0/pi/extensions/project-context.ts"
+      ],
+      "exit": 143,
+      "signal": null,
+      "responded": true,
+      "stdout": "{\"id\":\"state-check\",\"type\":\"response\",\"command\":\"get_state\",\"success\":true,\"data\":{\"model\":{\"id\":\"unknown\",\"name\":\"unknown\",\"api\":\"unknown\",\"provider\":\"unknown\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":0,\"maxTokens\":0},\"thinkingLevel\":\"off\",\"isStreaming\":false,\"isCompacting\":false,\"steeringMode\":\"one-at-a-time\",\"followUpMode\":\"one-at-a-time\",\"sessionId\":\"01a12859-f4d2-7661-b676-36a2ca78bef9\",\"autoCompactionEnabled\":true,\"messageCount\":1,\"pendingMessageCount\":0}}\n",
+      "stderr": "",
+      "registered": true
+    },
+    {
+      "at": "2026-10-11T00:25:47.658Z",
+      "platform": "linux",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "stop",
+        "serve"
+      ],
+      "exit": 0,
+      "stdout": "Service stopped; the next session event can restart it.\n",
+      "stderr": ""
+    }
+  ]
+}

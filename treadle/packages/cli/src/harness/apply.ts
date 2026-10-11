@@ -13,15 +13,17 @@ import {
   type Stats,
 } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { runtimeEntry } from '../serve/runtime.js';
 import { normalize } from './content.js';
 import { destRoots } from './paths.js';
+import { wiringTarget } from './plan.js';
 import type { InstallChoices, Plan, PlanRow } from './types.js';
 
 const stateName = (agent: string): string => `harness-install.${agent}.json`;
 
 interface WiringRecord {
   target: string;
-  kind: 'settings-hooks' | 'config-notify';
+  kind: 'settings-hooks' | 'config-notify' | 'config-hooks';
   matcher: string;
   command: string;
 }
@@ -83,6 +85,21 @@ export function applyPlan(
   manifestRoot: string,
   at: string,
 ): ApplyResult {
+  const previous = existsSync(statePath(choices))
+    ? (JSON.parse(readFileSync(statePath(choices), 'utf8')) as StateDoc)
+    : undefined;
+  if (
+    previous &&
+    (previous.format !== 'harness/0.1' ||
+      previous.agent !== choices.agent ||
+      previous.scope !== choices.scope ||
+      !Array.isArray(previous.written) ||
+      !Array.isArray(previous.wirings))
+  )
+    throw Error('Incompatible install record; inspect it before updating');
+  for (const w of previous?.wirings ?? [])
+    if (w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind))
+      throw Error('Install record has an unexpected wiring target');
   const refused: PlanRow[] = [];
   const written: string[] = [];
   const removedLeftovers: string[] = [];
@@ -105,8 +122,8 @@ export function applyPlan(
   const wiringRefused: string[] = [];
   if (refused.length === 0) {
     for (const w of plan.wirings) {
-      if (w.kind === 'settings-hooks') {
-        const rec = mergeClaudeSettings(w.target, w.detail);
+      if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
+        const rec = mergeClaudeSettings(w.target, w.detail, w.kind);
         if (rec) {
           wiringRecords.push(rec);
           wiringNotes.push(`wired ${w.target} (${rec.matcher} → ${rec.command})`);
@@ -129,15 +146,46 @@ export function applyPlan(
   if (
     refused.length === 0 &&
     wiringRefused.length === 0 &&
+    choices.hooks &&
+    plan.rows.some((r) => r.kind === 'hook' && r.mode !== 'skip')
+  ) {
+    const roots = destRoots(choices.agent, choices.scope, choices.root);
+    const folder =
+      choices.agent === 'pi'
+        ? join(roots.base, choices.scope === 'project' ? '.pi/extensions' : 'extensions')
+        : join(roots.runtime, 'hooks');
+    const pointer = join(folder, 'runtime.json');
+    const value =
+      JSON.stringify(
+        { format: 'runtime-pointer/1', node: process.execPath, entry: runtimeEntry(), protocol: 1 },
+        null,
+        2,
+      ) + '\n';
+    if (existsSync(pointer) && readFileSync(pointer, 'utf8') !== value && !choices.force)
+      wiringRefused.push('Runtime pointer differs; inspect it before using --force');
+    else {
+      mkdirSync(folder, { recursive: true });
+      writeFileSync(pointer, value);
+      written.push(pointer);
+    }
+  }
+  if (
+    refused.length === 0 &&
+    wiringRefused.length === 0 &&
     (written.length > 0 || wiringRecords.length > 0)
   ) {
+    if (choices.hooks)
+      for (const old of previous?.wirings ?? [])
+        if (!wiringRecords.some((current) => JSON.stringify(current) === JSON.stringify(old)))
+          unwireRecorded(old);
     mkdirSync(dirname(statePath(choices)), { recursive: true });
     const doc: StateDoc = {
       format: 'harness/0.1',
       agent: choices.agent,
       scope: choices.scope,
-      written,
-      wirings: wiringRecords,
+      // Partial component updates retain ownership of earlier installed files.
+      written: [...new Set([...(previous?.written ?? []), ...written])],
+      wirings: choices.hooks ? wiringRecords : [...(previous?.wirings ?? []), ...wiringRecords],
       at,
     };
     writeFileSync(statePath(choices), JSON.stringify(doc, null, 2) + '\n');
@@ -145,7 +193,11 @@ export function applyPlan(
   return { written: written.length, removedLeftovers, refused, wiringNotes, wiringRefused };
 }
 
-function mergeClaudeSettings(target: string, detail: string): WiringRecord | null {
+function mergeClaudeSettings(
+  target: string,
+  detail: string,
+  kind: WiringRecord['kind'] = 'settings-hooks',
+): WiringRecord | null {
   const [matcher, command] = detail.split(' → ');
   if (!matcher || !command) return null;
   let doc: Record<string, unknown> = {};
@@ -156,15 +208,35 @@ function mergeClaudeSettings(target: string, detail: string): WiringRecord | nul
       return null; // foreign settings file — the caller reports the refusal (R2 #10)
     }
   }
+  if (
+    !doc ||
+    typeof doc !== 'object' ||
+    Array.isArray(doc) ||
+    (doc['hooks'] !== undefined &&
+      (!doc['hooks'] || typeof doc['hooks'] !== 'object' || Array.isArray(doc['hooks'])))
+  )
+    return null;
   const hooks = (doc['hooks'] as Record<string, unknown[]> | undefined) ?? (doc['hooks'] = {});
   const entries =
     (hooks[matcher] as { hooks: { type: string; command: string }[] }[] | undefined) ??
     (hooks[matcher] = []);
-  const already = entries.some((e) => e.hooks?.some((h) => h.command === command));
-  if (!already) entries.push({ hooks: [{ type: 'command', command }] });
+  if (
+    !Array.isArray(entries) ||
+    entries.some(
+      (e) => !e || typeof e !== 'object' || (e.hooks !== undefined && !Array.isArray(e.hooks)),
+    )
+  )
+    return null;
+  const definition = command.startsWith('{')
+    ? (JSON.parse(command) as { type: string; command: string; args?: string[] })
+    : { type: 'command', command };
+  const already = entries.some((e) =>
+    e.hooks?.some((h) => JSON.stringify(h) === JSON.stringify(definition)),
+  );
+  if (!already) entries.push({ hooks: [definition] });
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(target, JSON.stringify(doc, null, 2) + '\n');
-  return { target, kind: 'settings-hooks', matcher, command };
+  return { target, kind, matcher, command };
 }
 
 function setCodexNotify(target: string, command: string): WiringRecord | null {
@@ -175,8 +247,9 @@ function setCodexNotify(target: string, command: string): WiringRecord | null {
     .split('\\')
     .join('/');
   const line = `notify = ["node", "${arg}"]`;
-  if (/^notify\s*=/m.test(text)) text = text.replace(/^notify\s*=.*$/m, line);
-  else text = (text.endsWith('\n') || text === '' ? text : text + '\n') + line + '\n';
+  if (/^notify\s*=/m.test(text)) {
+    if (!text.split('\n').some((l) => l === line)) return null;
+  } else text = (text.endsWith('\n') || text === '' ? text : text + '\n') + line + '\n';
   mkdirSync(dirname(target), { recursive: true });
   try {
     writeFileSync(target, text);
@@ -184,6 +257,49 @@ function setCodexNotify(target: string, command: string): WiringRecord | null {
     return null;
   }
   return { target, kind: 'config-notify', matcher: 'notify', command: line };
+}
+
+function unwireRecorded(w: WiringRecord): boolean {
+  if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
+    if (existsSync(w.target)) {
+      try {
+        const d = JSON.parse(readFileSync(w.target, 'utf8')) as Record<string, unknown>;
+        const hooks = d['hooks'] as Record<string, { hooks: { command: string }[] }[]> | undefined;
+        const entries = hooks?.[w.matcher];
+        if (entries) {
+          hooks[w.matcher] = entries
+            .map((e) => ({
+              ...e,
+              hooks: (e.hooks ?? []).filter((h) =>
+                w.command.startsWith('{')
+                  ? JSON.stringify(h) !== w.command
+                  : h.command !== w.command,
+              ),
+            }))
+            .filter((e) => e.hooks.length > 0);
+          if ((hooks[w.matcher] ?? []).length === 0) delete hooks[w.matcher];
+          if (Object.keys(hooks).length === 0) delete d['hooks'];
+          writeFileSync(w.target, JSON.stringify(d, null, 2) + '\n');
+          return true;
+        }
+      } catch {
+        // foreign file now — leave it; --remove deletes only what we wrote
+      }
+    }
+  } else if (w.kind === 'config-notify') {
+    if (existsSync(w.target)) {
+      const text = readFileSync(w.target, 'utf8');
+      const without = text
+        .split('\n')
+        .filter((l) => l.trim() !== w.command.trim())
+        .join('\n');
+      if (without !== text) {
+        writeFileSync(w.target, without);
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 export interface RemoveResult {
@@ -208,7 +324,15 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
     p.startsWith(roots.runtime + sep);
   const tampered: string[] = [];
   const removed: string[] = [];
-  for (const p of [...doc.written].sort().reverse()) {
+  const shared = new Set<string>();
+  for (const f of readdirSync(roots.state).filter(
+    (f) => /^harness-install\..+\.json$/.test(f) && join(roots.state, f) !== sp,
+  )) {
+    const other = JSON.parse(readFileSync(join(roots.state, f), 'utf8')) as StateDoc;
+    for (const file of other.written ?? []) shared.add(file);
+  }
+  for (const p of [...new Set(doc.written)].sort().reverse()) {
+    if (shared.has(p)) continue;
     if (!insideRoots(p)) {
       tampered.push(p); // the state file is data — data never arms deletion outside the roots
       continue;
@@ -225,39 +349,9 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
   }
   const unwired: string[] = [];
   for (const w of doc.wirings) {
-    if (w.kind === 'settings-hooks') {
-      if (existsSync(w.target)) {
-        try {
-          const d = JSON.parse(readFileSync(w.target, 'utf8')) as Record<string, unknown>;
-          const hooks = d['hooks'] as
-            Record<string, { hooks: { command: string }[] }[]> | undefined;
-          const entries = hooks?.[w.matcher];
-          if (entries) {
-            hooks[w.matcher] = entries
-              .map((e) => ({ hooks: (e.hooks ?? []).filter((h) => h.command !== w.command) }))
-              .filter((e) => e.hooks.length > 0);
-            if ((hooks[w.matcher] ?? []).length === 0) delete hooks[w.matcher];
-            if (Object.keys(hooks).length === 0) delete d['hooks'];
-            writeFileSync(w.target, JSON.stringify(d, null, 2) + '\n');
-            unwired.push(w.target);
-          }
-        } catch {
-          // foreign file now — leave it; --remove deletes only what we wrote
-        }
-      }
-    } else if (w.kind === 'config-notify') {
-      if (existsSync(w.target)) {
-        const text = readFileSync(w.target, 'utf8');
-        const without = text
-          .split('\n')
-          .filter((l) => l.trim() !== w.command.trim())
-          .join('\n');
-        if (without !== text) {
-          writeFileSync(w.target, without);
-          unwired.push(w.target);
-        }
-      }
-    }
+    if (w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind))
+      throw Error('Install record has an unexpected wiring target');
+    if (unwireRecorded(w)) unwired.push(w.target);
   }
   // prune empty dirs we created (only if empty — never foreign content)
   for (const p of removed) {

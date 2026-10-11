@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-10T23:54:18.113Z",
+  "scope": "Published contracts and local executable versions only; real-host adapter and native OS witnesses pending T-12",
+  "observations": [
+    {
+      "host": "codex",
+      "platform": "linux",
+      "command": "codex --version",
+      "exit": 0,
+      "version": "codex-cli 0.162.1",
+      "error": null
+    },
+    {
+      "host": "claude",
+      "platform": "linux",
+      "command": "claude --version",
+      "exit": 0,
+      "version": "2.1.233 (Claude Code)",
+      "error": null
+    },
+    {
+      "host": "pi",
+      "platform": "linux",
+      "command": "pi --version",
+      "exit": 0,
+      "version": "1.1.0",
+      "error": null
+    }
+  ]
+}

@@ -135,7 +135,7 @@ describe('the installer engine (T-1)', () => {
       const c = choices(root, manifestPath);
       const plan = compilePlan(lm.manifest, lm.root, c);
       const out = applyPlan(plan, c, lm.root, '2026-10-10T00:00:00Z');
-      expect(out.written).toBe(4); // SKILL.md + extra.md + agent + hook
+      expect(out.written).toBe(5); // SKILL.md + extra.md + agent + hook
       expect(existsSync(join(root, '.pi/skills/alpha/SKILL.md'))).toBe(true);
       expect(existsSync(join(root, '.pi/agents/one.md'))).toBe(true);
       expect(existsSync(statePath(c))).toBe(true);
@@ -204,10 +204,10 @@ describe('the installer engine (T-1)', () => {
       applyPlan(compilePlan(lm.manifest, lm.root, c), c, lm.root, 't');
       const settings = JSON.parse(readFileSync(join(root, '.claude/settings.json'), 'utf8')) as {
         env: { KEEP: string };
-        hooks: Record<string, { hooks: { command: string }[] }[]>;
+        hooks: Record<string, { hooks: { command: string; args?: string[] }[] }[]>;
       };
       expect(settings.env.KEEP).toBe('me'); // unknown keys preserved
-      expect(settings.hooks['PostToolUse'][0]?.hooks[0]?.command).toContain(
+      expect(settings.hooks['PostToolUse'][0]?.hooks[0]?.args?.[0]).toContain(
         '.harness/hooks/check.js',
       );
 
@@ -257,6 +257,8 @@ describe('the installer engine (T-1)', () => {
 
   it('R2 #1: per-agent state files — two agents never clobber each other', () => {
     const { root, manifestPath } = harnessFixture();
+    const previousHome = process.env.HOME;
+    process.env.HOME = root;
     try {
       const lm = loadManifest(manifestPath);
       const cPi = choices(root, manifestPath, { agent: 'pi' });
@@ -272,6 +274,7 @@ describe('the installer engine (T-1)', () => {
       expect(existsSync(join(root, '.codex/skills/alpha/SKILL.md'))).toBe(true);
       expect(existsSync(join(root, '.harness/harness-install.codex.json'))).toBe(true);
     } finally {
+      process.env.HOME = previousHome;
       rmSync(root, { recursive: true, force: true });
     }
   });
@@ -404,3 +407,77 @@ function capture(
 
 // UsageError imported for the engine-level guarantee (types must export it)
 expect(UsageError).toBeDefined();
+
+it('preserves foreign notify and nested hook metadata; shared payload survives removal of one surface', () => {
+  const { root, manifestPath } = harnessFixture();
+  const oldHome = process.env.HOME;
+  process.env.HOME = root;
+  try {
+    const lm = loadManifest(manifestPath),
+      claude = choices(root, manifestPath, { agent: 'claude' }),
+      pi = choices(root, manifestPath, { agent: 'pi' });
+    mkdirSync(join(root, '.claude'), { recursive: true });
+    writeFileSync(
+      join(root, '.claude/settings.json'),
+      JSON.stringify({
+        hooks: {
+          PostToolUse: [
+            { matcher: 'foreign', extra: 1, hooks: [{ type: 'command', command: 'foreign' }] },
+          ],
+        },
+      }),
+    );
+    applyPlan(compilePlan(lm.manifest, lm.root, claude), claude, lm.root, 't');
+    applyPlan(compilePlan(lm.manifest, lm.root, pi), pi, lm.root, 't');
+    removeInstall(claude);
+    const json = JSON.parse(readFileSync(join(root, '.claude/settings.json'), 'utf8'));
+    expect(json.hooks.PostToolUse[0].matcher).toBe('foreign');
+    expect(json.hooks.PostToolUse[0].extra).toBe(1);
+    mkdirSync(join(root, '.codex'), { recursive: true });
+    writeFileSync(join(root, '.codex/config.toml'), 'notify = ["foreign"]\n');
+    const codex = choices(root, manifestPath, { agent: 'codex' }),
+      out = applyPlan(compilePlan(lm.manifest, lm.root, codex), codex, lm.root, 't');
+    expect(out.wiringRefused).toHaveLength(1);
+    expect(readFileSync(join(root, '.codex/config.toml'), 'utf8')).toBe('notify = ["foreign"]\n');
+  } finally {
+    process.env.HOME = oldHome;
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+it('retains partial install ownership and replaces only recorded obsolete hook definitions', () => {
+  const { root, manifestPath } = harnessFixture();
+  try {
+    const lm = loadManifest(manifestPath),
+      full = choices(root, manifestPath, { agent: 'claude' });
+    applyPlan(compilePlan(lm.manifest, lm.root, full), full, lm.root, 'first');
+    const settings = join(root, '.claude/settings.json');
+    const original = JSON.parse(readFileSync(settings, 'utf8'));
+    original.hooks.PostToolUse.push({
+      matcher: 'foreign',
+      hooks: [{ type: 'command', command: 'foreign' }],
+    });
+    writeFileSync(settings, JSON.stringify(original));
+    const changed = structuredClone(lm.manifest);
+    const wiring = changed.hooks[0]!.wiring.claude as {
+      kind: string;
+      matcher: string;
+      command: string;
+    };
+    wiring.matcher = 'SessionStart';
+    const hooks = { ...full, skills: [], agents: false };
+    applyPlan(compilePlan(changed, lm.root, hooks), hooks, lm.root, 'upgrade');
+    const current = JSON.parse(readFileSync(settings, 'utf8'));
+    expect(current.hooks.PostToolUse).toEqual([
+      { matcher: 'foreign', hooks: [{ type: 'command', command: 'foreign' }] },
+    ]);
+    expect(current.hooks.SessionStart).toHaveLength(1);
+    const state = JSON.parse(readFileSync(statePath(full), 'utf8'));
+    expect(state.written.some((p: string) => p.endsWith('SKILL.md'))).toBe(true);
+    removeInstall(full);
+    expect(existsSync(join(root, '.claude/skills/alpha/SKILL.md'))).toBe(false);
+    expect(JSON.parse(readFileSync(settings, 'utf8')).hooks.PostToolUse[0].matcher).toBe('foreign');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

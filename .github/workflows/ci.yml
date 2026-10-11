@@ -20,7 +20,7 @@ jobs:
         with: { version: 9 }
       - uses: actions/setup-node@v4
         with:
-          node-version: '${{ matrix.node }}'
+          node-version: "${{ matrix.node }}"
           cache: pnpm
           cache-dependency-path: treadle/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
@@ -30,3 +30,13 @@ jobs:
       - run: pnpm audit:prod
       - name: conformance
         run: pnpm --filter @treadle/conformance test
+      - name: portable runtime package
+        run: node scripts/verify-runtime-package.mjs
+      - name: background harness journey
+        run: node scripts/harness-smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: harness-smoke-${{ runner.os }}-${{ matrix.node }}
+          path: ${{ runner.temp }}/harness-smoke.json
+          if-no-files-found: warn

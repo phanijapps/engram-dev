@@ -1,0 +1,15 @@
+{
+  "scope": "Proposal-only checks; no task execution or owner acts",
+  "at": "2026-10-10T23:45:17.543Z",
+  "revision": 4,
+  "tasks": 14,
+  "proposed_decisions": 5,
+  "alignment_violations": 0,
+  "alignment_gaps": 0,
+  "artifact_hashes_verified": true,
+  "plan_digest": "eb3c9a0cf249bee9debb2aa7324600147ec59204853013a274335504421f0643",
+  "execution_refused": true,
+  "workflow_phase": "decisions",
+  "owner_acts": 0,
+  "task_evidence": 0
+}

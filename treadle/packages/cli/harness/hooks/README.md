@@ -1,18 +1,26 @@
-# harness hooks
+# Harness lifecycle hooks
 
-Hooks are plain Node JavaScript files. One file, one concern. No
-dependencies, no build step. They run with the user's node.
+The authoritative manifest defines host-specific wiring and companion files.
+The lifecycle bridge uses Node and a versioned runtime pointer; installation
+and native packaging include its shared helper. Do not copy a wrapper alone.
 
-The contract (harness/0.1):
+Claude and Codex SessionStart/UserPromptSubmit receive bounded JSON on stdin
+and return hook-specific additional context. The bridge ensures the shared
+service, connects the explicit event cwd, and reads context without task
+admission or owner actions. Failure emits bootstrap/retry guidance. Closing a
+session does not stop the service. A stopped service reconnects on the next
+event. Codex requires explicit host hook trust; inactive hooks need manual
+`<harness CLI> project connect <workspace>` and `context --workspace <workspace>`.
 
-- A hook reads its input from argv (a single JSON string) and prints
-  its decision to stdout as JSON. Exit 0 = pass; exit 3 = refuse
-  (the surface receives the refusal); any other exit = error.
-- A hook never writes outside a path it was given. A hook never
-  guesses: missing input is an error, not a pass.
-- Wiring is per surface and lives in `harness.json`: pi loads the
-  file as an extension, Claude Code invokes it through a settings
-  matcher, Codex invokes it through config notify, Copilot has no
-  hook mechanism (null — printed honestly in every plan).
+Pi loads session-recall as an extension, using `ctx.cwd` for session_start and
+before_agent_start. Its companion helper registers no handlers. The native
+package loads the extension wrapper explicitly. Use one installation mode per
+host; loading native and compatibility callbacks together is unsupported.
+Native custom-agent packaging is limited to Claude. Copilot has no lifecycle
+hook wiring in this manifest.
 
-The first payload lands with the surface adapters (T-3).
+The separate machine-managed guard retains its legacy argv JSON contract
+(exit 0 pass, 3 refusal, 1 malformed input) and pi tool_call blocking. Claude
+PostToolUse is an advisory after-the-fact check, not a write admission gate.
+The core task and owner workflow remain authoritative. Legacy recall argv
+options are compatibility helpers, not the current lifecycle protocol.

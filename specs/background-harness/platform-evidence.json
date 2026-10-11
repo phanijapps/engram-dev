@@ -1,0 +1,12 @@
+{
+  "format": "release-matrix/1",
+  "runtimeFiles": ["linux-smoke.json"],
+  "hostObservations": "host-observations.json",
+  "requiredRuntimePlatforms": ["linux", "darwin", "win32"],
+  "pendingHostJourneys": [
+    "Claude Code lifecycle, reload/removal and user activation on each required OS",
+    "Codex CLI lifecycle with human exact-file hook trust on each required OS",
+    "Codex desktop lifecycle and IDE fallback separately",
+    "pi native package install/update/removal and session events on each required OS"
+  ]
+}

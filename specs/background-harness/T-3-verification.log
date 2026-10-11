@@ -1,0 +1,49 @@
+
+Attempt 2026-10-11T00:00:37.980Z exit 1
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ❯ packages/cli/test/serve-runtime.test.ts (5 tests | 1 failed) 757ms
+   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  414ms
+   × shared service lifecycle > requires exact Host, token and absent Origin, including Unicode credentials 30ms
+     → expected 200 to be 403 // Object.is equality
+   ✓ shared service lifecycle > never stops or overwrites an unverified live PID or malformed descriptor 3ms
+   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  304ms
+   ✓ shared service lifecycle > uses another UI port when the preferred one belongs to another app 5ms
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:00:36
+   Duration  1.35s (transform 87ms, setup 0ms, collect 96ms, tests 757ms, environment 0ms, prepare 97ms)
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/cli/test/serve-runtime.test.ts > shared service lifecycle > requires exact Host, token and absent Origin, including Unicode credentials
+AssertionError: expected 200 to be 403 // Object.is equality
+
+- Expected
++ Received
+
+- 403
++ 200
+
+ ❯ packages/cli/test/serve-runtime.test.ts:27:82
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+Attempt 2026-10-11T00:01:06.617Z exit 0
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/cli/test/serve-runtime.test.ts (5 tests) 822ms
+   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  479ms
+   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  305ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  20:01:04
+   Duration  1.42s (transform 84ms, setup 0ms, collect 89ms, tests 822ms, environment 0ms, prepare 107ms)
+

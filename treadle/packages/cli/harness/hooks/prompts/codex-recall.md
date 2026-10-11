@@ -1,21 +1,12 @@
-# recall — where does work dangle?
+# Project context
 
-Run this at the start of a session, or whenever the user says
-"continue" and you are not sure which work they mean:
+When this host supports trusted lifecycle hooks, they reconnect this workspace and supply current context at startup/resume and before a prompt. Enable the integration, review the current hook definition and reload the host.
 
-    <harness CLI> do where <workspace>
+If hooks are unavailable or untrusted, run the installed harness CLI:
 
-The command lists every open spec (stage, open questions, next ready
-task, revision, last evidence) across live specs roots and git
-worktrees. The archive is never listed; delivered work is not work in
-flight.
+    <harness CLI> project connect <workspace>
+    <harness CLI> context --workspace <workspace>
 
-## The rule this surface cannot enforce
+Native plugins are unavailable in the current IDE extension. Project hook configuration depends on the host version; use the commands above when it does not run. Runtime, host activation and project enrollment are separate states.
 
-On pi and Claude Code, a hard gate intercepts continue-shaped first
-messages when more than one spec is open and asks which one. Codex has
-no such hook — so the rule lives in YOU: if more than one spec is
-open and the user says continue (or go on / resume / pick up), do not
-choose. List the open specs and ask which one. Never guess.
-
-One spec open → continue resolves to it. None open → say so.
+If more than one spec is open, ask which to continue. Context candidates are not admitted tasks. Read the core gate and handout. New specs use `do init <packDir> --owner-gated`; owner answers, decisions, Start and Finish remain separate human actions.

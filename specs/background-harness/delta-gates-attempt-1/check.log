@@ -1,0 +1,15 @@
+
+> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+
+/home/videogamer/code/memex_beta/treadle/scripts/harness-smoke.mjs
+  39:26  error  'fetch' is not defined  no-undef
+  44:28  error  'fetch' is not defined  no-undef
+
+/home/videogamer/code/memex_beta/treadle/scripts/package-runtime.mjs
+  29:13  error  'Buffer' is not defined  no-undef
+
+✖ 3 problems (3 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

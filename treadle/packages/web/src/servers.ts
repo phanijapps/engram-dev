@@ -7,9 +7,9 @@
  */
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
 import { readFile, readdir } from 'node:fs/promises';
-import { existsSync, realpathSync } from 'node:fs';
+import { existsSync, realpathSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { join, resolve, dirname, sep } from 'node:path';
+import { join, resolve, dirname, sep, relative, isAbsolute } from 'node:path';
 import {
   alignment,
   withPackLock,
@@ -48,7 +48,7 @@ const WEB = assetRoot();
 const NAME_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const FILE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]*\.md$/;
 
-type Handler = (req: IncomingMessage, res: ServerResponse, body: string) => Promise<void>;
+export type Handler = (req: IncomingMessage, res: ServerResponse, body: string) => Promise<void>;
 
 function denied(status: number, message: string): Error & { status: number } {
   return Object.assign(new Error(message), { status });
@@ -71,7 +71,7 @@ function json(res: ServerResponse, code: number, obj: unknown): void {
 
 /** The security headers every surface speaks (R25): CSP pins the page to
  *  itself + inline config injection; no sniffing; same-origin framing only. */
-const SECURITY_HEADERS: Record<string, string> = {
+export const SECURITY_HEADERS: Record<string, string> = {
   'Content-Security-Policy':
     "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'none'",
   'X-Content-Type-Options': 'nosniff',
@@ -79,9 +79,13 @@ const SECURITY_HEADERS: Record<string, string> = {
   'Referrer-Policy': 'no-referrer',
 };
 
-async function asset(res: ServerResponse, file: string, type: string): Promise<void> {
+export function readWebAsset(file: string): Promise<Buffer> {
+  return readFile(join(WEB, file));
+}
+
+export async function asset(res: ServerResponse, file: string, type: string): Promise<void> {
   try {
-    const bytes = await readFile(join(WEB, file));
+    const bytes = await readWebAsset(file);
     res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'no-store', ...SECURITY_HEADERS });
     res.end(bytes);
   } catch {
@@ -101,7 +105,7 @@ async function admit(
   const option = typeof body['option'] === 'string' ? body['option'] : undefined;
   const at = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
   const transaction = withPackLock(packDir, () => {
-    const loaded = loadPackWithMeta(packDir);
+    const loaded = loadContainedPack(packDir);
     if (!loaded.ok) throw denied(400, loaded.message);
     const { doc, path } = loaded.value;
     if (
@@ -162,7 +166,7 @@ function admitWorkflow(
   owner: string,
 ): Record<string, unknown> {
   const transaction = withPackLock(packDir, () => {
-    const loaded = loadPackWithMeta(packDir);
+    const loaded = loadContainedPack(packDir);
     if (!loaded.ok) throw denied(400, loaded.message);
     const { doc, path } = loaded.value;
     const by = typeof body['by'] === 'string' ? body['by'] : owner;
@@ -256,11 +260,23 @@ function guardOrigin(req: IncomingMessage): void {
   if (origin && origin !== `http://${req.headers.host}`)
     throw denied(403, 'Use this page to record owner actions');
 }
+function loadContainedPack(dir: string): ReturnType<typeof loadPackWithMeta> {
+  const root = realpathSync(dir);
+  for (const file of readdirSync(root).filter((file) => file.endsWith('.json'))) {
+    const rel = relative(root, realpathSync(join(root, file)));
+    if (!rel || rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel))
+      throw denied(404, 'Spec JSON escapes its directory');
+  }
+  return loadPackWithMeta(dir);
+}
 function packDirectory(root: string, name: string): string {
+  if (name === 'archive' || name.startsWith('.')) throw denied(404, 'No such spec');
   try {
     const parent = realpathSync(root);
     const dir = realpathSync(join(root, name));
-    if (!dir.startsWith(parent + sep)) throw denied(404, 'No such spec');
+    const rel = relative(parent, dir);
+    if (!rel || rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel))
+      throw denied(404, 'No such spec');
     return dir;
   } catch {
     throw denied(404, 'No such spec');
@@ -305,7 +321,7 @@ export function startRoom(packDir: string, port = 0, owner = 'human:owner'): Pro
     if (url === '/marked.min.js')
       return asset(res, 'marked.min.js', 'text/javascript; charset=utf-8');
     if (url === '/spec') {
-      const loaded = loadPackWithMeta(packDir);
+      const loaded = loadContainedPack(packDir);
       if (!loaded.ok) throw denied(400, loaded.message);
       const { emit } = await import('@treadle/core');
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -314,7 +330,7 @@ export function startRoom(packDir: string, port = 0, owner = 'human:owner'): Pro
     }
     if (url === '/workflow') {
       if (req.method === 'GET') {
-        const l = loadPackWithMeta(packDir);
+        const l = loadContainedPack(packDir);
         if (!l.ok) throw denied(400, l.message);
         json(res, 200, workflowReport(l.value.doc, l.value.path));
         return;
@@ -374,9 +390,9 @@ async function listSpecs(root: string): Promise<{ specs: unknown[]; legacy: unkn
     return { specs, legacy };
   }
   for (const e of entries.sort((a, b) => a.name.localeCompare(b.name))) {
-    if (!e.isDirectory()) continue;
+    if (!e.isDirectory() || ['archive', '.okf'].includes(e.name)) continue;
     const d = join(root, e.name);
-    const loaded = loadPackWithMeta(d);
+    const loaded = loadContainedPack(d);
     if (!loaded.ok) {
       const files = (await readdir(d)).filter((f) => f.endsWith('.md')).sort();
       legacy.push({ name: e.name, title: e.name.replace(/-/g, ' '), files });
@@ -401,8 +417,8 @@ async function listSpecs(root: string): Promise<{ specs: unknown[]; legacy: unkn
 }
 
 /** The library: every pack under a root, standing. */
-export function startLibrary(root: string, port = 0, owner = 'human:owner'): Promise<RoomHandle> {
-  const server = makeServer(async (req, res, body) => {
+export function libraryHandler(root: string, owner = 'human:owner'): Handler {
+  return async (req, res, body) => {
     const url = req.url ?? '/';
     const path = url.split('?')[0]!;
     if (path === '/') return asset(res, 'library.html', 'text/html; charset=utf-8');
@@ -433,7 +449,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
         return;
       }
       if (req.method === 'GET') {
-        const loaded = loadPackWithMeta(dir);
+        const loaded = loadContainedPack(dir);
         if (!loaded.ok) throw denied(400, loaded.message);
         json(res, 200, workflowReport(loaded.value.doc, loaded.value.path));
         return;
@@ -445,7 +461,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       // sentence, no invented wording; corpus and engine untouched
       const name = decodeOr(path.slice('/alignment/'.length));
       if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
-      const loaded = loadPackWithMeta(join(root, name));
+      const loaded = loadContainedPack(packDirectory(root, name));
       if (!loaded.ok) {
         throw denied(loaded.message.includes('no spec json') ? 404 : 400, loaded.message);
       }
@@ -461,7 +477,7 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
     if (path.startsWith('/spec/')) {
       const name = decodeOr(path.slice('/spec/'.length));
       if (!NAME_RE.test(name)) throw denied(404, `no spec named '${name}'`);
-      const loaded = loadPackWithMeta(join(root, name));
+      const loaded = loadContainedPack(packDirectory(root, name));
       if (!loaded.ok)
         throw denied(loaded.message.includes('no spec json') ? 404 : 400, loaded.message);
       const { emit } = await import('@treadle/core');
@@ -474,10 +490,12 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       const name = decodeOr(rest.split('/')[0] ?? '');
       const file = decodeOr(rest.split('/')[1] ?? '');
       if (!NAME_RE.test(name) || !FILE_RE.test(file)) throw denied(404, 'no such document');
-      const f = resolve(join(root, name), file);
-      const contained = f.startsWith(resolve(join(root, name)));
-      if (!contained) throw denied(404, 'no such document');
+      const dir = packDirectory(root, name);
       try {
+        const f = realpathSync(resolve(dir, file));
+        const rel = relative(dir, f);
+        if (!rel || rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel))
+          throw denied(404, 'no such document');
         const bytes = await readFile(f);
         res.writeHead(200, { 'Content-Type': 'text/markdown; charset=utf-8' });
         res.end(bytes);
@@ -504,7 +522,11 @@ export function startLibrary(root: string, port = 0, owner = 'human:owner'): Pro
       return;
     }
     json(res, 404, { ok: false, error: 'not found' });
-  });
+  };
+}
+
+export function startLibrary(root: string, port = 0, owner = 'human:owner'): Promise<RoomHandle> {
+  const server = makeServer(libraryHandler(root, owner));
   return new Promise((resolveP) => {
     server.listen(port, '127.0.0.1', () => {
       const addr = server.address();

@@ -153,10 +153,7 @@
           "matcher": "PostToolUse",
           "command": "node .harness/hooks/post-tool-check.js"
         },
-        "codex": {
-          "kind": "config-notify",
-          "command": "node .harness/hooks/post-tool-check.js"
-        },
+        "codex": null,
         "copilot": null
       }
     },
@@ -168,25 +165,60 @@
           "kind": "extension",
           "dest": ".pi/extensions/session-recall.js"
         },
-        "claude": [
-          {
-            "kind": "settings-hooks",
-            "matcher": "SessionStart",
-            "command": "node .harness/hooks/session-recall.js --claude-start"
-          },
-          {
-            "kind": "settings-hooks",
-            "matcher": "UserPromptSubmit",
-            "command": "node .harness/hooks/session-recall.js --claude-gate"
-          }
-        ],
+        "claude": null,
+        "codex": null,
+        "copilot": null
+      },
+      "companions": ["hooks/codex-context.js"]
+    },
+    {
+      "id": "codex-recall-prompt",
+      "file": "hooks/session-recall.js",
+      "wiring": {
         "codex": {
           "kind": "prompt-file",
           "dest": ".codex/prompts/recall.md",
           "prompt": "hooks/prompts/codex-recall.md"
-        },
-        "copilot": null
+        }
+      }
+    },
+    {
+      "id": "codex-context",
+      "file": "hooks/codex-context.js",
+      "wiring": {
+        "codex": [
+          {
+            "kind": "config-hooks",
+            "matcher": "SessionStart",
+            "command": "node .harness/hooks/codex-context.js --host codex --event SessionStart"
+          },
+          {
+            "kind": "config-hooks",
+            "matcher": "UserPromptSubmit",
+            "command": "node .harness/hooks/codex-context.js --host codex --event UserPromptSubmit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "claude-context",
+      "file": "hooks/claude-context.js",
+      "companions": ["hooks/codex-context.js"],
+      "wiring": {
+        "claude": [
+          {
+            "kind": "settings-hooks",
+            "matcher": "SessionStart",
+            "command": "node .harness/hooks/claude-context.js --host claude --event SessionStart"
+          },
+          {
+            "kind": "settings-hooks",
+            "matcher": "UserPromptSubmit",
+            "command": "node .harness/hooks/claude-context.js --host claude --event UserPromptSubmit"
+          }
+        ]
       }
     }
-  ]
+  ],
+  "version": "0.2.0"
 }

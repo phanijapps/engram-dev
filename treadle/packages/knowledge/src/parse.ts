@@ -4,7 +4,7 @@
  * records the error for the validator to report. Enumeration is symlink-safe.
  */
 import { readdirSync, readFileSync, statSync, realpathSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { join, relative, resolve, sep, isAbsolute } from 'node:path';
 import { parse as parseYaml } from 'yaml';
 
 /* PyYAML parity (YAML 1.1 dialect): duplicate keys take last-wins, scalars
@@ -122,7 +122,10 @@ function errConcept(cid: string, reserved: string | null, error: string): Concep
 
 /** Yield resolved, in-bundle .md paths — symlink escapes and dupes skipped
  *  (the safe enumeration every reader shares). */
-export function iterConceptFiles(root: string): string[] {
+export function iterConceptFiles(
+  root: string,
+  excludedDirectories: readonly string[] = [],
+): string[] {
   const rootResolved = resolve(root);
   const seen = new Set<string>();
   const out: string[] = [];
@@ -135,8 +138,9 @@ export function iterConceptFiles(root: string): string[] {
     }
     for (const e of entries.sort((a, b) => a.name.localeCompare(b.name))) {
       const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith('.md')) {
+      if (e.isDirectory()) {
+        if (!excludedDirectories.includes(e.name)) walk(p);
+      } else if (e.name.endsWith('.md')) {
         // Dirent.isFile() is lexical: a symlinked .md reads as a file here and
         // escapes below unless realpathed — the guard lives on the real path
         const st = statSync(p, { throwIfNoEntry: false });
@@ -147,7 +151,9 @@ export function iterConceptFiles(root: string): string[] {
         } catch {
           continue;
         }
-        if (!real.startsWith(realpathSync(rootResolved))) continue; // escape: never read
+        const rel = relative(realpathSync(rootResolved), real);
+        if (rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel)) continue; // escape: never read
+        if (rel.split(sep).some((part) => excludedDirectories.includes(part))) continue;
         if (seen.has(real)) continue; // dupe: once
         seen.add(real);
         out.push(real);

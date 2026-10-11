@@ -1,3 +1,9 @@
+function libraryFetch(path, options = {}) {
+  const config = window.LIBRARY_CONFIG || {};
+  const headers = { ...options.headers };
+  if (options.method === 'POST' && config.ownerToken) headers['X-Owner-Token'] = config.ownerToken;
+  return fetch((config.base || '') + path, { ...options, headers });
+}
 /* The spec library page (spec-library T-3..T-6; DES-3..DES-7).
    Consumes GETs and emits events at the seam — nothing else. */
 
@@ -385,13 +391,24 @@ async function renderDocs() {
     const name = S.sel.startsWith('legacy:') ? S.sel.slice(7) : S.sel;
     const file = el.dataset.doc;
     try {
-      const r = await fetch(`/artifact/${encodeURIComponent(name)}/${encodeURIComponent(file)}`);
+      const r = await libraryFetch(
+        `/artifact/${encodeURIComponent(name)}/${encodeURIComponent(file)}`,
+      );
       if (!r.ok) {
         el.innerHTML = `<div class="empty">Could not load ${esc(file)}.</div>`;
         return;
       }
       const md = await r.text();
-      el.innerHTML = idlHtml(marked.parse(md));
+      if (window.LIBRARY_CONFIG?.safeMarkdown) {
+        const frame = document.createElement('iframe');
+        frame.title = file;
+        frame.setAttribute('sandbox', '');
+        frame.style.cssText = 'width:100%;height:500px;border:0;background:white';
+        frame.srcdoc =
+          '<!doctype html><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; img-src data:"><style>body{font:16px/1.5 system-ui;padding:16px;color:#222}pre{white-space:pre-wrap}</style>' +
+          marked.parse(md);
+        el.replaceChildren(frame);
+      } else el.innerHTML = idlHtml(marked.parse(md));
       el.querySelectorAll('[data-jump]').forEach((x) => (x.onclick = () => jump(x.dataset.jump)));
     } catch (e) {
       el.innerHTML = `<div class="empty">${esc(String(e))}</div>`;
@@ -424,7 +441,7 @@ function qCard(q) {
 }
 
 async function emit(name, body) {
-  const r = await fetch('/event/' + encodeURIComponent(name), {
+  const r = await libraryFetch('/event/' + encodeURIComponent(name), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ...body, expected_revision: S.spec.revision }),
@@ -655,7 +672,7 @@ async function submitOwner(body) {
   setBusy(true, 'Saving your decision…');
   $('owner-error').hidden = true;
   try {
-    const r = await fetch('/workflow/' + encodeURIComponent(name), {
+    const r = await libraryFetch('/workflow/' + encodeURIComponent(name), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ ...body, expected_revision: S.spec.revision }),
@@ -721,7 +738,7 @@ async function loadGate() {
   const panel = document.getElementById('gatePanel');
   if (!panel || !S.sel || S.sel.indexOf('legacy:') === 0) return;
   try {
-    const r = await fetch('/alignment/' + encodeURIComponent(S.sel));
+    const r = await libraryFetch('/alignment/' + encodeURIComponent(S.sel));
     if (!r.ok) {
       panel.textContent = 'the gate could not be read (' + r.status + ')';
       return;
@@ -878,12 +895,12 @@ function route() {
 }
 
 async function loadSpec(name) {
-  const r = await fetch('/spec/' + encodeURIComponent(name));
+  const r = await libraryFetch('/spec/' + encodeURIComponent(name));
   if (!r.ok) throw new Error('no spec named ' + name);
   const doc = await r.json();
   let workflow = null;
   try {
-    const wr = await fetch('/workflow/' + encodeURIComponent(name));
+    const wr = await libraryFetch('/workflow/' + encodeURIComponent(name));
     if (!wr.ok) throw new Error('Could not read approval state');
     workflow = await wr.json();
     if (workflow.revision !== doc.revision) throw new Error('The spec changed during refresh');
@@ -938,7 +955,7 @@ async function paintDetail() {
 }
 
 async function loadAll() {
-  const r = await fetch('/specs');
+  const r = await libraryFetch('/specs');
   if (!r.ok) throw new Error('Could not load the spec list');
   const out = await r.json();
   S.specs = out.specs || [];

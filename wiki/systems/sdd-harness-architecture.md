@@ -6,13 +6,22 @@ status: stable
 created: 2026-10-10
 updated: 2026-10-10
 sources:
-  - {"id": "s1", "resource": "treadle/pnpm-workspace.yaml"}
-  - {"id": "s2", "resource": "treadle/packages/core/src/specpack/derive.ts"}
-  - {"id": "s3", "resource": "treadle/packages/core/src/specpack/admission.ts"}
-  - {"id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts"}
-  - {"id": "s5", "resource": "treadle/packages/cli/src/harness/where.ts"}
-  - {"id": "s6", "resource": "treadle/packages/knowledge/src/parse.ts"}
-  - {id: owner, resource: specs/documentation-consolidation/owner-decision-revision.md}
+  - { "id": "s1", "resource": "treadle/pnpm-workspace.yaml" }
+  - { "id": "s2", "resource": "treadle/packages/core/src/specpack/derive.ts" }
+  - {
+      "id": "s3",
+      "resource": "treadle/packages/core/src/specpack/admission.ts",
+    }
+  - { "id": "s4", "resource": "treadle/packages/core/src/specpack/record.ts" }
+  - { "id": "s5", "resource": "treadle/packages/cli/src/harness/where.ts" }
+  - { "id": "s6", "resource": "treadle/packages/knowledge/src/parse.ts" }
+  - { id: service, resource: treadle/packages/cli/src/serve/runtime.ts }
+  - { id: projects, resource: treadle/packages/web/src/project-server.ts }
+  - { id: context, resource: treadle/packages/cli/src/harness/context.ts }
+  - {
+      id: owner,
+      resource: specs/documentation-consolidation/owner-decision-revision.md,
+    }
 ---
 
 # Purpose and flow
@@ -64,3 +73,33 @@ External code indexing remains delegated. Current freshness limitations are
 The prior Python architecture explanation is preserved at
 `specs/archive/documentation/2026-10-10/wiki/systems/sdd-harness-architecture.md`.
 The [TypeScript decision](/decisions/port-to-typescript.md) explains the transition.
+
+# Shared background service — 2026-10-10
+
+`start serve` detaches one service per operating-system user; `stop serve`
+requests authenticated shutdown. Startup/recovery publishes owned directories
+atomically and never expires a live lock. Project enrollment persists separately
+from the process descriptor. Source: `treadle/packages/cli/src/serve/runtime.ts`
+and `treadle/packages/cli/src/serve/projects.ts`.
+
+```text
+project install / session event
+    → ensure shared service → enroll explicit event workspace
+    → read-only context → choose new or continuing spec
+shared browser → project → wiki/search + spec library → existing owner gates
+stop serve → next session event → ensure + reconnect
+session exit → service remains running
+```
+
+The browser lists enrolled roots and uses project-qualified library/wiki routes;
+equal spec slugs in different roots stay separate. Missing/moved roots are
+reported unavailable. It does not discover or enroll unrelated worktrees.
+Source: `treadle/packages/web/src/project-server.ts`.
+
+Context reports core workflow gates, doing work, evidence, refused packs and
+non-admitted candidates. It does not grant approval or advance task state.
+Freshness still has Python-only/HEAD limits; dirty TypeScript and Markdown
+require direct inspection. Source: `treadle/packages/cli/src/harness/context.ts`.
+Native artifacts and compatibility wiring come from one authoritative tree;
+activation/trust remains a host action. Actual native OS/host release coverage
+is tracked in `specs/background-harness/`, not inferred from a CI declaration.

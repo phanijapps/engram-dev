@@ -12,7 +12,7 @@
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { join, dirname, basename } from 'node:path';
 import { normalizedHash } from './content.js';
 import { destPath, sourceFile } from './manifest.js';
 import { destRoots } from './paths.js';
@@ -92,7 +92,12 @@ function modeForFile(sourceAbs: string, destAbs: string, force: boolean): PlanRo
   return force ? 'update' : 'refuse';
 }
 
-function wiringTarget(agent: Surface, scope: Scope, root: string): string {
+export function wiringTarget(agent: Surface, scope: Scope, root: string, kind?: string): string {
+  if (kind === 'config-hooks')
+    return join(
+      destRoots(agent, scope, root).base,
+      scope === 'project' ? '.codex/hooks.json' : 'hooks.json',
+    );
   if (agent === 'claude') {
     const dir = scope === 'project' ? join(root, '.claude') : join(homedir(), '.claude');
     return join(dir, 'settings.json');
@@ -209,7 +214,7 @@ export function compilePlan(
           mode: modeForFile(srcPath, destAbs, choices.force),
           ...(w.kind === 'prompt-file'
             ? {
-                note: 'recall prompt-file (the honest codex subset: the prompt teaches the rule; notify rides the guard hook)',
+                note: 'manual recall fallback; current lifecycle context requires trusted host hooks',
               }
             : {}),
         });
@@ -230,23 +235,39 @@ export function compilePlan(
           w.kind === 'config-notify'
             ? `node ${destAbs}`
             : w.matcher
-              ? `${w.matcher} → ${w.command}`
+              ? `${w.matcher} → ${hookCommand(w, destAbs)}`
               : (w.command ?? '');
         wirings.push({
           surface: agent,
           kind: w.kind,
-          target: wiringTarget(agent, scope, choices.root),
+          target: wiringTarget(agent, scope, choices.root, w.kind),
           detail,
         });
       }
+      if (w.kind !== 'prompt-file')
+        for (const companion of h.companions ?? []) {
+          const folder =
+            w.kind === 'extension' && w.dest
+              ? dirname(destFor(w.dest, agent, scope, choices.root))
+              : join(roots.runtime, 'hooks');
+          const destination = join(folder, basename(companion));
+          rows.push({
+            component: `${h.id}-support`,
+            kind: 'hook',
+            surface: agent,
+            source: companion,
+            destination,
+            mode: modeForFile(join(manifestRoot, companion), destination, choices.force),
+          });
+        }
       // additional wirings from array-valued wiring (claude multi-matcher — additive manifest)
       for (const extra of wiringList.slice(1)) {
-        if (extra.kind === 'settings-hooks' && extra.matcher) {
+        if ((extra.kind === 'settings-hooks' || extra.kind === 'config-hooks') && extra.matcher) {
           wirings.push({
             surface: agent,
-            kind: 'settings-hooks',
-            target: wiringTarget(agent, scope, choices.root),
-            detail: `${extra.matcher} → ${extra.command ?? ''}`,
+            kind: extra.kind,
+            target: wiringTarget(agent, scope, choices.root, extra.kind),
+            detail: `${extra.matcher} → ${hookCommand(extra, join(roots.runtime, 'hooks', h.file.split('/').pop()!))}`,
           });
         }
       }
@@ -265,4 +286,22 @@ export function planSummary(plan: Plan): {
   const s = { create: 0, same: 0, update: 0, refuse: 0, skip: 0 };
   for (const r of plan.rows) s[r.mode]++;
   return s;
+}
+
+function hookCommand(w: HookWiring, path: string): string {
+  const suffix = (w.command ?? '')
+    .replace(/^node\s+\S+/, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (w.kind === 'settings-hooks')
+    return JSON.stringify({ type: 'command', command: process.execPath, args: [path, ...suffix] });
+  const quote = (s: string): string => "'" + s.replaceAll("'", "'" + '"' + "'" + '"' + "'") + "'";
+  return JSON.stringify({
+    type: 'command',
+    command: [process.execPath, path, ...suffix].map(quote).join(' '),
+    commandWindows: [process.execPath, path, ...suffix]
+      .map((s) => '"' + s.replaceAll('"', '\\"') + '"')
+      .join(' '),
+  });
 }

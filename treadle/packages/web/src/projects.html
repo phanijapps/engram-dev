@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Project workspace</title>
+    <style>
+      body {
+        margin: 0;
+        background: #f5f4ef;
+        color: #212522;
+        font: 16px/1.5 system-ui;
+      }
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 32px;
+      }
+      h1 {
+        margin-top: 0;
+      }
+      button,
+      input,
+      a {
+        font: inherit;
+      }
+      button,
+      a {
+        min-height: 28px;
+      }
+      button {
+        padding: 6px 12px;
+        cursor: pointer;
+      }
+      a {
+        color: #17634d;
+      }
+      *:focus-visible {
+        outline: 3px solid #087660;
+        outline-offset: 3px;
+      }
+      .projects {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .card {
+        background: white;
+        border: 1px solid #d2d8d2;
+        padding: 20px;
+        border-radius: 8px;
+        max-width: 440px;
+      }
+      .path {
+        word-break: break-all;
+        color: #59645c;
+        font-size: 14px;
+      }
+      #knowledge {
+        margin-top: 32px;
+      }
+      #concepts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 16px 0;
+      }
+      iframe {
+        width: 100%;
+        height: 550px;
+        border: 1px solid #ccd4cc;
+        background: white;
+      }
+      label {
+        display: block;
+      }
+      input {
+        padding: 8px;
+        max-width: 100%;
+      }
+      .error {
+        color: #9c2d19;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Project workspace</h1>
+      <p>Open a spec, review a decision, or explore the project knowledge.</p>
+      <div id="status" role="status" aria-live="polite">Loading projects…</div>
+      <section id="projects" class="projects" aria-label="Enrolled projects"></section>
+      <section id="knowledge" hidden>
+        <h2 id="wiki-title">Knowledge</h2>
+        <form id="search">
+          <label for="query">Search this project’s wiki</label
+          ><input id="query" maxlength="200" /><button>Search</button>
+        </form>
+        <div id="concepts"></div>
+        <iframe id="preview" title="Knowledge document" sandbox=""></iframe>
+      </section>
+    </main>
+    <script src="/marked.min.js"></script>
+    <script src="/projects.js"></script>
+  </body>
+</html>

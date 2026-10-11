@@ -1,0 +1,5 @@
+# Execution refinement and technical recovery
+
+Recorded 2026-10-10T23:56:40.521Z. User instruction delegates best judgment and implementation; execution-authorization.md retains the actual wording. Plan 3 corrects T-1 expectation to match published contracts and actual CLI version observations, leaving real host loading in T-12. It explicitly registers the Windows entry-point fixes in T-2 touch context.
+
+Two T-2 checks failed because the verifier treated the deployment's self-link as an external dependency. One attempted repair used an incorrect relative path, so the second check repeated the same failure. The attempted verifier correction exposed a real pnpm deployment self-reference to the source checkout. The package builder now needs to localize that exact reference; a fresh successful declared check is required. The technical stall was explicitly unblocked within delegated implementation; no passing task evidence is claimed until a fresh declared check succeeds. No owner refusal, finish act or missing platform witness was bypassed.

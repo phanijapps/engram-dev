@@ -48,21 +48,74 @@ can cause a refusal; inspect those differences before choosing an overwrite.
 The manifest also targets Pi, Claude and Copilot; hook support differs by agent.
 The source of installed components is `treadle/packages/cli/harness/`.
 
-## Open and inspect work
+## Run the shared background app
 
-Run these commands from `treadle/`:
+Build once with `pnpm --dir treadle build`. A source installation (`./install.sh`,
+or `./install.ps1` on Windows) exposes the `treadle` command. Then:
 
-```bash
-pnpm exec tsx packages/cli/src/main.ts do where ..
-pnpm exec tsx packages/cli/src/main.ts know search ../wiki "owner workflow"
-pnpm exec tsx packages/cli/src/main.ts do library ../specs
+```text
+treadle start serve
+treadle project connect /absolute/path/to/project
+treadle status serve
+treadle context --workspace /absolute/path/to/project --json
+treadle stop serve
 ```
 
-The library opens in the browser at `http://127.0.0.1:8788` by default.
-It serves the explicit specs root and stays running until stopped.
-Use `do interview <packDir>` for a single pack's question room.
-Both servers are localhost-only. Serve trusted workspace content; Markdown is
-not sanitized for untrusted input. Read [SECURITY.md](SECURITY.md).
+`start serve` returns the browser address and detaches the server. It reuses one
+healthy service per operating-system user. The preferred browser port is 8788;
+an occupied port gets a reported alternative. Project cards lead to that
+workspace's wiki/search and spec library, including existing owner actions.
+Enrollment persists across server restarts. An empty canonical `specs/` takes
+precedence over legacy `docs/specs/`.
+
+Install project hooks with `treadle init harness --agent codex --scope project
+--root /absolute/path/to/project` (replace `codex` with `claude` or `pi`).
+Successful wiring starts the server if needed and connects that explicit
+workspace. Reload the host and complete its own trust/activation steps.
+Installation does not assert that hooks have actually run. Use `--hooks-only`
+to update adapters without copying skills or agents. `--dry-run` and
+`--no-hooks` do not connect a project; global installs do not enroll a workspace.
+
+Startup and prompt callbacks reconnect from the event workspace, read current
+wiki/spec context, and report approval gates without advancing tasks. Closing
+an agent session leaves the server running. After `stop serve`, the **next
+session event** starts it again; there is no polling watchdog. Multiple projects
+and sessions share the service. `project disconnect <id>` removes enrollment
+without deleting files or stopping another session's service.
+
+## Native host packages and fallback
+
+Generate a fresh local artifact from the authoritative harness tree:
+
+```text
+treadle package harness --agent claude --out /absolute/path/to/new-plugin
+treadle package harness --agent codex --out /absolute/path/to/new-plugin
+treadle package harness --agent pi --out /absolute/path/to/new-package
+```
+
+The Claude artifact contains its plugin manifest, skills, agents and hooks;
+Codex contains a plugin manifest, local marketplace, skills and hooks; pi
+contains its package manifest, skills and extensions. Native custom agents for
+Codex and pi are not asserted by this generator. Use either the native artifact
+or compatibility installation for a host to avoid loading both callbacks.
+These local artifacts include a machine-local Node/runtime pointer; regenerate
+when the runtime moves. Missing runtime produces bootstrap guidance. Nothing
+is published to a registry.
+
+Codex hooks require the host's explicit trust of the current hook file. Codex
+IDE plugin availability differs from CLI/desktop: if hooks are unavailable or
+inactive, use `project connect` and `context --workspace` explicitly. The source
+installation remains available for host-specific configuration. Runtime and
+adapter tests run locally on Linux; macOS, native Windows and each actual host
+surface require recorded release witnesses. See the
+[compatibility record](specs/background-harness/compatibility.md).
+
+For a portable production runtime, run `pnpm --dir treadle package:runtime
+/absolute/path/to/new-runtime`, then invoke `node <runtime>/dist/src/main.js`.
+Node >=22 is required; this artifact includes dependencies and browser assets.
+The older `do library <specsRoot>` and `do interview <packDir>` foreground
+commands remain available. All listeners bind `127.0.0.1`; read
+[SECURITY.md](SECURITY.md) before serving workspace content.
 
 ## Approval and completion
 
@@ -133,7 +186,7 @@ Source citations still need direct inspection. Reliable freshness is a proposed
 next slice, not an already approved implementation plan.
 
 Other recorded gaps include test-file typechecking, remote CI evidence,
-multi-root library navigation and automatic documentation upkeep. License and
+remaining native host/platform witnesses and automatic documentation upkeep. License and
 legacy integration choices remain owner decisions. Retrospectives must come
 from actual session evidence; past sessions cannot be reconstructed from a
 completed pack. Read [open work](wiki/project/open-work.md) before choosing the

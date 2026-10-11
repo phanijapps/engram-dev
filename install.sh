@@ -3,13 +3,10 @@
 #
 #   curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash
 #
-# What it does (and why, honestly): the harness is a pnpm workspace whose
-# packages speak `workspace:*` — every npm-based remote install mechanism
-# (npm i -g <git>, folder installs, tarball inflation) breaks on npm's
-# handling of that protocol; the mechanisms were tested and recorded in
-# specs/install-paths. The path that WORKS, proven by
-# treadle/scripts/cleanroom-link.sh, is the native one: clone, pnpm
-# install + build, pnpm link --global. This script wraps exactly that.
+# Source bootstrap: builds the workspace and bundled browser assets, then
+# links the CLI. A portable runtime is also available from `pnpm package:runtime`;
+# its dependencies and assets are self-contained outside this checkout.
+# Windows users can use install.ps1 without Bash.
 set -euo pipefail
 
 REPO_URL="https://github.com/phanijapps/engram-dev"
@@ -39,7 +36,6 @@ say "linking the CLI globally (pnpm link)"
 
 say "verifying"
 treadle --version
-treadle do where / >/dev/null 2>&1 || true   # a report, exit 0 always; smoke only
 
 say "installed. try: treadle init harness"
 say "uninstall: (cd $SRC_DIR/treadle/packages/cli && pnpm unlink --global) && rm -rf $SRC_DIR"

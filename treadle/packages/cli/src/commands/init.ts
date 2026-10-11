@@ -14,6 +14,7 @@ import {
   UsageError,
 } from '../harness/types.js';
 import { promptForMissing } from '../harness/skin.js';
+import { connectWorkspace } from './project.js';
 import { resolve } from 'node:path';
 
 export interface Flags {
@@ -22,6 +23,7 @@ export interface Flags {
   skills?: string[];
   agents?: boolean;
   hooks?: boolean;
+  hooksOnly?: boolean;
   root?: string;
   manifest?: string;
   dryRun?: boolean;
@@ -40,6 +42,7 @@ export function registerInit(initCmd: Command): void {
     .option('--skills <ids...>', 'skill ids to install (default: all)')
     .option('--no-agents', 'skip agent components')
     .option('--no-hooks', 'skip hooks')
+    .option('--hooks-only', 'install lifecycle hooks without copying skills or agents')
     .option('--root <dir>', 'project root (default: cwd)')
     .option('--manifest <path>', 'manifest override (default: the shipped harness.json)')
     .option('--dry-run', 'print the plan; write nothing')
@@ -129,6 +132,31 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
   const at = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
   const result = applyPlan(plan, choices, manifestRoot, at);
   for (const note of result.wiringNotes) console.log(note);
+  if (result.refused.length || result.wiringRefused.length) {
+    for (const reason of result.wiringRefused) console.error(`refused: ${reason}`);
+    console.error(
+      'Files may have been copied, but activation wiring failed; repair and retry. No project was enrolled.',
+    );
+    process.exitCode = 3;
+    return;
+  }
+  if (choices.scope === 'project' && choices.hooks && choices.agent !== 'copilot') {
+    try {
+      const connection = await connectWorkspace(choices.root);
+      console.log(
+        `project enrolled; runtime running: ${(connection['service'] as { url: string }).url}`,
+      );
+      console.log(
+        'Host activation is pending until you enable/reload the integration and, for Codex, review and trust its hook definition.',
+      );
+    } catch (e) {
+      console.error(
+        `Installed files; project enrollment failed: ${(e as Error).message}. Retry with project connect <workspace>.`,
+      );
+      process.exitCode = 1;
+      return;
+    }
+  }
   console.log(
     `installed: ${result.written} file(s) written, ${summary.same} same, ${summary.skip} skipped — plan recorded`,
   );
@@ -173,8 +201,8 @@ function choicesFromFlags(f: Flags): InstallChoices {
   return {
     agent: agent!,
     scope,
-    skills: f.skills && f.skills.length > 0 ? f.skills : 'all',
-    agents: f.agents !== false,
+    skills: f.hooksOnly ? [] : f.skills && f.skills.length > 0 ? f.skills : 'all',
+    agents: !f.hooksOnly && f.agents !== false,
     hooks: f.hooks !== false,
     root: resolve(f.root ?? process.cwd()), // R2 #9: resolved once — relative --root must not leak into user-level configs
     manifestPath: f.manifest ?? undefined,

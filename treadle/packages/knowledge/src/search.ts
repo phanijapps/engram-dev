@@ -63,9 +63,12 @@ function fmText(fm: Record<string, unknown>): string {
   return values.join(' ');
 }
 
-export function buildIndex(root: string): Index {
+export function buildIndex(
+  root: string,
+  options: { excludeDirectories?: readonly string[] } = {},
+): Index {
   const docs: DocMeta[] = [];
-  for (const md of iterConceptFiles(root)) {
+  for (const md of iterConceptFiles(root, options.excludeDirectories)) {
     const c = parseConcept(md, resolve(root));
     if (c.reserved !== null) continue;
     const title = fmStr(c.frontmatter, 'title');

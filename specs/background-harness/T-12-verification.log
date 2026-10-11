@@ -1,0 +1,42 @@
+
+Attempt 2026-10-11T00:29:48.197Z exit 1
+{
+  "at": "2026-10-11T00:29:48.186Z",
+  "verdict": "INCOMPLETE",
+  "witnesses": [
+    {
+      "file": "linux-smoke.json",
+      "sha256": "33cf38fdf6c246202e44ecd8268a8fc99df94b19f4d5dae3d8e465db3b68dae2"
+    }
+  ],
+  "missing": [
+    "Actual runtime witness pending: darwin",
+    "Actual runtime witness pending: win32",
+    "Host journey pending: Claude Code lifecycle, reload/removal and user activation on each required OS",
+    "Host journey pending: Codex CLI lifecycle with human exact-file hook trust on each required OS",
+    "Host journey pending: Codex desktop lifecycle and IDE fallback separately",
+    "Host journey pending: pi native package install/update/removal and session events on each required OS"
+  ],
+  "note": "Published contracts, unit callback tests and CI configuration cannot substitute for actual native host journeys or human host trust."
+}
+
+Attempt 2026-10-11T00:31:44.252Z exit 1
+{
+  "at": "2026-10-11T00:31:44.243Z",
+  "verdict": "INCOMPLETE",
+  "witnesses": [
+    {
+      "file": "linux-smoke.json",
+      "sha256": "33cf38fdf6c246202e44ecd8268a8fc99df94b19f4d5dae3d8e465db3b68dae2"
+    }
+  ],
+  "missing": [
+    "Actual runtime witness pending: darwin",
+    "Actual runtime witness pending: win32",
+    "Host journey pending: Claude Code lifecycle, reload/removal and user activation on each required OS",
+    "Host journey pending: Codex CLI lifecycle with human exact-file hook trust on each required OS",
+    "Host journey pending: Codex desktop lifecycle and IDE fallback separately",
+    "Host journey pending: pi native package install/update/removal and session events on each required OS"
+  ],
+  "note": "Published contracts, unit callback tests and CI configuration cannot substitute for actual native host journeys or human host trust."
+}

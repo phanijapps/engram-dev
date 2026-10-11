@@ -6,26 +6,36 @@ Report vulnerabilities privately to the maintainers (SECURITY contact in
 CODEOWNERS until a dedicated address exists). Coordinated disclosure; we
 respond within 7 days.
 
-## Threat model (v1, written down — not folklore)
+## Local trust boundary
 
-- **Surfaces:** two localhost-only HTTP servers (the room, the library) and
-  one CLI. No network exposure by design: both bind 127.0.0.1.
-- **Trust boundaries:** (1) the filesystem — packs, bundles, and their `.md`
-  artifacts are **trusted-on-disk** (owner-authored repo content); the
-  pages render them with markdown-to-HTML **without sanitization** — do
-  not point the library at untrusted directories. (2) the browser — the
-  pages are same-origin, CSP-pinned (`default-src 'self'`), nosniff,
-  same-origin framing only. (3) the network — none; no telemetry, no
-  outbound calls, no CDN (assets vendored).
-- **Guards, tested:** path traversal (component + realpath, both directions),
-  symlink escapes, overlong-UTF-8 decodes (404, never 500), non-`.md`
-  artifact refusals, `.okf` state dir never enumerated, port default
-  ephemeral for tests.
-- **Admission is claim-gated:** every write path requires a `human:` claim;
-  agents cannot approve, close, or accept.
-- **Auth:** deliberately absent in v1 (localhost single-user). Auth is a
-  platform-adapter concern — the adapter contract says so. Do not expose
-  the ports.
+The shared service has two listeners bound to `127.0.0.1`: a private control
+API and a browser application. Legacy foreground interview/library listeners
+also bind localhost. These are local tools for one operating-system user;
+do not forward or expose their ports.
+
+Control health, enrollment and shutdown require a private bearer credential,
+exact Host and no browser Origin. The descriptor binds protocol, instance
+nonce, PID and reported addresses. Shutdown targets a verified instance through
+its API; a PID alone never authorizes a kill. Startup ownership is published
+atomically; stale-lock recovery requires a proven dead process, never age.
+Private state uses POSIX owner permissions or Windows user ACLs. Another process
+running as the same user can read these credentials and is outside isolation
+guarantees. Credentials do not appear in public status or agent context.
+
+Only the CLI/hooks enroll an explicit trusted real workspace. Browser requests
+cannot enroll roots or stop the service. Project routes recheck realpath
+containment; dot state/archive trees are excluded from wiki enumeration.
+Browser owner writes require exact Origin, a separate page token, a held pack
+revision and the core writer lock. Human actor claims record attribution;
+they are not authentication. Agents must not perform owner acts.
+
+The shared browser uses local vendored assets, CSP, nosniff and text rendering
+for titles. Markdown previews run inside an opaque iframe with no sandbox
+privileges and a restrictive document CSP. Source Markdown remains trusted
+repository content. Legacy foreground Markdown rendering is unsanitized;
+serve trusted trees only. The service sends no telemetry and makes no outbound
+network calls. Host packages execute with the user's privileges and require
+that host's trust/activation process.
 
 ## Supply chain
 
