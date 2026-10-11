@@ -113,7 +113,7 @@ describe('the installer engine (T-1)', () => {
     }
   });
 
-  it('compiles a truthful plan: modes by normalized hash, copilot hook honestly skipped', () => {
+  it('compiles a truthful plan: modes by normalized hash, unwired component skipped', () => {
     const { root, manifestPath } = harnessFixture();
     try {
       const { manifest, root: mRoot } = loadManifest(manifestPath);
@@ -131,7 +131,7 @@ describe('the installer engine (T-1)', () => {
       );
       const copHook = copPlan.rows.find((r) => r.kind === 'hook');
       expect(copHook?.mode).toBe('skip');
-      expect(copHook?.note).toContain('honest');
+      expect(copHook?.note).toContain('wiring');
       expect(copPlan.rows.find((r) => r.component === 'one')?.mode).toBe('skip'); // no copilot source
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -376,7 +376,7 @@ describe('the installer engine (T-1)', () => {
     }
   });
 
-  it('the shipped manifest is valid and carries the honest copilot null', () => {
+  it('the shipped manifest is valid and retains explicit per-component omissions', () => {
     const lm = loadManifest(defaultManifestPath());
     expect(lm.manifest.components.length).toBeGreaterThanOrEqual(12);
     expect(lm.manifest.hooks[0]?.wiring.copilot).toBeNull();

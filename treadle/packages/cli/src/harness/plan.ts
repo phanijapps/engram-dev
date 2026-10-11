@@ -1,3 +1,4 @@
+import { brand } from '@treadle/brand';
 /** The plan compiler: manifest + choices → an inspectable plan.
  *  No write happens before this exists (D-2). Modes are TRUTHFUL at
  *  compile time — every mode is computed by normalized-hash
@@ -8,13 +9,13 @@
  *    update  bytes differ and --force is set
  *    refuse  bytes differ and no --force (apply exits 3) — or the
  *            destination is occupied by a directory where a file belongs
- *    skip    no source, empty source, or hooks unsupported (null wiring)
+ *    skip    no source, empty source, or component unwired (null wiring)
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
 import { normalizedHash } from './content.js';
-import { destPath, sourceFile } from './manifest.js';
+import { destPath, sourceFile, readCopilotHooks } from './manifest.js';
 import { destRoots } from './paths.js';
 import type {
   HarnessManifest,
@@ -93,6 +94,7 @@ function modeForFile(sourceAbs: string, destAbs: string, force: boolean): PlanRo
 }
 
 export function wiringTarget(agent: Surface, scope: Scope, root: string, kind?: string): string {
+  if (kind === 'copilot-hooks') return join(root, '.github/hooks', brand.binName + '.json');
   if (kind === 'config-hooks')
     return join(
       destRoots(agent, scope, root).base,
@@ -184,7 +186,7 @@ export function compilePlan(
           source: h.file,
           destination: '',
           mode: 'skip',
-          note: `hooks not supported on ${agent} — the honest no`,
+          note: `no ${agent} wiring for this component in the manifest`,
         });
         continue;
       }
@@ -262,7 +264,12 @@ export function compilePlan(
         }
       // additional wirings from array-valued wiring (claude multi-matcher — additive manifest)
       for (const extra of wiringList.slice(1)) {
-        if ((extra.kind === 'settings-hooks' || extra.kind === 'config-hooks') && extra.matcher) {
+        if (
+          (extra.kind === 'settings-hooks' ||
+            extra.kind === 'config-hooks' ||
+            extra.kind === 'copilot-hooks') &&
+          extra.matcher
+        ) {
           wirings.push({
             surface: agent,
             kind: extra.kind,
@@ -272,6 +279,18 @@ export function compilePlan(
         }
       }
     }
+  }
+  for (const wiring of wirings.filter((w) => w.kind === 'copilot-hooks')) {
+    if (!readCopilotHooks(wiring.target))
+      rows.push({
+        component: 'copilot-config',
+        kind: 'hook',
+        surface: agent,
+        source: '',
+        destination: wiring.target,
+        mode: 'refuse',
+        note: 'Malformed or unsafe Copilot hook configuration; preserve it and repair before installing',
+      });
   }
   return { rows, wirings };
 }
@@ -314,6 +333,18 @@ function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): s
     .trim()
     .split(/\s+/)
     .filter(Boolean);
+  if (w.kind === 'copilot-hooks') {
+    const payload = relative(root, path).split('\\').join('/');
+    const args = ['node', payload, ...suffix];
+    const quote = (value: string): string => "'" + value.replaceAll("'", "'\"'\"'") + "'";
+    return JSON.stringify({
+      type: 'command',
+      bash: args.map(quote).join(' '),
+      powershell: '& ' + args.map((s) => "'" + s.replaceAll("'", "''") + "'").join(' '),
+      cwd: '.',
+      timeoutSec: 60,
+    });
+  }
   if (w.kind === 'settings-hooks')
     return JSON.stringify({
       type: 'command',

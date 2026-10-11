@@ -15,6 +15,7 @@ import {
 import { dirname, join } from 'node:path';
 import { runtimeEntry } from '../serve/runtime.js';
 import { normalize } from './content.js';
+import { readCopilotHooks } from './manifest.js';
 import { destRoots } from './paths.js';
 import { wiringTarget } from './plan.js';
 import type { InstallChoices, Plan, PlanRow } from './types.js';
@@ -23,7 +24,8 @@ const stateName = (agent: string): string => `harness-install.${agent}.json`;
 
 interface WiringRecord {
   target: string;
-  kind: 'settings-hooks' | 'config-notify' | 'config-hooks';
+  kind: 'settings-hooks' | 'config-notify' | 'config-hooks' | 'copilot-hooks';
+  created?: boolean;
   matcher: string;
   command: string;
 }
@@ -100,6 +102,38 @@ export function applyPlan(
   for (const w of previous?.wirings ?? [])
     if (w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind))
       throw Error('Install record has an unexpected wiring target');
+  if (choices.agent === 'copilot' && choices.hooks) {
+    const invalid = plan.wirings.filter(
+      (w) => w.kind === 'copilot-hooks' && !readCopilotHooks(w.target),
+    );
+    const refused = plan.rows.filter((r) => r.mode === 'refuse');
+    const pointer = join(
+      destRoots(choices.agent, choices.scope, choices.root).runtime,
+      'hooks/runtime.json',
+    );
+    const desired =
+      JSON.stringify(
+        { format: 'runtime-pointer/1', node: process.execPath, entry: runtimeEntry(), protocol: 1 },
+        null,
+        2,
+      ) + '\n';
+    const pointerConflict =
+      existsSync(pointer) && readFileSync(pointer, 'utf8') !== desired && !choices.force;
+    if (invalid.length || refused.length || pointerConflict)
+      return {
+        written: 0,
+        removedLeftovers: [],
+        refused,
+        wiringNotes: [],
+        wiringRefused: [
+          ...invalid.map(
+            (w) =>
+              `${w.target}: malformed or unsafe Copilot configuration; repair before installing`,
+          ),
+          ...(pointerConflict ? ['Runtime pointer differs; inspect it before using --force'] : []),
+        ],
+      };
+  }
   const refused: PlanRow[] = [];
   const written: string[] = [];
   const removedLeftovers: string[] = [];
@@ -122,7 +156,38 @@ export function applyPlan(
   const wiringRefused: string[] = [];
   if (refused.length === 0) {
     for (const w of plan.wirings) {
-      if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
+      if (w.kind === 'copilot-hooks') {
+        const [matcher, command] = w.detail.split(' → ');
+        const doc = readCopilotHooks(w.target);
+        if (!doc || !matcher || !command) {
+          wiringRefused.push(`${w.target}: Copilot hook configuration refused`);
+          continue;
+        }
+        const created =
+          !existsSync(w.target) ||
+          previous?.wirings.some((old) => old.target === w.target && old.created === true) ||
+          wiringRecords.some((old) => old.target === w.target && old.created === true);
+        const definition: unknown = JSON.parse(command);
+        const entries = doc.hooks[matcher] ?? (doc.hooks[matcher] = []);
+        const present = entries.some((entry) => sameDefinition(entry, definition));
+        const owned = previous?.wirings.some(
+          (old) =>
+            old.target === w.target &&
+            old.matcher === matcher &&
+            sameDefinition(JSON.parse(old.command), definition),
+        );
+        if (!present) {
+          entries.push(definition);
+          mkdirSync(dirname(w.target), { recursive: true });
+          writeFileSync(w.target, JSON.stringify(doc, null, 2) + '\n');
+        }
+        // An identical pre-existing foreign definition is usable, but remains unowned.
+        if (!present || owned)
+          wiringRecords.push({ target: w.target, kind: w.kind, matcher, command, created });
+        wiringNotes.push(
+          `wired ${w.target} (${matcher}${present && !owned ? '; existing foreign entry retained' : ''})`,
+        );
+      } else if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
         const rec = mergeClaudeSettings(w.target, w.detail, w.kind);
         if (rec) {
           wiringRecords.push(rec);
@@ -260,7 +325,24 @@ function setCodexNotify(target: string, command: string): WiringRecord | null {
 }
 
 function unwireRecorded(w: WiringRecord): boolean {
-  if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
+  if (w.kind === 'copilot-hooks') {
+    const doc = readCopilotHooks(w.target);
+    if (!doc) return false;
+    const entries = doc.hooks[w.matcher];
+    if (!entries) return false;
+    const kept = entries.filter((entry) => !sameDefinition(entry, JSON.parse(w.command)));
+    if (kept.length === entries.length) return false;
+    if (kept.length) doc.hooks[w.matcher] = kept;
+    else delete doc.hooks[w.matcher];
+    if (
+      w.created &&
+      Object.keys(doc.hooks).length === 0 &&
+      Object.keys(doc).every((key) => ['version', 'hooks'].includes(key))
+    )
+      rmSync(w.target);
+    else writeFileSync(w.target, JSON.stringify(doc, null, 2) + '\n');
+    return true;
+  } else if (w.kind === 'settings-hooks' || w.kind === 'config-hooks') {
     if (existsSync(w.target)) {
       try {
         const d = JSON.parse(readFileSync(w.target, 'utf8')) as Record<string, unknown>;
@@ -315,6 +397,16 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
   if (!existsSync(sp)) throw new Error(`no recorded install at ${sp} — nothing to remove`);
   const doc = JSON.parse(readFileSync(sp, 'utf8')) as StateDoc;
   const roots = destRoots(choices.agent, choices.scope, choices.root);
+  if (choices.agent === 'copilot')
+    for (const w of doc.wirings) {
+      if (
+        w.kind !== 'copilot-hooks' ||
+        w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind)
+      )
+        throw Error('Install record has an unexpected Copilot wiring target');
+      if (existsSync(w.target) && !readCopilotHooks(w.target))
+        throw Error('Malformed or unsafe Copilot configuration; repair it before removal');
+    }
   const sep = String.fromCharCode(92); // backslash, escaped for windows paths
   const insideRoots = (p: string): boolean =>
     p === roots.base ||
@@ -372,4 +464,21 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
   }
   rmSync(sp);
   return { removed, unwired };
+}
+
+function sameDefinition(a: unknown, b: unknown): boolean {
+  const canonical = (value: unknown): string => {
+    if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
+    if (value && typeof value === 'object')
+      return (
+        '{' +
+        Object.entries(value)
+          .sort(([a], [b]) => a.localeCompare(b))
+          .map(([key, v]) => JSON.stringify(key) + ':' + canonical(v))
+          .join(',') +
+        '}'
+      );
+    return JSON.stringify(value);
+  };
+  return canonical(a) === canonical(b);
 }

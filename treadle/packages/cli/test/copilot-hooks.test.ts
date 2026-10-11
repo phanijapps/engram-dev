@@ -1,3 +1,4 @@
+import { brand } from '@treadle/brand';
 import { afterEach, expect, it } from 'vitest';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -98,3 +99,205 @@ it('bounds a stalled runtime and returns recovery guidance', () => {
   expect(JSON.parse(out.stdout).additionalContext).toContain('timed out');
   expect(Date.now() - started).toBeLessThan(27000);
 }, 30000);
+
+import { existsSync, mkdirSync, renameSync, symlinkSync } from 'node:fs';
+import { loadManifest, defaultManifestPath } from '../src/harness/manifest.js';
+import { compilePlan } from '../src/harness/plan.js';
+import { applyPlan, removeInstall, statePath } from '../src/harness/apply.js';
+import type { InstallChoices } from '../src/harness/types.js';
+function installer(root: string, force = false) {
+  const loaded = loadManifest(defaultManifestPath());
+  const choices: InstallChoices = {
+    agent: 'copilot',
+    scope: 'project',
+    skills: [],
+    agents: false,
+    hooks: true,
+    root,
+    force,
+    dryRun: false,
+    json: false,
+    yes: false,
+    remove: false,
+  };
+  const plan = () => compilePlan(loaded.manifest, loaded.root, choices);
+  const apply = () => applyPlan(plan(), choices, loaded.root, new Date().toISOString());
+  return {
+    ...loaded,
+    choices,
+    plan,
+    apply,
+    config: join(root, '.github/hooks', brand.binName + '.json'),
+  };
+}
+it('installs exact hook JSON, repeats without duplicates, and removes an owned empty container', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  expect(i.plan().rows.some((r) => r.component === 'copilot-context' && r.mode === 'create')).toBe(
+    true,
+  );
+  expect(existsSync(i.config)).toBe(false); // compilation and dry-run are read-only
+  expect(i.apply().wiringRefused).toEqual([]);
+  const doc = JSON.parse(readFileSync(i.config, 'utf8'));
+  expect(doc.version).toBe(1);
+  for (const event of ['sessionStart', 'userPromptSubmitted']) {
+    expect(doc.hooks[event]).toHaveLength(1);
+    expect(doc.hooks[event][0]).toMatchObject({ type: 'command', cwd: '.', timeoutSec: 60 });
+    expect(doc.hooks[event][0].bash).toContain(event);
+    expect(doc.hooks[event][0].powershell).toContain(event);
+  }
+  expect(i.apply().wiringRefused).toEqual([]);
+  expect(JSON.parse(readFileSync(i.config, 'utf8')).hooks.sessionStart).toHaveLength(1);
+  if (process.platform !== 'win32') {
+    const out = spawnSync('bash', ['-c', doc.hooks.sessionStart[0].bash], {
+      cwd: f.root,
+      input: JSON.stringify({ cwd: f.root }),
+      env: { ...process.env, HARNESS_RUNTIME_ENTRY: f.runtime },
+      encoding: 'utf8',
+    });
+    expect(out.status, out.stderr).toBe(0);
+    expect(JSON.parse(out.stdout).additionalContext).toContain(f.root);
+  }
+  removeInstall(i.choices);
+  expect(existsSync(i.config)).toBe(false);
+  expect(existsSync(statePath(i.choices))).toBe(false);
+});
+it('preserves foreign entries, metadata, sibling files and a pre-existing empty container', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  mkdirSync(join(f.root, '.github/hooks'), { recursive: true });
+  const foreign = { type: 'command', bash: 'echo foreign' };
+  writeFileSync(
+    i.config,
+    JSON.stringify({
+      version: 1,
+      owner: 'foreign',
+      hooks: { sessionStart: [foreign], errorOccurred: [foreign] },
+    }),
+  );
+  const sibling = join(f.root, '.github/hooks/foreign.json');
+  writeFileSync(sibling, 'FOREIGN_BYTES');
+  i.apply();
+  i.apply();
+  removeInstall(i.choices);
+  expect(JSON.parse(readFileSync(i.config, 'utf8'))).toEqual({
+    version: 1,
+    owner: 'foreign',
+    hooks: { sessionStart: [foreign], errorOccurred: [foreign] },
+  });
+  expect(readFileSync(sibling, 'utf8')).toBe('FOREIGN_BYTES');
+  writeFileSync(i.config, JSON.stringify({ version: 1, hooks: {} }));
+  i.apply();
+  removeInstall(i.choices);
+  expect(JSON.parse(readFileSync(i.config, 'utf8'))).toEqual({ version: 1, hooks: {} });
+});
+it('does not take ownership of identical foreign definitions', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  i.apply();
+  const content = readFileSync(i.config, 'utf8');
+  removeInstall(i.choices);
+  mkdirSync(join(f.root, '.github/hooks'), { recursive: true });
+  writeFileSync(i.config, content);
+  i.apply();
+  removeInstall(i.choices);
+  expect(readFileSync(i.config, 'utf8')).toBe(content);
+});
+it('upgrades only recorded definitions and preserves edited foreign entries on removal', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  i.apply();
+  const first = JSON.parse(readFileSync(i.config, 'utf8')).hooks.sessionStart[0];
+  const row = i.manifest.hooks.find((h) => h.id === 'copilot-context')!;
+  const wiring = row.wiring.copilot as { command: string }[];
+  for (const w of wiring) w.command += ' --version 2';
+  i.apply();
+  const doc = JSON.parse(readFileSync(i.config, 'utf8'));
+  expect(doc.hooks.sessionStart).toHaveLength(1);
+  expect(doc.hooks.sessionStart[0]).not.toEqual(first);
+  doc.hooks.sessionStart[0].env = { USER_ADDED: 'keep' };
+  writeFileSync(i.config, JSON.stringify(doc));
+  removeInstall(i.choices);
+  expect(JSON.parse(readFileSync(i.config, 'utf8')).hooks.sessionStart[0].env).toEqual({
+    USER_ADDED: 'keep',
+  });
+});
+it.each([
+  '{',
+  'null',
+  '[]',
+  '{"version":2,"hooks":{}}',
+  '{"version":1,"hooks":[]}',
+  '{"version":1,"hooks":{"sessionStart":{}}}',
+])('refuses malformed configuration before any payload writes even under force (%#)', (content) => {
+  const f = fixture(),
+    i = installer(f.root, true);
+  mkdirSync(join(f.root, '.github/hooks'), { recursive: true });
+  writeFileSync(i.config, content);
+  expect(i.plan().rows.some((r) => r.mode === 'refuse')).toBe(true);
+  expect(i.apply().written).toBe(0);
+  expect(existsSync(join(f.root, '.harness'))).toBe(false);
+  expect(readFileSync(i.config, 'utf8')).toBe(content);
+});
+it('preflights payload and runtime pointer conflicts before changing hook configuration', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  mkdirSync(join(f.root, '.harness/hooks'), { recursive: true });
+  writeFileSync(join(f.root, '.harness/hooks/copilot-context.js'), 'foreign payload');
+  expect(i.apply().written).toBe(0);
+  expect(existsSync(i.config)).toBe(false);
+  rmSync(join(f.root, '.harness/hooks/copilot-context.js'));
+  writeFileSync(join(f.root, '.harness/hooks/runtime.json'), 'foreign pointer');
+  expect(i.apply().wiringRefused).toContain(
+    'Runtime pointer differs; inspect it before using --force',
+  );
+  expect(existsSync(i.config)).toBe(false);
+});
+it.skipIf(process.platform === 'win32')(
+  'emitted commands survive checkout relocation and spaces',
+  () => {
+    const f = fixture(),
+      i = installer(f.root);
+    i.apply();
+    const moved = f.root + ' relocated';
+    renameSync(f.root, moved);
+    roots.push(moved);
+    const runtime = join(moved, 'runtime.mjs');
+    writeFileSync(runtime, readFileSync(runtime, 'utf8').replaceAll(f.root, moved));
+    const doc = JSON.parse(
+      readFileSync(join(moved, '.github/hooks', brand.binName + '.json'), 'utf8'),
+    );
+    const out = spawnSync('bash', ['-c', doc.hooks.sessionStart[0].bash], {
+      cwd: moved,
+      input: JSON.stringify({ cwd: moved }),
+      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime },
+      encoding: 'utf8',
+    });
+    expect(out.status, out.stderr).toBe(0);
+    expect(JSON.parse(out.stdout).additionalContext).toContain(moved);
+  },
+);
+
+it('refuses removal when hook configuration became malformed, preserving installed payloads', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  i.apply();
+  writeFileSync(i.config, '{');
+  expect(() => removeInstall(i.choices)).toThrow(/repair it before removal/);
+  expect(readFileSync(i.config, 'utf8')).toBe('{');
+  expect(existsSync(join(f.root, '.harness/hooks/copilot-context.js'))).toBe(true);
+  expect(existsSync(statePath(i.choices))).toBe(true);
+});
+it.skipIf(process.platform === 'win32')(
+  'refuses symlinked configuration without changing its target',
+  () => {
+    const f = fixture(),
+      i = installer(f.root, true);
+    mkdirSync(join(f.root, '.github/hooks'), { recursive: true });
+    const target = join(f.root, 'foreign.json');
+    writeFileSync(target, '{"version":1,"hooks":{}}');
+    symlinkSync(target, i.config);
+    expect(i.apply().written).toBe(0);
+    expect(readFileSync(target, 'utf8')).toBe('{"version":1,"hooks":{}}');
+  },
+);

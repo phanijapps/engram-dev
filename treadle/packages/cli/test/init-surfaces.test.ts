@@ -1,3 +1,4 @@
+import { brand } from '@treadle/brand';
 /** T-3: the surface adapters — four surfaces against temp projects and
  *  a temp HOME. Every install asserted end to end; the hook payload
  *  itself proven in both entries (script + extension shape). */
@@ -128,7 +129,7 @@ describe('the four surface adapters (T-3)', () => {
     }
   });
 
-  it('copilot: instructions + agents + native SKILL.md skills; hooks honestly skipped', () => {
+  it('copilot: instructions + agents + native SKILL.md skills; lifecycle hooks installed', () => {
     const w = tempWorld();
     try {
       install('copilot', w.project);
@@ -150,7 +151,13 @@ describe('the four surface adapters (T-3)', () => {
       });
       const hookRow = plan.rows.find((r) => r.kind === 'hook');
       expect(hookRow?.mode).toBe('skip');
-      expect(hookRow?.note).toContain('honest');
+      expect(hookRow?.note).toContain('wiring');
+      const config = JSON.parse(
+        readFileSync(join(w.project, '.github/hooks', brand.binName + '.json'), 'utf8'),
+      );
+      expect(config.version).toBe(1);
+      expect(config.hooks.sessionStart).toHaveLength(1);
+      expect(config.hooks.userPromptSubmitted).toHaveLength(1);
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });
@@ -164,7 +171,11 @@ describe('the four surface adapters (T-3)', () => {
       runHarnessInit({ agent: 'copilot', scope: 'global', remove: false }),
     );
     expect(Number(err?.exit)).toBe(2);
-    expect(err?.messages.some((m) => m.includes('copilot has no global scope'))).toBe(true);
+    expect(
+      err?.messages.some((m) =>
+        m.includes('Copilot global scope is not supported by this installer'),
+      ),
+    ).toBe(true);
   });
 
   it('the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage', () => {

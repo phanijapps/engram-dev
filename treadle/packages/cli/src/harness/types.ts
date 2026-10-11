@@ -6,7 +6,13 @@ export type Scope = 'project' | 'global';
 export type ComponentKind = 'skill' | 'agent';
 
 export interface HookWiring {
-  kind: 'extension' | 'settings-hooks' | 'config-notify' | 'config-hooks' | 'prompt-file';
+  kind:
+    | 'extension'
+    | 'settings-hooks'
+    | 'config-notify'
+    | 'config-hooks'
+    | 'copilot-hooks'
+    | 'prompt-file';
   dest?: string;
   /** prompt-file wiring: the prompt template to install (the JS payload is not the prompt) */
   prompt?: string;

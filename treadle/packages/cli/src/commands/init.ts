@@ -140,7 +140,11 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
     process.exitCode = 3;
     return;
   }
-  if (choices.scope === 'project' && choices.hooks && choices.agent !== 'copilot') {
+  if (
+    choices.scope === 'project' &&
+    choices.hooks &&
+    plan.rows.some((r) => r.kind === 'hook' && r.mode !== 'skip')
+  ) {
     try {
       const connection = await connectWorkspace(choices.root);
       console.log(
@@ -181,7 +185,7 @@ function choicesFromFlags(f: Flags): InstallChoices {
   }
   if (agent === 'copilot' && scope === 'global') {
     throw new UsageError(
-      'copilot has no global scope — project only (the honest no)',
+      'Copilot global scope is not supported by this installer; use project scope',
       `${brand.binName} init harness --agent copilot --scope project`,
     );
   }

@@ -228,6 +228,25 @@
           }
         ]
       }
+    },
+    {
+      "id": "copilot-context",
+      "file": "hooks/copilot-context.js",
+      "companions": ["hooks/codex-context.js"],
+      "wiring": {
+        "copilot": [
+          {
+            "kind": "copilot-hooks",
+            "matcher": "sessionStart",
+            "command": "node .harness/hooks/copilot-context.js --event sessionStart"
+          },
+          {
+            "kind": "copilot-hooks",
+            "matcher": "userPromptSubmitted",
+            "command": "node .harness/hooks/copilot-context.js --event userPromptSubmitted"
+          }
+        ]
+      }
     }
   ],
   "version": "0.2.0"

@@ -1,7 +1,7 @@
 /** Manifest loading + validation. Failures refuse — never guess. */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, lstatSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { isAbsolute, join, resolve } from 'node:path';
+import { isAbsolute, join, resolve, dirname } from 'node:path';
 import type { ComponentRow, HarnessManifest, HookRow, Surface } from './types.js';
 
 export interface LoadedManifest {
@@ -99,4 +99,39 @@ export function destPath(c: ComponentRow, surface: Surface): string | undefined 
 
 export function manifestRelative(root: string, p: string): string {
   return isAbsolute(p) ? p : join(root, p);
+}
+
+/** Strict preflight for the dedicated Copilot container; no foreign bytes are changed here. */
+export function readCopilotHooks(
+  target: string,
+): { version: 1; hooks: Record<string, unknown[]>; [key: string]: unknown } | null {
+  try {
+    let current = target;
+    for (let depth = 0; depth < 3; depth++) {
+      try {
+        if (lstatSync(current).isSymbolicLink()) return null;
+      } catch (error) {
+        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') return null;
+      }
+      const parent = dirname(current);
+      if (parent === current) break;
+      current = parent;
+    }
+    if (!existsSync(target)) return { version: 1, hooks: {} };
+    const value = JSON.parse(readFileSync(target, 'utf8'));
+    if (
+      !value ||
+      typeof value !== 'object' ||
+      Array.isArray(value) ||
+      value.version !== 1 ||
+      !value.hooks ||
+      typeof value.hooks !== 'object' ||
+      Array.isArray(value.hooks) ||
+      Object.values(value.hooks).some((entries) => !Array.isArray(entries))
+    )
+      return null;
+    return value;
+  } catch {
+    return null;
+  }
 }

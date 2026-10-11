@@ -3,7 +3,7 @@
   "name": "copilot-hooks",
   "description": "Copilot lifecycle hook integration",
   "date": {
-    "updated": "2026-10-11T22:01:47Z"
+    "updated": "2026-10-11T22:06:56Z"
   },
   "status": {
     "lifecycle": "active",
@@ -217,7 +217,7 @@
     {
       "id": "T-2",
       "title": "Wire project installation, upgrade and removal",
-      "status": "doing",
+      "status": "done",
       "phase": "core",
       "needs": [
         "T-1"
@@ -323,7 +323,16 @@
         "notes": [
           "No native host or cloud job success follows from fixtures. Keep owner actions separate. Task commands T-1/T-2 run from treadle; T-3 from repository root."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T22:06:56Z",
+          "by": "agent:codex",
+          "notes": "63 tests pass in seven files. New JSON ownership, preflight, upgrade/removal, foreign and malformed config, symlink refusal, relocated Unix commands covered; existing hosts pass. Source typecheck/lint pass. Initial brand failure corrected with brand.binName; brand gate exits 0. Logs checks/T-2-pass.log and T-2-brand.log."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -465,5 +474,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 10
+  "revision": 11
 }
