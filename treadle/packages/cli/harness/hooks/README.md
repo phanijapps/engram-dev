@@ -62,6 +62,7 @@ The separate machine-managed guard retains its legacy argv JSON contract
 PostToolUse is an advisory after-the-fact check, not a write admission gate.
 The core task and owner workflow remain authoritative. Legacy recall argv
 options are compatibility helpers, not the current lifecycle protocol.
+
 ## Feedback context and delivery
 
 Lifecycle context exposes bounded feedback session IDs, cursors, latest-round
