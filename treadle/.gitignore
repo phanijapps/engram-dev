@@ -2,3 +2,7 @@ node_modules/
 dist/
 *.tsbuildinfo
 coverage/
+
+# Native CI reports are uploaded, not versioned build outputs.
+ci-evidence/
+test-results.json
