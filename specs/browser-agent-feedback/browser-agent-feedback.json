@@ -3,11 +3,15 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T17:01:40.478Z"
+    "updated": "2026-10-11T17:02:35Z",
+    "closed": {
+      "at": "2026-10-11T17:02:35Z",
+      "by": "human:owner"
+    }
   },
   "status": {
-    "lifecycle": "active",
-    "deliverable": "in_progress"
+    "lifecycle": "complete",
+    "deliverable": "delivered"
   },
   "metadata": {
     "brief": {
@@ -1494,6 +1498,13 @@
         "at": "2026-10-11T12:24:50Z",
         "revision": 25,
         "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+      },
+      {
+        "id": "64fceb81-0274-4e90-9d7c-a8aee275fd34",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T17:02:35Z",
+        "revision": 45
       }
     ],
     "pending_audit": [],
@@ -1547,5 +1558,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 44
+  "revision": 45
 }

@@ -5,3 +5,4 @@
 {"id":"2e7b1276-f57b-4a2e-a140-012be2a3b7c6","kind":"accept","by":"human:owner","at":"2026-10-11T12:20:05Z","revision":23,"decision":"D-4"}
 {"id":"f6f8b6b6-de7f-464a-a3d2-a004c4355fa3","kind":"accept","by":"human:owner","at":"2026-10-11T12:20:09Z","revision":24,"decision":"D-5"}
 {"id":"7be996c9-0fe3-4e93-af91-7037d74dba94","kind":"start","by":"human:owner","at":"2026-10-11T12:24:50Z","revision":25,"plan_digest":"a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"}
+{"id":"64fceb81-0274-4e90-9d7c-a8aee275fd34","kind":"close","by":"human:owner","at":"2026-10-11T17:02:35Z","revision":45}
