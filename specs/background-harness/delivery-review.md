@@ -31,7 +31,7 @@ Prior findings and repairs:
   and matcher metadata survive. Regression test and independent rerun pass.
 
 **Release/PACK verdict: not complete.** The canonical T-12 release matrix still
-requires actual native macOS/Windows runtime evidence and full host journeys,
+requires full host journeys,
 including separate Codex desktop/IDE behavior and human hook trust. Published
 contracts, fixture callbacks, plugin validation or a CI declaration do not
 supply that evidence. T-14 and the owner's separate Finish spec remain pending;
@@ -111,3 +111,18 @@ the package. Final repository gates are rerun sequentially.
 The staging-parent correction received a separate read-only red-foreman PASS.
 The sequential final local run passed all six repository gates (168 tests);
 actual command exits remain in delta-gates/results.json.
+
+Actual native CI run 38100576822 at 021164c79ab56ac7f9f548e21e44846fadd58542
+passed all six Linux/macOS/Windows Node 22/24 rows, including check, coverage,
+brand, production audit, conformance, portable packaging and runtime journey.
+The original smoke artifacts are retained under native-runtime/ with hashes
+and provenance. Each reports exit 0 and all six lifecycle expectations.
+The release verifier now has all required native runtime platforms; full
+host trust/activation journeys remain missing, so T-12/T-14 and owner Finish
+remain pending. No canonical task state or approval was changed by importing
+CI evidence.
+
+Independent final evidence review returned **PASS — nothing to fix** after
+checking native artifacts, hashes, provenance, matrix and documentation claims.
+The reviewer confirmed verify-matrix remains INCOMPLETE only for full host
+journeys and that no PACK, owner Finish or host-trust completion was fabricated.

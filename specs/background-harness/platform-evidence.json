@@ -1,8 +1,19 @@
 {
   "format": "release-matrix/1",
-  "runtimeFiles": ["linux-smoke.json"],
+  "runtimeFiles": [
+    "native-runtime/harness-smoke-Linux-22/harness-smoke.json",
+    "native-runtime/harness-smoke-Linux-24/harness-smoke.json",
+    "native-runtime/harness-smoke-Windows-22/harness-smoke.json",
+    "native-runtime/harness-smoke-Windows-24/harness-smoke.json",
+    "native-runtime/harness-smoke-macOS-22/harness-smoke.json",
+    "native-runtime/harness-smoke-macOS-24/harness-smoke.json"
+  ],
   "hostObservations": "host-observations.json",
-  "requiredRuntimePlatforms": ["linux", "darwin", "win32"],
+  "requiredRuntimePlatforms": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
   "pendingHostJourneys": [
     "Claude Code lifecycle, reload/removal and user activation on each required OS",
     "Codex CLI lifecycle with human exact-file hook trust on each required OS",

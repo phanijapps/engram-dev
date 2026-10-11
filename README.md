@@ -105,9 +105,10 @@ is published to a registry.
 Codex hooks require the host's explicit trust of the current hook file. Codex
 IDE plugin availability differs from CLI/desktop: if hooks are unavailable or
 inactive, use `project connect` and `context --workspace` explicitly. The source
-installation remains available for host-specific configuration. Runtime and
-adapter tests run locally on Linux; macOS, native Windows and each actual host
-surface require recorded release witnesses. See the
+installation remains available for host-specific configuration. Runtime,
+packaging and lifecycle checks passed in native CI on Linux, macOS and Windows
+with Node 22 and 24. Full host activation journeys remain pending,
+including Codex desktop/IDE and human hook trust. See the
 [compatibility record](specs/background-harness/compatibility.md).
 
 For a portable production runtime, run `pnpm --dir treadle package:runtime

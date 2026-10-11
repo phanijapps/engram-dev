@@ -31,3 +31,12 @@ shell; configurable shell behavior requires its own witness. Source:
 [Codex command runner](https://github.com/openai/codex/blob/main/codex-rs/hooks/src/engine/command_runner.rs).
 No human hook trust, actual prompt execution, desktop/IDE session, or native
 macOS/Windows host journey is inferred from these observations.
+
+## Actual native runtime checks — 2026-10-10
+
+[Run 38100576822](https://github.com/phanijapps/engram-dev/actions/runs/38100576822)
+passed all six native Linux/macOS/Windows rows with Node 22 and 24. Packaging
+and the six server lifecycle expectations passed on each; original smoke files
+and exact tested-head provenance are retained under native-runtime/. These
+witnesses supply the runtime matrix, while the four full host journey categories
+in platform-evidence.json remain pending.

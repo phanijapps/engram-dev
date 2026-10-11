@@ -106,3 +106,9 @@ aliased standalone Linux verifier exits 0 with the relocated package.
 Source: [pinned pnpm deploy implementation](https://github.com/pnpm/pnpm/blob/v9.15.9/releasing/plugin-commands-deploy/src/deploy.ts).
 The failure and its tested revision are retained in ci-sixth-run.json; native
 confirmation of the cross-drive repair remains required.
+
+Native confirmation: run 38100576822 at 021164c passed every Linux/macOS/Windows
+Node 22/24 row, including standalone packaging and the runtime journey. This
+confirms the repaired ordinary native paths and cross-drive packaging fixture.
+Original artifacts and provenance are retained under native-runtime/. It does
+not establish power-loss durability or human host activation.

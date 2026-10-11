@@ -1,15 +1,33 @@
 {
-  "at": "2026-10-11T00:42:09.324Z",
+  "at": "2026-10-11T01:06:53.630Z",
   "verdict": "INCOMPLETE",
   "witnesses": [
     {
-      "file": "linux-smoke.json",
-      "sha256": "9077dc9dd76c9bfae0b6f1e1582ad86529fec61e8dd071c75881f8b2590c86d8"
+      "file": "native-runtime/harness-smoke-Linux-22/harness-smoke.json",
+      "sha256": "d047939056c9a0f804b21e3a6c81806c8eb53f41718aa32713060dfeb66b6265"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Linux-24/harness-smoke.json",
+      "sha256": "efae3c32a9f82b0e86af0a03bdc890c8ecff3bb54f5784ef1337e4f30b172bea"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Windows-22/harness-smoke.json",
+      "sha256": "68c49ed391f18ad27dd85679cbc0a2d147008edee48b0edc4a9dfcf577220762"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Windows-24/harness-smoke.json",
+      "sha256": "87100ffb49c11abfc77f2067aa4cc80383b6186ff91f9109fd70abbbff3bed31"
+    },
+    {
+      "file": "native-runtime/harness-smoke-macOS-22/harness-smoke.json",
+      "sha256": "345e2aadf4950be17395b1c5d0682c3b90002a75cc628b87297dc7054c64c4a3"
+    },
+    {
+      "file": "native-runtime/harness-smoke-macOS-24/harness-smoke.json",
+      "sha256": "7c5eba74688f8d1dd68208a95494976ef7a0389d4192cc29efca964521bd5937"
     }
   ],
   "missing": [
-    "Actual runtime witness pending: darwin",
-    "Actual runtime witness pending: win32",
     "Host journey pending: Claude Code lifecycle, reload/removal and user activation on each required OS",
     "Host journey pending: Codex CLI lifecycle with human exact-file hook trust on each required OS",
     "Host journey pending: Codex desktop lifecycle and IDE fallback separately",
