@@ -36,6 +36,24 @@ Inspect `--dry-run` before using `--force`. Installer-owned prior commands are r
 foreign hook commands remain. If ownership records are missing, inspect retained legacy commands manually.
 Codex hook trust and host activation still need the host's normal action.
 
+## Claude project paths
+
+Project Claude callbacks use `node` with literal arguments.
+The launcher finds the nearest ancestor `.claude/settings.json` and resolves the relative payload there.
+It preserves event stdin and the session directory.
+The commands work after checkout relocation and from project subdirectories.
+Global callbacks retain absolute executable and payload paths.
+
+Refresh through `init harness --agent claude --scope project --hooks-only`.
+Inspect the dry-run before you use `--force`.
+The installer replaces callbacks that its ownership record identifies.
+For old manual callbacks, reconcile their exact definitions before installation to avoid duplicate events.
+Preserve foreign callbacks and settings.
+
+Context uses the exact event directory as the workspace on every host.
+A subdirectory session can therefore report a missing wiki or specs directory.
+Start at the repository root to obtain its canonical context.
+
 ## Pi extension sources
 
 Pi extensions belong to the harness. Shared script and extension payloads live in
@@ -57,6 +75,8 @@ Refresh project extensions through `init harness --agent pi --scope project
 Inspect its `--dry-run` plan before adding `--force` for differing files.
 Reload Pi after installation.
 
+The guard covers corpus `expected.*` witness files, legacy `expected` and `golden` directories,
+and the generated `wiki/code` directory. Reads remain permitted.
 The separate machine-managed guard retains its legacy argv JSON contract
 (exit 0 pass, 3 refusal, 1 malformed input) and pi tool_call blocking. Claude
 PostToolUse is an advisory after-the-fact check, not a write admission gate.

@@ -101,8 +101,8 @@ describe('the four surface adapters (T-3)', () => {
         hooks: Record<string, { hooks: { command: string; args?: string[] }[] }[]>;
       };
       expect(s.permissions.allow).toContain('Read'); // foreign keys preserved
-      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args?.[0]).toContain(
-        join('.harness', 'hooks', 'post-tool-check.js'),
+      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args).toContain(
+        '.harness/hooks/post-tool-check.js',
       );
     } finally {
       w.restore();
@@ -277,7 +277,9 @@ describe('session-recall payload + wirings (T-1)', () => {
       };
       expect(s.hooks['SessionStart']?.[0]?.hooks[0]?.args).toContain('SessionStart');
       expect(s.hooks['UserPromptSubmit']?.[0]?.hooks[0]?.args).toContain('UserPromptSubmit');
-      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args?.[0]).toContain('post-tool-check');
+      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args).toContain(
+        '.harness/hooks/post-tool-check.js',
+      );
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });

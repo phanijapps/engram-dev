@@ -217,9 +217,7 @@ describe('the installer engine (T-1)', () => {
         hooks: Record<string, { hooks: { command: string; args?: string[] }[] }[]>;
       };
       expect(settings.env.KEEP).toBe('me'); // unknown keys preserved
-      expect(settings.hooks['PostToolUse'][0]?.hooks[0]?.args?.[0]).toContain(
-        join('.harness', 'hooks', 'check.js'),
-      );
+      expect(settings.hooks['PostToolUse'][0]?.hooks[0]?.args).toContain('.harness/hooks/check.js');
 
       // BLOCKER 3 (R2): Native home isolated — the suite must NEVER touch the real ~/.codex
       const fakeHome = mkdtempSync(join(tmpdir(), 'hh-'));

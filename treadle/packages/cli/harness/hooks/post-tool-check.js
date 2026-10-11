@@ -14,7 +14,10 @@ import { fileURLToPath } from 'node:url';
  *  - extension mode: loaded by pi as an extension; the default export
  *    registers the same guard on tool_call.
  */
-const MANAGED = [/\/corpus\/.*\/golden\//, /\/corpus\/.*\/expected\//, /(^|\/)wiki\/code\//];
+const MANAGED = [
+  /(^|\/)corpus\/(?:[^/]+\/)*(?:golden\/|expected\/|expected\.[^/]+$)/,
+  /(^|\/)wiki\/code\//,
+];
 const ALLOW_ENV = 'HARNESS_ALLOW_MACHINE_EDITS';
 
 /** Pure check: { ok, reason } for a payload with a file path. */

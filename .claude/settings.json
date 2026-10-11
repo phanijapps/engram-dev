@@ -5,7 +5,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .harness/hooks/post-tool-check.js"
+            "command": "node",
+            "args": [
+              "-e",
+              "const fs=require('node:fs'),p=require('node:path');let root=process.cwd();while(!fs.existsSync(p.join(root,'.claude','settings.json'))){const parent=p.dirname(root);if(parent===root)throw Error('Project Claude hook configuration not found');root=parent;}const hook=p.resolve(root,process.argv[1]);const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});if(result.error)throw result.error;process.exit(result.status??1);",
+              "--",
+              ".harness/hooks/post-tool-check.js"
+            ]
           }
         ]
       }
@@ -15,7 +21,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .harness/hooks/session-recall.js --claude-start"
+            "command": "node",
+            "args": [
+              "-e",
+              "const fs=require('node:fs'),p=require('node:path');let root=process.cwd();while(!fs.existsSync(p.join(root,'.claude','settings.json'))){const parent=p.dirname(root);if(parent===root)throw Error('Project Claude hook configuration not found');root=parent;}const hook=p.resolve(root,process.argv[1]);const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});if(result.error)throw result.error;process.exit(result.status??1);",
+              "--",
+              ".harness/hooks/claude-context.js",
+              "--host",
+              "claude",
+              "--event",
+              "SessionStart"
+            ]
           }
         ]
       }
@@ -25,7 +41,17 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node .harness/hooks/session-recall.js --claude-gate"
+            "command": "node",
+            "args": [
+              "-e",
+              "const fs=require('node:fs'),p=require('node:path');let root=process.cwd();while(!fs.existsSync(p.join(root,'.claude','settings.json'))){const parent=p.dirname(root);if(parent===root)throw Error('Project Claude hook configuration not found');root=parent;}const hook=p.resolve(root,process.argv[1]);const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});if(result.error)throw result.error;process.exit(result.status??1);",
+              "--",
+              ".harness/hooks/claude-context.js",
+              "--host",
+              "claude",
+              "--event",
+              "UserPromptSubmit"
+            ]
           }
         ]
       }

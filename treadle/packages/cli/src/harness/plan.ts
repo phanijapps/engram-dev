@@ -288,21 +288,25 @@ export function planSummary(plan: Plan): {
   return s;
 }
 
-// A session can start below the project root. Resolve the nearest Codex config,
+// A session can start below the project root. Resolve the nearest host config,
 // then its relative payload; no checkout path is embedded in project wiring.
 // Keep the original cwd and inherited stdin for the lifecycle callback.
-const codexProjectLauncher = [
-  "const fs=require('node:fs'),p=require('node:path');",
-  'let root=process.cwd();',
-  "while(!fs.existsSync(p.join(root,'.codex','hooks.json'))){",
-  'const parent=p.dirname(root);',
-  "if(parent===root)throw Error('Project Codex hook configuration not found');",
-  'root=parent;}',
-  'const hook=p.resolve(root,process.argv[1]);',
-  "const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});",
-  'if(result.error)throw result.error;',
-  'process.exit(result.status??1);',
-].join('');
+const projectHookLauncher = (config: string, host: string): string =>
+  [
+    "const fs=require('node:fs'),p=require('node:path');",
+    'let root=process.cwd();',
+    `while(!fs.existsSync(p.join(root,${config
+      .split('/')
+      .map((part) => `'${part}'`)
+      .join(',')}))){`,
+    'const parent=p.dirname(root);',
+    `if(parent===root)throw Error('Project ${host} hook configuration not found');`,
+    'root=parent;}',
+    'const hook=p.resolve(root,process.argv[1]);',
+    "const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});",
+    'if(result.error)throw result.error;',
+    'process.exit(result.status??1);',
+  ].join('');
 
 function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): string {
   const suffix = (w.command ?? '')
@@ -311,14 +315,27 @@ function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): s
     .split(/\s+/)
     .filter(Boolean);
   if (w.kind === 'settings-hooks')
-    return JSON.stringify({ type: 'command', command: process.execPath, args: [path, ...suffix] });
+    return JSON.stringify({
+      type: 'command',
+      command: scope === 'project' ? 'node' : process.execPath,
+      args:
+        scope === 'project'
+          ? [
+              '-e',
+              projectHookLauncher('.claude/settings.json', 'Claude'),
+              '--',
+              relative(root, path).split('\\').join('/'),
+              ...suffix,
+            ]
+          : [path, ...suffix],
+    });
   const quote = (s: string): string => "'" + s.replaceAll("'", "'" + '"' + "'" + '"' + "'") + "'";
   const argv =
     scope === 'project'
       ? [
           'node',
           '-e',
-          codexProjectLauncher,
+          projectHookLauncher('.codex/hooks.json', 'Codex'),
           '--',
           relative(root, path).split('\\').join('/'),
           ...suffix,

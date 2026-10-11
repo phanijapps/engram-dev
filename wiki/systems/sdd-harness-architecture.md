@@ -20,6 +20,7 @@ sources:
   - { id: context, resource: treadle/packages/cli/src/harness/context.ts }
   - { id: planning, resource: treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md }
   - { id: hook-paths, resource: treadle/packages/cli/src/harness/plan.ts }
+  - { id: hook-guard, resource: treadle/packages/cli/harness/hooks/post-tool-check.js }
   - {
       id: owner,
       resource: specs/documentation-consolidation/owner-decision-revision.md,
@@ -122,6 +123,25 @@ The runtime pointer remains machine-local; moving the runtime needs reinstallati
 Native packaged hooks keep their plugin-root entry. Host trust and activation remain host actions.
 Source: `treadle/packages/cli/src/harness/plan.ts` and
 `treadle/packages/cli/harness/hooks/README.md`.
+
+# Hook repairs — observed 2026-10-11
+
+Project Claude callbacks now resolve their relative payload from the nearest ancestor `.claude/settings.json`.
+They preserve event stdin and the session directory after checkout relocation.
+The installer records current lifecycle callbacks and their companion helper.
+Legacy manual callbacks need exact ownership reconciliation before replacement to avoid duplicate events.
+Source: `treadle/packages/cli/src/harness/plan.ts` and `treadle/packages/cli/harness/hooks/README.md`.
+
+The machine-managed guard covers corpus `expected.*` witness files as well as legacy generated directories.
+Pi checks these paths before a write; reads remain permitted.
+Claude PostToolUse consumes stdin and supplies advisory context after the completed call.
+Source: `treadle/packages/cli/harness/hooks/post-tool-check.js`.
+
+The context bridge uses the exact event directory as the workspace.
+Sessions below the repository root look for their own wiki and specs directories.
+Use a repository-root session for the canonical knowledge and work context.
+Source: `treadle/packages/cli/harness/hooks/codex-context.js`.
+
 
 # Browser feedback plane — observed 2026-10-11
 
