@@ -1,14 +1,9 @@
 # Wukong
 
-```text
-##      ##  ##      ##  ##      ##    ######    ##      ##    ######
-##      ##  ##      ##  ##    ##    ##      ##  ####    ##  ##      ##
-##      ##  ##      ##  ##  ##      ##      ##  ####    ##  ##
-##  ##  ##  ##      ##  ####        ##      ##  ##  ##  ##  ##  ######
-##  ##  ##  ##      ##  ##  ##      ##      ##  ##    ####  ##      ##
-####  ####  ##      ##  ##    ##    ##      ##  ##    ####  ##      ##
-##      ##    ######    ##      ##    ######    ##      ##    ######
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="treadle/packages/brand/assets/wordmark-dark.svg">
+  <img src="treadle/packages/brand/assets/wordmark-light.svg" alt="Wukong" width="960">
+</picture>
 
 **The human drives; the machine moves.**
 
