@@ -5,7 +5,13 @@ created: 2026-10-08
 updated: 2026-10-10
 title: The anti-waterfall loop — bounded artifacts, interleaved work
 description: "The SDD loop pattern: knowledge first, then the smallest analysis/design that unblocks the next slice; uncertainty recorded as a deliverable; unblocked work proceeds while questions run."
-sources: [{ id: src, resource: treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md }]
+sources:
+  [
+    {
+      id: src,
+      resource: treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md,
+    },
+  ]
 tags: [pattern, sdd, anti-waterfall, loop]
 ---
 
@@ -15,7 +21,7 @@ Knowledge first, then five basic skills in a loop — with the loop's shape
 itself preventing waterfall:
 
 [^l1]:
-    `treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md` §0 — bounded artifacts, uncertainty
+    `treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md`, Shared artifact contract — bounded artifacts, uncertainty
     as a deliverable, interleaving is the point.
 
 [^l2]:
@@ -32,9 +38,10 @@ itself preventing waterfall:
 
 # When to apply
 
-Every initiative. The loop replaces phase gates: analyze the smallest
-next thing, plan its slices, implement one, review with re-runs — and let
-recorded questions (not silence) gate what is not yet known.
+Every initiative. Analyze the smallest next question and plan its ready slices.
+Keep unresolved questions explicit. Implementation needs the current plan's
+owner gates; analysis readiness does not authorize execution.
+Source: `treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md`, Register and hand off.
 
 # Examples
 

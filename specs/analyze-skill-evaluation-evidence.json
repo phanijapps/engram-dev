@@ -1,0 +1,708 @@
+{
+  "format": "skill-evaluation/1",
+  "recorded_at": "2026-10-11T03:24:45Z",
+  "scope": "Evaluate unchanged analyze; proposal only; no installation or owner actions",
+  "repository_head": "ec337605f0aac3e6fde1225cd4842d88111c969e",
+  "cli_version": {
+    "argv": [
+      "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "0.1.0\n",
+    "stderr": ""
+  },
+  "skill_source_hashes": {
+    "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md": "3df75fa2c68e28938eded006a356c3cc84dab5bde9decdd3fabb7d3fa5f50e5d",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/spike.tmpl.md": "d13432a558d41029eed603fdd382a5b7df2669d9ac9dfef296fdc3fd42262f56",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/spec.tmpl.md": "9c87da7e479c08293cccaa53cdefa0806b1b99b60d070151dbad6da0103f0660",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/impact.tmpl.md": "62ab60004c92637990809d2d0a48de88ee006ff8a87c7e867a93307adba49c4c",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/feature.tmpl.md": "0e3b759f9651a5231f79142ab2ec72987023aae92973f21fec268677c5082cfa",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/gapanalysis.tmpl.md": "33623e783e62e5ec210ea24f242b03cc3e7b30ced94ade708298913f0f0aaa9f",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/assets/bug.tmpl.md": "eacbb04d719b85b3e9d93404ccf1f276f0a45c33e7337a57ee253827f001affc",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/evals/rubric.md": "f8f55b2a68f91bb35d9e50364c4606af5fa3fd0fb29cb5b27d88d8d89722e56a",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/evals/cases.json": "dff6c57a51704f5b3d6d34c84d9cadb6db3f16e8d63059113fdfad93fd6e9160",
+    ".pi/skills/analyze/SKILL.md": "d3322f8034a3173507dcf8c7da6c1a9ad2a6945f7722f4d4fe579b0d03fa4af7",
+    ".pi/skills/analyze/assets/spike.tmpl.md": "d13432a558d41029eed603fdd382a5b7df2669d9ac9dfef296fdc3fd42262f56",
+    ".pi/skills/analyze/assets/spec.tmpl.md": "9c87da7e479c08293cccaa53cdefa0806b1b99b60d070151dbad6da0103f0660",
+    ".pi/skills/analyze/assets/impact.tmpl.md": "62ab60004c92637990809d2d0a48de88ee006ff8a87c7e867a93307adba49c4c",
+    ".pi/skills/analyze/assets/feature.tmpl.md": "0e3b759f9651a5231f79142ab2ec72987023aae92973f21fec268677c5082cfa",
+    ".pi/skills/analyze/assets/gapanalysis.tmpl.md": "33623e783e62e5ec210ea24f242b03cc3e7b30ced94ade708298913f0f0aaa9f",
+    ".pi/skills/analyze/assets/bug.tmpl.md": "eacbb04d719b85b3e9d93404ccf1f276f0a45c33e7337a57ee253827f001affc",
+    ".pi/skills/analyze/evals/rubric.md": "f8f55b2a68f91bb35d9e50364c4606af5fa3fd0fb29cb5b27d88d8d89722e56a",
+    ".pi/skills/analyze/evals/cases.json": "dff6c57a51704f5b3d6d34c84d9cadb6db3f16e8d63059113fdfad93fd6e9160",
+    ".codex/skills/analyze/SKILL.md": "3df75fa2c68e28938eded006a356c3cc84dab5bde9decdd3fabb7d3fa5f50e5d",
+    ".codex/skills/analyze/assets/spike.tmpl.md": "d13432a558d41029eed603fdd382a5b7df2669d9ac9dfef296fdc3fd42262f56",
+    ".codex/skills/analyze/assets/spec.tmpl.md": "9c87da7e479c08293cccaa53cdefa0806b1b99b60d070151dbad6da0103f0660",
+    ".codex/skills/analyze/assets/impact.tmpl.md": "62ab60004c92637990809d2d0a48de88ee006ff8a87c7e867a93307adba49c4c",
+    ".codex/skills/analyze/assets/feature.tmpl.md": "0e3b759f9651a5231f79142ab2ec72987023aae92973f21fec268677c5082cfa",
+    ".codex/skills/analyze/assets/gapanalysis.tmpl.md": "33623e783e62e5ec210ea24f242b03cc3e7b30ced94ade708298913f0f0aaa9f",
+    ".codex/skills/analyze/assets/bug.tmpl.md": "eacbb04d719b85b3e9d93404ccf1f276f0a45c33e7337a57ee253827f001affc",
+    ".codex/skills/analyze/evals/rubric.md": "f8f55b2a68f91bb35d9e50364c4606af5fa3fd0fb29cb5b27d88d8d89722e56a",
+    ".codex/skills/analyze/evals/cases.json": "dff6c57a51704f5b3d6d34c84d9cadb6db3f16e8d63059113fdfad93fd6e9160",
+    ".claude/skills/analyze/SKILL.md": "d3322f8034a3173507dcf8c7da6c1a9ad2a6945f7722f4d4fe579b0d03fa4af7",
+    ".claude/skills/analyze/assets/spike.tmpl.md": "d13432a558d41029eed603fdd382a5b7df2669d9ac9dfef296fdc3fd42262f56",
+    ".claude/skills/analyze/assets/spec.tmpl.md": "9c87da7e479c08293cccaa53cdefa0806b1b99b60d070151dbad6da0103f0660",
+    ".claude/skills/analyze/assets/impact.tmpl.md": "62ab60004c92637990809d2d0a48de88ee006ff8a87c7e867a93307adba49c4c",
+    ".claude/skills/analyze/assets/feature.tmpl.md": "0e3b759f9651a5231f79142ab2ec72987023aae92973f21fec268677c5082cfa",
+    ".claude/skills/analyze/assets/gapanalysis.tmpl.md": "33623e783e62e5ec210ea24f242b03cc3e7b30ced94ade708298913f0f0aaa9f",
+    ".claude/skills/analyze/assets/bug.tmpl.md": "eacbb04d719b85b3e9d93404ccf1f276f0a45c33e7337a57ee253827f001affc",
+    ".claude/skills/analyze/evals/rubric.md": "f8f55b2a68f91bb35d9e50364c4606af5fa3fd0fb29cb5b27d88d8d89722e56a",
+    ".claude/skills/analyze/evals/cases.json": "dff6c57a51704f5b3d6d34c84d9cadb6db3f16e8d63059113fdfad93fd6e9160"
+  },
+  "command_probes": [
+    {
+      "id": "bad-search",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "search",
+        "owner workflow"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: missing required argument 'query'\n"
+    },
+    {
+      "id": "bad-read",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "read",
+        "systems/owner-workflow"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: missing required argument 'cid'\n"
+    },
+    {
+      "id": "retired-code-index",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "code",
+        "index",
+        ".",
+        "wiki"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "error: unknown command 'code'\n"
+    },
+    {
+      "id": "correct-search",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "search",
+        "/tmp/analyze-eval-wmzn47n2/feature/wiki",
+        "list"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "       1  systems/list \u2014 Note listing\n          # Note listing\nThe local CLI lists note id and \u2026\n",
+      "stderr": ""
+    },
+    {
+      "id": "correct-read",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "read",
+        "/tmp/analyze-eval-wmzn47n2/feature/wiki",
+        "systems/list"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "---\ntitle: Note listing\ntype: System\ndescription: Local note listing contract.\nstatus: stable\nsources:\n  - {id: list, resource: src/list.ts}\n---\n# Note listing\nThe local CLI lists note id and title, tab separated, in insertion order. It does not use a network or accounts. Source: `src/list.ts:1`.\n\n",
+      "stderr": ""
+    },
+    {
+      "id": "dirty-status",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "status",
+        "/tmp/analyze-eval-wmzn47n2/dirty_bug/wiki",
+        "--workspace",
+        "/tmp/analyze-eval-wmzn47n2/dirty_bug"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "freshness: fresh\nconcepts: 1\nconformance: 0 error(s), 0 warning(s)\nanchors: 3 checked, 0 need review\nfindings: 0 pending\n",
+      "stderr": ""
+    },
+    {
+      "id": "dirty-anchors",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "know",
+        "anchors",
+        "/tmp/analyze-eval-wmzn47n2/dirty_bug/wiki",
+        "--workspace",
+        "/tmp/analyze-eval-wmzn47n2/dirty_bug"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "untracked     systems/notifications \u2192 src/publish.ts (not yet baselined)\nuntracked     systems/notifications \u2192 src/email.ts (not yet baselined)\nuntracked     systems/notifications \u2192 src/push.ts (not yet baselined)\nanchors: 3 checked, 0 need review\n",
+      "stderr": ""
+    },
+    {
+      "id": "gated-init",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "init",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe",
+        "--owner-gated",
+        "--title",
+        "Synthetic probe",
+        "--why",
+        "Evaluate authoring contract only"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "born: /tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe/probe.json (revision 1, stage awaiting_owner)\n",
+      "stderr": ""
+    },
+    {
+      "id": "question-missing-revision",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "add",
+        "question",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe",
+        "--phase",
+        "spec",
+        "--id",
+        "Q-1",
+        "--question",
+        "Which retention period is intended?"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "REFUSED: Pass the current --expected-revision\n"
+    },
+    {
+      "id": "question-held-revision",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "add",
+        "question",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe",
+        "--phase",
+        "spec",
+        "--id",
+        "Q-1",
+        "--question",
+        "Which retention period is intended?",
+        "--expected-revision",
+        "1"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "asked Q-1 (revision 2)\n",
+      "stderr": ""
+    },
+    {
+      "id": "stale-question-revision",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "add",
+        "question",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe",
+        "--phase",
+        "design",
+        "--id",
+        "Q-2",
+        "--question",
+        "Which candidate mechanism?",
+        "--expected-revision",
+        "1"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "REFUSED: Pass the current --expected-revision\n"
+    },
+    {
+      "id": "read-only-status",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "status",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "workflow: spec \u2014 Q-1\ndeliverable: planning \u00b7 0 tasks \u00b7 revision 2 \u00b7 1 open \u00b7 not approved\n",
+      "stderr": ""
+    },
+    {
+      "id": "read-only-check",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "check",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "alignment: 0 violation(s), 0 gap(s) \u2014 gaps are reported, never guessed\n",
+      "stderr": ""
+    },
+    {
+      "id": "duplicate-question",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "add",
+        "question",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe",
+        "--phase",
+        "spec",
+        "--id",
+        "Q-1",
+        "--question",
+        "Repeated question",
+        "--expected-revision",
+        "2"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 1,
+      "stdout": "",
+      "stderr": "REFUSED: Q-1: already asked\n"
+    },
+    {
+      "id": "empty-shell-check",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "init",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/empty",
+        "--owner-gated",
+        "--title",
+        "Empty shell",
+        "--why",
+        "Admission is not complete analysis"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "born: /tmp/analyze-eval-wmzn47n2/probes/workspace/specs/empty/empty.json (revision 1, stage awaiting_owner)\n",
+      "stderr": ""
+    },
+    {
+      "id": "empty-shell-alignment",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "check",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/empty"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "alignment: 0 violation(s), 0 gap(s) \u2014 gaps are reported, never guessed\n",
+      "stderr": ""
+    },
+    {
+      "id": "where-sidecar",
+      "argv": [
+        "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+        "do",
+        "where",
+        "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+        "--json"
+      ],
+      "cwd": "/tmp/analyze-eval-wmzn47n2/probes/workspace",
+      "exit": 0,
+      "stdout": "{\n  \"root\": \"/tmp/analyze-eval-wmzn47n2/probes/workspace\",\n  \"packs\": [\n    {\n      \"name\": \"empty\",\n      \"path\": \"/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/empty\",\n      \"stage\": \"awaiting_owner\",\n      \"openQuestions\": 0,\n      \"nextTask\": null,\n      \"revision\": 1,\n      \"lastEvidenceAt\": null,\n      \"tree\": \"\"\n    },\n    {\n      \"name\": \"probe\",\n      \"path\": \"/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe\",\n      \"stage\": \"planning\",\n      \"openQuestions\": 1,\n      \"nextTask\": null,\n      \"revision\": 2,\n      \"lastEvidenceAt\": null,\n      \"tree\": \"\"\n    }\n  ],\n  \"worktrees\": [],\n  \"worktreesUnavailable\": \"no git \u2014 worktree scan unavailable\"\n}\n",
+      "stderr": "fatal: not a git repository (or any parent up to mount point /)\nStopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).\n"
+    }
+  ],
+  "baseline_reset_probe": {
+    "runs": [
+      {
+        "id": "initial-fingerprints",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "fingerprints",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki"
+        ],
+        "exit": 0,
+        "stdout": "fingerprints: /tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki/.okf/fingerprints.json\n",
+        "stderr": ""
+      },
+      {
+        "id": "initial-stamp",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "stamp",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "freshness stamp: /tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki/.okf/last-index.json\n",
+        "stderr": ""
+      },
+      {
+        "id": "before-anchors",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "anchors",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "changed       systems/limits \u2192 src/limits.py\nanchors: 1 checked, 1 need review \u2014 the gardener re-verifies and re-anchors\n",
+        "stderr": ""
+      },
+      {
+        "id": "before-status",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "status",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "freshness: stale\nconcepts: 1\nconformance: 0 error(s), 0 warning(s)\nanchors: 1 checked, 1 need review\nfindings: 0 pending\n",
+        "stderr": ""
+      },
+      {
+        "id": "blind-fingerprints",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "fingerprints",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki"
+        ],
+        "exit": 0,
+        "stdout": "fingerprints: /tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki/.okf/fingerprints.json\n",
+        "stderr": ""
+      },
+      {
+        "id": "blind-stamp",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "stamp",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "freshness stamp: /tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki/.okf/last-index.json\n",
+        "stderr": ""
+      },
+      {
+        "id": "after-anchors",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "anchors",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "anchors: 1 checked, 0 need review\n",
+        "stderr": ""
+      },
+      {
+        "id": "after-status",
+        "argv": [
+          "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+          "/home/videogamer/code/memex_beta/treadle/packages/cli/src/main.ts",
+          "know",
+          "status",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset/wiki",
+          "--workspace",
+          "/tmp/analyze-eval-wmzn47n2/probes/baseline-reset"
+        ],
+        "exit": 0,
+        "stdout": "freshness: fresh\nconcepts: 1\nconformance: 0 error(s), 0 warning(s)\nanchors: 1 checked, 0 need review\nfindings: 0 pending\n",
+        "stderr": ""
+      }
+    ],
+    "documentation_unchanged": true
+  },
+  "contract_probe": {
+    "argv": [
+      "/home/videogamer/code/memex_beta/treadle/node_modules/.bin/tsx",
+      "/tmp/analyze-eval-wmzn47n2/probes/contract-probe.mts",
+      "/tmp/analyze-eval-wmzn47n2/probes/workspace"
+    ],
+    "exit": 0,
+    "stdout": "{\n  \"core_preferred_pack_loads\": true,\n  \"context_packs\": [\n    {\n      \"name\": \"empty\",\n      \"error\": \"Missing, ambiguous or oversized spec JSON\",\n      \"stage\": \"refused\"\n    },\n    {\n      \"name\": \"probe\",\n      \"path\": \"/tmp/analyze-eval-wmzn47n2/probes/workspace/specs/probe\",\n      \"revision\": 2,\n      \"stage\": \"planning\",\n      \"lifecycle\": \"active\",\n      \"workflow\": {\n        \"phase\": \"spec\",\n        \"reasons\": [\n          \"Q-1\"\n        ]\n      },\n      \"doing\": [],\n      \"candidate\": null,\n      \"evidence\": [],\n      \"openQuestions\": [\n        \"Q-1\"\n      ]\n    }\n  ],\n  \"selectionRequired\": true,\n  \"spec_frontmatter_edit_changes_digest\": true,\n  \"original_digest\": \"6cecb622dda1c580db6597e493cd2bde495de03086b8af504ce75233cdfc0f72\",\n  \"superseded_digest\": \"a99eb4ce8e55a8eb06dd9a305a7dc44556ad52d2e669d5d80a1261a4c95f0a79\",\n  \"pi_registered_events\": [\n    \"session_start\",\n    \"before_agent_start\"\n  ],\n  \"claude_active_lifecycle\": [\n    {\n      \"kind\": \"settings-hooks\",\n      \"matcher\": \"SessionStart\",\n      \"command\": \"node .harness/hooks/claude-context.js --host claude --event SessionStart\"\n    },\n    {\n      \"kind\": \"settings-hooks\",\n      \"matcher\": \"UserPromptSubmit\",\n      \"command\": \"node .harness/hooks/claude-context.js --host claude --event UserPromptSubmit\"\n    }\n  ],\n  \"analysis_alignment\": {\n    \"violations\": [],\n    \"gaps\": 1\n  }\n}\n",
+    "stderr": ""
+  },
+  "behavioral_trials": [
+    {
+      "case": "feature",
+      "local_artifacts": "/tmp/analyze-eval-wmzn47n2/feature/specs/note-list-csv",
+      "pack_sha256": "335d27e3c338fc8084940f763d6e57a75b7db5003cf575d2065f25e77e91e248",
+      "format": "specpack/0.4",
+      "revision": 3,
+      "status": {
+        "lifecycle": "active",
+        "deliverable": "drafted"
+      },
+      "requirements": 3,
+      "proposed_decisions": 1,
+      "tasks": 0,
+      "spec_phase_questions": [],
+      "owner_acts": [],
+      "artifacts": {
+        "analysis": {
+          "ref": "feature.md",
+          "type": "text/markdown",
+          "description": "Draft feature analysis and planning handoff",
+          "sha256": "c998ce28927c55e70cd8f6120e4a448b7e9c1293dcc916198c62cc8170abd534"
+        },
+        "brief": {
+          "ref": "brief.md",
+          "type": "text/markdown",
+          "description": "Draft owner brief",
+          "sha256": "935b716dea73f463d7fd0889329e78454b50065b8c326b68a67c9ed018110a2e"
+        },
+        "spec": {
+          "ref": "spec.md",
+          "type": "text/markdown",
+          "description": "Candidate behavior and proposed checks",
+          "sha256": "3d755f38b0960775d8e3f2e2aa1b165913d07069243f07f807cd168e7449e55f"
+        }
+      }
+    },
+    {
+      "case": "dirty_bug",
+      "local_artifacts": "/tmp/analyze-eval-wmzn47n2/dirty_bug/specs/email-notification-drop",
+      "pack_sha256": "fa51a32e80727ee6502fa1aa14757ae87da6426f7e6dc2924885e327a8dad3f2",
+      "format": "specpack/0.4",
+      "revision": 2,
+      "status": {
+        "lifecycle": "active",
+        "deliverable": "awaiting_owner"
+      },
+      "requirements": 2,
+      "proposed_decisions": 0,
+      "tasks": 0,
+      "spec_phase_questions": [],
+      "owner_acts": [],
+      "artifacts": {
+        "analysis": {
+          "ref": "bug-email-drop.md",
+          "type": "analysis",
+          "description": "Draft bug analysis of pinned dirty source"
+        },
+        "brief": {
+          "ref": "brief.md",
+          "type": "brief",
+          "description": "Bounded owner handoff"
+        },
+        "spec": {
+          "ref": "spec.md",
+          "type": "spec",
+          "description": "Candidate observable behavior; no approval"
+        }
+      }
+    }
+  ],
+  "fixture_preservation": {
+    "checked": 21,
+    "changed": [],
+    "initial_input_hashes": {
+      "raw-cases.json": "56968511a80d1cda55f62c625999e9766c143d03c137c7df3e658b92afd21b46",
+      "dirty_bug/evaluation-tools.json": "cae46aa3a45ce0d9a12cd6f3fed35547b577819ee9cf43aecc976892de2fdcc3",
+      "dirty_bug/README.md": "867a283ad17fec1f08536082e38c8216356fa0f30ff2e34e51413bf79625e282",
+      "dirty_bug/request.txt": "e2973f5f765e25923af7c9d6ba786e900438ea69857f371fd03ba4259da77e4b",
+      "feature/evaluation-tools.json": "1ec47081b087fcee6aeb4bb0df7b6b414a5748fc19e8d28a837cdea1dcb70646",
+      "feature/README.md": "a5f4ca3b32a892d552e33516824afec24a4e708c1016feddd83980575fdcc5ec",
+      "feature/request.txt": "709e92b309616e3dd13f554b929a410ed89b62841dc5d0222399dac4e0046508",
+      "dirty_bug/wiki/index.md": "46f261170e4356ebef1323928e6c207ab9f5fcfa820cb6e47d6efc0e5cc0bd6e",
+      "dirty_bug/tests/email.test.ts": "34ccffd11eb507925b58403a6d76eafbd31c0e9c516f7668cafc41b3644b9cf8",
+      "dirty_bug/src/audit.ts": "1f2aa65aee1f41df8671312d67bdd98c8719b51886c979ee0f15c03ca55c1144",
+      "dirty_bug/src/push.ts": "8b37d33a0185824eb940de1e1a264f40a399f5622b133732666e3f5c1456a701",
+      "dirty_bug/src/email.ts": "4095e15b63668350ece0619c5d18d7cabcbdd0a7e05532ed2fc769fbc0ba6f43",
+      "dirty_bug/src/publish.ts": "1b914c6792d61e3fb7b96118bf6a7fd6f550b3a0def65e1fb44b6d53d7d9c906",
+      "dirty_bug/wiki/.okf/last-index.json": "f336ba7c861ae56cd612fc62e4367807cb3be44ff73f291f2d864c4186ff49bd",
+      "dirty_bug/wiki/.okf/fingerprints.json": "e5c97e180d860317753acbc804aaf8d1ed673183273592af05e07fd5874fca11",
+      "dirty_bug/wiki/systems/notifications.md": "b2e2281a7ba34469bf3942f1413f90b6a076af4531cdaa73bd2b5185fc4443fa",
+      "feature/wiki/index.md": "41dd41d5eebcef25c8125231d50c46fd18b1280fa8f20558f79634aaf7b58a71",
+      "feature/src/list.ts": "7509703f68c91d5f03b19039f0665633a6f87252529bc9ce70771ba20e0ce890",
+      "feature/wiki/.okf/last-index.json": "eda8de6645c7d107464228597b55eed206005bd7910c6511b51fe638fc26d216",
+      "feature/wiki/.okf/fingerprints.json": "af07d52648aadbd7845de4824f21f1d8a052d4b670967a4a7bbeb34509c2a153",
+      "feature/wiki/systems/list.md": "a5cb82c26e05be402aed9fe3722a08b865fddb963366e9acca78598de795e3a2"
+    }
+  },
+  "workspace_preservation": {
+    "baseline_files": 1287,
+    "observed_differences": [
+      {
+        "path": ".codex/hooks.json",
+        "before_sha256": "2b3523238c5180faad599d1f01baff24f9ec63d6cc54c9a1b6c25d180a7353d6",
+        "after_sha256": "f1e5ba86917b84c9e7239021cce613b87c825f7b41024e828322ac0725494242"
+      }
+    ],
+    "difference_actor": "Not established; pre-existing untracked hook configuration preserved"
+  },
+  "repository_gates": [
+    {
+      "command": "pnpm check",
+      "exit": 0,
+      "elapsed_seconds": 11.18,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/check.log"
+    },
+    {
+      "command": "pnpm coverage",
+      "exit": 0,
+      "elapsed_seconds": 6.85,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/coverage.log"
+    },
+    {
+      "command": "pnpm corpus:check",
+      "exit": 0,
+      "elapsed_seconds": 0.82,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/corpus-check.log"
+    },
+    {
+      "command": "pnpm brand:check",
+      "exit": 0,
+      "elapsed_seconds": 0.47,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/brand-check.log"
+    },
+    {
+      "command": "pnpm audit:prod",
+      "exit": 0,
+      "elapsed_seconds": 0.96,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/audit-prod.log"
+    },
+    {
+      "command": "pnpm links",
+      "exit": 0,
+      "elapsed_seconds": 0.45,
+      "log": "/tmp/analyze-eval-wmzn47n2/gates/links.log"
+    }
+  ],
+  "wiki_checks": [
+    {
+      "command": ["know", "validate", "/home/videogamer/code/memex_beta/wiki"],
+      "exit": 0
+    },
+    {
+      "command": [
+        "know",
+        "anchors",
+        "/home/videogamer/code/memex_beta/wiki",
+        "--workspace",
+        "/home/videogamer/code/memex_beta"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "know",
+        "status",
+        "/home/videogamer/code/memex_beta/wiki",
+        "--workspace",
+        "/home/videogamer/code/memex_beta"
+      ],
+      "exit": 0
+    }
+  ],
+  "independent_review": {
+    "reviewer": "agent:analyze_red_foreman",
+    "current_skill_verdict": "FIX BEFORE COMMIT",
+    "current_skill_findings": {
+      "BLOCKER": 2,
+      "DEFECT": 7,
+      "SMELL": 1
+    },
+    "feature_trial_verdict": "FIX BEFORE COMMIT",
+    "feature_trial_findings": [
+      {
+        "severity": "DEFECT",
+        "location": "feature/.analysis-evaluation/prepare.py:164",
+        "finding": "Direct JSON write bypasses shared lock, core loader/writer, atomic persistence and locked revision recheck. Valid final state does not validate the preceding writer procedure. No overwrite was observed."
+      },
+      {
+        "severity": "DEFECT",
+        "location": "feature/commands.json:52",
+        "finding": "Grouped shell/CLI entries have no chronological sequence or timestamps. Grounding order is unestablished, not proven late."
+      }
+    ],
+    "feature_read_only_reruns": {
+      "do_check": {
+        "exit": 0,
+        "violations": 0,
+        "gaps": 3
+      },
+      "do_status": {
+        "exit": 0,
+        "blocked_on": "D-CSV-SELECTION"
+      },
+      "verify.py": {
+        "exit": 0
+      }
+    },
+    "report_accuracy_verdict": "PASS \u2014 nothing to fix",
+    "report_accuracy_scope": "Report and evidence accuracy only; current skill retains FIX BEFORE COMMIT."
+  },
+  "limitations": [
+    "Nine existing recipes were not executed as a complete suite.",
+    "Single feature and bug trials do not establish general skill reliability.",
+    "Temporary raw logs are not durable; essential observed outputs are retained here.",
+    "No active cross-host UI gate test; wiring was inspected and the Pi registration shape was probed.",
+    "HEAD freshness and Python-only fingerprints do not establish dirty TypeScript/Markdown freshness."
+  ],
+  "structural_validation": {
+    "command": [
+      "python3",
+      "/home/videogamer/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/harness/skills/sdlc/analyze"
+    ],
+    "exit": 0,
+    "stdout": "Skill is valid!\n",
+    "scope": "Structure only; does not establish behavioral correctness"
+  }
+}

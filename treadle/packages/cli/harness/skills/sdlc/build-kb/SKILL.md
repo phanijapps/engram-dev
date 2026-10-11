@@ -1,94 +1,121 @@
 ---
 name: build-kb
-description: Build and maintain a project knowledge base (wiki) from an existing codebase — the brownfield understanding skill. Drives the harness CLI (know: search, read, validate, findings) and optionally graphify for code graphs. Triggers are "Understand this codebase", "Build knowledge", "Document this repo/project", "Build the wiki".
+description: >-
+  Build, refresh, or audit codebase knowledge from source code and related documents.
+  Use for documenting a repository, product context, architecture, dependencies,
+  interfaces, entities, and their history. Also use after critical changes to public
+  APIs, events, storage, authentication, domain invariants, deployment topology, or
+  external dependencies to refresh affected documentation.
 ---
 
-CLI examples below use `do` and `know` subcommands. Prefix them with the installed
-harness executable; check its `--help` output or use the documented Node entry.
+# build-kb
 
-# build-kb — build the project knowledge base
+Document the current system and its evidenced evolution. Support applications,
+services, libraries, and repositories in any language through source inspection.
+External indexers can assist; they are not prerequisites.
 
-The project wiki is an **knowledge bundle at `<repo>/wiki/`** — concepts as
-Markdown, git-versioned with the code. All engine operations go through
-the harness CLI (the `know` pedal, run from the workspace root). Never hand-edit generated sections inside `wiki/code/**`.
+Use the repository's existing knowledge home and formats. If none exists, create
+`wiki/`. Adopt existing documents as sources; do not relocate them or create a
+second authority for task state. Preserve generated sections and `wiki/code/**`.
+State the selected knowledge home. A directory of loose documents can supply
+sources or become that home; its name alone does not establish an OKF bundle.
 
-## 1. Understand the repo (always, read-only)
+## Choose the pass
 
-Anchor first: `know validate wiki` (health) and the freshness check —
-compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
-Record:
+- **Discover:** build initial knowledge or fill broad coverage gaps. Read
+  [the coverage contract](resources/coverage.md), then the relevant
+  [single-project](resources/single-project-strategy.md) or
+  [monorepo strategy](resources/mono-repo-strategy.md).
+- **Refresh:** after a critical component change or an explicit update request,
+  inspect the diff and refresh affected knowledge. Read
+  [incremental refresh](resources/incremental-refresh.md) and the affected rows
+  of the coverage contract. Run this pass before the code change's review.
+- **Audit:** compare existing knowledge with current sources and the coverage
+  contract. Return omissions, contradictions, stale claims, and repair routes.
+  Audit is read-only unless the user requests repairs.
 
-1. **Shape** — mono-repo vs single project vs partial wiki
-   (`resolve` reports `wiki.present` / `freshness`). Pick the matching
-   strategy: `resources/mono-repo-strategy.md` or
-   `resources/single-project-strategy.md`.
-2. **State** — git remote + branch + branching strategy at a glance;
-   `resolve` pins `repo_head`.
-3. **Technologies** — languages, frameworks, build system (from manifests,
-   not guesses).
+For dated records in any pass, read
+[chronological records](resources/chronological-records.md).
+Use [semantic extraction](resources/semantic-extraction.md) for domain rules and
+[graph evidence](resources/graphify.md) when a suitable graph tool is available.
+Read only the resources that apply to the pass.
 
-If `wiki.present` is true and `freshness` is `fresh`, skip to §5 (curate).
-If `stale`, run §3 then §5.
+## Inspect before writing
 
-## 2. Knowledge base shape (create or adopt)
+1. Establish the requested repository roots, knowledge home, and scope.
+   Inspect manifests, entry points, source layout, tests, existing documents,
+   and deployment or build configuration. Distinguish active code from archives.
+2. Inventory relevant product briefs, requirements, READMEs, architecture records,
+   interface specifications, migration records, and runbooks. Record authority,
+   dates, and conflicts with code. Ask only for context the available evidence
+   cannot supply; record unavailable documents or unknown product intent.
+3. Inspect repository state and actual source content. Include staged, unstaged,
+   untracked, renamed, and deleted sources within scope. Record the revision,
+   comparison base, and hashes of dirty sources used as evidence. Without Git,
+   record source hashes and observation dates.
+4. For an existing harness-compatible bundle, run available read-only health
+   checks using [the current CLI forms](resources/cli.md). For a new wiki, verify
+   that authored concepts exist before treating validation as meaningful.
+   Preserve other document formats and use their applicable checks. A matching HEAD stamp is not proof
+   of source accuracy. The current harness fingerprint scanner covers Python
+   only; TypeScript, Markdown, and other sources can remain unbaselined.
 
-- No wiki yet → scaffold `<repo>/wiki/` by hand (frontmatter per the
-  wiki contract: type, title, description, sources); the `.okf/` state
-  dir is born on the first `know stamp`. Then §3.
-- Wiki exists → never re-init; adopt it: read `wiki/index.md` and the
-  newest concepts, then §3 (update is incremental and fingerprint-safe).
+Do not skip discovery or claim accuracy because the stamp says `fresh`.
+Do not rewrite baselines or stamp the bundle before checking affected claims.
 
-## 3. Deterministic index (tree-sitter, no LLM)
+## Author connected knowledge
 
-code indexing is delegated in the current era — the wiki anchors curated pages; machine code indexes are out (recorded gap)
-globs. This writes managed `wiki/code/**` concepts (modules, symbols,
-imports) and stamps `.okf/last-index.json` — which is what makes the
-freshness check report freshness. Re-runs re-extract only what changed; unchanged sources are
-never rewritten.
+Cover product context, related documents, architecture, upstream and downstream
+dependencies, domain entities, interfaces, events, storage, and important flows.
+Use the coverage contract to distinguish evidenced, absent, inaccessible,
+unresolved, and not applicable areas. A missing section must not hide a gap.
 
-## 4. Code graph (optional, when graphify is installed)
+Keep current explanations organized by topic. Link components, contracts,
+entities, and flows so readers can follow interactions in both directions.
+For each relationship, name its producer or provider, caller or consumer, and
+the exchanged contract. Verify graph relationships against code and tests.
 
-If `graphify` is on PATH (or installed as a platform skill), follow
-`resources/graphify.md`: build the graph, then use `graphify explain` and
-`graphify path` outputs as _evidence_ for relationship sections in curated
-concepts. The graph supplements the wiki; it never replaces it.
+Cite each load-bearing claim to observed source locations. Use revisions or
+source hashes when needed to distinguish observations. Product intent comes
+from product evidence; module names alone do not establish users or outcomes.
+When sources disagree, record the conflict and the basis of the current account.
 
-## 5. Curated concepts (the layer agents actually read)
+For harness bundles, concepts need `title`, `type`, and `description`; add
+`sources` for evidence and use `status: draft|stable|deprecated` where applicable.
+Indexes and logs follow the bundle contract. In other repositories, preserve
+their established format and explain any verification limits.
 
-Authored concepts live beside the generated ones — one page per idea,
-bundle front matter (`type`, `title`, `description`, `tags`), body sections
-`# Overview`, `# Relationships`, `# Evidence` when applicable. Write for a
-new engineer: systems first (`type: System`), then rules, decisions, and
-workflows. Every factual claim cites a path (and revision when it matters).
-Omit sections you cannot evidence — never invent.
+Describe existing enforced behavior directly. Proposed policies, golden paths,
+and future constraints remain drafts and use the findings ledger when available.
+Human acceptance stays separate from documentation authorship. Never resolve a
+finding, invent approval, or repeat a declined proposal on the owner's behalf.
 
-Normative content (golden paths, constraints, standards — "what new code
-must conform to") is **never written directly as settled truth**: author it
-as `status: draft` and route acceptance through the findings ledger:
+Record dated changes and decisions in chronological navigation, with links to
+current explanations. Preserve original and closed records. Later corrections
+use dated supplements or superseding records. Do not infer historical intent or
+session experiences from task statuses or commits.
 
-```
-know findings propose wiki <source-path> <destination-cid> <kind> \
-  --destination wiki/<concept>.md --kind golden-path --rationale "…"
-```
+## Verify the pass
 
-A human accepts or declines (`know findings resolve wiki <id> <decision>
-accepted|declined`). Declined findings are never re-proposed.
+- **Discover:** account for every coverage area and trace representative flows
+  through components, interfaces, events, and storage. Record evidence gaps.
+- **Refresh:** account for changed sources, affected callers and consumers,
+  updated pages, checked claims, chronology, and any justified no-update result.
+- **Audit:** report severity, source locations, missing coverage, affected pages,
+  and bounded repair routes. Do not apply fixes in an audit-only request.
 
-## 6. Validate, record, commit
+Check links, source locations, and document-to-code consistency. For a
+harness-compatible bundle, run available validation, anchors, status, and
+representative search/read checks. Use applicable checks for other formats.
+Report actual commands and exit codes, warnings, unbaselined sources, and pending
+findings. Format validation alone does not establish semantic completeness.
+Use repository-specific verification requirements when they are stricter.
 
-1. `know validate wiki` (conformance) and the freshness check
-   (stamp `repo_head` == HEAD); `know findings list wiki`
-   must be 0 or known.
-2. Commit the wiki with the code it describes — git history is the
-   durable record (project memory back-burnered, knowledge-engine decision D5).
-3. Commit `wiki/` **with the code it describes** (same commit or an
-   adjacent one). The wiki travels with the repo.
+After verification, refresh fingerprints or stamps only when the authorized
+pass calls for it, and retain their coverage limits in the result. A content
+baseline does not establish that every claim was reviewed.
 
-## Rules
-
-- Managed sections regenerate; hand edits belong in curated concepts only.
-- Evidence over invention; when sources disagree, record the conflict.
-- The wiki documents what _is_; normative pages (what _should be_) go
-  through findings.
-- Freshness is the contract: if `resolve` says `stale`, update before
-  trusting `wiki/code/**`.
+Return the scope, coverage result, changed pages, chronological entries, checks,
+and remaining gaps. Commit only when the user or repository workflow authorizes
+it. This skill defines agent routing; it does not install or claim a filesystem
+watcher or automatic host hook. Existing task scope and owner gates still apply.

@@ -1,32 +1,23 @@
-# graphify integration
+# Optional graph evidence
 
-`graphify` (v0.9.x) builds code knowledge graphs (`graphify-out/graph.json`)
-and complements the wiki: the graph is machine-traversable structure, the
-wiki is human/agent-readable knowledge.
+An available code graph can help find symbols, callers, dependencies, and paths
+across components. It complements source inspection and existing documents.
 
-## Setup
+Check the installed tool's help and available integration before using it.
+Use its supported query or extraction operations; do not assume a version,
+command grammar, per-package merge feature, or language coverage. If no suitable
+tool is available, continue with source searches and representative flow traces.
+Installing a tool or changing its configuration is not part of this skill.
 
-- CLI present? `graphify --version`.
-- Skill not yet on your platform? `graphify install --platform pi`
-  (also supports claude, codex, cursor, kiro, and others).
-- Build: run the graphify skill/command over the repo (it extracts
-  nodes/edges into `graphify-out/graph.json`). Mono-repos: build per
-  package, then `graphify merge-graphs g1 g2 --out graphify-out/merged-graph.json`.
+Record which repository roots and source revision or content snapshot the graph
+covers. Check whether changed, new, renamed, or deleted files are represented.
+A matching wiki HEAD stamp does not establish that the graph covers dirty files.
 
-## Consuming the graph as wiki evidence
+Verify important graph relationships against source. Import edges do not prove
+runtime REST, event, database, or external-service relationships. Inspect those
+contracts and their providers or consumers separately. Label ambiguous edges
+and inaccessible roots as unresolved evidence.
 
-- `graphify explain "<symbol>"` — plain-language node + neighbors →
-  paste-worthy material for a concept's `# Relationships` section.
-- `graphify path "A" "B"` — shortest dependency path between two symbols →
-  evidence for how a request flows (`workflows/*` concepts).
-- `graphify diagnose multigraph` — same-endpoint edge collapse risks →
-  record real findings in the relevant system concept, not silently.
-
-## Discipline
-
-- `graphify-out/` is generated output: keep it out of git (gitignore it);
-  cite _findings_, not the artifact, in the wiki.
-- The graph is a snapshot — regenerate when the stamp says the wiki is stale
-  (`repo_head` ≠ HEAD), so graph and wiki describe the same revision.
-- Graph claims are evidence, not authority: verify against source before a
-  curated concept asserts a relationship.
+Preserve generated artifacts according to the repository's rules. Cite the
+underlying verified source in curated pages rather than relying only on an
+ephemeral graph output. Do not hand-edit frozen `wiki/code/**` pages.
