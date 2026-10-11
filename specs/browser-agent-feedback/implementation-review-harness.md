@@ -33,3 +33,15 @@ The seven requested cases otherwise have safe guidance. Mixed document/diff spli
 ## Limits
 
 Skill reasoning and synthetic tests do not prove actual Claude/Codex/Pi activation, real human submission, native agent receipt/reply or idle-host wake behavior. Those witnesses remain T-6 obligations. No full repository gates or final PACK verdict are asserted here. Prior approved artifacts and unrelated dirty hook repairs were preserved.
+
+## Repaired T-5 supplement — 2026-10-11
+
+**PASS — nothing to fix within bounded T-5 scope.** The fixed-head guidance DEFECT and mixed-mode clarity limitation above are resolved in current canonical and installed bytes. Earlier findings and the runtime reproducer remain historical evidence. This is not PACK approval, owner authority, or a native human/host delivery witness.
+
+The repaired [SKILL.md](../../treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md) explicitly prefers the default worktree after-side for iterative code feedback. It explains that --head fixes committed comparison bytes for that session and another round cannot show new worktree edits. Changed after-side selection requires an explicit new session; the original thread/history remain preserved. The repaired [protocol.md](../../treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md) repeats that limitation, says to reply with the new URL in the original thread, and describes separate documents/diff sessions with feedback revision chaining. The original probe's unchanged committed after-side is now the documented expectation, not falsely presented as revision delivery.
+
+All seven forward cases were re-evaluated against the final guidance. Missing-cursor recovery still reads from0 and deduplicates IDs; resolved redelivery creates no new edit request; Start-bound artifact changes require ordinary replan and genuine human Start; stale publication failure returns explicit recovery instead of waiting against inaccessible bytes; lost Open retries keep exact operation/request identity; idle hosts retain explicit next-prompt/manual fallback with one bounded active wait. A mixed full-Markdown/diff request now has an explicit two-session route instead of requiring inference. The separate fixed-head adversarial case now directs a new selected review session before claiming revised bytes are visible.
+
+The independent declared check again passed **15 tests across two files**, exit0. quick_validate again passed, exit0. All six installed Claude/Codex/Pi SKILL.md/protocol.md files match final canonical source hashes. [Final command results, installed hashes and forward repair evaluation](checks/implementation-red-harness-repaired-checks.json) and the nested repaired logs retain actual evidence. The intentionally tested malformed-input rejection remains present on stderr with a passing process/assertions; it is not an unreported suite failure.
+
+No source, installer ownership state, canonical JSON, approved artifacts or owner acts were changed by this reviewer. Native host invocation, actual human submission/agent receipt and final PACK review remain outside this bounded verdict.
