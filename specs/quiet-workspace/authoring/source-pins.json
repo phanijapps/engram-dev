@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-10-11T17:50:55.729530+00:00",
+  "head": "2d22941c84a1362f5572e461753e29813386aadd",
+  "git_status": " M wiki/.okf/last-index.json\n?? artifacts/\n?? specs/quiet-workspace/\n",
+  "sha256": {
+    "treadle/packages/web/src/library.html": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+    "treadle/packages/web/src/library.js": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+    "treadle/packages/web/src/page.html": "ea49bbf5a1a40ae34fac025965c5dfc4ef1d19b346faf15c7cb1e9d13d1d0e67",
+    "treadle/packages/web/src/page.js": "796c36dfdfc03af01d620eabe005610bb89737d92a249bef73464aa93bdb2f1e",
+    "treadle/packages/web/src/feedback.js": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+    "treadle/packages/web/test/theme.test.ts": "fcc76ab69ec6cca42653cc05a575adc71fb325edb49bff7da48946e82ecc962f",
+    "treadle/packages/web/test/library-skin.test.ts": "e6794dbdfec43a1de75aea898fbd4fca91f004e472f5820c28fe70abf1a89689",
+    "treadle/packages/web/test/room-skin.test.ts": "bcc6ed628c10c91ee516987d2f8ed8edabb95965a35d966069275217dccdc708",
+    "treadle/packages/web/test/workflow-ui.test.ts": "6ebd654fc03a31cfaa7a7b4f7438e051d818af3bed2cd430bc4fb2935bbee60f",
+    "treadle/packages/web/test/feedback-ui.test.ts": "3c8574936d166d0b1c079b2113dc274ee5cbb4d21cf360cd4b38e9983d120710",
+    "artifacts/wukong-approval-ux/output/Wukong-Approval-UX-Reviewed.pptx": "55f34f0cd86c9dd997d5541d869c82f60214258705bd0bbee70ce09455ada611",
+    "artifacts/wukong-approval-ux/.build/content.mjs": "f2f63b15cea732dd7ba3ffcee77a6bfd201125267fedfa372fca6f681693d5e8"
+  }
+}

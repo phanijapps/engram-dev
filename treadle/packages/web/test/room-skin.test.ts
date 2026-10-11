@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 /** T-5: the room in the same dress — the wizard contract survives the reskin:
- *  keyboard acts fire (arrows navigate, Enter submits), the approve card is
- *  the gradient CTA, and the four security headers hold on every surface. */
+ *  keyboard acts fire (arrows navigate, Enter submits), the approve card remains
+ *  a clear primary action, and the four security headers hold on every surface. */
 import { describe, expect, it } from 'vitest';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -63,11 +63,13 @@ function key(w: Window & typeof globalThis, k: string): void {
 }
 
 describe('the room under the new skin (T-5)', () => {
-  it('the reskin is real: serif voice, gradient approve, no structural 1px borders', () => {
+  it('the room shares system typography and flat primary actions', () => {
     const html = readFileSync(join(WEB, 'page.html'), 'utf8');
     const style = html.slice(html.indexOf('<style>'), html.indexOf('</style>'));
-    expect(style).toContain('var(--voice-serif)');
-    expect(style).toContain('linear-gradient(135deg, var(--primary), var(--primary-c))');
+    expect(style).toContain('var(--voice-body)');
+    expect(style).toContain('min-height: 44px');
+    expect(style).toContain('background: var(--action)');
+    expect(style).not.toContain('linear-gradient');
     expect(style).not.toMatch(/border(-\w+)?:\s*1px(?!.*ghost)/); // R5: border-bottom counts
   });
 
