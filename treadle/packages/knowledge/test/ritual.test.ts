@@ -83,6 +83,7 @@ describe('the freshness stamp', () => {
     const bundle = join(repo, 'wiki');
     mkdirSync(bundle, { recursive: true });
     execFileSync('git', ['init', '-q'], { cwd: repo });
+    execFileSync('git', ['config', 'core.autocrlf', 'false'], { cwd: repo });
     execFileSync('git', ['config', 'user.email', 't@t'], { cwd: repo });
     execFileSync('git', ['config', 'user.name', 't'], { cwd: repo });
     writeFileSync(join(repo, 'a.txt'), 'one\n');

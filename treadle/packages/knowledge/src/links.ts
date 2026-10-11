@@ -100,7 +100,7 @@ export function brokenLinks(root: string, absPath: string, body: string): string
   for (const target of extractLinkTargets(body)) {
     if (seen.has(target)) continue;
     const r = resolveTarget(target, srcDir, rootR);
-    let exists = false;
+    let exists: boolean;
     try {
       exists = statSync(r).isFile();
     } catch {

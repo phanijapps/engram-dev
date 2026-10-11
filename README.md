@@ -213,6 +213,10 @@ Legacy spec formats retain their original rules; new owner-gated work uses 0.4.
 
 ## For developers
 
+Use Node.js **22.13 or newer in the 22.x line, or 24.x** for the development
+checks. ESLint 10, Vitest 5, and Vite 8 require these newer patch releases;
+the Wukong runtime still targets Node 22 or newer.
+
 Clone and build the preview if you want to change Wukong itself:
 
 ```sh

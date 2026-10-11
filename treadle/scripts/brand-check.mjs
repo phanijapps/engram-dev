@@ -31,6 +31,8 @@ const ALLOW_CONTAINS = [
   /scripts\/set-brand\.mjs$/,
   /corpus\//, // golden data: repo-relative fixture paths, not source
   /^coverage\//, // generated tooling output, not source
+  /^test-results\.json$/, // generated test paths and diagnostics, not product copy
+  /^ci-evidence\//, // generated gate receipts, not product copy
   /scripts\/corpus-check\.mjs$/, // speaks the repo-root workspace path
   /scripts\/link-check\.mjs$/, // walks the workspace dir by path — same rationale as corpus-check
   /conformance\/generators\/gen_corpus\.ts$/, // repo-relative fixture paths, not brand

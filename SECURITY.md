@@ -39,13 +39,12 @@ that host's trust/activation process.
 
 ## Supply chain
 
-- **Production chain: ZERO known vulnerabilities** — `pnpm audit:prod`
-  (commander + yaml only) is the CI gate at high severity.
-- Dev chain (vitest/tinypool/vite) carries 8 audit advisories — all local
-  test-runner gadgets whose exploits require attacker-controlled vitest/vite
-  CONFIG inside this repo, which is already a trusted boundary (any such
-  attacker can edit source). ACCEPTED + MONITORED: upgrade to vitest ≥4
-  when its tinypool/vite pins are patched; revisit quarterly.
+- `pnpm audit:prod` checks the complete production dependency graph at high
+  severity; it does not establish that future releases are vulnerability-free.
+- The 2026-10-11 cleanup updated development tooling to ESLint 10.12.0,
+  Vitest/coverage 5.0.3, Vite 8.3.4 and Ajv 8.20.0. The full `pnpm audit --json`
+  then reported 0 advisories. Retained audit results belong beside the cleanup
+  evidence; rerun the audit when dependencies change.
 - Lockfile committed; installs run with pnpm 9 (pinned via
   `packageManager`); `onlyBuiltDependencies` allowlist (esbuild only).
 - No postinstall scripts from dependencies; no runtime network access in

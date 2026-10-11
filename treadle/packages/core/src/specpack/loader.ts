@@ -68,7 +68,7 @@ export function loadPack(dir: string): Admission<PackDoc> {
 function discover(dir: string): Admission<string> {
   const preferred = [join(dir, `${basename(dir)}.json`), join(dir, 'specpack.json')];
   for (const p of preferred) if (existsSync(p)) return { ok: true, value: p };
-  let names: string[] = [];
+  let names: string[];
   try {
     names = readdirSync(dir);
   } catch {
