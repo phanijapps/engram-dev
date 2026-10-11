@@ -76,9 +76,16 @@ export function atomicJSON(path: string, value: unknown): void {
 }
 export function readDescriptor(dir = stateDirectory()): ServiceDescriptor | null {
   const path = join(dir, 'service.json');
-  if (!existsSync(path)) return null;
-  if (lstatSync(path).isSymbolicLink()) throw Error('Service descriptor may not be a symlink');
-  const d = JSON.parse(readFileSync(path, 'utf8')) as ServiceDescriptor;
+  let bytes: string;
+  try {
+    if (lstatSync(path).isSymbolicLink()) throw Error('Service descriptor may not be a symlink');
+    bytes = readFileSync(path, 'utf8');
+  } catch (e) {
+    // Shutdown may remove the descriptor between stat and read.
+    if ((e as NodeJS.ErrnoException).code === 'ENOENT') return null;
+    throw e;
+  }
+  const d = JSON.parse(bytes) as ServiceDescriptor;
   if (
     d.format !== 'service/1' ||
     d.protocol !== 1 ||

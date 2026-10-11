@@ -85,3 +85,24 @@ flagged because the whitelist compared forward slashes to native backslashes.
 The checker now normalizes only its comparison path; source reads and allowed
 rules are unchanged. Independent follow-up and `pnpm brand:check` exited 0.
 Final local check and aliased standalone packaging also exited 0 after repairs.
+
+The sixth native run 38100335336 confirmed the macOS Node 22 package and runtime
+journey, then exposed a macOS Node 24 shutdown race: service.json disappeared
+between the stop caller's stat and read. readDescriptor now treats only ENOENT
+during filesystem access as absent; malformed JSON, symlinks, unsupported
+protocols and other I/O failures still refuse. A deterministic test removes the
+descriptor between those operations and checks malformed replacements remain
+refused. Independent read-only red-foreman review returned PASS and reran all
+7 lifecycle tests. Native CI must still verify the repaired source.
+
+Both Windows rows in the sixth run passed check, coverage and brand, then
+failed portable deployment across drives (checkout D:, temporary output C:).
+pnpm 9 computes modulesDir with path.relative, whose cross-drive result is an
+absolute Windows path; downstream joining prefixed the checkout to that path.
+Packaging now deploys to an owned temporary staging root beside the workspace,
+validates every dependency link, copies through the JS traversal and relocates
+links within the final requested root. Staging is removed in finally. The
+aliased standalone Linux verifier exits 0 with the relocated package.
+Source: [pinned pnpm deploy implementation](https://github.com/pnpm/pnpm/blob/v9.15.9/releasing/plugin-commands-deploy/src/deploy.ts).
+The failure and its tested revision are retained in ci-sixth-run.json; native
+confirmation of the cross-drive repair remains required.

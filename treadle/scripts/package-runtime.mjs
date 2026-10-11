@@ -9,9 +9,12 @@ import {
   realpathSync,
   readlinkSync,
   symlinkSync,
+  mkdtempSync,
+  cpSync,
+  statSync,
 } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { resolve, join, relative, dirname, basename } from 'node:path';
+import { resolve, join, relative, dirname, basename, isAbsolute, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 export const workspace = fileURLToPath(new URL('..', import.meta.url));
 function run(args) {
@@ -52,40 +55,78 @@ export function packageRuntime(destination) {
     rmSync(target, { recursive: true });
   }
   run(['build']);
-  mkdirSync(resolve(target, '..'), { recursive: true });
-  run(['--filter', '@treadle/cli', 'deploy', '--prod', target]);
-  // pnpm 9 leaves a self-reference to the source package in its virtual store.
-  // Redirect only that exact reference to the deployed package itself.
-  function localize(dir) {
-    for (const name of readdirSync(dir)) {
-      const file = join(dir, name),
-        st = lstatSync(file);
-      if (st.isDirectory()) localize(file);
-      else if (st.isSymbolicLink()) {
-        let real;
-        try {
-          real = realpathSync(file);
-        } catch (cause) {
-          throw Error(`Broken deployed dependency link: ${file} -> ${readlinkSync(file)}`, {
-            cause,
-          });
+  // pnpm 9 computes relative modules paths; across Windows drives these become
+  // absolute paths that its installer incorrectly joins to the source directory.
+  const stagingParent = mkdtempSync(join(dirname(workspace), '.runtime-stage-'));
+  const staging = join(realpathSync(stagingParent), 'installed');
+  try {
+    run(['--filter', '@treadle/cli', 'deploy', '--prod', staging]);
+    // pnpm 9 leaves a self-reference to the source package in its virtual store.
+    // Redirect only that exact reference to the deployed package itself.
+    function localize(dir) {
+      for (const name of readdirSync(dir)) {
+        const file = join(dir, name),
+          st = lstatSync(file);
+        if (st.isDirectory()) localize(file);
+        else if (st.isSymbolicLink()) {
+          let real;
+          try {
+            real = realpathSync(file);
+          } catch (cause) {
+            throw Error(`Broken deployed dependency link: ${file} -> ${readlinkSync(file)}`, {
+              cause,
+            });
+          }
+          if (real !== sourceCli) continue;
+          rmSync(file);
+          symlinkSync(
+            process.platform === 'win32' ? staging : relative(dirname(file), staging),
+            file,
+            process.platform === 'win32' ? 'junction' : 'dir',
+          );
         }
-        if (real !== sourceCli) continue;
-        rmSync(file);
-        symlinkSync(
-          process.platform === 'win32' ? target : relative(dirname(file), target),
-          file,
-          process.platform === 'win32' ? 'junction' : 'dir',
-        );
       }
     }
+    localize(join(staging, 'node_modules'));
+    const links = [];
+    function collect(dir) {
+      for (const name of readdirSync(dir)) {
+        const file = join(dir, name),
+          st = lstatSync(file);
+        if (st.isDirectory()) collect(file);
+        else if (st.isSymbolicLink()) {
+          const real = realpathSync(file),
+            rel = relative(staging, real);
+          if (rel === '..' || rel.startsWith('..' + sep) || isAbsolute(rel))
+            throw Error(`External deployed dependency: ${file} -> ${real}`);
+          links.push({
+            path: relative(staging, file),
+            destination: rel,
+            directory: statSync(real).isDirectory(),
+          });
+        }
+      }
+    }
+    collect(staging);
+    cpSync(staging, target, { recursive: true, verbatimSymlinks: true, filter: () => true });
+    for (const link of links) {
+      const file = join(target, link.path),
+        destination = join(target, link.destination);
+      rmSync(file);
+      symlinkSync(
+        process.platform === 'win32' ? destination : relative(dirname(file), destination),
+        file,
+        link.directory ? (process.platform === 'win32' ? 'junction' : 'dir') : 'file',
+      );
+    }
+    writeFileSync(
+      join(target, '.runtime-package.json'),
+      JSON.stringify({ format: 'runtime-package/1', node: '>=22' }) + '\n',
+    );
+    return target;
+  } finally {
+    rmSync(stagingParent, { recursive: true, force: true });
   }
-  localize(join(target, 'node_modules'));
-  writeFileSync(
-    join(target, '.runtime-package.json'),
-    JSON.stringify({ format: 'runtime-package/1', node: '>=22' }) + '\n',
-  );
-  return target;
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   console.log(packageRuntime(process.argv[2] ?? join(workspace, 'dist/runtime')));

@@ -93,3 +93,21 @@ Independent brand-gate follow-up returned **PASS — nothing to fix**, with
 the package descriptor is written; runtime deployment canonicalizes its parent
 and refuses broken links with explicit diagnostics. Windows native rows must
 confirm the platform copy workaround; no native success is inferred locally.
+
+The sixth run exposed descriptor removal during macOS Node 24 shutdown.
+Independent review of the narrow ENOENT repair and deterministic regression
+returned **PASS — nothing to fix**, with all 7 lifecycle tests passing. The
+reader still refuses malformed descriptors and other filesystem failures.
+This source verdict does not assert completion of the remaining native run
+or any host trust/activation journey.
+
+Independent review of the same-drive staging and dependency relocation repair
+returned **PASS — nothing to fix**, with the aliased standalone runtime verifier
+exit 0. A concurrent local gate attempt discovered test files inside staging
+before cleanup; delta-gates-staging-attempt preserves that failed run. Staging
+was moved beside the TypeScript workspace so its test discovery cannot include
+the package. Final repository gates are rerun sequentially.
+
+The staging-parent correction received a separate read-only red-foreman PASS.
+The sequential final local run passed all six repository gates (168 tests);
+actual command exits remain in delta-gates/results.json.

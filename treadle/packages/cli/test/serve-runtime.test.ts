@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir, hostname } from 'node:os';
 import { join } from 'node:path';
@@ -15,6 +15,20 @@ import {
   publicStatus,
   atomicJSON,
 } from '../src/serve/runtime.js';
+const disappearing = vi.hoisted(() => ({ path: '' }));
+vi.mock('node:fs', async (original) => {
+  const fs = await original<typeof import('node:fs')>();
+  return {
+    ...fs,
+    readFileSync: (...args: Parameters<typeof fs.readFileSync>) => {
+      if (args[0] === disappearing.path) {
+        disappearing.path = '';
+        fs.rmSync(args[0]);
+      }
+      return fs.readFileSync(...args);
+    },
+  };
+});
 const dirs: string[] = [],
   closers: (() => Promise<void>)[] = [];
 function scratch() {
@@ -23,6 +37,7 @@ function scratch() {
   return dir;
 }
 afterEach(async () => {
+  disappearing.path = '';
   for (const close of closers.splice(0)) await close();
   for (const dir of dirs.splice(0)) {
     await stopService(dir).catch(() => {});
@@ -30,6 +45,16 @@ afterEach(async () => {
   }
 });
 describe('shared service lifecycle', () => {
+  it('treats descriptor removal between stat and read as stopped', () => {
+    const dir = scratch();
+    const path = join(dir, 'service.json');
+    writeFileSync(path, '{}');
+    disappearing.path = path;
+    expect(readDescriptor(dir)).toBeNull();
+    expect(readDescriptor(dir)).toBeNull();
+    writeFileSync(path, '{}');
+    expect(() => readDescriptor(dir)).toThrow('Incompatible');
+  });
   it('cold-starts once across callers, survives parent command and restarts after stop', async () => {
     const dir = scratch();
     const all = await Promise.all(Array.from({ length: 5 }, () => ensureService({ dir, port: 0 })));
