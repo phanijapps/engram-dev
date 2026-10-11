@@ -1,27 +1,22 @@
 # Single-project strategy
 
-One package, one product, wiki at the repo root.
+Read the entry points, manifests, existing documents, important tests, and
+configuration. Trace a representative user or library operation from its caller
+through the component and its external interactions. Use the coverage contract;
+a fixed number of pages does not establish completeness.
 
-## Index pass
+Suggested topics, adapted to the existing knowledge structure:
 
-```
-# code indexing delegated — curated anchors only (recorded gap)
-  --include "src/**" \
-  --exclude "src/**/tests/**"
-```
+- Product purpose, users, capabilities, and the domain vocabulary.
+- System boundary, entry points, internal responsibilities, and runtime topology.
+- Inbound consumers, outbound dependencies, and exchanged contracts.
+- Domain entities, interface and event contracts, storage, and important flows.
+- Operations and evidenced decisions, linked to chronological navigation.
 
-Adjust the include to the source root(s) (`src/`, `lib/`, package dir).
-Generated `wiki/code/**` mirrors the package layout.
+A library can have public symbols and consumers without REST routes or a
+database. A command-line tool can use files rather than tables. Record those
+distinctions instead of inventing infrastructure to fill a template.
 
-## Curated concept seeds
-
-- `systems/<product>.md` — what it is, entry points, how a request flows.
-- `domain/<core-abstraction>.md` ×2–4 — the ideas the code implements.
-- `workflows/<primary-loop>.md` — the main runtime or dev loop.
-- Golden path (normative, via findings) only when evidence is explicit
-  (framework-owned interfaces, conventions repeated in ≥2 modules).
-
-## Signals you are done for this pass
-
-Stamp check (`repo_head` == HEAD) → wiki fresh; every curated concept has ≥1 path-level
-evidence claim; no pending findings older than the session.
+Use existing documents as evidence and preserve their authority. Mark partial
+access or unknown context explicitly. Keep changes bounded to the requested
+knowledge pass; initial documentation does not require an engine code index.

@@ -1,0 +1,15 @@
+
+Attempt 2026-10-11T00:13:54.546Z exit 0
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/cli/test/init-engine.test.ts (16 tests) 88ms
+ ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1041ms
+   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  361ms
+
+ Test Files  2 passed (2)
+      Tests  28 passed (28)
+   Start at  20:13:52
+   Duration  1.76s (transform 260ms, setup 0ms, collect 360ms, tests 1.13s, environment 0ms, prepare 215ms)
+
+{"ok":false,"reason":"payload is not JSON: Unexpected token 'o', \"not json\" is not valid JSON"}

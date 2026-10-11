@@ -1,0 +1,219 @@
+{
+  "format": "feedback-native-witness/1",
+  "observed_at": "2026-10-11T16:32:20.955528+00:00",
+  "cases": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "version": "codex-cli 0.162.1",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "codex",
+        "version": "codex-cli 0.162.1",
+        "argv": [
+          "codex",
+          "exec",
+          "--ephemeral",
+          "-s",
+          "danger-full-access",
+          "-C",
+          "/home/videogamer/code/memex_beta",
+          "-"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T14:55:32.466321+00:00",
+        "prompt_file": "checks/native-prompts/codex-document-reattach.txt",
+        "prompt_sha256": "f7fa2a9f494d280f915ee4d6c4255e72e0d4d17ec3f873203f6c9d08c707ea6e"
+      },
+      "command_evidence": "checks/native-commands-codex-documents.json",
+      "command_evidence_sha256": "711decbdca4c464690a5d4149cb9300b6b100e47726bdb7d756e38009a250fcf",
+      "batch": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+      "revised_round": "2ba041b5-66bf-4c9e-b09b-bc8388aeebab"
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "version": "codex-cli 0.162.1",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "codex",
+        "version": "codex-cli 0.162.1",
+        "argv": [
+          "codex",
+          "exec",
+          "--ephemeral",
+          "-s",
+          "danger-full-access",
+          "-C",
+          "/home/videogamer/code/memex_beta",
+          "-"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T13:47:49.273Z",
+        "prompt_file": "checks/native-prompts/codex-revision.txt",
+        "prompt_sha256": "720f09a049e19617d48b39a4ad4e3f69efd99bad88e09ba370c8464e16b53c71"
+      },
+      "command_evidence": "checks/native-commands-codex-diff.json",
+      "command_evidence_sha256": "b9a8280ef34a1a2cfc59a907a6b8697e5dee82f4b457a5199def047d82e1b6a5",
+      "batch": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+      "revised_round": "b24f4ca5-cc8c-4b83-b82d-23afcf132e38"
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "version": "2.1.233 (Claude Code)",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "claude",
+        "version": "2.1.233 (Claude Code)",
+        "argv": [
+          "claude",
+          "-p",
+          "--no-session-persistence",
+          "--permission-mode",
+          "dontAsk",
+          "--allowedTools",
+          "Bash",
+          "Read",
+          "Edit",
+          "Write",
+          "--output-format",
+          "text"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T13:47:49.273Z",
+        "prompt_file": "checks/native-prompts/claude-revision.txt",
+        "prompt_sha256": "611609b5d8a62ffbf7b9fc030c1fe8d0c56c70fb685e995ed1561e04c908a5bd"
+      },
+      "command_evidence": "checks/native-commands-claude-documents.json",
+      "command_evidence_sha256": "5cfa3ffe63427dfda43a841b34f208ab017318173541a46fc501d384ce989f34",
+      "batch": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+      "revised_round": "971562a0-562e-44cd-9787-48f48ae6e72a"
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "version": "2.1.233 (Claude Code)",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "claude",
+        "version": "2.1.233 (Claude Code)",
+        "argv": [
+          "claude",
+          "-p",
+          "--no-session-persistence",
+          "--permission-mode",
+          "dontAsk",
+          "--allowedTools",
+          "Bash",
+          "Read",
+          "Edit",
+          "Write",
+          "--output-format",
+          "text"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T13:47:49.273Z",
+        "prompt_file": "checks/native-prompts/claude-revision.txt",
+        "prompt_sha256": "611609b5d8a62ffbf7b9fc030c1fe8d0c56c70fb685e995ed1561e04c908a5bd"
+      },
+      "command_evidence": "checks/native-commands-claude-diff.json",
+      "command_evidence_sha256": "3b66ada053794b69b85284ff41f577e7ea15968d6d11bde16f5ec9ef84affb21",
+      "batch": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+      "revised_round": "aeb62723-84b4-42c5-838b-41704b0f34aa"
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "version": "1.1.0",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "pi",
+        "version": "1.1.0",
+        "argv": [
+          "pi",
+          "--approve",
+          "--no-session",
+          "-p",
+          "@specs/browser-agent-feedback/checks/native-prompts/pi-revision.txt"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T13:46:21.903Z",
+        "prompt_file": "checks/native-prompts/pi-revision.txt",
+        "prompt_sha256": "37ad4fa6a60f93f59f15fd6f839566bc189254296cc8ac8daa632f12b852051a"
+      },
+      "command_evidence": "checks/native-commands-pi-documents.json",
+      "command_evidence_sha256": "ada7049c1a8fbfba1b69bd4a0a59a5f25fdde20f6ba403d7f840e501fadc590d",
+      "batch": "4fdddb48-b222-4804-be45-79404ab47c22",
+      "revised_round": "fc0dfe6a-efee-4339-a639-76d985c5c3f8"
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "version": "1.1.0",
+      "native_process": {
+        "format": "feedback-native-process/1",
+        "host": "pi",
+        "version": "1.1.0",
+        "argv": [
+          "pi",
+          "--approve",
+          "--no-session",
+          "-p",
+          "@specs/browser-agent-feedback/checks/native-prompts/pi-revision.txt"
+        ],
+        "exit": 0,
+        "observed_at": "2026-10-11T13:46:21.903Z",
+        "prompt_file": "checks/native-prompts/pi-revision.txt",
+        "prompt_sha256": "37ad4fa6a60f93f59f15fd6f839566bc189254296cc8ac8daa632f12b852051a"
+      },
+      "command_evidence": "checks/native-commands-pi-diff.json",
+      "command_evidence_sha256": "753b095115887bb0e927b08fb89d838cde2adb5d844c311e651db4f60666716a",
+      "batch": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+      "revised_round": "4280cc42-c77c-4a89-8687-15180efd8040"
+    }
+  ],
+  "excluded_observations": [
+    {
+      "file": "checks/native-command-observations/codex-4b397a60-d0bf-4bb6-90f7-d6988202dcf9-e3adb33f-52a3-498a-9edd-e6964c4b917e.json",
+      "reason": "Historical unavailable child output cannot prove successful protocol execution"
+    },
+    {
+      "file": "checks/native-command-observations/codex-a2805f26-b669-4b82-bfc2-95ab61d59ed5-42260589-1f0b-41fe-a977-2384c7f38392.json",
+      "reason": "Historical unavailable child output cannot prove successful protocol execution"
+    }
+  ],
+  "ledger_sha256": "d7a593e7e13baa2ade0b9232c12a8e781ab88ed04f46315f5fb5d26a3baed0f7",
+  "human_browser_confirmation": {
+    "source": "checks/human-browser-confirmation.json",
+    "observed_at": "2026-10-11T16:32:20.955528+00:00"
+  },
+  "recovery": {
+    "file": "checks/recovery-witness.json",
+    "sha256": "c39ea78c6645693ea6c93ab39c758071f5a9b121302614ea9340213f39d26393"
+  },
+  "native_process_history": [
+    "checks/native-process-claude.json",
+    "checks/native-process-codex-batch3.json",
+    "checks/native-process-codex-document.json",
+    "checks/native-process-codex-reattach.json",
+    "checks/native-process-codex.json",
+    "checks/native-process-pi.json"
+  ],
+  "owner_test_waiver": {
+    "file": "checks/native-owner-test-waiver.json",
+    "sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7"
+  },
+  "independent_review": {
+    "verdict": "pass_with_owner_waiver",
+    "by": "agent:independent-red-foreman",
+    "file": "implementation-review-native.md",
+    "sha256": "286139921444a030eea53a432383297e5c319dc893269600b8abfad602809b42"
+  }
+}

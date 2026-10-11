@@ -1,0 +1,16 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 176ms
+ ✓ packages/core/test/feedback.test.ts (22 tests) 275ms
+ ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 616ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 258ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 314ms
+ ✓ packages/cli/test/feedback-cli.test.ts (9 tests) 1341ms
+   ✓ portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1023ms
+
+ Test Files  6 passed (6)
+      Tests  49 passed (49)
+   Start at  08:59:58
+   Duration  2.47s (transform 1.05s, setup 0ms, collect 3.68s, tests 2.98s, environment 1ms, prepare 605ms)
+

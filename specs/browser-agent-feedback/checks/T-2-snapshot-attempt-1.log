@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/cli/test/feedback-snapshot.test.ts (7 tests) 393ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  08:43:33
+   Duration  1.23s (transform 277ms, setup 0ms, collect 325ms, tests 393ms, environment 0ms, prepare 112ms)
+

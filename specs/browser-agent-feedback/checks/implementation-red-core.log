@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/core/test/feedback.test.ts (19 tests) 208ms
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  08:47:27
+   Duration  1.05s (transform 272ms, setup 0ms, collect 329ms, tests 208ms, environment 0ms, prepare 100ms)
+

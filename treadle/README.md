@@ -1,4 +1,4 @@
-# treadle workspace
+# Wukong runtime workspace
 
 The active TypeScript runtime for `do` and `know`. Read the
 [project overview](../wiki/project/overview.md) and

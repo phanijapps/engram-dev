@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 186ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 257ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 300ms
+ ✓ packages/web/test/feedback-ui.test.ts (6 tests) 1020ms
+   ✓ renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  441ms
+
+ Test Files  4 passed (4)
+      Tests  14 passed (14)
+   Start at  09:11:17
+   Duration  2.21s (transform 521ms, setup 0ms, collect 2.98s, tests 1.76s, environment 1ms, prepare 393ms)
+

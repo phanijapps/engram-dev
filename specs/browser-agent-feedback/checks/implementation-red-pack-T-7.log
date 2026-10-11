@@ -1,0 +1,28 @@
+Checking head: git rev-parse HEAD
+head: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/head.log
+Checking check: pnpm check
+check: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/check.log
+Checking coverage: pnpm coverage
+coverage: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/coverage.log
+Checking corpus-check: pnpm corpus:check
+corpus-check: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/corpus-check.log
+Checking brand-check: pnpm brand:check
+brand-check: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/brand-check.log
+Checking audit-prod: pnpm audit:prod
+audit-prod: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/audit-prod.log
+Checking links: pnpm links
+links: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/links.log
+Checking native: node /home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs
+native: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/native.log
+Checking fingerprints: pnpm exec tsx packages/cli/src/main.ts know fingerprints .. ../wiki
+fingerprints: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/fingerprints.log
+Checking stamp: pnpm exec tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..
+stamp: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/stamp.log
+Checking anchors: pnpm exec tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..
+anchors: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/anchors.log
+Checking validate: pnpm exec tsx packages/cli/src/main.ts know validate ../wiki
+validate: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/validate.log
+Checking status: pnpm exec tsx packages/cli/src/main.ts know status ../wiki --workspace ..
+status: exit 0; /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/status.log
+Delivery checks pass; coverage {"statements":88.5,"lines":88.5,"functions":95.39,"branches":78.41}; wiki 0 errors/warnings/review anchors, fresh. Python-only fingerprints and Git HEAD stamp do not establish dirty TypeScript/Markdown freshness. Native Resolve exception remains waived/unverified.
+Delivery evidence: /home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-6bb4bb46-4bd5-46c4-bb9b-52edcc32b8ee/results.json

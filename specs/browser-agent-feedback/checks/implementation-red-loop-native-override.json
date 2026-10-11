@@ -1,0 +1,21 @@
+{
+  "observed_at": "2026-10-11T13:51:16.935857+00:00",
+  "scope": "Read-only Commander repeated --session equals-form probe; no native runner invoked and no write command executed.",
+  "argv": [
+    "node",
+    "./treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "read",
+    "./specs/browser-agent-feedback",
+    "--session",
+    "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "--session=a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+    "--json"
+  ],
+  "exit": 0,
+  "selected_session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "override_session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+  "returned_session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+  "stderr": ""
+}

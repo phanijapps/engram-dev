@@ -22,21 +22,21 @@ npm install -g --allow-scripts=engram-dev "$URL" >>"$TRANSCRIPT" 2>&1
 log "   install exit: 0"
 
 log "2. where the bin landed"
-BIN="$(command -v treadle)"
+BIN="$(command -v wukong)"
 log "   bin: $BIN"
 
 log "3. assertions from an arbitrary directory (PATH node)"
 cd /tmp
-treadle --version >>"$TRANSCRIPT" 2>&1
-treadle --help >/dev/null
-log "   treadle --help: ok"
-treadle do where /tmp >/dev/null
-log "   treadle do where: ok"
-treadle know validate "$(mktemp -d)" >/dev/null 2>&1 || true   # empty dir: honest refusal path, not a crash
+wukong --version >>"$TRANSCRIPT" 2>&1
+wukong --help >/dev/null
+log "   wukong --help: ok"
+wukong do where /tmp >/dev/null
+log "   wukong do where: ok"
+wukong know validate "$(mktemp -d)" >/dev/null 2>&1 || true   # empty dir: honest refusal path, not a crash
 log "   survives odd input: ok"
 
 log "4. the floor check: the installed entry file under BOTH node binaries"
-ENTRY="$(node -e 'console.log(require("resolve").sync?.("treadle") ?? "")' 2>/dev/null || true)"
+ENTRY="$(node -e 'console.log(require("resolve").sync?.("wukong") ?? "")' 2>/dev/null || true)"
 # resolve the real main.js the bin points at (through the npm shim)
 MAINJS="$(find "$(npm root -g)" -path "*@treadle/cli/dist/src/main.js" 2>/dev/null | head -1)"
 if [ -z "$MAINJS" ]; then

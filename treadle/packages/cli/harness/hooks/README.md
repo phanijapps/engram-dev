@@ -1,18 +1,105 @@
-# harness hooks
+# Harness lifecycle hooks
 
-Hooks are plain Node JavaScript files. One file, one concern. No
-dependencies, no build step. They run with the user's node.
+The authoritative manifest defines host-specific wiring and companion files.
+The lifecycle bridge uses Node and a versioned runtime pointer; installation
+and native packaging include its shared helper. Do not copy a wrapper alone.
 
-The contract (harness/0.1):
+Claude and Codex SessionStart/UserPromptSubmit receive bounded JSON on stdin
+and return hook-specific additional context. The bridge ensures the shared
+service, connects the explicit event cwd, and reads context without task
+admission or owner actions. Failure emits bootstrap/retry guidance. Closing a
+session does not stop the service. A stopped service reconnects on the next
+event. Codex requires explicit host hook trust; inactive hooks need manual
+`<harness CLI> project connect <workspace>` and `context --workspace <workspace>`.
 
-- A hook reads its input from argv (a single JSON string) and prints
-  its decision to stdout as JSON. Exit 0 = pass; exit 3 = refuse
-  (the surface receives the refusal); any other exit = error.
-- A hook never writes outside a path it was given. A hook never
-  guesses: missing input is an error, not a pass.
-- Wiring is per surface and lives in `harness.json`: pi loads the
-  file as an extension, Claude Code invokes it through a settings
-  matcher, Codex invokes it through config notify, Copilot has no
-  hook mechanism (null — printed honestly in every plan).
+Pi loads session-recall as an extension, using `ctx.cwd` for session_start and
+before_agent_start. Its companion helper registers no handlers. The native
+package loads the extension wrapper explicitly. Use one installation mode per
+host; loading native and compatibility callbacks together is unsupported.
+Native custom-agent packaging is limited to Claude. Copilot has no lifecycle
+hook wiring in this manifest.
 
-The first payload lands with the surface adapters (T-3).
+## Codex project paths
+
+Project Codex wiring uses `node` from PATH and a project-relative payload path.
+The launcher walks from the session directory to the nearest `.codex/hooks.json`,
+then invokes `.harness/hooks/codex-context.js` under that root.
+It preserves the event stdin and working directory, including sessions started in subdirectories.
+It does not depend on Git or embed a checkout-specific absolute path.
+A nearer Codex config defines a separate project boundary; a missing payload fails there.
+Global installations retain absolute runtime paths because they serve unrelated project directories.
+The machine-local runtime pointer still needs regeneration if the installed runtime moves.
+Native packaged hooks continue to use the plugin-root entry; this compatibility path change does not alter native packaging.
+
+Refresh Codex project wiring through `init harness --agent codex --scope project --hooks-only`.
+Inspect `--dry-run` before using `--force`. Installer-owned prior commands are replaced;
+foreign hook commands remain. If ownership records are missing, inspect retained legacy commands manually.
+Codex hook trust and host activation still need the host's normal action.
+
+## Claude project paths
+
+Project Claude callbacks use `node` with literal arguments.
+The launcher finds the nearest ancestor `.claude/settings.json` and resolves the relative payload there.
+It preserves event stdin and the session directory.
+The commands work after checkout relocation and from project subdirectories.
+Global callbacks retain absolute executable and payload paths.
+
+Refresh through `init harness --agent claude --scope project --hooks-only`.
+Inspect the dry-run before you use `--force`.
+The installer replaces callbacks that its ownership record identifies.
+For old manual callbacks, reconcile their exact definitions before installation to avoid duplicate events.
+Preserve foreign callbacks and settings.
+
+Context uses the exact event directory as the workspace on every host.
+A subdirectory session can therefore report a missing wiki or specs directory.
+Start at the repository root to obtain its canonical context.
+
+## Pi extension sources
+
+Pi extensions belong to the harness. Shared script and extension payloads live in
+`hooks/`; `harness.json` declares their project destinations.
+
+| Installed Pi file                   | Authoritative source       | Manifest entry             |
+| ----------------------------------- | -------------------------- | -------------------------- |
+| `.pi/extensions/post-tool-check.js` | `hooks/post-tool-check.js` | `post-tool-check`          |
+| `.pi/extensions/session-recall.js`  | `hooks/session-recall.js`  | `session-recall`           |
+| `.pi/extensions/codex-context.js`   | `hooks/codex-context.js`   | `session-recall` companion |
+
+The installer also creates `.pi/extensions/runtime.json` for the current machine.
+Regenerate this local pointer after moving the checkout or runtime.
+The native package uses `extensions/project-context.ts` as its lifecycle entry.
+That wrapper exports the same `hooks/session-recall.js` callback.
+
+Refresh project extensions through `init harness --agent pi --scope project
+--hooks-only`, prefixed with the installed harness executable.
+Inspect its `--dry-run` plan before adding `--force` for differing files.
+Reload Pi after installation.
+
+The guard covers corpus `expected.*` witness files, legacy `expected` and `golden` directories,
+and the generated `wiki/code` directory. Reads remain permitted.
+The separate machine-managed guard retains its legacy argv JSON contract
+(exit 0 pass, 3 refusal, 1 malformed input) and pi tool_call blocking. Claude
+PostToolUse is an advisory after-the-fact check, not a write admission gate.
+The core task and owner workflow remain authoritative. Legacy recall argv
+options are compatibility helpers, not the current lifecycle protocol.
+
+## Feedback context and delivery
+
+Lifecycle context exposes bounded feedback session IDs, cursors, latest-round
+IDs and draft/unresolved/stale counts. It excludes comment bodies and source
+bytes. Read submitted content explicitly with `do feedback read` or a bounded
+`do feedback wait` through the installed CLI. Repeated reads retain batches;
+remember the last processed cursor and stable batch IDs to avoid repeated edits.
+
+The canonical `skills/sdlc/feedback/` skill and protocol resource ship to Claude,
+Codex and Pi. Install through the harness installer rather than editing host
+copies. Mixed document/diff requests use separate explicit selections; iterative
+worktree rounds differ from sessions pinned to a committed `--head`.
+
+Browser Submit and owner Start do not wake an idle agent or launch a host.
+An active wait (1–60 seconds), later prompt or manual feedback invocation handles
+delivery. Feedback uses its own ledger and revision, preserving owner gates.
+No host session, transcript or token capture is added to lifecycle hooks.
+Sources: `treadle/packages/cli/src/harness/context.ts:15`,
+`treadle/packages/cli/src/commands/feedback.ts:98`, and
+`treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md:1`.

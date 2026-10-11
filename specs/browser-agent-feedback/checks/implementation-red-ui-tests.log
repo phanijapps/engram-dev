@@ -1,0 +1,14 @@
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/core/test/feedback.test.ts (22 tests) 275ms
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 213ms
+ ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 598ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 248ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 341ms
+ ✓ packages/web/test/feedback-ui.test.ts (5 tests) 1073ms
+ ✓ packages/cli/test/feedback-cli.test.ts (10 tests) 1441ms
+
+ Test Files  7 passed (7)
+      Tests  55 passed (55)
+   Start at  09:07:36
+   Duration  2.57s (transform 1.04s, setup 0ms, collect 4.63s, tests 4.19s, environment 2ms, prepare 739ms)

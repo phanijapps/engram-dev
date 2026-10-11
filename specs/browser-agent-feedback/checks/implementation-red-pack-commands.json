@@ -1,0 +1,76 @@
+{
+  "reviewer": "agent:red-foreman:/root/roadmap_eval_revision",
+  "source_commit": "05253ebdba634c119b2836201d2643697600b2f1",
+  "commands": [
+    {
+      "task": "T-1",
+      "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:32.270759+00:00",
+      "finished_at": "2026-10-11T16:55:34.362155+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-1.log",
+      "sha256": "2c1034ca3f6845f1786c3266d5faeea9be13bec9b6e5692a614078b5eaed5201"
+    },
+    {
+      "task": "T-2",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:34.363232+00:00",
+      "finished_at": "2026-10-11T16:55:38.033707+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-2.log",
+      "sha256": "08d57e4b8af8823a333af7e1a2cd356aedcdbb8ffad6165002daa4ba6e0c283c"
+    },
+    {
+      "task": "T-3",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:38.034860+00:00",
+      "finished_at": "2026-10-11T16:55:40.893752+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-3.log",
+      "sha256": "24d727e75ce96ecc56db6cacafa07d6ca63c4e25eb9761e9f4d9a35f6fa69cda"
+    },
+    {
+      "task": "T-4",
+      "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:40.894823+00:00",
+      "finished_at": "2026-10-11T16:55:44.588106+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-4.log",
+      "sha256": "c61bcaeff65f80069912a9db04a3da902e6f76db0a0d09f25383658244ea3954"
+    },
+    {
+      "task": "T-5",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:44.589330+00:00",
+      "finished_at": "2026-10-11T16:55:47.278793+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-5.log",
+      "sha256": "777227be77112e17ca43908ad8f87449cbbe955d0313d58aacd7c13e6941dcb8"
+    },
+    {
+      "task": "T-6",
+      "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:47.280091+00:00",
+      "finished_at": "2026-10-11T16:55:50.929927+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-6.log",
+      "sha256": "840fe26848f8f0644f8e66e22c244ce893d674d560ddb75dc3576513c722d2aa"
+    },
+    {
+      "task": "T-7",
+      "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "started_at": "2026-10-11T16:55:50.930754+00:00",
+      "finished_at": "2026-10-11T16:56:18.663499+00:00",
+      "exit": 0,
+      "log": "checks/implementation-red-pack-T-7.log",
+      "sha256": "1349ea61200dc6f2223c90a283b65e2d2467127fcaf8d36dd8ed89ec2c39aff3"
+    }
+  ]
+}

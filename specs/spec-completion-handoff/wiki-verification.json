@@ -4,7 +4,7 @@
     {
       "name": "fingerprints",
       "exit": 0,
-      "stdout": "fingerprints: /home/videogamer/code/memex_beta/wiki/.okf/fingerprints.json\n",
+      "stdout": "fingerprints: ./wiki/.okf/fingerprints.json\n",
       "stderr": ""
     },
     {

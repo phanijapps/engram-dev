@@ -1,0 +1,50 @@
+{
+  "run": 38100576822,
+  "testedHead": "021164c79ab56ac7f9f548e21e44846fadd58542",
+  "url": "https://github.com/phanijapps/engram-dev/actions/runs/38100576822",
+  "witnesses": [
+    {
+      "file": "native-runtime/harness-smoke-Linux-22/harness-smoke.json",
+      "artifact": "harness-smoke-Linux-22",
+      "sha256": "d047939056c9a0f804b21e3a6c81806c8eb53f41718aa32713060dfeb66b6265",
+      "platform": "linux",
+      "node": "v22.23.3"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Linux-24/harness-smoke.json",
+      "artifact": "harness-smoke-Linux-24",
+      "sha256": "efae3c32a9f82b0e86af0a03bdc890c8ecff3bb54f5784ef1337e4f30b172bea",
+      "platform": "linux",
+      "node": "v24.21.0"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Windows-22/harness-smoke.json",
+      "artifact": "harness-smoke-Windows-22",
+      "sha256": "68c49ed391f18ad27dd85679cbc0a2d147008edee48b0edc4a9dfcf577220762",
+      "platform": "win32",
+      "node": "v22.23.3"
+    },
+    {
+      "file": "native-runtime/harness-smoke-Windows-24/harness-smoke.json",
+      "artifact": "harness-smoke-Windows-24",
+      "sha256": "87100ffb49c11abfc77f2067aa4cc80383b6186ff91f9109fd70abbbff3bed31",
+      "platform": "win32",
+      "node": "v24.21.0"
+    },
+    {
+      "file": "native-runtime/harness-smoke-macOS-22/harness-smoke.json",
+      "artifact": "harness-smoke-macOS-22",
+      "sha256": "345e2aadf4950be17395b1c5d0682c3b90002a75cc628b87297dc7054c64c4a3",
+      "platform": "darwin",
+      "node": "v22.23.2"
+    },
+    {
+      "file": "native-runtime/harness-smoke-macOS-24/harness-smoke.json",
+      "artifact": "harness-smoke-macOS-24",
+      "sha256": "7c5eba74688f8d1dd68208a95494976ef7a0389d4192cc29efca964521bd5937",
+      "platform": "darwin",
+      "node": "v24.20.0"
+    }
+  ],
+  "scope": "Actual native runtime/packaging witnesses; no host trust or complete host activation journeys are inferred."
+}

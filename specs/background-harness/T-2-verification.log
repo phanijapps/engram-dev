@@ -1,0 +1,30 @@
+
+> treadle-root@ build ./treadle
+> tsc --build && node scripts/copy-assets.mjs
+
+Packages are copied from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/videogamer/.local/share/pnpm/store/v3
+  Virtual store is at:             ../../../../../tmp/runtime package ü cHMpKu/installed/node_modules/.pnpm
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  WARN  deprecated eslint@9.39.5
+ WARN  1 deprecated subdependencies found: glob@10.5.0
+.                                        |  +12 +
+Progress: resolved 326, reused 255, downloaded 0, added 12, done
+(node:385078) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+file://./treadle/scripts/verify-runtime-package.mjs:12
+      if (st.isSymbolicLink() && realpathSync(path) !== realpathSync(root) && !realpathSync(path).startsWith(realpathSync(root) + sep)) throw Error(`External dependency: ${f}`);
+                                                                                                                                              ^
+
+Error: External dependency: cli
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:12:143)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at file://./treadle/scripts/verify-runtime-package.mjs:16:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

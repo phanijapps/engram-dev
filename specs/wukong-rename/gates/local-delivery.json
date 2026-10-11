@@ -1,0 +1,166 @@
+{
+  "exit": 0,
+  "at": "2026-10-11T01:57:12.722Z",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "brand": {
+    "name": "Wukong",
+    "command": "wukong"
+  },
+  "projectId": "f69b47a23566ae2a3e86acb0",
+  "registryPreserved": true,
+  "reviewerPreserved": true,
+  "packages": [
+    {
+      "surface": "claude",
+      "name": "wukong-harness-claude",
+      "path": "/tmp/wukong-harness-4wRriM/claude"
+    },
+    {
+      "surface": "codex",
+      "name": "wukong-harness-codex",
+      "path": "/tmp/wukong-harness-4wRriM/codex"
+    },
+    {
+      "surface": "pi",
+      "name": "wukong-harness-pi",
+      "path": "/tmp/wukong-harness-4wRriM/pi"
+    }
+  ],
+  "commands": [
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "status",
+        "serve"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "wukong",
+      "args": [
+        "--help"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "wukong",
+      "args": [
+        "--version"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "stop",
+        "serve"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "status",
+        "serve"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "project",
+        "connect",
+        "/home/videogamer/code/memex_beta",
+        "--json"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "codex",
+        "--scope",
+        "project",
+        "--root",
+        "/home/videogamer/code/memex_beta",
+        "--skills",
+        "analyze",
+        "build-kb",
+        "implement",
+        "new-project",
+        "plan",
+        "review",
+        "roadmap",
+        "--no-agents",
+        "--no-hooks"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "codex",
+        "--scope",
+        "project",
+        "--root",
+        "/home/videogamer/code/memex_beta",
+        "--hooks-only"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "package",
+        "harness",
+        "--agent",
+        "claude",
+        "--out",
+        "/tmp/wukong-harness-4wRriM/claude"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "package",
+        "harness",
+        "--agent",
+        "codex",
+        "--out",
+        "/tmp/wukong-harness-4wRriM/codex"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+      "args": [
+        "./treadle/packages/cli/dist/src/main.js",
+        "package",
+        "harness",
+        "--agent",
+        "pi",
+        "--out",
+        "/tmp/wukong-harness-4wRriM/pi"
+      ],
+      "exit": 0
+    }
+  ],
+  "url": "http://127.0.0.1:8788/",
+  "scope": "Actual local Linux CLI/service and generated package bytes; host trust/reload and native host journeys remain separate."
+}

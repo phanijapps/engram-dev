@@ -1,0 +1,62 @@
+{
+  "platform": "linux",
+  "node": "v24.19.0",
+  "at": "2026-10-11T01:03:32.900Z",
+  "results": [
+    {
+      "name": "check",
+      "at": "2026-10-11T01:03:16.330Z",
+      "command": [
+        "pnpm",
+        "check"
+      ],
+      "exit": 1
+    },
+    {
+      "name": "coverage",
+      "at": "2026-10-11T01:03:22.916Z",
+      "command": [
+        "pnpm",
+        "coverage"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "corpus:check",
+      "at": "2026-10-11T01:03:29.948Z",
+      "command": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "brand:check",
+      "at": "2026-10-11T01:03:30.920Z",
+      "command": [
+        "pnpm",
+        "brand:check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "audit:prod",
+      "at": "2026-10-11T01:03:31.396Z",
+      "command": [
+        "pnpm",
+        "audit:prod"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "links",
+      "at": "2026-10-11T01:03:32.435Z",
+      "command": [
+        "pnpm",
+        "links"
+      ],
+      "exit": 0
+    }
+  ],
+  "limits": "Fresh stamp compares HEAD; Python-only scanner does not detect dirty TS/Markdown."
+}

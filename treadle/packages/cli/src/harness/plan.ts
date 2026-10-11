@@ -12,7 +12,7 @@
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
-import { join } from 'node:path';
+import { join, dirname, basename } from 'node:path';
 import { normalizedHash } from './content.js';
 import { destPath, sourceFile } from './manifest.js';
 import { destRoots } from './paths.js';
@@ -92,7 +92,12 @@ function modeForFile(sourceAbs: string, destAbs: string, force: boolean): PlanRo
   return force ? 'update' : 'refuse';
 }
 
-function wiringTarget(agent: Surface, scope: Scope, root: string): string {
+export function wiringTarget(agent: Surface, scope: Scope, root: string, kind?: string): string {
+  if (kind === 'config-hooks')
+    return join(
+      destRoots(agent, scope, root).base,
+      scope === 'project' ? '.codex/hooks.json' : 'hooks.json',
+    );
   if (agent === 'claude') {
     const dir = scope === 'project' ? join(root, '.claude') : join(homedir(), '.claude');
     return join(dir, 'settings.json');
@@ -209,7 +214,7 @@ export function compilePlan(
           mode: modeForFile(srcPath, destAbs, choices.force),
           ...(w.kind === 'prompt-file'
             ? {
-                note: 'recall prompt-file (the honest codex subset: the prompt teaches the rule; notify rides the guard hook)',
+                note: 'manual recall fallback; current lifecycle context requires trusted host hooks',
               }
             : {}),
         });
@@ -225,28 +230,44 @@ export function compilePlan(
           mode: modeForFile(src, destAbs, choices.force),
         });
         // config-notify wires at user level — the payload path must be absolute;
-        // settings-hooks runs from the project root — the manifest command stands
+        // project Codex hooks resolve their relative payload from the nearest config root
         const detail =
           w.kind === 'config-notify'
             ? `node ${destAbs}`
             : w.matcher
-              ? `${w.matcher} → ${w.command}`
+              ? `${w.matcher} → ${hookCommand(w, destAbs, scope, choices.root)}`
               : (w.command ?? '');
         wirings.push({
           surface: agent,
           kind: w.kind,
-          target: wiringTarget(agent, scope, choices.root),
+          target: wiringTarget(agent, scope, choices.root, w.kind),
           detail,
         });
       }
+      if (w.kind !== 'prompt-file')
+        for (const companion of h.companions ?? []) {
+          const folder =
+            w.kind === 'extension' && w.dest
+              ? dirname(destFor(w.dest, agent, scope, choices.root))
+              : join(roots.runtime, 'hooks');
+          const destination = join(folder, basename(companion));
+          rows.push({
+            component: `${h.id}-support`,
+            kind: 'hook',
+            surface: agent,
+            source: companion,
+            destination,
+            mode: modeForFile(join(manifestRoot, companion), destination, choices.force),
+          });
+        }
       // additional wirings from array-valued wiring (claude multi-matcher — additive manifest)
       for (const extra of wiringList.slice(1)) {
-        if (extra.kind === 'settings-hooks' && extra.matcher) {
+        if ((extra.kind === 'settings-hooks' || extra.kind === 'config-hooks') && extra.matcher) {
           wirings.push({
             surface: agent,
-            kind: 'settings-hooks',
-            target: wiringTarget(agent, scope, choices.root),
-            detail: `${extra.matcher} → ${extra.command ?? ''}`,
+            kind: extra.kind,
+            target: wiringTarget(agent, scope, choices.root, extra.kind),
+            detail: `${extra.matcher} → ${hookCommand(extra, join(roots.runtime, 'hooks', h.file.split('/').pop()!), scope, choices.root)}`,
           });
         }
       }
@@ -265,4 +286,64 @@ export function planSummary(plan: Plan): {
   const s = { create: 0, same: 0, update: 0, refuse: 0, skip: 0 };
   for (const r of plan.rows) s[r.mode]++;
   return s;
+}
+
+// A session can start below the project root. Resolve the nearest host config,
+// then its relative payload; no checkout path is embedded in project wiring.
+// Keep the original cwd and inherited stdin for the lifecycle callback.
+const projectHookLauncher = (config: string, host: string): string =>
+  [
+    "const fs=require('node:fs'),p=require('node:path');",
+    'let root=process.cwd();',
+    `while(!fs.existsSync(p.join(root,${config
+      .split('/')
+      .map((part) => `'${part}'`)
+      .join(',')}))){`,
+    'const parent=p.dirname(root);',
+    `if(parent===root)throw Error('Project ${host} hook configuration not found');`,
+    'root=parent;}',
+    'const hook=p.resolve(root,process.argv[1]);',
+    "const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});",
+    'if(result.error)throw result.error;',
+    'process.exit(result.status??1);',
+  ].join('');
+
+function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): string {
+  const suffix = (w.command ?? '')
+    .replace(/^node\s+\S+/, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+  if (w.kind === 'settings-hooks')
+    return JSON.stringify({
+      type: 'command',
+      command: scope === 'project' ? 'node' : process.execPath,
+      args:
+        scope === 'project'
+          ? [
+              '-e',
+              projectHookLauncher('.claude/settings.json', 'Claude'),
+              '--',
+              relative(root, path).split('\\').join('/'),
+              ...suffix,
+            ]
+          : [path, ...suffix],
+    });
+  const quote = (s: string): string => "'" + s.replaceAll("'", "'" + '"' + "'" + '"' + "'") + "'";
+  const argv =
+    scope === 'project'
+      ? [
+          'node',
+          '-e',
+          projectHookLauncher('.codex/hooks.json', 'Codex'),
+          '--',
+          relative(root, path).split('\\').join('/'),
+          ...suffix,
+        ]
+      : [process.execPath, path, ...suffix];
+  return JSON.stringify({
+    type: 'command',
+    command: argv.map(quote).join(' '),
+    commandWindows: argv.map((s) => '"' + s.replaceAll('"', '\\"') + '"').join(' '),
+  });
 }

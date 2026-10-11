@@ -1,0 +1,32 @@
+{
+  "observed_at": "2026-10-11T16:49:35.375Z",
+  "cwd": "./treadle",
+  "commands": [
+    {
+      "name": "head",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "./specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/head.log",
+      "sha256": "5778f463a54ec180a74fa9b7213dc6a47c5165ce8592ae1e55cade77c8c32d19"
+    },
+    {
+      "name": "check",
+      "argv": [
+        "pnpm",
+        "check"
+      ],
+      "exit": 1,
+      "signal": null,
+      "log": "./specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/check.log",
+      "sha256": "025c513a0c9131c32eb1d808e011418227c499d4f55b250ab82169566da99266"
+    }
+  ],
+  "repo_head": "bf72a87ed4be9c96fd508d93f92d57b0b881ec08",
+  "result": "fail",
+  "error": "check failed; inspect retained log"
+}

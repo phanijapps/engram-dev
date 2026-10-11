@@ -1,0 +1,125 @@
+{
+  "bomBuilder": {
+    "sourceHex": "efbbbf6f6e650a",
+    "builtHex": "efbbbf6f6e650a",
+    "storedHex": "efbbbf6f6e650a",
+    "sourceEqualsStored": true
+  },
+  "bomCoreRead": {
+    "originalHex": "efbbbf6f6e650a",
+    "returnedHex": "efbbbf6f6e650a"
+  },
+  "openRetryCursor": {
+    "sameReceipt": true,
+    "currentCursor": 0,
+    "readAfterReturnedCursor": {
+      "format": "feedback-result/1",
+      "pack_id": "test",
+      "session": "a78249e1-dc66-4314-bee9-6a52f7dab44c",
+      "revision": 3,
+      "cursor": 1,
+      "status": "submitted",
+      "batches": [
+        {
+          "id": "c62a49a7-6edf-4361-bc19-a94fe54441c1",
+          "session": "a78249e1-dc66-4314-bee9-6a52f7dab44c",
+          "round": "6b8a55d6-bdbb-4b66-b1ea-45d9a68a6734",
+          "cursor": 1,
+          "by": "human:probe",
+          "at": "2026-10-11T12:59:55.656Z",
+          "items": [
+            {
+              "id": "0aa55eaa-3537-4ca4-ab39-95f2d845e3ff",
+              "kind": "comment",
+              "thread": "f1189d69-247e-4ef3-95aa-acf57f571e90",
+              "body": "Submitted request",
+              "by": "human:probe",
+              "at": "2026-10-11T12:59:55.654Z",
+              "anchor": {
+                "round": "6b8a55d6-bdbb-4b66-b1ea-45d9a68a6734"
+              }
+            }
+          ]
+        }
+      ],
+      "threads": [
+        {
+          "id": "f1189d69-247e-4ef3-95aa-acf57f571e90",
+          "resolved": false,
+          "stale": false
+        }
+      ]
+    },
+    "readFromOriginalSessionCursor": {
+      "format": "feedback-result/1",
+      "pack_id": "test",
+      "session": "a78249e1-dc66-4314-bee9-6a52f7dab44c",
+      "revision": 3,
+      "cursor": 1,
+      "status": "submitted",
+      "batches": [
+        {
+          "id": "c62a49a7-6edf-4361-bc19-a94fe54441c1",
+          "session": "a78249e1-dc66-4314-bee9-6a52f7dab44c",
+          "round": "6b8a55d6-bdbb-4b66-b1ea-45d9a68a6734",
+          "cursor": 1,
+          "by": "human:probe",
+          "at": "2026-10-11T12:59:55.656Z",
+          "items": [
+            {
+              "id": "0aa55eaa-3537-4ca4-ab39-95f2d845e3ff",
+              "kind": "comment",
+              "thread": "f1189d69-247e-4ef3-95aa-acf57f571e90",
+              "body": "Submitted request",
+              "by": "human:probe",
+              "at": "2026-10-11T12:59:55.654Z",
+              "anchor": {
+                "round": "6b8a55d6-bdbb-4b66-b1ea-45d9a68a6734"
+              }
+            }
+          ]
+        }
+      ],
+      "threads": [
+        {
+          "id": "f1189d69-247e-4ef3-95aa-acf57f571e90",
+          "resolved": false,
+          "stale": false
+        }
+      ]
+    }
+  },
+  "replayDurability": {
+    "syncs": [
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds/.staging-25ba6548-dc51-4c77-91f4-9281a88c43cc/4ef87452-5108-42d6-9219-3b36a746aec5-after.txt"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds/.staging-25ba6548-dc51-4c77-91f4-9281a88c43cc"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/.state-6628186e-6bf4-4081-ba62-6ae129eaea0a.tmp"
+      },
+      {
+        "phase": "retry",
+        "path": "<fixture>/specs/test/feedback/state.json"
+      },
+      {
+        "phase": "retry",
+        "path": "<fixture>/specs/test/feedback"
+      },
+      {
+        "phase": "retry",
+        "path": "<fixture>/specs/test"
+      }
+    ],
+    "packDirectoryFlushedOnRetry": true
+  }
+}

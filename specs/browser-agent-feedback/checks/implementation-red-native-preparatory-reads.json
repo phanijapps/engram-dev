@@ -1,0 +1,465 @@
+{
+  "observed_at": "2026-10-11T16:30:45.721705+00:00",
+  "scope": "Independent CLI reads of actual stored native sessions; not native agent invocations or human acts",
+  "cli_sha256": "695cf3a9dd634fe50983a51072c11f8a3288512cd9f2b75a9ee945588dbecd64",
+  "verifier_sha256": "d19dd19d1220313ecad9985b8b02f5913748e41312ee62470ed055365f9561a1",
+  "records": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "revision": 49,
+        "cursor": 4,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "43c183dd-6338-4d81-8ce4-ab04b35b8aaf",
+            "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+            "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:36:22.218Z",
+            "items": [
+              {
+                "id": "9c9a28d5-5c89-4d5e-bea5-113325f99e17",
+                "kind": "comment",
+                "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+                "body": "fadsf",
+                "by": "human:owner",
+                "at": "2026-10-11T13:36:20.063Z",
+                "anchor": {
+                  "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+                  "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+                  "side": "after",
+                  "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+                }
+              }
+            ]
+          },
+          {
+            "id": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+            "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+            "round": "6a829c77-d190-4203-b906-1729fa277987",
+            "cursor": 2,
+            "by": "human:owner",
+            "at": "2026-10-11T13:47:50.668Z",
+            "items": [
+              {
+                "id": "0802898a-ec8f-4633-883f-9dfb24192bb7",
+                "kind": "comment",
+                "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+                "body": "dfsdfdsa",
+                "by": "human:owner",
+                "at": "2026-10-11T13:47:47.327Z",
+                "anchor": {
+                  "round": "6a829c77-d190-4203-b906-1729fa277987",
+                  "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+                  "side": "after",
+                  "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec"
+                }
+              }
+            ]
+          },
+          {
+            "id": "41159ffc-0a4e-460a-87c5-0914d16e7542",
+            "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+            "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+            "cursor": 3,
+            "by": "human:owner",
+            "at": "2026-10-11T14:35:09.458Z",
+            "items": [
+              {
+                "id": "c5e0c5a9-cfbf-4266-8739-a02f588d794c",
+                "kind": "comment",
+                "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+                "body": "Approved",
+                "by": "human:owner",
+                "at": "2026-10-11T14:35:06.076Z",
+                "anchor": {
+                  "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+                  "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+                  "side": "after",
+                  "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b"
+                }
+              }
+            ]
+          },
+          {
+            "id": "30fb0850-7729-4248-97fd-430cc2e52990",
+            "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+            "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+            "cursor": 4,
+            "by": "human:owner",
+            "at": "2026-10-11T14:47:58.840Z",
+            "items": [
+              {
+                "id": "cdcb8696-3a41-431f-9616-31acca32b564",
+                "kind": "reattach",
+                "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+                "body": "fadsf",
+                "by": "human:owner",
+                "at": "2026-10-11T14:47:43.675Z",
+                "anchor": {
+                  "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+                  "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+                  "side": "after",
+                  "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                  "start": 7,
+                  "end": 7
+                },
+                "original": {
+                  "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+                  "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+                  "side": "after",
+                  "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+                },
+                "event": "49da1592-8cd9-4e8f-85ef-aeb13aed19b5"
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+            "resolved": true,
+            "stale": false
+          },
+          {
+            "id": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+            "resolved": true,
+            "stale": true
+          },
+          {
+            "id": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+            "resolved": true,
+            "stale": false
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "revision": 49,
+        "cursor": 1,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+            "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+            "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:38:22.652Z",
+            "items": [
+              {
+                "id": "57df3b33-b9d9-4403-9c81-e3bb217e9cb4",
+                "kind": "comment",
+                "thread": "cd001460-eb31-4f59-8964-41137001c6ec",
+                "body": "test",
+                "by": "human:owner",
+                "at": "2026-10-11T13:38:21.664Z",
+                "anchor": {
+                  "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+                  "target": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+                  "side": "after",
+                  "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+                }
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "cd001460-eb31-4f59-8964-41137001c6ec",
+            "resolved": true,
+            "stale": true
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "revision": 49,
+        "cursor": 1,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+            "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+            "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:38:27.826Z",
+            "items": [
+              {
+                "id": "f3954ec7-86f3-4659-a083-a2a1ecb8d664",
+                "kind": "comment",
+                "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+                "body": "dsafdsa",
+                "by": "human:owner",
+                "at": "2026-10-11T13:38:27.068Z",
+                "anchor": {
+                  "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+                  "target": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+                  "side": "after",
+                  "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835"
+                }
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+            "resolved": true,
+            "stale": true
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "revision": 49,
+        "cursor": 1,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+            "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+            "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:36:35.009Z",
+            "items": [
+              {
+                "id": "6c3a4442-62d5-4f49-af51-9ef732249c03",
+                "kind": "comment",
+                "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+                "body": "fdafd",
+                "by": "human:owner",
+                "at": "2026-10-11T13:36:33.786Z",
+                "anchor": {
+                  "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+                  "target": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+                  "side": "before",
+                  "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca"
+                }
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+            "resolved": false,
+            "stale": false
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "revision": 49,
+        "cursor": 1,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "4fdddb48-b222-4804-be45-79404ab47c22",
+            "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+            "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:38:32.024Z",
+            "items": [
+              {
+                "id": "e741c7fd-1024-472a-9c85-df1a45456270",
+                "kind": "comment",
+                "thread": "56cbe701-236d-4279-b273-7bc331135e6c",
+                "body": "asdfdsaf",
+                "by": "human:owner",
+                "at": "2026-10-11T13:38:31.434Z",
+                "anchor": {
+                  "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+                  "target": "fe01a0d3-db5e-4546-939e-1293db049b68",
+                  "side": "after",
+                  "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7"
+                }
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "56cbe701-236d-4279-b273-7bc331135e6c",
+            "resolved": true,
+            "stale": true
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "argv": [
+        "node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "read",
+        "./specs/browser-agent-feedback",
+        "--session",
+        "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "--after",
+        "0",
+        "--json"
+      ],
+      "exit": 0,
+      "output": {
+        "format": "feedback-result/1",
+        "pack_id": "browser-agent-feedback",
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "revision": 49,
+        "cursor": 1,
+        "status": "submitted",
+        "batches": [
+          {
+            "id": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+            "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+            "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+            "cursor": 1,
+            "by": "human:owner",
+            "at": "2026-10-11T13:36:08.825Z",
+            "items": [
+              {
+                "id": "5e448dc4-29f0-4d9e-b053-bcfced7faf0b",
+                "kind": "comment",
+                "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+                "body": "test",
+                "by": "human:owner",
+                "at": "2026-10-11T13:36:05.399Z",
+                "anchor": {
+                  "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+                  "target": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+                  "side": "after",
+                  "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+                }
+              }
+            ]
+          }
+        ],
+        "threads": [
+          {
+            "id": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+            "resolved": true,
+            "stale": true
+          }
+        ],
+        "project": "f69b47a23566ae2a3e86acb0"
+      },
+      "stderr": ""
+    }
+  ]
+}

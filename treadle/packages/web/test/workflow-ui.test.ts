@@ -105,7 +105,10 @@ describe('owner workflow UI', () => {
       await h.waitFor(
         () =>
           !!current(f.dir).doc.workflow?.start_receipt &&
-          h.window.document.querySelector('#owner-start') === null,
+          h.window.document.querySelector('#owner-start') === null &&
+          h.window.document.querySelector('#owner-heading')?.textContent ===
+            'Implementation in progress' &&
+          h.window.document.activeElement?.id === 'owner-heading',
       );
       expect(current(f.dir).doc.workflow?.start_receipt?.by).toBe('human:owner');
       expect(h.window.document.querySelector('#owner-finish')).toBeNull();

@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 /** post-tool-check (harness/0.1) — the machine-managed guard.
  *
  *  Refuses writes into machine-managed trees (the golden corpus, the
@@ -12,7 +14,10 @@
  *  - extension mode: loaded by pi as an extension; the default export
  *    registers the same guard on tool_call.
  */
-const MANAGED = [/\/corpus\/.*\/golden\//, /\/corpus\/.*\/expected\//, /(^|\/)wiki\/code\//];
+const MANAGED = [
+  /(^|\/)corpus\/(?:[^/]+\/)*(?:golden\/|expected\/|expected\.[^/]+$)/,
+  /(^|\/)wiki\/code\//,
+];
 const ALLOW_ENV = 'HARNESS_ALLOW_MACHINE_EDITS';
 
 /** Pure check: { ok, reason } for a payload with a file path. */
@@ -32,14 +37,14 @@ export function check(payload) {
   return { ok: true, reason: 'not machine-managed' };
 }
 
-// ── script mode (claude settings wiring, codex notify, humans) ──
+// ── script mode (Claude PostToolUse stdin, legacy argv callers) ──
 // enter ONLY when this file is the invoked program — not when pi
 // imports it as an extension (pi's own argv must never reach here;
 // the dogfooded load-kill proved why)
 const invoked = (() => {
   try {
     return (
-      process.argv[1] !== undefined && import.meta.url.endsWith(process.argv[1].split('/').pop())
+      process.argv[1] !== undefined && resolve(process.argv[1]) === fileURLToPath(import.meta.url)
     );
   } catch {
     return false;
@@ -48,10 +53,33 @@ const invoked = (() => {
 if (invoked) {
   let payload;
   try {
-    payload = JSON.parse(process.argv[2]);
+    if (process.argv[2] !== undefined) payload = JSON.parse(process.argv[2]);
+    else {
+      let input = '';
+      for await (const chunk of process.stdin) {
+        input += chunk;
+        if (Buffer.byteLength(input) > 65536) throw Error('hook input exceeds 64 KiB');
+      }
+      payload = JSON.parse(input);
+    }
   } catch (e) {
-    console.error(JSON.stringify({ ok: false, reason: `payload is not JSON: ${e.message}` }));
+    console.error(
+      JSON.stringify({ ok: false, reason: `payload is not bounded JSON: ${e.message}` }),
+    );
     process.exit(1);
+  }
+  if (payload?.hook_event_name === 'PostToolUse') {
+    const args = payload.tool_input ?? {};
+    const path = args.file_path ?? args.path ?? args.notebook_path ?? args.filePath;
+    // PostToolUse cannot prevent a completed write; report its result as advisory context.
+    if (
+      typeof path === 'string' &&
+      /(write|edit|patch|create|replace|notebook|apply)/i.test(String(payload.tool_name ?? ''))
+    ) {
+      const out = check({ tool_path: path });
+      console.log(JSON.stringify(out.ok ? {} : { systemMessage: out.reason }));
+    } else console.log('{}');
+    process.exit(0);
   }
   const out = check(payload);
   console.log(JSON.stringify(out));

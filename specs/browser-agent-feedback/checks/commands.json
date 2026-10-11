@@ -1,0 +1,169 @@
+[
+  {
+    "at": "2026-10-11T12:15:26.589451+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "check"
+    ],
+    "exit": 0,
+    "log": "baseline-01.log"
+  },
+  {
+    "at": "2026-10-11T12:15:38.241771+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "coverage"
+    ],
+    "exit": 0,
+    "log": "baseline-02.log"
+  },
+  {
+    "at": "2026-10-11T12:15:45.163702+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "corpus:check"
+    ],
+    "exit": 0,
+    "log": "baseline-03.log"
+  },
+  {
+    "at": "2026-10-11T12:15:46.006637+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "brand:check"
+    ],
+    "exit": 0,
+    "log": "baseline-04.log"
+  },
+  {
+    "at": "2026-10-11T12:15:46.497117+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "audit:prod"
+    ],
+    "exit": 0,
+    "log": "baseline-05.log"
+  },
+  {
+    "at": "2026-10-11T12:15:47.461032+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "links"
+    ],
+    "exit": 0,
+    "log": "baseline-06.log"
+  },
+  {
+    "at": "2026-10-11T12:15:47.899475+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "log": "baseline-07.log"
+  },
+  {
+    "at": "2026-10-11T12:15:48.702994+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "exit": 0,
+    "log": "baseline-08.log"
+  },
+  {
+    "at": "2026-10-11T12:15:49.499619+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "log": "baseline-09.log"
+  },
+  {
+    "at": "2026-10-11T12:15:50.335178+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "check",
+      "../specs/browser-agent-feedback"
+    ],
+    "exit": 0,
+    "log": "baseline-10.log"
+  },
+  {
+    "at": "2026-10-11T12:15:51.060923+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "status",
+      "../specs/browser-agent-feedback"
+    ],
+    "exit": 0,
+    "log": "baseline-11.log"
+  },
+  {
+    "at": "2026-10-11T12:15:51.784837+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "where",
+      "..",
+      "--json"
+    ],
+    "exit": 0,
+    "log": "baseline-12.log"
+  },
+  {
+    "at": "2026-10-11T12:15:52.535311+00:00",
+    "cwd": "treadle",
+    "argv": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "../specs/browser-agent-feedback/authoring/validate.ts"
+    ],
+    "exit": 0,
+    "log": "baseline-13.log"
+  }
+]

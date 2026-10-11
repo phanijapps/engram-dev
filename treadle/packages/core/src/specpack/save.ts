@@ -9,6 +9,7 @@ import type { PackDoc } from './model.js';
 import { dirname } from 'node:path';
 import { flushOwnerAudit, ownerEventsPath, appendPendingAudit } from './audit.js';
 import type { OwnerAct } from './workflow.js';
+import { syncPublishedPath } from './durability.js';
 
 export function savePack(
   doc: PackDoc,
@@ -30,12 +31,7 @@ export function savePack(
     renameSync(tmp, jsonPath);
     if (doc.format === 'specpack/0.4') {
       try {
-        const dir = openSync(dirname(jsonPath), 'r');
-        try {
-          fsyncSync(dir);
-        } finally {
-          closeSync(dir);
-        }
+        syncPublishedPath(jsonPath);
       } catch (error) {
         return (error as Error).message;
       }

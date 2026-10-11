@@ -1,115 +1,274 @@
-# treadle
+# Wukong
 
-A local spec-driven development harness: build repository knowledge, agree the
-work, implement checked tasks, and finish with independent review and owner approval.
-The active runtime is strict TypeScript in `treadle/`.
+```text
+ __        __      _
+ \ \      / /_   _| | _____  _ __   __ _
+  \ \ /\ / /| | | | |/ / _ \| '_ \ / _` |
+   \ V  V / | |_| |   < (_) | | | | (_| |
+    \_/\_/   \__,_|_|\_\___/|_| |_|\__, |
+                                   |___/
+          .-"""-.       |
+         /  o o  \      |
+        (   (_)   )     |
+         \  ___  /      |
+          '-----'       |
+          /|   |\-------|
+         / |___|        |
+           /   \        |
+```
 
-The project is entering Phase 2. The baseline includes a searchable wiki,
-executable specpacks, a local interview room and spec library, a contract corpus,
-and the completed owner approval workflow. See the
-[project overview](wiki/project/overview.md) and
-[owner workflow](wiki/systems/owner-workflow.md).
+**The human drives; the machine moves.**
 
-## What the harness does
+Welcome to Wukong. Give your AI coding agent repository knowledge, a clear plan,
+and a reliable path from idea to reviewed code. You decide when work starts and
+when it is complete.
 
-| Plane        | Responsibility                                                                                              |
-| ------------ | ----------------------------------------------------------------------------------------------------------- |
-| `know`       | Search and read wiki concepts, manage findings, validate links and anchors, and record freshness            |
-| `do`         | Create and inspect specpacks, admit tasks, record evidence, and enforce owner approval and completion gates |
-| Local web UI | Answer questions in the room; inspect work and perform separate owner actions in the library                |
+Wukong runs on your machine. Your wiki, specs, decisions, and evidence stay with
+your repository. The local web app puts the current gate and next action in view.
 
-The working model is knowledge first, then `analyze` → `plan` → `implement` →
-`review`. Code indexing uses external tools; the engine owns the wiki bundle
-and work records. The installable harness supplies the agent instructions,
-reviewers and hooks. Product naming is isolated in `@treadle/brand`.
+[Install](#install) · [Connect your project](#connect-your-project) ·
+[Your first journey](#your-first-journey) · [Documentation](#documentation)
 
-## Run from this checkout
+## Install
 
-Use Node >=22 and the pnpm version pinned in `treadle/package.json`.
-From the repository root:
+You need **Git**, **Node.js 22 or newer**, and **pnpm 9.15.9**. Wukong currently
+installs from source. The scripts download the source, build it, and link the
+`wukong` command.
 
-```bash
-cd treadle
-corepack enable
+This preview lives on `codex/background-harness`. The commands below use that
+branch until it reaches `main`. Use an empty destination directory for the clone.
+
+If pnpm has no global binary directory, run `pnpm setup` first. Open a new
+terminal after it updates your `PATH`.
+
+### macOS and Linux
+
+Run these commands in a Bash terminal:
+
+```sh
+git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git "$HOME/.engram-dev"
+bash "$HOME/.engram-dev/install.sh"
+```
+
+The [Bash installer](install.sh) uses `$HOME/.engram-dev` by default.
+
+### Windows
+
+Run these commands in PowerShell:
+
+```powershell
+git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git "$env:LOCALAPPDATA\engram-dev"
+powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\engram-dev\install.ps1"
+```
+
+The [PowerShell installer](install.ps1) uses `$env:LOCALAPPDATA\engram-dev` by
+default. The execution policy option applies only to that PowerShell process.
+Both default directory names preserve the existing installation layout.
+
+Check the installed command:
+
+```sh
+wukong --version
+```
+
+<details>
+<summary>Install from your own checkout</summary>
+
+```sh
+git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git
+cd wukong/treadle
 pnpm install --frozen-lockfile
-pnpm check
+pnpm build
+pnpm --dir packages/cli link --global
+wukong --version
 ```
 
-Read [the installation walkthrough](wiki/assets/guide/index.html) for installation
-outside this checkout. To preview a project installation for Codex, while still
-in `treadle/`:
+The public command is `wukong`. The source workspace remains `treadle/`.
 
-```bash
-pnpm exec tsx packages/cli/src/main.ts init harness --agent codex --scope project --root .. --dry-run
+</details>
+
+## Connect your project
+
+Open a terminal in the project you want to work on. Run the interactive installer:
+
+```sh
+wukong init harness
 ```
 
-For a clean destination, remove `--dry-run` to install. Existing modified files
-can cause a refusal; inspect those differences before choosing an overwrite.
-The manifest also targets Pi, Claude and Copilot; hook support differs by agent.
-The source of installed components is `treadle/packages/cli/harness/`.
+Choose your agent, then select the hooks and reviewers you need.
+For an explicit project installation, replace the path below with your project:
 
-## Open and inspect work
-
-Run these commands from `treadle/`:
-
-```bash
-pnpm exec tsx packages/cli/src/main.ts do where ..
-pnpm exec tsx packages/cli/src/main.ts know search ../wiki "owner workflow"
-pnpm exec tsx packages/cli/src/main.ts do library ../specs
+```sh
+wukong init harness --agent codex --scope project --root "/path/to/project"
 ```
 
-The library opens in the browser at `http://127.0.0.1:8788` by default.
-It serves the explicit specs root and stays running until stopped.
-Use `do interview <packDir>` for a single pack's question room.
-Both servers are localhost-only. Serve trusted workspace content; Markdown is
-not sanitized for untrusted input. Read [SECURITY.md](SECURITY.md).
+Use `claude`, `pi`, or `copilot` instead of `codex` for those agents.
+Successful project hook installation starts the shared app and connects your
+project. Open the browser address that the installer prints.
 
-## Approval and completion
+Reload your agent and complete its trust or activation steps.
+Installation does not establish that the host has activated its hooks.
+Copilot has no shared-service hooks; connect its project manually:
 
-New work uses `do init <packDir> --owner-gated --title "..." --why "..."`,
-which creates specpack 0.4. The intended sequence is:
+```sh
+wukong project connect "/path/to/project"
+```
 
-1. Record the requirement and brief.
-2. Answer and approve spec questions when needed.
-3. Accept design decisions and review the complete task plan.
-4. Give separate permission to start that exact plan.
-5. Implement one admitted task at a time and record its actual check.
-6. Obtain independent review for the current plan and evidence.
-7. Use **Finish spec** in the library to complete and freeze the record.
+Use `--dry-run` to inspect the installation first. Inspect differing files before
+using `--force`. Use `--hooks-only` to refresh hook adapters, or `--no-hooks` to
+install without automatic project connection.
 
-Decision acceptance does not authorize implementation. Successful tasks and
-review do not supply final owner consent. One start approval covers the agreed
-task sequence; a changed plan needs new permission.
+## Your first journey
 
-The bare CLI still defaults to specpack 0.3. Existing 0.2 and 0.3 records retain
-their contracts; active adoption into the new workflow is explicit. Closed
-records stay frozen. The completed
-[owner-workflow initiative](wiki/initiatives/spec-completion-handoff.md) and its
-[retrospective](wiki/retrospectives/2026-10-10-owner-gates.md) record the repair
-and actual owner completion.
+Start with a request like this:
 
-## Where documentation and specs live
+```text
+Build the knowledge base for this repository, then analyze adding email alerts.
+```
 
-| Location               | Authority                                                                      |
-| ---------------------- | ------------------------------------------------------------------------------ |
-| `wiki/`                | Current architecture, domain rules, decisions, research and operating guidance |
-| `specs/<slug>/`        | Canonical specpack, analysis, design, task plan and evidence                   |
-| `wiki/initiatives/`    | Dated navigation to executable records                                         |
-| `wiki/retrospectives/` | Observed-session reports and participant accounts                              |
-| `wiki/assets/`         | Format contracts, installation guide and replay assets                         |
-| `specs/archive/`       | Retired records and original documentation preserved as evidence               |
+The agent follows a clear sequence:
 
-There is no `docs/` directory. The wiki consolidates knowledge without duplicating
-the executable task ledger. Historical paths resolve through the
-[relocation map](specs/docs-root-migration/relocations.json). Python engines are
-retired at tag `python-final`; the TypeScript generator checks the committed
-contract witnesses. See [the documentation map](wiki/project/documentation-map.md).
+```text
+Know the code -> Analyze -> Plan -> Implement -> Review -> Finish
+```
 
-## Verify changes
+1. **Know the code.** `build-kb` documents the repository in a searchable wiki.
+   Use `new-project` to shape a new project.
+2. **Analyze.** Record the problem, requirements, questions, and relevant context.
+3. **Plan.** Review the design and tasks. Accept the decisions, then separately
+   authorize the exact plan with **Start Implementation**.
+4. **Implement.** The agent executes one admitted task at a time and records real
+   check results.
+5. **Review.** An independent reviewer checks the changes against the plan and
+   evidence. The agent repairs failures before another review.
+6. **Finish.** Inspect the result, then select **Finish spec** to complete and
+   freeze the record.
 
-From `treadle/`:
+Answer and approve spec questions when the plan contains them.
+One start approval covers the agreed task sequence. A changed plan needs new
+permission. Tests and review do not supply permission to finish.
 
-```bash
+In browser feedback, save a draft before selecting **Submit feedback**.
+The agent can read your submitted comments and publish revised rounds.
+Resolve threads after you inspect the revisions. Feedback submission and thread
+resolution are separate from owner start and finish approval.
+
+Your repository keeps two useful records:
+
+| Record          | Purpose                                                                |
+| --------------- | ---------------------------------------------------------------------- |
+| `wiki/`         | Product context, architecture, rules, decisions, and source references |
+| `specs/<slug>/` | Requirements, design, tasks, checks, review, and owner actions         |
+
+To create an empty owner-gated specpack directly, run this from your project root:
+
+```sh
+wukong do init specs/email-alerts --owner-gated --title "Email alerts" --why "Notify users when work needs attention"
+```
+
+This creates the record. Analysis and task planning still follow.
+See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
+
+## Manage the local app
+
+```sh
+wukong start serve
+wukong status serve
+wukong stop serve
+```
+
+One background service runs per operating-system user and serves connected
+projects. The preferred port is **8788**. If that port is occupied, the service
+prints a different address.
+
+Closing an agent session leaves the app available. After an explicit stop, the
+next supported session event starts it again. Project connections survive restarts.
+
+Inspect project context or remove a project connection:
+
+```sh
+wukong context --workspace "/path/to/project" --json
+wukong project disconnect <id>
+```
+
+Context reads wiki and spec state without executing tasks or owner actions.
+All listeners bind to `127.0.0.1`. Use trusted repositories and keep the ports
+local. See [SECURITY.md](SECURITY.md) for the trust boundary.
+
+## Agent support
+
+| Agent          | Installed integration                                      | Activation                                                  |
+| -------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Claude Code    | Skills, reviewers, and hooks; optional native plugin       | Reload and enable the integration.                          |
+| Codex          | Skills, reviewers, and hooks; optional native plugin       | Trust the current hooks. Availability differs across hosts. |
+| pi             | Skills, reviewers, and extensions; optional native package | Reload the installed extensions or load the package.        |
+| GitHub Copilot | Instructions, skills, and reviewers                        | No shared-service hooks. Connect the project manually.      |
+
+Use either a native artifact or the project installer for each host. Avoid
+loading the same callbacks twice. Global installation needs `--yes` and does not
+connect a project automatically.
+
+Pi extensions come from the authoritative harness manifest. See the
+[extension source map](treadle/packages/cli/harness/hooks/README.md#pi-extension-sources).
+The installer regenerates their local runtime pointer for each checkout.
+
+Host activation and trust need actual host checks. See the
+[compatibility record](specs/background-harness/compatibility.md) and
+[host acceptance backlog](specs/harness-host-acceptance/harness-host-acceptance.json)
+for the observed boundaries. Native custom-agent packages are not asserted for
+Codex or pi.
+
+<details>
+<summary>Build a portable runtime or native agent package</summary>
+
+Build a runtime with bundled dependencies and assets into a new directory:
+
+```sh
+pnpm --dir treadle package:runtime "/path/to/new-runtime"
+node "/path/to/new-runtime/dist/src/main.js" --help
+```
+
+Create a native agent artifact with an installed runtime:
+
+```sh
+wukong package harness --agent claude --out "/path/to/new-plugin"
+wukong package harness --agent codex --out "/path/to/new-plugin"
+wukong package harness --agent pi --out "/path/to/new-package"
+```
+
+Each output directory must be new. Regenerate native artifacts if the runtime
+moves. These commands create local artifacts; they do not publish to a registry.
+
+</details>
+
+## Documentation
+
+| Start here                                                   | What you will find                                     |
+| ------------------------------------------------------------ | ------------------------------------------------------ |
+| [Project overview](wiki/project/overview.md)                 | Product scope and current state                        |
+| [Architecture](wiki/systems/sdd-harness-architecture.md)     | Knowledge, work, and web layers                        |
+| [Owner workflow](wiki/systems/owner-workflow.md)             | Questions, decisions, start permission, and completion |
+| [Documentation map](wiki/project/documentation-map.md)       | Current knowledge, executable specs, and history       |
+| [Engineering controls](wiki/project/engineering-controls.md) | Verification and evidence                              |
+| [Open work](wiki/project/open-work.md)                       | Known gaps and proposed follow-ups                     |
+| [Initiatives](wiki/initiatives/index.md)                     | Canonical work records                                 |
+
+Explore the commands with `wukong --help`, `wukong do --help`, and
+`wukong know --help`. `know` searches and validates the wiki. `do` manages specs
+and task evidence.
+
+Freshness currently uses Git HEAD and Python-only fingerprints. A fresh stamp
+cannot prove that dirty TypeScript or Markdown sources were detected.
+Legacy spec formats retain their original rules. New owner-gated work uses 0.4.
+
+## Contribute
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md) before changing
+the harness. Maintain installable agent content in `treadle/packages/cli/harness/`.
+
+Run these checks from `treadle/`:
+
+```sh
 pnpm check
 pnpm coverage
 pnpm corpus:check
@@ -118,28 +277,13 @@ pnpm audit:prod
 pnpm links
 ```
 
-Coverage floors are 75% statements, lines and functions, and 65% branches.
-Corpus changes are contract changes and need deliberate review. Current test
-counts, coverage results and CI runs belong in dated evidence.
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [AGENTS.md](AGENTS.md) for work rules
-and the wiki maintenance commands.
+Coverage floors are 75% for statements, lines, and functions, and 65% for branches.
+Review contract corpus changes deliberately. Record actual results and preserve
+unrelated work.
 
-## Phase 2 starting point
+Have a bug or an idea? [Open an issue](https://github.com/phanijapps/wukong/issues).
+Report security issues through [the security policy](SECURITY.md).
 
-The principal knowledge gap is source freshness: the fingerprint scanner tracks
-Python only, while the runtime is TypeScript. The stamp compares Git HEAD;
-it does not establish that dirty TypeScript or Markdown changes were detected.
-Source citations still need direct inspection. Reliable freshness is a proposed
-next slice, not an already approved implementation plan.
+## License
 
-Other recorded gaps include test-file typechecking, remote CI evidence,
-multi-root library navigation and automatic documentation upkeep. License and
-legacy integration choices remain owner decisions. Retrospectives must come
-from actual session evidence; past sessions cannot be reconstructed from a
-completed pack. Read [open work](wiki/project/open-work.md) before choosing the
-next Phase 2 scope.
-
-Continue with [architecture](wiki/systems/sdd-harness-architecture.md),
-[engineering controls](wiki/project/engineering-controls.md),
-[initiatives](wiki/initiatives/index.md) and
-[retrospectives](wiki/retrospectives/index.md).
+[MIT](LICENSE).

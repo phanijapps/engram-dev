@@ -1,0 +1,5 @@
+
+> treadle-root@ links ./treadle
+> node scripts/link-check.mjs
+
+links gate: 106 live file(s), every markdown link resolves

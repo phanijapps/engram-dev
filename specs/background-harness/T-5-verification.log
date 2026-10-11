@@ -1,0 +1,90 @@
+
+Attempt 2026-10-11T00:09:02.333Z exit 1
+
+ RUN  v3.2.7 ./treadle
+
+ ❯ packages/web/test/owner-workflow.test.ts (11 tests | 1 failed) 1331ms
+   × owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure 1242ms
+     → expected 1 to be +0 // Object.is equality
+   ✓ browser owner admission > requires separate decision/start acts, held revisions and owner claims 28ms
+   ✓ browser owner admission > serializes simultaneous browser writes and shares the CLI/core lock 10ms
+   ✓ browser owner admission > shows missing review and admits explicit completion only after current independent review 17ms
+   ✓ browser owner admission > supports explicit resolution and closure on active legacy packs without changing their format 7ms
+   ✓ browser owner admission > rejects wrong origins, non-JSON actions and symlink escapes 7ms
+   ✓ browser owner admission > checks held revisions for question answers in the room 11ms
+   ✓ durable owner receipts and recovery > persists an owner act before an audit failure and recovers without repeating approval 2ms
+   ✓ durable owner receipts and recovery > deduplicates a completed append whose acknowledgement failed 2ms
+   ✓ durable owner receipts and recovery > recovers only an incomplete fragment matching a known pending receipt 2ms
+   ✓ durable owner receipts and recovery > does not recover a live lock or infer stale ownership from age 1ms
+
+ Test Files  3 failed (3)
+      Tests  1 failed | 10 passed (11)
+   Start at  20:09:00
+   Duration  2.11s (transform 361ms, setup 0ms, collect 277ms, tests 1.33s, environment 1ms, prepare 331ms)
+
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/web/test/project-library.test.ts [ packages/web/test/project-library.test.ts ]
+ReferenceError: document is not defined
+ ❯ packages/web/src/projects.js:3:16
+      1| /* Browser code never receives the control credential or an enrollment…
+      2| let selected;
+      3| const status = document.getElementById('status');
+       |                ^
+      4| async function load(path) {
+      5|   const response = await fetch(path);
+ ❯ packages/web/test/project-library.test.ts:6:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  packages/web/test/project-security.test.ts [ packages/web/test/project-security.test.ts ]
+ReferenceError: document is not defined
+ ❯ packages/web/src/projects.js:3:16
+      1| /* Browser code never receives the control credential or an enrollment…
+      2| let selected;
+      3| const status = document.getElementById('status');
+       |                ^
+      4| async function load(path) {
+      5|   const response = await fetch(path);
+ ❯ packages/web/test/project-security.test.ts:5:31
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/web/test/owner-workflow.test.ts > owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ packages/web/test/owner-workflow.test.ts:132:11
+    130|         expect(
+    131|           cli(['next', f.dir, '--expected-revision', String(loaded(f.d…
+    132|         ).toBe(0);
+       |           ^
+    133|         const verified = spawnSync('bash', ['-lc', cmd], { encoding: '…
+    134|         expect(verified.status).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+Attempt 2026-10-11T00:09:41.353Z exit 0
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/web/test/project-library.test.ts (1 test) 73ms
+ ✓ packages/web/test/project-security.test.ts (2 tests) 130ms
+ ✓ packages/web/test/owner-workflow.test.ts (11 tests) 2482ms
+   ✓ owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  2397ms
+
+ Test Files  3 passed (3)
+      Tests  14 passed (14)
+   Start at  20:09:37
+   Duration  3.31s (transform 465ms, setup 0ms, collect 989ms, tests 2.68s, environment 1ms, prepare 325ms)
+

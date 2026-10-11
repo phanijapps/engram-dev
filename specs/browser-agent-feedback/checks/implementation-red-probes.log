@@ -1,0 +1,103 @@
+{
+  "bomBuilder": {
+    "sourceHex": "efbbbf6f6e650a",
+    "builtHex": "6f6e650a",
+    "storedHex": "6f6e650a",
+    "sourceEqualsStored": false
+  },
+  "bomCoreRead": {
+    "originalHex": "efbbbf6f6e650a",
+    "returnedHex": "6f6e650a",
+    "replayError": {
+      "code": "conflict",
+      "message": "Operation ID was reused with another payload"
+    }
+  },
+  "openRetryCursor": {
+    "sameReceipt": true,
+    "currentCursor": 1,
+    "readAfterReturnedCursor": {
+      "format": "feedback-result/1",
+      "pack_id": "test",
+      "session": "dc0ae371-19b5-43f0-97cf-38d59a94a352",
+      "revision": 3,
+      "cursor": 1,
+      "status": "pending",
+      "batches": [],
+      "threads": [
+        {
+          "id": "62dbe14c-cb47-43d5-8723-f65369778d75",
+          "resolved": false,
+          "stale": false
+        }
+      ]
+    },
+    "readFromOriginalSessionCursor": {
+      "format": "feedback-result/1",
+      "pack_id": "test",
+      "session": "dc0ae371-19b5-43f0-97cf-38d59a94a352",
+      "revision": 3,
+      "cursor": 1,
+      "status": "submitted",
+      "batches": [
+        {
+          "id": "a3c6b778-89f4-40e8-be47-da4920dbea92",
+          "session": "dc0ae371-19b5-43f0-97cf-38d59a94a352",
+          "round": "c8f27e73-337a-46c9-a71b-4c844fcd4721",
+          "cursor": 1,
+          "by": "human:probe",
+          "at": "2026-10-11T12:49:41.109Z",
+          "items": [
+            {
+              "id": "7df60b72-0c59-4f8b-a971-f3f09dc57720",
+              "kind": "comment",
+              "thread": "62dbe14c-cb47-43d5-8723-f65369778d75",
+              "body": "Submitted request",
+              "by": "human:probe",
+              "at": "2026-10-11T12:49:41.107Z",
+              "anchor": {
+                "round": "c8f27e73-337a-46c9-a71b-4c844fcd4721"
+              }
+            }
+          ]
+        }
+      ],
+      "threads": [
+        {
+          "id": "62dbe14c-cb47-43d5-8723-f65369778d75",
+          "resolved": false,
+          "stale": false
+        }
+      ]
+    }
+  },
+  "replayDurability": {
+    "syncs": [
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds/.staging-190028d6-d5d2-4855-b0eb-7ec6e817c5ac/8cf28042-e760-4e45-a21f-0d85e2332058-after.txt"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds/.staging-190028d6-d5d2-4855-b0eb-7ec6e817c5ac"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/rounds"
+      },
+      {
+        "phase": "first",
+        "path": "<fixture>/specs/test/feedback/.state-008fca0d-c55c-43ad-8c9c-9ea588f46f8a.tmp"
+      },
+      {
+        "phase": "retry",
+        "path": "<fixture>/specs/test/feedback/state.json"
+      },
+      {
+        "phase": "retry",
+        "path": "<fixture>/specs/test/feedback"
+      }
+    ],
+    "packDirectoryFlushedOnRetry": false
+  }
+}

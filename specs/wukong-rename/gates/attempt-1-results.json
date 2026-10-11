@@ -1,0 +1,11 @@
+[
+  {
+    "label": "check",
+    "command": "pnpm",
+    "args": [
+      "check"
+    ],
+    "exit": 1,
+    "at": "2026-10-11T01:56:48.428Z"
+  }
+]

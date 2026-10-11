@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-11T01:31:09.098Z",
+  "results": [
+    {
+      "command": "pnpm exec tsx packages/cli/src/main.ts know fingerprints .. ../wiki",
+      "at": "2026-10-11T01:31:04.921Z",
+      "exit": 0
+    },
+    {
+      "command": "pnpm exec tsx packages/cli/src/main.ts know stamp ../wiki --workspace ..",
+      "at": "2026-10-11T01:31:05.723Z",
+      "exit": 0
+    },
+    {
+      "command": "pnpm exec tsx packages/cli/src/main.ts know anchors ../wiki --workspace ..",
+      "at": "2026-10-11T01:31:06.507Z",
+      "exit": 0
+    },
+    {
+      "command": "pnpm exec tsx packages/cli/src/main.ts know validate ../wiki",
+      "at": "2026-10-11T01:31:07.336Z",
+      "exit": 0
+    },
+    {
+      "command": "pnpm exec tsx packages/cli/src/main.ts know status ../wiki --workspace ..",
+      "at": "2026-10-11T01:31:08.190Z",
+      "exit": 0
+    }
+  ],
+  "limits": "Python-only fingerprints and HEAD stamp do not establish dirty TS/Markdown freshness."
+}

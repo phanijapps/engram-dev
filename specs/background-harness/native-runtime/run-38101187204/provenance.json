@@ -1,0 +1,50 @@
+{
+  "run": 38101187204,
+  "testedHead": "d0a2bca619760931dad44b0a6cbf20cf54ad973d",
+  "url": "https://github.com/phanijapps/engram-dev/actions/runs/38101187204",
+  "witnesses": [
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Linux-22/harness-smoke.json",
+      "artifact": "harness-smoke-Linux-22",
+      "sha256": "68aa1be55f78a66e51a03f7d9ec573c3775604733b7fde8a25d372540a2992a8",
+      "platform": "linux",
+      "node": "v22.23.3"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Linux-24/harness-smoke.json",
+      "artifact": "harness-smoke-Linux-24",
+      "sha256": "2f2ffdb6b51af6977787a03a62fc3aee6dfab29506ee9c410f9407ac2e557ebc",
+      "platform": "linux",
+      "node": "v24.21.0"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Windows-22/harness-smoke.json",
+      "artifact": "harness-smoke-Windows-22",
+      "sha256": "278360bed3092be7b04be6f4d692cacd4f5aa792249ad7a8d2700b85dbc64259",
+      "platform": "win32",
+      "node": "v22.23.3"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Windows-24/harness-smoke.json",
+      "artifact": "harness-smoke-Windows-24",
+      "sha256": "d592ebe131348f562b7445c823ee7c1cee6fdea963976ed1134df713a7be1e96",
+      "platform": "win32",
+      "node": "v24.21.0"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-macOS-22/harness-smoke.json",
+      "artifact": "harness-smoke-macOS-22",
+      "sha256": "246eaa081cbba5095b3c6a9b8335c4d22a9b8159665bf8d54599a142c03ffa00",
+      "platform": "darwin",
+      "node": "v22.23.2"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-macOS-24/harness-smoke.json",
+      "artifact": "harness-smoke-macOS-24",
+      "sha256": "106daca2b29117a9dce24fac203aabad0498ac12f44bba55e074ae71dcf4cbd8",
+      "platform": "darwin",
+      "node": "v24.20.0"
+    }
+  ],
+  "scope": "Actual runtime witnesses for asynchronous directory cleanup revision; full host trust/activation remains separate."
+}

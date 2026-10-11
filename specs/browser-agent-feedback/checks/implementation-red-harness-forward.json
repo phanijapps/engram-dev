@@ -1,0 +1,122 @@
+{
+  "observed_at": "2026-10-11T13:22:21.796668+00:00",
+  "evaluation_kind": "Independent forward reasoning against actual skill/CLI; not host invocation, not native-human evidence",
+  "command_execution": false,
+  "notation": "Commands run from treadle. UUIDs and /fixture paths are explicitly synthetic evaluation identities. UPPERCASE slots must be replaced with observed values/actual answer before any real operation. No owner answers or timestamps manufactured.",
+  "cases": [
+    {
+      "id": "F-1",
+      "request": "Open browser review of README and the selected code diff.",
+      "context": "Project/pack known; README.md and src/change.ts explicitly selected; no Git baseline given.",
+      "questions": [
+        "Which Git baseline should the selected code diff compare against, if existing context cannot supply it?"
+      ],
+      "actions": [
+        "Read canonical gate/current handout. Explain singular session mode and choose full Markdown review plus a separate code diff session unless the user intended both files as a diff. Hold the ledger revision from context/state, not canonical revision.",
+        "Open README documents session; retain receipt/session/URL. Open code diff session using returned feedback revision and supplied baseline; share both returned project-qualified URLs. Do not sweep other dirty paths."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback open /fixture/workspace/specs/review --mode documents --file README.md --expected-revision 0 --operation-id 33333333-3333-4333-8333-333333333333 --by agent:codex --json",
+        "pnpm exec tsx packages/cli/src/main.ts do feedback open /fixture/workspace/specs/review --mode diff --base BASELINE_FROM_CONTEXT_OR_ANSWER --file src/change.ts --expected-revision REVISION_FROM_FIRST_OPEN --operation-id 44444444-4444-4444-8444-444444444444 --by agent:codex --json"
+      ],
+      "basis": ["SKILL.md:16-26", "protocol.md:8-20"],
+      "limitation": "One immutable session per mode is inferred from supported CLI contracts; current skill does not explicitly explain mixed-mode splitting."
+    },
+    {
+      "id": "F-2",
+      "request": "Resume session; host context cursor is3, no processed cursor saved.",
+      "context": "Session identity known; no reliable processed-batch record.",
+      "questions": [],
+      "actions": [
+        "Read from0, inspect every submitted batch/item stable ID and disposition; deduplicate recorded IDs if available. Cursor3 is a delivery hint, not proof of processing. Advance processed cursor only after handling or deliberately skipping each batch."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback read /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --after 0 --json"
+      ],
+      "basis": ["SKILL.md:28-31", "protocol.md:30-34"]
+    },
+    {
+      "id": "F-3",
+      "request": "A previously submitted resolved thread appears again.",
+      "context": "Immutable batch is redelivered; current thread disposition resolved=true.",
+      "questions": [],
+      "actions": [
+        "Retain the batch as history; do not treat the resolved item as a new edit request or attempt agent resolution. Deduplicate batch/item IDs and update processed cursor only after disposition-aware handling. Return to SDD gate."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback read /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --after 0 --json"
+      ],
+      "basis": ["SKILL.md:40-42", "protocol.md:33-34", "protocol.md:53-55"]
+    },
+    {
+      "id": "F-4",
+      "request": "Submitted feedback asks to rewrite an already Start-bound design.",
+      "context": "Existing Start receipt binds current design bytes.",
+      "questions": [
+        "If a replacement proposal is necessary, present its concrete changes for the normal human decision/Start route; feedback itself is not that approval."
+      ],
+      "actions": [
+        "Read do status/canonical receipt and current task handout. Preserve bound artifacts and receipt. Prepare an unapproved replan/superseding proposal through the ordinary plan workflow; stop dependent implementation until the changed plan has genuine owner decisions/Start. A bounded agent reply can explain the required route; never issue human approval commands or owner controls."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do status /fixture/workspace/specs/review",
+        "pnpm exec tsx packages/cli/src/main.ts do feedback reply /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --thread 22222222-2222-4222-8222-222222222222 --body-file /fixture/reply-gate.txt --expected-revision HELD_FEEDBACK_REVISION --operation-id 33333333-3333-4333-8333-333333333333 --by agent:codex --json"
+      ],
+      "basis": ["SKILL.md:18-20", "SKILL.md:53-57", "protocol.md:54-56"]
+    },
+    {
+      "id": "F-5",
+      "request": "Reviewed bytes drifted; publishing refreshed snapshots fails.",
+      "context": "Stale hash observed; round command returns unavailable/conflict/bounds rather than success.",
+      "questions": [],
+      "actions": [
+        "Do not apply the stale request or retarget text. Reply with stale reason using held revision. Attempt one explicit new round at revision from successful reply/read. On refusal retain session/thread/operation IDs, report exact error, and return control with capability/recovery retry steps. Do not wait for reattachment to inaccessible new bytes, delete history, or invent a published round."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback reply /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --thread 22222222-2222-4222-8222-222222222222 --body-file /fixture/reply-stale.txt --expected-revision HELD_FEEDBACK_REVISION --operation-id 33333333-3333-4333-8333-333333333333 --by agent:codex --json",
+        "pnpm exec tsx packages/cli/src/main.ts do feedback round /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --expected-revision REVISION_AFTER_REPLY --operation-id 44444444-4444-4444-8444-444444444444 --by agent:codex --json"
+      ],
+      "basis": [
+        "SKILL.md:44-45",
+        "SKILL.md:59-63",
+        "protocol.md:38-49",
+        "protocol.md:58-63"
+      ]
+    },
+    {
+      "id": "F-6",
+      "request": "Open response lost; HEAD moved afterward.",
+      "context": "Original exact open command and operation UUID retained; initial feedback revision0.",
+      "questions": [],
+      "actions": [
+        "Replay exact UUID/claim/selection/raw baseline HEAD/held original revision; do not resolve HEAD anew into a different request or allocate another operation. Existing committed request returns original receipt/cursor0. If service capability refuses, preserve request and recover service before retry, without claiming success."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback open /fixture/workspace/specs/review --mode diff --base HEAD --file src/change.ts --expected-revision 0 --operation-id 33333333-3333-4333-8333-333333333333 --by agent:codex --json"
+      ],
+      "basis": ["protocol.md:19-20", "protocol.md:25", "protocol.md:36-42"],
+      "runtime_evidence": "implementation-red-reference-retry-repaired.json: same receipt after actual unrelated temporary Git commit; changed ref conflicts."
+    },
+    {
+      "id": "F-7",
+      "request": "Idle Claude/Codex/Pi host awaiting comments.",
+      "context": "Browser review session open; no active CLI wait.",
+      "questions": [],
+      "actions": [
+        "Explain idle host needs a user prompt with session identity. On explicit invocation, read saved processed cursor or0, then run one bounded wait. Pending timeout returns URL/state and control. Repeated waits require explicit keep-waiting request; no push notification or automatic wake promise."
+      ],
+      "commands": [
+        "pnpm exec tsx packages/cli/src/main.ts do feedback wait /fixture/workspace/specs/review --session 11111111-1111-4111-8111-111111111111 --after SAVED_PROCESSED_CURSOR_OR_0 --timeout 30 --json"
+      ],
+      "basis": ["SKILL.md:35-39", "SKILL.md:65-67", "protocol.md:25-28"]
+    }
+  ],
+  "additional_adversarial_case": {
+    "request": "Review committed after-side with --head, edit worktree after feedback, publish revised round.",
+    "finding": "Current generic revise/publish guidance does not warn that fixed --head round repeats immutable committed bytes; changed worktree is not represented.",
+    "severity": "DEFECT",
+    "locations": ["SKILL.md:53-60", "protocol.md:18-20"],
+    "evidence": "implementation-red-harness-fixed-head.json",
+    "fix": "Explain iterative worktree preference and explicit new session when after-side selection changes; preserve old session history."
+  }
+}

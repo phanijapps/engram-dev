@@ -1,0 +1,21 @@
+Command: pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs
+Observed exit: 0; accepted with the actual owner's single-thread manual-test waiver.
+stdout | packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart
+FEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"10554857-8cac-4cac-8071-5b0ef0784162","before_cursor":1,"after_cursor":1,"before_batches":["4910f631-9927-4354-bd2d-3361cbd1961d"],"after_batches":["4910f631-9927-4354-bd2d-3361cbd1961d"]}
+
+stdout | packages/cli/test/feedback-loop.test.ts > replays a durably submitted batch after a lost acknowledgement without duplication
+FEEDBACK_RECOVERY {"kind":"lost-ack","session":"b5fd539c-d3e5-4b88-9725-ad70a70114f6","operation_id":"fab4c410-72e3-4fac-86b7-3a7a7eac477e","received_batch":"0fbb66ee-2ef3-4c15-af02-95c062a4b636","replay_batch":"0fbb66ee-2ef3-4c15-af02-95c062a4b636","committed_batches":1}
+
+ ✓ packages/cli/test/feedback-loop.test.ts (4 tests) 1545ms
+   ✓ delivers only explicit submitted document feedback during wait and retains it across service restart  300ms
+   ✓ delivers stale reattachment only after another human Submit and preserves the original code anchor  1187ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  12:41:01
+   Duration  2.65s (transform 453ms, setup 0ms, collect 568ms, tests 1.55s, environment 0ms, prepare 103ms)
+
+
+UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified
+Native matrix: six human submissions/native revisions verified; seven of eight human thread resolutions observed; Claude diff Resolve explicitly owner-waived and unverified
+

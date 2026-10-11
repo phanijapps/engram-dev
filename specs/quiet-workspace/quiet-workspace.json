@@ -1,0 +1,821 @@
+{
+  "id": "quiet-workspace",
+  "name": "quiet-workspace",
+  "description": "Quiet Workspace frontend",
+  "date": {
+    "updated": "2026-10-11T19:13:26Z",
+    "closed": {
+      "at": "2026-10-11T19:13:26Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete",
+    "deliverable": "delivered"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "markdown",
+      "sha256": "c5004c8c962d3882d9fd1393ddef3ccafd270f692595509b6edeb844688799b9"
+    },
+    "analysis": {
+      "ref": "feature.md",
+      "type": "markdown",
+      "sha256": "a5013d35dabee9e55feb0cd80eece6b77e576df4be40f36233725d1e845a6015"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "markdown",
+      "sha256": "6a1906b49c0061e6f6d3cb57a8272b9a08f39cc9e0d71e128770f9b7ab815c98"
+    },
+    "owner-inputs": {
+      "ref": "owner-inputs.md",
+      "type": "markdown",
+      "sha256": "130792f6c8d3e5df9cdd933a3b93717030747a7596d1cbd1230ddbe0a095bbe5"
+    },
+    "source-pins": {
+      "ref": "authoring/source-pins.json",
+      "type": "json",
+      "sha256": "862817b210a40d620c43244014ec5e1bf8d06c9c3ba86a75d3b5e1af1d68dfcc"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "markdown",
+      "sha256": "7652fb6b448a739afe51387842f8b1f02ad616904651229e4773cf80be3af36b"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "markdown",
+      "sha256": "cfbb16c6928e4c76ca101e9363d716472626748214fdb6df1186763ca22ab3b9"
+    }
+  },
+  "spec": {
+    "why": "Apply the owner-approved frontend-only approval UX to the existing library, feedback and interview room without changing contracts or backend logic.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Both existing browser surfaces MUST use the approved Quiet Workspace hierarchy, system typography, neutral surfaces and prominent primary actions.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-1",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "Both existing browser surfaces use the approved Quiet Workspace hierarchy, system typography, neutral surfaces and prominent primary actions."
+          }
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "The library MUST show the current workflow gate and the next eligible action without inventing readiness from task counts or historical stage labels.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-2",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "library show the current workflow gate and the next eligible action without inventing readiness from task counts or historical stage labels."
+          }
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Existing owner acts MUST retain separate handlers, server eligibility, revision checks, confirmations, focus feedback and truthful recovery states.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-3",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "Existing owner acts retain separate handlers, server eligibility, revision checks, confirmations, focus feedback and truthful recovery states."
+          }
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "The existing Feedback tab MUST place selected source and discussion together and retain separate Save, Submit, Resolve and Reattach actions with draft and conflict recovery.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-4",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "existing Feedback tab place selected source and discussion together and retain separate Save, Submit, Resolve and Reattach actions with draft and conflict recovery."
+          }
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "The existing interview room MUST retain two panes, choice and free-text input, unknown answers, Back, Submit and keyboard behavior with the same clear hierarchy.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-5",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "existing interview room retain two panes, choice and free-text input, unknown answers, Back, Submit and keyboard behavior with the same clear hierarchy."
+          }
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "The UI MUST retain light and dark preference, visible keyboard focus, usable primary targets, responsive scrolling and access to all existing secondary content.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-6",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "UI retain light and dark preference, visible keyboard focus, usable primary targets, responsive scrolling and access to all existing secondary content."
+          }
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "Verification MUST prove the change remains frontend-only and preserves contracts, repository gates and current knowledge documentation.",
+        "priority": "P1",
+        "scenarios": [
+          {
+            "id": "AC-7",
+            "given": "the existing library or interview room with representative data",
+            "when": "the owner inspects or uses the corresponding existing controls",
+            "then": "Verification prove the change remains frontend-only and preserves contracts, repository gates and current knowledge documentation."
+          }
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Backend and model changes",
+      "New screens, endpoints, analytics, remote assets or dependencies",
+      "Automatic owner acts, bulk approval, agent wake-up",
+      "Reopening closed packs or altering historical evidence"
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Only existing screens, routes, UI data and actions."
+      },
+      {
+        "id": "CON-2",
+        "text": "No server, API, backend, core, model, schema or dependency changes."
+      },
+      {
+        "id": "CON-3",
+        "text": "Preserve real owner authority and all approved or closed records."
+      },
+      {
+        "id": "CON-4",
+        "text": "Preserve approved design artifact bytes and its frontend-only scope."
+      }
+    ]
+  },
+  "design": {
+    "decisions": [],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Apply shared Quiet Workspace styles",
+        "kind": "component",
+        "detail": "Implement section DES-1 in design.md.",
+        "addresses": [
+          "FR-1",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Apply library gate hierarchy and action placement",
+        "kind": "flow",
+        "detail": "Implement section DES-2 in design.md.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "Apply feedback and interview room composition",
+        "kind": "flow",
+        "detail": "Implement section DES-3 in design.md.",
+        "addresses": [
+          "FR-4",
+          "FR-5",
+          "FR-6"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "Verify frontend delivery and update affected knowledge",
+        "kind": "mechanism",
+        "detail": "Implement section DES-4 in design.md.",
+        "addresses": [
+          "FR-7"
+        ]
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Apply shared Quiet Workspace styles",
+      "detail": "Implement DES-1 within its named frontend scope. Preserve the approved behavior and all existing contracts.",
+      "needs": [],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-6"
+      ],
+      "accepts": [
+        "AC-1",
+        "AC-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4"
+      ],
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/theme.test.ts packages/web/test/library-skin.test.ts packages/web/test/room-skin.test.ts",
+        "expect": "Exit 0; visual expectations match the approved design and existing behavior, revisions, owner authority and keyboard expectations remain true."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/library.html",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b"
+          },
+          {
+            "path": "treadle/packages/web/src/page.html",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "ea49bbf5a1a40ae34fac025965c5dfc4ef1d19b346faf15c7cb1e9d13d1d0e67"
+          },
+          {
+            "path": "treadle/packages/web/test/theme.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "fcc76ab69ec6cca42653cc05a575adc71fb325edb49bff7da48946e82ecc962f"
+          },
+          {
+            "path": "treadle/packages/web/test/library-skin.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "e6794dbdfec43a1de75aea898fbd4fca91f004e472f5820c28fe70abf1a89689"
+          },
+          {
+            "path": "treadle/packages/web/test/room-skin.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "bcc6ed628c10c91ee516987d2f8ed8edabb95965a35d966069275217dccdc708"
+          },
+          {
+            "path": "specs/quiet-workspace/execution-log.md",
+            "why": "Explicit task implementation or evidence output."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/quiet-workspace/brief.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/feature.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/spec.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/design.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/plan.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/owner-inputs.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "artifacts/wukong-approval-ux/.build/content.mjs",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/test/helpers/dom.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          }
+        ],
+        "wiki": [
+          "systems/owner-workflow",
+          "systems/sdd-harness-architecture"
+        ],
+        "notes": [
+          "Run verification from treadle. Source touch paths pin on admission; read and wiki references are advisory.",
+          "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
+          "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/theme.test.ts packages/web/test/library-skin.test.ts packages/web/test/room-skin.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T18:01:51Z",
+          "by": "agent:codex",
+          "notes": "12 tests in3 files passed,1.87s. Shared Quiet Workspace typography, neutral light/dark roles and44px primary controls; existing theme/security behavior retained. See execution-log.md. No backend changes."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Apply library gate hierarchy and action placement",
+      "detail": "Implement DES-2 within its named frontend scope. Preserve the approved behavior and all existing contracts.",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-6"
+      ],
+      "accepts": [
+        "AC-2",
+        "AC-3",
+        "AC-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4"
+      ],
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts packages/web/test/owner-workflow.test.ts packages/web/test/approval-ux.test.ts",
+        "expect": "Exit 0; visual expectations match the approved design and existing behavior, revisions, owner authority and keyboard expectations remain true."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/library.html",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "5ac6a16d618065ce24d3406adf7d2b02e8b8a3e1baeae8dea6142f40f4c182b8"
+          },
+          {
+            "path": "treadle/packages/web/src/library.js",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8"
+          },
+          {
+            "path": "treadle/packages/web/test/workflow-ui.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "6ebd654fc03a31cfaa7a7b4f7438e051d818af3bed2cd430bc4fb2935bbee60f"
+          },
+          {
+            "path": "treadle/packages/web/test/inspector.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "a464f3e746023c99b6dcc28819bd4a6d159ce8ba65a8212ad962007e71d9d9ed"
+          },
+          {
+            "path": "treadle/packages/web/test/approval-ux.test.ts",
+            "why": "Explicit task implementation or evidence output."
+          },
+          {
+            "path": "specs/quiet-workspace/execution-log.md",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "b9ef381d94643d459da0275de8fbc548f637efddeeb583f44377ec0dacec2574"
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/quiet-workspace/brief.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/feature.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/spec.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/design.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/plan.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/owner-inputs.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "artifacts/wukong-approval-ux/.build/content.mjs",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/test/helpers/dom.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          }
+        ],
+        "wiki": [
+          "systems/owner-workflow",
+          "systems/sdd-harness-architecture"
+        ],
+        "notes": [
+          "Run verification from treadle. Source touch paths pin on admission; read and wiki references are advisory.",
+          "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
+          "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts packages/web/test/owner-workflow.test.ts packages/web/test/approval-ux.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T18:08:56Z",
+          "by": "agent:codex",
+          "notes": "22 tests in4 files pass. Gate grouping follows current workflow; guarded actions, retained details, progressive disclosures and native phase buttons. No backend/API/model changes. See execution-log.md."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Apply feedback and interview room composition",
+      "detail": "Implement DES-3 within its named frontend scope. Preserve the approved behavior and all existing contracts.",
+      "needs": [
+        "T-2"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-4",
+        "FR-5",
+        "FR-6"
+      ],
+      "accepts": [
+        "AC-4",
+        "AC-5",
+        "AC-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4"
+      ],
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts",
+        "expect": "Exit 0; visual expectations match the approved design and existing behavior, revisions, owner authority and keyboard expectations remain true."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/library.html",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "441489b61edab1fac0bb5fb4ae3a0a558cf07b2933fb2d2cc65f1e9788c82b1c"
+          },
+          {
+            "path": "treadle/packages/web/src/feedback.js",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636"
+          },
+          {
+            "path": "treadle/packages/web/src/page.html",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9ad8f9aaace487dbea751892e166b7605281f801906bc3eeec4f52b11d179694"
+          },
+          {
+            "path": "treadle/packages/web/src/page.js",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "796c36dfdfc03af01d620eabe005610bb89737d92a249bef73464aa93bdb2f1e"
+          },
+          {
+            "path": "treadle/packages/web/test/feedback-ui.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "3c8574936d166d0b1c079b2113dc274ee5cbb4d21cf360cd4b38e9983d120710"
+          },
+          {
+            "path": "treadle/packages/web/test/room-keyboard.test.ts",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "6c3ec37abfe66c245f7209b04532c399b4de80b77ff6fc6ad72b2e2054ba2c9d"
+          },
+          {
+            "path": "treadle/packages/web/test/approval-feedback-ux.test.ts",
+            "why": "Explicit task implementation or evidence output."
+          },
+          {
+            "path": "specs/quiet-workspace/execution-log.md",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9c01310af7d685816d23ea969e6268a3d80417fb8fed794de04ffc20f55040f8"
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/quiet-workspace/brief.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/feature.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/spec.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/design.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/plan.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/owner-inputs.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "artifacts/wukong-approval-ux/.build/content.mjs",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/test/helpers/dom.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          }
+        ],
+        "wiki": [
+          "systems/owner-workflow",
+          "systems/sdd-harness-architecture"
+        ],
+        "notes": [
+          "Run verification from treadle. Source touch paths pin on admission; read and wiki references are advisory.",
+          "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
+          "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts packages/web/test/room-keyboard.test.ts packages/web/test/approval-feedback-ux.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T18:12:29Z",
+          "by": "agent:codex",
+          "notes": "11 tests in3 files pass, including4 new feedback/room regressions. Separate Save and Submit; side-by-side source/discussion; retained drafts, duplicate-request guards and labeled choice focus. No backend/model changes."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Verify frontend delivery and update affected knowledge",
+      "detail": "Implement DES-4 within its named frontend scope. Preserve the approved behavior and all existing contracts.",
+      "needs": [
+        "T-3"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "satisfies": [
+        "FR-7"
+      ],
+      "accepts": [
+        "AC-7"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4"
+      ],
+      "status": "done",
+      "verify": {
+        "cmd": "node ../specs/quiet-workspace/verify-delivery.mjs",
+        "expect": "Exit 0; all named behavior expectations pass. For T-4, all six repository gates, coverage floors and five wiki checks pass; frontend evidence records actual rendered-state inspection and zero backend/model changes."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "wiki/systems/owner-workflow.md",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "9608d88132aa4bb90c229d0fb7b2d4f350be75ca0a4569dc4e56e34926415493"
+          },
+          {
+            "path": "wiki/initiatives/quiet-workspace.md",
+            "why": "Explicit task implementation or evidence output."
+          },
+          {
+            "path": "wiki/initiatives/index.md",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "198095f7077a58b30c633aa23cb5c42699cb76b980caceec616cdf69aa7975a6"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "d9d579000100d2665764359e881526773ae5c3c8e04d0b5aa39cee310d2367a2"
+          },
+          {
+            "path": "wiki/.okf/last-index.json",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "c6f84078b9debee217ef0a376975840500a90eb0e0b1351d40d36c2380006caf"
+          },
+          {
+            "path": "specs/quiet-workspace/verify-delivery.mjs",
+            "why": "Explicit task implementation or evidence output."
+          },
+          {
+            "path": "specs/quiet-workspace/frontend-evidence.json",
+            "why": "Explicit task implementation or evidence output."
+          },
+          {
+            "path": "specs/quiet-workspace/execution-log.md",
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "d8aefb44570460478af5af989f71536d7903f22757a0c2937ebc200e829807b1"
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/quiet-workspace/brief.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/feature.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/spec.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/design.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/plan.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "specs/quiet-workspace/owner-inputs.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "artifacts/wukong-approval-ux/.build/content.mjs",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/test/helpers/dom.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Approved direction, fixed contract or verification guidance."
+          }
+        ],
+        "wiki": [
+          "systems/owner-workflow",
+          "systems/sdd-harness-architecture"
+        ],
+        "notes": [
+          "Run verification from treadle. Source touch paths pin on admission; read and wiki references are advisory.",
+          "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
+          "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/quiet-workspace/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T18:37:17Z",
+          "by": "agent:codex",
+          "notes": "Delivery rerun2 exits0:247tests/51files, all6repository gates and5wiki commands pass; coverage88.5statements/lines95.39functions78.4branches. Wiki0errors0warnings167anchors0reviewfresh. 23existing states plusresponsive/theme/focus/longsource captures, HTMLvalid3surfaces andaxe subset0violations; source5hashes/served3JS hashes match. Prior failedtelemetry check/coverage preserved; restored existing refreshnote in approvedfrontend scope. FullWCAG/CWV/zoom limits and contextinventory multiJSON limit recorded in frontend-evidence.json; nobackend/API/model changes."
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "e0cc43c2-0e38-4edd-b49a-dfaf8476075d",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-11T17:56:40Z",
+        "revision": 9,
+        "plan_digest": "e09ea3bb11d7b8d9708ec9913cfc462729ee57eb40043d7d6bd4747d363d2e55"
+      },
+      {
+        "id": "e327d632-9f8e-4e06-8c92-0ee05ed60dc0",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T19:13:26Z",
+        "revision": 19
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-11T17:56:40Z",
+      "plan_digest": "e09ea3bb11d7b8d9708ec9913cfc462729ee57eb40043d7d6bd4747d363d2e55"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:/root/roadmap_eval_revision",
+        "at": "2026-10-11T18:48:58Z",
+        "plan_digest": "e09ea3bb11d7b8d9708ec9913cfc462729ee57eb40043d7d6bd4747d363d2e55",
+        "evidence_digest": "74b7695d5e7aa2f9e89e77f270337676e9fc1633b695379e919125972ca774b7",
+        "artifact": "checks/implementation-red-foreman.md",
+        "artifact_sha256": "21e975f181b48af2b150d9cefa1c7ac787d05a5fdbcf26d8a06076b5504720dc",
+        "source_commit": "3b4f6aeb90e2851ebb962275b323695df2329b70",
+        "render_evidence": "frontend-evidence.json",
+        "render_evidence_sha256": "e15710cb9935f034c65163601a5085094a0c01303957289655e55f08cac492b1",
+        "recorded_by": "agent:codex",
+        "notes": "Actual independent exact T1–T4 reruns pass; 249tests, all11deliverycommands0. 44captures inspected. Historicalfailures retained. Frontendonly; documented selector/accessibility/performance limits. No owner Finish."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "treadle",
+    "source_head": "2d22941c84a1362f5572e461753e29813386aadd",
+    "toolchain": "Node >=22; pnpm9.15.9",
+    "mode": "owner-gated frontend-only proposal"
+  },
+  "format": "specpack/0.4",
+  "revision": 19
+}

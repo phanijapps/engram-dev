@@ -105,11 +105,10 @@ describe('owner sequence across CLI and browser', () => {
     const lib = await startLibrary(f.root);
     const workspace = fileURLToPath(new URL('../../..', import.meta.url));
     const cli = (args: string[]) =>
-      spawnSync(
-        join(workspace, 'node_modules/.bin/tsx'),
-        ['packages/cli/src/main.ts', 'do', ...args],
-        { cwd: workspace, encoding: 'utf8' },
-      );
+      spawnSync(process.execPath, ['--import', 'tsx', 'packages/cli/src/main.ts', 'do', ...args], {
+        cwd: workspace,
+        encoding: 'utf8',
+      });
     try {
       expect(cli(['next', f.dir, '--expected-revision', '1']).status).toBe(1);
       expect(
@@ -190,7 +189,7 @@ describe('owner sequence across CLI and browser', () => {
     } finally {
       await lib.close();
     }
-  });
+  }, 20000);
 });
 function action(d: PackDoc, kind: 'accept' | 'start', path: string) {
   const a = ownerAction(

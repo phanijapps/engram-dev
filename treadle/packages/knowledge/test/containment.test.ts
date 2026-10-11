@@ -2,7 +2,7 @@
  *  the lexical guard): symlink escapes read nothing, sibling prefixes route
  *  right, and enumeration refuses symlinked dirs. */
 import { describe, expect, it } from 'vitest';
-import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, symlinkSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -22,6 +22,24 @@ function bundleWith(parent: string): string {
 }
 
 describe('realpath containment (B1)', () => {
+  it('keeps concept ids and links relative to an aliased bundle root', () => {
+    const tmp = mkdtempSync(join(tmpdir(), 'root-alias-'));
+    try {
+      const bundle = bundleWith(tmp);
+      const alias = join(tmp, 'alias');
+      symlinkSync(bundle, alias, process.platform === 'win32' ? 'junction' : 'dir');
+      writeFileSync(
+        join(bundle, 'sub', 'page.md'),
+        '---\ntitle: P\ntype: system\n---\n[Root](../root.md)\n',
+      );
+      const concepts = iterConceptFiles(alias).map((p) => parseConcept(p, alias));
+      expect(concepts.map((c) => c.cid)).toEqual(['root', 'sub/page']);
+      expect(buildAdjacency(alias, concepts)['sub/page']).toEqual(['root']);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  });
+
   it('a symlinked file escaping the bundle reads nothing', () => {
     const tmp = mkdtempSync(join(tmpdir(), 'esc-'));
     writeFileSync(join(tmp, 'secret.md'), '---\ntitle: S\ntype: note\n---\nSECRET CONTENT\n');

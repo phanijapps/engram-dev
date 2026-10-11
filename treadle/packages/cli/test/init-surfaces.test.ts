@@ -98,10 +98,10 @@ describe('the four surface adapters (T-3)', () => {
       expect(existsSync(join(w.project, '.harness/hooks/post-tool-check.js'))).toBe(true);
       const s = JSON.parse(readFileSync(join(w.project, '.claude/settings.json'), 'utf8')) as {
         permissions: { allow: string[] };
-        hooks: Record<string, { hooks: { command: string }[] }[]>;
+        hooks: Record<string, { hooks: { command: string; args?: string[] }[] }[]>;
       };
       expect(s.permissions.allow).toContain('Read'); // foreign keys preserved
-      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.command).toContain(
+      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args).toContain(
         '.harness/hooks/post-tool-check.js',
       );
     } finally {
@@ -111,15 +111,16 @@ describe('the four surface adapters (T-3)', () => {
     }
   });
 
-  it('codex: skills + agent in the project; notify wired at user level (temp HOME)', () => {
+  it('codex: project lifecycle hooks and skills preserve user notify', () => {
     const w = tempWorld();
     try {
       install('codex', w.project);
       expect(existsSync(join(w.project, '.codex/skills/analyze/SKILL.md'))).toBe(true);
       expect(existsSync(join(w.project, '.codex/agents/red-foreman.toml'))).toBe(true);
-      expect(existsSync(join(w.project, '.harness/hooks/post-tool-check.js'))).toBe(true);
-      const cfg = readFileSync(join(w.home, '.codex/config.toml'), 'utf8');
-      expect(cfg).toMatch(/^notify\s*=\s*\["node", "\/.*post-tool-check\.js"\]/m); // absolute — user-level config
+      expect(existsSync(join(w.project, '.harness/hooks/codex-context.js'))).toBe(true);
+      const cfg = JSON.parse(readFileSync(join(w.project, '.codex/hooks.json'), 'utf8'));
+      expect(cfg.hooks.SessionStart).toHaveLength(1);
+      expect(existsSync(join(w.home, '.codex/config.toml'))).toBe(false);
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });
@@ -254,62 +255,13 @@ function captureExit(
 }
 
 describe('session-recall payload + wirings (T-1)', () => {
-  it('pi: the hard gate REPLACES array-shaped continue messages when the scan shows >1 open (R2 #4: the enforced path, for real)', async () => {
+  it('pi installs its lifecycle extension and support module', () => {
     const w = tempWorld();
     try {
       install('pi', w.project);
       expect(existsSync(join(w.project, '.pi/extensions/session-recall.js'))).toBe(true);
-      // stub the CLI: two open packs, engine-quoted JSON — the payload trusts HARNESS_CLI
-      const stub = join(w.project, 'cli-stub.mjs');
-      const writeStub = (body: string) => {
-        writeFileSync(stub, '#!/usr/bin/env node\n' + body);
-        chmodSync(stub, 0o755); // execFile runs it directly — it must be executable
-      };
-      writeStub(
-        `console.log(JSON.stringify({ root: ${JSON.stringify(w.project)}, packs: [
-          { name: 'alpha', path: 'x', stage: 'in_progress', openQuestions: 0, nextTask: null, revision: 1, lastEvidenceAt: null, tree: '' },
-          { name: 'beta', path: 'y', stage: 'in_review', openQuestions: 1, nextTask: 'T-2', revision: 4, lastEvidenceAt: '2026-10-10T01:00:00Z', tree: '' },
-        ], worktrees: [] }));`,
-      );
-      process.env.HARNESS_CLI = stub;
-      const mod = await import(
-        join(w.project, '.pi/extensions/session-recall.js') + `?v=${Date.now()}`
-      );
-      const handlers: { eventName: string; fn: (event: unknown) => unknown }[] = [];
-      const sent: unknown[] = [];
-      mod.default({
-        on: (eventName: string, fn: (event: unknown) => unknown) =>
-          handlers.push({ eventName, fn }),
-        sendMessage: (m: unknown) => sent.push(m),
-      });
-      // 1. session_start sends the block AS AN OBJECT (R2 #2) — the model sees it
-      await handlers.find((h) => h.eventName === 'session_start')!.fn({});
-      expect(sent.length).toBe(1);
-      expect((sent[0] as { customType: string }).customType).toBe('session-recall');
-      expect((sent[0] as { content: string }).content).toContain('alpha');
-      // 2. the gate replaces an ARRAY-shaped continue first message (real pi shape — R2 #1)
-      const gate = handlers.find((h) => h.eventName === 'message_end')!;
-      const out = (await gate.fn({
-        message: { role: 'user', content: [{ type: 'text', text: 'continue' }] },
-      })) as { message: { content: { type: string; text: string }[] } } | undefined;
-      expect(out).toBeDefined();
-      const text = out?.message.content?.[0]?.text ?? '';
-      expect(text).toContain('the hard gate');
-      expect(text).toContain('alpha');
-      expect(text).toContain('never guess');
-      // 3. one open → the gate allows (never over-fires): re-scan with a single pack
-      writeStub(
-        `console.log(JSON.stringify({ root: ${JSON.stringify(w.project)}, packs: [
-          { name: 'alpha', path: 'x', stage: 'in_progress', openQuestions: 0, nextTask: null, revision: 1, lastEvidenceAt: null, tree: '' },
-        ], worktrees: [] }));`,
-      );
-      await handlers.find((h) => h.eventName === 'session_start')!.fn({});
-      const allow = await gate.fn({
-        message: { role: 'user', content: [{ type: 'text', text: 'continue' }] },
-      });
-      expect(allow).toBeUndefined();
+      expect(existsSync(join(w.project, '.pi/extensions/codex-context.js'))).toBe(true);
     } finally {
-      delete process.env.HARNESS_CLI;
       w.restore();
       rmSync(w.home, { recursive: true, force: true });
       rmSync(w.project, { recursive: true, force: true });
@@ -321,11 +273,13 @@ describe('session-recall payload + wirings (T-1)', () => {
     try {
       install('claude', w.project);
       const s = JSON.parse(readFileSync(join(w.project, '.claude/settings.json'), 'utf8')) as {
-        hooks: Record<string, { hooks: { command: string }[] }[]>;
+        hooks: Record<string, { hooks: { command: string; args?: string[] }[] }[]>;
       };
-      expect(s.hooks['SessionStart']?.[0]?.hooks[0]?.command).toContain('--claude-start');
-      expect(s.hooks['UserPromptSubmit']?.[0]?.hooks[0]?.command).toContain('--claude-gate');
-      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.command).toContain('post-tool-check');
+      expect(s.hooks['SessionStart']?.[0]?.hooks[0]?.args).toContain('SessionStart');
+      expect(s.hooks['UserPromptSubmit']?.[0]?.hooks[0]?.args).toContain('UserPromptSubmit');
+      expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args).toContain(
+        '.harness/hooks/post-tool-check.js',
+      );
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });

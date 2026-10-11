@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 174ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 257ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 315ms
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  12:55:38
+   Duration  1.85s (transform 465ms, setup 0ms, collect 2.35s, tests 746ms, environment 1ms, prepare 288ms)
+

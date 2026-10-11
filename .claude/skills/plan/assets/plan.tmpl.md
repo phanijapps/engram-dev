@@ -1,74 +1,84 @@
 ---
 kind: plan
 slug: <kebab-slug>
-title: <what this plan executes>
+title: <what this plan proposes>
 status: draft
 created: YYYY-MM-DD
-repo_head: <commit pinned at authoring>
+repo_head: <commit observed at authoring>
 design_ref: design.md | "mini-design below"
 analysis_inputs: [spec.md, impact-<change>.md]
 depth: full-design | compact-design | mini-design | micro-plan
-rationale_for_depth: <one line — usually the impact artifact's verdict>
+rationale_for_depth: <reason based on impact evidence>
 ---
 
 # Plan — <title>
 
-> The executable consequence of design.md. Tasks are small, AND-only,
-> acyclic, each with an observable verification expectation and frozen
-> context. Status changes reflect observed evidence only.
+> This is the readable delivery proposal. The canonical JSON pack owns tasks and evidence.
+> Keep this artifact unchanged after start approval. Append progress to execution-log.md.
 
-## Mini-design (only when depth = mini/micro)
+## Scope and machine record
 
-Approach + options considered + the one decision made. Skip for
-full/compact depth — design.md owns that.
+- Canonical pack: <path, format, held revision>.
+- Planned requirements: <FR IDs and prose ID mappings>.
+- Deferred scope: <IDs, blocking question or decision, owner if known, and unblock action>.
+- Current machine gate: <observed status; no implied permission>.
 
-## Task DAG
+## Mini-design (only for mini or micro depth)
 
-| ID  | Task (goal, one line) | Implements | Prereqs | Verification expectation           | Size | Status  |
-| --- | --------------------- | ---------- | ------- | ---------------------------------- | ---- | ------- |
-| T1  | …                     | R1, D2     | —       | `<command>` exits 0 / <observable> | S    | todo    |
-| T2  | …                     | R1         | T1      | <command or observation>           | M    | todo    |
-| T3  | …                     | R2         | —       | blocked-on: Q3                     | S    | blocked |
+State the approach, real alternatives, contracts, failure behavior, exclusions, and proposed decision IDs.
+Include a local Mermaid behavior diagram if it clarifies the change, or state the omission reason.
+For full or compact depth, link to design.md instead of duplicating it.
 
-Rules enforced by walking, not eyeballing: no cycles, no self-prereqs,
-every prereq output exists as a later task's input, every blocked-on id
-resolves to a real Q/D id.
+## Task definitions
 
-## Frozen context (per task)
+| ID     | Bounded outcome    | FR / DES / AC links   | Needs (T IDs)                   | Requires decisions (D IDs) | Verification command and expected observation                   |
+| ------ | ------------------ | --------------------- | ------------------------------- | -------------------------- | --------------------------------------------------------------- |
+| <T-id> | <goal and outputs> | <canonical trace IDs> | <prerequisite task IDs or none> | <proposed D IDs or none>   | <actual proposed command, working directory, measurable result> |
 
-What implement loads for the task — exactly this, no browsing:
+Name exclusions and allowed file changes per task. Give each task a coherent, independently verifiable outcome.
+Unresolved follow-ups belong in the scope register, not fake tasks with question IDs as prerequisites or checks.
+Walk the graph: no cycles, self-prerequisites, dangling IDs, or ordering without an output dependency.
 
-- **T1:** `know search "<question>"` + `know read <cid>`; wiki:
-  `<cid list>`; refs: spec.md §R1, design.md §D2, `<source paths>`; key
-  files: `<paths>`.
+## Delivery DAG (when useful)
 
-## Traceability matrix
+For branching or nontrivial dependencies, insert a fenced Mermaid flowchart with canonical T IDs.
+Use arrows from prerequisite to dependent. Match every edge to the JSON `needs` field.
+State a caption and plain-text order, including branch and join behavior.
+A diagram shows proposed dependencies, not execution status or permission.
+For one task or a simple chain, state why the task table is sufficient.
 
-| Requirement | Design section       | Task(s) | Verification       |
-| ----------- | -------------------- | ------- | ------------------ |
-| R1          | §Approach/§Contracts | T1, T2  | T1+T2 expectations |
-| R2          | §Change-by-surface   | T3      | T3 expectation     |
+## Context per task
 
-Any planned R with no task = hole (fix the plan). Any task implementing
-nothing = creep (cut it).
+For each canonical T ID, list:
 
-## Ready set
+- `context.touch`: allowed repository-relative paths; new paths are explicit.
+- `context.read`: source and analysis/design files the worker must read.
+- `context.wiki`, `links`, `notes`, `commands`: relevant concepts, references, constraints, and precise commands.
+- Verification working directory and required tools.
 
-Tasks with all prereqs done and no blocking ids — implement's entry
-contract: **[T1]**. If empty, the plan is a parking lot: name the first
-unblock move instead.
+Touch files pin at machine handout time. Read and wiki entries remain advisory unless explicitly supported pins are supplied.
+Do not claim all references are hash-frozen. Missing context returns to planning rather than open-ended exploration.
 
-## Status ledger
+## Traceability
 
-Observed evidence only — commands run (with outcome refs), commits,
-review artifacts. "Should work" is not a status.
+| Planned FR / AC | Design element or section | Task(s) | Verification expectation        |
+| --------------- | ------------------------- | ------- | ------------------------------- |
+| <ID>            | <DES ID or section>       | <T IDs> | <command and observable result> |
 
-| Task | Status | Evidence                                           |
-| ---- | ------ | -------------------------------------------------- |
-| —    | —      | (implement/review fill this; plan leaves it empty) |
+Every planned requirement reaches a check. Every task reaches a requirement.
+Report deferred requirement gaps separately; do not hide them behind a green alignment result.
+
+## Proposal validation
+
+Record actual alignment, status, discovery, schema, DAG, artifact, and diagram checks.
+Include command, exit code, and evidence reference where applicable. Disclose unavailable checks.
+Do not record planned verification as an observed pass.
 
 ## Handoff
 
-- **Ready now:** T1 → `implement` (frozen context as listed)
-- **Blocked:** T3 (Q3 → owner/path from the analysis register)
-- **Next step:** single next skill invocation and its input
+- Pack and held revision: <actual path and revision>.
+- Structural entry set: <tasks without unmet task prerequisites; proposal only>.
+- Owner gate: <spec questions, decision acceptance, or separate start action as actually reported>.
+- Follow-ups: <blocking IDs and unblock actions>.
+- Next action: <owner review before permission; implement handout only after a valid start receipt>.
+- Progress record: execution-log.md and canonical task evidence. There is no live status ledger in this approved plan.

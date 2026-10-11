@@ -1,0 +1,38 @@
+[
+  {
+    "label": "check",
+    "command": "pnpm",
+    "args": [
+      "check"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T02:17:15.303Z"
+  },
+  {
+    "label": "coverage",
+    "command": "pnpm",
+    "args": [
+      "coverage"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T02:17:22.052Z"
+  },
+  {
+    "label": "corpus-check",
+    "command": "pnpm",
+    "args": [
+      "corpus:check"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T02:17:22.925Z"
+  },
+  {
+    "label": "brand-check",
+    "command": "pnpm",
+    "args": [
+      "brand:check"
+    ],
+    "exit": 1,
+    "at": "2026-10-11T02:17:23.461Z"
+  }
+]

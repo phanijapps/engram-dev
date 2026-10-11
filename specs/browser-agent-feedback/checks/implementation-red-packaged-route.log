@@ -1,0 +1,19 @@
+{
+  "packagedImport": true,
+  "apiStatus": 200,
+  "response": {
+    "format": "feedback/1",
+    "project": "aaaaaaaaaaaaaaaaaaaaaaaa",
+    "pack_id": "test",
+    "revision": 0,
+    "closed": false,
+    "sessions": [],
+    "threads": [],
+    "batches": []
+  },
+  "pageStatus": 200,
+  "pageLoadsFeedbackAsset": true,
+  "assetStatus": 200,
+  "assetIsBrowserCode": true,
+  "serverHasNoFeedbackAssetImport": true
+}

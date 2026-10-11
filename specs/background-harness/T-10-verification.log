@@ -1,0 +1,13 @@
+
+Attempt 2026-10-11T00:15:49.461Z exit 0
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/cli/test/codex-context.test.ts (2 tests) 1829ms
+   ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  1784ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  20:15:46
+   Duration  2.38s (transform 47ms, setup 0ms, collect 42ms, tests 1.83s, environment 0ms, prepare 111ms)
+

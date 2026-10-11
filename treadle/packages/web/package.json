@@ -4,7 +4,8 @@
   "type": "module",
   "dependencies": {
     "@treadle/brand": "workspace:*",
-    "@treadle/core": "workspace:*"
+    "@treadle/core": "workspace:*",
+    "@treadle/knowledge": "workspace:*"
   },
   "exports": {
     ".": "./dist/src/index.js"

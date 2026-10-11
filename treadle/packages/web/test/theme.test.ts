@@ -28,25 +28,25 @@ describe('the token layer (structural, both pages)', () => {
       expect(html).toContain("[data-theme='dark']");
       // canonical light anchors (FR-1)
       for (const v of [
-        '#094cb2',
-        '#faf9fa',
-        '#1b1c1d',
-        '#ba1a1a',
-        '#15803d',
-        '#b45309',
-        '#6d28d9',
+        '#0064d9',
+        '#f5f5f7',
+        '#1d1d1f',
+        '#b42318',
+        '#187035',
+        '#915400',
+        '#515158',
       ]) {
         expect(html, v).toContain(v);
       }
       // canonical dark anchors
       for (const v of [
-        '#0b0f14',
-        '#38bdf8',
-        '#f87171',
-        '#10b981',
-        '#f59e0b',
-        '#a855f7',
-        '#232d3d',
+        '#1c1c1e',
+        '#8ec1ff',
+        '#ff9b92',
+        '#83dba0',
+        '#ffd28a',
+        '#b4b4bc',
+        '#3a3a3c',
       ]) {
         expect(html, v).toContain(v);
       }
@@ -58,7 +58,8 @@ describe('the token layer (structural, both pages)', () => {
       // the toggle exists
       expect(html).toContain('theme-toggle');
       // the voice stacks
-      expect(html).toContain('--voice-serif');
+      expect(html).toContain('--voice-body: -apple-system');
+      expect(html).toContain('--on-action: #ffffff');
     });
   }
 });

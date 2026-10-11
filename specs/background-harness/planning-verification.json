@@ -1,0 +1,89 @@
+{
+  "scope": "Proposal verification and unchanged-runtime baseline; not task evidence or delivery PACK review",
+  "source_head": "c52a643e15be6f7e6bc72d054e41d104c9bf38e3",
+  "results": [
+    {
+      "name": "pack-alignment",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "check",
+        "../specs/background-harness"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:30.033081+00:00",
+      "log": "planning-checks/pack-alignment.log"
+    },
+    {
+      "name": "proposal-format",
+      "argv": [
+        "pnpm",
+        "exec",
+        "prettier",
+        "--check",
+        "/home/videogamer/code/memex_beta/specs/background-harness/analysis.md",
+        "/home/videogamer/code/memex_beta/specs/background-harness/brief.md",
+        "/home/videogamer/code/memex_beta/specs/background-harness/design.md",
+        "/home/videogamer/code/memex_beta/specs/background-harness/owner-flow.md",
+        "/home/videogamer/code/memex_beta/specs/background-harness/plan.md",
+        "/home/videogamer/code/memex_beta/specs/background-harness/spec.md"
+      ],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:30.737624+00:00",
+      "log": "planning-checks/proposal-format.log"
+    },
+    {
+      "name": "check",
+      "argv": ["pnpm", "check"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:31.474236+00:00",
+      "log": "planning-checks/check.log"
+    },
+    {
+      "name": "coverage",
+      "argv": ["pnpm", "coverage"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:42.220081+00:00",
+      "log": "planning-checks/coverage.log"
+    },
+    {
+      "name": "corpus",
+      "argv": ["pnpm", "corpus:check"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:48.979666+00:00",
+      "log": "planning-checks/corpus.log"
+    },
+    {
+      "name": "brand",
+      "argv": ["pnpm", "brand:check"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:49.918776+00:00",
+      "log": "planning-checks/brand.log"
+    },
+    {
+      "name": "audit",
+      "argv": ["pnpm", "audit:prod"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:50.375050+00:00",
+      "log": "planning-checks/audit.log"
+    },
+    {
+      "name": "links",
+      "argv": ["pnpm", "links"],
+      "cwd": "treadle",
+      "exit": 0,
+      "at": "2026-10-10T23:43:51.359235+00:00",
+      "log": "planning-checks/links.log"
+    }
+  ]
+}

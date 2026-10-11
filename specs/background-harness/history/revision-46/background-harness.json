@@ -1,0 +1,1399 @@
+{
+  "id": "background-harness",
+  "name": "background-harness",
+  "description": "Shared background harness and project context",
+  "date": {
+    "updated": "2026-10-11T00:31:44.263Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "896437ef1080ddbede282d6d31445d6f5013526b2e6f7b7a9d474eeab40b77b0"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "51cbdff804366cf86ff184abf88cbe9add75f5ca98ae481fc9c62cb0f4ed330b"
+    },
+    "owner-flow": {
+      "ref": "owner-flow.md",
+      "type": "text/markdown",
+      "sha256": "8d4037b411dbb0859d8dcbf0bbede3d010c8d00eab625802a3b23ccdede5970d"
+    },
+    "analysis": {
+      "ref": "analysis.md",
+      "type": "text/markdown",
+      "sha256": "e6574b402744e77d65729ededf1be05e5d60efa5cb5d5444372b503af121f33d"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "c4c89958e15008caee3307de340f95b62f4f119da039e3c94ada8b74df314489"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "a0391b32902c49a7e3ce26b5aa553f4cc138302d17c372a183287d75e9536d6c"
+    },
+    "plan-review": {
+      "ref": "plan-review.md",
+      "type": "text/markdown",
+      "sha256": "f2d7804c72c46d593330b04dce6b70f59f13917bae5d3e062b46fa8323b90dad"
+    },
+    "verification": {
+      "ref": "verification.md",
+      "type": "text/markdown",
+      "sha256": "cd2c270a85c5bdd9b55de3e0ad3afae4616aaf8e46839cac4e8cbde1cdbf23e6"
+    },
+    "planning-verification": {
+      "ref": "planning-verification.json",
+      "type": "application/json",
+      "sha256": "d6f113ee82fe3b43458949e3b97b8cd998b774714bcb0d324adff54c3d8ec4b0"
+    },
+    "planning-wiki-verification": {
+      "ref": "planning-wiki-verification.json",
+      "type": "application/json",
+      "sha256": "2e8a9d1de37398f47af1fd5604e31de0477073611833c1a7af99815554bc6e28"
+    },
+    "execution-authorization": {
+      "ref": "execution-authorization.md",
+      "type": "text/markdown"
+    }
+  },
+  "spec": {
+    "why": "Connect the existing local SDD workflow to a background web runtime with project enrollment and Codex, Claude Code and pi adapters on Linux, macOS and Windows.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Provide an installable runtime with bundled web/harness assets on Linux, macOS and native Windows; installation works outside the source checkout.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "treadle start serve starts or reuses one background service per OS user; treadle stop serve stops that verified service and leaves project enrollment intact.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Successful project harness installation enrolls its explicit workspace after ensuring the service; host startup/resume and pre-prompt events reconnect it. After stop, restart occurs on the next relevant event; closing a session leaves the service running.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Persist project identities and trusted real workspace/wiki/spec roots independently of sessions; provide honest connection status, retry, disconnect and missing-root states.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "One local web app lists enrolled projects and provides project-qualified existing spec workflow plus read-only wiki navigation/search without slug collisions or cross-project access.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "New/continuing-spec agent context reads canonical pack gates, revision, doing task and knowledge references without task admission, mutation or guessing among multiple open packs.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "Generate versioned native Claude, supported Codex and pi artifacts from the authoritative harness tree, retaining explicit compatibility installation where native support is absent.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-8",
+        "text": "Adapters use verified host lifecycle/output contracts and current event workspace; report runtime, activation/trust and enrollment readiness separately, preserving foreign configuration and avoiding duplicate hooks.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-9",
+        "text": "Preserve owner answers, decision acceptance, exact-plan start, sequential task evidence, independent PACK review and separate human Finish; context and adapters perform no owner acts.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-10",
+        "text": "Verify the connection and SDD journey across the three operating systems and supported host surfaces; record actual commands/versions/results and keep unsupported or unrun combinations explicit.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Remote services and role authentication",
+      "Concurrent task execution leases",
+      "Browser spec-authoring wizard or new approval state machine",
+      "Automatic retrospectives or knowledge upkeep",
+      "TS/Markdown freshness redesign",
+      "Native registry publication and license choice",
+      "Copilot service integration"
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "a PO, Dev Lead, developer or QA using the same local session",
+        "want": "the harness to connect the workspace and restore the correct knowledge/spec context across supported agents",
+        "so": "we can use the existing owner-gated SDD loop without managing server processes manually"
+      }
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Local single-machine use, with PO, Dev Lead, Dev and QA sharing one agent session; no remote authentication, role permissions or concurrent task-execution leases."
+      },
+      {
+        "id": "CON-2",
+        "text": "Both new listeners bind 127.0.0.1. Browser UI cannot enroll roots or control the service; privileged control rejects browser origins and requires a private local credential plus exact Host validation."
+      },
+      {
+        "id": "CON-3",
+        "text": "Runtime state stores project pointers and service identity only; no sessions, prompts, transcripts, credentials in context, telemetry or token usage."
+      },
+      {
+        "id": "CON-4",
+        "text": "Canonical specs/ wins even when empty; legacy-only external roots remain compatible; archive and .okf are excluded. Core writer lock, held revision and owner receipts remain authoritative."
+      },
+      {
+        "id": "CON-5",
+        "text": "No native package publication or license decision in this plan; generate/build/install local artifacts for review. Preserve Copilot existing behavior but do not promise new service integration."
+      }
+    ]
+  },
+  "design": {
+    "approach": "Add lifecycle, enrollment and read-only context around existing knowledge/workflow; generate host-native packages from one authority.",
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "One shared per-user background Node runtime, separate from agent lifetimes, with next-event restart and a stable reported UI address.",
+        "because": "Avoid duplicate project servers and keep explicit stop effective while sessions are idle.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Reuse the existing spec engine and owner UI; add project selection and read-only knowledge access. New packs are authored by the agent/CLI into specs/.",
+        "because": "The owner workflow already exists; a web spec-authoring wizard and new role system would expand the task.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-3",
+        "decision": "Separate credentialed control HTTP from browser HTTP; sandbox Markdown previews on an opaque origin with scripts/forms/top-navigation disabled.",
+        "because": "Enrollment expands filesystem reach and trusted Markdown must not acquire control-plane or owner-action authority.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-4",
+        "decision": "Generate host-native packages from a versioned harness source manifest; bootstrap and fallback installation remain explicit.",
+        "because": "Native hosts should manage activation/versioning while treadle owns its runtime and project enrollment.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-5",
+        "decision": "Publish a capability matrix and prove adapters in real hosts, including Codex CLI/desktop separately and IDE compatibility configuration.",
+        "because": "Current Codex plugin support excludes IDE; pi package metadata does not promise custom-agent installation. Trust/reload are user host actions.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Witnessed host contracts",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-7",
+          "FR-8",
+          "FR-10"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Standalone runtime and generated host artifacts",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-1",
+          "FR-7",
+          "FR-8"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "Shared lifecycle and trusted project registry",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-4"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "Project-qualified knowledge and existing owner workflow",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-5",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "Read-only contextual host adapters",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-3",
+          "FR-6",
+          "FR-8",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "Real environment evidence and independent review",
+        "kind": "mechanism",
+        "detail": "See design.md and plan.md task scope.",
+        "addresses": [
+          "FR-10",
+          "FR-9"
+        ]
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Prove host compatibility and freeze adapter contracts",
+      "detail": "Create disposable-fixture witnesses, not production adapters. Confirm Linux/macOS/Windows command launching constraints; include native plugin/package custom-agent limits and user activation. Save source URLs, versions, commands and exit codes without real session content. Narrow support only by owner-approved amendment.",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "satisfies": [
+        "FR-7",
+        "FR-8",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "node specs/background-harness/verify-compatibility.mjs",
+        "expect": "Published host lifecycle/package contracts and installed Linux CLI versions are checked; real host loading and native macOS/Windows/desktop/IDE execution witnesses remain mandatory release checks in T-12."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/background-harness/compatibility.md"
+          },
+          {
+            "path": "specs/background-harness/compatibility-evidence.json"
+          },
+          {
+            "path": "specs/background-harness/verify-compatibility.mjs"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-1; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/background-harness/verify-compatibility.mjs",
+          "exit": 0,
+          "at": "2026-10-10T23:54:18.129Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-1-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Package a standalone cross-platform runtime",
+      "detail": "Build and install local package artifacts; bundle production workspace dependencies/assets and define Node prerequisite/bootstrap instructions. Update asset/manifest resolution and provide a native Windows entry point. Do not publish, download silently, or require source-tree cwd.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1"
+      ],
+      "verify": {
+        "cmd": "node treadle/scripts/verify-runtime-package.mjs",
+        "expect": "A local distributable installs into a clean path with spaces/non-ASCII outside the checkout, resolves internal dependencies and loads CLI, web assets and harness manifest with Node >=22; native Windows uses fileURLToPath and no Bash/global-link dependency."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/package.json",
+            "sha256": "949a1b1802be9a3f877d38e48ead41448b8567c4bb3a86be0e6cb767e8d40efa"
+          },
+          {
+            "path": "treadle/packages/cli/package.json",
+            "sha256": "b30bb308c11cc67d31efe0c77ec1c3c5b97e2f9ba4983a3c0b597661e561e75e"
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "sha256": "268c9a2f0d01882040d36131e14f6c871259778519d0895e2a51e23eda3dd7e0"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "8788753e2f51012f169e68b23f08cdbf6037caa999a83342bf01d4f2c0956df1"
+          },
+          {
+            "path": "treadle/scripts/package-runtime.mjs"
+          },
+          {
+            "path": "treadle/scripts/verify-runtime-package.mjs"
+          },
+          {
+            "path": "install.sh",
+            "sha256": "175782cd84039e58131ac9620f11b6ff4cd2f7e9812dc4460b5155e278c91e83"
+          },
+          {
+            "path": "treadle/packages/cli/src/main.ts"
+          },
+          {
+            "path": "install.ps1"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-2; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node treadle/scripts/verify-runtime-package.mjs",
+          "exit": 1,
+          "at": "2026-10-10T23:55:26.478Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-2-verification.log"
+        },
+        {
+          "cmd": "node treadle/scripts/verify-runtime-package.mjs",
+          "exit": 1,
+          "at": "2026-10-10T23:55:53.790Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-2-verification.log"
+        },
+        {
+          "cmd": "node treadle/scripts/verify-runtime-package.mjs",
+          "exit": 1,
+          "at": "2026-10-10T23:56:43.329Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-2-verification.log"
+        },
+        {
+          "cmd": "node treadle/scripts/verify-runtime-package.mjs",
+          "exit": 0,
+          "at": "2026-10-10T23:57:38.472Z",
+          "by": "agent:codex",
+          "notes": "Actual command run through exec_command exited 0: standalone runtime dependencies, assets and CLI verified outside checkout on Linux. Native OS witness remains T-12."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Implement shared start, stop and status",
+      "detail": "Add start serve, stop serve and status serve. Use detached process with disconnected stdio/unref, private per-user state, instance nonce and authenticated health/shutdown. Serialize startup and bound retries; lock recovery requires proof, not age. Fixed preferred UI port may safely choose another and report it; hooks read the descriptor, never assume a port.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-3"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/serve-runtime.test.ts",
+        "expect": "Concurrent cold starts produce one service; parent exit leaves it alive; authenticated stop acknowledges shutdown; next ensure restarts; stale descriptor/PID reuse, held startup lock, crash, timeout, incompatible version and occupied port never kill or claim an unrelated process."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/main.ts",
+            "sha256": "61e4da89bd8048d31066e4b660c2bd4383e67ad17ed4cdd66d8b4dbad3294a0e"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/serve.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/serve/runtime.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/serve-runtime.test.ts"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-3; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/serve-runtime.test.ts",
+          "exit": 1,
+          "at": "2026-10-11T00:00:37.989Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-3-verification.log"
+        },
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/serve-runtime.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:01:06.623Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-3-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Persist trusted project enrollment and control API",
+      "detail": "Add versioned atomic registry, project connect/disconnect/status and credentialed control listener. Register only explicit trusted roots; global harness install does not enroll home/cwd implicitly. Event cwd connects the current checkout, never an unrelated worktree discovered by git. Validate token storage permissions/ACL on each OS; same-user malicious processes remain outside credential isolation guarantees.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-3"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-3"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/project-registry.test.ts",
+        "expect": "Canonical realpath aliases enroll once; distinct worktrees have distinct identities; duplicate slugs coexist; concurrent enrollment and daemon restart retain records; disconnect, moved/deleted roots, symlink escape, bad Host/Origin/token and incompatible schema behave explicitly."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/serve/projects.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/project.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/project-registry.test.ts"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-4; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/project-registry.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:02:53.362Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-4-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "Add shared project, wiki and spec web navigation",
+      "detail": "Reuse library workflow and knowledge public API without a second ledger. Browser writes include project-qualified action, held revision and CSRF protection; titles render as text and Markdown previews use opaque sandbox without execution privileges. Wiki/search never enumerate .okf or archive. Legacy foreground commands remain compatible. Record keyboard/focus checks on project selection and owner actions.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-4"
+      ],
+      "satisfies": [
+        "FR-5",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-2",
+        "D-3"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/web/test/project-library.test.ts packages/web/test/project-security.test.ts packages/web/test/owner-workflow.test.ts",
+        "expect": "Project-qualified lists, search, wiki and spec links work with equal slugs; owner actions remain revision/lock guarded. Traversal, symlink escape, browser enrollment/stop, forged Host, cross-origin/CSRF writes and malicious Markdown cannot control service or act as owner."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/package.json",
+            "sha256": "809416e53d07f2ca2ad3b2c03a877f24188ff92b38571d142c3f7ccfd9c00cae"
+          },
+          {
+            "path": "treadle/packages/web/src/servers.ts",
+            "sha256": "268c9a2f0d01882040d36131e14f6c871259778519d0895e2a51e23eda3dd7e0"
+          },
+          {
+            "path": "treadle/packages/web/src/library.js",
+            "sha256": "c57c080dc225262e101ab2213c88dab2044cd14c50423e6855ca3ca290b50eab"
+          },
+          {
+            "path": "treadle/packages/web/src/library.html",
+            "sha256": "6c6b84b4fa82098abdbda65d62c639f7f535823256c47d58631bab86a4518b8b"
+          },
+          {
+            "path": "treadle/packages/web/test/project-library.test.ts",
+            "sha256": "8f66f741de02fae4c126dceea958947ec87323214205156b7d51eceb02f85750"
+          },
+          {
+            "path": "treadle/packages/web/test/project-security.test.ts",
+            "sha256": "925c7722d6f5107096c65130577717db8b46390243ca7b94f630a4cb7cbfbc76"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-5; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/web/test/project-library.test.ts packages/web/test/project-security.test.ts packages/web/test/owner-workflow.test.ts",
+          "exit": 1,
+          "at": "2026-10-11T00:09:02.339Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-5-verification.log"
+        },
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/web/test/project-library.test.ts packages/web/test/project-security.test.ts packages/web/test/owner-workflow.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:09:41.359Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-5-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-6",
+      "title": "Expose truthful read-only agent context",
+      "detail": "Add treadle context --workspace <root> --json and bounded human output. Return wiki/spec locations, service/project identity, core workflow phase, current doing task, evidence references and candidate next task explicitly non-admitted. New-work guidance uses do init --owner-gated; continuing never calls nextTask or ownerAction. Bound reads/output; malformed packs have explicit per-pack refusals.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-4"
+      ],
+      "satisfies": [
+        "FR-6",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-2",
+        "D-3"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/context.test.ts packages/cli/test/where.test.ts packages/cli/test/owner-workflow.test.ts",
+        "expect": "Before/after bytes, revisions and task states are equal; actual core gates match recall; doing tasks and invalid/missing/empty/closed roots differ; multiple open specs require selection; canonical-empty does not merge legacy; unavailable knowledge/freshness is disclosed."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/harness/where.ts",
+            "sha256": "d709b18fb41875d7f11b521edbe649da834b9aa162b9209594b1ba5e92f7317e"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/context.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/context.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/context.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/where.test.ts",
+            "sha256": "fbb39451c94a5af89ce6d25bef64125ce17d384cc843e332e4cae054bddfe98b"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-6; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/context.test.ts packages/cli/test/where.test.ts packages/cli/test/owner-workflow.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:10:32.089Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-6-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-7",
+      "title": "Generate native host packages from one source",
+      "detail": "Version the source manifest and generator contract while reading existing harness/0.1. Include only supported skills/agents/hooks/extensions per host, use package-relative references, and define managed artifact identity/digests for migration/removal. Keep generated installed artifacts out of authoritative source edits; no registry publication.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-1",
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-7",
+        "FR-8"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/harness-packages.test.ts",
+        "expect": "Deterministic local Claude plugin, supported Codex plugin and pi package validate against witnessed host contracts; all content derives from the authoritative tree; host/runtime/protocol compatibility versions and unsupported fields are explicit."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "sha256": "d6a5bd2ce6bd23387c9975503b1cfb2ea4b7654ccaff1229098f94ab915a52b5"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/types.ts",
+            "sha256": "62d0a2b7504032a5622e4aa28465cf70743cdd1998085800b5d6e105cb00f9d4"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "512f00b3003947b19cea306b7a78ad808adfb6dff6551cc9041e81c2e1227f03"
+          },
+          {
+            "path": "treadle/scripts/package-harness.mjs"
+          },
+          {
+            "path": "treadle/packages/cli/test/harness-packages.test.ts"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-7; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/harness-packages.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:12:06.830Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-7-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-8",
+      "title": "Repair installer truth and bootstrap enrollment",
+      "detail": "Separate runtime installed, host artifacts wired/activated/trusted, and project connected readiness. Successful project bootstrap ensures then enrolls; awaiting host trust stays visible. Server failure leaves truthful installed-but-disconnected state. Native install without runtime diagnoses bootstrap. Migrate only recorded owned files/wiring; global install needs existing authorization flags and an explicit project connect; --no-hooks does not promise automatic reconnect.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-3",
+        "T-4",
+        "T-7"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-4",
+        "FR-7",
+        "FR-8"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts",
+        "expect": "Refused wiring yields a truthful non-success exit and cannot enroll; dry-run writes/starts nothing; durable install then ensure/enroll can retry without duplicate hooks. Foreign notify/settings survive; upgrade/remove leave other projects and the shared runtime intact."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "d484dd8ad9b905344b01a77df88f4bd655ba206488b000b32514c673d3ea2cb3"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "350a4b2b108ebe123905bd53e3d3e9a57abe3648a3aef57a9c6e47d6933fb575"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "617d933584944520662b16ba93c388994b6ddd049bf9fb5c36b345c081af257c"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/types.ts",
+            "sha256": "36ad0ba2c38060177c49f520bd9cc2e11879418f2b179d18152a711d0a55a019"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-engine.test.ts",
+            "sha256": "e7fa4f0dd12104f309a41d3a6453564b3740ae766c4e5857d068afce77d10e86"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "840570a441214a631d8bb2e86e08c5f9f81c4e1fe6d3f62d315def4668c10386"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-8; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:13:54.549Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-8-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-9",
+      "title": "Implement the Claude Code lifecycle adapter",
+      "detail": "Use generated native hook configuration and existing compatibility installer, shared Node adapter bridge and versioned context. Test start/resume/clear/compact/worktree, Windows launching and reload/removal with a real disposable Claude host in T-12; mocks here verify parsing/error boundaries only.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-6",
+        "T-8"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-6",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/claude-context.test.ts",
+        "expect": "Witnessed SessionStart/UserPromptSubmit use event cwd and correct stdin/output/exit contracts; next prompt after stop reconnects; closing Claude leaves server running; timeout/failure provides an actionable status without leaking control token or admitting tasks."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/hooks/session-recall.js",
+            "sha256": "f778bee03e1a7900cdf7cef0c6b99c950cdf6e7d9dbd03243929520f035a073d"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/claude-context.js"
+          },
+          {
+            "path": "treadle/packages/cli/test/claude-context.test.ts"
+          },
+          {
+            "path": "specs/background-harness/host-evidence/claude.json"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-9; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/claude-context.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:17:56.752Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-9-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-10",
+      "title": "Implement Codex native and IDE-compatible adapters",
+      "detail": "Replace the obsolete manual-only recall claim where actual hooks are supported. Generate commandWindows/host fields only when witnessed. Inactive/untrusted or unsupported IDE hooks show explicit remediation and manual connect/context fallback, never a fake ready state. Test actual CLI, desktop and IDE surfaces separately in T-12.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-6",
+        "T-8"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-6",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/codex-context.test.ts",
+        "expect": "Witnessed hooks produce valid contextual output, event cwd and bounded failures; exact hook trust remains a human host action; CLI/desktop native path and IDE supported configuration path are distinct; notify integration is preserved without double callbacks."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/hooks/codex-context.js"
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "sha256": "373cf02c46fdf597d264a71646e147cc3aab6be44fd2a20951534db85632e123"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "b2e88506be25c402165ac921ef4e46795312fd1747e0db6077e968ec9629073a"
+          },
+          {
+            "path": "treadle/packages/cli/test/codex-context.test.ts"
+          },
+          {
+            "path": "specs/background-harness/host-evidence/codex.json"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-10; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/codex-context.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:15:49.468Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-10-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-11",
+      "title": "Implement the pi native extension adapter",
+      "detail": "Package extensions/skills/prompts through the native pi package contract; retain explicit custom-agent compatibility files only where separately supported. Avoid process.cwd assumptions and the old unenforced message_end gate claim; core admission remains the authority. Real-host load, restart, update and removal witnesses are required in T-12.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-6",
+        "T-8"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-6",
+        "FR-8",
+        "FR-9"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/pi-context.test.ts",
+        "expect": "Witnessed session_start/before_agent_start use ctx.cwd and valid context-message return contracts; reload/resume/new/fork do not duplicate handlers; shutdown closes only session resources, and next event after stop reconnects."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/hooks/session-recall.js",
+            "sha256": "823c33b602d3fa08f7c69c12d5ee8b092d36510bbfb351ad2c3df9ecc1542179"
+          },
+          {
+            "path": "treadle/packages/cli/harness/extensions/project-context.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/pi-context.test.ts"
+          },
+          {
+            "path": "specs/background-harness/host-evidence/pi.json"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-11; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "cd treadle && pnpm exec vitest run packages/cli/test/pi-context.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T00:16:50.909Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-11-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-12",
+      "title": "Verify the complete journey on all required environments",
+      "detail": "Implement portable smoke fixtures and CI runtime jobs; collect versioned real-host witnesses locally or on available machines with disposable fixture owner actions clearly labelled. Include two simultaneous session connections and stop races without concurrent same-task execution, equal slugs, server crash, packed assets and hostile-browser tests. Preserve closed real packs. Any claimed absent capability requires changed scope and owner reapproval.",
+      "status": "todo",
+      "phase": "core",
+      "needs": [
+        "T-5",
+        "T-9",
+        "T-10",
+        "T-11",
+        "T-13"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "node specs/background-harness/verify-matrix.mjs",
+        "expect": "Actual Linux, macOS and native Windows runtime results plus real-host results for each supported OS/surface pass: clean install, trust, project selection, new/continue spec, stop/next-event restart, session exit, upgrade/removal and owner flow. Missing/unrun combinations fail the release verifier; a CI matrix declaration is not evidence."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/background-harness/verify-matrix.mjs",
+            "sha256": "1edc9b6e2c0e6d6114bfab34493be18b04f9be0716556439530bbd601659eb16"
+          },
+          {
+            "path": "specs/background-harness/platform-evidence.json",
+            "sha256": "53ff17b43c75ff5d88f72e2c428d37d7d3763d72e8a6d0967c70cefa6ce81528"
+          },
+          {
+            "path": "treadle/scripts/harness-smoke.mjs",
+            "sha256": "c563f84e175521e7fafb756985f4bf0b41134db7e268561f609b26bfc8028fa9"
+          },
+          {
+            "path": ".github/workflows/ci.yml",
+            "sha256": "e61ac1b1092cfe0ef1b9991656e7c1cf1da623180c97e0b519ee96075e38e7d1"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-12; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/background-harness/verify-matrix.mjs",
+          "exit": 1,
+          "at": "2026-10-11T00:31:44.260Z",
+          "by": "agent:codex",
+          "notes": "Actual command result; see T-12-verification.log"
+        }
+      ]
+    },
+    {
+      "id": "T-13",
+      "title": "Document operation and run repository gates",
+      "detail": "Create the portable gate runner that captures each real command/exit; update setup, lifecycle, package management, connection troubleshooting and accepted local threat boundary. Only close gap G4 to the implemented extent; G1/G2/G10 and license remain separate. No automatic retrospective/session capture or publication. Record any environment blockers instead of carrying old green evidence.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-5",
+        "T-9",
+        "T-10",
+        "T-11"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "node specs/background-harness/verify-gates.mjs",
+        "expect": "Actual check, coverage floors, corpus:check, brand:check, audit:prod, links and wiki fingerprint/stamp/anchors/validate/status commands succeed; wiki has zero errors/warnings/review anchors and a fresh stamp. Documentation states native/fallback support and TS/Markdown dirty-freshness limits."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "README.md",
+            "sha256": "704558f642e32b841b651d0f86dbfca5ecc6e3525dd2162dc171edbabdeda8fe"
+          },
+          {
+            "path": "SECURITY.md",
+            "sha256": "2bea5e88ea504a8add231e76644c8fbfd9fb9b438ea7f8761064a23b8aecfac6"
+          },
+          {
+            "path": "wiki/systems/sdd-harness-architecture.md",
+            "sha256": "cbd0238ed0e8aa0ca14c3db42a6346117354890603ad9e1863b47739a54637ff"
+          },
+          {
+            "path": "wiki/project/open-work.md",
+            "sha256": "5c5cc1428fc1871e30c50ee1984a4e6a40b17f873a5614c79532e6f5793025a3"
+          },
+          {
+            "path": "wiki/assets/guide"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "33b96e766a52c35fff98f7f9c48fc76161f9b15f457ac35e295570f7d1ba08a4"
+          },
+          {
+            "path": "specs/background-harness/verify-gates.mjs",
+            "sha256": "6f8b4009aa32be75eee4e7db6dee14f0320d0abfb83a0f6dc52324542b373666"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-13; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/background-harness/verify-gates.mjs",
+          "exit": 0,
+          "at": "2026-10-11T00:31:36.649Z",
+          "by": "agent:codex",
+          "notes": "Actual full gate run in gates/results.json and final source recheck in delta-gates/results.json; failed delta attempt retained separately. Wiki block run once with zero errors/warnings/review anchors; Python/HEAD freshness limits remain."
+        }
+      ]
+    },
+    {
+      "id": "T-14",
+      "title": "Obtain independent PACK review",
+      "detail": "Implement only the artifact verifier, obtain an independent review, repair within approved scope and return to review. Phase review avoids digest recursion. Separate human Finish spec remains pending after this task; no reviewer or agent may synthesize that owner act.",
+      "status": "todo",
+      "phase": "review",
+      "needs": [
+        "T-13"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-10"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4",
+        "D-5"
+      ],
+      "verify": {
+        "cmd": "node specs/background-harness/verify-review.mjs",
+        "expect": "Independent read-only red-foreman reruns relevant task expectations, reports severity/location/fix and records actual PACK PASS matching current plan and non-review evidence digests; unresolved findings or self-review refuse completion."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/background-harness/delivery-review.md"
+          },
+          {
+            "path": "specs/background-harness/verify-review.mjs"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md T-14; preserve existing owner gates and unrelated edits.",
+          "One admitted task at a time. No start consent is recorded. New decisions or drift require owner review."
+        ]
+      }
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 3,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "aac22b45-0f76-4e7e-af56-8d76c9fba21a",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 6,
+        "decision": "D-1"
+      },
+      {
+        "id": "e038c80f-1482-4334-b7ef-2a1247d31f4d",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 7,
+        "decision": "D-2"
+      },
+      {
+        "id": "d12189ab-cc99-4ed2-82b8-5e5c97f83891",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 8,
+        "decision": "D-3"
+      },
+      {
+        "id": "a11255b3-2ebb-4e2b-8cfe-c984ab94cb3a",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 9,
+        "decision": "D-4"
+      },
+      {
+        "id": "60f469c2-47c7-4354-99d9-1cc219288a24",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 10,
+        "decision": "D-5"
+      },
+      {
+        "id": "6c57d3f1-e084-4820-bedf-c27e26701bb5",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-10T23:51:12.912Z",
+        "revision": 11,
+        "plan_digest": "08a5bff440945aa1ccf98a4c9ae873a3505bba04b91bc52129c6d7a19b720938"
+      },
+      {
+        "id": "18ba2054-0e6e-49d2-8a81-91d0f2a0fd30",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-10T23:56:40.504Z",
+        "revision": 18,
+        "plan_digest": "44d499709bad8442b706d25d89c9e09102d7a94d6d5836ecf6cb529158909f7d"
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-10T23:56:40.504Z",
+      "plan_digest": "44d499709bad8442b706d25d89c9e09102d7a94d6d5836ecf6cb529158909f7d"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PLAN",
+        "verdict": "PASS",
+        "by": "agent:red_foreman_plan",
+        "at": "2026-10-10T23:45:17.543Z",
+        "note": "Actual independent read-only proposal review: PASS — nothing to fix. See plan-review.md. This is planning quality only, not owner acceptance/start permission or delivery PACK review."
+      }
+    ]
+  },
+  "env": {
+    "workspace": "../..",
+    "source_head": "c52a643e15be6f7e6bc72d054e41d104c9bf38e3",
+    "mode": "executing-user-authorized-plan",
+    "source_state": "Current user delegated best judgment and implementation; receipts bind Plan 2. No Finish act."
+  },
+  "format": "specpack/0.4",
+  "revision": 46
+}

@@ -1,0 +1,141 @@
+[
+  {
+    "label": "check",
+    "command": "pnpm",
+    "args": [
+      "check"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:27.752Z"
+  },
+  {
+    "label": "coverage",
+    "command": "pnpm",
+    "args": [
+      "coverage"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:34.682Z"
+  },
+  {
+    "label": "corpus",
+    "command": "pnpm",
+    "args": [
+      "corpus:check"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:35.546Z"
+  },
+  {
+    "label": "brand",
+    "command": "pnpm",
+    "args": [
+      "brand:check"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:36.048Z"
+  },
+  {
+    "label": "audit",
+    "command": "pnpm",
+    "args": [
+      "audit:prod"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:37.059Z"
+  },
+  {
+    "label": "links",
+    "command": "pnpm",
+    "args": [
+      "links"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:37.500Z"
+  },
+  {
+    "label": "runtime-package",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "scripts/verify-runtime-package.mjs"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:40.104Z"
+  },
+  {
+    "label": "runtime-journey",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "scripts/harness-smoke.mjs"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:42.328Z"
+  },
+  {
+    "label": "fingerprints",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "packages/cli/dist/src/main.js",
+      "know",
+      "fingerprints",
+      "..",
+      "../wiki"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:42.509Z"
+  },
+  {
+    "label": "stamp",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "packages/cli/dist/src/main.js",
+      "know",
+      "stamp",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:42.659Z"
+  },
+  {
+    "label": "anchors",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "packages/cli/dist/src/main.js",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:42.870Z"
+  },
+  {
+    "label": "validate",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "packages/cli/dist/src/main.js",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:43.080Z"
+  },
+  {
+    "label": "status",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "packages/cli/dist/src/main.js",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "at": "2026-10-11T01:59:43.346Z"
+  }
+]

@@ -1,0 +1,58 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ❯ packages/web/test/feedback-api.test.ts (3 tests | 2 failed) 153ms
+   ✓ isolates snapshots and records comments, submission retries and resolution without canonical writes 88ms
+   × rejects CSRF, role escalation, malformed anchors, oversized input and path escapes 57ms
+     → expected 403 to be 400 // Object.is equality
+   × retains closed history but rejects writes and leaves legacy packs unsupported 8ms
+     → expected undefined to be true // Object.is equality
+ ✓ packages/web/test/project-library.test.ts (2 tests) 241ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 325ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/web/test/feedback-api.test.ts > rejects CSRF, role escalation, malformed anchors, oversized input and path escapes
+AssertionError: expected 403 to be 400 // Object.is equality
+
+- Expected
++ Received
+
+- 400
++ 403
+
+ ❯ packages/web/test/feedback-api.test.ts:207:69
+    205|     ).toBe(413);
+    206|     symlinkSync(f.dir, join(f.project.specs, 'escape'), 'dir');
+    207|     expect((await fetch(f.base + '/feedback/escape/state')).status).to…
+       |                                                                     ^
+    208|     expect(readFeedback(f.dir, f.project.workspace)!.revision).toBe(1);
+    209|   } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  packages/web/test/feedback-api.test.ts > retains closed history but rejects writes and leaves legacy packs unsupported
+AssertionError: expected undefined to be true // Object.is equality
+
+- Expected: 
+true
+
++ Received: 
+undefined
+
+ ❯ packages/web/test/feedback-api.test.ts:220:82
+    218|     pack.status = 'complete';
+    219|     writeFileSync(path, emitBytes(pack));
+    220|     expect((await (await fetch(f.base + '/feedback/same/state')).json(…
+       |                                                                                  ^
+    221|     expect((await f.post('submit', { round: f.opened.round })).status)…
+    222|     delete pack.status;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  2 failed | 6 passed (8)
+   Start at  08:54:00
+   Duration  1.79s (transform 550ms, setup 0ms, collect 2.26s, tests 719ms, environment 1ms, prepare 293ms)
+

@@ -1088,5 +1088,37 @@ more than one is open: ASK which one continues. never guess.</span></code></pre>
       addEventListener('scroll', pick, { passive: true });
       pick();
     </script>
+      <section aria-labelledby="background-service">
+      <h2 id="background-service">Shared background app</h2>
+      <p>
+        After building and installing the CLI (Node 22 or newer), run
+        <code>treadle start serve</code> and open its reported browser address.
+        On native Windows use <code>./install.ps1</code>; on Linux/macOS use
+        <code>./install.sh</code>.
+      </p>
+      <pre>
+treadle project connect /absolute/path/to/project
+treadle status serve
+treadle context --workspace /absolute/path/to/project --json
+treadle stop serve</pre>
+      <p>
+        Project harness installation for Codex, Claude or pi ensures the service
+        and enrolls the explicit workspace after successful wiring. Reload and
+        trust the host hooks. Closing a session leaves the app running; after a
+        stop, the next session event restarts it. Global installation and
+        no-hooks mode require an explicit project connect.
+      </p>
+      <p>
+        Generate native artifacts with
+        <code
+          >treadle package harness --agent claude|codex|pi --out
+          /absolute/new/directory</code
+        >, selecting one agent. Choose native or compatibility wiring for each
+        host. The artifact points to the local runtime; regenerate if it moves.
+        Codex IDE plugin availability differs from CLI/desktop; inactive hooks
+        use manual connect/context. Cross-platform source support does not
+        itself establish native host witnesses.
+      </p>
+    </section>
   </body>
 </html>

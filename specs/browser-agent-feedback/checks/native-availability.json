@@ -1,0 +1,132 @@
+{
+  "format": "feedback-native-availability/1",
+  "observed_at": "2026-10-11T13:35:10.904656+00:00",
+  "hosts": [
+    {
+      "host": "codex",
+      "version": "codex-cli 0.162.1",
+      "auth_status_command": [
+        "codex",
+        "login",
+        "status"
+      ],
+      "auth_status_exit": 0,
+      "status": "Logged in using ChatGPT",
+      "native_process": {
+        "argv": [
+          "codex",
+          "exec",
+          "--ephemeral",
+          "-s",
+          "workspace-write",
+          "-C",
+          "/home/videogamer/code/memex_beta",
+          "-"
+        ],
+        "exit": 0
+      },
+      "feedback_status": "pending",
+      "sessions": [
+        "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "a2805f26-b669-4b82-bfc2-95ab61d59ed5"
+      ],
+      "observed_waits": [
+        {
+          "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+          "timeout": 30,
+          "after": 0,
+          "exit": 0,
+          "status": "pending",
+          "cursor": 0,
+          "revision": 6
+        },
+        {
+          "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+          "timeout": 30,
+          "after": 0,
+          "exit": 0,
+          "status": "pending",
+          "cursor": 0,
+          "revision": 6
+        }
+      ]
+    },
+    {
+      "host": "claude",
+      "version": "2.1.233 (Claude Code)",
+      "auth_status_command": [
+        "claude",
+        "auth",
+        "status"
+      ],
+      "auth_status_exit": 0,
+      "status": "Native process returned pending; no submitted batches or edits observed",
+      "native_process": {
+        "argv": [
+          "claude",
+          "-p",
+          "--no-session-persistence",
+          "--permission-mode",
+          "dontAsk",
+          "--allowedTools",
+          "Bash",
+          "Read",
+          "Edit",
+          "Write",
+          "--output-format",
+          "text"
+        ],
+        "exit": 0
+      },
+      "feedback_status": "pending",
+      "waits_per_session": 2,
+      "wait_timeout": 30,
+      "wait_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cursor": 0,
+      "feedback_revision": 6
+    },
+    {
+      "host": "pi",
+      "version": "1.1.0",
+      "auth_status_command": [
+        "pi",
+        "auth",
+        "check",
+        "--provider",
+        "zai-coding-cn",
+        "--json",
+        "--no-refresh"
+      ],
+      "auth_status_exit": 0,
+      "status": "Native process returned pending; no submitted batches or edits observed",
+      "native_process": {
+        "argv": [
+          "pi",
+          "--approve",
+          "--no-session",
+          "-p",
+          "@/tmp/wukong-native-pi-prompt.txt"
+        ],
+        "exit": 0
+      },
+      "feedback_status": "pending",
+      "waits_per_session": 2,
+      "wait_timeout": 30,
+      "wait_exit_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "cursor": 0,
+      "feedback_revision": 6
+    }
+  ],
+  "native_human_matrix_complete": false,
+  "transcript_capture": "No native transcript exported to engine, wiki or repository; records retain only scoped command/outcome observations."
+}

@@ -1,0 +1,8 @@
+{
+  "observed_at": "2026-10-11T13:22:48.274549+00:00",
+  "code": "import {loadManifest} from './packages/cli/src/harness/manifest.ts';import {compilePlan} from './packages/cli/src/harness/plan.ts';const manifestPath='./packages/cli/harness/harness.json';const {manifest,root}=loadManifest(manifestPath);const results=[];for(const agent of ['claude','codex','pi']){const plan=compilePlan(manifest,root,{agent,scope:'project',skills:['feedback'],agents:false,hooks:false,root:'..',manifestPath,force:false,dryRun:true,json:true,yes:false,remove:false});results.push({agent,rows:plan.rows.map(r=>({component:r.component,dest:r.dest,mode:r.mode})),refusals:plan.rows.filter(r=>r.mode==='refuse').length});}console.log(JSON.stringify(results,null,2));",
+  "exit": 0,
+  "output": "[\n  {\n    \"agent\": \"claude\",\n    \"rows\": [\n      {\n        \"component\": \"feedback\",\n        \"mode\": \"same\"\n      }\n    ],\n    \"refusals\": 0\n  },\n  {\n    \"agent\": \"codex\",\n    \"rows\": [\n      {\n        \"component\": \"feedback\",\n        \"mode\": \"same\"\n      }\n    ],\n    \"refusals\": 0\n  },\n  {\n    \"agent\": \"pi\",\n    \"rows\": [\n      {\n        \"component\": \"feedback\",\n        \"mode\": \"same\"\n      }\n    ],\n    \"refusals\": 0\n  }\n]\n",
+  "stderr": "",
+  "mutation": false
+}

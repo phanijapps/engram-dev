@@ -1,0 +1,16 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+  "phase": "verify",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "--input-type=module",
+    "-e",
+    "import{readFileSync}from'node:fs';import assert from'node:assert/strict';const m=await import('data:text/javascript;base64,'+Buffer.from(readFileSync(\"specs/browser-agent-feedback/checks/native-sources/codex.js\",'utf8')).toString('base64'));for(const n of[0,1,2])assert.equal(m.reviewLabel(n),n+' feedback '+(n===1?'comment':'comments'));console.log('Code fixture assertions passed: 0,1,2');"
+  ],
+  "started_at": "2026-10-11T13:45:54.518Z",
+  "observed_at": "2026-10-11T13:45:54.566Z",
+  "exit": 0,
+  "output": "Code fixture assertions passed: 0,1,2"
+}

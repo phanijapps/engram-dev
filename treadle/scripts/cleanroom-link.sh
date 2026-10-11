@@ -39,12 +39,12 @@ log "5. pnpm link --global (from packages/cli)"
 
 log "6. assertions from an arbitrary directory"
 cd /tmp
-treadle --version >>"$TRANSCRIPT" 2>&1
-treadle --help >/dev/null
-log "   treadle --help: ok"
-treadle do where /tmp >/dev/null
-log "   treadle do where: ok"
-treadle know validate "$REPO_ROOT/wiki" >/dev/null
-log "   treadle know validate: ok"
+wukong --version >>"$TRANSCRIPT" 2>&1
+wukong --help >/dev/null
+log "   wukong --help: ok"
+wukong do where /tmp >/dev/null
+log "   wukong do where: ok"
+wukong know validate "$REPO_ROOT/wiki" >/dev/null
+log "   wukong know validate: ok"
 
 log "CLEANROOM LINK PASS"

@@ -1,0 +1,266 @@
+{
+  "format": "feedback-native-preparation/1",
+  "at": "2026-10-11T13:27:21.600Z",
+  "baseline": "d919603f84223c1502558738f1dd7e2e700521ab",
+  "canonical_sha256": "a1ead5ea95235c342cce66239d64f97e56eba8d6c0c2ff94694a110cc4f9a897",
+  "cases": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "file": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "documents",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/codex.md",
+        "--expected-revision",
+        "0",
+        "--operation-id",
+        "90590b68-b1e0-4477-9a81-02bcb4a9c1cd",
+        "--by",
+        "agent:codex",
+        "--json"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "90590b68-b1e0-4477-9a81-02bcb4a9c1cd",
+      "revision": 1,
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+      "cursor": 0,
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/codex.md"
+        ],
+        "artifacts": []
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=4b397a60-d0bf-4bb6-90f7-d6988202dcf9"
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "file": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "diff",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/codex.js",
+        "--expected-revision",
+        "1",
+        "--operation-id",
+        "611095ba-f9f6-4fec-9c74-e728198ecfd3",
+        "--by",
+        "agent:codex",
+        "--json",
+        "--base",
+        "d919603f84223c1502558738f1dd7e2e700521ab"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "611095ba-f9f6-4fec-9c74-e728198ecfd3",
+      "revision": 2,
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+      "cursor": 0,
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/codex.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=a2805f26-b669-4b82-bfc2-95ab61d59ed5"
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "file": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "documents",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/claude.md",
+        "--expected-revision",
+        "2",
+        "--operation-id",
+        "142a0723-8c90-4837-8827-b2fb68e3c15e",
+        "--by",
+        "agent:codex",
+        "--json"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "142a0723-8c90-4837-8827-b2fb68e3c15e",
+      "revision": 3,
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+      "cursor": 0,
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/claude.md"
+        ],
+        "artifacts": []
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=bef9d411-b853-43fd-89c4-b48b59320d55"
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "file": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "diff",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/claude.js",
+        "--expected-revision",
+        "3",
+        "--operation-id",
+        "27433878-a93f-4e46-b00e-29b31168c638",
+        "--by",
+        "agent:codex",
+        "--json",
+        "--base",
+        "d919603f84223c1502558738f1dd7e2e700521ab"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "27433878-a93f-4e46-b00e-29b31168c638",
+      "revision": 4,
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+      "cursor": 0,
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/claude.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=a84b9b3a-2e34-4a10-8451-155ee83a0cc3"
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "file": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "documents",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/pi.md",
+        "--expected-revision",
+        "4",
+        "--operation-id",
+        "2636e52a-820c-4e1e-97b6-095c08d3d615",
+        "--by",
+        "agent:codex",
+        "--json"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "2636e52a-820c-4e1e-97b6-095c08d3d615",
+      "revision": 5,
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+      "cursor": 0,
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/pi.md"
+        ],
+        "artifacts": []
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=16b78290-a9e2-40fb-a8a6-4fa85da7a713"
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "file": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+      "open_command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "./treadle/packages/cli/dist/src/main.js",
+        "do",
+        "feedback",
+        "open",
+        "specs/browser-agent-feedback",
+        "--mode",
+        "diff",
+        "--file",
+        "specs/browser-agent-feedback/checks/native-sources/pi.js",
+        "--expected-revision",
+        "5",
+        "--operation-id",
+        "036b4e78-10de-44ef-bb97-669b2f524f02",
+        "--by",
+        "agent:codex",
+        "--json",
+        "--base",
+        "d919603f84223c1502558738f1dd7e2e700521ab"
+      ],
+      "open_exit": 0,
+      "format": "feedback-result/1",
+      "status": "pending",
+      "project": "f69b47a23566ae2a3e86acb0",
+      "operation_id": "036b4e78-10de-44ef-bb97-669b2f524f02",
+      "revision": 6,
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+      "cursor": 0,
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/pi.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/#/browser-agent-feedback/feedback?session=2053a9ce-4b37-43bb-a996-43935cb46444"
+    }
+  ]
+}

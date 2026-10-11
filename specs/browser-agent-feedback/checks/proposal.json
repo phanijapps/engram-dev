@@ -1,0 +1,59 @@
+{
+  "observed_at": "2026-10-11T12:19:02.480Z",
+  "revision": 19,
+  "schema": "specpack-owner-workflow.schema.json",
+  "schemaValid": true,
+  "violations": [],
+  "gaps": 0,
+  "requirements": 11,
+  "decisions": 5,
+  "tasks": 7,
+  "artifacts": 12,
+  "sourcePins": 23,
+  "structuralEntry": [
+    "T-1"
+  ],
+  "topologicalOrder": [
+    "T-1",
+    "T-2",
+    "T-3",
+    "T-4",
+    "T-5",
+    "T-6",
+    "T-7"
+  ],
+  "gate": {
+    "phase": "decisions",
+    "reasons": [
+      "D-1",
+      "D-2",
+      "D-3",
+      "D-4",
+      "D-5",
+      "T-1 needs D-1",
+      "T-1 needs D-3",
+      "T-1 needs D-4",
+      "T-2 needs D-1",
+      "T-2 needs D-2",
+      "T-2 needs D-3",
+      "T-2 needs D-4",
+      "T-3 needs D-1",
+      "T-3 needs D-4",
+      "T-3 needs D-5",
+      "T-4 needs D-3",
+      "T-4 needs D-4",
+      "T-4 needs D-5",
+      "T-5 needs D-2",
+      "T-5 needs D-4",
+      "T-6 needs D-1",
+      "T-6 needs D-2",
+      "T-6 needs D-3",
+      "T-6 needs D-4",
+      "T-6 needs D-5",
+      "T-7 needs D-4"
+    ]
+  },
+  "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+  "ownerActs": 0,
+  "executionAdmitted": false
+}

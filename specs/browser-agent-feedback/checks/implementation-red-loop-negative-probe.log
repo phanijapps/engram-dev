@@ -1,0 +1,11 @@
+{
+  "explicit_synthetic_negative_fixture": true,
+  "native_processes_run": 0,
+  "real_human_actions": 0,
+  "extracted_native_verifier_accepted": true,
+  "empty_command_argv": true,
+  "invalid_prompt_hash": true,
+  "pending_stdout_declared_submitted": true,
+  "resolution_precedes_revision": true,
+  "output": "Native matrix: six human browser / native agent revision / human resolution journeys verified\n"
+}

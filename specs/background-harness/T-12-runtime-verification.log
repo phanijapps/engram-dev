@@ -1,0 +1,14 @@
+{
+  "verdict": "PASS",
+  "scope": "Native runtime and backlog transfer only",
+  "combinations": [
+    "linux/22",
+    "linux/24",
+    "win32/22",
+    "win32/24",
+    "darwin/22",
+    "darwin/24"
+  ],
+  "deferred": "harness-host-acceptance",
+  "fullHostAcceptance": "INCOMPLETE"
+}

@@ -1,0 +1,46 @@
+{
+  "observed_at": "2026-10-11T13:54:22.829Z",
+  "probes": [
+    {
+      "args": [
+        "--session",
+        "a2805f26-b669-4b82-bfc2-95ab61d59ed5"
+      ],
+      "exit": 1
+    },
+    {
+      "args": [
+        "--session=a2805f26-b669-4b82-bfc2-95ab61d59ed5"
+      ],
+      "exit": 1
+    },
+    {
+      "args": [
+        "--by=agent:claude"
+      ],
+      "exit": 1
+    },
+    {
+      "args": [
+        "--",
+        "another-project"
+      ],
+      "exit": 1
+    },
+    {
+      "args": [
+        "--after",
+        "--session=other"
+      ],
+      "exit": 1
+    },
+    {
+      "args": [
+        "--timeout",
+        "1"
+      ],
+      "exit": 1
+    }
+  ],
+  "no_child_observations": true
+}

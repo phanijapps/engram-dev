@@ -1,0 +1,14 @@
+UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified
+file://./specs/browser-agent-feedback/verify-hosts.mjs:10
+  if (!ok) throw Error(message);
+                 ^
+
+Error: Native Claude/Codex/Pi human feedback witnesses are not recorded yet; T-6 remains pending
+    at requireValue (file://./specs/browser-agent-feedback/verify-hosts.mjs:10:18)
+    at native (file://./specs/browser-agent-feedback/verify-hosts.mjs:90:3)
+    at file://./specs/browser-agent-feedback/verify-hosts.mjs:246:42
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

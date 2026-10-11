@@ -1,0 +1,365 @@
+{
+  "id": "wukong-rename",
+  "name": "wukong-rename",
+  "description": "Wukong product and CLI rename",
+  "date": {
+    "updated": "2026-10-11T02:09:54Z",
+    "closed": {
+      "at": "2026-10-11T02:09:54Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete",
+    "deliverable": "delivered"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "4219e17a9667148dc6088c434154640e6535e9b6de6c1aeb2fb030f8dc313934"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "22648140035caf80c37915324d99792292377b8e1566960e23829cad9b6eaa2d"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "6378752a0d7a4d6e97b502c1155c31111d056d6eb9c3cb1fcc2ea708cd73f97d"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "74ef8349427a5ff3f1adb192d541927fdeb34ada6af60b7276fef39c47566cb0"
+    },
+    "authorization": {
+      "ref": "authorization.md",
+      "type": "text/markdown",
+      "sha256": "2c1f4780f870b06b990915ff77d5d7b7f82dcad76216e04b20c7078a74bfb75b"
+    }
+  },
+  "spec": {
+    "why": "Rename the displayed product to Wukong and command to wukong, retaining internal @treadle packages, treadle/ workspace, formats and existing service/project identity. The user will rename the repository separately.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Public branding, CLI executable and live usage docs say Wukong/wukong.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "Existing server state/enrollment and format contracts survive; authored skills remain brand-neutral and hook recall uses the installed runtime or explicit HARNESS_CLI override.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Rebranding helper changes display/CLI only, validates inputs before writing and supports repeated renames without package/import churn.",
+        "serves": [
+          "US-1"
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Repository gates, standalone runtime, generated host packages and independent PACK review pass. No invented new native host trust/activation or changes to closed records.",
+        "serves": [
+          "US-1"
+        ]
+      }
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "text": "As a harness user I want the product and CLI called Wukong while existing projects and workflows keep working."
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Renaming the remote repository, internal packages/workspace, stored formats, closed evidence or unrun real host acceptance; automatic Finish consent"
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use Wukong/wukong publicly, retain internal packages/workspace and service state identity, refresh owned skills/hooks through the installer.",
+        "because": "Actual user authorization follows the proposed bounded product/CLI rename; avoid lost enrollments or import churn.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Compatible product rebrand",
+        "kind": "mechanism",
+        "detail": "Change brand tokens and CLI bin metadata while retaining internal names and a stable brand.stateDirectory token. Replace project-page literal command text with server-supplied public branding rendered with textContent. Recall uses its versioned runtime pointer and explicit override, refusing missing runtime rather than guessing a product binary. Repair brand:set to update tokens/current CLI bin only, supporting quoting and repeated renames. Brand gate scans current and former product tokens but allows internal import specifiers, workspace paths and historical contracts. Current README/agent instructions/installation/rebrand guide explain transition; historical specs, corpus, wiki research and frozen guide bytes remain preserved. Keep repository URLs valid until the user actually renames the repository.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4"
+        ]
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Implement compatible product and CLI rename",
+      "detail": "Change brand tokens and CLI bin metadata while retaining internal names and a stable brand.stateDirectory token. Replace project-page literal command text with server-supplied public branding rendered with textContent. Recall uses its versioned runtime pointer and explicit override, refusing missing runtime rather than guessing a product binary. Repair brand:set to update tokens/current CLI bin only, supporting quoting and repeated renames. Brand gate scans current and former product tokens but allows internal import specifiers, workspace paths and historical contracts. Current README/agent instructions/installation/rebrand guide explain transition; historical specs, corpus, wiki research and frozen guide bytes remain preserved. Keep repository URLs valid until the user actually renames the repository.",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "verify": {
+        "cmd": "node specs/wukong-rename/verify-implementation.mjs",
+        "expect": "Focused helper/CLI/state/UI/recall regressions pass; product configuration and CLI bin are Wukong/wukong with internal names and state identity retained."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "sha256": "031054e8a8b8ac494af9a6a48bd9193c0c9d87750b4c42ac19f4ec2b3492e214"
+          },
+          {
+            "path": "treadle/packages/cli/package.json",
+            "sha256": "b30bb308c11cc67d31efe0c77ec1c3c5b97e2f9ba4983a3c0b597661e561e75e"
+          },
+          {
+            "path": "treadle/packages/cli/src/serve/runtime.ts",
+            "sha256": "7bc6c8aa13a1e6c4740df1b62dc85923c1bfa8ce79d942b441e2c75dc40fc6a0"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/session-recall.js",
+            "sha256": "2371ec6addf058eb0710e6288ba772358119d9a494e4986afd83c37158503856"
+          },
+          {
+            "path": "treadle/scripts/set-brand.mjs",
+            "sha256": "f5bc3b244b9de1e2e8e989281e52ee6cd2b20a9b42f928689abdc6463e04a6ec"
+          },
+          {
+            "path": "treadle/scripts/brand-check.mjs",
+            "sha256": "a5c1d537ba552a0300f10711ff2fca9b8a245be93a2a88021f907c2b1745db39"
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "sha256": "5bcc914589d37976c6b9f846b3b0257a2a2a73fc1788e4acccf6bb221ae4a3c3"
+          },
+          {
+            "path": "treadle/packages/web/src/projects.js",
+            "sha256": "32b063f0dd971d956af3cf03c0b50af1d7256c4bb740c7ee855bcd60a579c7aa"
+          },
+          {
+            "path": "README.md",
+            "sha256": "a7679e7285eda697b710aeeb5b9066b1ac94ec5721c2e75cce602fc8824fb3aa"
+          },
+          {
+            "path": "AGENTS.md",
+            "sha256": "905bacd2a362fcc7904b6ed283875aa7e3547e78549c19be5c40389aa8088676"
+          },
+          {
+            "path": "install.sh",
+            "sha256": "213889b76e6e19f0f96f53bd3899e903ebc9acb774684a5b2d4bda268dfe3fa5"
+          },
+          {
+            "path": "install.ps1",
+            "sha256": "531caa380c55fc9964eb220a7d92052ed43e9544250b7232af14f9fd0b7532c2"
+          }
+        ],
+        "notes": [
+          "Read brief.md, spec.md, design.md and plan.md; preserve user reviewer edits and closed specs."
+        ]
+      },
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "node specs/wukong-rename/verify-implementation.mjs",
+          "exit": 0,
+          "at": "2026-10-11T01:56:06Z",
+          "by": "agent:codex",
+          "notes": "Five focused suites passed (25 tests); compiled CLI reports Wukong/wukong, storage remains treadle. Actual log: implementation.log."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Verify distribution, installation and repository gates",
+      "detail": "Run actual gates and runtime packaging; refresh the local integration through authoritative installer, preserve foreign configuration and disclose unrun host trust.",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-1"
+      ],
+      "verify": {
+        "cmd": "node specs/wukong-rename/verify-delivery.mjs",
+        "expect": "Full repository gates, native-neutral packaging and wiki checks pass; observed wukong CLI/service/project continuity and generated host package names are recorded."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/wukong-rename/verify-delivery.mjs"
+          }
+        ],
+        "notes": [
+          "Human hook trust/reload is separate; no real host acceptance is asserted by callback or package tests."
+        ]
+      },
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "node specs/wukong-rename/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T01:57:57Z",
+          "by": "agent:codex",
+          "notes": "All six gates, portable runtime, Linux smoke and five wiki checks passed; local-delivery.json verifies wukong CLI, Wukong server, preserved registry/reviewer and hashes of all three host packages. Initial lint failure retained in gates/attempt-1-*; corrected regex escapes before passing rerun."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Obtain independent PACK review",
+      "detail": "Read-only red-foreman independently reruns relevant expectations and supplies current plan/evidence digests. Human Finish stays separate.",
+      "status": "done",
+      "phase": "review",
+      "needs": [
+        "T-2"
+      ],
+      "verify": {
+        "cmd": "node specs/wukong-rename/verify-review.mjs",
+        "expect": "Independent current PACK PASS and passing implementation evidence are verified without manufacturing a verdict."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "specs/wukong-rename/verify-review.mjs"
+          }
+        ],
+        "notes": [
+          "Record actual reviewer verdict beside work."
+        ]
+      },
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "honors": [],
+      "accepts": [],
+      "requires_decisions": [
+        "D-1"
+      ],
+      "evidence": [
+        {
+          "cmd": "node specs/wukong-rename/verify-review.mjs",
+          "exit": 0,
+          "at": "2026-10-11T02:01:52Z",
+          "by": "agent:codex",
+          "notes": "Verified actual independent PACK PASS from agent:red_foreman_plan at 2026-10-11T02:01:21Z for current plan and non-review evidence digests. Separate Finish consent not inferred."
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "f025fe6f-dbe8-4225-a01c-24c168117de4",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T01:50:44.466Z",
+        "revision": 2,
+        "decision": "D-1"
+      },
+      {
+        "id": "3e3444d7-1df9-401b-8633-a564db8461ec",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-11T01:50:44.466Z",
+        "revision": 3,
+        "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370"
+      },
+      {
+        "id": "ac7991b9-df51-43d6-bd9e-a2aad1564811",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T02:09:54Z",
+        "revision": 12
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-11T01:50:44.466Z",
+      "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red_foreman_plan",
+        "at": "2026-10-11T02:01:21Z",
+        "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370",
+        "evidence_digest": "5b626ce7e4621067cf65524dfebea20f974a0e819f231a8b86c002087a809ec3",
+        "notes": "Independent read-only report: pack-review.md",
+        "findings": []
+      },
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red_foreman_plan",
+        "at": "2026-10-11T02:08:27Z",
+        "plan_digest": "89ba76e9423ef7ec7c29c4e7aa490185a2adbfc4482394c13f76e4944e7e8370",
+        "evidence_digest": "5b626ce7e4621067cf65524dfebea20f974a0e819f231a8b86c002087a809ec3",
+        "notes": "Native CI follow-up: native-ci/review.md. Inherited Windows shutdown defect disclosed separately; identical-source retry passed. No repair claimed.",
+        "findings": []
+      }
+    ]
+  },
+  "env": {
+    "node": ">=22",
+    "pnpm": "9.15.9"
+  },
+  "format": "specpack/0.4",
+  "revision": 12
+}

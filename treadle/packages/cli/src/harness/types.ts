@@ -6,7 +6,7 @@ export type Scope = 'project' | 'global';
 export type ComponentKind = 'skill' | 'agent';
 
 export interface HookWiring {
-  kind: 'extension' | 'settings-hooks' | 'config-notify' | 'prompt-file';
+  kind: 'extension' | 'settings-hooks' | 'config-notify' | 'config-hooks' | 'prompt-file';
   dest?: string;
   /** prompt-file wiring: the prompt template to install (the JS payload is not the prompt) */
   prompt?: string;
@@ -17,6 +17,7 @@ export interface HookWiring {
 export interface HookRow {
   id: string;
   file: string;
+  companions?: string[];
   wiring: Partial<Record<Surface, HookWiring | HookWiring[] | null>>;
 }
 
@@ -31,6 +32,7 @@ export interface ComponentRow {
 
 export interface HarnessManifest {
   format: 'harness/0.1';
+  version?: string;
   components: ComponentRow[];
   hooks: HookRow[];
 }

@@ -17,14 +17,20 @@ not label unevaluated cases as passed.
 3. **Observable verification:** every task's expectation is a
    command/measurable observation; none are "looks right" assertions.
 4. **DAG validity:** walked, not eyeballed — no cycles, no self-prereqs,
-   prereqs are output-needs; ready set is the true topological entry set.
-5. **Decision discipline:** alternatives real, doors tagged; one-way
-   doors gate their tasks on owner acceptance; insufficient evidence
+   prereqs are output-needs; structural entry set matches the DAG, and is separate from machine execution readiness.
+5. **Decision discipline:** alternatives real, doors tagged; all proposed
+   decisions need owner acceptance and separate start permission; insufficient evidence
    keeps slices blocked, no manufactured decisions.
-6. **Frozen context:** each task names its compile query, wiki cids,
-   exact refs; no exploration-as-context.
+6. **Frozen context:** each task registers allowed touch paths and sufficient advisory references;
+   no exploration-as-context or false advisory pin claims.
 7. **Status honesty:** statuses reflect observed evidence only; revisions
-   supersede, never rewrite.
+   supersede, never rewrite approved artifacts. No task admission or owner action during planning.
+
+8. **Diagram integrity:** useful diagrams answer named questions, distinguish proposals,
+   trace IDs, show material boundaries and failure paths, and agree with prose and canonical links.
+   Omission for small fixes is justified; unavailable rendering is disclosed.
+9. **Machine integrity:** locked registration, correct canonical link families, actual artifact hashes,
+   schema availability/results, preserved prior evidence and receipts. Alignment alone is insufficient.
 
 ## Scoring dimensions (0 = absent/incorrect, 1 = partial, 2 = complete)
 
@@ -35,9 +41,10 @@ not label unevaluated cases as passed.
 - DAG correctness (walk-validated)
 - Traceability integrity
 - Verification expectations (observable, mapped to ACs)
-- Handoff quality (ready set + per-task context implement can execute)
+- Handoff quality (structural entry set, owner gate, registered task context)
+- Visual clarity (appropriate view, accurate semantics, readable captions and validation limits)
 
-Release threshold: all critical gates + at least 13/16. A single
+Release threshold: all critical gates + at least 15/18. A single
 invented answer to a recorded question, or one evidence-less "done",
 fails the run regardless of score.
 
@@ -50,3 +57,9 @@ fails the run regardless of score.
   settled questions, surveys beyond the ready set) fails even when
   polished — stage blur is the failure.
 - Repeat after changing the contract, templates, or routing table.
+
+For this substantial revision, use an independent forward-test in an isolated temporary workspace.
+Give the evaluator realistic requests and raw fixtures, without the expected answers or prior findings.
+Permit authored planning artifacts and test packs only inside that workspace.
+Run actual machine checks where available; do not grant owner consent or admit implementation.
+Record generated artifacts, commands, schema/diagram tool versions, outcomes, failures, and remaining unrun cases.

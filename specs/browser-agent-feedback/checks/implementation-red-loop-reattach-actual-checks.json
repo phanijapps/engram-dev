@@ -1,0 +1,38 @@
+{
+  "observed_at": "2026-10-11T15:00:03.316266+00:00",
+  "scope": "Read-only actual artifact checks; no human/native completion claim",
+  "verifier_sha256": "d19dd19d1220313ecad9985b8b02f5913748e41312ee62470ed055365f9561a1",
+  "ledger_sha256": "60c01f6dc7e3b5f2c8cb1ee14ea74cdc4b3ff082fb5f9d15e792e4a4fdb8f0ad",
+  "draft_hash_matches": true,
+  "all_command_hashes_match": true,
+  "reattach_original_matches": true,
+  "reattach_anchor_matches": true,
+  "reattach_actor_matches": true,
+  "reattach_time_matches": true,
+  "prompt_hash_matches": true,
+  "process_record_exit": 0,
+  "later_receipts": [
+    {
+      "phase": "reply",
+      "operation_id": "bd4bd566-7558-4fcc-b423-9ded047d0b18",
+      "observed_at": "2026-10-11T14:53:28.654Z",
+      "matches": true
+    },
+    {
+      "phase": "round",
+      "operation_id": "accb7673-60f3-4675-836a-a5b8b3c8d4be",
+      "observed_at": "2026-10-11T14:53:33.245Z",
+      "matches": true
+    }
+  ],
+  "thread_count": 8,
+  "resolution_event_count": 0,
+  "native_witness_exists": false,
+  "command": [
+    "node",
+    "./specs/browser-agent-feedback/verify-hosts.mjs"
+  ],
+  "exit": 1,
+  "stdout": "UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified\n",
+  "stderr": "file://./specs/browser-agent-feedback/verify-hosts.mjs:10\n  if (!ok) throw Error(message);\n                 ^\n\nError: Native Claude/Codex/Pi human feedback witnesses are not recorded yet; T-6 remains pending\n    at requireValue (file://./specs/browser-agent-feedback/verify-hosts.mjs:10:18)\n    at native (file://./specs/browser-agent-feedback/verify-hosts.mjs:109:3)\n    at file://./specs/browser-agent-feedback/verify-hosts.mjs:440:42\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.19.0\n"
+}

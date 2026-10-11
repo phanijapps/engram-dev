@@ -1,0 +1,149 @@
+
+> treadle-root@ check ./treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+Checking formatting...
+All matched files use Prettier code style!
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/conformance/test/corpus.test.ts (1 test) 6ms
+ ✓ packages/brand/test/brand.test.ts (2 tests) 4ms
+ ✓ packages/cli/test/banner.test.ts (1 test) 4ms
+ ✓ packages/cli/test/init-skin.test.ts (3 tests) 5ms
+ ✓ packages/conformance/test/owner-schema.test.ts (2 tests) 11ms
+ ✓ packages/cli/test/harness-packages.test.ts (1 test) 65ms
+ ✓ packages/cli/test/project-registry.test.ts (3 tests) 93ms
+ ✓ packages/knowledge/test/debts.test.ts (5 tests) 40ms
+ ✓ packages/knowledge/test/knowledge.test.ts (4 tests) 36ms
+ ✓ packages/knowledge/test/containment.test.ts (5 tests) 62ms
+ ✓ packages/cli/test/init-engine.test.ts (17 tests) 105ms
+ ✓ packages/knowledge/test/ritual.test.ts (5 tests) 116ms
+ ✓ packages/core/test/core.test.ts (5 tests) 5ms
+ ✓ packages/core/test/owner-workflow.test.ts (9 tests) 53ms
+ ✓ packages/web/test/pages.test.ts (11 tests) 99ms
+ ✓ packages/cli/test/where.test.ts (7 tests) 129ms
+ ✓ packages/cli/test/context.test.ts (1 test) 35ms
+ ✓ packages/web/test/project-library.test.ts (1 test) 101ms
+ ✓ packages/web/test/servers.test.ts (6 tests) 164ms
+ ✓ packages/web/test/project-security.test.ts (2 tests) 165ms
+stdout | packages/cli/test/do.test.ts > the do plane (integration, in-process) > answers, approves, records, closes — the whole ceremony through the CLI
+answered Q-1 by human:owner
+answered Q-2 by human:owner
+approved by human:owner at 2026-10-10T12:00:00Z
+{"task":"T-1","status":"done","fail_streak":0}
+closed by human:owner: the record is frozen
+
+stdout | packages/cli/test/do.test.ts > do next (the frozen handout) > hands out the task, saves the doing state, then reports closure honestly
+task T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
+  D    D-1
+  TASK T-1 — one
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+born: /tmp/cli-owner-lu5mFP/p/p.json (revision 1, stage awaiting_owner)
+recorded accept by human:owner; audit recorded
+recorded start by human:owner; audit recorded
+task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+  D    D-1
+  TASK T-1 — Work
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+born: /tmp/cli-owner-2Om2yo/p/p.json (revision 1, stage awaiting_owner)
+asked Q-1 (revision 2)
+
+stdout | packages/cli/test/do.test.ts > do accept / reject (the human act, last to port) > accept resolves the decision and its questions; reject keeps them open
+accepted D-9 by human:owner — resolved Q-1
+rejected D-8: wrong shape — the questions stay open
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > explicitly adopts active legacy bytes without inventing earlier start consent
+born: /tmp/cli-owner-0ncPCa/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+ ✓ packages/conformance/test/runner.test.ts (3 tests) 6ms
+ ✓ packages/cli/test/do.test.ts (5 tests) 37ms
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+born: /tmp/cli-owner-EdoWgy/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+born: /tmp/cli-owner-ARwCUB/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+born: /tmp/cli-owner-3PZTGf/p/p.json (revision 1, stage awaiting_owner)
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+born: /tmp/cli-owner-2Ku7Rq/p/p.json (revision 1, stage awaiting_owner)
+
+ ✓ packages/cli/test/owner-workflow.test.ts (7 tests) 56ms
+ ✓ packages/cli/test/know.test.ts (7 tests) 96ms
+ ✓ packages/web/test/room-skin.test.ts (3 tests) 54ms
+ ✓ packages/web/test/library-skin.test.ts (4 tests) 251ms
+ ✓ packages/web/test/dom.smoke.test.ts (2 tests) 345ms
+ ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1076ms
+   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  363ms
+ ✓ packages/web/test/theme.test.ts (5 tests) 427ms
+ ✓ packages/cli/test/serve-runtime.test.ts (7 tests) 1278ms
+   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  589ms
+   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  309ms
+   ✓ shared service lifecycle > recovers proven dead startup and recovery owners; unfinished candidates hold no lock  336ms
+ ✓ packages/cli/test/claude-context.test.ts (1 test) 1588ms
+   ✓ connects startup/resume/preprompt workspace and never shuts down with session lifetime  1586ms
+ ✓ packages/web/test/room-keyboard.test.ts (1 test) 1630ms
+   ✓ the room keyboard (standalone harness) > drives the ceremony: Enter submits, approve card reached  1625ms
+ ✓ packages/cli/test/pi-context.test.ts (1 test) 1969ms
+   ✓ registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown  1967ms
+ ✓ packages/cli/test/codex-context.test.ts (2 tests) 2092ms
+   ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  2029ms
+ ✓ packages/web/test/owner-workflow.test.ts (11 tests) 2113ms
+   ✓ owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  2027ms
+ ✓ packages/web/test/inspector.test.ts (1 test) 3325ms
+   ✓ the phase inspector (T-3) > renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only  3322ms
+ ✓ packages/web/test/telemetry.test.ts (1 test) 3356ms
+   ✓ the review telemetry + gate (T-8) > renders the real counts, filters by severity, speaks the house sentence  3354ms
+ ✓ packages/web/test/workflow-ui.test.ts (4 tests) 4003ms
+   ✓ owner workflow UI > shows the ordered flow; decision approval does not start implementation  494ms
+   ✓ owner workflow UI > fails closed when approval state cannot be read; retry restores the controls  3132ms
+
+ Test Files  38 passed (38)
+      Tests  168 passed (168)
+   Start at  21:21:09
+   Duration  5.76s (transform 5.56s, setup 0ms, collect 18.16s, tests 25.00s, environment 6.05s, prepare 5.62s)
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+REFUSED: decisions: D-1; T-1 needs D-1
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+REFUSED: A complete spec cannot be adopted
+REFUSED: Adoption needs an owner claim
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+REFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).

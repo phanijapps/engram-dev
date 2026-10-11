@@ -1,0 +1,18 @@
+{
+  "initial": {
+    "operation_id": "34b961e7-b267-44af-a8e2-4b3c855505aa",
+    "revision": 1,
+    "session": "76f8e049-ec34-49f2-b95e-1d09e8e1508d",
+    "round": "4778deee-b6b1-419b-869d-e4ff093c4882"
+  },
+  "round": {
+    "operation_id": "815b0c89-aeff-4f1c-9716-c53d0dce373e",
+    "revision": 2,
+    "session": "76f8e049-ec34-49f2-b95e-1d09e8e1508d",
+    "round": "6b22ac6c-deb8-4327-b883-eafa66985a74"
+  },
+  "storedHead": "fa6e4d73eb8877aaca9da038e02361e63df2a21c",
+  "newLiveBytes": "new requested revision in worktree\n",
+  "publishedAfter": "reviewed head bytes\n",
+  "refreshedWorktreeRepresented": false
+}

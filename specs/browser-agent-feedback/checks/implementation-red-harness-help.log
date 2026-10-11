@@ -1,0 +1,14 @@
+Usage: wukong do feedback [options] [command]
+
+review selected artifacts and read submitted browser feedback
+
+Options:
+  -h, --help                 display help for command
+
+Commands:
+  open [options] <packDir>
+  read [options] <packDir>
+  wait [options] <packDir>
+  reply [options] <packDir>
+  round [options] <packDir>
+  help [command]             display help for command

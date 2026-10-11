@@ -5,7 +5,11 @@ title: <what knowledge was missing, plainly>
 status: draft
 created: YYYY-MM-DD
 repo_head: <commit pinned at authoring>
+wiki_freshness: fresh | stale | absent | unknown
 trigger: <compile miss / search miss / review finding / blocked task / stale wiki>
+source_state: <relevant staged, unstaged, untracked, or clean inputs>
+source_hashes: {}
+supersedes: []
 related: []
 ---
 
@@ -15,6 +19,17 @@ related: []
 > might live, and how to close it. Ends in a close plan — never a shrug.
 > This mode fixes the _context layer_; it does not spec or fix anything
 > itself.
+
+## Source pins and limits
+
+Record HEAD, relevant dirty state, observed source hashes, and knowledge limits.
+Cite actual files and documents. A fresh stamp does not verify dirty source bytes.
+Separate current observations from historical evidence and proposed checks.
+
+## Scope and Out-of-scope
+
+State the bounded question and included slice. List exclusions explicitly.
+If no exclusions exist, explain why the boundary is complete.
 
 ## Trigger
 
@@ -40,21 +55,34 @@ inferred from …; D is pure unknown."
 
 Concrete next moves, each mapped to its owner/tool:
 
-- `know code index . wiki` / build-kb pass for …
+- Bounded `build-kb` refresh or external index retrieval for …
 - spike for … (experiment-sized unknowns)
 - ask-once human list for … (only what no artifact can answer)
 - new wiki concepts worth authoring (curated, evidence-cited) for …
 
-## Assumptions adopted meanwhile
+## Assumptions
 
 What we will proceed on while gaps stay open — each with blast radius and
 the gap ID that closes it:
 
-| ID  | Assumption | Blast radius | Closed by |
-| --- | ---------- | ------------ | --------- |
+| ID  | Assumption | Blast radius | Validation trigger | Closed by |
+| --- | ---------- | ------------ | ------------------ | --------- |
+
+## Open questions
+
+Classify each question as source, experiment, human spec, or design.
+
+| ID  | Question | Kind | Blocks | Owner | Resolution path |
+| --- | -------- | ---- | ------ | ----- | --------------- |
 
 ## Handoff
 
-- **Ready now:** …
-- **Blocked on:** G-ids with owners
-- **Next step:** …
+- **Pack:** canonical path, held revision, format and spec-question state; or why no initiative is needed.
+- **Artifacts and requirements:** references and registered candidate IDs.
+- **Ready for planning:** bounded slices supported by evidence.
+- **Blocked on:** unresolved IDs, slices, owners and resolution paths.
+- **Next step:** one next skill or action with its inputs.
+- **Checks and limits:** actual command exits, expected alignment gaps and unrun checks.
+
+Read `resources/operations.md` from the skill before machine registration.
+Analysis grants no implementation permission or owner approval.

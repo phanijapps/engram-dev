@@ -1,5 +1,6 @@
 /** Manifest loading + validation. Failures refuse — never guess. */
 import { existsSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { isAbsolute, join, resolve } from 'node:path';
 import type { ComponentRow, HarnessManifest, HookRow, Surface } from './types.js';
 
@@ -60,6 +61,8 @@ function validateComponent(c: ComponentRow): void {
 function validateHook(h: HookRow): void {
   if (!h.id || !h.file) throw new Error('hook refused: id and file are required');
   if (!safePath(h.file)) throw new Error(`${h.id}: hook file escapes the manifest root — refused`);
+  for (const file of h.companions ?? [])
+    if (!safePath(file)) throw Error(`${h.id}: support file escapes manifest root`);
   for (const [k, w] of Object.entries(h.wiring)) {
     const ws = Array.isArray(w) ? w : [w];
     for (const one of ws) {
@@ -76,13 +79,13 @@ function validateHook(h: HookRow): void {
  *  (dist/src/harness/), and packed installs; a fixed hop count broke
  *  all three at once (found by the git-installed binary, T-2). */
 export function defaultManifestPath(): string {
-  let dir = new URL('.', import.meta.url).pathname;
+  let dir = fileURLToPath(new URL('.', import.meta.url));
   for (let i = 0; i < 5; i++) {
     const candidate = join(dir, 'harness', 'harness.json');
     if (existsSync(candidate)) return candidate;
     dir = join(dir, '..');
   }
-  return join(new URL('.', import.meta.url).pathname, '..', '..', 'harness', 'harness.json'); // the honest ENOENT when truly absent
+  return join(fileURLToPath(new URL('.', import.meta.url)), '..', '..', 'harness', 'harness.json'); // the honest ENOENT when truly absent
 }
 
 export function sourceFile(c: ComponentRow, surface: Surface): string | undefined {

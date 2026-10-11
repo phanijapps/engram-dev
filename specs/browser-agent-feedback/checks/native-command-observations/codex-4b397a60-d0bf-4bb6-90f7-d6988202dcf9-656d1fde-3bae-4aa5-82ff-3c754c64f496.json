@@ -1,0 +1,83 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "codex",
+  "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+  "phase": "read",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "read",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "--after",
+    "3",
+    "--json"
+  ],
+  "started_at": "2026-10-11T14:53:43.519Z",
+  "observed_at": "2026-10-11T14:53:43.675Z",
+  "exit": 0,
+  "output": {
+    "format": "feedback-result/1",
+    "pack_id": "browser-agent-feedback",
+    "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+    "revision": 42,
+    "cursor": 4,
+    "status": "submitted",
+    "batches": [
+      {
+        "id": "30fb0850-7729-4248-97fd-430cc2e52990",
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+        "cursor": 4,
+        "by": "human:owner",
+        "at": "2026-10-11T14:47:58.840Z",
+        "items": [
+          {
+            "id": "cdcb8696-3a41-431f-9616-31acca32b564",
+            "kind": "reattach",
+            "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+            "body": "fadsf",
+            "by": "human:owner",
+            "at": "2026-10-11T14:47:43.675Z",
+            "anchor": {
+              "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+              "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "side": "after",
+              "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+              "start": 7,
+              "end": 7
+            },
+            "original": {
+              "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+              "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "side": "after",
+              "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+            },
+            "event": "49da1592-8cd9-4e8f-85ef-aeb13aed19b5"
+          }
+        ]
+      }
+    ],
+    "threads": [
+      {
+        "id": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+        "resolved": false,
+        "stale": false
+      },
+      {
+        "id": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+        "resolved": false,
+        "stale": true
+      },
+      {
+        "id": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+        "resolved": false,
+        "stale": false
+      }
+    ],
+    "project": "f69b47a23566ae2a3e86acb0"
+  }
+}

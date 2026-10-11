@@ -1,0 +1,41 @@
+{
+  "observed_at": "2026-10-11T13:13:57.181833+00:00",
+  "all_declared_match": true,
+  "all_browser_assets_match": true,
+  "results": [
+    {
+      "file": "treadle/packages/web/src/feedback.js",
+      "declared": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+      "current": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+      "matches": true,
+      "compiled_asset": "treadle/packages/web/dist/src/feedback.js",
+      "compiled_sha256": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+      "compiled_matches_source": true
+    },
+    {
+      "file": "treadle/packages/web/src/library.js",
+      "declared": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+      "current": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+      "matches": true,
+      "compiled_asset": "treadle/packages/web/dist/src/library.js",
+      "compiled_sha256": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+      "compiled_matches_source": true
+    },
+    {
+      "file": "treadle/packages/web/src/library.html",
+      "declared": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+      "current": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+      "matches": true,
+      "compiled_asset": "treadle/packages/web/dist/src/library.html",
+      "compiled_sha256": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+      "compiled_matches_source": true
+    },
+    {
+      "file": "treadle/packages/web/src/project-server.ts",
+      "declared": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441",
+      "current": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441",
+      "matches": true
+    }
+  ],
+  "scope": "Read-only independent comparison; no source/build writes"
+}

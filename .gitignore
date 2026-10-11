@@ -13,6 +13,9 @@ graphify-out/
 # the installer runtime state (per-agent records, absolute paths — machine-local)
 /.harness/
 
+# Pi's runtime pointer contains machine-local executable paths; the installer regenerates it.
+/.pi/extensions/runtime.json
+
 # the git-install orchestrator must never commit its build trees
-node_modules/
+node_modules
 package-lock.json

@@ -1,0 +1,17 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+stdout | packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart
+FEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"d3a717ef-20bf-4dac-a972-40e32b1ca03b","before_cursor":1,"after_cursor":1,"before_batches":["4eca764e-ee3b-4af5-be4b-1a13cd75e86e"],"after_batches":["4eca764e-ee3b-4af5-be4b-1a13cd75e86e"]}
+
+stdout | packages/cli/test/feedback-loop.test.ts > replays a durably submitted batch after a lost acknowledgement without duplication
+FEEDBACK_RECOVERY {"kind":"lost-ack","session":"994d90b1-06e9-4b3b-a6fb-88b8bac3a13d","operation_id":"d4cba657-77b3-43a5-b2b4-56accb12dfa4","received_batch":"686e0b4d-62b9-463f-b4ea-5a5aecac3ab6","replay_batch":"686e0b4d-62b9-463f-b4ea-5a5aecac3ab6","committed_batches":1}
+
+ ✓ packages/cli/test/feedback-loop.test.ts (4 tests) 1535ms
+   ✓ delivers stale reattachment only after another human Submit and preserves the original code anchor  1174ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  12:37:14
+   Duration  2.56s (transform 414ms, setup 0ms, collect 524ms, tests 1.54s, environment 0ms, prepare 112ms)
+

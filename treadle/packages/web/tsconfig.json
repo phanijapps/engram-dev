@@ -5,5 +5,15 @@
     "outDir": "dist"
   },
   "include": ["src"],
-  "references": [{ "path": "../core" }, { "path": "../brand" }]
+  "references": [
+    {
+      "path": "../core"
+    },
+    {
+      "path": "../brand"
+    },
+    {
+      "path": "../knowledge"
+    }
+  ]
 }

@@ -1,0 +1,25 @@
+{
+  "format": "task-rebase-receipt/1",
+  "authority": {
+    "source": "Actual user async answer",
+    "answer": "Approve the two-file pin refresh"
+  },
+  "observed_at": "2026-10-11T13:40:41.617Z",
+  "result": {
+    "ok": true,
+    "value": {
+      "revision": 39,
+      "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+      "paths": [
+        {
+          "path": "specs/browser-agent-feedback/verify-hosts.mjs",
+          "sha256": "ef0c21edad5fd9ecbfa22130a828c2a9d793debb5866fa5c15f85cbf72187336"
+        },
+        {
+          "path": "specs/browser-agent-feedback/host-witnesses.md",
+          "sha256": "81a287fdfac560af341e74d4a411d5ae5d7cd7c50b91d0be116bcfa5742a8f9f"
+        }
+      ]
+    }
+  }
+}

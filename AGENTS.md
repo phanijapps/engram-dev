@@ -1,8 +1,8 @@
-# AGENTS.md — working on treadle
+# AGENTS.md — working on Wukong
 
 ## Project and Phase 2 baseline
 
-Treadle is a spec-driven development harness. Its thesis is **knowledge first,
+Wukong is a spec-driven development harness. Its thesis is **knowledge first,
 then a tight loop**. The knowledge plane (`know`) maintains a searchable wiki.
 The work plane (`do`) admits specpacks, tasks, evidence, review and owner actions.
 The active runtime is one strict-TypeScript pnpm workspace under `treadle/`.

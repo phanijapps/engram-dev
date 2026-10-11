@@ -1,9 +1,9 @@
 
-> treadle-root@ coverage /home/videogamer/code/memex_beta/treadle
+> treadle-root@ coverage ./treadle
 > vitest run --coverage
 
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
       Coverage enabled with v8
 
  ✓ packages/brand/test/brand.test.ts (2 tests) 4ms

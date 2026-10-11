@@ -1,0 +1,8 @@
+
+> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+Checking formatting...
+ ELIFECYCLE  Command failed with exit code 1.
+[warn] packages/cli/harness/hooks/README.md
+[warn] Code style issues found in the above file. Run Prettier with --write to fix.

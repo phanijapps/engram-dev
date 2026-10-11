@@ -1,0 +1,5 @@
+
+> treadle-root@ brand:check /home/videogamer/code/memex_beta/treadle
+> node scripts/brand-check.mjs
+
+brand-check: clean — "wukong, treadle" lives only in its fence

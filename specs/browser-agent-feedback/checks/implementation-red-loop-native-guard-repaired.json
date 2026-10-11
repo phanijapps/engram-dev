@@ -1,0 +1,148 @@
+{
+  "observed_at": "2026-10-11T13:55:07.012220+00:00",
+  "runner_sha256": "a2904f3d78c039e31c4914ef380dca65690c994d14f1fde12efd7678848d44a7",
+  "scope": "Actual rejected invocations only; valid argv construction checked in isolated copied-runner with synthetic spawn stub, no native or real mutation command executed.",
+  "negative_probes": [
+    {
+      "phase": "read",
+      "args": [
+        "--session",
+        "other"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--session=other"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--by=agent:claude"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--",
+        "another-project"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--after",
+        "--session=other"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--timeout",
+        "1"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "wait",
+      "args": [
+        "--after"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "round",
+      "args": [
+        "--file",
+        "other"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "reply",
+      "args": [
+        "--body-file",
+        "--session=other"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "verify",
+      "args": [
+        "--after",
+        "0"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "another-project"
+      ],
+      "exit": 1,
+      "guard_error": true
+    },
+    {
+      "phase": "read",
+      "args": [
+        "--after=0"
+      ],
+      "exit": 1,
+      "guard_error": true
+    }
+  ],
+  "real_observation_inventory_unchanged": true,
+  "positive_synthetic_construction": [
+    {
+      "phase": "wait",
+      "exit": 0,
+      "child_called": true,
+      "fixed_session": true,
+      "fixed_actor": true
+    },
+    {
+      "phase": "read",
+      "exit": 0,
+      "child_called": true,
+      "fixed_session": true,
+      "fixed_actor": true
+    },
+    {
+      "phase": "reply",
+      "exit": 0,
+      "child_called": true,
+      "fixed_session": true,
+      "fixed_actor": true
+    },
+    {
+      "phase": "round",
+      "exit": 0,
+      "child_called": true,
+      "fixed_session": true,
+      "fixed_actor": true
+    },
+    {
+      "phase": "verify",
+      "exit": 0,
+      "child_called": true,
+      "fixed_session": true,
+      "fixed_actor": true
+    }
+  ]
+}

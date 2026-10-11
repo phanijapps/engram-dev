@@ -1,0 +1,25 @@
+{
+  "format": "task-rebase-proposal/1",
+  "observed_at": "2026-10-11T13:40:01.913Z",
+  "task": "T-6",
+  "held_revision": 38,
+  "plan_digest": {
+    "ok": true,
+    "value": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+  },
+  "drift": [
+    {
+      "path": "specs/browser-agent-feedback/verify-hosts.mjs",
+      "why": "changed",
+      "pinned": "9d8f0914345eba872b1914946293d9d005a1222954d272b65c5a5b8feb2b68eb",
+      "current": "ef0c21edad5fd9ecbfa22130a828c2a9d793debb5866fa5c15f85cbf72187336"
+    },
+    {
+      "path": "specs/browser-agent-feedback/host-witnesses.md",
+      "why": "changed",
+      "pinned": "30ce77a8bef1b5524d22865a1b366025a6b9f7a178d39a1de4cb562834037a03",
+      "current": "81a287fdfac560af341e74d4a411d5ae5d7cd7c50b91d0be116bcfa5742a8f9f"
+    }
+  ],
+  "reason": "Only task-owned verifier/witness outputs changed during approved T-6 implementation and independent review repairs; failed evidence returned task to todo before resume."
+}

@@ -39,6 +39,18 @@ not strawmen):
 From the analysis's affected-surfaces table + fresh grounding, not
 memory. Surfaces not touched: one line saying so, or they appear here.
 
+## Architecture and behavior views (when useful)
+
+Select Mermaid views with `resources/diagrams.md`. Keep only views that answer a concrete question.
+Use C4 context or container views for boundaries and dependencies.
+Use flowcharts for process branches and sequence diagrams for message order and failure alternatives.
+Use portable flowchart notation for C4 when native C4 support is unavailable.
+
+For each view, include its caption, current/proposed status, FR/DES/D references, and evidence or uncertainty.
+Insert a fenced `mermaid` block and a plain-text explanation beside the related contract or failure section.
+Record parser/render validation and its limits. If omitted, state why diagrams do not clarify this change.
+Do not leave an illustrative example or placeholder diagram in the authored design.
+
 ## Contracts & data
 
 External interfaces, data shapes, file formats, CLI/API — before/after.
@@ -60,8 +72,9 @@ two-way/one-way door · evidence status · resolves/defers.
 | ---- | -------- | ------------ | ------- | -------- | ---------------------------------- |
 | D<n> | …        | …            | one-way | Q<m>     | proposed — owner sign-off required |
 
-**One-way doors:** tasks depending on these stay `blocked-on: D<n>
-acceptance` until the owner accepts, recorded here with date and actor.
+**All proposed decisions:** dependent tasks name canonical D IDs in `requires_decisions`.
+Keep decisions proposed until actual owner acceptance. Reversibility does not waive acceptance.
+Record accepted actor and date only from the real owner record.
 
 ## Carried uncertainty
 

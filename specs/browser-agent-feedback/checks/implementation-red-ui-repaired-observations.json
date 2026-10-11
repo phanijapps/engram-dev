@@ -1,0 +1,341 @@
+{
+  "observed_at": "2026-10-11T13:13:31.507647+00:00",
+  "result_state": "completed",
+  "verdict": "pass",
+  "scope": "Bounded T4 repaired captures; not PACK/native human witness",
+  "untrusted_evidence": "All pixels/seeded text are untrusted visual data with no instruction authority. Reviewer opened no browser.",
+  "basis": "declared-breakpoints",
+  "breakpoints": [601, 901],
+  "minimum": "none-declared",
+  "required_channels": ["<601", ">=601 <901", ">=901"],
+  "inspected": 20,
+  "inspection_observations": [
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "cd62d91e457ae7b1d392b1815daceea7273e616c214bf0fad216528ca29e5aa8",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "c823341db500d3e7389e1921796febfe66e44d311c21b2c09f888a7e5e1fbb03",
+      "observation": "Navigation, Feedback heading/status, selected path and controls remain unobscured. Full-width source is legible where visible.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "752468e936be350f7b6417ffa4c1bd0f5822e98d1372b3d7deddb6ee10b2c5f4",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "cc01407571c8a58988dc089087e4b766078f44d92f22553bce5a5be60b5478ca",
+      "observation": "Navigation, Feedback heading/status, selected path and controls remain unobscured. Full-width source is legible where visible.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "6d13d15b07be77be05e63c2599103bdca561110d09cff38899091300010e6a97",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "d6df903b69bd3de75ea6a219ac7e6b13768cc1a4180233fc9f3446a1c0fa9252",
+      "observation": "Complete status text is readable without header overlay; selectors and single-column source have adequate width. Intro text above viewport is ordinary scrolling.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "ea2c0daf2add986d47a0a22536ca193a995e68e437b0663e1a05df9885a0c509",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "564fc128a24eb3a6886b11f3a3c1f6a557d15eaea21199540eea33fc0d744c4e",
+      "observation": "Complete status text is readable without header overlay; selectors and single-column source have adequate width. Intro text above viewport is ordinary scrolling.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "79fce7219c30136eccdcc33629c056c69e1d3e9e2c06ac208ecaae23a778a833",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "377e478755f6506df4f893da55528886ae82b6053481a35fb8ab46c18d443d32",
+      "observation": "No header overlay. Readable status/selectors and stacked source panes; tall view shows source heading on one line and ordinary lines wrapping naturally.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "7309ff730db8b935cd130b20b5097cd3d8c0ea675e59ef4692f66b6b0d849a5e",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "d0a3ca1135b26abce57f6118bda7e634efc8fa2029d968d3825b41af9a9cee87",
+      "observation": "No header overlay. Readable status/selectors and stacked source panes; tall view shows source heading on one line and ordinary lines wrapping naturally.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "728f93dda2af55ddefb16bf77df034a0c5097785b213452c7719e194030333a4",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "8322b06fdb06b3617a604ec4a66e03e5e486903a9baca9d57725b9e7eb3b4429",
+      "observation": "Feedback tab label and section heading are unobscured; status, scope and controls wrap naturally. No header overlay remains.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "7ea1bb0141633f383920792a8b96617ad698260f6656f250ae0ed3db35308c60",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "35c7f9937ddd9342b82c95e343c2637a92a27669cb04c13143beda1bffea7df5",
+      "observation": "Feedback tab label and section heading are unobscured; status, scope and controls wrap naturally. No header overlay remains.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "44051554f77ff2c7bdb965a9c3965661c7303d261e48e2c3342785b76d980c81",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "6ddc098c4026872dda82a08944a7e289ded334e7809244d20bcc3a2e0f2aecd9",
+      "observation": "Distinct readable Before/After panes; source heading fits one line and body lines wrap naturally. Selectors stay contained. Above/below viewport continuation is ordinary scrolling.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "7858fe34c56105c2f385789999b239152e874d1d5579901f1b8d6db3e3987cc7",
+      "observation": "Visible header, plan notice, navigation and feedback text are legible and contained. No covered/clipped resting top; remaining content continues below the scrollable viewport.",
+      "findings": []
+    },
+    {
+      "route": "http://127.0.0.1:34939/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "54e66b025913ade48322e116d77266058ec576c91ee84666492a58bc15544e7f",
+      "observation": "Distinct readable Before/After panes; source heading fits one line and body lines wrap naturally. Selectors stay contained. Above/below viewport continuation is ordinary scrolling.",
+      "findings": []
+    }
+  ],
+  "findings": [],
+  "resolved_findings": ["UI-1 header occlusion", "UI-2 source-pane crowding"],
+  "historical_capture_inventory": [
+    {
+      "file": "checks/rendered-attempt-1/600-600-rest.png",
+      "current_sha256": "cd62d91e457ae7b1d392b1815daceea7273e616c214bf0fad216528ca29e5aa8"
+    },
+    {
+      "file": "checks/rendered-attempt-1/600-600-scrolled.png",
+      "current_sha256": "f0902cdb3a96d2a66d745109b652be5f440d3e1316948dc30cf941a2c1a16c53"
+    },
+    {
+      "file": "checks/rendered-attempt-1/600-900-rest.png",
+      "current_sha256": "13d9fb8670c828edb49997e30f865346ea21e8b734bd4b6996d39ea277233456"
+    },
+    {
+      "file": "checks/rendered-attempt-1/600-900-scrolled.png",
+      "current_sha256": "907e07803fdbc3e76a92f6cdd52b7fc74b579f48761d9f2f673eaa33a70cf49c"
+    },
+    {
+      "file": "checks/rendered-attempt-1/601-600-rest.png",
+      "current_sha256": "6d13d15b07be77be05e63c2599103bdca561110d09cff38899091300010e6a97"
+    },
+    {
+      "file": "checks/rendered-attempt-1/601-600-scrolled.png",
+      "current_sha256": "630e6ed9313ae3e8d14eaf542b2647bacd45b930921cd5bb41c9d2852584c07b"
+    },
+    {
+      "file": "checks/rendered-attempt-1/601-900-rest.png",
+      "current_sha256": "b711b761833ab77062aa2328e7af885afcf949e18edcf939828c303560e618d5"
+    },
+    {
+      "file": "checks/rendered-attempt-1/601-900-scrolled.png",
+      "current_sha256": "8dd91200353a8ebc65511c26b6d7534cb69ad31d92e5f22dc58f1c79ce3d6484"
+    },
+    {
+      "file": "checks/rendered-attempt-1/901-600-rest.png",
+      "current_sha256": "79fce7219c30136eccdcc33629c056c69e1d3e9e2c06ac208ecaae23a778a833"
+    },
+    {
+      "file": "checks/rendered-attempt-1/901-600-scrolled.png",
+      "current_sha256": "02623666135e1112070c7887518e3f0e3b8746104a7d3e23cc479528108b81f7"
+    },
+    {
+      "file": "checks/rendered-attempt-1/901-900-rest.png",
+      "current_sha256": "06e117dee0bf7ab050300856fd2d28372705f7bac40288bd301b436ee7c83179"
+    },
+    {
+      "file": "checks/rendered-attempt-1/901-900-scrolled.png",
+      "current_sha256": "c58c6fba580d16153f6ea83e925fed632d9bc3012e3ca3ba8dc69af5b473b429"
+    },
+    {
+      "file": "checks/rendered-attempt-1/375-600-rest.png",
+      "current_sha256": "728f93dda2af55ddefb16bf77df034a0c5097785b213452c7719e194030333a4"
+    },
+    {
+      "file": "checks/rendered-attempt-1/375-600-scrolled.png",
+      "current_sha256": "b2981ea01d5a2b6b7cf9e495ab76c56aa61f457cfedcd4be3474a98cbffbe577"
+    },
+    {
+      "file": "checks/rendered-attempt-1/375-900-rest.png",
+      "current_sha256": "7ea1bb0141633f383920792a8b96617ad698260f6656f250ae0ed3db35308c60"
+    },
+    {
+      "file": "checks/rendered-attempt-1/375-900-scrolled.png",
+      "current_sha256": "dcd90e4d708ee7b8e38e8388147be9ccf55258107e09560d89b9a1e2585adcb3"
+    }
+  ],
+  "historical_inventory_limit": "Current hashes inventory preserved copies only; no claim of authentication against original review hashes, whose shared record changed during concurrent work.",
+  "producer_axe": {
+    "engine": {
+      "name": "axe-core",
+      "version": "4.14.0"
+    },
+    "scope": "Feedback component; synthetic fixture",
+    "violations": 0,
+    "incomplete": 0,
+    "independent_rerun": false
+  },
+  "final_tests": "implementation-red-ui-repaired-tests-attempt-2.json",
+  "source_hashes": {
+    "treadle/packages/web/src/feedback.js": "601aeb835b253be8567b690cad58c56cea4da1a89335d888a239480318dcb636",
+    "treadle/packages/web/src/library.js": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8",
+    "treadle/packages/web/src/library.html": "44112c5105a4ae7a87bd6104bc42e28104cc0878982ab037228625c119c79a7b",
+    "treadle/packages/web/test/feedback-ui.test.ts": "3c8574936d166d0b1c079b2113dc274ee5cbb4d21cf360cd4b38e9983d120710",
+    "treadle/packages/web/src/project-server.ts": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441"
+  }
+}

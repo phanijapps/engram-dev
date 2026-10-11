@@ -2,7 +2,7 @@
  *  worktree), no-git degradation, --json shape, archive exclusion. */
 import { describe, expect, it } from 'vitest';
 import { execSync } from 'node:child_process';
-import { mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, renameSync, rmSync, writeFileSync, realpathSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { recallBlock, where, isOpen } from '../src/harness/where.js';
@@ -129,12 +129,14 @@ describe('do where (T-0)', () => {
   });
 
   it('a worktree carries its own row, labeled with its tree', () => {
-    const root = mkdtempSync(join(tmpdir(), 'where3-'));
+    const sandbox = mkdtempSync(join(tmpdir(), 'where3-'));
+    const root = join(sandbox, 'main');
+    const wt = join(sandbox, 'linked ü space');
+    mkdirSync(root);
     try {
       execSync('git init -q .', { cwd: root });
       execSync('git config user.email t@t && git config user.name t', { cwd: root });
       execSync('git commit -qm init --allow-empty', { cwd: root });
-      const wt = join(root, '..', 'wt-branch');
       execSync(`git worktree add -q "${wt}" -b side`, { cwd: root });
       // each side writes ONLY its own pack (both untracked in their trees)
       fixturePack(root, 'main-pack', 'in_progress');
@@ -143,11 +145,11 @@ describe('do where (T-0)', () => {
       renameSync(join(wt, 'specs'), join(wt, 'docs', 'specs'));
       const r = where(root);
       expect(r.packs.map((p) => p.name)).toEqual(['main-pack']);
-      expect(r.worktrees).toHaveLength(1);
+      expect(r.worktrees, JSON.stringify({ requestedRoot: root, report: r })).toHaveLength(1);
       expect(r.worktrees[0]?.packs.map((p: { name: string }) => p.name)).toEqual(['side-pack']);
       const block = recallBlock(r);
       expect(block).toContain('side-pack');
-      expect(block).toContain(wt); // the tree label
+      expect(block).toContain(realpathSync.native(wt)); // the canonical tree label
       expect(block).toContain('ASK which one continues'); // two open across trees
       execSync(`git worktree remove --force "${wt}"`, { cwd: root });
     } finally {
@@ -156,8 +158,7 @@ describe('do where (T-0)', () => {
       } catch {
         /* best effort */
       }
-      rmSync(root, { recursive: true, force: true });
-      rmSync(join(root, '..', 'wt-branch'), { recursive: true, force: true });
+      rmSync(sandbox, { recursive: true, force: true });
     }
   });
 

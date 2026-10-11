@@ -1,0 +1,64 @@
+{
+  "format": "feedback-native-command-observation/1",
+  "host": "pi",
+  "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+  "phase": "read",
+  "argv": [
+    "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+    "do",
+    "feedback",
+    "read",
+    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+    "--session",
+    "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+    "--after",
+    "0",
+    "--json"
+  ],
+  "started_at": "2026-10-11T13:43:04.502Z",
+  "observed_at": "2026-10-11T13:43:04.660Z",
+  "exit": 0,
+  "output": {
+    "format": "feedback-result/1",
+    "pack_id": "browser-agent-feedback",
+    "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+    "revision": 18,
+    "cursor": 1,
+    "status": "submitted",
+    "batches": [
+      {
+        "id": "4fdddb48-b222-4804-be45-79404ab47c22",
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+        "cursor": 1,
+        "by": "human:owner",
+        "at": "2026-10-11T13:38:32.024Z",
+        "items": [
+          {
+            "id": "e741c7fd-1024-472a-9c85-df1a45456270",
+            "kind": "comment",
+            "thread": "56cbe701-236d-4279-b273-7bc331135e6c",
+            "body": "asdfdsaf",
+            "by": "human:owner",
+            "at": "2026-10-11T13:38:31.434Z",
+            "anchor": {
+              "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+              "target": "fe01a0d3-db5e-4546-939e-1293db049b68",
+              "side": "after",
+              "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7"
+            }
+          }
+        ]
+      }
+    ],
+    "threads": [
+      {
+        "id": "56cbe701-236d-4279-b273-7bc331135e6c",
+        "resolved": false,
+        "stale": false
+      }
+    ],
+    "project": "f69b47a23566ae2a3e86acb0"
+  }
+}

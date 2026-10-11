@@ -1,0 +1,201 @@
+{
+  "observed_at": "2026-10-11T13:04:22.407Z",
+  "browser": "151.0.7922.108",
+  "basis": "declared-breakpoints",
+  "breakpoints": [
+    601,
+    901
+  ],
+  "minimum": "none-declared",
+  "captures": [
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false
+    },
+    {
+      "route": "http://127.0.0.1:36295/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false
+    }
+  ],
+  "keyboard": {
+    "focus": {
+      "active": "feedback-comment",
+      "outline": "rgb(9, 76, 178) solid 3px",
+      "offset": "3px"
+    },
+    "submitted": true
+  },
+  "targets": [
+    {
+      "name": "Refresh feedback",
+      "width": 149.828125,
+      "height": 34.5
+    },
+    {
+      "name": "documents · 25c33f5d",
+      "width": 309,
+      "height": 36
+    },
+    {
+      "name": "Round 1 · submitted",
+      "width": 309,
+      "height": 36
+    },
+    {
+      "name": "example/long-but-explicitly-selected-document.md",
+      "width": 309,
+      "height": 36
+    },
+    {
+      "name": "View original anchor",
+      "width": 171.84375,
+      "height": 36
+    },
+    {
+      "name": "Resolve",
+      "width": 82.015625,
+      "height": 36
+    }
+  ],
+  "errors": [],
+  "network": [
+    "http://127.0.0.1:36295"
+  ],
+  "fixture": "synthetic UI verification; no native human witness"
+}

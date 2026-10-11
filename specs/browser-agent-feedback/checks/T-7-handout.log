@@ -1,0 +1,43 @@
+task T-7 — 40 items in the frozen slice (digest 48bb29fead2b…)
+  AC   AC-10
+  AC   AC-11
+  AC   AC-5
+  CON  CON-1
+  CON  CON-2
+  CON  CON-3
+  CON  CON-4
+  CON  CON-5
+  D    D-1
+  D    D-2
+  D    D-3
+  D    D-4
+  D    D-5
+  DES  DES-1 — Feedback state and immutable rounds
+  DES  DES-2 — Snapshot builder and portable CLI
+  DES  DES-3 — Guarded shared browser routes
+  DES  DES-4 — Feedback browser view
+  DES  DES-5 — Harness feedback skill and context
+  DES  DES-6 — Journey and evidence
+  FR   FR-1
+  FR   FR-10
+  FR   FR-11
+  FR   FR-2
+  FR   FR-3
+  FR   FR-4
+  FR   FR-5
+  FR   FR-6
+  FR   FR-7
+  FR   FR-8
+  FR   FR-9
+  TASK T-1 — Define and persist the feedback contract
+  TASK T-2 — Build selected snapshots and the CLI bridge
+  TASK T-3 — Expose guarded feedback browser APIs
+  TASK T-4 — Build the browser Feedback view
+  TASK T-5 — Ship one feedback skill to Claude, Codex and Pi
+  TASK T-6 — Witness document and code review through all three hosts
+  TASK T-7 — Verify delivery and refresh current knowledge
+  US   US-1
+  US   US-2
+  US   US-3
+
+Actual do next exit: 0

@@ -1,0 +1,15 @@
+{
+  "revision": 43,
+  "plan_digest": {
+    "ok": true,
+    "value": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+  },
+  "evidence_digest": "57e68d9760ef22c8d1b6583fbb4f60f7d97c0545fa9f362e29dcc202e55d0a88",
+  "gate": {
+    "phase": "review",
+    "reasons": [
+      "Independent review must pass for the current plan and evidence"
+    ],
+    "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+  }
+}

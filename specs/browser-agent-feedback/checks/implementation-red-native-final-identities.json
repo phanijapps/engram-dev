@@ -1,0 +1,337 @@
+{
+  "format": "feedback-native-independent-review/1",
+  "observed_at": "2026-10-11T16:39:05.449230+00:00",
+  "by": "agent:red-foreman",
+  "verdict": "pass_with_owner_waiver",
+  "claim": "Six native submissions/deliveries/revisions; five completed host/mode journeys, one Claude diff journey with remaining human Resolve explicitly waived; seven actual human resolutions.",
+  "ledger_revision": 49,
+  "ledger_sha256": "d7a593e7e13baa2ade0b9232c12a8e781ab88ed04f46315f5fb5d26a3baed0f7",
+  "canonical_revision": 40,
+  "canonical_sha256": "3bffd83753f65f3468cadeb4c310732dc964eefdf4e91f9562a2699c0108f39d",
+  "start_plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+  "owner_waiver_sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+  "sources": {
+    "specs/browser-agent-feedback/verify-hosts.mjs": "4e922af0aa22c85aabee1a93b0037027b3580983453c13fef21584364cad0dff",
+    "specs/browser-agent-feedback/checks/native-command-runner.mjs": "a2904f3d78c039e31c4914ef380dca65690c994d14f1fde12efd7678848d44a7",
+    "treadle/packages/cli/test/feedback-loop.test.ts": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
+    "treadle/packages/cli/dist/src/main.js": "695cf3a9dd634fe50983a51072c11f8a3288512cd9f2b75a9ee945588dbecd64"
+  },
+  "cases": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "batch": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+      "revised_round": "2ba041b5-66bf-4c9e-b09b-bc8388aeebab",
+      "command_file": "checks/native-commands-codex-documents.json",
+      "command_sha256": "711decbdca4c464690a5d4149cb9300b6b100e47726bdb7d756e38009a250fcf",
+      "aggregate_records_match_raw_observations": true,
+      "records": 24,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+      "fixture_sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 3,
+      "thread_count": 3,
+      "qualification": "complete"
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "batch": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+      "revised_round": "b24f4ca5-cc8c-4b83-b82d-23afcf132e38",
+      "command_file": "checks/native-commands-codex-diff.json",
+      "command_sha256": "b9a8280ef34a1a2cfc59a907a6b8697e5dee82f4b457a5199def047d82e1b6a5",
+      "aggregate_records_match_raw_observations": true,
+      "records": 6,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 1,
+      "thread_count": 1,
+      "qualification": "complete"
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "batch": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+      "revised_round": "971562a0-562e-44cd-9787-48f48ae6e72a",
+      "command_file": "checks/native-commands-claude-documents.json",
+      "command_sha256": "5cfa3ffe63427dfda43a841b34f208ab017318173541a46fc501d384ce989f34",
+      "aggregate_records_match_raw_observations": true,
+      "records": 9,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+      "fixture_sha256": "b051f21ec3000b3995cb5d069c627bb61741a11dbe90701f30453690ceff975f",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 1,
+      "thread_count": 1,
+      "qualification": "complete"
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "batch": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+      "revised_round": "aeb62723-84b4-42c5-838b-41704b0f34aa",
+      "command_file": "checks/native-commands-claude-diff.json",
+      "command_sha256": "3b66ada053794b69b85284ff41f577e7ea15968d6d11bde16f5ec9ef84affb21",
+      "aggregate_records_match_raw_observations": true,
+      "records": 6,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 0,
+      "thread_count": 1,
+      "qualification": "human Resolve explicitly owner-waived"
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "batch": "4fdddb48-b222-4804-be45-79404ab47c22",
+      "revised_round": "fc0dfe6a-efee-4339-a639-76d985c5c3f8",
+      "command_file": "checks/native-commands-pi-documents.json",
+      "command_sha256": "ada7049c1a8fbfba1b69bd4a0a59a5f25fdde20f6ba403d7f840e501fadc590d",
+      "aggregate_records_match_raw_observations": true,
+      "records": 5,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+      "fixture_sha256": "2fe8335c3f34fc3d5db5f9fe25bb30c89a5d9f4892c116c9bc1c1d8b1d8336cc",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 1,
+      "thread_count": 1,
+      "qualification": "complete"
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "batch": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+      "revised_round": "4280cc42-c77c-4a89-8687-15180efd8040",
+      "command_file": "checks/native-commands-pi-diff.json",
+      "command_sha256": "753b095115887bb0e927b08fb89d838cde2adb5d844c311e651db4f60666716a",
+      "aggregate_records_match_raw_observations": true,
+      "records": 5,
+      "fixture_file": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+      "fixture_sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+      "snapshot_hashes_match": true,
+      "mutation_and_delivery_receipts_match": true,
+      "actual_resolved_threads": 1,
+      "thread_count": 1,
+      "qualification": "complete"
+    }
+  ],
+  "threads": [
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+      "resolution": {
+        "id": "15a126f7-9d9b-4759-9b42-0d45ce4d5498",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:27:49.705Z"
+      },
+      "revised_at": "2026-10-11T14:53:33.219Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+      "resolution": {
+        "id": "e6c41c5a-e523-45d6-910f-ccd5de12e7b3",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:27:53.315Z"
+      },
+      "revised_at": "2026-10-11T14:53:33.219Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "codex",
+      "mode": "documents",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+      "resolution": {
+        "id": "de4ddf0a-a694-4c75-9a94-1148198c743d",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:28:01.106Z"
+      },
+      "revised_at": "2026-10-11T14:53:33.219Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "codex",
+      "mode": "diff",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "thread": "cd001460-eb31-4f59-8964-41137001c6ec",
+      "resolution": {
+        "id": "8e5d507c-1929-44b4-b01a-80e1f558bf39",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:28:08.495Z"
+      },
+      "revised_at": "2026-10-11T13:45:54.414Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "claude",
+      "mode": "documents",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+      "resolution": {
+        "id": "034c9ab5-f02b-4401-881e-33bf18ca8716",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:28:17.457Z"
+      },
+      "revised_at": "2026-10-11T13:45:12.495Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "claude",
+      "mode": "diff",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+      "resolution": null,
+      "revised_at": "2026-10-11T13:46:09.039Z",
+      "actual_resolution_after_revision": false,
+      "owner_waived": true
+    },
+    {
+      "host": "pi",
+      "mode": "documents",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "thread": "56cbe701-236d-4279-b273-7bc331135e6c",
+      "resolution": {
+        "id": "89e7717e-1535-439b-924c-0554c42d9571",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:29:33.990Z"
+      },
+      "revised_at": "2026-10-11T13:44:05.496Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    },
+    {
+      "host": "pi",
+      "mode": "diff",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+      "resolution": {
+        "id": "2b73fc65-0c9f-44b7-b32c-e3c9d8b83b16",
+        "kind": "resolve",
+        "by": "human:owner",
+        "at": "2026-10-11T16:27:31.403Z"
+      },
+      "revised_at": "2026-10-11T13:44:51.676Z",
+      "actual_resolution_after_revision": true,
+      "owner_waived": false
+    }
+  ],
+  "registered_artifacts": [
+    {
+      "id": "brief",
+      "file": "brief.md",
+      "sha256": "c93da1f97d93ed7f69fabcec20882b44e1190f2ce9746e1738c8554940ed1769",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "analysis",
+      "file": "feature.md",
+      "sha256": "b2655d36d52dc1264ef05e799df956fffddd90984b39f8f544438f33f8bcfb84",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "spec",
+      "file": "spec.md",
+      "sha256": "ddf92dcdee71ad633e669dcd69dc2f359431c5824c6b785f665f4867d6607436",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "research",
+      "file": "research.md",
+      "sha256": "e4dcd4fb38b03d3cb788920232e4b35d936258efad51224e1cfdb2f85786b5cb",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "owner-inputs",
+      "file": "owner-inputs.md",
+      "sha256": "7a41100c6efe7f8f044f54f4074af9871127b1faefc453c7d95b791be3fbdd78",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "source-pins",
+      "file": "authoring/source-pins.json",
+      "sha256": "758ea60cc94bb82c5fa97179624b4982b64f20708838fc7bcfd36fcd765ee82c",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "design",
+      "file": "design.md",
+      "sha256": "57a22572679a332bcd89e85523c4c3e1466b06315e8c61c063dbc9e029f78c44",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "plan",
+      "file": "plan.md",
+      "sha256": "9238ee403eead69f7fa907b0877f261035d7c43c27a2dd344f40f742e3ded732",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "DG-1",
+      "file": "diagrams/DG-1.mmd",
+      "sha256": "574a3304f1d8fbe5ecb5d519bfb04bcce7f2e1f053481b7662ef1e0d733af602",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "DG-2",
+      "file": "diagrams/DG-2.mmd",
+      "sha256": "4c4b4f22eb5e3aa86e278242bb3c4c573cc4b98d6f47badc952771d70891584d",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "DG-3",
+      "file": "diagrams/DG-3.mmd",
+      "sha256": "571f98b29632883b39ffc73bac0a4214ecded952b75efd9d941746e6e709966c",
+      "registered_hash_matches": true
+    },
+    {
+      "id": "DG-4",
+      "file": "diagrams/DG-4.mmd",
+      "sha256": "5bae2e82cfadc74b62f0b5c16c0d0b06610026b1747a20efabd2659aa92a22af",
+      "registered_hash_matches": true
+    }
+  ],
+  "native_process_files": {
+    "checks/native-process-claude.json": "a234546a169ab3e9ee50b517f0db738084836a3cd62e84c9ac1858acddfb30f3",
+    "checks/native-process-codex-batch3.json": "28855438323df0f13a53943c1b94f7707a97806ecc2f0d5609b407dee3f66103",
+    "checks/native-process-codex-document.json": "f616dc13dbf36833abd74979b98c8c9df87bd811a81a005fad8d1f2f6282b6f0",
+    "checks/native-process-codex-reattach.json": "0459bac4c99f22fb218daf6dfebbdd4f24ea18bbb09a215c5f8f9c5cb47b178d",
+    "checks/native-process-codex.json": "3a099dd312309720fc0319fa86abfbaab0fe3b894e593d5d5beba678608fed06",
+    "checks/native-process-pi.json": "958fec639949449934643ca445cee3c277fede93105b4c0cc8828fce0f3d969f"
+  },
+  "human_confirmation_file_sha256": "beeff3e2f7d9b219a7e15ed2356a008f1fddd2e98db10240b41048cf98e17a1d",
+  "recovery_witness_sha256": "c39ea78c6645693ea6c93ab39c758071f5a9b121302614ea9340213f39d26393",
+  "owner_test_exception_negative_evidence": "checks/implementation-red-native-owner-exception-negative-final.json",
+  "limits": [
+    "Actor claims and saved argv/exit records are not authentication or process attestation.",
+    "Actual user replies and host process execution were directly observed by coordinating agent; independent review checks saved scoped records and actual engine reads.",
+    "No completed sixth manual-resolution journey, Windows certification, remote-host activation, idle wake-up, full WCAG or field performance claim.",
+    "No PACK verdict or owner Finish. Exact combined task command must be rerun after this stable report is bound into the actual native witness."
+  ]
+}

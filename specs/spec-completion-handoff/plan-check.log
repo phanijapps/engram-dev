@@ -1,11 +1,11 @@
 
-> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> treadle-root@ check ./treadle
 > tsc --build && eslint . && prettier --check . && vitest run
 
 Checking formatting...
 All matched files use Prettier code style!
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/conformance/test/corpus.test.ts (1 test) 6ms
  ✓ packages/brand/test/brand.test.ts (2 tests) 3ms

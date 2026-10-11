@@ -1,0 +1,32 @@
+[
+  {
+    "agent": "claude",
+    "rows": [
+      {
+        "component": "feedback",
+        "mode": "same"
+      }
+    ],
+    "refusals": 0
+  },
+  {
+    "agent": "codex",
+    "rows": [
+      {
+        "component": "feedback",
+        "mode": "same"
+      }
+    ],
+    "refusals": 0
+  },
+  {
+    "agent": "pi",
+    "rows": [
+      {
+        "component": "feedback",
+        "mode": "same"
+      }
+    ],
+    "refusals": 0
+  }
+]

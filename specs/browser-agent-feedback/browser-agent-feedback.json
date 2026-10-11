@@ -1,0 +1,1562 @@
+{
+  "id": "browser-agent-feedback",
+  "name": "browser-agent-feedback",
+  "description": "Browser feedback to coding agents",
+  "date": {
+    "updated": "2026-10-11T17:02:35Z",
+    "closed": {
+      "at": "2026-10-11T17:02:35Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete",
+    "deliverable": "delivered"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "markdown",
+      "sha256": "c93da1f97d93ed7f69fabcec20882b44e1190f2ce9746e1738c8554940ed1769"
+    },
+    "analysis": {
+      "ref": "feature.md",
+      "type": "markdown",
+      "sha256": "b2655d36d52dc1264ef05e799df956fffddd90984b39f8f544438f33f8bcfb84"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "markdown",
+      "sha256": "ddf92dcdee71ad633e669dcd69dc2f359431c5824c6b785f665f4867d6607436"
+    },
+    "research": {
+      "ref": "research.md",
+      "type": "markdown",
+      "sha256": "e4dcd4fb38b03d3cb788920232e4b35d936258efad51224e1cfdb2f85786b5cb"
+    },
+    "owner-inputs": {
+      "ref": "owner-inputs.md",
+      "type": "markdown",
+      "sha256": "7a41100c6efe7f8f044f54f4074af9871127b1faefc453c7d95b791be3fbdd78"
+    },
+    "source-pins": {
+      "ref": "authoring/source-pins.json",
+      "type": "json",
+      "sha256": "758ea60cc94bb82c5fa97179624b4982b64f20708838fc7bcfd36fcd765ee82c"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "markdown",
+      "sha256": "57a22572679a332bcd89e85523c4c3e1466b06315e8c61c063dbc9e029f78c44"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "markdown",
+      "sha256": "9238ee403eead69f7fa907b0877f261035d7c43c27a2dd344f40f742e3ded732"
+    },
+    "DG-1": {
+      "ref": "diagrams/DG-1.mmd",
+      "type": "mermaid",
+      "sha256": "574a3304f1d8fbe5ecb5d519bfb04bcce7f2e1f053481b7662ef1e0d733af602"
+    },
+    "DG-2": {
+      "ref": "diagrams/DG-2.mmd",
+      "type": "mermaid",
+      "sha256": "4c4b4f22eb5e3aa86e278242bb3c4c573cc4b98d6f47badc952771d70891584d"
+    },
+    "DG-3": {
+      "ref": "diagrams/DG-3.mmd",
+      "type": "mermaid",
+      "sha256": "571f98b29632883b39ffc73bac0a4214ecded952b75efd9d941746e6e709966c"
+    },
+    "DG-4": {
+      "ref": "diagrams/DG-4.mmd",
+      "type": "mermaid",
+      "sha256": "5bae2e82cfadc74b62f0b5c16c0d0b06610026b1747a20efabd2659aa92a22af"
+    }
+  },
+  "spec": {
+    "why": "Review plans, documentation and code diffs in the Wukong web app, submit anchored comments to a waiting coding agent, and inspect revisions through the full SDD owner workflow.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "The system MUST review explicitly selected Markdown documents and Git code changes as immutable rounds tied to exact bytes, project, pack and baseline.",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-1",
+            "given": "an active pack and explicit document paths or code paths plus a Git baseline",
+            "when": "the agent opens a round",
+            "then": "the UI shows the selected immutable bytes and exact diff sides; unrelated dirty files are excluded"
+          }
+        ]
+      },
+      {
+        "id": "FR-2",
+        "text": "The owner MUST add round, file and line-range comments bound to a target ID, snapshot digest and diff side; invalid anchors are refused.",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-2",
+            "given": "a stored snapshot",
+            "when": "the owner adds a comment",
+            "then": "a stable thread records the original quote and byte identity; forged or invalid line ranges fail"
+          }
+        ]
+      },
+      {
+        "id": "FR-3",
+        "text": "Draft comments MUST stay drafts until explicit Submit feedback; submitted batches MUST have monotonic cursors and stable IDs, survive restart and be safely reread.",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-3",
+            "given": "draft comments and a waiting CLI reader",
+            "when": "the owner submits the round",
+            "then": "one immutable batch appears; retry does not duplicate it; repeated reads do not consume it"
+          }
+        ]
+      },
+      {
+        "id": "FR-4",
+        "text": "Agents MUST reply to threads and publish new immutable rounds without resolving human comments; source changes retain original anchors and explicit stale status.",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-4",
+            "given": "an unresolved thread on round one",
+            "when": "an agent replies and publishes round two",
+            "then": "the owner can compare both rounds; edited/deleted anchors stay linked to the original and are never silently retargeted or cleared; stale recovery publishes a fresh round and explicit reattachment plus Submit redelivers that thread"
+          }
+        ]
+      },
+      {
+        "id": "FR-5",
+        "text": "Feedback MUST NOT grant spec approval, decision acceptance, Start permission, task completion, PACK PASS or Finish; changed bound artifacts require the existing replan route.",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-5",
+            "given": "a pack without Start or with a receipt for different bytes",
+            "when": "feedback is submitted or all comments are resolved",
+            "then": "the machine execution gate remains closed; a plan change cannot use the old receipt"
+          }
+        ]
+      },
+      {
+        "id": "FR-6",
+        "text": "Feedback writes MUST use the shared pack writer lock, held feedback revision, durable atomic publication and stable operation IDs; corruption, recovery and bounds fail explicitly.",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-6",
+            "given": "concurrent writers, a failed publication or an oversized record",
+            "when": "a write is attempted",
+            "then": "no false acknowledgement or partial committed round appears; retries and recovery are explicit"
+          }
+        ]
+      },
+      {
+        "id": "FR-7",
+        "text": "Browser feedback MUST remain loopback-only and enforce existing Host, Origin, page token, content-type, size and realpath guards; agents cannot resolve threads or write completed packs.",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-7",
+            "given": "two enrolled projects, hostile requests and completed packs",
+            "when": "a request crosses a boundary or claims the wrong role",
+            "then": "it is refused without source, store or owner-receipt mutation; permitted reads remain available"
+          }
+        ]
+      },
+      {
+        "id": "FR-8",
+        "text": "Claude, Codex and Pi MUST receive the same structured submitted batch through the CLI wait/read protocol and show replies/new rounds through Wukong; idle-host delivery is explicitly manual or next-prompt.",
+        "priority": "P1",
+        "serves": [
+          "US-2"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-8",
+            "given": "a host using the feedback skill in the correct workspace",
+            "when": "the owner submits feedback while its CLI wait is active",
+            "then": "the command returns a batch and the agent reads/replies; timeout is pending, never approval; an idle host is not claimed to be awakened"
+          }
+        ]
+      },
+      {
+        "id": "FR-9",
+        "text": "The Feedback view MUST show document/diff selection, draft/submitted/agent-response states, original/new rounds, stale anchors, unresolved threads, conflicts, errors and unavailable-agent guidance with keyboard access.",
+        "priority": "P1",
+        "serves": [
+          "US-1"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-9",
+            "given": "the Feedback view",
+            "when": "the owner reviews, submits, retries or changes round",
+            "then": "states are distinguishable and recoverable; focus, labels and keyboard navigation work; source/comment HTML stays inert"
+          }
+        ]
+      },
+      {
+        "id": "FR-10",
+        "text": "Feedback MUST preserve specpack 0.2/0.3/0.4 bytes and core discovery; active 0.4 enables writes, legacy and completed records get clear unsupported/read-only behavior.",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-10",
+            "given": "existing and new packs, with nested feedback records",
+            "when": "feedback is opened or queried",
+            "then": "no adoption or format rewrite occurs; the canonical pack remains discoverable with exactly one root JSON"
+          }
+        ]
+      },
+      {
+        "id": "FR-11",
+        "text": "Delivery MUST record document and code review loops for Claude, Codex and Pi, relevant recovery checks, repository gates, current knowledge and independent PACK review before the owner finishes.",
+        "priority": "P1",
+        "serves": [
+          "US-3"
+        ],
+        "scenarios": [
+          {
+            "id": "AC-11",
+            "given": "the approved task sequence has completed",
+            "when": "delivery is checked",
+            "then": "actual host/check evidence supports claims; missing native witnesses remain blocked; separate human Finish freezes the record"
+          }
+        ]
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Browser chat or session/tool process control",
+      "Cloud sharing, phone access, remote listeners and PR hosting integration",
+      "Crit installation, embedding or copied implementation",
+      "Live-app DOM and static HTML preview review",
+      "Session/transcript/token capture",
+      "Automatic adoption of legacy packs or permission inference",
+      "Windows native release certification in this Linux slice"
+    ],
+    "constraints": [
+      {
+        "id": "CON-1",
+        "text": "Retain localhost enrollment, Host/Origin/page-token/realpath guards and no outbound network behavior from SECURITY.md."
+      },
+      {
+        "id": "CON-2",
+        "text": "Capture review artifacts and explicit comments only; no agent session, transcript, token or credential capture."
+      },
+      {
+        "id": "CON-3",
+        "text": "Preserve canonical workflow authority, source drift guards, approved artifacts, closed packs and historical formats."
+      },
+      {
+        "id": "CON-4",
+        "text": "Use the authoritative harness and canonical installer for requested Claude/Codex/Pi surface updates."
+      },
+      {
+        "id": "CON-5",
+        "text": "Bound snapshot bytes, round count, comment size, store size and wait duration; never silently truncate review targets."
+      }
+    ],
+    "stories": [
+      {
+        "id": "US-1",
+        "as": "repository owner",
+        "want": "review precise artifact changes and carry comments across rounds",
+        "so": "I can guide revisions without losing the original context"
+      },
+      {
+        "id": "US-2",
+        "as": "coding-agent user",
+        "want": "receive submitted browser feedback in Claude, Codex or Pi",
+        "so": "I can revise through one portable protocol"
+      },
+      {
+        "id": "US-3",
+        "as": "spec owner",
+        "want": "keep feedback separate from executable authority and frozen evidence",
+        "so": "the full SDD journey remains accountable"
+      }
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Keep feedback/1 state and immutable round files under the active pack feedback/ directory, separate from the canonical specpack; use the existing pack writer lock and durable atomic publication.",
+        "because": "A separate file format avoids changing approved plan digests or legacy corpus bytes. SQLite adds a dependency and migration surface; putting comments in canonical JSON couples conversation to owner receipts.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Use a portable CLI open/wait/read/reply/round bridge plus an installed feedback skill; bounded cursor reads deliver submitted batches, with explicit next-prompt/manual fallback for idle hosts.",
+        "because": "All named hosts can run commands and read files in the reference pattern. Native RPC/SDK session control has host-specific authority, lifecycle and trust costs outside the selected scope. Real-host witnesses remain mandatory.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-3",
+        "decision": "Snapshot explicit Markdown targets and selected Git diff paths with exact content hashes, baseline commit IDs and before/after line anchors; source changes make anchors stale rather than silently moving them.",
+        "because": "Live line numbers and a whole-worktree diff can misaddress edits or capture unrelated changes. Explicit immutable snapshots give an auditable referent; heuristic auto-reattachment is deferred.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-4",
+        "decision": "Keep feedback submit, agent replies and owner resolution separate from the existing spec/decision/Start/PACK/Finish workflow. Expose pending feedback without creating a hidden execution permission or automatic approval.",
+        "because": "Crit-style feedback completion is insufficient for Wukong owner authority. Reusing core gates preserves frozen artifacts and makes scope drift require owner review; unresolved feedback remains visible rather than silently clearing.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-5",
+        "decision": "Add a Feedback view to the shared project-qualified Wukong library, with source line/diff anchors and existing sandboxed Markdown preview; keep legacy foreground views disabled for this feature.",
+        "because": "The shared application already provides enrolled-project routing and page-token guards. Crit embedding introduces a second service and protocol; exposing new writes in the legacy foreground server would require another security surface.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Feedback state and immutable rounds",
+        "kind": "data",
+        "detail": "Versioned nested store, revisions, operation IDs, immutable snapshots, draft/batch/reply/thread state and frozen history. Reattachment drafts are explicitly submitted on the new round; sealed rounds never require inaccessible owner action.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-7",
+          "FR-10"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Snapshot builder and portable CLI",
+        "kind": "interface",
+        "detail": "Explicit artifact/Git selection, stable before/after bytes, bounded wait/read/reply/round JSON protocol.",
+        "addresses": [
+          "FR-1",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-8",
+          "FR-10"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "Guarded shared browser routes",
+        "kind": "api",
+        "detail": "Existing enrolled-project and page-token boundary; allowlisted stored snapshots and human feedback POST operations.",
+        "addresses": [
+          "FR-2",
+          "FR-3",
+          "FR-5",
+          "FR-6",
+          "FR-7",
+          "FR-10"
+        ]
+      },
+      {
+        "id": "DES-4",
+        "title": "Feedback browser view",
+        "kind": "component",
+        "detail": "Safe document/diff views, keyboard anchors, draft/batch/reply/stale/conflict states with separate workflow controls.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-4",
+          "FR-5",
+          "FR-9"
+        ]
+      },
+      {
+        "id": "DES-5",
+        "title": "Harness feedback skill and context",
+        "kind": "flow",
+        "detail": "Shared Claude/Codex/Pi protocol, explicit wait and next-prompt fallback, current task authority and source identity checks.",
+        "addresses": [
+          "FR-5",
+          "FR-8"
+        ]
+      },
+      {
+        "id": "DES-6",
+        "title": "Journey and evidence",
+        "kind": "mechanism",
+        "detail": "Actual native host loops, recovery, compatibility, repository/wiki gates and later independent review/human Finish.",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6",
+          "FR-7",
+          "FR-8",
+          "FR-9",
+          "FR-10",
+          "FR-11"
+        ]
+      }
+    ],
+    "diagrams": [
+      {
+        "id": "DG-1",
+        "artifact": "DG-1",
+        "caption": "Proposed C4 container boundaries",
+        "format": "mermaid",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "DES-3",
+          "DES-4",
+          "DES-5"
+        ]
+      },
+      {
+        "id": "DG-2",
+        "artifact": "DG-2",
+        "caption": "Proposed submitted feedback round sequence",
+        "format": "mermaid",
+        "covers": [
+          "DES-1",
+          "DES-2",
+          "DES-3",
+          "DES-5",
+          "FR-5"
+        ]
+      },
+      {
+        "id": "DG-3",
+        "artifact": "DG-3",
+        "caption": "Proposed feedback and preserved owner-gate process",
+        "format": "mermaid",
+        "covers": [
+          "DES-5",
+          "DES-6",
+          "FR-5",
+          "FR-11"
+        ]
+      },
+      {
+        "id": "DG-4",
+        "artifact": "DG-4",
+        "caption": "Proposed delivery task dependencies",
+        "format": "mermaid",
+        "covers": [
+          "DES-6",
+          "FR-11"
+        ]
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Define and persist the feedback contract",
+      "detail": "Store transitions, anchor validity, lock/revision/idempotency, crash recovery, bounds and frozen-pack refusal pass; canonical receipts/bytes stay unchanged. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
+      "phase": "core",
+      "status": "done",
+      "needs": [],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-10"
+      ],
+      "accepts": [
+        "AC-2",
+        "AC-3",
+        "AC-4",
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "AC-10"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-3",
+        "D-4"
+      ],
+      "produces": [
+        "treadle/packages/core/src/feedback/model.ts",
+        "treadle/packages/core/src/feedback/store.ts",
+        "treadle/packages/core/src/feedback/index.ts",
+        "treadle/packages/core/src/index.ts",
+        "treadle/packages/core/test/feedback.test.ts"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+        "expect": "Store transitions, anchor validity, lock/revision/idempotency, crash recovery, bounds and frozen-pack refusal pass; canonical receipts/bytes stay unchanged. Stale reattachment becomes a draft on a fresh round and advances delivery only on Submit."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/core/src/feedback/model.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/core/src/feedback/store.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/core/src/feedback/index.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/core/src/index.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "bae62ece84c7532f71f2fefaee2e483d34707f88021f18ae66337c5747c12759"
+          },
+          {
+            "path": "treadle/packages/core/test/feedback.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:35:00Z",
+          "by": "agent:codex",
+          "notes": "19 store/anchor/recovery/locking/bounds tests passed. Log checks/T-1-attempt-1.log; core source typecheck and focused lint also passed. Canonical owner bytes remained unchanged in feedback fixtures."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Build selected snapshots and the CLI bridge",
+      "detail": "Document/Git selections, rename/delete/add sides, source drift, no external diff execution, JSON statuses, cursor redelivery, cancellation and timeout pass. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
+      "phase": "integration",
+      "status": "done",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-8",
+        "FR-10"
+      ],
+      "accepts": [
+        "AC-1",
+        "AC-3",
+        "AC-4",
+        "AC-5",
+        "AC-6",
+        "AC-8",
+        "AC-10"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4"
+      ],
+      "produces": [
+        "treadle/packages/cli/src/commands/feedback.ts",
+        "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+        "treadle/packages/cli/src/commands/do.ts",
+        "treadle/packages/cli/test/feedback-cli.test.ts",
+        "treadle/packages/cli/test/feedback-snapshot.test.ts"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+        "expect": "Document/Git selections, rename/delete/add sides, source drift, no external diff execution, JSON statuses, cursor redelivery, cancellation and timeout pass. Sealed/stale recovery publishes a readable new round before waiting, or refuses explicitly."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/commands/feedback.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/feedback-snapshot.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/do.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "52cf80147a84e1c859e9c74de7c93bdbc9c9e4b24bbf7b3c33d3f5d0bd787f6a"
+          },
+          {
+            "path": "treadle/packages/cli/test/feedback-cli.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/cli/test/feedback-snapshot.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:45:35Z",
+          "by": "agent:codex",
+          "notes": "15 CLI/snapshot checks passed, including actual Git driver/filter execution traps, explicit selection, stale refs, original-byte retries, bounded waits and cancellation. Source typecheck and lint also passed. Log checks/T-2-attempt-1.log."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Expose guarded feedback browser APIs",
+      "detail": "Existing shared guards, project isolation, snapshot allowlist, feedback role actions, conflict and recovery behavior pass without source or owner-state writes. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
+      "phase": "integration",
+      "status": "done",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-2",
+        "FR-3",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-10"
+      ],
+      "accepts": [
+        "AC-2",
+        "AC-3",
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "AC-10"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-4",
+        "D-5"
+      ],
+      "produces": [
+        "treadle/packages/web/src/feedback.ts",
+        "treadle/packages/web/src/project-server.ts",
+        "treadle/packages/web/test/feedback-api.test.ts"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+        "expect": "Existing shared guards, project isolation, snapshot allowlist, feedback role actions, conflict and recovery behavior pass without source or owner-state writes."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/feedback.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "40ce05c8bc2cba701ffd60f7ea742c5c15b381814e1a5a636423b3df0d5720d5"
+          },
+          {
+            "path": "treadle/packages/web/test/feedback-api.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 1,
+          "at": "2026-10-11T12:55:14Z",
+          "by": "agent:codex",
+          "notes": "First test attempt: 2 fixture/expectation failures; retained checks/T-3-attempt-1.log. Corrected closed fixture to use normalized PackDoc and symlink/conflict status expectations."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:55:15Z",
+          "by": "agent:codex",
+          "notes": "8 API/project/security tests passed, log checks/T-3-attempt-2.log. Source typecheck and focused lint exited 0. Shared CSRF/revision/role/path guards retain canonical owner bytes; closed history is read-only."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Build the browser Feedback view",
+      "detail": "All specified review states, keyboard selection, focus/labels, draft preservation, inert malicious text and separate owner controls pass; rendered responsive/manual evidence is attached. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions. The single declared verification command must execute both required checks; steps are explanatory and cannot substitute a unit-only evidence row.",
+      "phase": "integration",
+      "status": "done",
+      "needs": [
+        "T-3"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-4",
+        "FR-5",
+        "FR-9"
+      ],
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-4",
+        "AC-5",
+        "AC-9"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-3",
+        "D-4",
+        "D-5"
+      ],
+      "produces": [
+        "treadle/packages/web/src/feedback.js",
+        "treadle/packages/web/src/library.js",
+        "treadle/packages/web/src/library.html",
+        "treadle/packages/web/src/project-server.ts",
+        "treadle/packages/web/test/feedback-ui.test.ts",
+        "specs/browser-agent-feedback/verify-hosts.mjs",
+        "specs/browser-agent-feedback/host-witnesses.md"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+        "expect": "All specified review states, keyboard selection, focus/labels, draft preservation, inert malicious text and separate owner controls pass; rendered responsive/manual evidence is attached.",
+        "steps": [
+          {
+            "run": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts",
+            "expect_exit": 0
+          },
+          {
+            "run": "node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+            "expect_exit": 0
+          }
+        ]
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/web/src/feedback.js",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/web/src/library.js",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "009536e3aa73c67bfa9592de03fd8c8a1a12e2fe557bdfd6e850a6a1959b777b"
+          },
+          {
+            "path": "treadle/packages/web/src/library.html",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "6c6b84b4fa82098abdbda65d62c639f7f535823256c47d58631bab86a4518b8b"
+          },
+          {
+            "path": "treadle/packages/web/src/project-server.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "2d630f728a723cdd00de6f99d53a18abfda22d9bced4a85f6df1d627f3ec7af0"
+          },
+          {
+            "path": "treadle/packages/web/test/feedback-ui.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "specs/browser-agent-feedback/verify-hosts.mjs",
+            "why": "UI witness verifier, extended by T-6."
+          },
+          {
+            "path": "specs/browser-agent-feedback/host-witnesses.md",
+            "why": "Actual manual rendered UI evidence."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+          "exit": 0,
+          "at": "2026-10-11T13:14:50Z",
+          "by": "agent:codex",
+          "notes": "6 UI tests and UI witness verifier pass. HTML validation and axe subset0 violations;20 Chromium captures independently reviewed completed/pass, original failures retained. Actual logs checks/T-4-attempt-2.log, ui-witness.json and implementation-review-ui-repaired.md. No native human/PACK claim."
+        }
+      ]
+    },
+    {
+      "id": "T-5",
+      "title": "Ship one feedback skill to Claude, Codex and Pi",
+      "detail": "Installer updates all three feedback skills from authoritative source; bounded summaries, explicit invocation, pending timeout and no owner/session capture behavior pass. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
+      "phase": "integration",
+      "status": "done",
+      "needs": [
+        "T-2"
+      ],
+      "implements": [
+        "DES-5"
+      ],
+      "satisfies": [
+        "FR-5",
+        "FR-8"
+      ],
+      "accepts": [
+        "AC-5",
+        "AC-8"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-2",
+        "D-4"
+      ],
+      "produces": [
+        "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+        "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+        "treadle/packages/cli/harness/harness.json",
+        "treadle/packages/cli/src/harness/context.ts",
+        "treadle/packages/cli/test/feedback-harness.test.ts",
+        ".claude/skills/feedback/SKILL.md",
+        ".claude/skills/feedback/resources/protocol.md",
+        ".codex/skills/feedback/SKILL.md",
+        ".codex/skills/feedback/resources/protocol.md",
+        ".pi/skills/feedback/SKILL.md",
+        ".pi/skills/feedback/resources/protocol.md"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+        "expect": "Installer updates all three feedback skills from authoritative source; bounded summaries, explicit invocation, pending timeout and no owner/session capture behavior pass."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "c6139bc62abcfe4792ea7de463488de4870f291b00e218d7912c8aa3f516268c"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/context.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "1089f6a0e12a819bfcc159201aed273354718e8f702b07002687a07b9bab28ca"
+          },
+          {
+            "path": "treadle/packages/cli/test/feedback-harness.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".claude/skills/feedback/SKILL.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".claude/skills/feedback/resources/protocol.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".codex/skills/feedback/SKILL.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".codex/skills/feedback/resources/protocol.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".pi/skills/feedback/SKILL.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": ".pi/skills/feedback/resources/protocol.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T13:25:51Z",
+          "by": "agent:codex",
+          "notes": "15 tests pass after fixed-head and mixed-mode guidance repair; quick_validate exit0; scoped installer all3 exit0. Logs T-5-attempt-2 and install-*-repaired; bounded context excludes text. Native witnesses remain T-6."
+        }
+      ]
+    },
+    {
+      "id": "T-6",
+      "title": "Witness document and code review through all three hosts",
+      "detail": "Automated document/diff/restart/drift and SDD gate cases pass; host verifier separately requires actual Claude/Codex/Pi document and code witnesses, human submissions/resolution and commands/exits. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions. The single declared verification command must execute both required checks; steps are explanatory and cannot substitute a unit-only evidence row.",
+      "phase": "integration",
+      "status": "done",
+      "needs": [
+        "T-4",
+        "T-5"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6",
+        "FR-7",
+        "FR-8",
+        "FR-9",
+        "FR-10",
+        "FR-11"
+      ],
+      "accepts": [
+        "AC-1",
+        "AC-2",
+        "AC-3",
+        "AC-4",
+        "AC-5",
+        "AC-6",
+        "AC-7",
+        "AC-8",
+        "AC-9",
+        "AC-10",
+        "AC-11"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4",
+        "D-5"
+      ],
+      "produces": [
+        "treadle/packages/cli/test/feedback-loop.test.ts",
+        "specs/browser-agent-feedback/verify-hosts.mjs",
+        "specs/browser-agent-feedback/host-witnesses.md"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+        "expect": "Automated document/diff/restart/drift and SDD gate cases pass; host verifier separately requires actual Claude/Codex/Pi document and code witnesses, human submissions/resolution and commands/exits. Witness stale-source refresh, human reattachment and cursor delivery without an inaccessible wait.",
+        "steps": [
+          {
+            "run": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts",
+            "expect_exit": 0
+          },
+          {
+            "run": "node ../specs/browser-agent-feedback/verify-hosts.mjs",
+            "expect_exit": 0
+          }
+        ]
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/test/feedback-loop.test.ts",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9"
+          },
+          {
+            "path": "specs/browser-agent-feedback/verify-hosts.mjs",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "ef0c21edad5fd9ecbfa22130a828c2a9d793debb5866fa5c15f85cbf72187336"
+          },
+          {
+            "path": "specs/browser-agent-feedback/host-witnesses.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "81a287fdfac560af341e74d4a411d5ae5d7cd7c50b91d0be116bcfa5742a8f9f"
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+          "exit": 1,
+          "at": "2026-10-11T13:31:58Z",
+          "by": "agent:codex",
+          "notes": "Four integrated loop tests pass; combined check refuses missing real native human submissions/revisions/resolutions. Six concrete URLs opened and user input requested; Codex native waits return pending. T-6 remains doing; no native/PACK completion claim."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+          "exit": 0,
+          "at": "2026-10-11T16:41:39Z",
+          "by": "agent:codex",
+          "notes": "Exact combined check exits0:4 integrated tests, UI witness and6 actual native deliveries/revisions. Qualified acceptance only:7/8 actual human Resolve; Claude diff Resolve explicitly owner-waived, unverified. Actual instruction/hash and independent pass_with_owner_waiver report retained; no fabricated event or full six-resolution claim. checks/T-6-final-qualified.log; native-witness.json; implementation-review-native.md."
+        }
+      ]
+    },
+    {
+      "id": "T-7",
+      "title": "Verify delivery and refresh current knowledge",
+      "detail": "All six repository gates and five wiki checks pass, coverage floors hold, 0 wiki errors/warnings/review anchors and fresh stamp; current docs describe actual verified behavior. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
+      "phase": "polish",
+      "status": "done",
+      "needs": [
+        "T-6"
+      ],
+      "implements": [
+        "DES-6"
+      ],
+      "satisfies": [
+        "FR-5",
+        "FR-10",
+        "FR-11"
+      ],
+      "accepts": [
+        "AC-5",
+        "AC-10",
+        "AC-11"
+      ],
+      "honors": [
+        "CON-1",
+        "CON-2",
+        "CON-3",
+        "CON-4",
+        "CON-5"
+      ],
+      "requires_decisions": [
+        "D-4"
+      ],
+      "produces": [
+        "wiki/systems/sdd-harness-architecture.md",
+        "wiki/systems/owner-workflow.md",
+        "wiki/initiatives/browser-agent-feedback.md",
+        "wiki/initiatives/index.md",
+        "wiki/.okf/fingerprints.json",
+        "wiki/.okf/last-index.json",
+        "treadle/packages/cli/harness/hooks/README.md",
+        "specs/browser-agent-feedback/verify-delivery.mjs",
+        "specs/browser-agent-feedback/execution-log.md"
+      ],
+      "verify": {
+        "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+        "expect": "All six repository gates and five wiki checks pass, coverage floors hold, 0 wiki errors/warnings/review anchors and fresh stamp; current docs describe actual verified behavior."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "wiki/systems/sdd-harness-architecture.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "24bab49684bc56e68809d15fa89031785c170aa1d96f9b7fe817a76d9a87cd35"
+          },
+          {
+            "path": "wiki/systems/owner-workflow.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "5db5b6d8b4bf488ea6c5263aa61049c5289a5035f55ac396965f9085e85f3217"
+          },
+          {
+            "path": "wiki/initiatives/browser-agent-feedback.md",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "wiki/initiatives/index.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "b07dca2ddb117440558dcb37ea24d40df7f83eee813cc4ff56707564dc77aac8"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "f9c8339ad8d2d0c5f8eae3c5b17a7472f99f5bba53acceb6026c40e3061f9939"
+          },
+          {
+            "path": "wiki/.okf/last-index.json",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "8c80b998efd37784530499ebe66206b33f3f9a8174e4aec9cdc1cc0727a83e87"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "f2a16384ca33966b88297df2688c5b8376f882fe4327a51340032655897e707d"
+          },
+          {
+            "path": "specs/browser-agent-feedback/verify-delivery.mjs",
+            "why": "Explicit implementation or verification output; new files are permitted."
+          },
+          {
+            "path": "specs/browser-agent-feedback/execution-log.md",
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "eef192a8c16e167f64e284b82dae74d092c0150a5b6c881e52c710589d6214fe"
+          }
+        ],
+        "read": [
+          {
+            "path": "specs/browser-agent-feedback/brief.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/feature.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/spec.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/design.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "specs/browser-agent-feedback/plan.md",
+            "why": "Registered proposal input."
+          },
+          {
+            "path": "SECURITY.md",
+            "why": "Current localhost and actor trust boundary."
+          },
+          {
+            "path": "treadle/packages/core/src/specpack/workflow.ts",
+            "why": "Existing owner gates must be preserved."
+          }
+        ],
+        "wiki": [
+          "systems/sdd-harness-architecture",
+          "systems/owner-workflow",
+          "domain/policy-no-session-capture-in-engine"
+        ],
+        "notes": [
+          "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
+          "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T16:52:06Z",
+          "by": "agent:codex",
+          "notes": "Exact delivery command exits0 after retained README formatting failure and repaired rerun. Final logs checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/results.json: six repository gates pass,237 tests, coverage88.5 stmt/lines95.39functions78.4branches; wiki0errors/0warnings/0reviewanchors/fresh. Four current concepts/navigation and canonical hook documentation checked against actual sources and commit refs. Native result retains sole owner-waived/unverified Claude diff Resolve. Python-only/HEAD freshness limit and one existing pending finding remain explicit. Independent full PACK review is separate."
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "1debee78-c9bf-40f3-8996-9c15cf8dc2d3",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T12:19:23Z",
+        "revision": 20,
+        "decision": "D-1"
+      },
+      {
+        "id": "a5b2791f-a5ea-4ff1-b242-50dcf0ab1dfc",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T12:19:36Z",
+        "revision": 21,
+        "decision": "D-2"
+      },
+      {
+        "id": "309c9335-34d7-42ce-ac8d-5f7423bdf537",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T12:19:59Z",
+        "revision": 22,
+        "decision": "D-3"
+      },
+      {
+        "id": "2e7b1276-f57b-4a2e-a140-012be2a3b7c6",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T12:20:05Z",
+        "revision": 23,
+        "decision": "D-4"
+      },
+      {
+        "id": "f6f8b6b6-de7f-464a-a3d2-a004c4355fa3",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T12:20:09Z",
+        "revision": 24,
+        "decision": "D-5"
+      },
+      {
+        "id": "7be996c9-0fe3-4e93-af91-7037d74dba94",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-11T12:24:50Z",
+        "revision": 25,
+        "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+      },
+      {
+        "id": "64fceb81-0274-4e90-9d7c-a8aee275fd34",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T17:02:35Z",
+        "revision": 45
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-11T12:24:50Z",
+      "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:red-foreman:/root/roadmap_eval_revision",
+        "at": "2026-10-11T17:00:34.290594+00:00",
+        "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f",
+        "evidence_digest": "57e68d9760ef22c8d1b6583fbb4f60f7d97c0545fa9f362e29dcc202e55d0a88",
+        "artifact": "implementation-review-pack.md",
+        "artifact_sha256": "749c89e0f3c5b4724b2b8685b298c5d665b5f5dafea630b701ee33e491a69b6d",
+        "receipt": "checks/implementation-red-pack-receipt.json",
+        "receipt_sha256": "2931b30f9fdcc43c5a4d89de6c7f003c10877f49ccc98691338ee735197e7d58",
+        "source_commit": "05253ebdba634c119b2836201d2643697600b2f1",
+        "native_qualification": {
+          "verdict": "pass_with_owner_waiver",
+          "actual_submissions_deliveries_revisions": 6,
+          "complete_human_resolution_journeys": 5,
+          "actual_resolved_threads": 7,
+          "total_threads": 8,
+          "waived_unverified_resolution": {
+            "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+            "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9"
+          },
+          "waiver_file": "checks/native-owner-test-waiver.json",
+          "waiver_sha256": "8e0f60ee60401ae15ea06874d238c65e3d00dca1b057dfc02354af0dc84bcbd7",
+          "stable_native_review_sha256": "286139921444a030eea53a432383297e5c319dc893269600b8abfad602809b42",
+          "native_witness_sha256": "eb76dc5702d8639b0b3270303ca125ea0daf40df8f9f5c482468d0e589966329"
+        },
+        "notes": "Actual independent re-verification of all7 tasks; sole Claude diff human Resolve remains owner-waived/unverified. No owner Finish action."
+      }
+    ]
+  },
+  "env": {
+    "build": "pnpm build",
+    "test": "pnpm test",
+    "lint": "pnpm check",
+    "toolchain": "Node >=22; pnpm 9.15.9; local Git for code snapshots; installed Claude/Codex/Pi for native witnesses",
+    "workspace": "treadle",
+    "source_head": "98086783d996c563072e6f147045177c23d66310",
+    "source_state": "Dirty prior hook repairs preserved; relevant bytes pinned in authoring/source-pins.json",
+    "mode": "owner-gated SDD proposal"
+  },
+  "format": "specpack/0.4",
+  "revision": 45
+}

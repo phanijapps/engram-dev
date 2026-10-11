@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/core/test/feedback.test.ts (19 tests) 223ms
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  08:34:02
+   Duration  1.08s (transform 281ms, setup 0ms, collect 332ms, tests 223ms, environment 0ms, prepare 102ms)
+

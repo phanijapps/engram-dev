@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-11T01:31:06.838Z",
+  "verdict": "INCOMPLETE",
+  "witnesses": [
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Linux-22/harness-smoke.json",
+      "sha256": "68aa1be55f78a66e51a03f7d9ec573c3775604733b7fde8a25d372540a2992a8"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Linux-24/harness-smoke.json",
+      "sha256": "2f2ffdb6b51af6977787a03a62fc3aee6dfab29506ee9c410f9407ac2e557ebc"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Windows-22/harness-smoke.json",
+      "sha256": "278360bed3092be7b04be6f4d692cacd4f5aa792249ad7a8d2700b85dbc64259"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-Windows-24/harness-smoke.json",
+      "sha256": "d592ebe131348f562b7445c823ee7c1cee6fdea963976ed1134df713a7be1e96"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-macOS-22/harness-smoke.json",
+      "sha256": "246eaa081cbba5095b3c6a9b8335c4d22a9b8159665bf8d54599a142c03ffa00"
+    },
+    {
+      "file": "native-runtime/run-38101187204/harness-smoke-macOS-24/harness-smoke.json",
+      "sha256": "106daca2b29117a9dce24fac203aabad0498ac12f44bba55e074ae71dcf4cbd8"
+    }
+  ],
+  "missing": [
+    "Host journey pending: Claude Code lifecycle, reload/removal and user activation on each required OS",
+    "Host journey pending: Codex CLI lifecycle with human exact-file hook trust on each required OS",
+    "Host journey pending: Codex desktop lifecycle and IDE fallback separately",
+    "Host journey pending: pi native package install/update/removal and session events on each required OS"
+  ],
+  "note": "Published contracts, unit callback tests and CI configuration cannot substitute for actual native host journeys or human host trust."
+}

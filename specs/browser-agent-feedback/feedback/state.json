@@ -1,0 +1,1512 @@
+{
+  "format": "feedback/1",
+  "pack_id": "browser-agent-feedback",
+  "revision": 49,
+  "sessions": [
+    {
+      "id": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/codex.md"
+        ],
+        "artifacts": []
+      },
+      "rounds": [
+        {
+          "id": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:20.285Z",
+          "by": "agent:codex",
+          "digest": "2f1cc1b4ea10f86f6708eafb898e3d50c9424d1f4d76f61de06dfdb89afc2c9e",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "before": null,
+              "after": {
+                "ref": "rounds/b5df4c15-8209-46af-8ad1-bcce3e4eb4d3/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+                "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36",
+                "bytes": 81,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "6a829c77-d190-4203-b906-1729fa277987",
+          "sequence": 2,
+          "at": "2026-10-11T13:45:33.013Z",
+          "by": "agent:codex",
+          "digest": "5788c3f68d6b0394c089b5b8acd68ecae498a35f98f5a57f9de10e1102919e87",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "before": {
+                "ref": "rounds/6a829c77-d190-4203-b906-1729fa277987/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+                "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36",
+                "bytes": 81,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/6a829c77-d190-4203-b906-1729fa277987/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+                "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec",
+                "bytes": 144,
+                "lines": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+          "sequence": 3,
+          "at": "2026-10-11T13:50:12.627Z",
+          "by": "agent:codex",
+          "digest": "1d1c2e5fcbc5669d0e6688b0ca3b42e734ca42295d0c69d028795d322dec38a0",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "before": {
+                "ref": "rounds/823e8f67-2ab6-4ffb-898c-10a7d4a64145/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+                "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec",
+                "bytes": 144,
+                "lines": 5
+              },
+              "after": {
+                "ref": "rounds/823e8f67-2ab6-4ffb-898c-10a7d4a64145/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+                "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                "bytes": 196,
+                "lines": 7
+              }
+            }
+          ]
+        },
+        {
+          "id": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+          "sequence": 4,
+          "at": "2026-10-11T14:39:13.256Z",
+          "by": "agent:codex",
+          "digest": "35c8414de34b2fdfe1de23437fb296efb1205c507b4207e3c6f1ee42b1d7d5c7",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "before": {
+                "ref": "rounds/cb346f3a-ea1b-41bb-9f64-fa165bd7cabc/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+                "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                "bytes": 196,
+                "lines": 7
+              },
+              "after": {
+                "ref": "rounds/cb346f3a-ea1b-41bb-9f64-fa165bd7cabc/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+                "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                "bytes": 196,
+                "lines": 7
+              }
+            }
+          ]
+        },
+        {
+          "id": "2ba041b5-66bf-4c9e-b09b-bc8388aeebab",
+          "sequence": 5,
+          "at": "2026-10-11T14:53:33.219Z",
+          "by": "agent:codex",
+          "digest": "8b6e00380867d631d32419a4249d24a336a0bf87858868faeae34b9777a58c95",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.md",
+              "before": {
+                "ref": "rounds/2ba041b5-66bf-4c9e-b09b-bc8388aeebab/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-before.txt",
+                "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                "bytes": 196,
+                "lines": 7
+              },
+              "after": {
+                "ref": "rounds/2ba041b5-66bf-4c9e-b09b-bc8388aeebab/9ce6dd35-ca0c-47f8-ba53-20d955f7146d-after.txt",
+                "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+                "bytes": 196,
+                "lines": 7
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 4
+    },
+    {
+      "id": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/codex.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "rounds": [
+        {
+          "id": "8b161506-0be0-43cd-874b-78d91a3e4355",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:20.568Z",
+          "by": "agent:codex",
+          "digest": "5a18b4bcc98f1584b37252c85bddb5580a5cc6aa48b858bc58fbdf33edf33cd3",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+              "before": {
+                "ref": "rounds/8b161506-0be0-43cd-874b-78d91a3e4355/30331557-20f7-4d2a-a18c-5d3ad79eb42a-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/8b161506-0be0-43cd-874b-78d91a3e4355/30331557-20f7-4d2a-a18c-5d3ad79eb42a-after.txt",
+                "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c",
+                "bytes": 78,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "b24f4ca5-cc8c-4b83-b82d-23afcf132e38",
+          "sequence": 2,
+          "at": "2026-10-11T13:45:54.414Z",
+          "by": "agent:codex",
+          "digest": "73941f8fa5d90713291da514ba3583cbb8cfb5a64581cc45f5ae30d17b3df280",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+              "key": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/codex.js",
+              "before": {
+                "ref": "rounds/b24f4ca5-cc8c-4b83-b82d-23afcf132e38/30331557-20f7-4d2a-a18c-5d3ad79eb42a-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/b24f4ca5-cc8c-4b83-b82d-23afcf132e38/30331557-20f7-4d2a-a18c-5d3ad79eb42a-after.txt",
+                "sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+                "bytes": 111,
+                "lines": 3
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 1
+    },
+    {
+      "id": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/claude.md"
+        ],
+        "artifacts": []
+      },
+      "rounds": [
+        {
+          "id": "86e1ef4d-b386-4140-821d-ec5671330420",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:20.797Z",
+          "by": "agent:codex",
+          "digest": "edf4bbe27b4ea746eaa6e3b584b00e344bdc6868275c43f1343ad0499f318874",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+              "key": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+              "before": null,
+              "after": {
+                "ref": "rounds/86e1ef4d-b386-4140-821d-ec5671330420/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-after.txt",
+                "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835",
+                "bytes": 82,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "971562a0-562e-44cd-9787-48f48ae6e72a",
+          "sequence": 2,
+          "at": "2026-10-11T13:45:12.495Z",
+          "by": "agent:claude",
+          "digest": "bdca676195e3e0f779dd754acd2160fd28a92c948178aea1a0e2d59a4c050d45",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+              "key": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/claude.md",
+              "before": {
+                "ref": "rounds/971562a0-562e-44cd-9787-48f48ae6e72a/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-before.txt",
+                "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835",
+                "bytes": 82,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/971562a0-562e-44cd-9787-48f48ae6e72a/98fa4dc6-5a1d-45ed-9bdd-7a5851835db9-after.txt",
+                "sha256": "b051f21ec3000b3995cb5d069c627bb61741a11dbe90701f30453690ceff975f",
+                "bytes": 133,
+                "lines": 4
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 1
+    },
+    {
+      "id": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/claude.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "rounds": [
+        {
+          "id": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:21.060Z",
+          "by": "agent:codex",
+          "digest": "01291b89dbaa73a25bd41cfbc70cc6f61cb27eb038ba8241081fdf3e908b1669",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+              "key": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+              "before": {
+                "ref": "rounds/b7bb31ea-d368-430d-a567-1ab08e3d9be0/a537075d-b79d-4451-803b-4a0f84b45b5a-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/b7bb31ea-d368-430d-a567-1ab08e3d9be0/a537075d-b79d-4451-803b-4a0f84b45b5a-after.txt",
+                "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c",
+                "bytes": 78,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "aeb62723-84b4-42c5-838b-41704b0f34aa",
+          "sequence": 2,
+          "at": "2026-10-11T13:46:09.039Z",
+          "by": "agent:claude",
+          "digest": "80a930c6009ba8422d206e65842962444a5d2a2105dfcf27149edadbc33b8d9d",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+              "key": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/claude.js",
+              "before": {
+                "ref": "rounds/aeb62723-84b4-42c5-838b-41704b0f34aa/a537075d-b79d-4451-803b-4a0f84b45b5a-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/aeb62723-84b4-42c5-838b-41704b0f34aa/a537075d-b79d-4451-803b-4a0f84b45b5a-after.txt",
+                "sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+                "bytes": 111,
+                "lines": 3
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 1
+    },
+    {
+      "id": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "selection": {
+        "mode": "documents",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/pi.md"
+        ],
+        "artifacts": []
+      },
+      "rounds": [
+        {
+          "id": "17eba892-7700-4d97-886d-a2f1a078d092",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:21.281Z",
+          "by": "agent:codex",
+          "digest": "c74076ee545e511cf6ecbebba868e4b118b0d3bdcb5fe3684a8db7541e469ce1",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "fe01a0d3-db5e-4546-939e-1293db049b68",
+              "key": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+              "before": null,
+              "after": {
+                "ref": "rounds/17eba892-7700-4d97-886d-a2f1a078d092/fe01a0d3-db5e-4546-939e-1293db049b68-after.txt",
+                "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7",
+                "bytes": 78,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "fc0dfe6a-efee-4339-a639-76d985c5c3f8",
+          "sequence": 2,
+          "at": "2026-10-11T13:44:05.496Z",
+          "by": "agent:pi",
+          "digest": "4642b1cc8ad468773757ee3960a2cdf499c9cffd543213235b9e5907b9514bdc",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "fe01a0d3-db5e-4546-939e-1293db049b68",
+              "key": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+              "path": "specs/browser-agent-feedback/checks/native-sources/pi.md",
+              "before": {
+                "ref": "rounds/fc0dfe6a-efee-4339-a639-76d985c5c3f8/fe01a0d3-db5e-4546-939e-1293db049b68-before.txt",
+                "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7",
+                "bytes": 78,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/fc0dfe6a-efee-4339-a639-76d985c5c3f8/fe01a0d3-db5e-4546-939e-1293db049b68-after.txt",
+                "sha256": "2fe8335c3f34fc3d5db5f9fe25bb30c89a5d9f4892c116c9bc1c1d8b1d8336cc",
+                "bytes": 130,
+                "lines": 5
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 1
+    },
+    {
+      "id": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "selection": {
+        "mode": "diff",
+        "paths": [
+          "specs/browser-agent-feedback/checks/native-sources/pi.js"
+        ],
+        "artifacts": [],
+        "base": "d919603f84223c1502558738f1dd7e2e700521ab",
+        "base_ref": "d919603f84223c1502558738f1dd7e2e700521ab"
+      },
+      "rounds": [
+        {
+          "id": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+          "sequence": 1,
+          "at": "2026-10-11T13:27:21.560Z",
+          "by": "agent:codex",
+          "digest": "80cc3a577417c10e2df717ff9c9c10487978c1c1d5bec1cb4e21e9dc7bd8d74c",
+          "sealed": true,
+          "targets": [
+            {
+              "id": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+              "key": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+              "before": {
+                "ref": "rounds/7190d810-fada-440d-9461-6f8fad1e9fb6/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/7190d810-fada-440d-9461-6f8fad1e9fb6/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-after.txt",
+                "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c",
+                "bytes": 78,
+                "lines": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "4280cc42-c77c-4a89-8687-15180efd8040",
+          "sequence": 2,
+          "at": "2026-10-11T13:44:51.676Z",
+          "by": "agent:pi",
+          "digest": "93e5c527ba20a61c261ce7fb85dc813a3985fe58af2031bef4e5a5e461eec37b",
+          "sealed": false,
+          "targets": [
+            {
+              "id": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+              "key": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+              "path": "specs/browser-agent-feedback/checks/native-sources/pi.js",
+              "before": {
+                "ref": "rounds/4280cc42-c77c-4a89-8687-15180efd8040/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-before.txt",
+                "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca",
+                "bytes": 69,
+                "lines": 3
+              },
+              "after": {
+                "ref": "rounds/4280cc42-c77c-4a89-8687-15180efd8040/b786a7e0-8209-4583-8ee8-62a1bb0b43ed-after.txt",
+                "sha256": "c65cf895dcc103701356ceec9acc4b654e56baadba76b31bc970c185dd8a67bd",
+                "bytes": 111,
+                "lines": 3
+              }
+            }
+          ]
+        }
+      ],
+      "drafts": [],
+      "cursor": 1
+    }
+  ],
+  "threads": [
+    {
+      "id": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "body": "test",
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:05.399Z",
+      "original": {
+        "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+        "target": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+        "side": "after",
+        "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+      },
+      "current": {
+        "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+        "target": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+        "side": "after",
+        "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+      },
+      "replies": [
+        {
+          "id": "5bec0ce5-4ce5-4711-83d7-88bcfb075cc5",
+          "by": "agent:pi",
+          "at": "2026-10-11T13:44:44.366Z",
+          "body": "Received your submitted comment on this diff round, exactly as submitted: \"test\". It carries no semantic change request, so I acknowledge it verbatim and invent none.\n\nPer the predeclared T-6 fixture revision workload, reviewLabel(count) in the selected fixture specs/browser-agent-feedback/checks/native-sources/pi.js now returns count + \" feedback \" + (count === 1 ? \"comment\" : \"comments\"), and I am publishing a fresh worktree after-side round against the unchanged base d919603f84223c1502558738f1dd7e2e700521ab. Source bytes matched the reviewed anchor (cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c) before the edit.\n\nThis submitted batch is browser test feedback, not SDD Start/decision approval, task evidence or an owner action; the thread stays open for you to resolve.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "2b73fc65-0c9f-44b7-b32c-e3c9d8b83b16",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:31.403Z"
+        }
+      ]
+    },
+    {
+      "id": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "body": "fadsf",
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:20.063Z",
+      "original": {
+        "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+      },
+      "current": {
+        "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+        "start": 7,
+        "end": 7
+      },
+      "replies": [
+        {
+          "id": "03700a7e-dd0a-467c-ae69-c3257e473ae7",
+          "by": "agent:codex",
+          "at": "2026-10-11T13:45:27.338Z",
+          "body": "Acknowledged your submitted test comment exactly: fadsf\n\nThe selected Markdown fixture is stale relative to the reviewed snapshot: reviewed SHA-256 39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36; current SHA-256 672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec. I have not edited the fixture. I will publish a fresh round; please Reattach the original thread to the new snapshot and Submit again. The submitted test text supplies no semantic change request or SDD approval.\n"
+        },
+        {
+          "id": "d13b2e3b-52d4-46c9-9b70-9e27b76ebf6e",
+          "by": "agent:codex",
+          "at": "2026-10-11T14:53:28.637Z",
+          "body": "Acknowledged the submitted test text \"fadsf\" in reattachment batch 30fb0850-7729-4248-97fd-430cc2e52990 (cursor 4), event 49da1592-8cd9-4e8f-85ef-aeb13aed19b5, on original thread 5c92a460-6998-4071-a24f-108e0dc1ee94. The original round 1 anchor remains preserved; this submitted reattachment points to round 4, after-side line 7. The selected live Markdown bytes match the stored round 4 after hash. The actual observed fixture check passed with exit 0: \"Submitting feedback does not grant Start approval.\" already exists exactly once. No source edit or duplicate sentence was needed. This arbitrary test text is acknowledged without inferring a semantic request or SDD approval. All three human threads remain unresolved. Publishing round 5 for the same selected fixture.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "49da1592-8cd9-4e8f-85ef-aeb13aed19b5",
+          "kind": "reattach",
+          "by": "human:owner",
+          "at": "2026-10-11T14:47:43.675Z",
+          "anchor": {
+            "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+            "start": 7,
+            "end": 7
+          }
+        },
+        {
+          "id": "15a126f7-9d9b-4759-9b42-0d45ce4d5498",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:49.705Z"
+        }
+      ]
+    },
+    {
+      "id": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "body": "fdafd",
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:33.786Z",
+      "original": {
+        "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+        "target": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+        "side": "before",
+        "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca"
+      },
+      "current": {
+        "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+        "target": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+        "side": "before",
+        "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca"
+      },
+      "replies": [
+        {
+          "id": "05b9b1cc-57cc-4a20-a9a7-87a0cef265b2",
+          "by": "agent:claude",
+          "at": "2026-10-11T13:46:04.327Z",
+          "body": "Agent reply (agent:claude) to comment \"fdafd\" (item 6c3a4442-62d5-4f49-af51-9ef732249c03, batch 93b01510-2ff5-4e4e-8871-613956dd15d3): the submitted text is acknowledged exactly as written. It contains no parseable request, so no semantic edit was inferred from it. Per the predeclared T-6 fixture revision workload, reviewLabel(count) in specs/browser-agent-feedback/checks/native-sources/claude.js now returns count + \" feedback \" + (count === 1 ? \"comment\" : \"comments\"), after a fresh check confirmed the baseline (d919603, sha256 dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca) and the reviewed after-side (sha256 cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c) were unchanged. A new round with the worktree after-side is published for review. Submitting feedback does not grant Start approval; this reply is neither resolution nor approval.\n"
+        }
+      ],
+      "events": []
+    },
+    {
+      "id": "cd001460-eb31-4f59-8964-41137001c6ec",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "body": "test",
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:21.664Z",
+      "original": {
+        "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+        "target": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+        "side": "after",
+        "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+      },
+      "current": {
+        "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+        "target": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+        "side": "after",
+        "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+      },
+      "replies": [
+        {
+          "id": "4926680f-5337-411e-a4ed-17fe69c6b64f",
+          "by": "agent:codex",
+          "at": "2026-10-11T13:45:41.092Z",
+          "body": "Acknowledged your submitted test comment exactly: test\n\nAfter confirming the selected JavaScript baseline and current source matched the stored manifest, I applied the test coordinator's predeclared fixture workload: reviewLabel(count) now returns count + \" feedback \" + (count === 1 ? \"comment\" : \"comments\"). This change follows the coordinator instruction; the test comment supplies no semantic change request or SDD approval. I will publish a revised round and run the observer fixture assertions. The human thread remains unresolved.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "8e5d507c-1929-44b4-b01a-80e1f558bf39",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:08.495Z"
+        }
+      ]
+    },
+    {
+      "id": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "body": "dsafdsa",
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:27.068Z",
+      "original": {
+        "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+        "target": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+        "side": "after",
+        "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835"
+      },
+      "current": {
+        "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+        "target": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+        "side": "after",
+        "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835"
+      },
+      "replies": [
+        {
+          "id": "4a331dfa-6552-4421-a1da-60cb3f4bfdc6",
+          "by": "agent:claude",
+          "at": "2026-10-11T13:45:02.169Z",
+          "body": "Agent reply (agent:claude) to comment \"dsafdsa\" (item f3954ec7-86f3-4659-a083-a2a1ecb8d664, batch 8eaf6c10-c399-4d8e-9f33-ba250e5c7190): the submitted text is acknowledged exactly as written. It contains no parseable request, so no semantic edit was inferred from it. Per the predeclared T-6 fixture revision workload, the sentence \"Submitting feedback does not grant Start approval.\" was appended to specs/browser-agent-feedback/checks/native-sources/claude.md after a fresh check confirmed current bytes matched the reviewed anchor (sha256 8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835). A new round with the updated fixture is published for review. Submitting feedback does not grant Start approval; this reply is neither resolution nor approval.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "034c9ab5-f02b-4401-881e-33bf18ca8716",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:17.457Z"
+        }
+      ]
+    },
+    {
+      "id": "56cbe701-236d-4279-b273-7bc331135e6c",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "body": "asdfdsaf",
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:31.434Z",
+      "original": {
+        "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+        "target": "fe01a0d3-db5e-4546-939e-1293db049b68",
+        "side": "after",
+        "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7"
+      },
+      "current": {
+        "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+        "target": "fe01a0d3-db5e-4546-939e-1293db049b68",
+        "side": "after",
+        "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7"
+      },
+      "replies": [
+        {
+          "id": "e1ce518f-dd16-4550-9e8c-194b55173f5d",
+          "by": "agent:pi",
+          "at": "2026-10-11T13:43:52.927Z",
+          "body": "Received your submitted comment on this round, exactly as submitted: \"asdfdsaf\". It carries no semantic change request, so I acknowledge it verbatim and invent none.\n\nPer the predeclared T-6 fixture revision workload, I appended the sentence \"Submitting feedback does not grant Start approval.\" to the selected fixture specs/browser-agent-feedback/checks/native-sources/pi.md and am publishing a fresh round of the same selection. Source bytes matched the reviewed anchor (87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7) before the edit.\n\nThis submitted batch is browser test feedback, not SDD Start/decision approval, task evidence or an owner action; the thread stays open for you to resolve.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "89e7717e-1535-439b-924c-0554c42d9571",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:29:33.990Z"
+        }
+      ]
+    },
+    {
+      "id": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "body": "dfsdfdsa",
+      "by": "human:owner",
+      "at": "2026-10-11T13:47:47.327Z",
+      "original": {
+        "round": "6a829c77-d190-4203-b906-1729fa277987",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec"
+      },
+      "current": {
+        "round": "6a829c77-d190-4203-b906-1729fa277987",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec"
+      },
+      "replies": [
+        {
+          "id": "7d480d0e-706b-4d0f-b520-ce4e4c485a33",
+          "by": "agent:codex",
+          "at": "2026-10-11T13:50:06.893Z",
+          "body": "Acknowledged the submitted test comment exactly: \"dfsdfdsa\". This arbitrary test text supplies no semantic change request or SDD approval. Under the coordinator's predeclared T-6 fixture workload, after verifying that the selected source matched the stored round 2 after hash, I appended \"Submitting feedback does not grant Start approval.\" once. The observed document fixture assertion passed with exit 0. The original stale thread remains unresolved for the owner's later explicit Reattach and Submit.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "e6c41c5a-e523-45d6-910f-ccd5de12e7b3",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:27:53.315Z"
+        }
+      ]
+    },
+    {
+      "id": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "body": "Approved",
+      "by": "human:owner",
+      "at": "2026-10-11T14:35:06.076Z",
+      "original": {
+        "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b"
+      },
+      "current": {
+        "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+        "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+        "side": "after",
+        "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b"
+      },
+      "replies": [
+        {
+          "id": "98631387-4e76-477d-8301-514ea65c8da5",
+          "by": "agent:codex",
+          "at": "2026-10-11T14:39:08.654Z",
+          "body": "Acknowledged your submitted test comment exactly: \"Approved\". This new comment is not a reattachment and grants no SDD Start approval, Finish approval, or decision acceptance. The selected Markdown bytes match round 3, and \"Submitting feedback does not grant Start approval.\" already appears exactly once; no fixture edit or duplicate was made. All three threads remain unresolved with their histories preserved. After round 4 is published, please use Reattach on the original stale thread(s) and then Submit; reattachment alone is only a draft.\n"
+        }
+      ],
+      "events": [
+        {
+          "id": "de4ddf0a-a694-4c75-9a94-1148198c743d",
+          "kind": "resolve",
+          "by": "human:owner",
+          "at": "2026-10-11T16:28:01.106Z"
+        }
+      ]
+    }
+  ],
+  "batches": [
+    {
+      "id": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+      "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+      "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:08.825Z",
+      "items": [
+        {
+          "id": "5e448dc4-29f0-4d9e-b053-bcfced7faf0b",
+          "kind": "comment",
+          "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911",
+          "body": "test",
+          "by": "human:owner",
+          "at": "2026-10-11T13:36:05.399Z",
+          "anchor": {
+            "round": "7190d810-fada-440d-9461-6f8fad1e9fb6",
+            "target": "b786a7e0-8209-4583-8ee8-62a1bb0b43ed",
+            "side": "after",
+            "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "43c183dd-6338-4d81-8ce4-ab04b35b8aaf",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:22.218Z",
+      "items": [
+        {
+          "id": "9c9a28d5-5c89-4d5e-bea5-113325f99e17",
+          "kind": "comment",
+          "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+          "body": "fadsf",
+          "by": "human:owner",
+          "at": "2026-10-11T13:36:20.063Z",
+          "anchor": {
+            "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+          }
+        }
+      ]
+    },
+    {
+      "id": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+      "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+      "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:36:35.009Z",
+      "items": [
+        {
+          "id": "6c3a4442-62d5-4f49-af51-9ef732249c03",
+          "kind": "comment",
+          "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9",
+          "body": "fdafd",
+          "by": "human:owner",
+          "at": "2026-10-11T13:36:33.786Z",
+          "anchor": {
+            "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0",
+            "target": "a537075d-b79d-4451-803b-4a0f84b45b5a",
+            "side": "before",
+            "sha256": "dff75c84372a60e667b26164242df7c884b8c94f5b5f0035c15c9cdf834257ca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+      "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+      "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:22.652Z",
+      "items": [
+        {
+          "id": "57df3b33-b9d9-4403-9c81-e3bb217e9cb4",
+          "kind": "comment",
+          "thread": "cd001460-eb31-4f59-8964-41137001c6ec",
+          "body": "test",
+          "by": "human:owner",
+          "at": "2026-10-11T13:38:21.664Z",
+          "anchor": {
+            "round": "8b161506-0be0-43cd-874b-78d91a3e4355",
+            "target": "30331557-20f7-4d2a-a18c-5d3ad79eb42a",
+            "side": "after",
+            "sha256": "cb1b6fe39dc68b311f212fdeeb4ad1e9ecefe8b939fdc858c33aab5e7f6bef3c"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+      "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+      "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:27.826Z",
+      "items": [
+        {
+          "id": "f3954ec7-86f3-4659-a083-a2a1ecb8d664",
+          "kind": "comment",
+          "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a",
+          "body": "dsafdsa",
+          "by": "human:owner",
+          "at": "2026-10-11T13:38:27.068Z",
+          "anchor": {
+            "round": "86e1ef4d-b386-4140-821d-ec5671330420",
+            "target": "98fa4dc6-5a1d-45ed-9bdd-7a5851835db9",
+            "side": "after",
+            "sha256": "8ccd575379a0f39146ad3e8736f7b07c8aa89e67ceb8ca5264c1c4bb07094835"
+          }
+        }
+      ]
+    },
+    {
+      "id": "4fdddb48-b222-4804-be45-79404ab47c22",
+      "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+      "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+      "cursor": 1,
+      "by": "human:owner",
+      "at": "2026-10-11T13:38:32.024Z",
+      "items": [
+        {
+          "id": "e741c7fd-1024-472a-9c85-df1a45456270",
+          "kind": "comment",
+          "thread": "56cbe701-236d-4279-b273-7bc331135e6c",
+          "body": "asdfdsaf",
+          "by": "human:owner",
+          "at": "2026-10-11T13:38:31.434Z",
+          "anchor": {
+            "round": "17eba892-7700-4d97-886d-a2f1a078d092",
+            "target": "fe01a0d3-db5e-4546-939e-1293db049b68",
+            "side": "after",
+            "sha256": "87506fd081e49b6f7c26342bd2d852b92877ef03b479d69ae653788b62853bd7"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "round": "6a829c77-d190-4203-b906-1729fa277987",
+      "cursor": 2,
+      "by": "human:owner",
+      "at": "2026-10-11T13:47:50.668Z",
+      "items": [
+        {
+          "id": "0802898a-ec8f-4633-883f-9dfb24192bb7",
+          "kind": "comment",
+          "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7",
+          "body": "dfsdfdsa",
+          "by": "human:owner",
+          "at": "2026-10-11T13:47:47.327Z",
+          "anchor": {
+            "round": "6a829c77-d190-4203-b906-1729fa277987",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "672921232aadac770233cdaef0e0a157bbc7621e9211be006fa1c3a0eb8361ec"
+          }
+        }
+      ]
+    },
+    {
+      "id": "41159ffc-0a4e-460a-87c5-0914d16e7542",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+      "cursor": 3,
+      "by": "human:owner",
+      "at": "2026-10-11T14:35:09.458Z",
+      "items": [
+        {
+          "id": "c5e0c5a9-cfbf-4266-8739-a02f588d794c",
+          "kind": "comment",
+          "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8",
+          "body": "Approved",
+          "by": "human:owner",
+          "at": "2026-10-11T14:35:06.076Z",
+          "anchor": {
+            "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b"
+          }
+        }
+      ]
+    },
+    {
+      "id": "30fb0850-7729-4248-97fd-430cc2e52990",
+      "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+      "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+      "cursor": 4,
+      "by": "human:owner",
+      "at": "2026-10-11T14:47:58.840Z",
+      "items": [
+        {
+          "id": "cdcb8696-3a41-431f-9616-31acca32b564",
+          "kind": "reattach",
+          "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94",
+          "body": "fadsf",
+          "by": "human:owner",
+          "at": "2026-10-11T14:47:43.675Z",
+          "anchor": {
+            "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "ba7eaa165f5f792256193d8960529c3808f1ccd22a528cbf82ccbebad29b133b",
+            "start": 7,
+            "end": 7
+          },
+          "original": {
+            "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3",
+            "target": "9ce6dd35-ca0c-47f8-ba53-20d955f7146d",
+            "side": "after",
+            "sha256": "39ea4fda6c348fcf7ad73a1c0fa1d75521c557621e52ddc6daa28e5d2595ab36"
+          },
+          "event": "49da1592-8cd9-4e8f-85ef-aeb13aed19b5"
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "id": "90590b68-b1e0-4477-9a81-02bcb4a9c1cd",
+      "digest": "987717d0ba2938e7c111be78cc2bf1b0f845085413940c63ee92e2275ee5ef45",
+      "result": {
+        "operation_id": "90590b68-b1e0-4477-9a81-02bcb4a9c1cd",
+        "revision": 1,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "b5df4c15-8209-46af-8ad1-bcce3e4eb4d3"
+      }
+    },
+    {
+      "id": "611095ba-f9f6-4fec-9c74-e728198ecfd3",
+      "digest": "546c74efceea9cdfbe87f9759fa0037f857dc50bb5f96d25102d3eec910dc12f",
+      "result": {
+        "operation_id": "611095ba-f9f6-4fec-9c74-e728198ecfd3",
+        "revision": 2,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "round": "8b161506-0be0-43cd-874b-78d91a3e4355"
+      }
+    },
+    {
+      "id": "142a0723-8c90-4837-8827-b2fb68e3c15e",
+      "digest": "9f0c93d51d867d81f23fe32a3ac5931fa41c3b508f50a34ae707eb14bb6291a0",
+      "result": {
+        "operation_id": "142a0723-8c90-4837-8827-b2fb68e3c15e",
+        "revision": 3,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "round": "86e1ef4d-b386-4140-821d-ec5671330420"
+      }
+    },
+    {
+      "id": "27433878-a93f-4e46-b00e-29b31168c638",
+      "digest": "a893369e8315f14cc4a6a03d89f1e5d89596c1f172ce91f3838c173fe6c503e0",
+      "result": {
+        "operation_id": "27433878-a93f-4e46-b00e-29b31168c638",
+        "revision": 4,
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "round": "b7bb31ea-d368-430d-a567-1ab08e3d9be0"
+      }
+    },
+    {
+      "id": "2636e52a-820c-4e1e-97b6-095c08d3d615",
+      "digest": "646a50bc661f1ad61c288ae04d050f2417830fcbd549fc522eb4f8bd40e429b0",
+      "result": {
+        "operation_id": "2636e52a-820c-4e1e-97b6-095c08d3d615",
+        "revision": 5,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "round": "17eba892-7700-4d97-886d-a2f1a078d092"
+      }
+    },
+    {
+      "id": "036b4e78-10de-44ef-bb97-669b2f524f02",
+      "digest": "41016339923a0a0f6c57cdaa25e1dd3454aecd022e254681c1b0e6de2f9284d4",
+      "result": {
+        "operation_id": "036b4e78-10de-44ef-bb97-669b2f524f02",
+        "revision": 6,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "round": "7190d810-fada-440d-9461-6f8fad1e9fb6"
+      }
+    },
+    {
+      "id": "1c44f0c1-fa70-41c8-a757-5f6988d02e3d",
+      "digest": "acec55494002cec6c4004722b8e31f7fe14b57e7274c5fa280d388949bb41cea",
+      "result": {
+        "operation_id": "1c44f0c1-fa70-41c8-a757-5f6988d02e3d",
+        "revision": 7,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911"
+      }
+    },
+    {
+      "id": "8a500f66-3f5b-498e-9fc8-e576721121d4",
+      "digest": "2dfb6f59238f33c768888f3b8df8c53b13b6ef44809d9d77042a776f00d2c05f",
+      "result": {
+        "operation_id": "8a500f66-3f5b-498e-9fc8-e576721121d4",
+        "revision": 8,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "batch": "91cde0c4-391f-411f-b1a6-538500a9fe41",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "1c94ffa5-1ca1-4b6a-b069-787b4739c192",
+      "digest": "ae02b8b715452761f943564541ef5b0bc0dd752fb03343c7289c7fa979750149",
+      "result": {
+        "operation_id": "1c94ffa5-1ca1-4b6a-b069-787b4739c192",
+        "revision": 9,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94"
+      }
+    },
+    {
+      "id": "d063d661-bb7e-4b04-9e5b-649cea00e648",
+      "digest": "2b80dff244f8fc0e8ed9dea4f6ebe6b9682204647e8d3d29095f70567b5e727e",
+      "result": {
+        "operation_id": "d063d661-bb7e-4b04-9e5b-649cea00e648",
+        "revision": 10,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "batch": "43c183dd-6338-4d81-8ce4-ab04b35b8aaf",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "b61320f4-88a9-4d6d-bebd-ddb4d4807f64",
+      "digest": "96b362001aa0560bdf872348044736bce8239e46182298b9ff7899c10aa2a9cf",
+      "result": {
+        "operation_id": "b61320f4-88a9-4d6d-bebd-ddb4d4807f64",
+        "revision": 11,
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9"
+      }
+    },
+    {
+      "id": "ee1fe04e-3f19-49a2-950b-d6e58dedb242",
+      "digest": "a3a07bd246a0833fb1ffaf583f43cc499efd956432a39ca3dfd1a08d96a7078f",
+      "result": {
+        "operation_id": "ee1fe04e-3f19-49a2-950b-d6e58dedb242",
+        "revision": 12,
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "batch": "93b01510-2ff5-4e4e-8871-613956dd15d3",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "b0d6837b-f564-4f3e-acc0-2840257270fa",
+      "digest": "e0c56b25d552996f631d192a3370b7f2d513dcef3e70f5a12b812092f9ce1e93",
+      "result": {
+        "operation_id": "b0d6837b-f564-4f3e-acc0-2840257270fa",
+        "revision": 13,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "thread": "cd001460-eb31-4f59-8964-41137001c6ec"
+      }
+    },
+    {
+      "id": "05c4b253-3bf1-4bcd-a5fe-7cec569fb43a",
+      "digest": "63791e095a1f30d5fbb0d87eb5a76a8a7f8662f60bcd38cebd85585522bb273a",
+      "result": {
+        "operation_id": "05c4b253-3bf1-4bcd-a5fe-7cec569fb43a",
+        "revision": 14,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "batch": "2be43832-a2e0-470f-9a89-b09e627ce63e",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "3cc8e51d-790f-4b64-8c72-469f9f4d649d",
+      "digest": "549ddb92c00a04b7d19a080f676fdea8ebdc37e9811e7998eb597424a3fd6399",
+      "result": {
+        "operation_id": "3cc8e51d-790f-4b64-8c72-469f9f4d649d",
+        "revision": 15,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a"
+      }
+    },
+    {
+      "id": "56030b90-aa3d-4675-a8a2-31d6bda84623",
+      "digest": "5c1473e0f73436b1d330701c28e795e1cdd607259a9c5b395f9c2bf091b1dacf",
+      "result": {
+        "operation_id": "56030b90-aa3d-4675-a8a2-31d6bda84623",
+        "revision": 16,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "batch": "8eaf6c10-c399-4d8e-9f33-ba250e5c7190",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "05e0d0a9-8cb9-401a-bdf7-15f6c76bf64d",
+      "digest": "9d63b43d4d73dbbfee2dda5e0b970441bd42d0dc79a409c2f67b57ba4b6a0a7e",
+      "result": {
+        "operation_id": "05e0d0a9-8cb9-401a-bdf7-15f6c76bf64d",
+        "revision": 17,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "thread": "56cbe701-236d-4279-b273-7bc331135e6c"
+      }
+    },
+    {
+      "id": "a3c00282-5415-40ca-b2f2-4837235e2cc5",
+      "digest": "7b7cd179b9fdb7a7e7a14714e18b23ad34aeb2f8c52e7578c3d2ba68ae006e6b",
+      "result": {
+        "operation_id": "a3c00282-5415-40ca-b2f2-4837235e2cc5",
+        "revision": 18,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "batch": "4fdddb48-b222-4804-be45-79404ab47c22",
+        "cursor": 1
+      }
+    },
+    {
+      "id": "8c4c12a8-fd7a-498d-b6c6-32b271787925",
+      "digest": "a8c79f1cef97d443cb92a5c1ec3d9c4512597e87144a3b711d25df64cd97b6c0",
+      "result": {
+        "operation_id": "8c4c12a8-fd7a-498d-b6c6-32b271787925",
+        "revision": 19,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "thread": "56cbe701-236d-4279-b273-7bc331135e6c"
+      }
+    },
+    {
+      "id": "8f683ba0-89c7-416a-ab37-b8dd12d5d3ac",
+      "digest": "26ee18434da54b2545e6b3ad498d315c6d429b23fc699ec48496752e62b0a407",
+      "result": {
+        "operation_id": "8f683ba0-89c7-416a-ab37-b8dd12d5d3ac",
+        "revision": 20,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "round": "fc0dfe6a-efee-4339-a639-76d985c5c3f8"
+      }
+    },
+    {
+      "id": "f35239d0-1dfb-4196-a7fa-8c423548a2a8",
+      "digest": "ecb245d900275192798f168a4f65ac1881bf7f1f4c70bcd3affa2c6e15ba7626",
+      "result": {
+        "operation_id": "f35239d0-1dfb-4196-a7fa-8c423548a2a8",
+        "revision": 21,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911"
+      }
+    },
+    {
+      "id": "87841bda-fb55-4d7e-a457-d8bfbf5353e7",
+      "digest": "18e35ebb4bf1b0ddfb334b0010acb17463fdc135c034d9836534648520364a1f",
+      "result": {
+        "operation_id": "87841bda-fb55-4d7e-a457-d8bfbf5353e7",
+        "revision": 22,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "round": "4280cc42-c77c-4a89-8687-15180efd8040"
+      }
+    },
+    {
+      "id": "5ff5d169-5385-4b28-b894-4069afe67bfc",
+      "digest": "13c858b518e337a5839290b43e3072974b9af46bccf4d00de1b78372693cd5cd",
+      "result": {
+        "operation_id": "5ff5d169-5385-4b28-b894-4069afe67bfc",
+        "revision": 23,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a"
+      }
+    },
+    {
+      "id": "17da98d4-46dd-41ce-967b-1b12d1342535",
+      "digest": "e334aa853a67a0f008123ca9c3fde0876092676452005890e178698c860efb6b",
+      "result": {
+        "operation_id": "17da98d4-46dd-41ce-967b-1b12d1342535",
+        "revision": 24,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "round": "971562a0-562e-44cd-9787-48f48ae6e72a"
+      }
+    },
+    {
+      "id": "3e9646d2-73a0-4933-b830-4e873176355c",
+      "digest": "df581e6439ba1ca3655f60b7732538c705e04462400864e1d8b55555846760b9",
+      "result": {
+        "operation_id": "3e9646d2-73a0-4933-b830-4e873176355c",
+        "revision": 25,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94"
+      }
+    },
+    {
+      "id": "3352b262-bddb-4cc7-bd12-20db18d36e74",
+      "digest": "31b7d17b9bda8ed065c8b2bcb5d84493f67fee619e9bbc95f646a3d41133f3ed",
+      "result": {
+        "operation_id": "3352b262-bddb-4cc7-bd12-20db18d36e74",
+        "revision": 26,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "6a829c77-d190-4203-b906-1729fa277987"
+      }
+    },
+    {
+      "id": "69049e55-406d-48fd-b448-f19afe7b11a1",
+      "digest": "e016d35cb315951a52df9eac16836e7f0ae0b8dd9a90f18f7aa21bc874a6287d",
+      "result": {
+        "operation_id": "69049e55-406d-48fd-b448-f19afe7b11a1",
+        "revision": 27,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "thread": "cd001460-eb31-4f59-8964-41137001c6ec"
+      }
+    },
+    {
+      "id": "50f4339a-f0d1-4328-b451-46d56a0065e6",
+      "digest": "4e3352b3d2c4f7372d0dc3cefec82b74dbdc278f0cd14cf42efa4b74463736f7",
+      "result": {
+        "operation_id": "50f4339a-f0d1-4328-b451-46d56a0065e6",
+        "revision": 28,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "round": "b24f4ca5-cc8c-4b83-b82d-23afcf132e38"
+      }
+    },
+    {
+      "id": "7f502d17-ec0c-4c6b-b453-e9020a6a8d99",
+      "digest": "69e87a340aa9b760f27968c2ccf55d817ce09c00a3b5c03d5ddb865267930799",
+      "result": {
+        "operation_id": "7f502d17-ec0c-4c6b-b453-e9020a6a8d99",
+        "revision": 29,
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "thread": "00a777c0-3e7e-4b55-97b0-40af05f068f9"
+      }
+    },
+    {
+      "id": "1f73ce42-4003-4d17-94ca-61e248e89d6f",
+      "digest": "00ac142d8e0a669196e45e762be85c2cfa8899b6a10a7ed959de7dc884227be1",
+      "result": {
+        "operation_id": "1f73ce42-4003-4d17-94ca-61e248e89d6f",
+        "revision": 30,
+        "session": "a84b9b3a-2e34-4a10-8451-155ee83a0cc3",
+        "round": "aeb62723-84b4-42c5-838b-41704b0f34aa"
+      }
+    },
+    {
+      "id": "fa3d15d6-6f74-4c51-acda-40b7f9fc3c07",
+      "digest": "708d49b8c4d4dfb6827f9b91430fa07b43270b9a6a8994eb02222a907dcb3460",
+      "result": {
+        "operation_id": "fa3d15d6-6f74-4c51-acda-40b7f9fc3c07",
+        "revision": 31,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7"
+      }
+    },
+    {
+      "id": "b76020f6-5f87-47f2-859b-2349a7c282de",
+      "digest": "45efea615f5db0664e5ed9bd2c0b5657d5caf7628d13f31699c52df00d0d3a1e",
+      "result": {
+        "operation_id": "b76020f6-5f87-47f2-859b-2349a7c282de",
+        "revision": 32,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "batch": "8b5da7ce-ec03-4305-9eb4-92b29d4dbadc",
+        "cursor": 2
+      }
+    },
+    {
+      "id": "626da2d2-5e46-48fb-961f-f90b3f16ae07",
+      "digest": "ee76ab3e05e9b287955c6d5b10046712b79dbb23915643d1654271e9d08a96f5",
+      "result": {
+        "operation_id": "626da2d2-5e46-48fb-961f-f90b3f16ae07",
+        "revision": 33,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7"
+      }
+    },
+    {
+      "id": "3033352d-b709-4b8a-84c7-720bf820b631",
+      "digest": "502d99769ace5fdf5a094f3bfb539e6e958e5f3fc69dd1ee3f095035a551b9c2",
+      "result": {
+        "operation_id": "3033352d-b709-4b8a-84c7-720bf820b631",
+        "revision": 34,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "823e8f67-2ab6-4ffb-898c-10a7d4a64145"
+      }
+    },
+    {
+      "id": "8a36d8f2-3a53-42c7-92a8-eaeffcafdf92",
+      "digest": "c2e69fc9e44b30bc31a34e0ed9d5d8d883f08373be79f9966d9e1a9149196661",
+      "result": {
+        "operation_id": "8a36d8f2-3a53-42c7-92a8-eaeffcafdf92",
+        "revision": 35,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8"
+      }
+    },
+    {
+      "id": "5cce4042-2d72-454c-ba08-a44f0dc9d9c1",
+      "digest": "f6ced3ef428234045c512739f54484410fb48b5b433c5c5bb4c6830ca9a2874c",
+      "result": {
+        "operation_id": "5cce4042-2d72-454c-ba08-a44f0dc9d9c1",
+        "revision": 36,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "batch": "41159ffc-0a4e-460a-87c5-0914d16e7542",
+        "cursor": 3
+      }
+    },
+    {
+      "id": "aaf08448-cedf-4b20-8447-c133f85a6185",
+      "digest": "5655227f2eb9c758a3149df6f1b19b0da337306ef08e04da07e1b36cb1cc21ee",
+      "result": {
+        "operation_id": "aaf08448-cedf-4b20-8447-c133f85a6185",
+        "revision": 37,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8"
+      }
+    },
+    {
+      "id": "768ae975-51b1-4f8e-ac06-f58676b6b74e",
+      "digest": "209446f6c66ae9d9265d4a8816a46e030d256e46a25c602fdbd3d55a628972a5",
+      "result": {
+        "operation_id": "768ae975-51b1-4f8e-ac06-f58676b6b74e",
+        "revision": 38,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "cb346f3a-ea1b-41bb-9f64-fa165bd7cabc"
+      }
+    },
+    {
+      "id": "a51c6f92-8666-49a7-a901-d0ed8318a7f8",
+      "digest": "20c9fc06004e2b187f8a2f372141aad00520b95b4e3ebe819c77572416419c53",
+      "result": {
+        "operation_id": "a51c6f92-8666-49a7-a901-d0ed8318a7f8",
+        "revision": 39,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94"
+      }
+    },
+    {
+      "id": "be2369c7-adcd-46d0-a7c5-c865ccd808f5",
+      "digest": "8eb89ca4926537505618a2209a902c7e12616aee98fabd56ff61097fd6d9bfc9",
+      "result": {
+        "operation_id": "be2369c7-adcd-46d0-a7c5-c865ccd808f5",
+        "revision": 40,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "batch": "30fb0850-7729-4248-97fd-430cc2e52990",
+        "cursor": 4
+      }
+    },
+    {
+      "id": "bd4bd566-7558-4fcc-b423-9ded047d0b18",
+      "digest": "6f09edff6e89f558c3ad22fca8bc118eef2a543bc683fa44af37719e872581a7",
+      "result": {
+        "operation_id": "bd4bd566-7558-4fcc-b423-9ded047d0b18",
+        "revision": 41,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94"
+      }
+    },
+    {
+      "id": "accb7673-60f3-4675-836a-a5b8b3c8d4be",
+      "digest": "209446f6c66ae9d9265d4a8816a46e030d256e46a25c602fdbd3d55a628972a5",
+      "result": {
+        "operation_id": "accb7673-60f3-4675-836a-a5b8b3c8d4be",
+        "revision": 42,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "round": "2ba041b5-66bf-4c9e-b09b-bc8388aeebab"
+      }
+    },
+    {
+      "id": "c9891881-239a-4b2a-bdad-a9edf4767b02",
+      "digest": "39b5ce02b24630605d3bd40e0dd76d351cc35d010ad96b75efd5771427fa6d75",
+      "result": {
+        "operation_id": "c9891881-239a-4b2a-bdad-a9edf4767b02",
+        "revision": 43,
+        "session": "2053a9ce-4b37-43bb-a996-43935cb46444",
+        "thread": "0dcc42c9-938d-462a-82ea-c7f3ce03f911"
+      }
+    },
+    {
+      "id": "5e07220a-a5d9-4d3c-a8b6-f2ca66e048c2",
+      "digest": "2014c7ad6b86e4a3125674c8a3b2015c30663be4d4d9b8424781526de44f59af",
+      "result": {
+        "operation_id": "5e07220a-a5d9-4d3c-a8b6-f2ca66e048c2",
+        "revision": 44,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5c92a460-6998-4071-a24f-108e0dc1ee94"
+      }
+    },
+    {
+      "id": "11e1d3de-6739-4b42-b0bd-093305f1a82a",
+      "digest": "3208931f40d15d22c4b589fd4e9e9f3419784769da6ff250f54246434dea4b55",
+      "result": {
+        "operation_id": "11e1d3de-6739-4b42-b0bd-093305f1a82a",
+        "revision": 45,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "5ac63f3c-38ca-4f9d-967f-bf542343ecf7"
+      }
+    },
+    {
+      "id": "d18845b7-2229-4369-be54-784d169c6856",
+      "digest": "38c70999a7c1227ec13197b2e852ef34833452d49758021110574e21ca9affa5",
+      "result": {
+        "operation_id": "d18845b7-2229-4369-be54-784d169c6856",
+        "revision": 46,
+        "session": "4b397a60-d0bf-4bb6-90f7-d6988202dcf9",
+        "thread": "9423cd55-d625-4fb7-be0b-10e3e040e7d8"
+      }
+    },
+    {
+      "id": "f150d6e9-0ac0-4c8a-acc6-82a7265c0c72",
+      "digest": "9ac28bf5e6c38891c45923feac4a22e5c382b77075e9f587e43e5db3a65afbe8",
+      "result": {
+        "operation_id": "f150d6e9-0ac0-4c8a-acc6-82a7265c0c72",
+        "revision": 47,
+        "session": "a2805f26-b669-4b82-bfc2-95ab61d59ed5",
+        "thread": "cd001460-eb31-4f59-8964-41137001c6ec"
+      }
+    },
+    {
+      "id": "ca1f6603-f840-404f-bf62-7c3f115d6e18",
+      "digest": "53beb1028c602fd85e1ab21747201de1f257a8219a6150f578225793a5b390c5",
+      "result": {
+        "operation_id": "ca1f6603-f840-404f-bf62-7c3f115d6e18",
+        "revision": 48,
+        "session": "bef9d411-b853-43fd-89c4-b48b59320d55",
+        "thread": "9ad9fed5-0a52-40b6-a3b8-4db40767fd7a"
+      }
+    },
+    {
+      "id": "08004c66-e901-4c6c-a2af-dd6a560e3908",
+      "digest": "306f7a621976f37a34417c119e70ccfed81fc6e2d2d5dadd6a11fd9f4018bc94",
+      "result": {
+        "operation_id": "08004c66-e901-4c6c-a2af-dd6a560e3908",
+        "revision": 49,
+        "session": "16b78290-a9e2-40fb-a8a6-4fa85da7a713",
+        "thread": "56cbe701-236d-4279-b273-7bc331135e6c"
+      }
+    }
+  ]
+}

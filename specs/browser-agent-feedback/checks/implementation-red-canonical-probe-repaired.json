@@ -1,0 +1,13 @@
+{
+  "observed_at": "2026-10-11T12:59:57.316282+00:00",
+  "cmd": [
+    "pnpm",
+    "exec",
+    "tsx",
+    "-e",
+    "<retained inline controlled-fixture probes>"
+  ],
+  "code": "\nimport fs from 'node:fs';import {join} from 'node:path';import {tmpdir} from 'node:os';import {randomUUID} from 'node:crypto';import {emitBytes,mutateFeedback,readFeedback} from './packages/core/src/index.ts';\nconst root=fs.mkdtempSync(join(tmpdir(),'implementation-red-canonical-'));const foreign=fs.mkdtempSync(join(tmpdir(),'implementation-red-foreign-'));\ntry {const dir=join(root,'specs','own');fs.mkdirSync(dir,{recursive:true});const outside=join(foreign,'foreign.json');fs.writeFileSync(outside,emitBytes({id:'foreign-project-pack',name:'foreign',format:'specpack/0.4',revision:1,spec:{requirements:[],clarifications:[]},plan:{decisions:[]},tasks:[],workflow:{policy:'owner-gated/1',plan:1,phase_questions:{spec:[]},acts:[],pending_audit:[]}}));fs.symlinkSync(outside,join(dir,'own.json'));\n let refusal;try{mutateFeedback(dir,root,{operation_id:randomUUID(),expected_revision:0,by:'agent:probe',action:{kind:'open',selection:{mode:'documents',paths:['doc.md'],artifacts:[]},snapshots:[{key:'doc.md',path:'doc.md',before:null,after:'Local target'}]}});}catch(e){refusal={code:e.code,message:e.message};}\n console.log(JSON.stringify({refusal,localLedgerCreated:fs.existsSync(join(dir,'feedback','state.json'))},null,2));\n}finally{fs.rmSync(root,{recursive:true,force:true});fs.rmSync(foreign,{recursive:true,force:true});}\n",
+  "exit": 0,
+  "output": "{\n  \"refusal\": {\n    \"code\": \"forbidden\",\n    \"message\": \"Symlink paths are not feedback targets\"\n  },\n  \"localLedgerCreated\": false\n}\n"
+}

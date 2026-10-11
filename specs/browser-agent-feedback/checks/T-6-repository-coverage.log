@@ -1,0 +1,256 @@
+
+> treadle-root@ coverage ./treadle
+> vitest run --coverage
+
+
+ RUN  v3.2.7 ./treadle
+      Coverage enabled with v8
+
+ ✓ packages/conformance/test/corpus.test.ts (1 test) 7ms
+ ✓ packages/brand/test/brand.test.ts (2 tests) 4ms
+ ✓ packages/cli/test/banner.test.ts (1 test) 6ms
+ ✓ packages/cli/test/init-skin.test.ts (3 tests) 7ms
+ ✓ packages/conformance/test/owner-schema.test.ts (2 tests) 15ms
+ ✓ packages/cli/test/harness-packages.test.ts (1 test) 85ms
+ ✓ packages/cli/test/project-registry.test.ts (3 tests) 105ms
+ ✓ packages/brand/test/rebrand.test.ts (1 test) 293ms
+ ✓ packages/knowledge/test/debts.test.ts (5 tests) 53ms
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+ ✓ packages/knowledge/test/knowledge.test.ts (4 tests) 40ms
+ ✓ packages/knowledge/test/containment.test.ts (5 tests) 50ms
+ ✓ packages/cli/test/init-engine.test.ts (17 tests) 108ms
+ ✓ packages/knowledge/test/ritual.test.ts (5 tests) 123ms
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+ ✓ packages/core/test/core.test.ts (5 tests) 9ms
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+ ✓ packages/core/test/owner-workflow.test.ts (9 tests) 42ms
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+ ✓ packages/web/test/pages.test.ts (11 tests) 84ms
+ ✓ packages/cli/test/machine-managed-guard.test.ts (1 test) 758ms
+   ✓ guards actual corpus witnesses through argv, Claude stdin and Pi tool_call  756ms
+ ✓ packages/cli/test/context.test.ts (1 test) 32ms
+ ✓ packages/cli/test/where.test.ts (7 tests) 148ms
+ ✓ packages/web/test/servers.test.ts (6 tests) 183ms
+ ✓ packages/conformance/test/runner.test.ts (3 tests) 8ms
+stdout | packages/cli/test/do.test.ts > the do plane (integration, in-process) > answers, approves, records, closes — the whole ceremony through the CLI
+answered Q-1 by human:owner
+answered Q-2 by human:owner
+approved by human:owner at 2026-10-10T12:00:00Z
+{"task":"T-1","status":"done","fail_streak":0}
+closed by human:owner: the record is frozen
+
+stdout | packages/cli/test/do.test.ts > do next (the frozen handout) > hands out the task, saves the doing state, then reports closure honestly
+task T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
+  D    D-1
+  TASK T-1 — one
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+born: /tmp/cli-owner-gVArSJ/p/p.json (revision 1, stage awaiting_owner)
+recorded accept by human:owner; audit recorded
+recorded start by human:owner; audit recorded
+task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+  D    D-1
+  TASK T-1 — Work
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions
+REFUSED: decisions: D-1; T-1 needs D-1
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stdout | packages/cli/test/do.test.ts > do accept / reject (the human act, last to port) > accept resolves the decision and its questions; reject keeps them open
+accepted D-9 by human:owner — resolved Q-1
+rejected D-8: wrong shape — the questions stay open
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+born: /tmp/cli-owner-qByT6B/p/p.json (revision 1, stage awaiting_owner)
+asked Q-1 (revision 2)
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > rejects stale answers and approvals in legacy packs too
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > explicitly adopts active legacy bytes without inventing earlier start consent
+born: /tmp/cli-owner-lDGsBh/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+born: /tmp/cli-owner-Hfip79/p/p.json (revision 1, stage awaiting_owner)
+adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > preserves actual bootstrap start dates and refuses changed reviewed scope
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+born: /tmp/cli-owner-Zpz9oc/p/p.json (revision 1, stage awaiting_owner)
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > refuses closed adoption and agent adoption without touching records
+REFUSED: A complete spec cannot be adopted
+REFUSED: Adoption needs an owner claim
+
+ ✓ packages/cli/test/do.test.ts (5 tests) 54ms
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+born: /tmp/cli-owner-hK8b7B/p/p.json (revision 1, stage awaiting_owner)
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses the same exclusive lock for CLI mutations
+REFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+
+stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+born: /tmp/cli-owner-VNMZPB/p/p.json (revision 1, stage awaiting_owner)
+
+stderr | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > does not import a fabricated bootstrap authorization
+REFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+ ✓ packages/cli/test/owner-workflow.test.ts (7 tests) 80ms
+ ✓ packages/web/test/feedback-api.test.ts (3 tests) 267ms
+ ✓ packages/core/test/feedback.test.ts (22 tests) 414ms
+ ✓ packages/cli/test/know.test.ts (7 tests) 116ms
+ ✓ packages/cli/test/feedback-harness.test.ts (3 tests) 388ms
+ ✓ packages/web/test/room-skin.test.ts (3 tests) 70ms
+ ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 714ms
+ ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1124ms
+   ✓ session-recall payload + wirings (T-1) > script mode: the block prints and exits 0 (unpiped contract)  312ms
+   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  366ms
+ ✓ packages/cli/test/codex-project-paths.test.ts (3 tests) 1135ms
+   ✓ project hook commands survive relocation and nested cwd while preserving event stdin  967ms
+ ✓ packages/cli/test/serve-runtime.test.ts (8 tests) 1308ms
+   ✓ shared service lifecycle > cold-starts once across callers, survives parent command and restarts after stop  605ms
+   ✓ shared service lifecycle > refuses a live or incomplete startup lock rather than expiring it  308ms
+   ✓ shared service lifecycle > recovers proven dead startup and recovery owners; unfinished candidates hold no lock  344ms
+ ✓ packages/web/test/library-skin.test.ts (4 tests) 387ms
+   ✓ the library skin (live DOM) > three panes render; the journey strip survives; serif titles apply  382ms
+ ✓ packages/cli/test/claude-context.test.ts (1 test) 1744ms
+   ✓ connects startup/resume/preprompt workspace and never shuts down with session lifetime  1743ms
+ ✓ packages/web/test/dom.smoke.test.ts (2 tests) 482ms
+   ✓ the DOM harness (T-0 smoke) > loads library.js, boots against the live server, and a click drives the router  342ms
+ ✓ packages/web/test/theme.test.ts (5 tests) 591ms
+ ✓ packages/cli/test/claude-project-paths.test.ts (3 tests) 1567ms
+   ✓ project hook commands survive relocation and nested cwd while preserving event stdin  1390ms
+ ✓ packages/web/test/room-keyboard.test.ts (1 test) 1906ms
+   ✓ the room keyboard (standalone harness) > drives the ceremony: Enter submits, approve card reached  1904ms
+ ✓ packages/web/test/project-security.test.ts (3 tests) 420ms
+   ✓ renders public branding and current CLI guidance in an empty project browser  306ms
+ ✓ packages/web/test/project-library.test.ts (2 tests) 436ms
+   ✓ renders public branding and current CLI guidance in an empty project browser  370ms
+ ✓ packages/cli/test/pi-context.test.ts (1 test) 2247ms
+   ✓ registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown  2245ms
+ ✓ packages/cli/test/feedback-cli.test.ts (10 tests) 1469ms
+   ✓ portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1024ms
+ ✓ packages/cli/test/codex-context.test.ts (2 tests) 2426ms
+   ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  2377ms
+ ✓ packages/cli/test/feedback-loop.test.ts (4 tests) 1636ms
+   ✓ delivers only explicit submitted document feedback during wait and retains it across service restart  353ms
+   ✓ delivers stale reattachment only after another human Submit and preserves the original code anchor  1202ms
+ ✓ packages/web/test/feedback-ui.test.ts (6 tests) 1852ms
+   ✓ renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  823ms
+ ✓ packages/web/test/owner-workflow.test.ts (11 tests) 2336ms
+   ✓ owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure  2248ms
+ ✓ packages/web/test/inspector.test.ts (1 test) 3523ms
+   ✓ the phase inspector (T-3) > renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only  3521ms
+ ✓ packages/web/test/telemetry.test.ts (1 test) 3539ms
+   ✓ the review telemetry + gate (T-8) > renders the real counts, filters by severity, speaks the house sentence  3537ms
+ ✓ packages/web/test/workflow-ui.test.ts (4 tests) 4454ms
+   ✓ owner workflow UI > shows the ordered flow; decision approval does not start implementation  678ms
+   ✓ owner workflow UI > requires a current independent review, then a separate confirmation to finish  418ms
+   ✓ owner workflow UI > preserves content on a stale action and refreshes without inventing permission  3161ms
+
+ Test Files  49 passed (49)
+      Tests  237 passed (237)
+   Start at  09:31:45
+   Duration  7.64s (transform 8.68s, setup 0ms, collect 38.36s, tests 38.85s, environment 6.31s, prepare 9.87s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    88.5 |    78.39 |   95.39 |    88.5 |                   
+ brand/src         |     100 |      100 |     100 |     100 |                   
+  brand.ts         |     100 |      100 |     100 |     100 |                   
+  index.ts         |     100 |      100 |     100 |     100 |                   
+ cli/src           |    82.5 |    66.66 |     100 |    82.5 |                   
+  main.ts          |    82.5 |    66.66 |     100 |    82.5 | 55-61             
+ cli/src/commands  |   78.51 |    61.88 |    87.5 |   78.51 |                   
+  context.ts       |   81.81 |      100 |     100 |   81.81 | 9-10              
+  do.ts            |    88.9 |    53.84 |   88.88 |    88.9 | ...63-667,682-686 
+  feedback.ts      |   86.13 |    80.48 |   91.66 |   86.13 | ...52-269,297-313 
+  init.ts          |   38.21 |    35.71 |      80 |   38.21 | ...96-203,221-240 
+  know.ts          |   88.76 |    70.27 |     100 |   88.76 | ...64-165,180-189 
+  package.ts       |   91.66 |      100 |     100 |   91.66 | 11                
+  project.ts       |   38.23 |      100 |      50 |   38.23 | ...26,29-31,34-40 
+  serve.ts         |    52.5 |      100 |     100 |    52.5 | ...26-30,35,40-48 
+ cli/src/harness   |   88.88 |    82.43 |   93.05 |   88.88 |                   
+  apply.ts         |   92.78 |    81.02 |     100 |   92.78 | ...87,290-303,361 
+  content.ts       |   81.81 |      100 |   66.66 |   81.81 | 17-18             
+  context.ts       |   87.76 |    59.52 |     100 |   87.76 | ...-44,95,113-114 
+  ...k-snapshot.ts |     100 |    88.55 |     100 |     100 | ...31,278-279,314 
+  manifest.ts      |   84.81 |       75 |    87.5 |   84.81 | ...,88-89,101-102 
+  packages.ts      |     100 |    86.88 |   88.88 |     100 | ...56,103,127-132 
+  paths.ts         |   88.88 |    83.33 |     100 |   88.88 | 29-30             
+  plan.ts          |   91.61 |    92.62 |     100 |   91.61 | ...47,193-203,239 
+  skin.ts          |   15.85 |       10 |   33.33 |   15.85 | ...9,41-74,81-100 
+  types.ts         |     100 |      100 |     100 |     100 |                   
+  where.ts         |   86.89 |    77.41 |     100 |   86.89 | ...15,126-129,180 
+ cli/src/serve     |   91.56 |    77.03 |     100 |   91.56 |                   
+  projects.ts      |   97.05 |    84.21 |     100 |   97.05 | 120-122           
+  runtime.ts       |   90.15 |    74.34 |     100 |   90.15 | ...33-434,451-453 
+ conformance/src   |   77.47 |    67.85 |    92.3 |   77.47 |                   
+  corpus.ts        |     100 |    71.42 |     100 |     100 | 16,19             
+  runner.ts        |   75.98 |    67.66 |    90.9 |   75.98 | ...74-475,486-492 
+ core/src          |   97.36 |       80 |   83.33 |   97.36 |                   
+  assert.ts        |     100 |      100 |     100 |     100 |                   
+  events.ts        |      50 |      100 |       0 |      50 | 26-27             
+  ids.ts           |     100 |    71.42 |     100 |     100 | 38                
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  refusals.ts      |     100 |      100 |     100 |     100 |                   
+  stages.ts        |     100 |      100 |     100 |     100 |                   
+ core/src/feedback |   98.57 |    88.58 |     100 |   98.57 |                   
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  model.ts         |     100 |      100 |     100 |     100 |                   
+  store.ts         |   98.54 |    88.53 |     100 |   98.54 | ...72,582-584,598 
+ core/src/specpack |   89.31 |    80.07 |   95.34 |   89.31 |                   
+  admission.ts     |   91.75 |    75.67 |      75 |   91.75 | 81-85,114-116     
+  alignment.ts     |   96.36 |    84.07 |     100 |   96.36 | 54-56,110-113,235 
+  audit.ts         |   95.65 |    71.42 |     100 |   95.65 | 59,105-107        
+  close.ts         |   93.33 |       84 |      50 |   93.33 | 58-60             
+  decisions.ts     |   93.82 |    67.74 |      80 |   93.82 | 77-78,105-107     
+  derive.ts        |     100 |    87.27 |     100 |     100 | ...30,41,43,47,49 
+  durability.ts    |     100 |    33.33 |     100 |     100 | 8-9               
+  emit.ts          |     100 |     93.1 |     100 |     100 | 55-56             
+  events.ts        |   82.75 |    65.21 |     100 |   82.75 | ...41,43-44,77-78 
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  loader.ts        |   66.29 |    76.08 |     100 |   66.29 | ...-89,98,104-106 
+  model.ts         |       0 |        0 |       0 |       0 |                   
+  next.ts          |   73.95 |       75 |     100 |   73.95 | ...40-244,252-255 
+  normalize.ts     |     100 |    83.33 |     100 |     100 | 8,20,27-28        
+  pins.ts          |   75.92 |    64.44 |     100 |   75.92 | ...,95-96,121-122 
+  record.ts        |      80 |       75 |      75 |      80 | ...,91-94,126-128 
+  save.ts          |   95.91 |       60 |     100 |   95.91 | 36-37             
+  transaction.ts   |   93.84 |    81.81 |     100 |   93.84 | 42-43,49-50       
+  workflow.ts      |   98.95 |    88.54 |     100 |   98.95 | 133-134,323       
+ knowledge/src     |   90.04 |    80.95 |   98.41 |   90.04 |                   
+  findings.ts      |    95.1 |    72.72 |     100 |    95.1 | ...-67,85,177-178 
+  fingerprints.ts  |   96.89 |    83.01 |     100 |   96.89 | 46-47,101-102     
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  links.ts         |   96.46 |    79.24 |     100 |   96.46 | 53-54,84-85       
+  parse.ts         |    75.2 |    65.95 |   85.71 |    75.2 | ...37-138,152-153 
+  read.ts          |   86.36 |       75 |     100 |   86.36 | ...6,62-68,99-100 
+  search.ts        |     100 |    91.35 |     100 |     100 | ...60-161,171-172 
+  stamp.ts         |    90.9 |       70 |     100 |    90.9 | 27,30-31,79-80    
+  validate.ts      |   86.24 |    86.04 |     100 |   86.24 | ...26-332,379-385 
+ web/src           |   92.63 |    76.05 |   96.77 |   92.63 |                   
+  feedback.ts      |       0 |        0 |       0 |       0 | 1                 
+  index.ts         |     100 |      100 |     100 |     100 |                   
+  ...ect-server.ts |   97.39 |    79.76 |     100 |   97.39 | ...49-252,324-325 
+  servers.ts       |   89.77 |     73.8 |     100 |   89.77 | ...15-516,521-524 
+-------------------|---------|----------|---------|---------|-------------------

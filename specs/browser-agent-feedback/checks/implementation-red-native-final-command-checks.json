@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-10-11T16:37:17.481665+00:00",
+  "unit_argv": [
+    "pnpm",
+    "exec",
+    "vitest",
+    "run",
+    "packages/cli/test/feedback-loop.test.ts"
+  ],
+  "unit_exit": 0,
+  "unit_log": "checks/implementation-red-native-final-loop-tests.log",
+  "unit_log_sha256": "374982591e7cd084be72eb187a2558c5724ca1b76e1c21556278bac0abfc4edf",
+  "test_source_sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
+  "ui_argv": [
+    "node",
+    "./specs/browser-agent-feedback/verify-hosts.mjs",
+    "--ui-only"
+  ],
+  "ui_exit": 0,
+  "ui_stdout": "UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified\n",
+  "ui_stderr": "",
+  "limit": "This is unit/UI verification only; the exact combined native command will run after the stable report is bound into the real witness."
+}

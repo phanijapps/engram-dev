@@ -15,7 +15,7 @@ trap 'rm -rf "$ENGRAM_SRC"' EXIT
 
 log "0. remove stale experiments (a broken prior install must never shadow)"
 npm rm -g engram-dev >/dev/null 2>&1 || true
-rm -f "$HOME/.local/node-v24.19.0/bin/treadle" || true
+rm -f "$HOME/.local/node-v24.19.0/bin/wukong" || true
 
 log "1. install.sh mechanism against a clean source dir + isolated PATH"
 export PATH="$HOME/.local/node-v24.19.0/bin:$HOME/.local/share/pnpm:/usr/local/bin:/usr/bin:/bin"; hash -r  # pnpm's own bin dir must be on PATH for link
@@ -24,13 +24,13 @@ log "   install exit: 0"
 
 log "2. assertions from an arbitrary directory (isolated PATH — no pnpm shadow)"
 cd /tmp
-treadle --version >>"$TRANSCRIPT" 2>&1
-treadle --help >/dev/null
-log "   treadle --help: ok"
-treadle do where /tmp >/dev/null
-log "   treadle do where: ok"
-treadle init harness --agent pi --scope project --root /tmp/cleanroom-proj --dry-run >/dev/null
-log "   treadle init harness --dry-run: ok"
+wukong --version >>"$TRANSCRIPT" 2>&1
+wukong --help >/dev/null
+log "   wukong --help: ok"
+wukong do where /tmp >/dev/null
+log "   wukong do where: ok"
+wukong init harness --agent pi --scope project --root /tmp/cleanroom-proj --dry-run >/dev/null
+log "   wukong init harness --dry-run: ok"
 
 log "3. the floor check: the linked entry under BOTH node binaries"
 MAINJS="$ENGRAM_SRC/treadle/packages/cli/dist/src/main.js"

@@ -1,0 +1,63 @@
+{
+  "observed_at": "2026-10-11T14:59:20.157Z",
+  "scope": "In-memory synthetic negative projections of current admission delta only. Synthetic resolves are never written to ledger/evidence. No native process or real human event is performed. This output is probe evidence, not native completion.",
+  "verifier_sha256": "d19dd19d1220313ecad9985b8b02f5913748e41312ee62470ed055365f9561a1",
+  "ledger_sha256": "60c01f6dc7e3b5f2c8cb1ee14ea74cdc4b3ff082fb5f9d15e792e4a4fdb8f0ad",
+  "ledger_bytes_unchanged": true,
+  "results": [
+    {
+      "variant": "actual_pending",
+      "accepted": false,
+      "message": "Every native test thread needs human resolution after its revised round"
+    },
+    {
+      "variant": "synthetic_resolved_baseline",
+      "accepted": true
+    },
+    {
+      "variant": "unresolved_extra_thread",
+      "accepted": false,
+      "message": "Every native test thread needs human resolution after its revised round"
+    },
+    {
+      "variant": "event_anchor_mismatch",
+      "accepted": false,
+      "message": "Human reattachment must preserve the stale original anchor and event"
+    },
+    {
+      "variant": "event_actor_mismatch",
+      "accepted": false,
+      "message": "Human reattachment must preserve the stale original anchor and event"
+    },
+    {
+      "variant": "event_timestamp_mismatch",
+      "accepted": false,
+      "message": "Human reattachment must preserve the stale original anchor and event"
+    },
+    {
+      "variant": "original_anchor_mismatch",
+      "accepted": false,
+      "message": "Human reattachment must preserve the stale original anchor and event"
+    },
+    {
+      "variant": "no_source_hash_change",
+      "accepted": false,
+      "message": "Human reattachment must preserve the stale original anchor and event"
+    },
+    {
+      "variant": "reattach_wait_missing",
+      "accepted": false,
+      "message": "Native command must redeliver the exact submitted reattachment batch"
+    },
+    {
+      "variant": "reattach_read_missing",
+      "accepted": false,
+      "message": "Native command must redeliver the exact submitted reattachment batch"
+    },
+    {
+      "variant": "later_reply_missing",
+      "accepted": false,
+      "message": "Reattached original thread needs a later native reply and human resolution"
+    }
+  ]
+}

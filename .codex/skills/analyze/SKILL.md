@@ -1,192 +1,146 @@
 ---
 name: analyze
-description: Create bounded, evidence-grounded SDD analysis for a feature, spec, defect, spike, impact question, or knowledge gap. Register the initiative specpack before planning handoff; keep uncertainty explicit. Use for analyzing proposed or broken work, not implementation or review.
+description: Create bounded, evidence-grounded analysis of a feature, spec, defect, spike, impact question, or knowledge gap. Register initiative requirements and artifacts before planning handoff. Use for investigation and proposed work, not implementation or independent review.
 ---
 
-# analyze — bounded analysis for spec-driven delivery
+# Analyze
 
-One skill, six modes, **one spine**. The modes differ in the artifact they
-produce and the question they answer — never in discipline. Every mode
-grounds in evidence first, stays bounded, preserves uncertainty, and hands
-off explicitly. Analysis that tries to "complete" before any work begins is
-waterfall with AI narration; this skill exists to prevent exactly that.
+Produce the smallest analysis that resolves the next decision or enables planning.
+Keep uncertainty explicit. An analysis proposes work; it grants no owner authority.
 
-## 0. The anti-waterfall contract
+## Resolve the request
 
-These rules bind every mode. Violating any of them is a defect in the
-analysis, not a style choice.
+Read the request, repository instructions, relevant knowledge, and existing work records.
+Reuse product context from `new-project` or `roadmap` when supplied.
+Distinguish current behavior, historical observations, proposed behavior, and unknowns.
+Do not turn an ordinary repository question into an executable initiative.
 
-1. **Bounded artifact.** Produce the _smallest analysis that unblocks the
-   next step_. An explicit Out-of-scope register is mandatory; an empty one
-   must say why completeness is credible.
-2. **Ground before you ask.** The repo, wiki, and memory answer most
-   questions. Ask the user only what evidence cannot supply — once, batched,
-   and recorded in the artifact as questions with owners and resolution
-   paths. Never re-ask what is already recorded.
-3. **Uncertainty is an output.** Open questions and assumptions are
-   deliverables, not embarrassments. Every question states what it blocks
-   and its resolution path; every assumption states its blast radius and
-   validation trigger. Nothing is silently resolved by vibes.
-4. **Evidence status on every load-bearing claim.** declared /
-   implementation-supported / inferred / conflicting / unknown. Omit
-   sections you cannot evidence; never invent content to fill a template.
-5. **Propose, never authorize.** Analyses are data. They never mark
-   anything accepted, verified, or successful. Normative claims ("new code
-   must…") route through `know findings propose`, never written as
-   settled truth.
-6. **Decisions are explicit and reversibility-tagged.** Record choice,
-   alternatives, and two-way vs one-way door. Insufficient evidence means
-   the question stays open — a DECISION is not manufactured to look done.
-7. **Bounded planning.** Analysis can prepare ready slices while unknowns remain.
-   Implementation waits for the owner gates of the current plan.
-8. **Supersede, don't mutate.** A re-analysis is a new artifact that marks
-   the old one `status: superseded`. Never silently rewrite a prior
-   analysis to match new conclusions.
+For initiative work, locate the canonical pack with `do where <workspace> --json`.
+Reuse its exact path and held revision. Create a new gated pack only when needed.
+Preserve legacy formats and closed records. Never silently adopt or reopen them.
 
-## 1. Ground before you ask (every mode, read-only first)
+If an ambiguous continuation has multiple open initiatives, ask which one to continue.
+An explicit new request does not require selection of an unrelated open initiative.
+Treat hook context as orientation. Verify refused or outdated entries through current commands.
+Lifecycle hooks supply context; core commands enforce admission. Candidates are not admitted tasks.
+Read [operations](resources/operations.md) before pack mutations or a machine handoff.
 
-1. **Anchor:** `know validate wiki` (health) and the freshness check —
-   compare `wiki/.okf/last-index.json` `repo_head` to `git rev-parse HEAD`.
-   Record `repo_head` — it pins every claim in the artifact.
-2. **Freshness gate:** if wiki is `stale` and the analysis depends on code
-   truth, run refresh fingerprints + stamp (code indexing is delegated — anchors stay honest). If you cannot update, pin all
-   code claims as evidence-status `declared` against the stamped revision
-   and say so — do not present stale extractions as current.
-3. **Compile context:** `know search "<mode question>"` then
-   `know read <cid>` (plus one query per affected subsystem).
-   Search results are pointers, not proof — open the cited files for
-   anything load-bearing.
-4. **Residual questions:** what evidence still cannot supply goes to the
-   user in ONE batched round, straight into the artifact's question
-   register.
+## Ground before questions
 
-## 2. Route the mode
+1. Record the repository HEAD and relevant staged, unstaged, and untracked inputs.
+   Pin cited dirty files with observed hashes. HEAD alone does not identify their bytes.
+2. If knowledge exists, check health, status, and affected anchors before refreshing anything.
+   Use `know search <bundle> <query>` and `know read <bundle> <cid>` to locate context.
+   Open cited source files and related documents for load-bearing claims.
+3. Record stale, conflicting, absent, or unbaselined knowledge explicitly.
+   Current freshness uses HEAD and Python fingerprints. It does not establish dirty TypeScript or Markdown freshness.
+   Do not reset fingerprints or stamp to make an analysis appear current.
+   Use direct source evidence when knowledge is incomplete. Delegate bounded knowledge maintenance to `build-kb` when needed.
+4. Ask only what the evidence cannot resolve. Batch residual owner questions where possible.
+   Reuse recorded answers. New evidence that invalidates an answer needs an explicit follow-up, not silent reuse.
 
-### Register the initiative
+For affected boundaries, inspect the relevant product purpose, components, and dependency direction.
+Where touched, identify API operations, event producers and consumers, database entities, migrations,
+external providers, authorization rules, compatibility constraints, and failure paths.
+Record upstream assumptions and downstream consequences with evidence.
+Keep the investigation proportional to the change. A local change does not need a complete repository inventory.
 
-For an SDD initiative that will hand off to planning or implementation, create
-`specs/<slug>/<slug>.json` with `do init <packDir> --owner-gated --title "…" --why "…"`
-if it does not exist. Load and reuse an existing active pack. A completed pack
-is frozen; a new change needs a new initiative. Ordinary repository questions
-do not require creating work records.
+## Choose a mode
 
-The JSON pack is the machine work record; the mode's Markdown artifact supplies
-its reasoning. Reference that artifact in the pack. Carry candidate requirements,
-questions, and proposed decisions into the pack before the planning handoff.
-New initiatives use root `specs`. Locate existing records with `do where` and
-reuse their reported path; never create the same initiative in both roots.
-Creation does not authorize implementation, accept decisions, or approve the spec.
-Use the installed harness CLI or the documented direct CLI invocation.
-Never invent human approval or closure fields.
+| Question                                | Mode    | Initiative artifact    | Deciding output                                               |
+| --------------------------------------- | ------- | ---------------------- | ------------------------------------------------------------- |
+| What capability should change, and why? | feature | `feature.md`           | Sourced problem, current behavior, proposed outcome and scope |
+| What exactly must be true?              | spec    | `spec.md`              | Candidate requirements and observable checks                  |
+| Why does this fail?                     | bug     | `bug-<short>.md`       | Causal hypotheses and deciding evidence                       |
+| Can this approach answer a decision?    | spike   | `spike-<n>-<topic>.md` | A bounded experiment and qualified outcome                    |
+| What breaks if this changes?            | impact  | `impact-<change>.md`   | Effects, dispositions and verification consequences           |
+| What knowledge is missing?              | gap     | `gap-<n>.md`           | Gaps and concrete resolution paths                            |
 
-| The ask is…                                  | Mode        | Artifact (under `specs/<slug>/`) | Question it answers                                          |
-| -------------------------------------------- | ----------- | -------------------------------- | ------------------------------------------------------------ |
-| "add / change a capability" — what & why     | **feature** | `feature.md`                     | What should change, and why is that justified?               |
-| "make it a testable contract"                | **spec**    | `spec.md`                        | What exactly must be true, and how would we check?           |
-| "this is broken / reproducible"              | **bug**     | `bug-<short>.md`                 | Why does this fail?                                          |
-| "we don't know if X works / is right"        | **spike**   | `spike-<n>-<topic>.md`           | What did the bounded investigation learn?                    |
-| "what breaks if we change X"                 | **impact**  | `impact-<change>.md`             | Which effects need dispositions?                             |
-| "what are we missing / why did context fail" | **gap**     | `gap-<n>.md`                     | What don't we know, where might it live, how do we close it? |
+Use the matching `assets/*.tmpl.md`. For gap mode use `assets/gapanalysis.tmpl.md`.
+Adapt the template to the evidence; state why an empty mandatory register is credible.
+For an initiative, store artifacts under its existing pack directory.
+For an ordinary question, answer in chat or the requested report location.
+Do not create a prose-only directory under live `specs` for an ordinary answer.
 
-Routing rules: one artifact per analysis, not per conversation. If a
-feature analysis reveals shared-contract blast radius, the impact mode runs
-as a _separate_ artifact it links to — modes never blur into each other.
-If mode is genuinely ambiguous, pick by the question column, state the
-choice in the artifact header.
+A mode answers one primary question. Link a separate impact or spike artifact when it adds useful evidence.
+Do not generate every mode automatically. Shared-contract consequences can remain a concise table for a small change.
 
-## Owner handoff
+- **Feature:** connect the problem to the product outcome and affected boundaries.
+  Separate sourced needs from proposed behavior. Name the next analysis or planning step.
+- **Spec:** write testable requirements for the bounded slice.
+  Give each criterion a verification method. Separate mandatory constraints from preferences and cite their sources.
+- **Bug:** record causal hypotheses before suggesting repairs.
+  Keep evidence for and against each hypothesis. State root cause only when deciding evidence confirms it.
+  An unresolved ledger is a valid result. Propose a regression test tied to the observed failure.
+- **Spike:** record one decision-relevant question, timebox, stop conditions, and method before exploration.
+  Reading a supplied probe is grounding; running it is an experiment and needs the declaration first.
+  Record the observed start and elapsed time. Do not invent or backdate them.
+  Mark probe code as throwaway. Stop when the question resolves or the timebox expires.
+  State confidence and limits. An inconclusive result names the evidence still needed.
+- **Impact:** trace providers and consumers through code and contracts.
+  Give each effect a disposition: retain, revise, replace, or defer.
+  A defer names its consequence and due point. Identify prior checks that need renewed evidence.
+- **Gap:** state what is unknown, why it matters, and where the answer might exist.
+  Map each gap to a source read, knowledge update, experiment, or residual owner question.
+  Preserve grounded areas instead of repeating the entire investigation.
 
-Write a brief before planning. State the requirement, purpose, scope and open questions.
-Use the writer skill for documents and owner questions.
-The spec states the intended behavior and observable checks.
+## Shared artifact contract
 
-Ask only questions that the repository and wiki cannot answer.
-Register required spec questions with `do add question --phase spec`.
-Design choices belong to the later decision review, not this question ceremony.
-Keep `workflow.phase_questions.spec` empty when no spec questions are needed.
-Do not ask the owner to approve an empty question ceremony.
-When questions exist, open `do interview <packDir>` or the spec library.
-The owner answers and then approves those spec questions.
-Record the actual answer and approval; silence and defaults are not consent.
-Pass the brief, spec, question state and pack revision to plan.
+Every artifact contains:
 
-New packs use specpack/0.4. Existing legacy packs keep their legacy contract.
-Do not silently adopt them or invent earlier start permission.
-Adoption needs a concrete owner-approved migration and preserves the original JSON.
+- Purpose, mode, relevant source pins, knowledge limits, and explicit Out-of-scope.
+- Evidence status on load-bearing claims: `declared`, `implementation-supported`, `inferred`, `conflicting`, or `unknown`.
+- Questions with what they block, owner, and resolution path.
+  Classify them as source, experiment, human spec, or design questions.
+- Assumptions with blast radius and validation trigger.
+- Mode findings, proposed choices where needed, and a concrete handoff.
 
-## 3. Mode playbooks
+Report actual commands, exits, and observations separately from planned checks.
+A failed assertion does not establish the proposition it asserts.
+Distinguish expected falsification from probe errors. Either conclusion needs captured deciding evidence.
+Bind observed claims to commands or sources in the current workspace.
+Do not copy another case's results into its check report.
+A local probe can establish a local fact; it does not establish production success.
+Cite existing accepted decisions or human receipts without granting new authority.
+Never invent an answer, identity, acceptance, permission, review verdict, or consent timestamp.
+Candidate feature requirements belong in the initiative.
+Record a proposed decision's alternatives, evidence, reversibility, and blocked slices.
+If evidence cannot support a choice, keep it open.
+Repository-wide normative discoveries use findings proposals; pending proposals are not accepted rules.
 
-Each artifact is a copy of the matching `assets/*.tmpl.md`, filled
-honestly — every template section either carries content or a stated
-"none identified + why credible". Mode essentials:
+## Register and hand off
 
-- **feature** — problem + pinned current behavior + proposed behavior +
-  affected surfaces (from wiki traversal, cite concept paths). Decide the
-  handoff: needs spec? needs spike first? straight to plan? Record which
-  questions block which part.
-- **spec** — requirements only for in-scope slices, each testable
-  (MUST/SHOULD) with acceptance criteria (given/when/then + method).
-  Constraints separated into mandatory vs preference with sources. Never
-  spec out-of-scope behavior "while we're here".
-- **bug** — hypothesis ledger before any fix talk. Each hypothesis carries
-  evidence-for / evidence-against and status (open / confirmed /
-  eliminated). Root cause is written only from a confirmed hypothesis;
-  otherwise the artifact ends at the ledger + what evidence would decide
-  it. Verification plan is regression-test-first.
-- **spike** — ONE decision-relevant question, timebox and kill conditions
-  declared _before_ work, method, findings (evidence-statused), outcome
-  with confidence, follow-ups. Spike code is throwaway and marked so; a
-  spike that "finishes the feature" has failed.
-- **impact** — candidate effects table: surface → mechanism → confidence →
-  disposition (retain / revise / replace / defer) → evidence. Every defer
-  names its consequence. Verification obligations list which existing
-  evidence is invalidated and must be re-established. Blocked work is
-  named explicitly.
-- **gap** — gap register: what we don't know × why it matters × where the
-  answer might live × how to close (repo source / wiki update / human /
-  experiment). Trigger context recorded (what failed — a compile miss, a
-  review finding, a blocked task). Ends in a close plan, not a shrug.
+For an initiative, write a brief and a candidate spec before planning.
+Use the writer skill when available. Preserve technical meaning if style guidance conflicts.
 
-## 4. Close: record, hand off
+Register the artifacts, candidate requirements, required spec questions, and proposed decisions in the pack.
+Use the procedure in [operations](resources/operations.md); an empty initialized pack is insufficient.
+Required human spec questions enter `workflow.phase_questions.spec` through the question command.
+Source gaps, experiments, and later design choices do not justify fictional human spec questions.
+An empty spec-question list skips that ceremony, not decisions or start permission.
+When required questions exist, the owner supplies actual answers and separate spec approval.
 
-Every artifact ends with a **Handoff** block:
+Verify the machine record and artifact references before handoff.
+Explain expected alignment gaps when requirements have no planned tasks yet.
+Analysis readiness means readiness for planning. Implementation still requires the current plan's owner gates.
 
-- **Ready now** — slices with no blocking unknowns (→ `plan` / `implement`).
-- **Blocked on** — question IDs, spikes, decisions (each with owner/path).
-- **Next step** — the single next skill invocation and its input.
+End with:
 
-Include the pack path and revision in a planning handoff. A prose-only
-initiative is not a machine handoff.
+- **Pack:** canonical path, held revision, format, and question state; or why no initiative is needed.
+- **Artifacts and requirements:** concrete references and registered candidate IDs.
+- **Ready for planning:** bounded slices and evidence that supports them.
+- **Blocked on:** unresolved IDs, affected slices, owners, and resolution paths.
+- **Next step:** one next action or skill invocation with its inputs.
+- **Checks and limits:** actual outcomes, expected gaps, and unrun checks.
 
-Then:
+## Preserve the record
 
-1. Note the milestone in the initiative folder and commit — the git
-   history is the durable record (project memory is back-burnered;
-   knowledge-engine decision D5).
-2. Normative claims discovered along the way → `know findings propose
-wiki <evidence> wiki/<concept>.md <kind> --rationale "…"`.
-   Never written directly as settled truth.
-3. Commit the artifact (with any wiki changes) — analysis travels with
-   the repo.
+Re-analysis creates a new dated supplement or successor with a link to the prior artifact.
+Record what changed and why. Preserve the old artifact's bytes, including its status.
+Approved documents can participate in the plan digest. Do not repin or mutate them to bypass review.
+Changes to an approved plan need owner review and new start permission.
+Do not reconstruct past sessions from commits or task state.
 
-## Rules
-
-- The spine is not optional: no mode skips grounding, bounding, or handoff.
-- Templates are contracts — sections carry content or a stated "none".
-- Evidence statuses are mandatory on load-bearing claims; conflicts are
-  recorded as `conflicting`, never averaged away.
-- Artifacts never contain acceptance, success, timestamps-of-truth, or
-  permission claims — those belong to authority, not analysis.
-- Ask-once: a question already recorded in any artifact or finding is
-  never asked again.
-- A stale wiki is a warning label, not a blocker: pin, mark, and proceed
-  honestly.
-
-## The ask-first rule (the hard gate's human contract)
-
-When the session opens with a recall block showing MORE THAN ONE spec
-in flight, and the user says "continue" (or go on / resume / pick up),
-you do not choose. You list the open specs and ask which one. The
-recall block is the source of truth (`do where <workspace>`); never
-memory. On pi and Claude Code a hard gate enforces this; on you it is
-discipline — the same rule either way.
+Keep a reviewable repository artifact when requested. Commit according to repository instructions and user scope.
+Do not automatically commit unrelated changes or publish anything.
+For skill evaluation, read [the evaluation protocol](evals/rubric.md); recipes are not completed runs.

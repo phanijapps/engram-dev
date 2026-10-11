@@ -1,0 +1,42 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ❯ packages/knowledge/test/containment.test.ts (5 tests | 1 failed) 41ms
+   × realpath containment (B1) > keeps concept ids and links relative to an aliased bundle root 27ms
+     → expected [ '../wiki/root', '../wiki/sub/page' ] to deeply equal [ 'root', 'sub/page' ]
+   ✓ realpath containment (B1) > a symlinked file escaping the bundle reads nothing 6ms
+   ✓ realpath containment (B1) > a symlinked directory escaping the bundle is refused 2ms
+   ✓ realpath containment (B1) > an in-bundle symlink alias reads, and dedupes to its target (one truth) 2ms
+   ✓ anchor routing (D7) > sibling sharing the bundle prefix is code, not wiki-internal 3ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/knowledge/test/containment.test.ts > realpath containment (B1) > keeps concept ids and links relative to an aliased bundle root
+AssertionError: expected [ '../wiki/root', '../wiki/sub/page' ] to deeply equal [ 'root', 'sub/page' ]
+
+- Expected
++ Received
+
+  [
+-   "root",
+-   "sub/page",
++   "../wiki/root",
++   "../wiki/sub/page",
+  ]
+
+ ❯ packages/knowledge/test/containment.test.ts:33:42
+     31|       writeFileSync(join(bundle, 'sub', 'page.md'), '---\ntitle: P\nty…
+     32|       const concepts = iterConceptFiles(alias).map((p) => parseConcept…
+     33|       expect(concepts.map((c) => c.cid)).toEqual(['root', 'sub/page']);
+       |                                          ^
+     34|       expect(buildAdjacency(alias, concepts)['sub/page']).toEqual(['ro…
+     35|     } finally {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  20:44:20
+   Duration  753ms (transform 133ms, setup 0ms, collect 177ms, tests 41ms, environment 0ms, prepare 121ms)
+

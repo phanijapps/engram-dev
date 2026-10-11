@@ -1,4 +1,5 @@
 export { assertNever } from './assert.js';
+export * from './feedback/index.js';
 export {
   OWNER_EVENT_FORMAT,
   ownerEventsPath,

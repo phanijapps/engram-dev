@@ -1,44 +1,30 @@
-# Mono-repo strategy
+# Monorepo and multiple-root strategy
 
-Multiple packages under one roof (e.g. memex: `engine/{core,memex,okf}`),
-**one wiki at the repo root** — a reader must see the whole system in one
-place.
+Start with workspace manifests and build configuration. Identify packages,
+services, shared contracts, deployment units, and external systems. Do not infer
+a runtime service boundary from a package directory alone.
 
-## Index pass (one pass, all packages)
+Use the existing repository knowledge home for the system overview. Give each
+important component a linked account of its role, public contracts, dependencies,
+and entities. Keep cross-component contracts in a shared reading location rather
+than duplicating conflicting descriptions in every package.
 
-The indexer is workspace-aware (it writes package/area summaries) but each
-run re-scopes the managed tree — **sequential per-package passes do not
-accumulate**. Use ONE update pass with an include per package:
+Read local READMEs and interface or migration records as well as central docs.
+Trace representative interactions across package boundaries and deployment units.
+Package imports establish code relationships; inspect configuration and runtime
+calls for network, event, database, and operational relationships.
 
-```
-okf code index . wiki \
-  --include "engine/okf/okf_kit/**"
-```
+For each shared contract, identify its producers or providers and its callers or
+consumers. Check both sides where accessible. Record unavailable external roots
+as gaps rather than guessing their behavior. For a small set of repositories,
+identify the root in every evidence location and preserve each root's authority.
+Do not create an unrequested coordinating repository.
 
-This yields `wiki/code/**` module concepts plus
-`wiki/code-summaries/{repository,areas/*,packages/**}`.
+Apply the coverage contract at system level and at important component boundaries.
+For refresh, trace changed shared contracts into affected consumers and their
+documentation. A root-level change can affect more than the package that contains
+the edited file. Report the extent actually inspected and unresolved consumers.
 
-## Curated concept seeds
-
-- `systems/<package>.md` per package — role, public surface, owner plane.
-- `systems/<top-architecture>.md` — how the packages compose (the diagram
-  in prose); this is usually the highest-value concept in the repo.
-- `domain/<shared-contract>.md` — the contracts packages exchange
-  (formats, front matter, CLI surfaces).
-- `decisions/<big-choice>.md` — recorded architecture decisions with
-  rationale and the alternative rejected.
-
-## Graphs
-
-If graphify is available, build per-package graphs and
-`graphify merge-graphs` into one cross-package graph; cite cross-package
-edges in the top-architecture concept's Evidence section.
-
-## Gotchas
-
-- One freshness stamp per update run — after the last package pass,
-  `resolve` reflects that pass's `repo_head`; commit code+wiki together.
-- Never index dependency/vendor trees or generated output; include-globs
-  are the guardrail.
-- Package READMEs/docs may already exist elsewhere (e.g. `docs/history/`)
-  for absorbed codebases — link them as sources rather than duplicating.
+Optional external graphs can help find cross-package relationships. Verify their
+claims against sources and record their source revision or content snapshot.
+There is no built-in managed code-index pass in the current harness.

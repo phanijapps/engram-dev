@@ -1,0 +1,129 @@
+{
+  "platform": "linux",
+  "node": "v24.19.0",
+  "at": "2026-10-11T01:31:59.418Z",
+  "results": [
+    {
+      "name": "check",
+      "at": "2026-10-11T01:31:36.399Z",
+      "command": [
+        "pnpm",
+        "check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "coverage",
+      "at": "2026-10-11T01:31:47.772Z",
+      "command": [
+        "pnpm",
+        "coverage"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "corpus:check",
+      "at": "2026-10-11T01:31:55.681Z",
+      "command": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "brand:check",
+      "at": "2026-10-11T01:31:56.491Z",
+      "command": [
+        "pnpm",
+        "brand:check"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "audit:prod",
+      "at": "2026-10-11T01:31:56.938Z",
+      "command": [
+        "pnpm",
+        "audit:prod"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "links",
+      "at": "2026-10-11T01:31:57.907Z",
+      "command": [
+        "pnpm",
+        "links"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wiki-fingerprints",
+      "at": "2026-10-11T01:31:58.385Z",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "packages/cli/dist/src/main.js",
+        "know",
+        "fingerprints",
+        "..",
+        "../wiki"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wiki-stamp",
+      "at": "2026-10-11T01:31:58.561Z",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "packages/cli/dist/src/main.js",
+        "know",
+        "stamp",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wiki-anchors",
+      "at": "2026-10-11T01:31:58.726Z",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "packages/cli/dist/src/main.js",
+        "know",
+        "anchors",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wiki-validate",
+      "at": "2026-10-11T01:31:58.941Z",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "packages/cli/dist/src/main.js",
+        "know",
+        "validate",
+        "../wiki"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "wiki-status",
+      "at": "2026-10-11T01:31:59.150Z",
+      "command": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "packages/cli/dist/src/main.js",
+        "know",
+        "status",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0
+    }
+  ],
+  "limits": "Fresh stamp compares HEAD; Python-only scanner does not detect dirty TS/Markdown."
+}

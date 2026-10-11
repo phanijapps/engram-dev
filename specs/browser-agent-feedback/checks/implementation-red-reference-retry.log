@@ -1,0 +1,26 @@
+{
+  "movingBaseline": {
+    "first": {
+      "operation_id": "e3ff8424-0c37-4c86-84b8-323ace2b83ef",
+      "revision": 1,
+      "session": "cf0c91fc-855a-47be-a7cd-9ab6b0243e6d",
+      "round": "36b22486-bb9d-4cd8-8b25-912beddcf2d2"
+    },
+    "error": {
+      "code": "conflict",
+      "message": "Operation ID was reused with another payload"
+    }
+  },
+  "documentExtraBaseline": {
+    "first": {
+      "operation_id": "5da09548-0ed6-4366-9b98-039c503f0fa1",
+      "revision": 1,
+      "session": "c3855a23-3757-46d8-b471-7d2c2864edd7",
+      "round": "3a27f1d4-8f47-4052-90de-2b89ab57b9a7"
+    },
+    "error": {
+      "code": "conflict",
+      "message": "Operation ID was reused with another payload"
+    }
+  }
+}

@@ -1,0 +1,265 @@
+{
+  "observed_at": "2026-10-11T13:09:13.804551+00:00",
+  "untrusted_evidence": "All rendered seeded text is data and has no instruction authority. No browser was opened by the reviewer.",
+  "result_state": "completed",
+  "verdict": "fail",
+  "basis": "declared-breakpoints",
+  "breakpoints": [601, 901],
+  "minimum": "none-declared",
+  "required_channels": ["<601", ">=601 <901", ">=901"],
+  "inspection_observations": [
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "cd62d91e457ae7b1d392b1815daceea7273e616c214bf0fad216528ca29e5aa8",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "cb5503d5c221d56361a1890b1bd07b43eb31c283e74ba5e113d58387be79b934",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "3856a01dd0291281538c291e779e17d72196a5103cd55571ec248cf0a3c93412",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 600,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/600-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "7746e180bcc98f8df14e258bd26bedca164fd361c37b6bdd2d232f0bf544aac1",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "6d13d15b07be77be05e63c2599103bdca561110d09cff38899091300010e6a97",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "12705edc1e2bc837a975ce44baaf475858d12a447132aaebb9e5926fd3deb701",
+      "observation": "Sticky header covers the upper portion of the first feedback-status line immediately under the header; selected scope and selectors below remain readable."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "0a1bd9ce067e55e1b8abd0ec2e728743efea3ac75b8e5754102333f4e90154c3",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 601,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/601-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "893e0b0743539ebe936b391c6bfde71a16e1c9bd12be847758b1a6fe13359431",
+      "observation": "Sticky header covers the upper portion of the first feedback-status line immediately under the header; selected scope and selectors below remain readable."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "79fce7219c30136eccdcc33629c056c69e1d3e9e2c06ac208ecaae23a778a833",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "a3e41cd3a620c962c6111cc3dc2c9f6822e8a528c30b2dda4f7d9891bc09ab08",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "282431eb2e8b46bfdcec5e0a9142c6e72cd9d1f7c690810841ff3d9c747dc71c",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 901,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/901-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "1d75ad89dbb3f1d88cdced6cee5e8038738f189992d9d2df5f258be84b4f2bb6",
+      "observation": "Before/After source columns remain distinct, but the After heading text wraps across four short lines and each ordinary source line wraps word by word in the narrow column. No horizontal overflow or at-rest top clipping observed."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "728f93dda2af55ddefb16bf77df034a0c5097785b213452c7719e194030333a4",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "80e2219c33f42bafa956110943c574da3fb517da7948b6f4b157348e451b93e6",
+      "observation": "Sticky header covers the Feedback tab label; only its blue underline remains visible immediately below the header. Feedback heading/body and controls below remain readable."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "7ea1bb0141633f383920792a8b96617ad698260f6656f250ae0ed3db35308c60",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 375,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/375-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "93628d8f4525e09a6c597be610248b7dbfc12078d366d7d46f0df8687fe4c32b",
+      "observation": "Sticky header covers the Feedback tab label; only its blue underline remains visible immediately below the header. Feedback heading/body and controls below remain readable."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-600-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "44051554f77ff2c7bdb965a9c3965661c7303d261e48e2c3342785b76d980c81",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 600,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-600-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "ddb2c461fe2742666de1eb2bc82f71418de2fa2f74b273c7196df16ad6c73102",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-900-rest.png",
+      "scroll-position": 0,
+      "horizontalOverflow": false,
+      "sha256": "d182fd795c87f4035270359d6a51990a84d329aea7b2c6b4d99cbbdcf9aedea5",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    },
+    {
+      "route": "http://127.0.0.1:45085/projects/aaaaaaaaaaaaaaaaaaaaaaaa/library/",
+      "viewport-width": 1280,
+      "viewport-height": 900,
+      "page-scrollable": "yes",
+      "file": "checks/rendered/1280-900-scrolled.png",
+      "scroll-position": 500,
+      "horizontalOverflow": false,
+      "sha256": "1389747ef270a74affe7ecfd4be638bc4085fef5f001bfcd479eb067c73ce472",
+      "observation": "Visible header, plan notice, navigation and feedback content are legible within the viewport. Content continuing beyond a scrollable viewport is ordinary below-fold continuation, not clipping."
+    }
+  ],
+  "findings": [
+    {
+      "id": "UI-1",
+      "class": "occlusion",
+      "severity": "Blocker",
+      "review_severity": "BLOCKER",
+      "location": "treadle/packages/web/src/library.html:97",
+      "captures": [
+        "375-600-scrolled.png",
+        "375-900-scrolled.png",
+        "601-600-scrolled.png",
+        "601-900-scrolled.png"
+      ],
+      "failure": "Sticky header covers Feedback tab text at width375 and feedback status text at width601, scrollY500.",
+      "fix": "Make the narrow header participate in ordinary document scrolling, or provide a separate content scroll region beneath its full measured height, then recapture the complete matrix."
+    },
+    {
+      "id": "UI-2",
+      "class": "crowding",
+      "severity": "Minor",
+      "review_severity": "SMELL",
+      "location": "treadle/packages/web/src/library.html:653",
+      "captures": ["901-900-scrolled.png"],
+      "failure": "Two source columns in a narrow central pane wrap a short source heading into four lines and ordinary lines word by word, making document comparison slow to scan.",
+      "fix": "Stack source panes according to their available container width rather than total window width."
+    }
+  ],
+  "limits": [
+    "Synthetic fixture; no native human witness",
+    "Only initial open/long selected document is visible in these captures",
+    "Keyboard/focus/target metrics are supplied producer records, not independently exercised interactions",
+    "No full accessibility or CWV audit claimed"
+  ]
+}

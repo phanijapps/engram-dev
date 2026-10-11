@@ -1,0 +1,13 @@
+
+ RUN  v3.2.7 ./treadle
+
+ ✓ packages/cli/test/feedback-harness.test.ts (3 tests) 174ms
+ ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 922ms
+   ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  326ms
+
+ Test Files  2 passed (2)
+      Tests  15 passed (15)
+   Start at  09:19:08
+   Duration  1.65s (transform 584ms, setup 0ms, collect 746ms, tests 1.10s, environment 0ms, prepare 193ms)
+
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
