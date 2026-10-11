@@ -1,0 +1,68 @@
+{
+  "observed_at": "2026-10-11T21:37:40.250054+00:00",
+  "held_head": "ff17f0050493b0811a7d562728d15887144e8f72",
+  "working_tree": "test fixture repair and dated supplements",
+  "source_sha256": {
+    "treadle/packages/web/test/owner-workflow.test.ts": "dbe755be4daf4a0c97402cb9ead9e55753387bec407da40d3c76d5f2d6fee04c",
+    "wiki/project/ci-verification.md": "73379699f036b9c5dedb9710a8d6ca22acdd39d0d81db408d5d557a1f710b660",
+    ".gitattributes": "8baed1cb0e8ab093d9dd1c3c813c10e82ffa3605fc1e27fc22799b86605c65b6",
+    "artifacts/ci-cleanup/followup/keepalive-probe.mjs": "689bff9bc313e3b52eb0570d27389d54290d68511b59df16d2dddd67efe10f79"
+  },
+  "gates": [
+    {
+      "command": "pnpm check",
+      "exit": 0,
+      "log": "check-repaired.log"
+    },
+    {
+      "command": "pnpm coverage",
+      "exit": 0,
+      "log": "coverage-repaired.log"
+    },
+    {
+      "command": "pnpm corpus:check",
+      "exit": 0,
+      "log": "corpus.log"
+    },
+    {
+      "command": "pnpm brand:check",
+      "exit": 0,
+      "log": "brand.log"
+    },
+    {
+      "command": "pnpm audit:prod",
+      "exit": 0,
+      "log": "audit-prod.log"
+    },
+    {
+      "command": "pnpm links",
+      "exit": 0,
+      "log": "links.log"
+    }
+  ],
+  "tests": {
+    "passed": 267,
+    "skipped": 9
+  },
+  "probes": [
+    {
+      "command": "/usr/local/bin/node artifacts/ci-cleanup/followup/keepalive-probe.mjs blocking",
+      "exit": 0,
+      "log": "probe-blocking.log"
+    },
+    {
+      "command": "/usr/local/bin/node artifacts/ci-cleanup/followup/keepalive-probe.mjs async",
+      "exit": 0,
+      "log": "probe-async.log"
+    }
+  ],
+  "wiki": {
+    "concepts": 47,
+    "anchors": 177,
+    "need_review": 0,
+    "errors": 0,
+    "warnings": 0,
+    "freshness": "fresh",
+    "pending_findings": 1
+  }
+}

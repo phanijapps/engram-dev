@@ -3,3 +3,4 @@
 # Preserve downloaded and locally captured terminal transcripts byte-for-byte.
 artifacts/ci-review-38173060745/**/*.log -text -diff
 artifacts/ci-cleanup/checks/*.log -text -diff
+artifacts/ci-cleanup/followup/*.log -text -diff

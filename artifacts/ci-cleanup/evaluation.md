@@ -1,5 +1,9 @@
 # CI cleanup — 2026-10-11
 
+Later native run `ff17f00` exposed an intermittent owner-workflow fixture reset.
+The dated `followup/evaluation.md` retains that failure, the test-only repair and
+its independent review. It supplements the observations below.
+
 The requested repairs cover the failures and false-green gates identified in
 `artifacts/ci-review-38173060745/cleanup-plan.md`. Source comparison starts at
 main `18c527bd652847a2ae80c07212f4aaaaed9572e3`; `source-pins.json` records the

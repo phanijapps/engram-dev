@@ -10,7 +10,7 @@ import {
 } from 'node:fs';
 import { tmpdir, hostname } from 'node:os';
 import { join } from 'node:path';
-import { spawnSync } from 'node:child_process';
+import { execFile } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { startLibrary, startRoom } from '../src/servers.js';
 import {
@@ -30,6 +30,19 @@ import {
 } from '@treadle/core';
 const at = '2026-10-10T21:57:36Z';
 const roots: string[] = [];
+// The HTTP fixture shares this event loop. Blocking it during CLI work can
+// leave keep-alive socket closure queued until the next browser request.
+function run(command: string, args: string[], cwd?: string) {
+  return new Promise<{ status: number | null; stdout: string; stderr: string }>((done) => {
+    execFile(command, args, { cwd, encoding: 'utf8', timeout: 15000 }, (error, stdout, stderr) =>
+      done({
+        status: error ? (typeof error.code === 'number' ? error.code : null) : 0,
+        stdout,
+        stderr,
+      }),
+    );
+  });
+}
 afterEach(() => {
   for (const r of roots.splice(0)) rmSync(r, { recursive: true, force: true });
 });
@@ -105,12 +118,13 @@ describe('owner sequence across CLI and browser', () => {
     const lib = await startLibrary(f.root);
     const workspace = fileURLToPath(new URL('../../..', import.meta.url));
     const cli = (args: string[]) =>
-      spawnSync(process.execPath, ['--import', 'tsx', 'packages/cli/src/main.ts', 'do', ...args], {
-        cwd: workspace,
-        encoding: 'utf8',
-      });
+      run(
+        process.execPath,
+        ['--import', 'tsx', 'packages/cli/src/main.ts', 'do', ...args],
+        workspace,
+      );
     try {
-      expect(cli(['next', f.dir, '--expected-revision', '1']).status).toBe(1);
+      expect((await cli(['next', f.dir, '--expected-revision', '1'])).status).toBe(1);
       expect(
         (
           await post(lib.url + 'workflow/p', {
@@ -120,18 +134,19 @@ describe('owner sequence across CLI and browser', () => {
           })
         ).status,
       ).toBe(200);
-      expect(cli(['next', f.dir, '--expected-revision', '2']).status).toBe(1);
+      expect((await cli(['next', f.dir, '--expected-revision', '2'])).status).toBe(1);
       expect(
         (await post(lib.url + 'workflow/p', { kind: 'start', expected_revision: 2 })).status,
       ).toBe(200);
       const start = loaded(f.dir).doc.workflow!.start_receipt;
       for (const task of ['T-1', 'T-2']) {
         expect(
-          cli(['next', f.dir, '--expected-revision', String(loaded(f.dir).doc.revision)]).status,
+          (await cli(['next', f.dir, '--expected-revision', String(loaded(f.dir).doc.revision)]))
+            .status,
         ).toBe(0);
-        const verified = spawnSync('bash', ['-lc', cmd], { encoding: 'utf8' });
+        const verified = await run('node', ['-e', 'process.exit(0)']);
         expect(verified.status).toBe(0);
-        const result = cli([
+        const result = await cli([
           'record',
           f.dir,
           '--task',

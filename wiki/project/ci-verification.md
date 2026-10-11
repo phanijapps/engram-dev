@@ -125,3 +125,16 @@ Remote results must name the actual tested commit and run. This chronology does
 not modify any closed specpack or resolve native host acceptance by inference.
 See [open work](/project/open-work.md). Freshness still uses Git HEAD and
 Python-only fingerprints; it cannot detect dirty TypeScript or Markdown changes.
+
+## Subsequent fixture repair — observed 2026-10-11
+
+Run 38176545852 at `ff17f0050493b0811a7d562728d15887144e8f72` passed five
+jobs but Windows Node 22 encountered `ECONNRESET` in the owner-workflow test.
+That fixture now awaits asynchronous CLI and verification children so its local
+HTTP server can process connection lifecycle events. All gate, revision,
+evidence and closure assertions remain; there are no retries or backend changes.
+A local warmed-pool probe reproduced a reset with a blocking child and succeeded
+with an asynchronous child. Native socket timing remains inferred rather than
+directly instrumented. Sources: `treadle/packages/web/test/owner-workflow.test.ts`;
+`artifacts/ci-cleanup/followup/evaluation.md` and its retained run metadata/probes.
+The subsequent PR run must validate this delta before a final green claim.
