@@ -1,7 +1,7 @@
 
 Attempt 2026-10-11T00:17:56.745Z exit 0
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/claude-context.test.ts (1 test) 1409ms
    ✓ connects startup/resume/preprompt workspace and never shuts down with session lifetime  1407ms

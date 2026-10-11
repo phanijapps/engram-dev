@@ -1,5 +1,5 @@
 
-> treadle-root@ brand:check /home/videogamer/code/memex_beta/treadle
+> treadle-root@ brand:check ./treadle
 > node scripts/brand-check.mjs
 
  ELIFECYCLE  Command failed with exit code 1.

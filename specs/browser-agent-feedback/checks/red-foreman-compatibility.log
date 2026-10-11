@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/core/test/owner-workflow.test.ts (9 tests) 28ms
  ✓ packages/cli/test/context.test.ts (1 test) 20ms

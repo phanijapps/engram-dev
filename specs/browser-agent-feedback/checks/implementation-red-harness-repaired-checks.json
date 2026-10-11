@@ -10,9 +10,9 @@
         "packages/cli/test/feedback-harness.test.ts",
         "packages/cli/test/init-surfaces.test.ts"
       ],
-      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "cwd": "./treadle",
       "exit": 0,
-      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/cli/test/feedback-harness.test.ts (3 tests) 189ms\n \u2713 packages/cli/test/init-surfaces.test.ts (12 tests) 919ms\n   \u2713 session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  334ms\n\n Test Files  2 passed (2)\n      Tests  15 passed (15)\n   Start at  09:25:39\n   Duration  1.64s (transform 606ms, setup 0ms, collect 755ms, tests 1.11s, environment 0ms, prepare 210ms)\n\n",
+      "output": "\n RUN  v3.2.7 ./treadle\n\n \u2713 packages/cli/test/feedback-harness.test.ts (3 tests) 189ms\n \u2713 packages/cli/test/init-surfaces.test.ts (12 tests) 919ms\n   \u2713 session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  334ms\n\n Test Files  2 passed (2)\n      Tests  15 passed (15)\n   Start at  09:25:39\n   Duration  1.64s (transform 606ms, setup 0ms, collect 755ms, tests 1.11s, environment 0ms, prepare 210ms)\n\n",
       "stderr": "{\"ok\":false,\"reason\":\"payload is not bounded JSON: Unexpected token 'o', \\\"not json\\\" is not valid JSON\"}\n",
       "log": "implementation-red-harness-repaired-tests.log"
     },
@@ -20,7 +20,7 @@
       "command": [
         "python3",
         "/home/videogamer/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/harness/skills/sdlc/feedback"
+        "./treadle/packages/cli/harness/skills/sdlc/feedback"
       ],
       "cwd": "/home/videogamer/code/memex_beta",
       "exit": 0,

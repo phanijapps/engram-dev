@@ -3,7 +3,7 @@
   "command": [
     "python3",
     "/home/videogamer/.codex/skills/.system/skill-creator/scripts/quick_validate.py",
-    "/home/videogamer/code/memex_beta/treadle/packages/cli/harness/skills/sdlc/feedback"
+    "./treadle/packages/cli/harness/skills/sdlc/feedback"
   ],
   "exit": 0,
   "output": "Skill is valid!\n",

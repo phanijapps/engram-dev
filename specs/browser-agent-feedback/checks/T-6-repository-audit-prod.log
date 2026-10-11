@@ -1,5 +1,5 @@
 
-> treadle-root@ audit:prod /home/videogamer/code/memex_beta/treadle
+> treadle-root@ audit:prod ./treadle
 > pnpm audit --prod --audit-level high
 
 (node:1094948) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.

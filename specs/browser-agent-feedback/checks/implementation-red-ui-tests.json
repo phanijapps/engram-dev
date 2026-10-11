@@ -12,7 +12,7 @@
     "packages/web/test/project-security.test.ts",
     "packages/web/test/project-library.test.ts"
   ],
-  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "cwd": "./treadle",
   "exit": 0,
   "tests": 55,
   "files": 7,

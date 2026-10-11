@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1003ms
    ✓ session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  361ms

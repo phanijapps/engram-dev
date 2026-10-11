@@ -6,7 +6,7 @@
       "platform": "linux",
       "command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "package",
         "harness",
         "--agent",
@@ -103,7 +103,7 @@
       "platform": "linux",
       "command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "stop",
         "serve"
       ],

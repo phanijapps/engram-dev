@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ❯ packages/cli/test/feedback-loop.test.ts (4 tests | 2 failed) 1530ms
    × delivers only explicit submitted document feedback during wait and retains it across service restart 288ms

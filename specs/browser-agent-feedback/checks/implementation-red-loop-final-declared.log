@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
 stdout | packages/cli/test/feedback-loop.test.ts > delivers only explicit submitted document feedback during wait and retains it across service restart
 FEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"819fa09c-1845-421e-afa8-30685a27c4ba","before_cursor":1,"after_cursor":1,"before_batches":["a63228c1-6ba2-4063-936d-15b66a6ba16d"],"after_batches":["a63228c1-6ba2-4063-936d-15b66a6ba16d"]}
@@ -17,14 +17,14 @@ FEEDBACK_RECOVERY {"kind":"lost-ack","session":"0737d72a-1f98-40b6-aefc-b227aa25
    Duration  2.65s (transform 425ms, setup 0ms, collect 551ms, tests 1.57s, environment 0ms, prepare 110ms)
 
 UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified
-file:///home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs:10
+file://./specs/browser-agent-feedback/verify-hosts.mjs:10
   if (!ok) throw Error(message);
                  ^
 
 Error: Native Claude/Codex/Pi human feedback witnesses are not recorded yet; T-6 remains pending
-    at requireValue (file:///home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs:10:18)
-    at native (file:///home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs:109:3)
-    at file:///home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs:383:42
+    at requireValue (file://./specs/browser-agent-feedback/verify-hosts.mjs:10:18)
+    at native (file://./specs/browser-agent-feedback/verify-hosts.mjs:109:3)
+    at file://./specs/browser-agent-feedback/verify-hosts.mjs:383:42
     at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
     at async node:internal/modules/esm/loader:643:26
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)

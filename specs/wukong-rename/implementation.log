@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/brand/test/brand.test.ts (2 tests) 4ms
  ✓ packages/brand/test/rebrand.test.ts (1 test) 166ms

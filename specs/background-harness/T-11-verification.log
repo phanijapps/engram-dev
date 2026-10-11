@@ -1,7 +1,7 @@
 
 Attempt 2026-10-11T00:16:50.905Z exit 0
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/pi-context.test.ts (1 test) 1616ms
    ✓ registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown  1615ms

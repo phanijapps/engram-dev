@@ -1,5 +1,5 @@
 
-> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> treadle-root@ build ./treadle
 > tsc --build && node scripts/copy-assets.mjs
 
 Packages are copied from the content-addressable store to the virtual store.

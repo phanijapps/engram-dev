@@ -53,9 +53,9 @@
         "packages/web/test/project-security.test.ts",
         "packages/web/test/project-library.test.ts"
       ],
-      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "cwd": "./treadle",
       "exit": 0,
-      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/web/test/feedback-api.test.ts (3 tests) 176ms\n \u2713 packages/core/test/feedback.test.ts (22 tests) 275ms\n \u2713 packages/cli/test/feedback-snapshot.test.ts (10 tests) 616ms\n \u2713 packages/web/test/project-library.test.ts (2 tests) 258ms\n \u2713 packages/web/test/project-security.test.ts (3 tests) 314ms\n \u2713 packages/cli/test/feedback-cli.test.ts (9 tests) 1341ms\n   \u2713 portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1023ms\n\n Test Files  6 passed (6)\n      Tests  49 passed (49)\n   Start at  08:59:58\n   Duration  2.47s (transform 1.05s, setup 0ms, collect 3.68s, tests 2.98s, environment 1ms, prepare 605ms)\n\n",
+      "output": "\n RUN  v3.2.7 ./treadle\n\n \u2713 packages/web/test/feedback-api.test.ts (3 tests) 176ms\n \u2713 packages/core/test/feedback.test.ts (22 tests) 275ms\n \u2713 packages/cli/test/feedback-snapshot.test.ts (10 tests) 616ms\n \u2713 packages/web/test/project-library.test.ts (2 tests) 258ms\n \u2713 packages/web/test/project-security.test.ts (3 tests) 314ms\n \u2713 packages/cli/test/feedback-cli.test.ts (9 tests) 1341ms\n   \u2713 portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1023ms\n\n Test Files  6 passed (6)\n      Tests  49 passed (49)\n   Start at  08:59:58\n   Duration  2.47s (transform 1.05s, setup 0ms, collect 3.68s, tests 2.98s, environment 1ms, prepare 605ms)\n\n",
       "log": "implementation-red-repaired-tests.log"
     }
   ]

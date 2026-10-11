@@ -3,7 +3,7 @@
   "packs": [
     {
       "name": "background-harness",
-      "path": "/home/videogamer/code/memex_beta/specs/background-harness",
+      "path": "./specs/background-harness",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -13,7 +13,7 @@
     },
     {
       "name": "browser-agent-feedback",
-      "path": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+      "path": "./specs/browser-agent-feedback",
       "stage": "drafted",
       "openQuestions": 0,
       "nextTask": "T-1",
@@ -23,7 +23,7 @@
     },
     {
       "name": "docs-root-migration",
-      "path": "/home/videogamer/code/memex_beta/specs/docs-root-migration",
+      "path": "./specs/docs-root-migration",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -33,7 +33,7 @@
     },
     {
       "name": "documentation-consolidation",
-      "path": "/home/videogamer/code/memex_beta/specs/documentation-consolidation",
+      "path": "./specs/documentation-consolidation",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -43,7 +43,7 @@
     },
     {
       "name": "fresh-harness",
-      "path": "/home/videogamer/code/memex_beta/specs/fresh-harness",
+      "path": "./specs/fresh-harness",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -53,7 +53,7 @@
     },
     {
       "name": "guided-loop",
-      "path": "/home/videogamer/code/memex_beta/specs/guided-loop",
+      "path": "./specs/guided-loop",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -63,7 +63,7 @@
     },
     {
       "name": "harness-host-acceptance",
-      "path": "/home/videogamer/code/memex_beta/specs/harness-host-acceptance",
+      "path": "./specs/harness-host-acceptance",
       "stage": "awaiting_owner",
       "openQuestions": 0,
       "nextTask": "T-1",
@@ -73,7 +73,7 @@
     },
     {
       "name": "install-paths",
-      "path": "/home/videogamer/code/memex_beta/specs/install-paths",
+      "path": "./specs/install-paths",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -83,7 +83,7 @@
     },
     {
       "name": "spec-completion-handoff",
-      "path": "/home/videogamer/code/memex_beta/specs/spec-completion-handoff",
+      "path": "./specs/spec-completion-handoff",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -93,7 +93,7 @@
     },
     {
       "name": "stitch-ui",
-      "path": "/home/videogamer/code/memex_beta/specs/stitch-ui",
+      "path": "./specs/stitch-ui",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,
@@ -103,7 +103,7 @@
     },
     {
       "name": "wukong-rename",
-      "path": "/home/videogamer/code/memex_beta/specs/wukong-rename",
+      "path": "./specs/wukong-rename",
       "stage": "delivered",
       "openQuestions": 0,
       "nextTask": null,

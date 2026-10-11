@@ -95,7 +95,7 @@ or Markdown freshness. These limits were not changed by this documentation edit.
 For each of `pi`, `codex`, and `claude`, previewed and applied:
 
 ```text
-pnpm exec tsx packages/cli/src/main.ts init harness --agent <surface> --scope project --skills roadmap new-project --no-agents --no-hooks --root /home/videogamer/code/memex_beta --manifest /home/videogamer/code/memex_beta/treadle/packages/cli/harness/harness.json --force
+pnpm exec tsx packages/cli/src/main.ts init harness --agent <surface> --scope project --skills roadmap new-project --no-agents --no-hooks --root /home/videogamer/code/memex_beta --manifest ./treadle/packages/cli/harness/harness.json --force
 ```
 
 Previews contained exactly the two requested skills, no leftover deletions,

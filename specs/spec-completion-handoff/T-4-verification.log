@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/web/test/workflow-ui.test.ts (4 tests) 813ms
    ✓ owner workflow UI > shows the ordered flow; decision approval does not start implementation  374ms

@@ -1,7 +1,7 @@
 
 Attempt 2026-10-11T00:13:54.546Z exit 0
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/init-engine.test.ts (16 tests) 88ms
  ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 1041ms

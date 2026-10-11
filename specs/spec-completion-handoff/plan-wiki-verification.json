@@ -15,7 +15,7 @@
       ],
       "cwd": "treadle",
       "exit": 0,
-      "output": "fingerprints: /home/videogamer/code/memex_beta/wiki/.okf/fingerprints.json\n"
+      "output": "fingerprints: ./wiki/.okf/fingerprints.json\n"
     },
     {
       "name": "stamp",

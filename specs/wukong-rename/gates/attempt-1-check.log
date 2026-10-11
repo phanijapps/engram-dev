@@ -1,9 +1,9 @@
 
-> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> treadle-root@ check ./treadle
 > tsc --build && eslint . && prettier --check . && vitest run
 
 
-/home/videogamer/code/memex_beta/treadle/scripts/brand-check.mjs
+./treadle/scripts/brand-check.mjs
   12:68  error  Unnecessary escape character: \"  no-useless-escape
   12:81  error  Unnecessary escape character: \"  no-useless-escape
   12:90  error  Unnecessary escape character: \"  no-useless-escape

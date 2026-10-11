@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 547ms
  ✓ packages/cli/test/feedback-cli.test.ts (9 tests) 1331ms

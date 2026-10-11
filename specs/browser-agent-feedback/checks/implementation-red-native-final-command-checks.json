@@ -13,7 +13,7 @@
   "test_source_sha256": "053a067c2469b1376407428c5ef1a4b412c483c8f5ded07737b82ea9a66fcee9",
   "ui_argv": [
     "node",
-    "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs",
+    "./specs/browser-agent-feedback/verify-hosts.mjs",
     "--ui-only"
   ],
   "ui_exit": 0,

@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
 {"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
  ✓ packages/cli/test/feedback-harness.test.ts (3 tests) 179ms

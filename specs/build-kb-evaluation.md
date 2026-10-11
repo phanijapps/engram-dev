@@ -158,7 +158,7 @@ Each invocation exited 0 and wrote 9 skill files.
 The command used for each of `pi`, `codex`, and `claude`, from `treadle/`, was:
 
 ```text
-pnpm exec tsx packages/cli/src/main.ts init harness --agent HOST --scope project --skills build-kb --no-agents --no-hooks --root /home/videogamer/code/memex_beta --manifest /home/videogamer/code/memex_beta/treadle/packages/cli/harness/harness.json --force
+pnpm exec tsx packages/cli/src/main.ts init harness --agent HOST --scope project --skills build-kb --no-agents --no-hooks --root /home/videogamer/code/memex_beta --manifest ./treadle/packages/cli/harness/harness.json --force
 ```
 
 `HOST` was replaced with each requested host.

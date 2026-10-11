@@ -1,6 +1,6 @@
 {
   "observed_at": "2026-10-11T16:49:35.375Z",
-  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "cwd": "./treadle",
   "commands": [
     {
       "name": "head",
@@ -11,7 +11,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/head.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/head.log",
       "sha256": "5778f463a54ec180a74fa9b7213dc6a47c5165ce8592ae1e55cade77c8c32d19"
     },
     {
@@ -22,7 +22,7 @@
       ],
       "exit": 1,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/check.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-1e3937f2-e024-4ce7-a764-6f710096f24c/check.log",
       "sha256": "025c513a0c9131c32eb1d808e011418227c499d4f55b250ab82169566da99266"
     }
   ],

@@ -1,5 +1,5 @@
 
-> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> treadle-root@ build ./treadle
 > tsc --build && node scripts/copy-assets.mjs
 
 Packages are copied from the content-addressable store to the virtual store.
@@ -12,17 +12,17 @@ Progress: resolved 1, reused 0, downloaded 0, added 0
 Progress: resolved 326, reused 255, downloaded 0, added 12, done
 (node:385078) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:12
+file://./treadle/scripts/verify-runtime-package.mjs:12
       if (st.isSymbolicLink() && realpathSync(path) !== realpathSync(root) && !realpathSync(path).startsWith(realpathSync(root) + sep)) throw Error(`External dependency: ${f}`);
                                                                                                                                               ^
 
 Error: External dependency: cli
-    at walk (file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:12:143)
-    at walk (file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:13:29)
-    at walk (file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:13:29)
-    at walk (file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:13:29)
-    at walk (file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:13:29)
-    at file:///home/videogamer/code/memex_beta/treadle/scripts/verify-runtime-package.mjs:16:3
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:12:143)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at walk (file://./treadle/scripts/verify-runtime-package.mjs:13:29)
+    at file://./treadle/scripts/verify-runtime-package.mjs:16:3
     at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
     at async node:internal/modules/esm/loader:643:26
     at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)

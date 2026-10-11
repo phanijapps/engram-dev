@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/web/test/feedback-ui.test.ts (5 tests) 1039ms
    ✓ renders inert source, keyboard line selection, draft save and explicit Submit without owner writes  455ms

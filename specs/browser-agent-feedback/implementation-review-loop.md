@@ -6,7 +6,7 @@ Reviewer: `agent:red-foreman` (independent of implementation). Observed 2026-10-
 
 ## Rerun evidence
 
-Executed from `/home/videogamer/code/memex_beta/treadle`:
+Executed from `./treadle`:
 
 ```sh
 pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs

@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/feedback-harness.test.ts (3 tests) 174ms
  ✓ packages/cli/test/init-surfaces.test.ts (12 tests) 922ms

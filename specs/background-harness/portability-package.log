@@ -1,5 +1,5 @@
 
-> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> treadle-root@ build ./treadle
 > tsc --build && node scripts/copy-assets.mjs
 
 (node:575781) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.

@@ -11,7 +11,7 @@
       ],
       "exit": 0,
       "log": "specs/browser-agent-feedback/checks/implementation-red-core.log",
-      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/core/test/feedback.test.ts (19 tests) 208ms\n\n Test Files  1 passed (1)\n      Tests  19 passed (19)\n   Start at  08:47:27\n   Duration  1.05s (transform 272ms, setup 0ms, collect 329ms, tests 208ms, environment 0ms, prepare 100ms)\n\n"
+      "output": "\n RUN  v3.2.7 ./treadle\n\n \u2713 packages/core/test/feedback.test.ts (19 tests) 208ms\n\n Test Files  1 passed (1)\n      Tests  19 passed (19)\n   Start at  08:47:27\n   Duration  1.05s (transform 272ms, setup 0ms, collect 329ms, tests 208ms, environment 0ms, prepare 100ms)\n\n"
     },
     {
       "cmd": [
@@ -24,7 +24,7 @@
       ],
       "exit": 0,
       "log": "specs/browser-agent-feedback/checks/implementation-red-cli.log",
-      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/cli/test/feedback-snapshot.test.ts (7 tests) 401ms\n \u2713 packages/cli/test/feedback-cli.test.ts (8 tests) 1310ms\n   \u2713 portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1020ms\n\n Test Files  2 passed (2)\n      Tests  15 passed (15)\n   Start at  08:47:29\n   Duration  2.56s (transform 668ms, setup 0ms, collect 1.11s, tests 1.71s, environment 1ms, prepare 216ms)\n\n"
+      "output": "\n RUN  v3.2.7 ./treadle\n\n \u2713 packages/cli/test/feedback-snapshot.test.ts (7 tests) 401ms\n \u2713 packages/cli/test/feedback-cli.test.ts (8 tests) 1310ms\n   \u2713 portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1020ms\n\n Test Files  2 passed (2)\n      Tests  15 passed (15)\n   Start at  08:47:29\n   Duration  2.56s (transform 668ms, setup 0ms, collect 1.11s, tests 1.71s, environment 1ms, prepare 216ms)\n\n"
     }
   ]
 }

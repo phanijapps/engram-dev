@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/web/test/feedback-api.test.ts (3 tests) 176ms
  ✓ packages/core/test/feedback.test.ts (22 tests) 275ms

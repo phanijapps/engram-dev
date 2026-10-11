@@ -1,7 +1,7 @@
 
 Attempt 2026-10-11T00:15:49.461Z exit 0
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/cli/test/codex-context.test.ts (2 tests) 1829ms
    ✓ runs the documented stdin/context contract, event workspace and next-event restart without owner acts  1784ms

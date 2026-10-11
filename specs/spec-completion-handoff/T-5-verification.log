@@ -1,5 +1,5 @@
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/core/test/owner-workflow.test.ts (9 tests) 31ms
 stdout | packages/cli/test/owner-workflow.test.ts > owner workflow CLI > uses explicit gated birth and separate revision-checked decision/start actions

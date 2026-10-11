@@ -31,7 +31,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "status",
         "serve"
       ],
@@ -54,7 +54,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "stop",
         "serve"
       ],
@@ -63,7 +63,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "status",
         "serve"
       ],
@@ -72,7 +72,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "project",
         "connect",
         "/home/videogamer/code/memex_beta",
@@ -83,7 +83,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "init",
         "harness",
         "--agent",
@@ -108,7 +108,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "init",
         "harness",
         "--agent",
@@ -124,7 +124,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "package",
         "harness",
         "--agent",
@@ -137,7 +137,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "package",
         "harness",
         "--agent",
@@ -150,7 +150,7 @@
     {
       "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
       "args": [
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "package",
         "harness",
         "--agent",

@@ -1,11 +1,11 @@
 
-> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> treadle-root@ check ./treadle
 > tsc --build && eslint . && prettier --check . && vitest run
 
 Checking formatting...
 All matched files use Prettier code style!
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
 
  Test Files  no tests
@@ -21,7 +21,7 @@ Vitest caught 1 unhandled error during the test run.
 This might cause false positive tests. Resolve unhandled errors to make sure your tests are not affected.
 
 ⎯⎯⎯⎯⎯⎯ Unhandled Error ⎯⎯⎯⎯⎯⎯⎯
-Error: ENOENT: no such file or directory, open '/home/videogamer/code/memex_beta/treadle/.runtime-stage-TOcXRF/installed/test/init-engine.test.ts'
+Error: ENOENT: no such file or directory, open './treadle/.runtime-stage-TOcXRF/installed/test/init-engine.test.ts'
  ❯ open node:internal/fs/promises:697:25
  ❯ Object.readFile node:internal/fs/promises:1348:14
  ❯ node_modules/.pnpm/vitest@3.2.7_@types+node@22.20.5_jsdom@30.1.2/node_modules/vitest/dist/chunks/coverage.DfSpMS-b.js:2405:16
@@ -32,6 +32,6 @@ Error: ENOENT: no such file or directory, open '/home/videogamer/code/memex_beta
  ❯ Vitest.runFiles node_modules/.pnpm/vitest@3.2.7_@types+node@22.20.5_jsdom@30.1.2/node_modules/vitest/dist/chunks/cli-api.DVe0nWUx.js:9676:10
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: '/home/videogamer/code/memex_beta/treadle/.runtime-stage-TOcXRF/installed/test/init-engine.test.ts' }
+Serialized Error: { errno: -2, code: 'ENOENT', syscall: 'open', path: './treadle/.runtime-stage-TOcXRF/installed/test/init-engine.test.ts' }
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 

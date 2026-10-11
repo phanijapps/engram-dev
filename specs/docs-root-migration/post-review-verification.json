@@ -47,7 +47,7 @@
         "links"
       ],
       "exit": 0,
-      "stdout": "\n> treadle-root@ links /home/videogamer/code/memex_beta/treadle\n> node scripts/link-check.mjs\n\nlinks gate: 91 live file(s), every markdown link resolves\n",
+      "stdout": "\n> treadle-root@ links ./treadle\n> node scripts/link-check.mjs\n\nlinks gate: 91 live file(s), every markdown link resolves\n",
       "stderr": ""
     }
   ]

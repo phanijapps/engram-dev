@@ -48,10 +48,10 @@ AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
     }
   ]
 
-    at assert (/home/videogamer/code/memex_beta/specs/browser-agent-feedback/authoring/validate.ts:51:10)
-    at Object.<anonymous> (/home/videogamer/code/memex_beta/specs/browser-agent-feedback/authoring/validate.ts:155:1)
+    at assert (./specs/browser-agent-feedback/authoring/validate.ts:51:10)
+    at Object.<anonymous> (./specs/browser-agent-feedback/authoring/validate.ts:155:1)
     at Module._compile (node:internal/modules/cjs/loader:1872:14)
-    at Object.transformer (/home/videogamer/code/memex_beta/treadle/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-B1c7OH6V.cjs:22:2188)
+    at Object.transformer (./treadle/node_modules/.pnpm/tsx@4.23.15/node_modules/tsx/dist/register-B1c7OH6V.cjs:22:2188)
     at Module.load (node:internal/modules/cjs/loader:1594:32)
     at Module._load (node:internal/modules/cjs/loader:1396:12)
     at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)

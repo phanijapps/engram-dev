@@ -10,7 +10,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/codex.md",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",
@@ -51,7 +51,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/codex.js",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",
@@ -96,7 +96,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/claude.md",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",
@@ -137,7 +137,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/claude.js",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",
@@ -182,7 +182,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/pi.md",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",
@@ -223,7 +223,7 @@
       "file": "specs/browser-agent-feedback/checks/native-sources/pi.js",
       "open_command": [
         "/home/videogamer/.local/node-v24.19.0/bin/node",
-        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "./treadle/packages/cli/dist/src/main.js",
         "do",
         "feedback",
         "open",

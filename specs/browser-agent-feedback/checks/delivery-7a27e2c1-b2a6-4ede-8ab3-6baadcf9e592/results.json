@@ -1,6 +1,6 @@
 {
   "observed_at": "2026-10-11T16:50:10.528Z",
-  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "cwd": "./treadle",
   "commands": [
     {
       "name": "head",
@@ -11,7 +11,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/head.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/head.log",
       "sha256": "5778f463a54ec180a74fa9b7213dc6a47c5165ce8592ae1e55cade77c8c32d19"
     },
     {
@@ -22,7 +22,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/check.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/check.log",
       "sha256": "6901287466a0853b689f1dc190d5aa99037d2f2f1e7fad61bdb8f8c8b1ebc51c"
     },
     {
@@ -33,7 +33,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/coverage.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/coverage.log",
       "sha256": "3340eab48344edb126d0b46c775202c316ab22945619a473217948f43cb66834"
     },
     {
@@ -44,7 +44,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/corpus-check.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/corpus-check.log",
       "sha256": "1a413e8ea2eca93926bfcae1333174b3e1f37edf05c05ed38afe8571b454aff7"
     },
     {
@@ -55,7 +55,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/brand-check.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/brand-check.log",
       "sha256": "9d479cb7941e5319984fe1f850d96e81d327cbcb93f600f3d92bb5541d63bb1f"
     },
     {
@@ -66,7 +66,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/audit-prod.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/audit-prod.log",
       "sha256": "95fc93f312633d774d52400a00604acde61c7e281354eaacbb50c359f463bad4"
     },
     {
@@ -77,18 +77,18 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/links.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/links.log",
       "sha256": "2e87990e3c1307b44d488c60c81323ddc1f1a706c02119efd5088b9d7ebeb2ea"
     },
     {
       "name": "native",
       "argv": [
         "node",
-        "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs"
+        "./specs/browser-agent-feedback/verify-hosts.mjs"
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/native.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/native.log",
       "sha256": "3b793cb8aa8572bb95b1f31a8aa67e0965007f3e7d28428814cd0e9743cba214"
     },
     {
@@ -105,7 +105,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/fingerprints.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/fingerprints.log",
       "sha256": "ff80ff400f28f189be79d6817232654fa07b33511e7374a2ad363176f08aea41"
     },
     {
@@ -123,7 +123,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/stamp.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/stamp.log",
       "sha256": "5691e029395e4e1ad8e29277d42c584e7921cbfff363611d50168e77411c6b59"
     },
     {
@@ -141,7 +141,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/anchors.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/anchors.log",
       "sha256": "026c72e0c545efbc66a3a1003817093c21efb5bb78480746e8766c7c555964a9"
     },
     {
@@ -157,7 +157,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/validate.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/validate.log",
       "sha256": "2d84d9c5b88ec2c17f60779efd790e0aeab79b9ebc32ff079635cd2025e3558f"
     },
     {
@@ -175,7 +175,7 @@
       ],
       "exit": 0,
       "signal": null,
-      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/status.log",
+      "log": "./specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/status.log",
       "sha256": "675956969b0f5b537582fd14d2ac44dcb20ee7f8576d45f5eed1cad1911bd71a"
     }
   ],

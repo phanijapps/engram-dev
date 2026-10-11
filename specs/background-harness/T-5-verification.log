@@ -1,7 +1,7 @@
 
 Attempt 2026-10-11T00:09:02.333Z exit 1
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ❯ packages/web/test/owner-workflow.test.ts (11 tests | 1 failed) 1331ms
    × owner sequence across CLI and browser > executes two checked tasks under one start receipt, then requires independent review and human closure 1242ms
@@ -76,7 +76,7 @@ AssertionError: expected 1 to be +0 // Object.is equality
 
 Attempt 2026-10-11T00:09:41.353Z exit 0
 
- RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+ RUN  v3.2.7 ./treadle
 
  ✓ packages/web/test/project-library.test.ts (1 test) 73ms
  ✓ packages/web/test/project-security.test.ts (2 tests) 130ms

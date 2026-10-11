@@ -63,7 +63,7 @@
         "tsx",
         "../specs/browser-agent-feedback/authoring/validate.ts"
       ],
-      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "cwd": "./treadle",
       "exit": 0,
       "log": "specs/browser-agent-feedback/checks/red-foreman-proposal-current.log",
       "output": "{\n  \"observed_at\": \"2026-10-11T12:22:47.958Z\",\n  \"revision\": 24,\n  \"schema\": \"specpack-owner-workflow.schema.json\",\n  \"schemaValid\": true,\n  \"violations\": [],\n  \"gaps\": 0,\n  \"requirements\": 11,\n  \"decisions\": 5,\n  \"tasks\": 7,\n  \"artifacts\": 12,\n  \"sourcePins\": 23,\n  \"structuralEntry\": [\n    \"T-1\"\n  ],\n  \"topologicalOrder\": [\n    \"T-1\",\n    \"T-2\",\n    \"T-3\",\n    \"T-4\",\n    \"T-5\",\n    \"T-6\",\n    \"T-7\"\n  ],\n  \"gate\": {\n    \"phase\": \"start\",\n    \"reasons\": [\n      \"Give permission to start this plan\"\n    ],\n    \"plan_digest\": \"a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f\"\n  },\n  \"plan_digest\": \"a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f\",\n  \"ownerActs\": 5,\n  \"acceptedDecisions\": [\n    \"D-1\",\n    \"D-2\",\n    \"D-3\",\n    \"D-4\",\n    \"D-5\"\n  ],\n  \"startReceipt\": null,\n  \"executionPermitted\": false,\n  \"tasksAdmitted\": []\n}\n"
@@ -79,7 +79,7 @@
         "status",
         "../specs/browser-agent-feedback"
       ],
-      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "cwd": "./treadle",
       "exit": 0,
       "log": "specs/browser-agent-feedback/checks/red-foreman-status-current.log",
       "output": "workflow: start \u2014 Give permission to start this plan\ndeliverable: awaiting_owner \u00b7 7 tasks \u00b7 revision 24 \u00b7 0 open \u00b7 not approved\n"
