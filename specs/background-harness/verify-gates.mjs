@@ -49,7 +49,7 @@ for (const command of commands) {
   });
   const output =
     (r.stdout ?? "") + (r.stderr ?? "") + (r.error ? String(r.error) : "");
-  writeFileSync(join(logs, `${command.name}.log`), output);
+  writeFileSync(join(logs, `${command.name.replaceAll(":", "-")}.log`), output);
   results.push({
     name: command.name,
     at,

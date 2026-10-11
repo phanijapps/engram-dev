@@ -48,3 +48,9 @@ The final display follow-up removes leading wiki YAML metadata from previews.
 The independent reviewer reran project-library and project-security (3 tests),
 confirmed the opaque sandbox and authority boundaries remain intact, and
 returned PASS. Final `pnpm check` output is retained in `final-check.log`.
+
+First actual CI run 38098882555 failed before tests: Windows checkout rejected
+colon-bearing gate log names; pnpm setup's version 9 conflicted with the pinned
+9.15.9 on Linux/macOS. Log filenames and future runner output now replace colons
+with dashes (bytes preserved), and CI selects the exact workspace pin. The
+failed jobs are retained in ci-first-run.json; they establish no runtime pass.
