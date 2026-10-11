@@ -130,6 +130,43 @@ describe('portable CLI feedback', () => {
     expect(r.output.url).toContain('#/test/feedback?session=');
     expect(readFeedback(f.dir, f.root)!.sessions).toHaveLength(1);
   });
+  it('returns original cursor on an open retry after a submitted batch', async () => {
+    const f = fixture();
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockImplementation(async () => new Response(JSON.stringify({ format: 'feedback/1' }))),
+    );
+    writeFileSync(join(f.root, 'doc.md'), '\uFEFFone\n');
+    const args = [
+      'open',
+      f.dir,
+      '--mode',
+      'documents',
+      '--file',
+      'doc.md',
+      '--expected-revision',
+      '0',
+      '--operation-id',
+      randomUUID(),
+      '--by',
+      'agent:codex',
+      '--json',
+    ];
+    const first = (await cli(args)).output;
+    mutateFeedback(f.dir, f.root, {
+      ...f.envelope(),
+      by: 'human:test',
+      action: { kind: 'submit', session: first.session, round: first.round },
+    });
+    const retry = (await cli(args)).output;
+    expect(retry.cursor).toBe(0);
+    expect(await waitForFeedback(f.dir, f.root, retry.session, retry.cursor, 1)).toMatchObject({
+      status: 'submitted',
+      cursor: 1,
+    });
+  });
   it('refuses older or unavailable applications before publishing snapshots', async () => {
     const f = fixture();
     vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('{}', { status: 404 })));

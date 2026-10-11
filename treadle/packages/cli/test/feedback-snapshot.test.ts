@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   mkdtempSync,
   mkdirSync,
@@ -17,6 +17,7 @@ import { buildFeedbackSnapshots } from '../src/harness/feedback-snapshot.js';
 import { emitBytes, type PackDoc, FEEDBACK_LIMITS } from '@treadle/core';
 const roots: string[] = [];
 afterEach(() => {
+  vi.unstubAllEnvs();
   for (const p of roots.splice(0)) rmSync(p, { recursive: true, force: true });
 });
 function fixture(gitRepo = false) {
@@ -215,6 +216,64 @@ describe('selected feedback snapshots', () => {
     });
     result.verify();
     expect(result.snapshots[0]!.after).toBe('changed\n');
+    expect(existsSync(marker)).toBe(false);
+  });
+  it('preserves selected BOM bytes and refuses canonical JSON symlinks', () => {
+    const f = fixture();
+    const text = '\uFEFFone\n';
+    writeFileSync(join(f.root, 'bom.md'), text);
+    expect(
+      buildFeedbackSnapshots(f.root, f.dir, { mode: 'documents', paths: ['bom.md'] }).snapshots[0]!
+        .after,
+    ).toBe(text);
+    const outside = join(f.root, 'foreign.json');
+    writeFileSync(outside, readFileSync(join(f.dir, 'test.json')));
+    rmSync(join(f.dir, 'test.json'));
+    symlinkSync(outside, join(f.dir, 'test.json'));
+    expect(() =>
+      buildFeedbackSnapshots(f.root, f.dir, { mode: 'documents', paths: ['bom.md'] }),
+    ).toThrow('Symlink');
+  });
+  it('ignores inherited Git routing and index configuration', () => {
+    const own = fixture(true),
+      foreign = fixture(true);
+    writeFileSync(join(own.root, 'source.ts'), 'OWN');
+    const base = own.commit();
+    writeFileSync(join(foreign.root, 'source.ts'), 'FOREIGN');
+    foreign.commit();
+    vi.stubEnv('GIT_DIR', join(foreign.root, '.git'));
+    vi.stubEnv('GIT_WORK_TREE', own.root);
+    vi.stubEnv('GIT_INDEX_FILE', join(foreign.root, '.git', 'index'));
+    vi.stubEnv('GIT_CONFIG_COUNT', '1');
+    vi.stubEnv('GIT_CONFIG_KEY_0', 'core.worktree');
+    vi.stubEnv('GIT_CONFIG_VALUE_0', foreign.root);
+    const result = buildFeedbackSnapshots(own.root, own.dir, {
+      mode: 'diff',
+      paths: ['source.ts'],
+      base: 'HEAD',
+    });
+    expect(result.selection.base).toBe(base);
+    expect(result.snapshots[0]!.before).toBe('OWN');
+    result.verify();
+  });
+  it('fails offline for absent promisor objects without executing configured transport', () => {
+    const f = fixture(true);
+    writeFileSync(join(f.root, 'source.ts'), 'promisor baseline');
+    f.commit();
+    const blob = f.git('rev-parse', 'HEAD:source.ts'),
+      marker = join(f.root, 'transport-executed'),
+      helper = join(f.root, 'uploadpack');
+    writeFileSync(helper, '#!/bin/sh\nprintf executed > "' + marker + '"\nexit 1\n');
+    chmodSync(helper, 0o755);
+    f.git('config', 'core.repositoryformatversion', '1');
+    f.git('config', 'extensions.partialclone', 'origin');
+    f.git('config', 'remote.origin.url', f.root);
+    f.git('config', 'remote.origin.promisor', 'true');
+    f.git('config', 'remote.origin.uploadpack', helper);
+    rmSync(join(f.root, '.git', 'objects', blob.slice(0, 2), blob.slice(2)));
+    expect(() =>
+      buildFeedbackSnapshots(f.root, f.dir, { mode: 'diff', paths: ['source.ts'], base: 'HEAD' }),
+    ).toThrow('unavailable');
     expect(existsSync(marker)).toBe(false);
   });
   it('detects moving refs, literal path names and unsupported/no Git selections', () => {

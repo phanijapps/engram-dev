@@ -1,0 +1,12 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 547ms
+ ✓ packages/cli/test/feedback-cli.test.ts (9 tests) 1331ms
+   ✓ portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1020ms
+
+ Test Files  2 passed (2)
+      Tests  19 passed (19)
+   Start at  08:56:53
+   Duration  2.55s (transform 657ms, setup 0ms, collect 1.07s, tests 1.88s, environment 1ms, prepare 193ms)
+

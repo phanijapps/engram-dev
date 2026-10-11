@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import {
   feedbackContainedPath,
   readFeedbackSnapshot,
-  loadPackWithMeta,
+  loadFeedbackPack,
   FeedbackError,
   FEEDBACK_LIMITS,
   type FeedbackSelection,
@@ -63,7 +63,7 @@ function decode(bytes: Buffer): string {
   if (bytes.length > FEEDBACK_LIMITS.file) refuse('bounds', 'Selected text exceeds 256 KiB');
   if (bytes.includes(0)) refuse('unavailable', 'Binary targets are unsupported');
   try {
-    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
   } catch {
     return refuse('unavailable', 'Target is not UTF-8 text');
   }
@@ -78,10 +78,20 @@ function worktree(file: string): Buffer | null {
 // Only object/index operations use Git. Worktree bytes are read directly, so
 // configured clean/smudge filters, external diffs and text converters cannot run.
 function git(workspace: string, args: string[], maxBuffer = 1024 * 1024): Buffer {
+  const environment = Object.fromEntries(
+    Object.entries(process.env).filter(([key]) => !key.toUpperCase().startsWith('GIT_')),
+  );
   try {
-    return execFileSync('git', ['--no-optional-locks', ...args], {
+    return execFileSync('git', ['--no-optional-locks', '-c', 'protocol.allow=never', ...args], {
       cwd: workspace,
-      env: { ...process.env, GIT_LITERAL_PATHSPECS: '1', GIT_NO_REPLACE_OBJECTS: '1' },
+      env: {
+        ...environment,
+        GIT_LITERAL_PATHSPECS: '1',
+        GIT_NO_REPLACE_OBJECTS: '1',
+        GIT_NO_LAZY_FETCH: '1',
+        GIT_ALLOW_PROTOCOL: '',
+        GIT_TERMINAL_PROMPT: '0',
+      },
       maxBuffer,
       stdio: ['ignore', 'pipe', 'pipe'],
     });
@@ -142,7 +152,7 @@ export function buildFeedbackSnapshots(
   const checks: (() => void)[] = [];
   let snapshots: FeedbackSnapshotInput[];
   if (request.mode === 'documents') {
-    const loaded = loadPackWithMeta(packDir);
+    const loaded = loadFeedbackPack(packDir, workspace);
     if (!loaded.ok) refuse('unavailable', loaded.message);
     const selected = [
       ...paths.map((path) => ({ key: path, path })),
@@ -181,7 +191,7 @@ export function buildFeedbackSnapshots(
     });
     const artifactPaths = artifacts.map((key) => loaded.value.doc.artifacts![key]!.file);
     checks.push(() => {
-      const latest = loadPackWithMeta(packDir);
+      const latest = loadFeedbackPack(packDir, workspace);
       if (
         !latest.ok ||
         artifacts.some((key, i) => latest.value.doc.artifacts?.[key]?.file !== artifactPaths[i])

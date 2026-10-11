@@ -459,7 +459,7 @@ export function readFeedbackSnapshot(
       fail('unavailable', 'Stored snapshot size changed');
     const bytes = readFileSync(path);
     if (hash(bytes) !== content.sha256) fail('unavailable', 'Stored snapshot hash changed');
-    return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    return new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
   } catch (error) {
     if (error instanceof FeedbackError) throw error;
     fail('unavailable', 'Stored snapshot is missing or invalid');
@@ -646,6 +646,7 @@ export function mutateFeedback(
         fail('conflict', 'Operation ID was reused with another payload');
       flushFile(loc.file);
       syncPublishedPath(loc.file);
+      if (process.platform !== 'win32') syncPublishedPath(loc.home);
       return previous.result;
     }
     if (state.revision !== input.expected_revision)

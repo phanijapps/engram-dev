@@ -221,9 +221,7 @@ export function registerFeedback(parent: Command): void {
           status: 'pending',
           project: project.id,
           ...receipt,
-          cursor: readFeedback(dir, project.workspace)!.sessions.find(
-            (s) => s.id === receipt.session,
-          )!.cursor,
+          cursor: 0,
           selection: readFeedback(dir, project.workspace)!.sessions.find(
             (s) => s.id === receipt.session,
           )!.selection,

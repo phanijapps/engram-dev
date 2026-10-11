@@ -1,0 +1,43 @@
+
+ RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle
+
+ ✓ packages/cli/test/feedback-snapshot.test.ts (10 tests) 558ms
+ ❯ packages/cli/test/feedback-cli.test.ts (9 tests | 1 failed) 1335ms
+   ✓ portable CLI feedback > resolves only an enrolled canonical pack and rejects absent registry matches 5ms
+   ✓ portable CLI feedback > opens through capability detection, echoes selection and returns the precise project URL 23ms
+   × portable CLI feedback > returns original cursor on an open retry after a submitted batch 20ms
+     → expected undefined to be +0 // Object.is equality
+   ✓ portable CLI feedback > refuses older or unavailable applications before publishing snapshots 4ms
+   ✓ portable CLI feedback > replays open and round operations from original immutable bytes after live-source changes 18ms
+   ✓ portable CLI feedback > does not expose draft bodies to a CLI reader; submitted batches retain cursor IDs 18ms
+   ✓ portable CLI feedback > resumes a bounded wait when a batch arrives without consuming it 211ms
+   ✓ portable CLI feedback > returns pending on timeout/cancellation, refuses invalid bounds and never mutates state  1019ms
+   ✓ portable CLI feedback > records replies with explicit agent identity and rejects human role or oversized body files 16ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/cli/test/feedback-cli.test.ts > portable CLI feedback > returns original cursor on an open retry after a submitted batch
+AssertionError: expected undefined to be +0 // Object.is equality
+
+- Expected: 
+0
+
++ Received: 
+undefined
+
+ ❯ packages/cli/test/feedback-cli.test.ts:162:26
+    160|     });
+    161|     const retry = (await cli(args)).output;
+    162|     expect(retry.cursor).toBe(0);
+       |                          ^
+    163|     expect(await waitForFeedback(f.dir, f.root, retry.session, retry.c…
+    164|       status: 'submitted',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 18 passed (19)
+   Start at  08:56:39
+   Duration  2.55s (transform 663ms, setup 0ms, collect 1.09s, tests 1.89s, environment 0ms, prepare 210ms)
+

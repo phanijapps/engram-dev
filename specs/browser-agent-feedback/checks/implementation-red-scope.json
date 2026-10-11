@@ -1,0 +1,143 @@
+{
+  "observed_at": "2026-10-11T12:55:19.337281+00:00",
+  "scope": "Independent partial implementation review T-1/T-2, not PACK",
+  "head": "891a91122d99c5292855ab4887466e7c55c35924",
+  "task_commits": [
+    "f972f33",
+    "74ceab0"
+  ],
+  "canonical_revision": 32,
+  "start_receipt": {
+    "by": "human:owner",
+    "at": "2026-10-11T12:24:50Z",
+    "plan_digest": "a893d71ed15098e51c3c4804132b4e7f8515e93a5989c31bea96772d94ac0e8f"
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+        "expect": "Store transitions, anchor validity, lock/revision/idempotency, crash recovery, bounds and frozen-pack refusal pass; canonical receipts/bytes stay unchanged. Stale reattachment becomes a draft on a fresh round and advances delivery only on Submit."
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/core/test/feedback.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:35:00Z",
+          "by": "agent:codex",
+          "notes": "19 store/anchor/recovery/locking/bounds tests passed. Log checks/T-1-attempt-1.log; core source typecheck and focused lint also passed. Canonical owner bytes remained unchanged in feedback fixtures."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+        "expect": "Document/Git selections, rename/delete/add sides, source drift, no external diff execution, JSON statuses, cursor redelivery, cancellation and timeout pass. Sealed/stale recovery publishes a readable new round before waiting, or refuses explicitly."
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-cli.test.ts packages/cli/test/feedback-snapshot.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:45:35Z",
+          "by": "agent:codex",
+          "notes": "15 CLI/snapshot checks passed, including actual Git driver/filter execution traps, explicit selection, stale refs, original-byte retries, bounded waits and cancellation. Source typecheck and lint also passed. Log checks/T-2-attempt-1.log."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "status": "done",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+        "expect": "Existing shared guards, project isolation, snapshot allowlist, feedback role actions, conflict and recovery behavior pass without source or owner-state writes."
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 1,
+          "at": "2026-10-11T12:55:14Z",
+          "by": "agent:codex",
+          "notes": "First test attempt: 2 fixture/expectation failures; retained checks/T-3-attempt-1.log. Corrected closed fixture to use normalized PackDoc and symlink/conflict status expectations."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/feedback-api.test.ts packages/web/test/project-security.test.ts packages/web/test/project-library.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T12:55:15Z",
+          "by": "agent:codex",
+          "notes": "8 API/project/security tests passed, log checks/T-3-attempt-2.log. Source typecheck and focused lint exited 0. Shared CSRF/revision/role/path guards retain canonical owner bytes; closed history is read-only."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "status": "todo",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+        "expect": "All specified review states, keyboard selection, focus/labels, draft preservation, inert malicious text and separate owner controls pass; rendered responsive/manual evidence is attached.",
+        "steps": [
+          {
+            "run": "pnpm exec vitest run packages/web/test/feedback-ui.test.ts",
+            "expect_exit": 0
+          },
+          {
+            "run": "node ../specs/browser-agent-feedback/verify-hosts.mjs --ui-only",
+            "expect_exit": 0
+          }
+        ]
+      },
+      "evidence": null
+    },
+    {
+      "id": "T-5",
+      "status": "todo",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+        "expect": "Installer updates all three feedback skills from authoritative source; bounded summaries, explicit invocation, pending timeout and no owner/session capture behavior pass."
+      },
+      "evidence": null
+    },
+    {
+      "id": "T-6",
+      "status": "todo",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts && node ../specs/browser-agent-feedback/verify-hosts.mjs",
+        "expect": "Automated document/diff/restart/drift and SDD gate cases pass; host verifier separately requires actual Claude/Codex/Pi document and code witnesses, human submissions/resolution and commands/exits. Witness stale-source refresh, human reattachment and cursor delivery without an inaccessible wait.",
+        "steps": [
+          {
+            "run": "pnpm exec vitest run packages/cli/test/feedback-loop.test.ts",
+            "expect_exit": 0
+          },
+          {
+            "run": "node ../specs/browser-agent-feedback/verify-hosts.mjs",
+            "expect_exit": 0
+          }
+        ]
+      },
+      "evidence": null
+    },
+    {
+      "id": "T-7",
+      "status": "todo",
+      "verify": {
+        "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+        "expect": "All six repository gates and five wiki checks pass, coverage floors hold, 0 wiki errors/warnings/review anchors and fresh stamp; current docs describe actual verified behavior."
+      },
+      "evidence": null
+    }
+  ],
+  "source_sha256": {
+    "treadle/packages/core/src/feedback/model.ts": "b674bf59ca31bcbf13797ac714fcf27e48d445b015cb7ca7464db11aa392af2f",
+    "treadle/packages/core/src/feedback/store.ts": "048703a8e92f0c44c63667115707628400abed66fec320bac064088463c58947",
+    "treadle/packages/core/src/feedback/index.ts": "c6b1dc7cf1e5527179454d36a95142c47277515b958e26a0d7ad588d495ab144",
+    "treadle/packages/core/src/index.ts": "97b5421822f26aa2ba4311461f8be9569fb1a1c2632e5d6f0943bce0660dc0f2",
+    "treadle/packages/cli/src/harness/feedback-snapshot.ts": "e89c3991b3b5641ab00463d6f21af27ad8e77ac2277a379648dc8c833ba852c3",
+    "treadle/packages/cli/src/commands/feedback.ts": "3e802d0169c82d627fdce0403536e6b7694065b3f0377c4b16b2b506d54f9299",
+    "treadle/packages/cli/src/commands/do.ts": "3995224ae925a0bfe6fb689cc3d97aa89c0f29f615b357d5f21c6b38eaa52951",
+    "treadle/packages/core/test/feedback.test.ts": "1c2fb3fd18c438a2aef6c9de06504c6f9590f33ae3119284724ac30ee44b9930",
+    "treadle/packages/cli/test/feedback-cli.test.ts": "3e11d97642a6a3753da2992a4ebe058061d295c482e277ba3676a07e789d4c80",
+    "treadle/packages/cli/test/feedback-snapshot.test.ts": "1d906daca927a50a80f861698221c7a36ce53c1387ffeb1ce1263b8a7ac40fc4"
+  }
+}

@@ -1,4 +1,5 @@
-import { afterEach, describe, expect, it } from 'vitest';
+import * as durability from '../src/specpack/durability.js';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync, symlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -23,6 +24,7 @@ import {
 
 const roots: string[] = [];
 afterEach(() => {
+  vi.restoreAllMocks();
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true });
 });
 function fixture() {
@@ -332,6 +334,58 @@ describe('durable artifact feedback', () => {
         }),
       'invalid',
     );
+  });
+  it('preserves BOM snapshot bytes across reads and payload retries', () => {
+    const f = fixture();
+    const action: FeedbackAction = {
+      kind: 'open',
+      selection: { mode: 'documents', paths: ['doc.md'], artifacts: [] },
+      snapshots: [{ key: 'doc.md', path: 'doc.md', before: null, after: '\uFEFFone\n' }],
+    };
+    const envelope = { operation_id: randomUUID(), expected_revision: 0, by: 'agent:test', action };
+    const r = mutateFeedback(f.dir, f.root, envelope),
+      target = readFeedback(f.dir, f.root)!.sessions[0]!.rounds[0]!.targets[0]!;
+    expect(readFeedbackSnapshot(f.dir, f.root, r.session, r.round!, target.id, 'after')).toBe(
+      '\uFEFFone\n',
+    );
+    expect(mutateFeedback(f.dir, f.root, envelope)).toEqual(r);
+  });
+  it('flushes the published state and newly created feedback parent on lost-ack retries', () => {
+    const f = fixture(),
+      flush = vi.spyOn(durability, 'syncPublishedPath');
+    const envelope = {
+      operation_id: randomUUID(),
+      expected_revision: 0,
+      by: 'agent:test',
+      action: {
+        kind: 'open' as const,
+        selection: { mode: 'documents' as const, paths: ['doc.md'], artifacts: [] },
+        snapshots: [{ key: 'doc.md', path: 'doc.md', before: null, after: 'one' }],
+      },
+    };
+    expect(() =>
+      mutateFeedback(f.dir, f.root, envelope, {
+        fault: (stage) => {
+          if (stage === 'published') throw Error('lost ack');
+        },
+      }),
+    ).toThrow('lost ack');
+    flush.mockClear();
+    mutateFeedback(f.dir, f.root, envelope);
+    expect(flush.mock.calls.map(([p]) => p)).toEqual(
+      process.platform === 'win32'
+        ? [join(f.dir, 'feedback/state.json')]
+        : [join(f.dir, 'feedback/state.json'), join(f.dir, 'feedback')],
+    );
+  });
+  it('refuses canonical JSON symlinks on reads and locked writes', () => {
+    const f = fixture(),
+      outside = join(f.root, 'foreign.json');
+    writeFileSync(outside, readFileSync(f.path));
+    rmSync(f.path);
+    symlinkSync(outside, f.path);
+    expect(() => readFeedback(f.dir, f.root)).toThrow('Symlink');
+    expect(() => f.open()).toThrow('Symlink');
   });
   it('uses the same writer lock and refuses audit recovery or completed writes', () => {
     const f = fixture();
