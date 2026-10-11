@@ -4,7 +4,7 @@ type: System
 description: "Current package boundaries, knowledge flow, work admission, and runtime limits."
 status: stable
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-10-11
 sources:
   - { "id": "s1", "resource": "treadle/pnpm-workspace.yaml" }
   - { "id": "s2", "resource": "treadle/packages/core/src/specpack/derive.ts" }
@@ -122,3 +122,63 @@ The runtime pointer remains machine-local; moving the runtime needs reinstallati
 Native packaged hooks keep their plugin-root entry. Host trust and activation remain host actions.
 Source: `treadle/packages/cli/src/harness/plan.ts` and
 `treadle/packages/cli/harness/hooks/README.md`.
+
+# Browser feedback plane — observed 2026-10-11
+
+The local library supports selected Markdown documents and Git diffs for active
+owner-gated packs. The CLI snapshots explicit targets; the browser submits review
+comments; an active agent reads batches, replies and publishes another round.
+The feedback skill is installed for Claude, Codex and Pi from the canonical harness.
+Sources: `treadle/packages/cli/src/commands/feedback.ts:195`;
+`treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md:1`.
+
+| Provider | Consumer | Exchanged contract |
+| --- | --- | --- |
+| CLI snapshot builder | Core feedback store | Explicit document targets or Git before/after bytes, selection and hashes |
+| Core feedback store | Project-qualified web API | `feedback/1` state, immutable snapshots, revision and operation receipts |
+| Human browser | Core feedback store | Draft comment, Submit batch, Resolve or Reattach with held feedback revision |
+| Core read API | Active agent CLI | `feedback-result/1`, session cursor and stable submitted batch IDs |
+| Lifecycle context | Claude, Codex and Pi | Bounded session IDs and counts; comment bodies stay in explicit feedback reads |
+
+Sources: `treadle/packages/cli/src/harness/feedback-snapshot.ts:134`;
+`treadle/packages/core/src/feedback/model.ts:1`;
+`treadle/packages/web/src/project-server.ts:255`;
+`treadle/packages/cli/src/harness/context.ts:15`.
+
+Within a spec directory, `feedback/state.json` stores sessions, threads, batches
+and operation receipts. `feedback/rounds/` stores immutable selected source bytes.
+A session fixes its selection; each round records hashes for before/after targets.
+A thread retains its original anchor and subsequent reattachment, resolution and
+reply history. Submit seals a round and assigns a stable batch cursor. Repeated
+reads do not consume batches. Identical operation retries return the original
+receipt; changed payloads and stale revisions conflict under the shared writer lock.
+Sources: `treadle/packages/core/src/feedback/model.ts:42`;
+`treadle/packages/core/src/feedback/store.ts:615`.
+
+Limits are 32 targets, 256 KiB per file, 4 MiB per round and ledger, 20 rounds
+per session, 8 KiB per body and 84 MiB total storage. The snapshot builder uses
+Git object reads and direct worktree bytes with no external diff, text converter,
+clean/smudge filter or lazy network fetch. Credential/state paths, symlinks and
+binary content are refused. The localhost API retains origin, path, role and
+revision guards; actor strings record claims rather than authenticate people.
+Sources: `treadle/packages/core/src/feedback/model.ts:1`;
+`treadle/packages/core/src/feedback/store.ts:76`;
+`treadle/packages/cli/src/harness/feedback-snapshot.ts:44`;
+`treadle/packages/cli/src/harness/feedback-snapshot.ts:80`;
+`treadle/packages/web/src/project-server.ts:42`.
+
+The browser does not launch or wake an idle coding agent. An active CLI wait
+checks for submitted batches for 1–60 seconds, or the agent reads them on a later
+prompt. Context reports counts without recording sessions, transcripts or tokens.
+A stale anchor needs human Reattach and Submit before redelivery. Worktree rounds
+support iteration; a fixed `--head` keeps the committed after-side and a changed
+head needs a new session. Closed packs retain read-only feedback history; legacy
+packs do not adopt owner gates automatically.
+Sources: `treadle/packages/cli/src/commands/feedback.ts:98`;
+`treadle/packages/core/src/feedback/store.ts:125`;
+`treadle/packages/core/src/feedback/store.ts:754`;
+`treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md:1`.
+
+See [browser feedback evidence and chronology](/initiatives/browser-agent-feedback.md)
+and [owner authority](/systems/owner-workflow.md). Canonical specpacks retain
+execution state; this page does not become a second task ledger.

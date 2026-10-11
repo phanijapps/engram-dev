@@ -1,0 +1,206 @@
+{
+  "observed_at": "2026-10-11T16:50:10.528Z",
+  "cwd": "/home/videogamer/code/memex_beta/treadle",
+  "commands": [
+    {
+      "name": "head",
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/head.log",
+      "sha256": "5778f463a54ec180a74fa9b7213dc6a47c5165ce8592ae1e55cade77c8c32d19"
+    },
+    {
+      "name": "check",
+      "argv": [
+        "pnpm",
+        "check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/check.log",
+      "sha256": "6901287466a0853b689f1dc190d5aa99037d2f2f1e7fad61bdb8f8c8b1ebc51c"
+    },
+    {
+      "name": "coverage",
+      "argv": [
+        "pnpm",
+        "coverage"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/coverage.log",
+      "sha256": "3340eab48344edb126d0b46c775202c316ab22945619a473217948f43cb66834"
+    },
+    {
+      "name": "corpus-check",
+      "argv": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/corpus-check.log",
+      "sha256": "1a413e8ea2eca93926bfcae1333174b3e1f37edf05c05ed38afe8571b454aff7"
+    },
+    {
+      "name": "brand-check",
+      "argv": [
+        "pnpm",
+        "brand:check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/brand-check.log",
+      "sha256": "9d479cb7941e5319984fe1f850d96e81d327cbcb93f600f3d92bb5541d63bb1f"
+    },
+    {
+      "name": "audit-prod",
+      "argv": [
+        "pnpm",
+        "audit:prod"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/audit-prod.log",
+      "sha256": "95fc93f312633d774d52400a00604acde61c7e281354eaacbb50c359f463bad4"
+    },
+    {
+      "name": "links",
+      "argv": [
+        "pnpm",
+        "links"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/links.log",
+      "sha256": "2e87990e3c1307b44d488c60c81323ddc1f1a706c02119efd5088b9d7ebeb2ea"
+    },
+    {
+      "name": "native",
+      "argv": [
+        "node",
+        "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/verify-hosts.mjs"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/native.log",
+      "sha256": "3b793cb8aa8572bb95b1f31a8aa67e0965007f3e7d28428814cd0e9743cba214"
+    },
+    {
+      "name": "fingerprints",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "fingerprints",
+        "..",
+        "../wiki"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/fingerprints.log",
+      "sha256": "ff80ff400f28f189be79d6817232654fa07b33511e7374a2ad363176f08aea41"
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "stamp",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/stamp.log",
+      "sha256": "5691e029395e4e1ad8e29277d42c584e7921cbfff363611d50168e77411c6b59"
+    },
+    {
+      "name": "anchors",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "anchors",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/anchors.log",
+      "sha256": "026c72e0c545efbc66a3a1003817093c21efb5bb78480746e8766c7c555964a9"
+    },
+    {
+      "name": "validate",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "validate",
+        "../wiki"
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/validate.log",
+      "sha256": "2d84d9c5b88ec2c17f60779efd790e0aeab79b9ebc32ff079635cd2025e3558f"
+    },
+    {
+      "name": "status",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "status",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "log": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback/checks/delivery-7a27e2c1-b2a6-4ede-8ab3-6baadcf9e592/status.log",
+      "sha256": "675956969b0f5b537582fd14d2ac44dcb20ee7f8576d45f5eed1cad1911bd71a"
+    }
+  ],
+  "repo_head": "bf72a87ed4be9c96fd508d93f92d57b0b881ec08",
+  "coverage": {
+    "statements": 88.5,
+    "lines": 88.5,
+    "functions": 95.39,
+    "branches": 78.41
+  },
+  "native": "UI witness: completed/pass; structural HTML, accessibility subset, keyboard, targets and rendered channels verified\nNative matrix: six human submissions/native revisions verified; seven of eight human thread resolutions observed; Claude diff Resolve explicitly owner-waived and unverified",
+  "source_hashes": {
+    "wiki/systems/sdd-harness-architecture.md": "389f301d6d797b4c27f037ce257040a48d4c03546e86cd48c9067112e8ef0f45",
+    "wiki/systems/owner-workflow.md": "f1aaa3a646713a1a8c9d6927526e71aaf857104e6dfbb9624625c4fe3ae2a17f",
+    "wiki/initiatives/browser-agent-feedback.md": "0c05f5bf2f57dd54335e4f59777dd37484044be8e9671cffb8ee6d629af7cadf",
+    "wiki/initiatives/index.md": "198095f7077a58b30c633aa23cb5c42699cb76b980caceec616cdf69aa7975a6",
+    "treadle/packages/cli/harness/hooks/README.md": "2b0f04405ad1f09264a475f3dbeb9a1a5c81b596936027a80272d88e6add70a8",
+    "treadle/packages/core/src/feedback/model.ts": "d2e5b0111a5ef3ab1861586f323f08d6751dced4f6a24bf71a1026c3f5a0f5d1",
+    "treadle/packages/core/src/feedback/store.ts": "89b96dc31fb5fd13fde0e74ea6547fe1ac09c837afe3783833e2b268f41fbbea",
+    "treadle/packages/cli/src/commands/feedback.ts": "9dd4d3b567b6a84e1ba81ebc97cc84540b3cf805d768bdeb6070c66e29747fd0",
+    "treadle/packages/cli/src/harness/feedback-snapshot.ts": "ef03e002757bf75dcf9bdf0276d0deb77744419ce5e142f9810eb64b9e7b92ff",
+    "treadle/packages/cli/src/harness/context.ts": "3cb7867aecf32c9591eaf536998cc2181e1d4eea70c2d514ab1a18cdaadfb327",
+    "treadle/packages/web/src/project-server.ts": "1c81ac8bcadbc92077d7d4ed7bbddca56dd7fdb3bb7fa90ad10281769b107441",
+    "specs/browser-agent-feedback/verify-delivery.mjs": "c8f5ab4e5f2d143afa77a43e73c5f9d44a1e84ecefebe7512e0e66387daac773"
+  },
+  "limits": "Python-only fingerprints and Git HEAD stamp do not establish dirty TypeScript/Markdown freshness. Native Resolve exception remains waived/unverified.",
+  "result": "pass"
+}

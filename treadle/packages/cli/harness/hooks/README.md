@@ -62,3 +62,23 @@ The separate machine-managed guard retains its legacy argv JSON contract
 PostToolUse is an advisory after-the-fact check, not a write admission gate.
 The core task and owner workflow remain authoritative. Legacy recall argv
 options are compatibility helpers, not the current lifecycle protocol.
+## Feedback context and delivery
+
+Lifecycle context exposes bounded feedback session IDs, cursors, latest-round
+IDs and draft/unresolved/stale counts. It excludes comment bodies and source
+bytes. Read submitted content explicitly with `do feedback read` or a bounded
+`do feedback wait` through the installed CLI. Repeated reads retain batches;
+remember the last processed cursor and stable batch IDs to avoid repeated edits.
+
+The canonical `skills/sdlc/feedback/` skill and protocol resource ship to Claude,
+Codex and Pi. Install through the harness installer rather than editing host
+copies. Mixed document/diff requests use separate explicit selections; iterative
+worktree rounds differ from sessions pinned to a committed `--head`.
+
+Browser Submit and owner Start do not wake an idle agent or launch a host.
+An active wait (1–60 seconds), later prompt or manual feedback invocation handles
+delivery. Feedback uses its own ledger and revision, preserving owner gates.
+No host session, transcript or token capture is added to lifecycle hooks.
+Sources: `treadle/packages/cli/src/harness/context.ts:15`,
+`treadle/packages/cli/src/commands/feedback.ts:98`, and
+`treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md:1`.

@@ -3,11 +3,11 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T16:41:39Z"
+    "updated": "2026-10-11T16:52:06Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_progress"
+    "deliverable": "in_review"
   },
   "metadata": {
     "brief": {
@@ -1301,7 +1301,7 @@
       "title": "Verify delivery and refresh current knowledge",
       "detail": "All six repository gates and five wiki checks pass, coverage floors hold, 0 wiki errors/warnings/review anchors and fresh stamp; current docs describe actual verified behavior. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
       "phase": "polish",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-6"
       ],
@@ -1347,11 +1347,13 @@
         "touch": [
           {
             "path": "wiki/systems/sdd-harness-architecture.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "24bab49684bc56e68809d15fa89031785c170aa1d96f9b7fe817a76d9a87cd35"
           },
           {
             "path": "wiki/systems/owner-workflow.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "5db5b6d8b4bf488ea6c5263aa61049c5289a5035f55ac396965f9085e85f3217"
           },
           {
             "path": "wiki/initiatives/browser-agent-feedback.md",
@@ -1359,19 +1361,23 @@
           },
           {
             "path": "wiki/initiatives/index.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "b07dca2ddb117440558dcb37ea24d40df7f83eee813cc4ff56707564dc77aac8"
           },
           {
             "path": "wiki/.okf/fingerprints.json",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "f9c8339ad8d2d0c5f8eae3c5b17a7472f99f5bba53acceb6026c40e3061f9939"
           },
           {
             "path": "wiki/.okf/last-index.json",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "8c80b998efd37784530499ebe66206b33f3f9a8174e4aec9cdc1cc0727a83e87"
           },
           {
             "path": "treadle/packages/cli/harness/hooks/README.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "f2a16384ca33966b88297df2688c5b8376f882fe4327a51340032655897e707d"
           },
           {
             "path": "specs/browser-agent-feedback/verify-delivery.mjs",
@@ -1379,7 +1385,8 @@
           },
           {
             "path": "specs/browser-agent-feedback/execution-log.md",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "eef192a8c16e167f64e284b82dae74d092c0150a5b6c881e52c710589d6214fe"
           }
         ],
         "read": [
@@ -1421,7 +1428,16 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/browser-agent-feedback/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T16:52:06Z",
+          "by": "agent:codex",
+          "notes": "Exact delivery command exits0 after retained README formatting failure and repaired rerun. Final logs checks/delivery-72c66e9c-b704-4167-be3f-86a5fd5284e5/results.json: six repository gates pass,237 tests, coverage88.5 stmt/lines95.39functions78.4branches; wiki0errors/0warnings/0reviewanchors/fresh. Four current concepts/navigation and canonical hook documentation checked against actual sources and commit refs. Native result retains sole owner-waived/unverified Claude diff Resolve. Python-only/HEAD freshness limit and one existing pending finding remain explicit. Independent full PACK review is separate."
+        }
+      ]
     }
   ],
   "workflow": {
@@ -1498,5 +1514,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 41
+  "revision": 43
 }
