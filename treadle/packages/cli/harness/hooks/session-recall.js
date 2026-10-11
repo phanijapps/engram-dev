@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Legacy recall scripts plus the current pi lifecycle context extension. Core gates own admission. */
-import { eventContext } from './codex-context.js';
+import { eventContext, runtimeConfig } from './codex-context.js';
 import { execFile } from 'node:child_process';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
@@ -31,18 +31,39 @@ function findCLI() {
 
 function whereJSON(workspace) {
   return new Promise((resolve) => {
-    const cli = findCLI();
-    execFile(cli, ['do', 'where', workspace, '--json'], { timeout: 15000 }, (err, stdout) => {
-      if (err) {
-        resolve({ unavailable: String(err.message) });
-        return;
+    let cli,
+      prefix = [];
+    if (process.env.HARNESS_CLI) {
+      cli = findCLI();
+      if (/\.m?js$/i.test(cli)) {
+        prefix = [cli];
+        cli = process.execPath;
       }
+    } else {
       try {
-        resolve(JSON.parse(stdout));
+        const runtime = runtimeConfig();
+        cli = runtime.node;
+        prefix = [runtime.entry];
       } catch {
-        resolve({ unavailable: 'do where did not speak JSON' });
+        cli = findCLI();
       }
-    });
+    }
+    execFile(
+      cli,
+      [...prefix, 'do', 'where', workspace, '--json'],
+      { timeout: 15000 },
+      (err, stdout) => {
+        if (err) {
+          resolve({ unavailable: String(err.message) });
+          return;
+        }
+        try {
+          resolve(JSON.parse(stdout));
+        } catch {
+          resolve({ unavailable: 'do where did not speak JSON' });
+        }
+      },
+    );
   });
 }
 

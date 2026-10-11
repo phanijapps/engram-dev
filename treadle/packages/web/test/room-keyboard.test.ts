@@ -10,8 +10,8 @@ const here = dirname(fileURLToPath(import.meta.url));
 describe('the room keyboard (standalone harness)', () => {
   it('drives the ceremony: Enter submits, approve card reached', () => {
     const out = execFileSync(
-      './node_modules/.bin/tsx',
-      [join(here, 'room-keyboard.standalone.mjs')],
+      process.execPath,
+      ['--import', 'tsx', join(here, 'room-keyboard.standalone.mjs')],
       {
         cwd: join(here, '..', '..', '..'),
         encoding: 'utf8',

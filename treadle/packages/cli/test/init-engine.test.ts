@@ -208,7 +208,7 @@ describe('the installer engine (T-1)', () => {
       };
       expect(settings.env.KEEP).toBe('me'); // unknown keys preserved
       expect(settings.hooks['PostToolUse'][0]?.hooks[0]?.args?.[0]).toContain(
-        '.harness/hooks/check.js',
+        join('.harness', 'hooks', 'check.js'),
       );
 
       // BLOCKER 3 (R2): HOME isolated — the suite must NEVER touch the real ~/.codex

@@ -8,7 +8,8 @@ import {
   fsyncSync,
   truncateSync,
 } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { join } from 'node:path';
+import { syncPublishedPath } from './durability.js';
 import type { PackDoc } from './model.js';
 import { humanClaim, canonical, type OwnerAct } from './workflow.js';
 
@@ -79,12 +80,7 @@ export function appendPendingAudit(path: string, pending: readonly OwnerAct[]): 
   } finally {
     closeSync(fd);
   }
-  const directory = openSync(dirname(path), 'r');
-  try {
-    fsyncSync(directory);
-  } finally {
-    closeSync(directory);
-  }
+  syncPublishedPath(path);
 }
 
 /** The caller holds the pack lock. No receipt is removed until the journal is durable. */

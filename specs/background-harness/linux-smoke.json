@@ -2,7 +2,7 @@
   "format": "harness-smoke/1",
   "platform": "linux",
   "node": "v24.19.0",
-  "at": "2026-10-11T00:26:58.750Z",
+  "at": "2026-10-11T00:41:42.927Z",
   "exit": 0,
   "commands": [
     {
@@ -33,7 +33,7 @@
         "<built-cli>",
         "project",
         "connect",
-        "/tmp/harness journey ü uqWZCI/project with spaces",
+        "/tmp/harness journey ü uOxpvf/project with spaces",
         "--json"
       ],
       "exit": 0
@@ -44,7 +44,7 @@
         "<built-cli>",
         "context",
         "--workspace",
-        "/tmp/harness journey ü uqWZCI/project with spaces",
+        "/tmp/harness journey ü uOxpvf/project with spaces",
         "--json"
       ],
       "exit": 0
@@ -73,7 +73,7 @@
         "<built-cli>",
         "project",
         "connect",
-        "/tmp/harness journey ü uqWZCI/project with spaces",
+        "/tmp/harness journey ü uOxpvf/project with spaces",
         "--json"
       ],
       "exit": 0

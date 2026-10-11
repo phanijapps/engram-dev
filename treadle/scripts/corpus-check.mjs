@@ -10,7 +10,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const treadle = join(here, '..');
 const repo = join(treadle, '..');
 try {
-  execFileSync('./node_modules/.bin/tsx', ['conformance/generators/gen_corpus.ts'], {
+  execFileSync(process.execPath, ['--import', 'tsx', 'conformance/generators/gen_corpus.ts'], {
     cwd: treadle,
     stdio: 'inherit',
   });

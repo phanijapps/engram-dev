@@ -4,7 +4,7 @@ import { execFile } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
-function runtime() {
+export function runtimeConfig() {
   const pointer = join(dirname(fileURLToPath(import.meta.url)), 'runtime.json');
   if (process.env.HARNESS_RUNTIME_ENTRY)
     return { node: process.execPath, entry: resolve(process.env.HARNESS_RUNTIME_ENTRY) };
@@ -62,7 +62,7 @@ export async function eventContext(workspace) {
         'Harness connection unavailable: event workspace is missing. Use project connect <workspace> and context --workspace <workspace>.',
     };
   try {
-    const config = runtime();
+    const config = runtimeConfig();
     const connection = await invoke(config, ['project', 'connect', workspace, '--json'], workspace);
     const report = await invoke(config, ['context', '--workspace', workspace, '--json'], workspace);
     if (report.format !== 'context/1' || !report.specs || !Array.isArray(report.specs.packs))

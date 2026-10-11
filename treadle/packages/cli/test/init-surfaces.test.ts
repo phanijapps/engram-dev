@@ -102,7 +102,7 @@ describe('the four surface adapters (T-3)', () => {
       };
       expect(s.permissions.allow).toContain('Read'); // foreign keys preserved
       expect(s.hooks['PostToolUse']?.[0]?.hooks[0]?.args?.[0]).toContain(
-        '.harness/hooks/post-tool-check.js',
+        join('.harness', 'hooks', 'post-tool-check.js'),
       );
     } finally {
       w.restore();

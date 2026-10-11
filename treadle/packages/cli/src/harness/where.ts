@@ -115,7 +115,7 @@ export function where(workspace: string): WhereReport {
     const trees = out
       .split('\n')
       .filter((l) => l.startsWith('worktree '))
-      .map((l) => l.slice('worktree '.length))
+      .map((l) => resolve(l.slice('worktree '.length)))
       .filter((p) => p !== root);
     for (const p of trees) {
       const treePacks = scanSpecsDir(specsRoot(p), p);

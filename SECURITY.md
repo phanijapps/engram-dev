@@ -57,3 +57,12 @@ that host's trust/activation process.
   If the library ever serves untrusted trees, sanitize before render.
 - The interview/library servers have no rate limiting (localhost
   single-user; not a DoS surface in the threat model).
+
+## Platform durability
+
+Pack bytes and journals are flushed before acknowledgement. POSIX additionally
+flushes the parent directory; Windows Node cannot open directory handles for
+fsync, so it flushes the published file after atomic rename. Failures retain
+canonical pending receipts for recovery. This does not establish equivalent
+power-loss behavior across filesystems; native fault-injection remains separate
+from ordinary runtime and receipt recovery tests.
