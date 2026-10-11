@@ -3,7 +3,7 @@
   "name": "quiet-workspace",
   "description": "Quiet Workspace frontend",
   "date": {
-    "updated": "2026-10-11T18:01:51Z"
+    "updated": "2026-10-11T18:08:56Z"
   },
   "status": {
     "lifecycle": "active",
@@ -369,7 +369,7 @@
         "CON-3",
         "CON-4"
       ],
-      "status": "todo",
+      "status": "done",
       "verify": {
         "cmd": "pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts packages/web/test/owner-workflow.test.ts packages/web/test/approval-ux.test.ts",
         "expect": "Exit 0; visual expectations match the approved design and existing behavior, revisions, owner authority and keyboard expectations remain true."
@@ -378,19 +378,23 @@
         "touch": [
           {
             "path": "treadle/packages/web/src/library.html",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "5ac6a16d618065ce24d3406adf7d2b02e8b8a3e1baeae8dea6142f40f4c182b8"
           },
           {
             "path": "treadle/packages/web/src/library.js",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "74278d98db53b6e6970ee5484794d48d555cba08f7bb8036d95e06dbe3d754e8"
           },
           {
             "path": "treadle/packages/web/test/workflow-ui.test.ts",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "6ebd654fc03a31cfaa7a7b4f7438e051d818af3bed2cd430bc4fb2935bbee60f"
           },
           {
             "path": "treadle/packages/web/test/inspector.test.ts",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "a464f3e746023c99b6dcc28819bd4a6d159ce8ba65a8212ad962007e71d9d9ed"
           },
           {
             "path": "treadle/packages/web/test/approval-ux.test.ts",
@@ -398,7 +402,8 @@
           },
           {
             "path": "specs/quiet-workspace/execution-log.md",
-            "why": "Explicit task implementation or evidence output."
+            "why": "Explicit task implementation or evidence output.",
+            "sha256": "b9ef381d94643d459da0275de8fbc548f637efddeeb583f44377ec0dacec2574"
           }
         ],
         "read": [
@@ -460,7 +465,16 @@
           "No backend/model/schema/dependency changes. No owner actions against real packs. Stop if a source response cannot support the approved view.",
           "Checks may use isolated disposable server fixtures. Do not modify actual closed packs or approved design artifacts."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts packages/web/test/owner-workflow.test.ts packages/web/test/approval-ux.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T18:08:56Z",
+          "by": "agent:codex",
+          "notes": "22 tests in4 files pass. Gate grouping follows current workflow; guarded actions, retained details, progressive disclosures and native phase buttons. No backend/API/model changes. See execution-log.md."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -743,5 +757,5 @@
     "mode": "owner-gated frontend-only proposal"
   },
   "format": "specpack/0.4",
-  "revision": 11
+  "revision": 13
 }

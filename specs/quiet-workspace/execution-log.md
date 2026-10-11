@@ -56,3 +56,16 @@ Updated only the superseded palette, serif and gradient visual expectations; exi
 Declared command: `pnpm exec vitest run packages/web/test/theme.test.ts packages/web/test/library-skin.test.ts packages/web/test/room-skin.test.ts`.
 Actual exit: 0. Outcome: 12 tests in 3 files passed, 1.87 seconds.
 No backend, API, core, model or dependency file changed.
+
+## T-2 observation
+
+Current workflow supplies queue grouping, status and the highlighted journey step.
+The current gate is above the existing tabs; eligible Start and Finish actions sit in a dedicated action area.
+Supporting record, task, telemetry and alignment details use native disclosures. Jump links open the containing disclosure.
+Failed refresh retains existing content while removing stale action eligibility. Busy controls retain their previous disabled state.
+All owner request fields and the separate Finish confirmation remain unchanged.
+
+Declared command: `pnpm exec vitest run packages/web/test/workflow-ui.test.ts packages/web/test/inspector.test.ts packages/web/test/owner-workflow.test.ts packages/web/test/approval-ux.test.ts`.
+Actual exit: 0. Outcome: 22 tests in 4 files passed, including 6 new focused regressions. Rerun after native-button and refresh refinements passed.
+The independent planning verdict is in `checks/plan-red-foreman.md`; it does not certify implementation.
+No backend, API, core, model or dependency file changed.

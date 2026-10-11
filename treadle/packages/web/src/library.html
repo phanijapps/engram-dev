@@ -472,6 +472,10 @@
       .phase-body {
         flex: 1;
       }
+      .phase-label,
+      .phase-state {
+        display: block;
+      }
       .phase-label {
         font-family: var(--voice-body);
         font-size: 13px;
@@ -739,6 +743,95 @@
       }
       summary {
         cursor: pointer;
+      }
+      #owner-panel {
+        flex: none;
+        margin-bottom: var(--space-4);
+      }
+      .owner-panel h2 {
+        font-size: 26px;
+        line-height: 1.25;
+        margin: 0 0 var(--space-2);
+      }
+      .owner-panel p {
+        margin: var(--space-2) 0;
+        color: var(--ink-2);
+      }
+      .owner-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        gap: var(--space-3);
+        flex: none;
+        padding-top: var(--space-4);
+        background: var(--surface-1);
+        box-shadow: 0 -1px 0 var(--ghost);
+      }
+      .owner-actions p {
+        margin: 0;
+        font-size: 13px;
+        color: var(--ink-2);
+        flex: 1 1 15rem;
+      }
+      .audit-notice {
+        color: var(--warn);
+      }
+      .task-row {
+        background: transparent;
+        border-radius: 0;
+        padding: var(--space-4) 0;
+        box-shadow: 0 1px 0 var(--ghost);
+      }
+      .task-row > summary {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        font-weight: 600;
+      }
+      .task-details {
+        padding: var(--space-3) 0;
+      }
+      .task-details .meta {
+        margin-block: var(--space-2);
+      }
+      .record-details,
+      .inspector-details {
+        margin-bottom: var(--space-4);
+      }
+      .record-details {
+        color: var(--ink-2);
+        font-size: 13px;
+      }
+      .phase-row {
+        width: 100%;
+        border: 0;
+        font: inherit;
+        color: var(--ink);
+        text-align: left;
+        background: transparent;
+      }
+      .phase-row[aria-current='step'] {
+        background: var(--surface-3);
+      }
+      .phase-row[aria-current='step'] .phase-label {
+        color: var(--primary);
+        font-weight: 600;
+      }
+      .phase-view {
+        visibility: hidden;
+      }
+      .phase-row:hover .phase-view,
+      .phase-row:focus-visible .phase-view {
+        visibility: visible;
+      }
+      @media (max-width: 900px) {
+        .owner-actions {
+          position: sticky;
+          bottom: 0;
+          padding-bottom: var(--space-3);
+        }
       }
     </style>
   </head>
