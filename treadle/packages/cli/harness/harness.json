@@ -24,6 +24,16 @@
       }
     },
     {
+      "id": "feedback",
+      "kind": "skill",
+      "source": "skills/sdlc/feedback",
+      "dest": {
+        "pi": ".pi/skills/feedback",
+        "claude": ".claude/skills/feedback",
+        "codex": ".codex/skills/feedback"
+      }
+    },
+    {
       "id": "implement",
       "kind": "skill",
       "source": "skills/sdlc/implement",

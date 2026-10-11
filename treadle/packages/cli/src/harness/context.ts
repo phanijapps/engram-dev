@@ -1,7 +1,14 @@
 /** Read-only event context. Candidate tasks are never admitted by this reader. */
 import { existsSync, realpathSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve, relative, isAbsolute, sep } from 'node:path';
-import { deriveStage, loadPackWithMeta, workflowGate } from '@treadle/core';
+import {
+  deriveStage,
+  loadPackWithMeta,
+  workflowGate,
+  readFeedback,
+  feedbackThreadState,
+  FeedbackError,
+} from '@treadle/core';
 import { readFreshness } from '@treadle/knowledge';
 import { serviceStatus, stateDirectory } from '../serve/runtime.js';
 import { contained, listProjects, specsRoot } from '../serve/projects.js';
@@ -45,7 +52,39 @@ export async function context(workspace: string, dir = stateDirectory()) {
       const candidate = doc.tasks.find(
         (t) => t.status === 'todo' && ((t['needs'] ?? []) as string[]).every((n) => done.has(n)),
       );
+      let feedback: Record<string, unknown> | null = null;
+      if (doc.format === 'specpack/0.4' && doc.workflow?.policy === 'owner-gated/1') {
+        try {
+          const ledger = readFeedback(packDir, root);
+          if (ledger)
+            feedback = {
+              revision: ledger.revision,
+              session_count: ledger.sessions.length,
+              // Bounded identity/count hints only; bodies are read through the CLI.
+              sessions: ledger.sessions.slice(-8).map((session) => {
+                const threads = ledger.threads.filter((t) => t.session === session.id);
+                const unresolved = threads.filter((t) => !feedbackThreadState(session, t).resolved);
+                return {
+                  id: session.id,
+                  cursor: session.cursor,
+                  latest_round: session.rounds.at(-1)?.id,
+                  sealed: session.rounds.at(-1)?.sealed,
+                  drafts: session.drafts.length,
+                  unresolved: unresolved.length,
+                  stale: unresolved.filter((t) => feedbackThreadState(session, t).stale).length,
+                };
+              }),
+              omitted_sessions: Math.max(0, ledger.sessions.length - 8),
+            };
+        } catch (error) {
+          feedback = {
+            state: 'unavailable',
+            code: error instanceof FeedbackError ? error.code : 'unavailable',
+          };
+        }
+      }
       packs.push({
+        feedback,
         name: doc.name,
         path: packDir,
         revision: doc.revision ?? 1,
@@ -105,7 +144,7 @@ export function contextBlock(report: Awaited<ReturnType<typeof context>>): strin
   ];
   for (const p of report.specs.packs)
     lines.push(
-      `${p['name']}: ${p['stage']} | gate ${String((p['workflow'] as { phase?: string })?.phase ?? 'refused')} | doing ${JSON.stringify(p['doing'] ?? [])} | candidate (not admitted) ${JSON.stringify(p['candidate'] ?? null)}${p['error'] ? ' | ' + String(p['error']) : ''}`,
+      `${p['name']}: ${p['stage']} | gate ${String((p['workflow'] as { phase?: string })?.phase ?? 'refused')} | doing ${JSON.stringify(p['doing'] ?? [])} | candidate (not admitted) ${JSON.stringify(p['candidate'] ?? null)}${p['error'] ? ' | ' + String(p['error']) : ''}${p['feedback'] ? ' | feedback (counts/IDs only) ' + JSON.stringify(p['feedback']) : ''}`,
     );
   if (report.specs.selectionRequired)
     lines.push('More than one spec is open. Ask which one to continue; never guess.');

@@ -1,0 +1,81 @@
+{
+  "observed_at": "2026-10-11T13:19:11.544525+00:00",
+  "checks": [
+    {
+      "command": [
+        "pnpm",
+        "exec",
+        "vitest",
+        "run",
+        "packages/cli/test/feedback-harness.test.ts",
+        "packages/cli/test/init-surfaces.test.ts"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "output": "\n RUN  v3.2.7 /home/videogamer/code/memex_beta/treadle\n\n \u2713 packages/cli/test/feedback-harness.test.ts (3 tests) 174ms\n \u2713 packages/cli/test/init-surfaces.test.ts (12 tests) 922ms\n   \u2713 session-recall payload + wirings (T-1) > claude-gate allows specific requests and gates ambiguous continuation from isolated counts  326ms\n\n Test Files  2 passed (2)\n      Tests  15 passed (15)\n   Start at  09:19:08\n   Duration  1.65s (transform 584ms, setup 0ms, collect 746ms, tests 1.10s, environment 0ms, prepare 193ms)\n\n",
+      "stderr": "{\"ok\":false,\"reason\":\"payload is not bounded JSON: Unexpected token 'o', \\\"not json\\\" is not valid JSON\"}\n",
+      "log": "implementation-red-harness-tests.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "do",
+        "feedback",
+        "--help"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta/treadle",
+      "exit": 0,
+      "output": "Usage: wukong do feedback [options] [command]\n\nreview selected artifacts and read submitted browser feedback\n\nOptions:\n  -h, --help                 display help for command\n\nCommands:\n  open [options] <packDir>\n  read [options] <packDir>\n  wait [options] <packDir>\n  reply [options] <packDir>\n  round [options] <packDir>\n  help [command]             display help for command\n",
+      "stderr": "",
+      "log": "implementation-red-harness-help.log"
+    }
+  ],
+  "installed_copies": [
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+      "installed": ".claude/skills/feedback/SKILL.md",
+      "source_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "installed_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "match": true
+    },
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+      "installed": ".codex/skills/feedback/SKILL.md",
+      "source_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "installed_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "match": true
+    },
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/SKILL.md",
+      "installed": ".pi/skills/feedback/SKILL.md",
+      "source_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "installed_sha256": "e796f40509803371bb14c4127e792f62baa44c0eeb5932956cfb353874c32a41",
+      "match": true
+    },
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+      "installed": ".claude/skills/feedback/resources/protocol.md",
+      "source_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "installed_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "match": true
+    },
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+      "installed": ".codex/skills/feedback/resources/protocol.md",
+      "source_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "installed_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "match": true
+    },
+    {
+      "source": "treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md",
+      "installed": ".pi/skills/feedback/resources/protocol.md",
+      "source_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "installed_sha256": "db6b268e1af744993641f5a0a101909a21330904e53bbc4bab74cf38f2df32f4",
+      "match": true
+    }
+  ],
+  "all_six_match": true
+}

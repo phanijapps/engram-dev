@@ -3,7 +3,7 @@
   "name": "browser-agent-feedback",
   "description": "Browser feedback to coding agents",
   "date": {
-    "updated": "2026-10-11T13:14:50Z"
+    "updated": "2026-10-11T13:25:51Z"
   },
   "status": {
     "lifecycle": "active",
@@ -1007,7 +1007,7 @@
       "title": "Ship one feedback skill to Claude, Codex and Pi",
       "detail": "Installer updates all three feedback skills from authoritative source; bounded summaries, explicit invocation, pending timeout and no owner/session capture behavior pass. Read the registered design contract first. Checks run from treadle/. Preserve prior dirty hook repairs and approved artifacts. Do not expand this file scope or perform owner actions.",
       "phase": "integration",
-      "status": "todo",
+      "status": "done",
       "needs": [
         "T-2"
       ],
@@ -1062,11 +1062,13 @@
           },
           {
             "path": "treadle/packages/cli/harness/harness.json",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "c6139bc62abcfe4792ea7de463488de4870f291b00e218d7912c8aa3f516268c"
           },
           {
             "path": "treadle/packages/cli/src/harness/context.ts",
-            "why": "Explicit implementation or verification output; new files are permitted."
+            "why": "Explicit implementation or verification output; new files are permitted.",
+            "sha256": "1089f6a0e12a819bfcc159201aed273354718e8f702b07002687a07b9bab28ca"
           },
           {
             "path": "treadle/packages/cli/test/feedback-harness.test.ts",
@@ -1136,7 +1138,16 @@
           "Run declared verification from treadle/. Touch paths pin at handout; read/wiki context remains advisory.",
           "No bound artifact edits, owner actions, automatic approval, transcript capture or unrelated dirty-file sweep."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/feedback-harness.test.ts packages/cli/test/init-surfaces.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T13:25:51Z",
+          "by": "agent:codex",
+          "notes": "15 tests pass after fixed-head and mixed-mode guidance repair; quick_validate exit0; scoped installer all3 exit0. Logs T-5-attempt-2 and install-*-repaired; bounded context excludes text. Native witnesses remain T-6."
+        }
+      ]
     },
     {
       "id": "T-6",
@@ -1468,5 +1479,5 @@
     "mode": "owner-gated SDD proposal"
   },
   "format": "specpack/0.4",
-  "revision": 34
+  "revision": 36
 }

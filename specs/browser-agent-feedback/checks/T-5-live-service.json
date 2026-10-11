@@ -1,0 +1,10 @@
+{
+  "observed_at": "2026-10-11T13:19:29.140Z",
+  "state_status": 200,
+  "format": "feedback/1",
+  "revision": 0,
+  "asset_status": 200,
+  "asset_matches_source": true,
+  "url": "http://127.0.0.1:8788/projects/f69b47a23566ae2a3e86acb0/library/",
+  "owner_action": false
+}
