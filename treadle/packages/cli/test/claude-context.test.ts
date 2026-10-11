@@ -1,12 +1,13 @@
 import { it, expect } from 'vitest';
-import { mkdtempSync, mkdirSync, rmSync, readFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 const cli = fileURLToPath(new URL('../dist/src/main.js', import.meta.url)),
   hook = fileURLToPath(new URL('../harness/hooks/claude-context.js', import.meta.url));
-it('connects startup/resume/preprompt workspace and never shuts down with session lifetime', () => {
+it('connects startup/resume/preprompt workspace and never shuts down with session lifetime', async () => {
   const root = mkdtempSync(join(tmpdir(), 'claude context ü ')),
     workspace = join(root, 'actual workspace'),
     state = join(root, 'state');
@@ -45,7 +46,7 @@ it('connects startup/resume/preprompt workspace and never shuts down with sessio
       expect(stopped.status, stopped.stderr).toBe(0);
     } finally {
       // Windows can briefly retain filesystem handles after service shutdown.
-      rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+      await rm(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
     }
   }
 }, 30000);

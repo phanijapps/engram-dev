@@ -134,3 +134,10 @@ Independent review of explicit stop-status checking and bounded owned-temp
 cleanup retries returned **PASS — nothing to fix**, with the focused callback
 test passing. Exhausted filesystem retries continue to fail the test. The
 previous six native runtime witnesses retain their original tested head.
+
+The ninth native run exposed a production startup-candidate removal failure
+as well as fixture cleanup. Runtime cleanup now uses bounded asynchronous
+filesystem retries, with all ownership checks retained. Independent read-only
+review returned **PASS — nothing to fix** and reran 8 runtime/callback tests.
+The earlier run7 witnesses identify their own source revision; the changed
+production runtime still requires new native evidence.

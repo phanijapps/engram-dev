@@ -122,3 +122,15 @@ Exhausted retries still throw; no assertion or platform row is skipped. Runtime
 source and the run7 native runtime witnesses are unchanged.
 Source: [Node rmSync retry semantics](https://nodejs.org/api/fs.html#fsrmsyncpath-options).
 The failed final rerun is retained in ci-eighth-run.json.
+
+Ninth run 38100945953 showed that synchronous retries did not resolve all
+Windows removals: Node 22 fixture cleanup failed EBUSY and Node 24 failed
+production claimDirectory candidate cleanup with EPERM. Runtime owned-directory
+cleanup now awaits fs/promises.rm with bounded retries; claimDirectory and all
+callers await cleanup. Atomic prepared owner publication, nonce checks and
+verified-dead recovery conditions remain. The Claude fixture also awaits async
+removal. Independent review returned PASS and reran 8 lifecycle/callback tests.
+Native confirmation of the updated production source remains required.
+[Upstream Windows synchronous retry issue](https://github.com/nodejs/node/issues/64016)
+supports choosing asynchronous cleanup; it does not prove the exact root cause
+of every observed CI failure. ci-ninth-run.json retains the actual failed run.

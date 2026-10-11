@@ -12,6 +12,7 @@ import {
   chmodSync,
   lstatSync,
 } from 'node:fs';
+import { rm } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { homedir, hostname } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -173,10 +174,13 @@ export function runtimeEntry(): string {
   throw Error('Build or install the runtime before starting the service');
 }
 /** Publish a complete owner record atomically; a crash before publication leaves no held lock. */
-function claimDirectory(
+async function removeOwnedDirectory(path: string): Promise<void> {
+  await rm(path, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+}
+async function claimDirectory(
   path: string,
   owner: { pid: number; host: string; token: string },
-): boolean {
+): Promise<boolean> {
   const candidate = `${path}.${owner.token}.candidate`;
   mkdirSync(candidate, { mode: 0o700 });
   try {
@@ -197,7 +201,7 @@ function claimDirectory(
       throw e;
     }
   } finally {
-    rmSync(candidate, { recursive: true, force: true });
+    await removeOwnedDirectory(candidate);
   }
 }
 export async function ensureService(options: ServiceOptions = {}): Promise<ServiceDescriptor> {
@@ -213,7 +217,7 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
         'Service identity cannot be verified while its process is alive; inspect status before retrying',
       );
     const token = randomUUID();
-    const acquired = claimDirectory(lock, { pid: process.pid, host: hostname(), token });
+    const acquired = await claimDirectory(lock, { pid: process.pid, host: hostname(), token });
     if (!acquired) {
       const ownerPath = join(lock, 'owner.json');
       if (existsSync(ownerPath)) {
@@ -231,7 +235,7 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
           // Only one recovery claimant may remove the verified dead lock.
           const recovery = join(dir, 'recovering');
           const recoveryOwner = { pid: process.pid, host: hostname(), token: randomUUID() };
-          let recovering = claimDirectory(recovery, recoveryOwner);
+          let recovering = await claimDirectory(recovery, recoveryOwner);
           if (!recovering) {
             const record = join(recovery, 'owner.json');
             if (!existsSync(record))
@@ -245,8 +249,8 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
               !alive(previous.pid) &&
               readFileSync(record, 'utf8') === bytes
             ) {
-              rmSync(recovery, { recursive: true });
-              recovering = claimDirectory(recovery, recoveryOwner);
+              await removeOwnedDirectory(recovery);
+              recovering = await claimDirectory(recovery, recoveryOwner);
             }
           }
           if (recovering)
@@ -255,9 +259,9 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
                 existsSync(ownerPath) &&
                 readFileSync(ownerPath, 'utf8') === JSON.stringify(owner)
               )
-                rmSync(lock, { recursive: true });
+                await removeOwnedDirectory(lock);
             } finally {
-              rmSync(recovery, { recursive: true });
+              await removeOwnedDirectory(recovery);
             }
         }
       }
@@ -299,7 +303,7 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
         existsSync(own) &&
         (JSON.parse(readFileSync(own, 'utf8')) as { token: string }).token === token
       )
-        rmSync(lock, { recursive: true });
+        await removeOwnedDirectory(lock);
     }
   }
   throw Error('Service startup lock is held; inspect its owner before recovery');
