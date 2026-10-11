@@ -5,6 +5,9 @@
   <img src="treadle/packages/brand/assets/wordmark-light.svg" alt="Wukong" width="960">
 </picture>
 
+[![CI checks (main)](https://github.com/phanijapps/wukong/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/phanijapps/wukong/actions/workflows/ci.yml)
+[![pnpm 9.15.9](https://img.shields.io/badge/pnpm-9.15.9-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/installation)
+
 **The human drives; the machine moves.**
 
 Build with an AI coding agent that understands your repository and follows an
