@@ -29,6 +29,7 @@ try {
   const project = join(temporary, 'project');
   mkdirSync(project);
   env = { ...process.env, HARNESS_STATE_DIR: join(temporary, 'state') };
+  delete env.HARNESS_RUNTIME_ENTRY;
   const flags = ['init', 'harness', '--agent', 'copilot', '--scope', 'project', '--root', project, '--hooks-only', '--yes'];
   run('installer-dry-run', [process.execPath, cli, ...flags, '--dry-run'], { env });
   if (existsSync(join(project, '.harness'))) throw Error('Dry-run changed project files');
@@ -61,7 +62,10 @@ try {
   console.error(error.message);
   process.exitCode = 1;
 } finally {
-  if (env && existsSync(cli)) run('stop-isolated-service', [process.execPath, cli, 'stop', 'serve'], { env });
+  if (env && existsSync(cli)) {
+    try { run('stop-isolated-service', [process.execPath, cli, 'stop', 'serve'], { env }); }
+    catch (error) { console.error(error.message); process.exitCode = 1; }
+  }
   if (temporary) rmSync(temporary, { recursive: true, force: true });
   writeFileSync(join(logs, 'results.json'), JSON.stringify({ at: new Date().toISOString(), results, nativeHostVerified: false, cloudJobVerified: false }, null, 2) + '\n');
   console.log('Evidence: ' + logs);

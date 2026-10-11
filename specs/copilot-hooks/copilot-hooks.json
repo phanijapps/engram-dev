@@ -3,7 +3,7 @@
   "name": "copilot-hooks",
   "description": "Copilot lifecycle hook integration",
   "date": {
-    "updated": "2026-10-11T22:10:11Z"
+    "updated": "2026-10-11T22:15:03.305Z"
   },
   "status": {
     "lifecycle": "active",
@@ -331,6 +331,13 @@
           "at": "2026-10-11T22:06:56Z",
           "by": "agent:codex",
           "notes": "63 tests pass in seven files. New JSON ownership, preflight, upgrade/removal, foreign and malformed config, symlink refusal, relocated Unix commands covered; existing hosts pass. Source typecheck/lint pass. Initial brand failure corrected with brand.binName; brand gate exits 0. Logs checks/T-2-pass.log and T-2-brand.log."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T22:13:24.338Z",
+          "by": "agent:codex",
+          "notes": "Actual post-review repair re-verification exited 0; checks/T-2-review-repair.log. Original evidence and task state preserved; no owner act or repin."
         }
       ]
     },
@@ -448,6 +455,13 @@
           "at": "2026-10-11T22:10:11Z",
           "by": "agent:codex",
           "notes": "Exact delivery verifier exited 0: build, temporary CLI dry-run/install/repeat/remove, isolated local service and installed wrapper, six repository gates, wiki maintenance with 0 errors/warnings and 0 anchors needing review. Actual receipts checks/delivery-22950332-7cf1-4f7c-8d83-0f93c9914ae2/results.json. Native Copilot, Windows hook execution, cloud and authenticated Z.ai calls remain unverified."
+        },
+        {
+          "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T22:15:03.305Z",
+          "by": "agent:codex",
+          "notes": "Actual post-review repair re-verification exited 0; checks/delivery-1272f7f6-9f65-4f55-9217-eb8781693452/results.json. Original evidence and task state preserved; no owner act or repin."
         }
       ]
     }
@@ -492,5 +506,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 13
+  "revision": 15
 }

@@ -1,0 +1,9 @@
+skip    hook   post-tool-check    (none)  — no copilot wiring for this component in the manifest
+skip    hook   session-recall     (none)  — no copilot wiring for this component in the manifest
+skip    hook   codex-recall-prompt (none)  — no copilot wiring for this component in the manifest
+skip    hook   codex-context      (none)  — no copilot wiring for this component in the manifest
+skip    hook   claude-context     (none)  — no copilot wiring for this component in the manifest
+create  hook   copilot-context    /tmp/copilot-delivery ü qGEWrH/project/.harness/hooks/copilot-context.js
+create  hook   copilot-context-support /tmp/copilot-delivery ü qGEWrH/project/.harness/hooks/codex-context.js
+wire    /tmp/copilot-delivery ü qGEWrH/project/.github/hooks/wukong.json  — sessionStart → {"type":"command","bash":"'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'","powershell":"& 'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'","cwd":".","timeoutSec":60}
+wire    /tmp/copilot-delivery ü qGEWrH/project/.github/hooks/wukong.json  — userPromptSubmitted → {"type":"command","bash":"'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'","powershell":"& 'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'","cwd":".","timeoutSec":60}

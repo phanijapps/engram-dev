@@ -15,7 +15,7 @@ import {
 import { dirname, join } from 'node:path';
 import { runtimeEntry } from '../serve/runtime.js';
 import { normalize } from './content.js';
-import { readCopilotHooks } from './manifest.js';
+import { readCopilotHooks, runtimePointerValue, copilotPointerConflict } from './manifest.js';
 import { destRoots } from './paths.js';
 import { wiringTarget } from './plan.js';
 import type { InstallChoices, Plan, PlanRow } from './types.js';
@@ -111,14 +111,7 @@ export function applyPlan(
       destRoots(choices.agent, choices.scope, choices.root).runtime,
       'hooks/runtime.json',
     );
-    const desired =
-      JSON.stringify(
-        { format: 'runtime-pointer/1', node: process.execPath, entry: runtimeEntry(), protocol: 1 },
-        null,
-        2,
-      ) + '\n';
-    const pointerConflict =
-      existsSync(pointer) && readFileSync(pointer, 'utf8') !== desired && !choices.force;
+    const pointerConflict = copilotPointerConflict(pointer, choices.force);
     if (invalid.length || refused.length || pointerConflict)
       return {
         written: 0,
@@ -130,7 +123,7 @@ export function applyPlan(
             (w) =>
               `${w.target}: malformed or unsafe Copilot configuration; repair before installing`,
           ),
-          ...(pointerConflict ? ['Runtime pointer differs; inspect it before using --force'] : []),
+          ...(pointerConflict ? [pointerConflict] : []),
         ],
       };
   }
@@ -221,11 +214,18 @@ export function applyPlan(
         : join(roots.runtime, 'hooks');
     const pointer = join(folder, 'runtime.json');
     const value =
-      JSON.stringify(
-        { format: 'runtime-pointer/1', node: process.execPath, entry: runtimeEntry(), protocol: 1 },
-        null,
-        2,
-      ) + '\n';
+      choices.agent === 'copilot'
+        ? runtimePointerValue()
+        : JSON.stringify(
+            {
+              format: 'runtime-pointer/1',
+              node: process.execPath,
+              entry: runtimeEntry(),
+              protocol: 1,
+            },
+            null,
+            2,
+          ) + '\n';
     if (existsSync(pointer) && readFileSync(pointer, 'utf8') !== value && !choices.force)
       wiringRefused.push('Runtime pointer differs; inspect it before using --force');
     else {
@@ -404,7 +404,7 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
         w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind)
       )
         throw Error('Install record has an unexpected Copilot wiring target');
-      if (existsSync(w.target) && !readCopilotHooks(w.target))
+      if (!readCopilotHooks(w.target))
         throw Error('Malformed or unsafe Copilot configuration; repair it before removal');
     }
   const sep = String.fromCharCode(92); // backslash, escaped for windows paths

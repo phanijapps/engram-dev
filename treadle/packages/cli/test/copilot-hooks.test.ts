@@ -301,3 +301,41 @@ it.skipIf(process.platform === 'win32')(
     expect(readFileSync(target, 'utf8')).toBe('{"version":1,"hooks":{}}');
   },
 );
+
+it('reports pointer conflicts in dry-run with matching force semantics', () => {
+  const f = fixture(),
+    i = installer(f.root);
+  i.apply();
+  const pointer = join(f.root, '.harness/hooks/runtime.json');
+  writeFileSync(pointer, 'FOREIGN_POINTER');
+  const row = i.plan().rows.find((r) => r.component === 'copilot-runtime-pointer');
+  expect(row?.mode).toBe('refuse');
+  expect(row?.note).toContain('differs');
+  expect(i.apply().written).toBe(0);
+  expect(readFileSync(pointer, 'utf8')).toBe('FOREIGN_POINTER');
+  const forced = installer(f.root, true);
+  expect(forced.plan().rows.some((r) => r.mode === 'refuse')).toBe(false);
+  expect(forced.apply().wiringRefused).toEqual([]);
+  expect(JSON.parse(readFileSync(pointer, 'utf8')).format).toBe('runtime-pointer/1');
+});
+it.skipIf(process.platform === 'win32')(
+  'refuses dangling configuration and pointer links during preflight and removal',
+  () => {
+    const f = fixture(),
+      i = installer(f.root, true);
+    i.apply();
+    rmSync(i.config);
+    symlinkSync(join(f.root, 'missing-target'), i.config);
+    expect(() => removeInstall(i.choices)).toThrow(/repair it before removal/);
+    expect(existsSync(statePath(i.choices))).toBe(true);
+    expect(existsSync(join(f.root, '.harness/hooks/copilot-context.js'))).toBe(true);
+    rmSync(i.config);
+    const pointer = join(f.root, '.harness/hooks/runtime.json');
+    rmSync(pointer);
+    symlinkSync(join(f.root, 'missing-pointer'), pointer);
+    expect(
+      i.plan().rows.some((r) => r.component === 'copilot-runtime-pointer' && r.mode === 'refuse'),
+    ).toBe(true);
+    expect(i.apply().written).toBe(0);
+  },
+);

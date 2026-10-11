@@ -15,7 +15,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
 import { normalizedHash } from './content.js';
-import { destPath, sourceFile, readCopilotHooks } from './manifest.js';
+import { destPath, sourceFile, readCopilotHooks, copilotPointerConflict } from './manifest.js';
 import { destRoots } from './paths.js';
 import type {
   HarnessManifest,
@@ -290,6 +290,20 @@ export function compilePlan(
         destination: wiring.target,
         mode: 'refuse',
         note: 'Malformed or unsafe Copilot hook configuration; preserve it and repair before installing',
+      });
+  }
+  if (wirings.some((w) => w.kind === 'copilot-hooks')) {
+    const pointer = join(roots.runtime, 'hooks/runtime.json');
+    const conflict = copilotPointerConflict(pointer, choices.force);
+    if (conflict)
+      rows.push({
+        component: 'copilot-runtime-pointer',
+        kind: 'hook',
+        surface: agent,
+        source: '',
+        destination: pointer,
+        mode: 'refuse',
+        note: conflict,
       });
   }
   return { rows, wirings };

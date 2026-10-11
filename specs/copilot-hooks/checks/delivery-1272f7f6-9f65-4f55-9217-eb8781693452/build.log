@@ -1,0 +1,4 @@
+
+> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> tsc --build && node scripts/copy-assets.mjs
+

@@ -1,0 +1,20 @@
+build: exit 0
+installer-dry-run: exit 0
+installer-apply: exit 0
+installer-repeat: exit 0
+installed-wrapper: exit 0
+installer-remove: exit 0
+check: exit 0
+coverage: exit 0
+corpus: exit 0
+brand: exit 0
+audit: exit 0
+links: exit 0
+fingerprints: exit 0
+stamp: exit 0
+anchors: exit 0
+validate: exit 0
+status: exit 0
+COPILOT DELIVERY PASS; local installer and callback witness only
+stop-isolated-service: exit 0
+Evidence: /home/videogamer/code/memex_beta/specs/copilot-hooks/checks/delivery-1272f7f6-9f65-4f55-9217-eb8781693452

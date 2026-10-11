@@ -3,6 +3,7 @@ import { existsSync, readFileSync, lstatSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { isAbsolute, join, resolve, dirname } from 'node:path';
 import type { ComponentRow, HarnessManifest, HookRow, Surface } from './types.js';
+import { runtimeEntry } from '../serve/runtime.js';
 
 export interface LoadedManifest {
   manifest: HarnessManifest;
@@ -133,5 +134,30 @@ export function readCopilotHooks(
     return value;
   } catch {
     return null;
+  }
+}
+
+/** The same pointer bytes drive Copilot preflight and installation. */
+export function runtimePointerValue(): string {
+  return (
+    JSON.stringify(
+      { format: 'runtime-pointer/1', node: process.execPath, entry: runtimeEntry(), protocol: 1 },
+      null,
+      2,
+    ) + '\n'
+  );
+}
+export function copilotPointerConflict(pointer: string, force: boolean): string | undefined {
+  try {
+    const stat = lstatSync(pointer);
+    if (!stat.isFile() || stat.isSymbolicLink())
+      return 'Runtime pointer is not a regular file; inspect it before installing';
+    if (!force && readFileSync(pointer, 'utf8') !== runtimePointerValue())
+      return 'Runtime pointer differs; inspect it before using --force';
+    return undefined;
+  } catch (error) {
+    return (error as NodeJS.ErrnoException).code === 'ENOENT'
+      ? undefined
+      : 'Runtime pointer cannot be read; inspect it before installing';
   }
 }

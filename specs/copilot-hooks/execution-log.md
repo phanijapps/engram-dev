@@ -28,3 +28,16 @@ Actual subprocess receipts: `checks/delivery-22950332-7cf1-4f7c-8d83-0f93c9914ae
 Current docs explain local hooks and Z.ai BYOK for CLI and VS Code. No API key was obtained or provider request sent.
 The approved analysis/design/plan remain unchanged; their historical proposed status stays preserved.
 All 3 tasks now have actual evidence; independent current-plan PACK review and owner Finish remain separate.
+
+
+Independent implementation review reproduced 2 installer defects despite green checks: omitted pointer conflicts in dry-run and dangling-config removal.
+The first findings and raw probes are retained in `implementation-review-first.md` and `checks/implementation-review-probes.log`.
+Repairs share the pointer preflight between compile and apply, and preflight recorded configuration before removal regardless of existsSync.
+Regression checks now cover matching force semantics, nonregular pointers, and dangling links.
+The exact T-2 check exited 0 with 65 tests; `checks/T-2-review-repair.log`.
+The exact T-3 verifier exited 0 after repair; `checks/delivery-1272f7f6-9f65-4f55-9217-eb8781693452/results.json`.
+The verifier also clears inherited runtime overrides and retains receipts if isolated-service cleanup fails.
+Actual repair evidence was appended through the supported shared locked writer to completed tasks, at revisions 14 and 15.
+The CLI has no completed-task evidence-append operation. This supplement changes no task state, definition, owner act, or context pin.
+The writer verified the current plan digest still matches the original Start receipt before each supplement.
+The independent reviewer separately rechecked T-1 and T-2 after repair, with 27 and 65 passing tests respectively.
