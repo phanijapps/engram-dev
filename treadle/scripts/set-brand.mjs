@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /** Update public branding and the CLI bin; internal package/storage identities stay stable. */
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
@@ -34,11 +34,16 @@ if (!/^[a-z][a-z0-9-]*$/.test(bin)) {
 }
 const brandPath = join(root, 'packages/brand/src/brand.ts');
 const cliPath = join(root, 'packages/cli/package.json');
+const wrapperPath = fileURLToPath(new URL('../../package.json', import.meta.url));
 let source = readFileSync(brandPath, 'utf8');
 const cli = JSON.parse(readFileSync(cliPath, 'utf8'));
+const wrapper = existsSync(wrapperPath) ? JSON.parse(readFileSync(wrapperPath, 'utf8')) : null;
 const entries = Object.entries(cli.bin ?? {});
 if (entries.length !== 1 || typeof entries[0][1] !== 'string')
   throw Error('Expected one managed CLI executable; no files changed');
+const wrapperEntries = wrapper ? Object.entries(wrapper.bin ?? {}) : [];
+if (wrapper && (wrapperEntries.length !== 1 || typeof wrapperEntries[0][1] !== 'string'))
+  throw Error('Expected one root wrapper executable; no files changed');
 const oldName = /\bname:\s*('(?:\\.|[^'\\])*'|"(?:\\.|[^"\\])*")/.exec(source)?.[1];
 if (!oldName) throw Error('Cannot read current product name; no files changed');
 const previous = oldName.startsWith('"')
@@ -57,8 +62,10 @@ for (const [key, value] of Object.entries(updates)) {
   source = source.replace(pattern, (_match, prefix) => prefix + JSON.stringify(value));
 }
 cli.bin = { [bin]: entries[0][1] };
+if (wrapper) wrapper.bin = { [bin]: wrapperEntries[0][1] };
 writeFileSync(brandPath, source);
 writeFileSync(cliPath, JSON.stringify(cli, null, 2) + '\n');
+if (wrapper) writeFileSync(wrapperPath, JSON.stringify(wrapper, null, 2) + '\n');
 console.log(`Rebranded to ${values.name} (${bin}). Internal packages and service state retained.`);
 console.log(
   'Update current usage docs, then run pnpm build, pnpm brand:check and pnpm check; relink the CLI and regenerate installed host artifacts.',

@@ -1,0 +1,7 @@
+
+> treadle-root@ brand:check /home/videogamer/code/memex_beta/treadle
+> node scripts/brand-check.mjs
+
+ ELIFECYCLE  Command failed with exit code 1.
+brand-check: "wukong, treadle" leaked outside its fence:
+  packages/brand/test/rebrand.test.ts

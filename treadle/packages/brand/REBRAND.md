@@ -7,7 +7,8 @@ tagline and lineage. Rebrand with:
 pnpm brand:set -- --name Acme --bin acme --tagline "Your words"
 ```
 
-The helper updates those public tokens and the CLI executable in package.json.
+The helper updates those public tokens and the CLI executable in both the
+workspace CLI package and the repository's root wrapper package.json, when present.
 It preserves internal package names/imports, workspace paths, service storage
 identity and format contracts. An omitted tagline preserves the existing one;
 an omitted `--formerly` records the previous product name. Repeated renames and
