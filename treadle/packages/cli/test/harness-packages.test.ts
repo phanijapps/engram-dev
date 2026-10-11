@@ -40,4 +40,4 @@ it('generates deterministic, local host packages and truthful capability metadat
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
-});
+}, 20000); // Six complete filesystem artifacts, including native Windows under coverage.

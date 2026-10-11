@@ -153,3 +153,10 @@ Independent final review of the run10 evidence returned **PASS — nothing to
 fix**, checking all six originals, expected checks, hashes/provenance, matrix
 and documentation. Release status remains INCOMPLETE only for full host
 journeys; no PACK, host trust or owner Finish claim was fabricated.
+
+The eleventh run exceeded the default 5-second fixture budget while generating
+six complete host packages under Windows Node 22 coverage (5923ms). Independent
+review of an explicit 20-second budget for that integration test returned
+**PASS — nothing to fix**, with the focused test passing and all assertions
+unchanged. The failed run remains in ci-eleventh-run.json; this change does
+not alter production runtime or artifact contents.

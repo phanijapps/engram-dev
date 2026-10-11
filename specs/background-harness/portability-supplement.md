@@ -139,3 +139,11 @@ Actual confirmation of asynchronous runtime cleanup: run 38101187204 at
 d0a2bca passed all six native OS/Node rows, including coverage, portable package
 and server lifecycle journey. Updated originals and tested-head provenance are
 retained in native-runtime/run-38101187204/; earlier artifacts are preserved.
+
+Eleventh native run 38101363978 passed five rows; Windows Node 22 coverage
+exceeded the default 5-second limit in the test that creates six complete
+host filesystem artifacts. Its measured duration was 5923ms. That integration
+test now has an explicit 20-second budget; every completeness, determinism,
+capability and existing-output assertion remains unchanged. Runtime cleanup
+and lifecycle checks passed. Independent review returned PASS and reran the
+focused package test. The actual failed run is retained in ci-eleventh-run.json.
