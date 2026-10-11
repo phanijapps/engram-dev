@@ -112,3 +112,13 @@ Node 22/24 row, including standalone packaging and the runtime journey. This
 confirms the repaired ordinary native paths and cross-drive packaging fixture.
 Original artifacts and provenance are retained under native-runtime/. It does
 not establish power-loss durability or human host activation.
+
+The final documentation-head rerun 38100753447 passed five rows; Windows
+Node 24 failed in Claude fixture cleanup after its callback assertions passed.
+rmSync reported EPERM for the owned temporary root after shutdown. The fixture
+now checks the stop subprocess's actual exit and bounds it to 15 seconds, then
+uses five documented filesystem retries with 100ms linear backoff for cleanup.
+Exhausted retries still throw; no assertion or platform row is skipped. Runtime
+source and the run7 native runtime witnesses are unchanged.
+Source: [Node rmSync retry semantics](https://nodejs.org/api/fs.html#fsrmsyncpath-options).
+The failed final rerun is retained in ci-eighth-run.json.

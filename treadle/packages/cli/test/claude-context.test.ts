@@ -36,7 +36,16 @@ it('connects startup/resume/preprompt workspace and never shuts down with sessio
     }
     expect(readFileSync(join(state, 'projects.json'), 'utf8')).not.toContain('not retained');
   } finally {
-    spawnSync(process.execPath, [cli, 'stop', 'serve'], { env });
-    rmSync(root, { recursive: true, force: true });
+    const stopped = spawnSync(process.execPath, [cli, 'stop', 'serve'], {
+      env,
+      encoding: 'utf8',
+      timeout: 15000,
+    });
+    try {
+      expect(stopped.status, stopped.stderr).toBe(0);
+    } finally {
+      // Windows can briefly retain filesystem handles after service shutdown.
+      rmSync(root, { recursive: true, force: true, maxRetries: 5, retryDelay: 100 });
+    }
   }
 }, 30000);

@@ -126,3 +126,11 @@ Independent final evidence review returned **PASS — nothing to fix** after
 checking native artifacts, hashes, provenance, matrix and documentation claims.
 The reviewer confirmed verify-matrix remains INCOMPLETE only for full host
 journeys and that no PACK, owner Finish or host-trust completion was fabricated.
+
+Final documentation-head run 38100753447 passed five rows and failed Windows
+Node 24 coverage only during Claude fixture deletion (EPERM after successful
+callback assertions). The original result is retained in ci-eighth-run.json.
+Independent review of explicit stop-status checking and bounded owned-temp
+cleanup retries returned **PASS — nothing to fix**, with the focused callback
+test passing. Exhausted filesystem retries continue to fail the test. The
+previous six native runtime witnesses retain their original tested head.
