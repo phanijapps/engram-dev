@@ -4,13 +4,6 @@
     "sessionStart": [
       {
         "type": "command",
-        "bash": "'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
-        "powershell": "& 'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
-        "cwd": ".",
-        "timeoutSec": 60
-      },
-      {
-        "type": "command",
         "bash": "'node' '-e' 'const fs=require('\"'\"'node:fs'\"'\"'),p=require('\"'\"'node:path'\"'\"');const hook=p.resolve(process.argv[1]);if(!fs.existsSync(hook)){console.error('\"'\"'Harness hook payload '\"'\"'+process.argv[1]+'\"'\"' is missing. Run: wukong init harness --agent copilot --hooks-only'\"'\"');console.log('\"'\"'{}'\"'\"');process.exit(0);}const result=require('\"'\"'node:child_process'\"'\"').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'\"'\"'inherit'\"'\"'});if(result.error)throw result.error;process.exit(result.status??1);' '--' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
         "powershell": "& 'node' '-e' 'const fs=require(''node:fs''),p=require(''node:path'');const hook=p.resolve(process.argv[1]);if(!fs.existsSync(hook)){console.error(''Harness hook payload ''+process.argv[1]+'' is missing. Run: wukong init harness --agent copilot --hooks-only'');console.log(''{}'');process.exit(0);}const result=require(''node:child_process'').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:''inherit''});if(result.error)throw result.error;process.exit(result.status??1);' '--' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
         "cwd": ".",
@@ -18,13 +11,6 @@
       }
     ],
     "userPromptSubmitted": [
-      {
-        "type": "command",
-        "bash": "'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'",
-        "powershell": "& 'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'",
-        "cwd": ".",
-        "timeoutSec": 60
-      },
       {
         "type": "command",
         "bash": "'node' '-e' 'const fs=require('\"'\"'node:fs'\"'\"'),p=require('\"'\"'node:path'\"'\"');const hook=p.resolve(process.argv[1]);if(!fs.existsSync(hook)){console.error('\"'\"'Harness hook payload '\"'\"'+process.argv[1]+'\"'\"' is missing. Run: wukong init harness --agent copilot --hooks-only'\"'\"');console.log('\"'\"'{}'\"'\"');process.exit(0);}const result=require('\"'\"'node:child_process'\"'\"').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'\"'\"'inherit'\"'\"'});if(result.error)throw result.error;process.exit(result.status??1);' '--' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'",

@@ -177,3 +177,8 @@ They are hashed pack names mapped to hashed compact lines. No prompt, transcript
 
 When committed Copilot wiring outlives its gitignored payload, the hook prints
 `init harness --agent copilot --hooks-only` guidance on stderr and exits 0 with `{}`.
+Claude Code and Codex project launchers do not have this guard yet; `specs/vscode-claude-hooks` T-1 adds it.
+
+Upgrade limit: committed entries found in a clone are not recorded as owned, so a later
+format change can append a second entry beside the old one. Inspect the hook file after
+an upgrade. `specs/vscode-claude-hooks` T-1 covers replacement without duplicates.

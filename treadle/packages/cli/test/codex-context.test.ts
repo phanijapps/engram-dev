@@ -104,6 +104,38 @@ it('lists open packs only and counts delivered and refused packs', async () => {
   expect(block).toContain('Open specs: 1; delivered or closed: 1; refused: 1 (bad-one)');
   expect(block).not.toContain('omitted');
 });
+it('keeps whole lines and the omitted note when hundreds of refused packs crowd the head', async () => {
+  const { compactBlock, CONTEXT_BUDGET } = await import(hook);
+  const refused = Array.from({ length: 400 }, (_, i) => ({
+    name: `refused-pack-with-a-rather-long-name-${i}`,
+    stage: 'refused',
+    error: 'Missing spec JSON',
+  }));
+  const open = Array.from({ length: 40 }, (_, i) => pack(`open-${i}`));
+  const block: string = compactBlock(fixtureReport([...refused, ...open]), connection);
+  expect(block.length).toBeLessThanOrEqual(CONTEXT_BUDGET);
+  expect(block).toContain('refused: 400 (');
+  expect(block).toContain(', +390 more)');
+  expect(block).not.toContain('refused-pack-with-a-rather-long-name-10');
+  expect(block.split('\n').at(-1)).toMatch(/^\d+ more open spec\(s\) omitted; run do where/);
+});
+it('reserves the omitted note against the head and keeps extra head lines in budget', async () => {
+  const { compactBlock } = await import(hook);
+  const open = Array.from({ length: 10 }, (_, i) => pack(`open-${i}`));
+  const block: string = compactBlock(fixtureReport(open), connection, 1200, ['HOST RULE']);
+  expect(block.length).toBeLessThanOrEqual(1200);
+  const lines = block.split('\n');
+  expect(lines.indexOf('HOST RULE')).toBeLessThan(lines.findIndex((l) => l.startsWith('open-')));
+  expect(lines.at(-1)).toMatch(/^\d+ more open spec\(s\) omitted/);
+});
+it('caps a pack line on a code-point boundary', async () => {
+  const { packLine, packSummary } = await import(hook);
+  const wide = { ...pack('emoji'), workflow: { phase: 'spec', reasons: ['😀'.repeat(800)] } };
+  const line: string = packLine(wide);
+  expect(Array.from(line)).toHaveLength(700);
+  expect(line).not.toMatch(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/);
+  expect(packSummary(wide).length).toBeGreaterThan(line.length);
+});
 it('bounds malformed input and unavailable runtime with actionable status', () => {
   const out = spawnSync(process.execPath, [hook, '--event', 'SessionStart'], {
     input: '{',

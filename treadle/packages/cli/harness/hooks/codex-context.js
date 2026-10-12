@@ -57,10 +57,20 @@ function invoke(config, args, cwd) {
 // Below Claude Code's 10,000-character inline limit for prompt-hook context (D-2).
 export const CONTEXT_BUDGET = 9000;
 const PACK_LINE_LIMIT = 700;
+const REFUSED_NAME_LIMIT = 10;
 const isRefused = (pack) => pack.stage === 'refused' || Boolean(pack.error);
 const isFinished = (pack) => ['delivered', 'closed'].includes(String(pack.stage));
+// Cut on code points so a surrogate pair is never split.
+const cap = (text, limit) => {
+  const points = Array.from(text);
+  return points.length > limit ? points.slice(0, limit - 1).join('') + '…' : text;
+};
 /** One compact line per open pack; the full record stays one `do status` away. */
 export function packLine(pack) {
+  return cap(packSummary(pack), PACK_LINE_LIMIT);
+}
+/** The uncapped summary; change fingerprints use it so late edits stay visible. */
+export function packSummary(pack) {
   const gate = pack.workflow ?? {};
   const reasons = (gate.reasons ?? []).slice(0, 3).map(String);
   const parts = [
@@ -71,18 +81,23 @@ export function packLine(pack) {
   if (pack.candidate) parts.push(`candidate ${pack.candidate.id} (not admitted)`);
   if (pack.openQuestions?.length) parts.push(`open ${pack.openQuestions.join(',')}`);
   if (pack.feedback) parts.push(`feedback (counts/IDs only) ${JSON.stringify(pack.feedback)}`);
-  const line = parts.join(' | ');
-  return line.length > PACK_LINE_LIMIT ? line.slice(0, PACK_LINE_LIMIT - 1) + '…' : line;
+  return parts.join(' | ');
 }
 export function openPacks(report) {
   return report.specs.packs.filter((pack) => !isRefused(pack) && !isFinished(pack));
 }
-/** Guidance first, then whole pack lines until the budget; omissions are stated, never cut. */
-export function compactBlock(report, connection, budget = CONTEXT_BUDGET) {
+/**
+ * Guidance first, then whole pack lines until the budget; omissions are stated, never cut.
+ * Host-specific instructions join the head through `extraHead`, inside the same budget.
+ */
+export function compactBlock(report, connection, budget = CONTEXT_BUDGET, extraHead = []) {
   const packs = report.specs.packs;
   const open = openPacks(report);
   const refused = packs.filter(isRefused);
   const finished = packs.filter((pack) => !isRefused(pack) && isFinished(pack));
+  const refusedNames = refused.slice(0, REFUSED_NAME_LIMIT).map((pack) => cap(pack.name, 80));
+  if (refused.length > REFUSED_NAME_LIMIT)
+    refusedNames.push(`+${refused.length - REFUSED_NAME_LIMIT} more`);
   const head = [
     `Harness connected: ${connection.service.url}projects/${connection.project.id}/library/`,
     `Workspace: ${report.workspace}`,
@@ -94,13 +109,17 @@ export function compactBlock(report, connection, budget = CONTEXT_BUDGET) {
       : []),
     report.guidance.newSpec,
     report.guidance.continueSpec,
-    `Open specs: ${open.length}; delivered or closed: ${finished.length}; refused: ${refused.length}${refused.length ? ` (${refused.map((pack) => pack.name).join(', ')})` : ''}`,
+    ...extraHead,
+    `Open specs: ${open.length}; delivered or closed: ${finished.length}; refused: ${refused.length}${refused.length ? ` (${refusedNames.join(', ')})` : ''}`,
   ];
-  const lines = [...head];
-  let size = head.join('\n').length;
   const omittedNote = (n) =>
     `${n} more open spec(s) omitted; run do where ${report.workspace} --json for the full list.`;
   const reserve = omittedNote(open.length).length + 1;
+  const lines = [...head];
+  // An oversized head (very long paths) gives up whole trailing head lines, never a partial one.
+  while (lines.length > 1 && lines.join('\n').length + (open.length ? reserve : 0) > budget)
+    lines.pop();
+  let size = lines.join('\n').length;
   for (const [index, pack] of open.entries()) {
     const line = packLine(pack);
     const last = index === open.length - 1;
@@ -111,9 +130,9 @@ export function compactBlock(report, connection, budget = CONTEXT_BUDGET) {
     lines.push(line);
     size += 1 + line.length;
   }
-  return lines.join('\n').slice(0, budget);
+  return lines.join('\n');
 }
-export async function eventContext(workspace) {
+export async function eventContext(workspace, extraHead = []) {
   if (typeof workspace !== 'string' || !workspace.trim())
     return {
       available: false,
@@ -126,7 +145,11 @@ export async function eventContext(workspace) {
     const report = await invoke(config, ['context', '--workspace', workspace, '--json'], workspace);
     if (report.format !== 'context/1' || !report.specs || !Array.isArray(report.specs.packs))
       throw Error('Unsupported context protocol; reinstall matching runtime and harness versions.');
-    return { available: true, block: compactBlock(report, connection), report };
+    return {
+      available: true,
+      block: compactBlock(report, connection, CONTEXT_BUDGET, extraHead),
+      report,
+    };
   } catch (error) {
     return {
       available: false,

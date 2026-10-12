@@ -184,7 +184,14 @@ Claude Code inlines at most 10,000 characters of prompt-hook context.
 Hook payloads live in the gitignored `.harness/hooks`. After a clone, run
 `wukong init harness --agent <claude|codex|copilot> --hooks-only --no-project-guide`
 for each host you use. Committed Copilot wiring without its payload prints this
-guidance instead of failing.
+guidance and exits 0. Claude Code and Codex wiring does not have this guard yet:
+without the payload, those hooks still exit 1 with a Node error until you run init.
+`specs/vscode-claude-hooks` T-1 adds the guard to their shared launcher.
+
+Known installer limit: in a clone, committed hook entries are not recorded as
+harness-owned. After a hook format change, re-running init can add the new entry
+next to the old one. Check the hook file for duplicate entries after an upgrade.
+`specs/vscode-claude-hooks` T-1 covers replacement without duplicates.
 
 VS Code also loads `.claude/settings.json` when `chat.useClaudeHooks` is on.
 Turn that location off with `"chat.hookFilesLocations": { ".claude/settings.json": false }`;
