@@ -19,3 +19,6 @@ graphify-out/
 # the git-install orchestrator must never commit its build trees
 node_modules
 package-lock.json
+
+# spec packs are local working records; already-tracked packs stay tracked until removed with `git rm --cached`
+/specs/
