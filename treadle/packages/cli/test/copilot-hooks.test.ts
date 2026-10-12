@@ -188,6 +188,30 @@ it('installs exact hook JSON, repeats without duplicates, and removes an owned e
   expect(existsSync(i.config)).toBe(false);
   expect(existsSync(statePath(i.choices))).toBe(false);
 });
+it.skipIf(process.platform === 'win32')(
+  'explains recovery instead of crashing when committed wiring outlives its payload',
+  () => {
+    const f = fixture(),
+      i = installer(f.root);
+    expect(i.apply().wiringRefused).toEqual([]);
+    const doc = JSON.parse(readFileSync(i.config, 'utf8'));
+    rmSync(join(f.root, '.harness/hooks/copilot-context.js'));
+    for (const event of ['sessionStart', 'userPromptSubmitted']) {
+      const out = spawnSync('bash', ['-c', doc.hooks[event][0].bash], {
+        cwd: f.root,
+        input: JSON.stringify({ cwd: f.root }),
+        env: { ...process.env, HARNESS_RUNTIME_ENTRY: f.runtime },
+        encoding: 'utf8',
+      });
+      expect(out.status, out.stderr).toBe(0);
+      expect(JSON.parse(out.stdout)).toEqual({});
+      expect(out.stderr).toContain(
+        `.harness/hooks/copilot-context.js is missing. Run: ${brand.binName} init harness --agent copilot --hooks-only`,
+      );
+      expect(out.stderr).not.toContain('at Module');
+    }
+  },
+);
 it('preserves foreign entries, metadata, sibling files and a pre-existing empty container', () => {
   const f = fixture(),
     i = installer(f.root);
