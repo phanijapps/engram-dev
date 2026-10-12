@@ -122,9 +122,10 @@ Sources: `treadle/packages/cli/src/harness/context.ts:15`,
 Use `init harness --agent copilot --scope project --hooks-only`, prefixed with the installed CLI.
 Inspect `--dry-run` before installation. The installer creates `.github/hooks/wukong.json`
 and installs the wrapper and shared helper through the authoritative manifest.
-`sessionStart` returns bounded top-level context; `userPromptSubmitted` reconnects and emits `{}`.
+`sessionStart` returns bounded top-level context and tells the agent to run `do status` before stage-dependent work.
+`userPromptSubmitted` reconnects. It emits `{}`, or a `systemMessage` when open spec state changed since the last prompt.
 Prompt hooks do not refresh model context through stdout. Read CLI context explicitly when needed.
-The commands use Node from PATH and project-relative payload paths, with repository-root `cwd` and a 60-second timeout.
+The commands use Node from PATH and run the project-relative payload through a small guard, with repository-root `cwd` and a 60-second timeout.
 Both Unix and PowerShell fields are emitted; local Unix callback execution is covered by fixtures.
 Native Windows activation and real Copilot sessions need separate host evidence.
 
@@ -154,3 +155,25 @@ For this source repository, root frozen installation or explicit `pnpm run setup
 installs and builds the nested workspace. Source setup does not initialize arbitrary
 target projects. Both source bootstrap scripts select main by default; explicit
 branch overrides remain available and protected existing checkouts are not switched.
+
+## Owner actions across hosts — 2026-10-12
+
+The web library writes owner actions into the pack. It does not push them to agents.
+An agent sees an owner action when a hook adds current pack state, or when it reads the pack itself.
+
+| Host                                   | Session start                                    | Each prompt                                              |
+| -------------------------------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| Claude Code, Codex                     | Context block                                    | Context block (current stage of each open spec)          |
+| Copilot CLI                            | Context block and a `do status` pull instruction | Output is discarded                                      |
+| VS Code Copilot Chat (`.github/hooks`) | Context block and a `do status` pull instruction | `systemMessage` to the user when open spec state changed |
+
+The context block puts guidance first, then one compact line per open spec.
+Delivered, closed and refused specs appear as counts. The block stays within 9,000 characters
+(Claude Code inlines at most 10,000) and states how many open specs it omitted.
+
+The Copilot change notice keeps per-session fingerprints in `os.tmpdir()/wukong-copilot`.
+They are hashed pack names mapped to hashed compact lines. No prompt, transcript or pack text is stored.
+`HARNESS_COPILOT_STATE_DIR` overrides the directory.
+
+When committed Copilot wiring outlives its gitignored payload, the hook prints
+`init harness --agent copilot --hooks-only` guidance on stderr and exits 0 with `{}`.
