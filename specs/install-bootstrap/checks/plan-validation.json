@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-12T14:17:09.603Z",
+  "revision": 6,
+  "schema": true,
+  "errors": null,
+  "artifacts": [
+    {
+      "file": "brief.md",
+      "matches": true
+    },
+    {
+      "file": "bug-source-setup.md",
+      "matches": true
+    },
+    {
+      "file": "spec.md",
+      "matches": true
+    },
+    {
+      "file": "design.md",
+      "matches": true
+    },
+    {
+      "file": "plan.md",
+      "matches": true
+    }
+  ],
+  "dag_order": [
+    "T-1",
+    "T-2",
+    "T-3",
+    "T-4"
+  ],
+  "structural_entry": [
+    "T-1"
+  ],
+  "plan_digest": {
+    "ok": true,
+    "value": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744"
+  },
+  "commands": [
+    {
+      "command": "wukong",
+      "args": [
+        "do",
+        "check",
+        "/home/videogamer/code/memex_beta/specs/install-bootstrap"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "wukong",
+      "args": [
+        "do",
+        "status",
+        "/home/videogamer/code/memex_beta/specs/install-bootstrap"
+      ],
+      "exit": 0
+    },
+    {
+      "command": "wukong",
+      "args": [
+        "do",
+        "where",
+        "/home/videogamer/code/memex_beta",
+        "--json"
+      ],
+      "exit": 0
+    }
+  ],
+  "decisions": [
+    {
+      "id": "D-1",
+      "status": "accepted"
+    },
+    {
+      "id": "D-2",
+      "status": "accepted"
+    },
+    {
+      "id": "D-3",
+      "status": "accepted"
+    }
+  ],
+  "owner_acts": 4,
+  "source_implementation": "not started"
+}

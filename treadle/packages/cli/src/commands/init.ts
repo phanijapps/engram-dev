@@ -17,6 +17,7 @@ import {
 import { promptForMissing } from '../harness/skin.js';
 import { connectWorkspace } from './project.js';
 import { resolve } from 'node:path';
+import { existsSync } from 'node:fs';
 
 export interface Flags {
   agent?: string;
@@ -191,6 +192,27 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
   console.log(
     `installed: ${result.written} file(s) written, ${summary.same} same, ${summary.skip} skipped — plan recorded`,
   );
+  if (
+    choices.agent === 'copilot' &&
+    choices.hooks &&
+    choices.scope === 'project' &&
+    plan.wirings.some((wiring) => wiring.kind === 'copilot-hooks') &&
+    ['copilot-context.js', 'codex-context.js', 'runtime.json'].every((file) =>
+      existsSync(resolve(choices.root, '.harness/hooks', file)),
+    )
+  ) {
+    console.log(
+      'Copilot hook scripts and the local runtime pointer are installed in .harness/hooks/.',
+    );
+    console.log(
+      'Run init on each machine after cloning or moving the runtime; reload Copilot from this project root.',
+    );
+    console.log(
+      'Hook repair: ' +
+        brand.binName +
+        ' init harness --agent copilot --scope project --hooks-only --no-agents --root .',
+    );
+  }
 }
 
 function choicesFromFlags(f: Flags): InstallChoices {

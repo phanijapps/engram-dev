@@ -1139,5 +1139,22 @@ treadle stop serve</pre>
         itself establish native host witnesses.
       </p>
     </section>
+    <section aria-labelledby="source-setup-current">
+      <h2 id="source-setup-current">Current source setup and clone recovery — 2026-10-12</h2>
+      <p>The source installers now select main by default. The private repository root
+      supports frozen pnpm installation through a shared setup helper; dependencies
+      and builds remain in the nested workspace. Historical examples above retain
+      their original commands. Use the <a href="../../../README.md">current README</a> for installation.</p>
+      <pre>corepack pnpm install --frozen-lockfile
+corepack pnpm run setup</pre>
+      <p>Choose either root setup command. Installers also link the CLI globally.
+      Target-project initialization uses that installed CLI and does not install
+      the application's dependencies. Local hook scripts and runtime pointers need
+      initialization on each machine after cloning.</p>
+      <pre>wukong init harness --agent copilot --scope project --hooks-only --no-agents --root .</pre>
+      <p>This repair preserves project guides, agents, and skills. Full init keeps
+      its backup safeguards; use no-project-guide to preserve instructions during
+      full component installation. Reload Copilot from the project root after init.</p>
+    </section>
   </body>
 </html>

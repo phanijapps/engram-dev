@@ -1,0 +1,9 @@
+
+ RUN  v5.0.3 /home/videogamer/code/memex_beta/treadle
+
+
+ Test Files  2 passed | 1 skipped (3)
+      Tests  19 passed | 10 skipped (29)
+   Start at  10:50:14
+   Duration  6.69s (tests 98%, transform 1%, import 1%)
+

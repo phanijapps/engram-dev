@@ -9,7 +9,7 @@ const workspaceDir = basename(resolve(import.meta.dirname, '../../..'));
 type Call = { name: string; args: string[]; cwd: string };
 
 // Real native command exit codes, disposable command stubs: no network or global link.
-function fixture(existingRef = '', failure = '') {
+function fixture(existingRef = '', failure = '', selectedRef: string | null = 'release-fixture') {
   const root = mkdtempSync(join(tmpdir(), 'powershell installer '));
   const bin = join(root, 'bin');
   const source = join(root, 'source with spaces');
@@ -34,10 +34,13 @@ if (name === 'node' && args[0] === '-p') {
 }
 if (name === 'git' && args.includes('symbolic-ref')) console.log(process.env.INSTALL_TEST_REF);
 if (name === 'git' && args[0] === 'clone') fs.mkdirSync(path.join(args.at(-1), ${JSON.stringify(workspaceDir)}, 'packages/cli'), {recursive:true});
+if (name === 'corepack' && args.at(-1) === '--version') console.log(process.env.INSTALL_TEST_FAILURE === 'wrong-pnpm-version' ? '10.0.0' : '9.15.9');
+if (name === 'node' && args[0]?.endsWith('setup.mjs') && process.env.INSTALL_TEST_FAILURE === 'source-setup') process.exit(19);
 if (name+':'+args[0] === process.env.INSTALL_TEST_FAILURE) process.exit(19);
+if (name === 'corepack' && args.includes('link') && process.env.INSTALL_TEST_FAILURE === 'pnpm:link') process.exit(19);
 `,
   );
-  for (const name of ['node', 'git', 'pnpm', brand.binName]) {
+  for (const name of ['node', 'git', 'pnpm', 'corepack', brand.binName]) {
     writeFileSync(
       join(bin, name + '.cmd'),
       `@"${process.execPath}" "${stub}" ${name} %*\r\n@exit /b %errorlevel%\r\n`,
@@ -55,8 +58,7 @@ if (name+':'+args[0] === process.env.INSTALL_TEST_FAILURE) process.exit(19);
         source,
         '-Repository',
         'https://example.invalid/fixture.git',
-        '-Ref',
-        'release-fixture',
+        ...(selectedRef ? ['-Ref', selectedRef] : []),
       ],
       {
         env: {
@@ -93,15 +95,16 @@ it.skipIf(process.platform !== 'win32')(
       'https://example.invalid/fixture.git',
       source,
     ]);
-    expect(calls.filter((c) => c.name === 'pnpm').map((c) => c.args)).toEqual([
-      ['install', '--frozen-lockfile'],
-      ['build'],
-      ['link', '--global'],
+    expect(calls.filter((c) => c.name === 'corepack').map((c) => c.args)).toEqual([
+      ['pnpm@9.15.9', '--version'],
+      ['pnpm@9.15.9', 'link', '--global'],
     ]);
-    expect(calls.find((c) => c.name === 'node' && c.args[0] !== '-p')?.args).toEqual([
-      join(source, workspaceDir, 'packages/cli/dist/src/main.js'),
-      '--version',
+    expect(calls.find((c) => c.name === 'node' && c.args[0]?.endsWith('setup.mjs'))?.args).toEqual([
+      join(source, 'scripts/setup.mjs'),
     ]);
+    expect(
+      calls.find((c) => c.name === 'node' && c.args[0]?.endsWith('dist\\src\\main.js'))?.args,
+    ).toEqual([join(source, workspaceDir, 'packages/cli/dist/src/main.js'), '--version']);
     expect(calls.at(-1)?.name).toBe(brand.binName);
   },
 );
@@ -146,13 +149,31 @@ it.skipIf(process.platform !== 'win32')(
 );
 
 it.skipIf(process.platform !== 'win32').each([
-  ['pnpm:install', 'Dependency installation failed'],
-  ['pnpm:build', 'Build failed'],
+  ['source-setup', 'Source setup failed'],
   ['pnpm:link', 'Global link failed'],
 ] as const)('PowerShell stops after %s fails', (failure, message) => {
   const { result, calls } = fixture('', failure);
   expect(result.status, result.stderr).toBe(1);
   expect(result.stderr).toContain(message);
-  expect(calls.at(-1)?.name + ':' + calls.at(-1)?.args[0]).toBe(failure);
+  expect(
+    failure === 'source-setup'
+      ? calls.at(-1)?.args[0]?.endsWith('setup.mjs')
+      : calls.at(-1)?.args.includes('link'),
+  ).toBe(true);
   expect(result.stdout).not.toContain('Installed.');
 });
+
+it.skipIf(process.platform !== 'win32')('PowerShell defaults to main', () => {
+  const { result, calls } = fixture('', '', null);
+  expect(result.status, result.stderr).toBe(0);
+  expect(calls.find((call) => call.name === 'git')?.args).toContain('main');
+});
+it.skipIf(process.platform !== 'win32')(
+  'PowerShell rejects wrong pnpm before source mutation',
+  () => {
+    const { result, calls } = fixture('', 'wrong-pnpm-version');
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('9.15.9');
+    expect(calls.some((call) => call.name === 'git')).toBe(false);
+  },
+);

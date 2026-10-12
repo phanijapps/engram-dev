@@ -29,9 +29,13 @@ if (name === 'node' && args[0] === '-p') {
 }
 if (name === 'git' && args.includes('symbolic-ref')) console.log(process.env.INSTALL_TEST_REF);
 if (name === 'git' && args[0] === 'clone') fs.mkdirSync(path.join(args.at(-1),${JSON.stringify(workspaceDir)},'packages/cli'),{recursive:true});
-if (name === 'pnpm' && args[0] === process.env.INSTALL_TEST_FAILURE) process.exit(19);
+if (name === 'corepack' && args.at(-1) === '--version') console.log(process.env.INSTALL_TEST_FAILURE === 'wrong-pnpm-version' ? '10.0.0' : '9.15.9');
+if (name === 'node' && args[0]?.endsWith('setup.mjs') && process.env.INSTALL_TEST_FAILURE === 'build') process.exit(19);
+if (name === 'corepack' && args.includes(process.env.INSTALL_TEST_FAILURE)) process.exit(19);
+if (name === 'git' && args.includes('pull') && process.env.INSTALL_TEST_FAILURE === 'git-pull') process.exit(19);
+if (name === 'node' && args[0]?.endsWith('dist/src/main.js') && process.env.INSTALL_TEST_FAILURE === 'verify') process.exit(19);
 `;
-  for (const name of ['git', 'node', 'pnpm', brand.binName])
+  for (const name of ['git', 'node', 'pnpm', 'corepack', brand.binName])
     writeFileSync(join(bin, name), stub, { mode: 0o755 });
   if (existingRef) mkdirSync(join(source, workspaceDir, 'packages/cli'), { recursive: true });
   const result = spawnSync('bash', [resolve(import.meta.dirname, '../../../../install.sh')], {
@@ -57,7 +61,7 @@ if (name === 'pnpm' && args[0] === process.env.INSTALL_TEST_FAILURE) process.exi
 }
 
 it.skipIf(process.platform === 'win32')(
-  'fresh install selects the preview source and verifies the CLI',
+  'fresh install selects main and shared setup before it links and verifies the CLI',
   () => {
     const { result, calls, source } = installFixture();
     expect(result.status, result.stderr).toBe(0);
@@ -65,20 +69,21 @@ it.skipIf(process.platform === 'win32')(
       'clone',
       '-q',
       '--branch',
-      'codex/background-harness',
+      'main',
       '--single-branch',
       'https://example.invalid/fixture.git',
       source,
     ]);
-    expect(calls.filter((c) => c.name === 'pnpm').map((c) => c.args)).toEqual([
-      ['install', '--frozen-lockfile'],
-      ['build'],
-      ['link', '--global'],
+    expect(calls.filter((c) => c.name === 'corepack').map((c) => c.args)).toEqual([
+      ['pnpm@9.15.9', '--version'],
+      ['pnpm@9.15.9', 'link', '--global'],
     ]);
-    expect(calls.find((c) => c.name === 'node' && c.args[0] !== '-p')!.args).toEqual([
-      join(source, workspaceDir, 'packages/cli/dist/src/main.js'),
-      '--version',
+    expect(calls.find((c) => c.name === 'node' && c.args[0].endsWith('setup.mjs'))!.args).toEqual([
+      join(source, 'scripts/setup.mjs'),
     ]);
+    expect(
+      calls.find((c) => c.name === 'node' && c.args[0].endsWith('dist/src/main.js'))!.args,
+    ).toEqual([join(source, workspaceDir, 'packages/cli/dist/src/main.js'), '--version']);
     expect(calls.at(-1)!.name).toBe(brand.binName);
   },
 );
@@ -118,10 +123,33 @@ it.skipIf(process.platform === 'win32')(
 it.skipIf(process.platform === 'win32')(
   'refuses another branch before source updates or a global link',
   () => {
-    const { result, calls } = installFixture('main');
+    const { result, calls } = installFixture('other-branch');
     expect(result.status).toBe(1);
     expect(result.stderr).toContain('existing files were left unchanged');
-    expect(calls.some((c) => c.args.includes('pull') || c.name === 'pnpm')).toBe(false);
+    expect(calls.some((c) => c.args.includes('pull') || c.args.includes('link'))).toBe(false);
+  },
+);
+
+it.skipIf(process.platform === 'win32')(
+  'refuses a wrong package manager before Git mutates source',
+  () => {
+    const { result, calls } = installFixture(undefined, 'wrong-pnpm-version');
+    expect(result.status).toBe(1);
+    expect(result.stderr).toContain('9.15.9');
+    expect(calls.some((call) => call.name === 'git')).toBe(false);
+  },
+);
+it.skipIf(process.platform === 'win32')('stops when a fast-forward update fails', () => {
+  const { result, calls } = installFixture('main', 'git-pull');
+  expect(result.status).toBe(19);
+  expect(calls.some((call) => call.args[0]?.endsWith('setup.mjs'))).toBe(false);
+});
+it.skipIf(process.platform === 'win32').each(['link', 'verify'])(
+  'propagates %s failure without reporting success',
+  (failure) => {
+    const { result } = installFixture(undefined, failure);
+    expect(result.status).toBe(19);
+    expect(result.stdout).not.toContain('installed. try:');
   },
 );
 

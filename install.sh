@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # install.sh — the one-command harness install (install-paths T-2).
 #
-#   curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/codex/background-harness/install.sh | bash
+#   curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/main/install.sh | bash
 #
 # Source bootstrap: builds the workspace and bundled browser assets, then
 # links the CLI. A portable runtime is also available from `pnpm package:runtime`;
@@ -10,8 +10,7 @@
 set -euo pipefail
 
 REPO_URL="${HARNESS_REPO_URL:-https://github.com/phanijapps/wukong.git}"
-# The published preview and its source must use the same ref until merge.
-INSTALL_REF="${HARNESS_REF:-codex/background-harness}"
+INSTALL_REF="${HARNESS_REF:-main}"
 SRC_DIR="${ENGRAM_SRC:-$HOME/.engram-dev}"
 
 say() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
@@ -26,7 +25,19 @@ if [ "$INSTALL_NODE_MAJOR" -lt 22 ]; then
   echo "node 22+ is required" >&2
   exit 1
 fi
-command -v pnpm >/dev/null || { say "enabling corepack (pins pnpm)"; corepack enable; }
+if command -v corepack >/dev/null; then
+  INSTALL_PM=(corepack pnpm@9.15.9)
+elif command -v pnpm >/dev/null; then
+  INSTALL_PM=(pnpm)
+else
+  echo "Install Corepack or pnpm 9.15.9 first." >&2
+  exit 1
+fi
+INSTALL_PM_VERSION="$("${INSTALL_PM[@]}" --version)"
+if [ "$INSTALL_PM_VERSION" != "9.15.9" ]; then
+  echo "pnpm 9.15.9 is required; found $INSTALL_PM_VERSION. Existing source files were left unchanged." >&2
+  exit 1
+fi
 
 say "cloning $REPO_URL → $SRC_DIR"
 if [ -d "$SRC_DIR/.git" ]; then
@@ -40,14 +51,11 @@ else
   git clone -q --branch "$INSTALL_REF" --single-branch "$REPO_URL" "$SRC_DIR"
 fi
 
-say "installing dependencies (pnpm, frozen lockfile)"
-( cd "$SRC_DIR/treadle" && pnpm install --frozen-lockfile )
-
-say "building"
-( cd "$SRC_DIR/treadle" && pnpm build )
+say "installing and building through the pinned source setup helper"
+node "$SRC_DIR/scripts/setup.mjs"
 
 say "linking the CLI globally (pnpm link)"
-( cd "$SRC_DIR/treadle/packages/cli" && pnpm link --global )
+( cd "$SRC_DIR/treadle/packages/cli" && "${INSTALL_PM[@]}" link --global )
 
 say "verifying"
 node "$SRC_DIR/treadle/packages/cli/dist/src/main.js" --version

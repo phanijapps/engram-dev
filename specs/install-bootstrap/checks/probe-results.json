@@ -1,0 +1,110 @@
+{
+  "started": "2026-10-12T14:10:15.550Z",
+  "completed": "2026-10-12T14:10:18.266Z",
+  "platform": "linux",
+  "node": "v24.19.0",
+  "source_hashes": {
+    "package.json": "23b1d4d320570cc8e50602764c71b0d915037fb770bdb77778eb8f0b6c52ca62",
+    "treadle/package.json": "a94de79c159fb0a618943b574337e2a25465e5e2a26e64b1062203d469a5e09d",
+    "treadle/pnpm-lock.yaml": "b6a01c90005b22006a617ed366e262527e565221bb3e0afc640f4068124a5ccb",
+    "treadle/pnpm-workspace.yaml": "477e6c5f8b033a1ecb7f8919ad2726e4328c7893c4ad6228d62471425b22dbe7",
+    "install.sh": "15f2cfd7acbfcad7ff0fdf68e9bcaba41fa586ee062e73eb089feb94be14c12d",
+    "install.ps1": "897d258f7fd237542b30d6b9de06cc1d4cdb4721b409aeb65c4efd5bb44e5ad1",
+    ".gitignore": "a95d55b4064b3fb4f98176123b5913e039ad9090a4bb64c555aba203cb9d7e09"
+  },
+  "commands": [
+    {
+      "label": "extract",
+      "cmd": "tar",
+      "args": [
+        "-xf",
+        "/tmp/install-bootstrap-probe-yoIf1g/source.tar",
+        "-C",
+        "/tmp/install-bootstrap-probe-yoIf1g/source with spaces"
+      ],
+      "cwd": "/home/videogamer/code/memex_beta",
+      "expected": 0,
+      "exit": 0,
+      "started": "2026-10-12T14:10:15.870Z",
+      "completed": "2026-10-12T14:10:15.958Z"
+    },
+    {
+      "label": "pnpm-version",
+      "cmd": "corepack",
+      "args": [
+        "pnpm",
+        "--version"
+      ],
+      "cwd": "/tmp/install-bootstrap-probe-yoIf1g/source with spaces",
+      "expected": 0,
+      "exit": 0,
+      "started": "2026-10-12T14:10:15.958Z",
+      "completed": "2026-10-12T14:10:16.366Z"
+    },
+    {
+      "label": "root-frozen-before",
+      "cmd": "corepack",
+      "args": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile",
+        "--lockfile-only",
+        "--ignore-scripts"
+      ],
+      "cwd": "/tmp/install-bootstrap-probe-yoIf1g/source with spaces",
+      "expected": 1,
+      "exit": 1,
+      "started": "2026-10-12T14:10:16.366Z",
+      "completed": "2026-10-12T14:10:16.845Z"
+    },
+    {
+      "label": "root-unfrozen-before",
+      "cmd": "corepack",
+      "args": [
+        "pnpm",
+        "install",
+        "--no-frozen-lockfile",
+        "--lockfile-only",
+        "--ignore-scripts"
+      ],
+      "cwd": "/tmp/install-bootstrap-probe-yoIf1g/source with spaces",
+      "expected": 1,
+      "exit": 1,
+      "started": "2026-10-12T14:10:16.845Z",
+      "completed": "2026-10-12T14:10:17.350Z"
+    },
+    {
+      "label": "nested-frozen-before",
+      "cmd": "corepack",
+      "args": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile",
+        "--lockfile-only",
+        "--ignore-scripts"
+      ],
+      "cwd": "/tmp/install-bootstrap-probe-yoIf1g/source with spaces/treadle",
+      "expected": 0,
+      "exit": 0,
+      "started": "2026-10-12T14:10:17.351Z",
+      "completed": "2026-10-12T14:10:17.848Z"
+    },
+    {
+      "label": "candidate-root-frozen-resolution",
+      "cmd": "corepack",
+      "args": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile",
+        "--lockfile-only",
+        "--ignore-scripts"
+      ],
+      "cwd": "/tmp/install-bootstrap-probe-yoIf1g/source with spaces",
+      "expected": 0,
+      "exit": 0,
+      "started": "2026-10-12T14:10:17.852Z",
+      "completed": "2026-10-12T14:10:18.262Z"
+    }
+  ],
+  "limit": "Resolution only, scripts disabled. Candidate setup helper, real build and native host activation untested."
+}

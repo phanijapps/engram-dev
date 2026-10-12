@@ -1,0 +1,13 @@
+
+> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> tsc --build && node scripts/copy-assets.mjs
+
+Packages are copied from the content-addressable store to the virtual store.
+  Content-addressable store is at: /home/videogamer/.local/share/pnpm/store/v3
+  Virtual store is at:             ../.runtime-stage-BPkYOB/installed/node_modules/.pnpm
+Progress: resolved 1, reused 0, downloaded 0, added 0
+.                                        |  +12 +
+Progress: resolved 244, reused 196, downloaded 0, added 12, done
+/tmp/bootstrap runtime smoke 6sWlLT/runtime
+(node:1714980) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)

@@ -1,0 +1,32 @@
+
+> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+Checking formatting...
+All matched files use Prettier code style!
+
+ RUN  v5.0.3 /home/videogamer/code/memex_beta/treadle
+
+
+ Test Files  61 passed | 1 skipped (62)
+      Tests  326 passed | 10 skipped (336)
+   Start at  10:38:09
+   Duration  23.67s (tests 61%, transform 25%, import 8%, environment 6%)
+
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).

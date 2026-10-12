@@ -1,0 +1,872 @@
+{
+  "id": "install-bootstrap",
+  "name": "install-bootstrap",
+  "description": "Reliable source setup and Copilot initialization",
+  "date": {
+    "updated": "2026-10-12T15:21:08.028Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "f244a7080adf3cd76ed23e83f0551b533cf7399fbed74281542dc85759c3d426"
+    },
+    "analysis": {
+      "ref": "bug-source-setup.md",
+      "type": "text/markdown",
+      "sha256": "2c3b9a905a7192daead30c73cd64b00537653449d2b0c22bdf073f0a31d113ae"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "0a378692b41a75c685ea09e96f8b8bf54e6044d0ae618da202d00f695818dbf1"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "164639896de15a2b6dcde29c126769ee6303cf18a842e5e6b9a39f5ce61be8de"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "9c8906fc5f5e354f46f5cd7adcceaacd7a0ec4f1d1ca02eb5741adea3be5a9c4"
+    },
+    "review": {
+      "ref": "review-pack.md",
+      "type": "text/markdown",
+      "sha256": "a5e4e1cdfd5de2dea382c6b90745f85243d89ec81f32fc2b957796dae476e10c"
+    }
+  },
+  "spec": {
+    "why": "Make cloned source setup work from the repository root, install current merged code, and verify per-machine Copilot hook materialization.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Root scripts-enabled frozen install and explicit setup delegate dependency installation and build to the existing nested workspace.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-2",
+        "text": "Keep runtime workspace and deploy authority under treadle; retire root file dependencies and bundle metadata; preserve a usable local compiled CLI entry.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-3",
+        "text": "Use pinned pnpm 9.15.9 through Corepack or a checked fallback, support native source paths with spaces, and propagate failures without later operations.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-4",
+        "text": "Both source installers default to main and reuse shared setup, retaining ref overrides, branch protection, global link scope and actual failure exits.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-5",
+        "text": "Copilot full project init and hooks-only cold-clone recovery materialize complete hooks without target dependency installation or weakening preservation guards.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-6",
+        "text": "Document source setup versus project init, verify actual delivery and wiki health, obtain independent review, and prepare the PR handoff.",
+        "priority": "P1"
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Workspace relocation",
+      "Root registry packaging",
+      "Dependency upgrades",
+      "Provider authentication",
+      "Cloud agent runtime bootstrap",
+      "Automatic activation on clone",
+      "Silent branch migration of existing source installations",
+      "Changing target application dependencies"
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Replace root file-package orchestration with a private source setup wrapper, matching root lockfile, shared nested setup and compiled local bin entry.",
+        "because": "Clean probes confirm the boundary defect. Retain the one active workspace and portable deploy mechanism rather than relocating them. Retire unsupported future root bundle metadata. Reversible files.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Default both source installers to main and reuse pinned shared setup with prerequisite checks, explicit ref overrides and branch mismatch refusal.",
+        "because": "Merged code is the current source; one mechanism avoids shell drift. Existing other-branch checkouts remain protected rather than silently switched. Reversible script change.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-3",
+        "decision": "Retain generated per-machine hook scripts and runtime pointer; prove and explain full project init and hooks-only cold-clone recovery.",
+        "because": "Clones retain portable host definitions but cannot inherit executable paths from another machine. Current manifest already provides local materialization. Preserve existing foreign-file and backup rules.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Root source setup interface",
+        "kind": "component",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "Private root manifest/lock and Node setup helper retain the nested workspace and compiled entry."
+      },
+      {
+        "id": "DES-2",
+        "title": "Pinned shared installer bootstrap",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-3",
+          "FR-4"
+        ],
+        "detail": "Shared helper, native process invocation and main defaults preserve branch and exit guards."
+      },
+      {
+        "id": "DES-3",
+        "title": "Cold-clone Copilot initialization",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-5",
+          "FR-6"
+        ],
+        "detail": "Use manifest-owned payloads and pointer without target package install; preserve config/guide bytes and explain next steps."
+      },
+      {
+        "id": "DES-4",
+        "title": "Real lifecycle and delivery verification",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3",
+          "FR-4",
+          "FR-5",
+          "FR-6"
+        ],
+        "detail": "Real clean root install/build, lock hash comparison, packaging, six gates, wiki health and independent review."
+      }
+    ],
+    "approach": "Thin root setup wrapper and one pinned source bootstrap; explicit per-machine project init with cold-clone regression coverage."
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Repair root source installation and setup entry",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "implements": [
+        "DES-1",
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "requires_decisions": [
+        "D-1"
+      ],
+      "detail": "Implement root manifest/lock, shared pinned helper and local compiled bin. Test resolution, lifecycle delegation, native argument paths, failure exits and missing assets. Author real delivery verifier; do not claim its unrun results.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/source-setup.test.ts",
+        "expect": "Root frozen resolution, setup order/version, paths with spaces, failed install/build and entry behavior pass."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "package.json",
+            "sha256": "23b1d4d320570cc8e50602764c71b0d915037fb770bdb77778eb8f0b6c52ca62"
+          },
+          {
+            "path": "pnpm-lock.yaml"
+          },
+          {
+            "path": "scripts/setup.mjs"
+          },
+          {
+            "path": "bin/engram.js",
+            "sha256": "8cc9b9afec443a578b7b1ddb563e5b062c6d37bd0c93b52f355282ae4a51f541"
+          },
+          {
+            "path": "treadle/scripts/set-brand.mjs",
+            "sha256": "037a87afcffd0dd0fd29ee1ef438cf918cb069812a8e09cd50a57e99027731c7"
+          },
+          {
+            "path": "treadle/packages/cli/test/source-setup.test.ts"
+          },
+          {
+            "path": "specs/install-bootstrap/verify-delivery.mjs"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "AGENTS.backup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/package.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-lock.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-workspace.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/scripts/package-runtime.mjs",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-paths/research.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/brief.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/bug-source-setup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/spec.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/design.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/plan.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          }
+        ],
+        "wiki": [
+          "project/setup",
+          "project/engineering-controls",
+          "systems/copilot-hooks"
+        ],
+        "notes": [
+          "Run verification from treadle; application targets never install their own dependencies during init.",
+          "Preserve owner closure receipts and unrelated edits. Do not edit approved proposal bytes.",
+          "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
+          "Use execution-log and actual command exits. Record native platform skips honestly."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/source-setup.test.ts",
+          "exit": 1,
+          "at": "2026-10-12T14:23:24Z",
+          "by": "agent:codex",
+          "notes": "Seven checks pass; real root install/build exits 0 but pnpm rewrites the hand-authored root lockfile bytes. Nested lock unchanged. Actual failure captured in checks/T-1-attempt-1.log; repair canonical root lock formatting without weakening the hash assertion."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/source-setup.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T14:25:37Z",
+          "by": "agent:codex",
+          "notes": "Eight checks pass, including actual scripts-enabled root frozen install/build in an isolated path with spaces, both lock hashes stable and nested/root compiled CLI help matching. Initial lock-format failure retained; generated canonical pnpm bytes fix it without weakening assertion. Native CI witness runs through the existing test matrix; remote outcomes remain pending. Log checks/T-1-attempt-2.log."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Unify shell and PowerShell installers on current merged source",
+      "status": "done",
+      "phase": "integration",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-3",
+        "FR-4"
+      ],
+      "requires_decisions": [
+        "D-2"
+      ],
+      "detail": "Route both installers through shared setup, default to main, validate prerequisites before Git mutation and retain overrides/branch protection/link/verify exit behavior. Preserve foreign existing checkouts.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/installers.test.ts packages/cli/test/installers-powershell.test.ts packages/cli/test/source-setup.test.ts",
+        "expect": "Correct default/ref/cwd, shared setup, protected branches and failure short-circuits pass on available native platforms; skips remain explicit."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "install.sh",
+            "sha256": "15f2cfd7acbfcad7ff0fdf68e9bcaba41fa586ee062e73eb089feb94be14c12d"
+          },
+          {
+            "path": "install.ps1",
+            "sha256": "897d258f7fd237542b30d6b9de06cc1d4cdb4721b409aeb65c4efd5bb44e5ad1"
+          },
+          {
+            "path": "treadle/packages/cli/test/installers.test.ts",
+            "sha256": "6db99b87a96ae25d7484f6b9ec1055a992fbdcaa1cb8664dea1f39d922bfbdca"
+          },
+          {
+            "path": "treadle/packages/cli/test/installers-powershell.test.ts",
+            "sha256": "a56cee46803a8a27fcc53d7126eb65d60de1266b55e86d5c794d93e17b61a618"
+          },
+          {
+            "path": "scripts/setup.mjs",
+            "sha256": "a052a2b8a57c772a9b4f5c810a9b38546bef5a7809c9e9e21c317a1a9fd49679"
+          },
+          {
+            "path": "treadle/packages/cli/test/source-setup.test.ts",
+            "sha256": "2f9e9e2127e76acb098b28b965bfe14b83eda26c424578385cc8fb2a399b5cbe"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "AGENTS.backup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/package.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-lock.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-workspace.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/scripts/package-runtime.mjs",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-paths/research.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/brief.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/bug-source-setup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/spec.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/design.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/plan.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          }
+        ],
+        "wiki": [
+          "project/setup",
+          "project/engineering-controls",
+          "systems/copilot-hooks"
+        ],
+        "notes": [
+          "Run verification from treadle; application targets never install their own dependencies during init.",
+          "Preserve owner closure receipts and unrelated edits. Do not edit approved proposal bytes.",
+          "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
+          "Use execution-log and actual command exits. Record native platform skips honestly."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/installers.test.ts packages/cli/test/installers-powershell.test.ts packages/cli/test/source-setup.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T14:31:01Z",
+          "by": "agent:codex",
+          "notes": "19 passed, 10 native Windows-only skips on Linux. Both source scripts use main/shared setup with pinned prereqs and preserve branch protection. Bash real command stubs prove wrong-tool/update/setup/link/verify short circuits; actual root lifecycle passes again. Exact log checks/T-2-attempt-2.log. Windows outcomes await native matrix."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Verify and explain Copilot cold-clone initialization",
+      "status": "done",
+      "phase": "integration",
+      "needs": [
+        "T-2"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-5",
+        "FR-6"
+      ],
+      "requires_decisions": [
+        "D-3"
+      ],
+      "detail": "Test complete full and hooks-only materialization when config exists but local ownership/payloads do not. Run copied commands against a controlled runtime. Preserve target dependency files, foreign config and guide backups. Add truthful setup/reload guidance; repair only demonstrated init defects within listed files.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/source-setup.test.ts",
+        "expect": "Cold clone creates wrapper/helper/pointer/config, commands execute, dry-run is read-only and target manifests/lock/foreign/guide bytes stay preserved."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "f40b3d0ecce9a7272ee500039b990bc71eff57d169334cca652e7258822e8ad3"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "b07a09dc62ba6da1fd1b17f64f98ee7e9278f37129144a6da1d4af31b00634fa"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "e10d343af4bf001c0f4d0c4c55afcfe784a97f6c42fc07d26f0d83e79d363666"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "d4dbc7dfe8046131af7ff5103ebc30e9628af3485f677f441043bfe754f5bcca"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "3b8d25334707834598337ec3ab6d4e305c349eebb5f9ddb60c82b46d5063eb50"
+          },
+          {
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md",
+            "sha256": "c0c064b1b0973a9a4466c0c2bf3b065a14af436e8302dd8606caa6a01306b4b7"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "594ddccd53aad012b11abfaea172999dee28282944867fbc594674d911368155"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "db61fe7924acb8593daae8e086caeeff6b342eccc111bde9407252ede35cdee4"
+          },
+          {
+            "path": "README.md",
+            "sha256": "abd4aa3daa3a1c4658c838977227ab1fff73f30b8d836e4aeb2c65e0388a8e72"
+          },
+          {
+            "path": "wiki/project/setup.md",
+            "sha256": "b250cd5beff1b2b279d18cd87ef965c5a908eb3e892d5caeca35c204d2b154da"
+          },
+          {
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "95eae0c6d74d424b0f8f5bdc536da21efe76fc922fda5c227376660dac5e4347"
+          },
+          {
+            "path": "treadle/packages/cli/test/source-setup.test.ts",
+            "sha256": "b6255fe51709d8b46af14af6cb3979d2fd80ec14c12537cd5c0235e60e6f6841"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "AGENTS.backup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/package.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-lock.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-workspace.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/scripts/package-runtime.mjs",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-paths/research.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/brief.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/bug-source-setup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/spec.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/design.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/plan.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          }
+        ],
+        "wiki": [
+          "project/setup",
+          "project/engineering-controls",
+          "systems/copilot-hooks"
+        ],
+        "notes": [
+          "Run verification from treadle; application targets never install their own dependencies during init.",
+          "Preserve owner closure receipts and unrelated edits. Do not edit approved proposal bytes.",
+          "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
+          "Use execution-log and actual command exits. Record native platform skips honestly."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/source-setup.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T14:37:50Z",
+          "by": "agent:codex",
+          "notes": "49 tests pass after native temporary-root normalization. Full and hooks-only cold clones with committed config but no .harness state create all payloads/pointer; actual copied adapter executes on each available native process path; app manifests/locks, foreign config and sibling files preserved, full exact backup/hooks-only untouched guide asserted. Docs/CLI explain per-machine init and root setup; links and wiki validate exit0. Log checks/T-3-attempt-2.log."
+        }
+      ]
+    },
+    {
+      "id": "T-4",
+      "title": "Verify clean source lifecycle and independent delivery",
+      "status": "done",
+      "phase": "integration",
+      "needs": [
+        "T-3"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3",
+        "FR-4",
+        "FR-5",
+        "FR-6"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3"
+      ],
+      "detail": "Run actual scripts-enabled frozen root install/build from a disposable snapshot of current scoped bytes and compare both lock hashes. Smoke compiled CLI/portable package and all six gates, refresh affected wiki under stated limits, obtain independent current-digest review, and prepare PR publication. Owner Finish stays separate.",
+      "verify": {
+        "cmd": "node ../specs/install-bootstrap/verify-delivery.mjs",
+        "expect": "Real root lifecycle, exact lock stability, compiled CLI/packaging, repository gates/coverage and wiki health pass; raw commands and failures retained."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "package.json",
+            "sha256": "a7c28e59f1e031671bfb8cd359f747280a81c590c4fece463c2ed2a67243ab36"
+          },
+          {
+            "path": "pnpm-lock.yaml",
+            "sha256": "17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a"
+          },
+          {
+            "path": "scripts/setup.mjs",
+            "sha256": "ef40ec90e67179a566c5ea78a37a89ff7b1ea52fa0d02af05297d9e88dba2907"
+          },
+          {
+            "path": "bin/engram.js",
+            "sha256": "a71d0ea1a883ee04dec523cc1bb2e0605505a4f6507cbde3152c2d1ec719bed6"
+          },
+          {
+            "path": "treadle/scripts/set-brand.mjs",
+            "sha256": "037a87afcffd0dd0fd29ee1ef438cf918cb069812a8e09cd50a57e99027731c7"
+          },
+          {
+            "path": "treadle/packages/cli/test/source-setup.test.ts",
+            "sha256": "ea8701564886dd41c4297b80bebcf7c093391ac7c2b623b20905b148b8492f8e"
+          },
+          {
+            "path": "specs/install-bootstrap/verify-delivery.mjs",
+            "sha256": "8a8731122e153fbb401397efd6407dfab708bf46dc7fd1659b883aca486cad92"
+          },
+          {
+            "path": "install.sh",
+            "sha256": "5c9532c1d4f403d95b4b6f8cf77a7b6053ca56ca6fce3f29b7fdeed50cac40fe"
+          },
+          {
+            "path": "install.ps1",
+            "sha256": "28ab7602a99b35188cf6c8caf6403459bb49d3bc2bf3120ea4a54b4342259fd5"
+          },
+          {
+            "path": "treadle/packages/cli/test/installers.test.ts",
+            "sha256": "e48f0578e8a38d9d2408fad4c70cd80c1b84ad87e1427eb72ee419d22ceb1545"
+          },
+          {
+            "path": "treadle/packages/cli/test/installers-powershell.test.ts",
+            "sha256": "fec66c7b7892820b8f47ecf81084675531cc20a74a47bcca82b7cb1dae4e15fa"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "e01c6cd2ac92afbf557f4a6b08e8e3fafcc6042c40b8087ec5e9ea33457cc085"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "b07a09dc62ba6da1fd1b17f64f98ee7e9278f37129144a6da1d4af31b00634fa"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "e10d343af4bf001c0f4d0c4c55afcfe784a97f6c42fc07d26f0d83e79d363666"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "d4dbc7dfe8046131af7ff5103ebc30e9628af3485f677f441043bfe754f5bcca"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "0396de583f1000e991000f342cb7b54081c5f1e76b54230db3d9372ff5b66dd5"
+          },
+          {
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md",
+            "sha256": "c0c064b1b0973a9a4466c0c2bf3b065a14af436e8302dd8606caa6a01306b4b7"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "0cc6bbc5d8f3fc2d51e4f877c46cd2dd3750ee65020336890dc8deb75f0442f1"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "db61fe7924acb8593daae8e086caeeff6b342eccc111bde9407252ede35cdee4"
+          },
+          {
+            "path": "README.md",
+            "sha256": "922ca3453bd48caa9fbaa0936f4f062d9a54205301d5c4acf8fafb7805830083"
+          },
+          {
+            "path": "wiki/project/setup.md",
+            "sha256": "790c28f735a6c6d3c786b01028c9f13b01a481d5bdc41d4feb1c19f3b5f86f24"
+          },
+          {
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "ec14a3e27c78d550b04c166751e7612578b694a45c19c90a6a673d70caf32a86"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json",
+            "sha256": "e0bdcccd8d6bbe58835119e8d1d73a2d06e413fc713815f6f55d81bd5519dc0f"
+          },
+          {
+            "path": "wiki/.okf/last-index.json",
+            "sha256": "337f10e9db44ae513e2d1f02aa9ce1de6180090ae8e94056e5a2f7d0b0ba64f5"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "AGENTS.backup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/package.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-lock.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/pnpm-workspace.yaml",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/scripts/package-runtime.mjs",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-paths/research.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/brief.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/bug-source-setup.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/spec.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/design.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          },
+          {
+            "path": "specs/install-bootstrap/plan.md",
+            "why": "Bootstrap authority, preserved history, safeguards and exact proposal"
+          }
+        ],
+        "wiki": [
+          "project/setup",
+          "project/engineering-controls",
+          "systems/copilot-hooks"
+        ],
+        "notes": [
+          "Run verification from treadle; application targets never install their own dependencies during init.",
+          "Preserve owner closure receipts and unrelated edits. Do not edit approved proposal bytes.",
+          "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
+          "Use execution-log and actual command exits. Record native platform skips honestly."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/install-bootstrap/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-12T14:46:11Z",
+          "by": "agent:codex",
+          "notes": "Complete repaired delivery exits0: real scripts-enabled root lifecycle/lock stability, portable runtime help and Copilot preview, all six repository gates and wiki0errors0warnings194anchors0review fresh. Two contained independent implementation findings repaired with regressions and independent repaired PASS; original reports/first successful delivery retained. Current logs checks/delivery-2026-10-12T14-42-51-201Z/ and T-4-attempt-2.log. Final PACK and remote native CI remain pending."
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "3c6fdc11-f9c5-4486-b06d-22e8450e9c10",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T14:14:52Z",
+        "revision": 3,
+        "decision": "D-1"
+      },
+      {
+        "id": "1a965722-520d-4e03-b88b-ef44bf4c9905",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T14:14:53Z",
+        "revision": 4,
+        "decision": "D-2"
+      },
+      {
+        "id": "ad44948b-a9cd-440f-96bb-d20fd0a9f2f0",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T14:14:56Z",
+        "revision": 5,
+        "decision": "D-3"
+      },
+      {
+        "id": "6adf0a22-11ba-45bd-a3d8-485c13ef7f27",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-12T14:15:00Z",
+        "revision": 6,
+        "plan_digest": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744"
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-12T14:15:00Z",
+      "plan_digest": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:search_kb_plan_review",
+        "at": "2026-10-12T15:21:08.028Z",
+        "plan_digest": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744",
+        "evidence_digest": "13194a519c70fe570c4f4187ef1ac8ead63b49e1e6e668c02a252db3f94d3fd1",
+        "note": "Recorded from actual independent read-only review of source 71b5a20/revision15: all four exact checks rerun exit0, compiled repairs verified, source/canonical/wiki hashes preserved. See review-pack.md and review-delivery-2026-10-12.md. Native CI run38265890294 attempt3 passes Ubuntu/macOS Node22/24 and Windows22; Windows24 remains failed. User explicitly instructed \"ignore windows errors for nwo\"; Windows remediation is deferred as disclosed in delivery-status-2026-10-12.md, not converted to success. Raw receipt checks/native-ci-attempt-3.json. Owner Finish remains separate and pending."
+      }
+    ]
+  },
+  "format": "specpack/0.4",
+  "revision": 16
+}
