@@ -18,13 +18,14 @@ afterEach(() => {
   for (const r of roots.splice(0)) rmSync(r, { recursive: true, force: true });
 });
 const manifestPath = join(import.meta.dirname, '../harness/harness.json');
-it('installs only feedback from canonical source on three surfaces, preserves foreign files and is idempotent', () => {
+it('installs only feedback from canonical source on four surfaces, preserves foreign files and is idempotent', () => {
   const { manifest, root: source } = loadManifest(manifestPath);
-  for (const surface of ['claude', 'codex', 'pi'] as const) {
+  for (const surface of ['claude', 'codex', 'pi', 'copilot'] as const) {
+    const dir = surface === 'copilot' ? '.github' : '.' + surface;
     const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'feedback-install-')));
     roots.push(root);
-    mkdirSync(join(root, '.' + surface), { recursive: true });
-    writeFileSync(join(root, '.' + surface, 'foreign.txt'), 'preserve');
+    mkdirSync(join(root, dir), { recursive: true });
+    writeFileSync(join(root, dir, 'foreign.txt'), 'preserve');
     const choices: InstallChoices = {
       agent: surface,
       scope: 'project',
@@ -43,10 +44,10 @@ it('installs only feedback from canonical source on three surfaces, preserves fo
     expect(plan.rows.filter((r) => r.mode === 'refuse')).toEqual([]);
     applyPlan(plan, choices, source, new Date().toISOString());
     for (const file of ['SKILL.md', 'resources/protocol.md'])
-      expect(readFileSync(join(root, '.' + surface, 'skills/feedback', file))).toEqual(
+      expect(readFileSync(join(root, dir, 'skills/feedback', file))).toEqual(
         readFileSync(join(source, 'skills/sdlc/feedback', file)),
       );
-    expect(readFileSync(join(root, '.' + surface, 'foreign.txt'), 'utf8')).toBe('preserve');
+    expect(readFileSync(join(root, dir, 'foreign.txt'), 'utf8')).toBe('preserve');
     const second = compilePlan(manifest, source, choices);
     expect(
       second.rows.filter((r) => r.component === 'feedback').every((r) => r.mode === 'same'),
