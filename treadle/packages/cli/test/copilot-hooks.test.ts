@@ -1,6 +1,6 @@
 import { brand } from '@treadle/brand';
 import { afterEach, expect, it, vi } from 'vitest';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
@@ -43,16 +43,17 @@ function fixture(mode = 'ok') {
     calls = join(root, 'calls.jsonl');
   writeFileSync(
     runtime,
-    `import {appendFileSync} from 'node:fs';
+    `import {appendFileSync,existsSync,readFileSync} from 'node:fs';
 const args=process.argv.slice(2);
 appendFileSync(${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
 if(${JSON.stringify(mode)}==='hang'){setInterval(()=>{},1000);}
 else if(${JSON.stringify(mode)}==='invalid'){console.log('not json');}
 else if(${JSON.stringify(mode)}==='fail'){process.exit(1);}
 else if(args[0]==='project'){console.log(JSON.stringify({service:{url:'http://127.0.0.1:9999/'},project:{id:'test'}}));}
-else {console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wiki:{root:'wiki',available:true,freshness:'fresh',limit:'HEAD-only'},specs:{root:'specs',packs:[]},guidance:{newSpec:'New spec',continueSpec:'Continue spec'}}));}
+else {const packs=existsSync(${JSON.stringify(join(root, 'packs.json'))})?JSON.parse(readFileSync(${JSON.stringify(join(root, 'packs.json'))},'utf8')):[];console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wiki:{root:'wiki',available:true,freshness:'fresh',limit:'HEAD-only'},specs:{root:'specs',packs},guidance:{newSpec:'New spec',continueSpec:'Continue spec'}}));}
 `,
   );
+  const state = join(root, 'session state');
   const run = (
     event = 'sessionStart',
     input = JSON.stringify({ cwd: root, prompt: 'PRIVATE_PROMPT', sessionId: 'PRIVATE_ID' }),
@@ -60,11 +61,11 @@ else {console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wik
     spawnSync(process.execPath, [hook, '--event', event], {
       cwd: root,
       input,
-      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime },
+      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime, HARNESS_COPILOT_STATE_DIR: state },
       encoding: 'utf8',
       timeout: 28000,
     });
-  return { root, runtime, calls, run };
+  return { root, runtime, calls, run, state };
 }
 it('returns session context in the Copilot envelope and reconnects on prompts', () => {
   const f = fixture(),
@@ -103,6 +104,47 @@ it.each(['invalid', 'fail'])('reports runtime %s failures and recovers after rep
   const healthy = fixture();
   writeFileSync(f.runtime, readFileSync(healthy.runtime));
   expect(JSON.parse(f.run().stdout).additionalContext).toContain('Harness connected:');
+});
+const openPack = (stage: string, phase: string) => ({
+  name: 'demo-pack',
+  stage,
+  workflow: { phase, reasons: [] },
+  doing: [],
+  candidate: null,
+  openQuestions: [],
+});
+it('tells the agent to pull spec state at session start', () => {
+  const f = fixture(),
+    out = JSON.parse(f.run().stdout).additionalContext;
+  expect(out).toContain('This host does not refresh spec state on each prompt.');
+  expect(out).toContain(`"${process.execPath}" "${f.runtime}" do status <packDir>`);
+});
+it('notifies the user only when open spec state changed, keeping no names or prompts', () => {
+  const f = fixture(),
+    prompt = () => JSON.parse(f.run('userPromptSubmitted').stdout);
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([openPack('drafted', 'spec')]));
+  expect(f.run().status).toBe(0);
+  expect(prompt()).toEqual({});
+  writeFileSync(
+    join(f.root, 'packs.json'),
+    JSON.stringify([openPack('in_progress', 'implementation')]),
+  );
+  expect(prompt()).toEqual({
+    systemMessage:
+      'Spec state changed since your last prompt: demo-pack (in_progress, gate implementation). Ask the agent to run do status before it continues.',
+  });
+  expect(prompt()).toEqual({});
+  const stored = readdirSync(f.state).map((file) => readFileSync(join(f.state, file), 'utf8'));
+  expect(stored).toHaveLength(1);
+  expect(stored[0]).not.toMatch(/demo-pack|PRIVATE_PROMPT|PRIVATE_ID|implementation/);
+});
+it('keeps working without a notice when session state cannot be written', () => {
+  const f = fixture();
+  writeFileSync(f.state, 'not a directory');
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([openPack('drafted', 'spec')]));
+  const out = f.run('userPromptSubmitted');
+  expect(out.status, out.stderr).toBe(0);
+  expect(JSON.parse(out.stdout)).toEqual({});
 });
 it('rejects unsupported events before connecting', () => {
   const out = fixture().run('sessionEnd');
