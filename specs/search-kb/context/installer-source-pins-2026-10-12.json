@@ -1,0 +1,24 @@
+{
+  "head": "c843b8b7bfb685f748d8b568dee91043db9288ae",
+  "sources": {
+    "AGENTS.md": "2e4bcc8316dcde29ab6c809f32a6d58a10fb1d7747fd7ee371508aed776d66a5",
+    ".github/hooks/wukong.json": "c1af96a3a944d58beaae724b35d3a1f08c9f4b78c024a06d9b122b1ab10d18dc",
+    ".harness/hooks/copilot-context.js": "87267d2727e82385fa17440bf5712cf342a57c027fc74d3d8103d02d0fc53d85",
+    ".harness/hooks/codex-context.js": "c796605097b4599f9f5e6107ca691a42c7fe9b84a87ccecb38c5eb95fce48fff",
+    ".harness/hooks/runtime.json": "665c863b1414f9866c77dd070125b1651982e668d3b915230479fa7c9b2b29f5",
+    "treadle/package.json": "a94de79c159fb0a618943b574337e2a25465e5e2a26e64b1062203d469a5e09d",
+    "treadle/packages/cli/src/commands/init.ts": "f68e012751bfe3deea0f9f337e45412ce8779f81b9d3f96164bcebbee36005de",
+    "treadle/packages/cli/src/harness/types.ts": "fc541de682b8e7beed7b8893f7e4442e20e57d517932478beecfd2b65bc3871a",
+    "treadle/packages/cli/src/harness/plan.ts": "d9870085da8a2a213734006485d770744623706d4f6ec1421bb75509d3c773e9",
+    "treadle/packages/cli/src/harness/apply.ts": "c56e17f6daab144ec2862aada47eb650f44ed9553d0a3027bd3d9e5e4e348405",
+    "treadle/packages/cli/src/harness/paths.ts": "95293ef01d802a13b2e8edbb709bd2070c5418ea6bcfa2611a21a4dab257776b",
+    "treadle/packages/cli/src/harness/manifest.ts": "d4dbc7dfe8046131af7ff5103ebc30e9628af3485f677f441043bfe754f5bcca",
+    "wiki/domain/wiki-contract.md": "076cbef326125b2209515f39a5a4c6d74e1a1a7d03882be39f12d0abe1063695",
+    "wiki/project/setup.md": "f2857cbc60505a81ec17b9a85828d2f3c1c5f547eaf3ac47ae5c0f89f088f680"
+  },
+  "external_guidance": {
+    "url": "https://www.betterclaw.io/blog/agents-md-best-practices",
+    "read_on": "2026-10-12",
+    "use": "Concise, specific instructions; exact commands, boundaries and maintenance. Host/version/research claims not adopted."
+  }
+}

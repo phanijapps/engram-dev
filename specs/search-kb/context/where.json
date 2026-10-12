@@ -1,0 +1,146 @@
+{
+  "root": "/home/videogamer/code/memex_beta",
+  "packs": [
+    {
+      "name": "background-harness",
+      "path": "/home/videogamer/code/memex_beta/specs/background-harness",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 55,
+      "lastEvidenceAt": "2026-10-11T01:33:14Z",
+      "tree": ""
+    },
+    {
+      "name": "browser-agent-feedback",
+      "path": "/home/videogamer/code/memex_beta/specs/browser-agent-feedback",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 45,
+      "lastEvidenceAt": "2026-10-11T16:52:06Z",
+      "tree": ""
+    },
+    {
+      "name": "copilot-hooks",
+      "path": "/home/videogamer/code/memex_beta/specs/copilot-hooks",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 17,
+      "lastEvidenceAt": "2026-10-11T22:15:03.305Z",
+      "tree": ""
+    },
+    {
+      "name": "docs-root-migration",
+      "path": "/home/videogamer/code/memex_beta/specs/docs-root-migration",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 23,
+      "lastEvidenceAt": "2026-10-10T21:21:43Z",
+      "tree": ""
+    },
+    {
+      "name": "documentation-consolidation",
+      "path": "/home/videogamer/code/memex_beta/specs/documentation-consolidation",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 25,
+      "lastEvidenceAt": "2026-10-10T20:49:43Z",
+      "tree": ""
+    },
+    {
+      "name": "fresh-harness",
+      "path": "/home/videogamer/code/memex_beta/specs/fresh-harness",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 40,
+      "lastEvidenceAt": "2026-10-10T15:46:49Z",
+      "tree": ""
+    },
+    {
+      "name": "guided-loop",
+      "path": "/home/videogamer/code/memex_beta/specs/guided-loop",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 21,
+      "lastEvidenceAt": "2026-10-10T18:25:50Z",
+      "tree": ""
+    },
+    {
+      "name": "harness-host-acceptance",
+      "path": "/home/videogamer/code/memex_beta/specs/harness-host-acceptance",
+      "stage": "awaiting_owner",
+      "openQuestions": 0,
+      "nextTask": "T-1",
+      "revision": 2,
+      "lastEvidenceAt": null,
+      "tree": ""
+    },
+    {
+      "name": "install-paths",
+      "path": "/home/videogamer/code/memex_beta/specs/install-paths",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 12,
+      "lastEvidenceAt": "2026-10-10T19:34:26Z",
+      "tree": ""
+    },
+    {
+      "name": "quiet-workspace",
+      "path": "/home/videogamer/code/memex_beta/specs/quiet-workspace",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 19,
+      "lastEvidenceAt": "2026-10-11T18:37:17Z",
+      "tree": ""
+    },
+    {
+      "name": "search-kb",
+      "path": "/home/videogamer/code/memex_beta/specs/search-kb",
+      "stage": "drafted",
+      "openQuestions": 0,
+      "nextTask": "T-1",
+      "revision": 2,
+      "lastEvidenceAt": null,
+      "tree": ""
+    },
+    {
+      "name": "spec-completion-handoff",
+      "path": "/home/videogamer/code/memex_beta/specs/spec-completion-handoff",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 41,
+      "lastEvidenceAt": "2026-10-10T22:55:57Z",
+      "tree": ""
+    },
+    {
+      "name": "stitch-ui",
+      "path": "/home/videogamer/code/memex_beta/specs/stitch-ui",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 37,
+      "lastEvidenceAt": "2026-10-10T14:09:03Z",
+      "tree": ""
+    },
+    {
+      "name": "wukong-rename",
+      "path": "/home/videogamer/code/memex_beta/specs/wukong-rename",
+      "stage": "delivered",
+      "openQuestions": 0,
+      "nextTask": null,
+      "revision": 12,
+      "lastEvidenceAt": "2026-10-11T02:01:52Z",
+      "tree": ""
+    }
+  ],
+  "worktrees": []
+}

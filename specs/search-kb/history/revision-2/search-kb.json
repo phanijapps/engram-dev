@@ -1,0 +1,475 @@
+{
+  "id": "search-kb",
+  "name": "search-kb",
+  "description": "Search OKF knowledge before SDLC work",
+  "date": {
+    "updated": "2026-10-11T22:41:29.304Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "drafted"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "e8ee22cb139122fe545a79ef54750e5aa8db70710c31ab2445236673586f618a"
+    },
+    "analysis": {
+      "ref": "feature.md",
+      "type": "text/markdown",
+      "sha256": "1570f9e8bca43fe16554ed7d0a08247b33f621d9e65342cd63a92493a591140e"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "d437f38b362ea5fdc84a51b4d5d49cb2558cb1461c2bad21d2d32f3afb27878c"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "ec3da313442b736569ab4460a001481bb1073ed1f62f5b0964a5d438b645b2ec"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "2d437f2c918d1b18f77420852f243943de9e7911f6606086bfe4cbb666bb9c67"
+    }
+  },
+  "spec": {
+    "why": "Provide a read-only, source-backed knowledge search skill across agent surfaces, with behavioral evaluations and Copilot workspace installation.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Discover the actual bundle and retrieve relevant concepts through the existing CLI or read-only Markdown fallback.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-2",
+        "text": "Consume OKF links, source attribution, lifecycle and advisory trust without inventing current facts or owner authority.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-3",
+        "text": "Return source-backed SDLC context, conflicts and gaps while preserving workspace bytes and owner gates.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-4",
+        "text": "Ship search-kb from the authoritative harness to all four surfaces and install it to the requested Copilot workspace.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-5",
+        "text": "Run actual behavioral evaluations, repository gates and independent review before raising the PR.",
+        "priority": "P1"
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Knowledge runtime changes or new indexes",
+      "Remote search services",
+      "Hook protocol changes or cloud bootstrap",
+      "Attested computation execution",
+      "Owner acceptance, Start or Finish actions performed by agents",
+      "Automatic knowledge repair",
+      "Other installed host skill refreshes"
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use search-kb as a read-only consumer of the existing knowledge CLI with a Markdown fallback.",
+        "because": "Existing retrieval is sufficient; adding runtime/index behavior expands the request. Reversible instruction change.",
+        "status": "proposed"
+      },
+      {
+        "id": "D-2",
+        "decision": "Ship one shared skill to four surfaces, route relevant SDLC context to it, and validate it with blind behavioral fixtures.",
+        "because": "Avoid host duplicates and mandatory work on unrelated steps; real evaluations establish behavior beyond wording checks. Reversible packaging/routing change.",
+        "status": "proposed"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "OKF retrieval and evidence interpretation",
+        "kind": "flow",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "Follow D-1 and design.md; report metadata, linked evidence, conflicts and gaps without mutations."
+      },
+      {
+        "id": "DES-2",
+        "title": "Portable skill routing and installation",
+        "kind": "component",
+        "addresses": [
+          "FR-4"
+        ],
+        "detail": "Register canonical manifest component, route selectively, and use existing installer guards."
+      },
+      {
+        "id": "DES-3",
+        "title": "Behavioral evaluation and delivery evidence",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-5"
+        ],
+        "detail": "Blind isolated runs with command/output/hash evidence; repository gates, wiki checks and independent review precede PR."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Author the read-only OKF search skill and evaluation fixtures",
+      "status": "todo",
+      "phase": "core",
+      "needs": [],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "detail": "Author concise entrypoint, focused interpretation reference, realistic case recipes and rubric. Add a structural verifier and isolated fixture support; do not claim behavioral results yet.",
+      "verify": {
+        "cmd": "node ../specs/search-kb/verify-skill.mjs",
+        "expect": "Skill frontmatter/validator and routed resources pass; fixtures materialize correctly; no behavioral success is inferred."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md"
+          },
+          {
+            "path": "specs/search-kb/verify-skill.mjs"
+          },
+          {
+            "path": "specs/search-kb/verify-delivery.mjs"
+          },
+          {
+            "path": "specs/search-kb/eval-support.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-2",
+      "title": "Integrate SDLC routing and install the skill to Copilot",
+      "status": "todo",
+      "phase": "integration",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-4"
+      ],
+      "requires_decisions": [
+        "D-2"
+      ],
+      "detail": "Add all four manifest destinations, selective source-first routing and real install/package tests. Refresh only Copilot project skills/agent/hooks through the installer; preserve foreign entries and other host customization.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/search-kb-install.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/harness-packages.test.ts",
+        "expect": "Actual resources install, packages contain the skill, idempotency/conflict preservation pass and existing hooks remain intact."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/harness.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/search-kb-install.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/harness-packages.test.ts"
+          },
+          {
+            "path": ".github/hooks/wukong.json"
+          },
+          {
+            "path": ".github/agents/red-forman.md"
+          },
+          {
+            "path": ".harness/hooks/copilot-context.js"
+          },
+          {
+            "path": ".harness/hooks/codex-context.js"
+          },
+          {
+            "path": ".github/skills/search-kb/SKILL.md"
+          },
+          {
+            "path": ".github/skills/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": ".github/skills/search-kb/evals/cases.json"
+          },
+          {
+            "path": ".github/skills/search-kb/evals/rubric.md"
+          },
+          {
+            "path": ".github/skills/analyze/SKILL.md"
+          },
+          {
+            "path": ".github/skills/plan/SKILL.md"
+          },
+          {
+            "path": ".github/skills/implement/SKILL.md"
+          },
+          {
+            "path": ".github/skills/review/SKILL.md"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-3",
+      "title": "Evaluate behavior, verify delivery and prepare the PR",
+      "status": "todo",
+      "phase": "review",
+      "needs": [
+        "T-2"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "detail": "Run blind independent evaluations in temporary workspaces, retain raw outputs and before/after hashes, score actual outcomes and repair demonstrated scoped defects. Run six gates and wiki checks; obtain independent review and raise/attach the PR. Owner Finish stays separate.",
+      "verify": {
+        "cmd": "node ../specs/search-kb/verify-delivery.mjs",
+        "expect": "Every declared case has actual evidence and passes all critical rubric gates; six repository gates and wiki validation/anchors/status pass; failures remain retained."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist.",
+          "Independent evaluation and red-forman review delegation are authorized by the skill evaluation protocol and AGENTS.md. Do not give evaluators expected answers."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md"
+          },
+          {
+            "path": "specs/search-kb/verify-skill.mjs"
+          },
+          {
+            "path": "specs/search-kb/verify-delivery.mjs"
+          },
+          {
+            "path": "specs/search-kb/eval-support.mjs"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/search-kb-install.test.ts"
+          },
+          {
+            "path": "wiki/project/setup.md"
+          },
+          {
+            "path": "wiki/domain/wiki-contract.md"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json"
+          },
+          {
+            "path": "wiki/.okf/last-index.json"
+          }
+        ]
+      }
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [],
+    "pending_audit": []
+  },
+  "format": "specpack/0.4",
+  "revision": 2
+}

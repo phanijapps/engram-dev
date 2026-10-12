@@ -1,0 +1,759 @@
+{
+  "id": "search-kb",
+  "name": "search-kb",
+  "description": "Search OKF knowledge before SDLC work",
+  "date": {
+    "updated": "2026-10-12T04:17:30Z"
+  },
+  "status": {
+    "lifecycle": "active",
+    "deliverable": "in_progress"
+  },
+  "metadata": {
+    "brief": {
+      "ref": "brief-2026-10-12.md",
+      "type": "text/markdown",
+      "sha256": "e39607a64e394c2c45d083acb1bb1df02688088488efc9fdc51102a33f9235f0"
+    },
+    "analysis": {
+      "ref": "feature-2026-10-12.md",
+      "type": "text/markdown",
+      "sha256": "2151aa155eae52a9d12d883945026b9ca6caeaf29ad214c3b41ecb5a65b83767"
+    },
+    "spec": {
+      "ref": "spec-2026-10-12.md",
+      "type": "text/markdown",
+      "sha256": "20ac61165f8d2b5a2af5fc971202d4c90ae8bbf6c66734a421d9df42cb5aa1a9"
+    },
+    "design": {
+      "ref": "design-2026-10-12.md",
+      "type": "text/markdown",
+      "sha256": "3b1b8ec4744341daa91af125389a00b5b91cc845439c60dbec4b50bc17ead30d"
+    },
+    "plan": {
+      "ref": "plan-2026-10-12.md",
+      "type": "text/markdown",
+      "sha256": "15a46b9a97b9515ee190af74b8105f78ef3c6e57662d407462edb6f7e2fc861e"
+    },
+    "brief_revision_2": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "e8ee22cb139122fe545a79ef54750e5aa8db70710c31ab2445236673586f618a"
+    },
+    "analysis_revision_2": {
+      "ref": "feature.md",
+      "type": "text/markdown",
+      "sha256": "1570f9e8bca43fe16554ed7d0a08247b33f621d9e65342cd63a92493a591140e"
+    },
+    "spec_revision_2": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "d437f38b362ea5fdc84a51b4d5d49cb2558cb1461c2bad21d2d32f3afb27878c"
+    },
+    "design_revision_2": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "ec3da313442b736569ab4460a001481bb1073ed1f62f5b0964a5d438b645b2ec"
+    },
+    "plan_revision_2": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "2d437f2c918d1b18f77420852f243943de9e7911f6606086bfe4cbb666bb9c67"
+    },
+    "guide_preview": {
+      "ref": "examples/AGENTS.proposed.md",
+      "type": "text/markdown",
+      "sha256": "44aec513b329ac83d8e9cb3eea0270187f6eb9f34126162b6dcd13213ed97455"
+    }
+  },
+  "spec": {
+    "why": "Provide a read-only, source-backed knowledge search skill across agent surfaces, with behavioral evaluations and Copilot workspace installation.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Discover the actual bundle and retrieve relevant concepts through the existing CLI or read-only Markdown fallback.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-2",
+        "text": "Consume OKF links, source attribution, lifecycle and advisory trust without inventing current facts or owner authority.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-3",
+        "text": "Return source-backed SDLC context, conflicts and gaps while preserving workspace bytes and owner gates.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-4",
+        "text": "Ship search-kb from the authoritative harness to all four surfaces and install it to the requested Copilot workspace.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-5",
+        "text": "Run actual behavioral evaluations, repository gates and independent review before raising the PR.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-6",
+        "text": "Full project init MUST create concise AGENTS.md with observed repository paths/commands, wiki retrieval, SDLC usage and preserved project-rule references.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-7",
+        "text": "Before replacing existing AGENTS.md, init MUST preserve its exact bytes as AGENTS.backup.md and MUST NOT overwrite a prior differing backup.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-8",
+        "text": "Guide/backup actions MUST be visible in dry-run/JSON, idempotent across surfaces, guarded against unsafe paths/source drift, and preserved during removal.",
+        "priority": "P1"
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Knowledge runtime changes or new indexes",
+      "Remote search services",
+      "Hook protocol changes or cloud bootstrap",
+      "Attested computation execution",
+      "Owner acceptance, Start or Finish actions performed by agents",
+      "Automatic knowledge repair",
+      "Other installed host skill refreshes",
+      "LLM-generated repository policy",
+      "Executing project scripts during guide discovery",
+      "Automatic backup rotation",
+      "Changing host instruction discovery behavior",
+      "Creating a wiki during initialization"
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Use search-kb as a read-only consumer of the existing knowledge CLI with a Markdown fallback.",
+        "because": "Existing retrieval is sufficient; adding runtime/index behavior expands the request. Reversible instruction change.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Ship one shared skill to four surfaces, route relevant SDLC context to it, and validate it with blind behavioral fixtures.",
+        "because": "Avoid host duplicates and mandatory work on unrelated steps; real evaluations establish behavior beyond wording checks. Reversible packaging/routing change.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-3",
+        "decision": "Generate a concise project guide deterministically from a canonical template, observed manifest/path data, wiki commands and preserved project instructions.",
+        "because": "Specific observed commands and links follow the requested guidance without inventing architecture or requiring an LLM/network. Reversible template/renderer change.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-4",
+        "decision": "Create the guide on full project init with opt-out; preserve byte-exact AGENTS.backup.md, refuse differing backup collisions even with force, and preserve both root documents on removal.",
+        "because": "Avoid backup loss and repeated multi-host rotation; global/hooks-only operations retain their scope. Reversible with retained original bytes and explicit user action.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "OKF retrieval and evidence interpretation",
+        "kind": "flow",
+        "addresses": [
+          "FR-1",
+          "FR-2",
+          "FR-3"
+        ],
+        "detail": "Follow D-1 and design.md; report metadata, linked evidence, conflicts and gaps without mutations."
+      },
+      {
+        "id": "DES-2",
+        "title": "Portable skill routing and installation",
+        "kind": "component",
+        "addresses": [
+          "FR-4"
+        ],
+        "detail": "Register canonical manifest component, route selectively, and use existing installer guards."
+      },
+      {
+        "id": "DES-3",
+        "title": "Behavioral evaluation and delivery evidence",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-5"
+        ],
+        "detail": "Blind isolated runs with command/output/hash evidence; repository gates, wiki checks and independent review precede PR."
+      },
+      {
+        "id": "DES-4",
+        "title": "Project-guide generation and backup lifecycle",
+        "kind": "mechanism",
+        "addresses": [
+          "FR-6",
+          "FR-7",
+          "FR-8"
+        ],
+        "detail": "Use D-3/D-4 template, context discovery, truthful planning, input preflight and safe publication; preserve shared root documents outside ordinary removable outputs."
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Author the read-only OKF search skill and evaluation fixtures",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "implements": [
+        "DES-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-2",
+        "FR-3"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "detail": "Author concise entrypoint, focused interpretation reference, realistic case recipes and rubric. Add a structural verifier and isolated fixture support; do not claim behavioral results yet.",
+      "verify": {
+        "cmd": "node ../specs/search-kb/verify-skill.mjs",
+        "expect": "Skill frontmatter/validator and routed resources pass; fixtures materialize correctly; no behavioral success is inferred."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md"
+          },
+          {
+            "path": "specs/search-kb/verify-skill.mjs"
+          },
+          {
+            "path": "specs/search-kb/verify-delivery.mjs"
+          },
+          {
+            "path": "specs/search-kb/eval-support.mjs"
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/search-kb/verify-skill.mjs",
+          "exit": 0,
+          "at": "2026-10-12T04:17:30Z",
+          "by": "agent:codex",
+          "notes": "Skill validator passed; four routed files present; 11 isolated fixtures materialized byte-exactly. Structural check only; no behavioral evaluation claimed. Logs checks/T-1-attempt-1.log and T-1-final.log. Canonical plan artifacts unchanged."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Integrate SDLC routing and install the skill to Copilot",
+      "status": "todo",
+      "phase": "integration",
+      "needs": [
+        "T-1"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "satisfies": [
+        "FR-4"
+      ],
+      "requires_decisions": [
+        "D-2"
+      ],
+      "detail": "Add all four manifest destinations, selective source-first routing and real install/package tests. Refresh only Copilot project skills/agent/hooks through the installer; preserve foreign entries and other host customization.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/search-kb-install.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/harness-packages.test.ts",
+        "expect": "Actual resources install, packages contain the skill, idempotency/conflict preservation pass and existing hooks remain intact."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/harness.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/search-kb-install.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/harness-packages.test.ts"
+          },
+          {
+            "path": ".github/hooks/wukong.json"
+          },
+          {
+            "path": ".github/agents/red-forman.md"
+          },
+          {
+            "path": ".harness/hooks/copilot-context.js"
+          },
+          {
+            "path": ".harness/hooks/codex-context.js"
+          },
+          {
+            "path": ".github/skills/search-kb/SKILL.md"
+          },
+          {
+            "path": ".github/skills/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": ".github/skills/search-kb/evals/cases.json"
+          },
+          {
+            "path": ".github/skills/search-kb/evals/rubric.md"
+          },
+          {
+            "path": ".github/skills/analyze/SKILL.md"
+          },
+          {
+            "path": ".github/skills/plan/SKILL.md"
+          },
+          {
+            "path": ".github/skills/implement/SKILL.md"
+          },
+          {
+            "path": ".github/skills/review/SKILL.md"
+          }
+        ]
+      }
+    },
+    {
+      "id": "T-4",
+      "title": "Generate and safely preserve project instructions at init",
+      "status": "todo",
+      "phase": "integration",
+      "needs": [
+        "T-2"
+      ],
+      "implements": [
+        "DES-4"
+      ],
+      "satisfies": [
+        "FR-6",
+        "FR-7",
+        "FR-8"
+      ],
+      "requires_decisions": [
+        "D-3",
+        "D-4"
+      ],
+      "detail": "Implement canonical template/renderer and CLI integration. Plan/guard exact guide and backup bytes, reject unsafe paths/drift/collisions, and preserve root documents across hosts/removal. Test actual publication, failure, scope and idempotency before applying to this workspace.",
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/agents-guide.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/copilot-hooks.test.ts",
+        "expect": "Exact backup and safe replacement, dry-run/JSON no-write behavior, stale input/unsafe path/collision refusals, no script execution, repeat/multi-host/global/hooks-only/opt-out/remove cases pass."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/types.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts"
+          },
+          {
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/agents-guide.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-engine.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-skin.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+          },
+          {
+            "path": "AGENTS.md"
+          },
+          {
+            "path": "AGENTS.backup.md"
+          }
+        ],
+        "read": [
+          {
+            "path": "treadle/packages/cli/src/harness/paths.ts",
+            "why": "Observed installer contracts, naming and owner-reviewable guide example"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "why": "Observed installer contracts, naming and owner-reviewable guide example"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "why": "Observed installer contracts, naming and owner-reviewable guide example"
+          },
+          {
+            "path": "treadle/packages/brand/src/brand.ts",
+            "why": "Observed installer contracts, naming and owner-reviewable guide example"
+          },
+          {
+            "path": "specs/search-kb/examples/AGENTS.proposed.md",
+            "why": "Observed installer contracts, naming and owner-reviewable guide example"
+          }
+        ],
+        "wiki": [
+          "project/setup",
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "links": [
+          {
+            "url": "https://www.betterclaw.io/blog/agents-md-best-practices",
+            "why": "Owner-requested guide structure and writing constraints"
+          }
+        ],
+        "notes": [
+          "Use existing installer pipeline; no knowledge/server/hook protocol changes.",
+          "Do not edit approved proposal artifacts. Checks, evaluations and execution-log record actual progress.",
+          "Keep prior project instructions authoritative through the byte-exact backup; no agent owner actions.",
+          "Use brand naming; do not hardcode this workspace architecture into portable output."
+        ]
+      }
+    },
+    {
+      "id": "T-3",
+      "title": "Evaluate behavior, verify delivery and prepare the PR",
+      "status": "todo",
+      "phase": "review",
+      "needs": [
+        "T-4"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "satisfies": [
+        "FR-5"
+      ],
+      "requires_decisions": [
+        "D-1",
+        "D-2",
+        "D-3",
+        "D-4"
+      ],
+      "detail": "Run blind independent evaluations in temporary workspaces, retain raw outputs and before/after hashes, score actual outcomes and repair demonstrated scoped defects. Run six gates and wiki checks; obtain independent review and raise/attach the PR. Owner Finish stays separate. Include behavioral use of the generated guide/backup rules, installer guide tests, and updated installation documentation. Preserve new failure evidence.",
+      "verify": {
+        "cmd": "node ../specs/search-kb/verify-delivery.mjs",
+        "expect": "Every declared case has actual evidence and passes all critical rubric gates; six repository gates and wiki validation/anchors/status pass; failures remain retained."
+      },
+      "context": {
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "wiki/assets/contracts/OKF_SPEC_v0.2.txt",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/know.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/search.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/read.ts",
+            "why": "Observed contract and existing runtime behavior"
+          },
+          {
+            "path": "treadle/packages/knowledge/src/links.ts",
+            "why": "Observed contract and existing runtime behavior"
+          }
+        ],
+        "wiki": [
+          "domain/wiki-contract",
+          "project/documentation-map"
+        ],
+        "commands": [
+          {
+            "cmd": "node packages/cli/dist/src/main.js know search ../wiki \"OKF\"",
+            "expect_exit": 0
+          }
+        ],
+        "notes": [
+          "Commands run from treadle unless explicitly stated. Read execution evidence before continuation.",
+          "Evidence and execution logs live under specs/search-kb/checks and evaluations; never edit bound planning artifacts.",
+          "Only file touch entries are machine-pinned; newly absent files remain unpinned until they exist.",
+          "Independent evaluation and red-forman review delegation are authorized by the skill evaluation protocol and AGENTS.md. Do not give evaluators expected answers."
+        ],
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md"
+          },
+          {
+            "path": "specs/search-kb/verify-skill.mjs"
+          },
+          {
+            "path": "specs/search-kb/verify-delivery.mjs"
+          },
+          {
+            "path": "specs/search-kb/eval-support.mjs"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/search-kb-install.test.ts"
+          },
+          {
+            "path": "wiki/project/setup.md"
+          },
+          {
+            "path": "wiki/domain/wiki-contract.md"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json"
+          },
+          {
+            "path": "wiki/.okf/last-index.json"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/types.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts"
+          },
+          {
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md"
+          },
+          {
+            "path": "treadle/packages/cli/test/agents-guide.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-engine.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-skin.test.ts"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+          },
+          {
+            "path": "AGENTS.md"
+          },
+          {
+            "path": "AGENTS.backup.md"
+          },
+          {
+            "path": "wiki/assets/guide/index.html"
+          }
+        ]
+      }
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "665e34f7-5cff-4931-835f-9043d37d8869",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T04:11:47Z",
+        "revision": 5,
+        "decision": "D-1"
+      },
+      {
+        "id": "290eab9c-e5ab-48a9-b665-46d4448e92a9",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T04:11:48Z",
+        "revision": 6,
+        "decision": "D-2"
+      },
+      {
+        "id": "37d1c91e-094f-4002-9880-63ed60e2558d",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T04:11:51Z",
+        "revision": 7,
+        "decision": "D-3"
+      },
+      {
+        "id": "101fb89d-654b-4abc-a24a-881c94a4c163",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-12T04:11:52Z",
+        "revision": 8,
+        "decision": "D-4"
+      },
+      {
+        "id": "f86eef9e-acc3-46b5-8834-34bbce7bf601",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-12T04:12:01Z",
+        "revision": 9,
+        "plan_digest": "297612805f8a47638dc1a3e3244a4e78cf1b764034e3470e412924e3897d3654"
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-12T04:12:01Z",
+      "plan_digest": "297612805f8a47638dc1a3e3244a4e78cf1b764034e3470e412924e3897d3654"
+    }
+  },
+  "format": "specpack/0.4",
+  "revision": 11
+}
