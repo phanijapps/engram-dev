@@ -1,0 +1,154 @@
+[
+  {
+    "name": "real-root-lifecycle",
+    "command": "pnpm",
+    "args": [
+      "exec",
+      "vitest",
+      "run",
+      "packages/cli/test/source-setup.test.ts"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "runtime-package",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "scripts/package-runtime.mjs",
+      "/tmp/bootstrap runtime smoke zUlux8/runtime"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "runtime-help",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "/tmp/bootstrap runtime smoke zUlux8/runtime/dist/src/main.js",
+      "--help"
+    ],
+    "cwd": "/tmp/bootstrap runtime smoke zUlux8",
+    "exit": 0
+  },
+  {
+    "name": "runtime-copilot-preview",
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node",
+    "args": [
+      "/tmp/bootstrap runtime smoke zUlux8/runtime/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "copilot",
+      "--scope",
+      "project",
+      "--hooks-only",
+      "--no-agents",
+      "--root",
+      "/tmp/bootstrap runtime smoke zUlux8/target project",
+      "--dry-run"
+    ],
+    "cwd": "/tmp/bootstrap runtime smoke zUlux8",
+    "exit": 0
+  },
+  {
+    "name": "check",
+    "command": "pnpm",
+    "args": [
+      "check"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "coverage",
+    "command": "pnpm",
+    "args": [
+      "coverage"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "corpus-check",
+    "command": "pnpm",
+    "args": [
+      "corpus:check"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "brand-check",
+    "command": "pnpm",
+    "args": [
+      "brand:check"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "audit-prod",
+    "command": "pnpm",
+    "args": [
+      "audit:prod"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "links",
+    "command": "pnpm",
+    "args": [
+      "links"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "wiki-anchors",
+    "command": "pnpm",
+    "args": [
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "wiki-validate",
+    "command": "pnpm",
+    "args": [
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  },
+  {
+    "name": "wiki-status",
+    "command": "pnpm",
+    "args": [
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0
+  }
+]

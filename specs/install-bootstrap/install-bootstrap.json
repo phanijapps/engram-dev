@@ -3,11 +3,11 @@
   "name": "install-bootstrap",
   "description": "Reliable source setup and Copilot initialization",
   "date": {
-    "updated": "2026-10-12T14:46:11Z"
+    "updated": "2026-10-12T15:21:08.028Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_review"
+    "deliverable": "in_progress"
   },
   "metadata": {
     "brief": {
@@ -34,6 +34,11 @@
       "ref": "plan.md",
       "type": "text/markdown",
       "sha256": "9c8906fc5f5e354f46f5cd7adcceaacd7a0ec4f1d1ca02eb5741adea3be5a9c4"
+    },
+    "review": {
+      "ref": "review-pack.md",
+      "type": "text/markdown",
+      "sha256": "a5e4e1cdfd5de2dea382c6b90745f85243d89ec81f32fc2b957796dae476e10c"
     }
   },
   "spec": {
@@ -849,6 +854,19 @@
       "plan_digest": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744"
     }
   },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:search_kb_plan_review",
+        "at": "2026-10-12T15:21:08.028Z",
+        "plan_digest": "4c108a984a111836932fafcb7502aed1d76b1f9fa16baf7537f9d2c7ec78c744",
+        "evidence_digest": "13194a519c70fe570c4f4187ef1ac8ead63b49e1e6e668c02a252db3f94d3fd1",
+        "note": "Recorded from actual independent read-only review of source 71b5a20/revision15: all four exact checks rerun exit0, compiled repairs verified, source/canonical/wiki hashes preserved. See review-pack.md and review-delivery-2026-10-12.md. Native CI run38265890294 attempt3 passes Ubuntu/macOS Node22/24 and Windows22; Windows24 remains failed. User explicitly instructed \"ignore windows errors for nwo\"; Windows remediation is deferred as disclosed in delivery-status-2026-10-12.md, not converted to success. Raw receipt checks/native-ci-attempt-3.json. Owner Finish remains separate and pending."
+      }
+    ]
+  },
   "format": "specpack/0.4",
-  "revision": 15
+  "revision": 16
 }

@@ -1,0 +1,560 @@
+check (windows-latest, 24)	Typecheck, lint, format and tests	﻿2026-10-12T14:51:45.7902787Z ##[group]Run pnpm check
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:45.7903142Z [36;1mpnpm check[0m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:45.7982837Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:45.7983422Z env:
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:45.7983699Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:45.7984036Z ##[endgroup]
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:46.6126678Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:46.6127642Z > treadle-root@ check D:\a\wukong\wukong\treadle
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:46.6128530Z > tsc --build && eslint . && prettier --check . && vitest run
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:51:46.6128983Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:00.3460006Z Checking formatting...
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:05.6208460Z All matched files use Prettier code style!
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:06.0714866Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:06.0719804Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90mD:/a/wukong/wukong/treadle[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:06.0720450Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:07.5239058Z  [32m✓[39m packages/cli/test/init-engine.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 886[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6744825Z  [32m✓[39m packages/core/test/feedback.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 4888[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6758097Z    [32m✓[39m durable artifact feedback [2m(22)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6769067Z      [33m[2m✓[22m[39m seals submissions, delivers empty batches without granting approval, and permits new rounds[33m 348[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6771249Z      [33m[2m✓[22m[39m recovers stale threads through refreshed snapshots and human reattachment plus Submit[33m 326[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6773131Z      [33m[2m✓[22m[39m rechecks sources inside the lock before acknowledging and enforces body/file/round counts[33m 2198[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:12.8263961Z {"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:13.3869989Z  [32m✓[39m packages/web/test/owner-workflow.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 5530[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:13.3872404Z    [32m✓[39m owner sequence across CLI and browser [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:13.3874077Z      [33m[2m✓[22m[39m executes two checked tasks under one start receipt, then requires independent review and human closure[33m 4328[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3081544Z  [32m✓[39m packages/cli/test/init-surfaces.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 2373[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3083149Z    [32m✓[39m the four surface adapters (T-3) [2m(7)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3084910Z      [33m[2m✓[22m[39m the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage[33m 308[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3086891Z    [32m✓[39m session-recall payload + wirings (T-1) [2m(5)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3088479Z      [33m[2m✓[22m[39m script mode: the block prints and exits 0 (unpiped contract)[33m 390[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:14.3090501Z      [33m[2m✓[22m[39m claude-gate allows specific requests and gates ambiguous continuation from isolated counts[33m 492[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:15.7167294Z  [32m✓[39m packages/cli/test/agents-guide.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2052[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:15.7170109Z    [33m[2m✓[22m[39m includes a truthful read-only CLI guide preview, and respects hooks-only/opt-out[33m 966[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:15.7171948Z    [33m[2m✓[22m[39m keeps actual removal --dry-run and --json previews read-only, including the install record[33m 759[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:16.6296934Z [90mstdout[2m | packages/cli/test/feedback-loop.test.ts[2m > [22m[2mdelivers only explicit submitted document feedback during wait and retains it across service restart
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:16.6301022Z [22m[39mFEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"9de4a7f8-3936-43fe-98ff-fea155b906ee","before_cursor":1,"after_cursor":1,"before_batches":["157c06c0-eb24-4550-b796-814db719e873"],"after_batches":["157c06c0-eb24-4550-b796-814db719e873"]}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:16.6307213Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.1055624Z [90mstdout[2m | packages/cli/test/feedback-loop.test.ts[2m > [22m[2mreplays a durably submitted batch after a lost acknowledgement without duplication
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.1061120Z [22m[39mFEEDBACK_RECOVERY {"kind":"lost-ack","session":"6c7eb519-efc9-4737-a67d-3b04160bc3f0","operation_id":"e32024ab-45c4-44eb-b082-933b4e989f3d","received_batch":"3958e9d3-5d7d-4e85-85e2-a05bf9e0b95b","replay_batch":"3958e9d3-5d7d-4e85-85e2-a05bf9e0b95b","committed_batches":1}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.1062932Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.3265830Z  [32m✓[39m packages/cli/test/feedback-loop.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 3187[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.3267939Z    [33m[2m✓[22m[39m delivers only explicit submitted document feedback during wait and retains it across service restart[33m 591[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:19.3270144Z    [33m[2m✓[22m[39m delivers stale reattachment only after another human Submit and preserves the original code anchor[33m 2236[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4053091Z  [32m✓[39m packages/cli/test/feedback-snapshot.test.ts [2m([22m[2m13 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 6845[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4055541Z    [32m✓[39m selected feedback snapshots [2m(13)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4057230Z      [33m[2m✓[22m[39m snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline[33m 902[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4058889Z      [33m[2m✓[22m[39m keeps both sides of selected renames and reads committed head comparisons[33m 1515[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4060314Z      [33m[2m✓[22m[39m does not execute external diff, textconv, clean or smudge commands[33m 849[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4062388Z      [33m[2m✓[22m[39m ignores inherited Git routing and index configuration[33m 925[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4064555Z      [33m[2m✓[22m[39m fails offline for absent promisor objects without executing configured transport[33m 848[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4079695Z      [33m[2m✓[22m[39m selects a portable wildcard-sensitive filename literally and detects moving refs[33m 960[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:21.4081368Z      [33m[2m✓[22m[39m refuses symlink diff targets without following their text[33m 522[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:22.9245877Z  [32m✓[39m packages/cli/test/feedback-cli.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 3041[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:22.9247031Z    [32m✓[39m portable CLI feedback [2m(10)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:22.9248346Z      [33m[2m✓[22m[39m replays an identical diff open after a symbolic baseline moves and rejects changed request identity[33m 940[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:22.9250164Z      [33m[2m✓[22m[39m returns pending on timeout/cancellation, refuses invalid bounds and never mutates state[33m 1090[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:24.6086636Z  [32m✓[39m packages/web/test/feedback-ui.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2201[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:24.6152908Z    [33m[2m✓[22m[39m renders inert source, keyboard line selection, draft save and explicit Submit without owner writes[33m 702[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:24.6190086Z    [33m[2m✓[22m[39m preserves local input and line range across remount and revision conflicts[33m 331[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:24.6221096Z    [33m[2m✓[22m[39m retains original anchor, shows stale/replies and explicitly reattaches to an open new round[33m 430[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:24.6477402Z    [33m[2m✓[22m[39m paginates large source without silently dropping lines and keeps Markdown preview opaque[33m 348[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:25.7809454Z  [32m✓[39m packages/web/test/workflow-ui.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1442[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:25.7810726Z    [32m✓[39m owner workflow UI [2m(4)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:25.7811967Z      [33m[2m✓[22m[39m shows the ordered flow; decision approval does not start implementation[33m 679[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:25.7815216Z      [33m[2m✓[22m[39m requires a current independent review, then a separate confirmation to finish[33m 411[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.0057190Z  [32m✓[39m packages/web/test/approval-ux.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1164[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.5598232Z  [32m✓[39m packages/web/test/approval-feedback-ux.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 662[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.5599633Z    [33m[2m✓[22m[39m keeps source and discussion in existing review, with explicit draft and Submit steps[33m 377[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.6319648Z  [32m✓[39m packages/web/test/servers.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 333[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.9250277Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:27.9829650Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.5084231Z  [32m✓[39m packages/web/test/feedback-api.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 631[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.5086271Z    [33m[2m✓[22m[39m isolates snapshots and records comments, submission retries and resolution without canonical writes[33m 316[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.6914116Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.7366073Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.7950296Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.8398611Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.9086095Z  [32m✓[39m packages/cli/test/where.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1038[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.9089585Z    [32m✓[39m do where (T-0) [2m(7)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:28.9090727Z      [33m[2m✓[22m[39m a worktree carries its own row, labeled with its tree[33m 652[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.2043602Z  [32m✓[39m packages/core/test/owner-workflow.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 66[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8236711Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8239671Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8241530Z [22m[39mREFUSED: decisions: D-1; T-1 needs D-1
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8242644Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8243598Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8244649Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-NibT64\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8246176Z recorded accept by human:owner; audit recorded
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8247247Z recorded start by human:owner; audit recorded
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8248694Z task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8249286Z   D    D-1
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8249714Z   TASK T-1 — Work
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.8249900Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9188251Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9191456Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9193732Z [22m[39mREFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9196723Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-ZNBrza\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9198606Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9199969Z asked Q-1 (revision 2)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9201058Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9201084Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9669396Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mexplicitly adopts active legacy bytes without inventing earlier start consent
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9672590Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-q4UVSg\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9674469Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:29.9675680Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0745837Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0748955Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0752143Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0754201Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-xrTXbC\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0755416Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0755919Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.0757469Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1020265Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1024319Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1026742Z [22m[39mREFUSED: A complete spec cannot be adopted
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1028214Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-hi3PW2\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1030234Z REFUSED: Adoption needs an owner claim
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1030983Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1031376Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1171283Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1174276Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1176879Z [22m[39mREFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1178981Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-2VxFyi\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1181040Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1181078Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1362769Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1365436Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1367626Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1369250Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-7rkGg5\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1375356Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1375392Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.1409836Z  [32m✓[39m packages/cli/test/owner-workflow.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 495[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4141285Z  [32m✓[39m packages/cli/test/copilot-hooks.test.ts [2m([22m[2m30 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m[33m 23719[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4170643Z    [33m[2m✓[22m[39m returns session context in the Copilot envelope and reconnects on prompts[33m 498[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4172709Z    [33m[2m✓[22m[39m reports runtime invalid failures and recovers after repair[33m 636[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4195696Z    [33m[2m✓[22m[39m reports runtime fail failures and recovers after repair[33m 628[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4239727Z    [33m[2m✓[22m[39m bounds a stalled runtime and returns recovery guidance[33m 20116[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4242223Z    [33m[2m✓[22m[39m repairs a cold clone with committed config and no local state (hooksOnly=false)[33m 456[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.4274730Z    [33m[2m✓[22m[39m repairs a cold clone with committed config and no local state (hooksOnly=true)[33m 321[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:30.6299135Z  [2m[90m↓[39m[22m packages/cli/test/installers.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:31.1535103Z  [32m✓[39m packages/cli/test/claude-project-paths.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 2400[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:31.1537411Z    [33m[2m✓[22m[39m project hook commands survive relocation and nested cwd while preserving event stdin[33m 2025[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:33.3293683Z  [32m✓[39m packages/cli/test/codex-project-paths.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1914[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:33.3296165Z    [33m[2m✓[22m[39m project hook commands survive relocation and nested cwd while preserving event stdin[33m 1480[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:33.3298076Z    [33m[2m✓[22m[39m global hooks retain absolute payload paths and execute from an unrelated cwd[33m 375[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:37.9592607Z  [32m✓[39m packages/cli/test/serve-runtime.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 4345[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:37.9597612Z    [32m✓[39m shared service lifecycle [2m(8)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:37.9599547Z      [33m[2m✓[22m[39m cold-starts once across callers, survives parent command and restarts after stop[33m 2508[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:37.9602770Z      [33m[2m✓[22m[39m refuses a live or incomplete startup lock rather than expiring it[33m 470[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:37.9611027Z      [33m[2m✓[22m[39m recovers proven dead startup and recovery owners; unfinished candidates hold no lock[33m 1124[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6020843Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mthe do plane (integration, in-process)[2m > [22m[2manswers, approves, records, closes — the whole ceremony through the CLI
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6026711Z [22m[39manswered Q-1 by human:owner
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6027566Z answered Q-2 by human:owner
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6029218Z approved by human:owner at 2026-10-10T12:00:00Z
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6030128Z {"task":"T-1","status":"done","fail_streak":0}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6031356Z closed by human:owner: the record is frozen
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6032418Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6238836Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo next (the frozen handout)[2m > [22m[2mhands out the task, saves the doing state, then reports closure honestly
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6242243Z [22m[39mtask T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6243448Z   D    D-1
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6244737Z   TASK T-1 — one
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6245285Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6839021Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo accept / reject (the human act, last to port)[2m > [22m[2maccept resolves the decision and its questions; reject keeps them open
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6841134Z [22m[39maccepted D-9 by human:owner — resolved Q-1
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6844254Z rejected D-8: wrong shape — the questions stay open
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6844979Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:38.6857764Z  [32m✓[39m packages/cli/test/do.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 184[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:40.3301778Z  [32m✓[39m packages/cli/test/feedback-harness.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1253[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:40.3305304Z    [33m[2m✓[22m[39m context exposes counts and stable IDs without draft, submitted, reply or snapshot bodies and never admits work[33m 313[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:40.3307378Z    [33m[2m✓[22m[39m bounds context summaries and reports corrupt state without injecting its content or changing files[33m 646[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:41.0355912Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:41.1426361Z  [32m✓[39m packages/cli/test/know.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 311[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:41.5122486Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.3074136Z  [32m✓[39m packages/knowledge/test/ritual.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 880[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.3087732Z    [32m✓[39m the freshness stamp [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.3088874Z      [33m[2m✓[22m[39m fresh at HEAD, stale after motion[33m 760[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.7786978Z  [32m✓[39m packages/web/test/pages.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 161[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8378248Z  [32m✓[39m packages/cli/test/installers-powershell.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 11991[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8380071Z    [33m[2m✓[22m[39m PowerShell selects source and verifies the linked command[33m 1228[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8405357Z    [33m[2m✓[22m[39m PowerShell refuses node-version before cloning[33m 765[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8472689Z    [33m[2m✓[22m[39m PowerShell refuses invalid-node-version before cloning[33m 815[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8485822Z    [33m[2m✓[22m[39m PowerShell refuses old-node-version before cloning[33m 895[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8488763Z    [33m[2m✓[22m[39m PowerShell updates only the selected existing branch[33m 1906[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8492007Z    [33m[2m✓[22m[39m PowerShell preserves a checkout on a different branch[33m 1222[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8493532Z    [33m[2m✓[22m[39m PowerShell stops after source-setup fails[33m 1422[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8495320Z    [33m[2m✓[22m[39m PowerShell stops after pnpm:link fails[33m 1336[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8496653Z    [33m[2m✓[22m[39m PowerShell defaults to main[33m 1403[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:42.8499623Z    [33m[2m✓[22m[39m PowerShell rejects wrong pnpm before source mutation[33m 994[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:43.1400899Z  [32m✓[39m packages/knowledge/test/debts.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 87[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:43.2255208Z  [32m✓[39m packages/knowledge/test/containment.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 100[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:44.6219520Z  [32m✓[39m packages/web/test/room-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:45.0314546Z  [32m✓[39m packages/web/test/theme.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 522[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:46.4994217Z  [32m✓[39m packages/web/test/project-library.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 558[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:46.9765931Z  [32m✓[39m packages/web/test/dom.smoke.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 472[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:46.9779023Z    [32m✓[39m the DOM harness (T-0 smoke) [2m(2)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:46.9780720Z      [33m[2m✓[22m[39m loads library.js, boots against the live server, and a click drives the router[33m 344[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:47.1519285Z  [32m✓[39m packages/brand/test/rebrand.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 412[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:47.1520941Z    [33m[2m✓[22m[39m rebrands repeatedly without changing internal identities and refuses invalid bins before writing[33m 408[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:48.6797782Z  [32m✓[39m packages/web/test/library-skin.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 378[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:48.6799302Z    [32m✓[39m the library skin (live DOM) [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:48.6799962Z      [33m[2m✓[22m[39m three panes render; legacy journey navigation survives[33m 372[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:49.1738325Z  [32m✓[39m packages/cli/test/project-registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 216[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:49.9273631Z  [32m✓[39m packages/cli/test/hook-entrypoint.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 588[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:49.9275786Z    [33m[2m✓[22m[39m executes hooks through ancestor aliases and leaves imported hooks silent with stdin intact[33m 586[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:51.5148089Z  [32m✓[39m packages/web/test/project-security.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 611[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:51.9858483Z  [32m✓[39m packages/web/test/inspector.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3535[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:51.9859262Z    [32m✓[39m the phase inspector (T-3) [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:51.9860061Z      [33m[2m✓[22m[39m renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only[33m 3533[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.1198362Z  [32m✓[39m packages/web/test/telemetry.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 440[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.1199693Z    [32m✓[39m the review telemetry + gate (T-8) [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.1200994Z      [33m[2m✓[22m[39m renders the real counts, filters by severity, speaks the house sentence[33m 438[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.8585995Z  [32m✓[39m packages/cli/test/search-kb-install.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1608[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.8606955Z    [33m[2m✓[22m[39m installs full search-kb resources for pi, preserves them on repeat, and refuses foreign edits[33m 430[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.8608863Z    [33m[2m✓[22m[39m installs full search-kb resources for claude, preserves them on repeat, and refuses foreign edits[33m 445[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.8611650Z    [33m[2m✓[22m[39m installs full search-kb resources for codex, preserves them on repeat, and refuses foreign edits[33m 364[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:53.8619771Z    [33m[2m✓[22m[39m installs full search-kb resources for copilot, preserves them on repeat, and refuses foreign edits[33m 364[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:56.9674968Z  [31m❯[39m packages/cli/test/pi-context.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2875[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:56.9676545Z [31m   [31m×[31m registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown[39m[33m 2873[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:57.8737632Z  [32m✓[39m packages/cli/test/ci-report.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 547[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:59.7681880Z  [32m✓[39m packages/cli/test/machine-managed-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1646[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:52:59.7683840Z    [33m[2m✓[22m[39m guards actual corpus witnesses through argv, Claude stdin and Pi tool_call[33m 1644[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:00.3643193Z  [32m✓[39m packages/cli/test/codex-context.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 7016[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:00.3650791Z    [33m[2m✓[22m[39m runs the documented stdin/context contract, event workspace and next-event restart without owner acts[33m 6879[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:00.3950723Z  [32m✓[39m packages/knowledge/test/knowledge.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 83[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:01.4674306Z  [32m✓[39m packages/cli/test/context.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 179[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:03.4253833Z  [32m✓[39m packages/cli/test/harness-packages.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2686[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:03.4256199Z    [33m[2m✓[22m[39m generates deterministic, local host packages and truthful capability metadata[33m 2684[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:04.0349400Z  [32m✓[39m packages/core/test/feedback-paths.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 24[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:04.4691877Z  [32m✓[39m packages/conformance/test/owner-schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.2722851Z  [32m✓[39m packages/cli/test/claude-context.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3432[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.2724045Z    [33m[2m✓[22m[39m connects startup/resume/preprompt workspace and never shuts down with session lifetime[33m 3430[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.5314910Z  [32m✓[39m packages/core/test/core.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.5540857Z  [32m✓[39m packages/brand/test/brand-gate.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 734[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.5572011Z    [33m[2m✓[22m[39m ignores generated CI diagnostics while rejecting product literals in source[33m 732[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:05.9190536Z  [32m✓[39m packages/cli/test/init-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 26[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.0514855Z [90mstdout[2m | packages/cli/test/native-path-identity.test.ts[2m > [22m[2midentifies the same native Git root despite filesystem path representations
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.0535698Z [22m[39mnative-path-identity/1 {"platform":"win32","node":"v24.21.0","input":"C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\native path identity EAUgCm","gitRoot":"C:/Users/runneradmin/AppData/Local/Temp/native path identity EAUgCm","lexicalWorkspace":"C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\native path identity EAUgCm","lexicalGit":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity EAUgCm","nativeWorkspace":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity EAUgCm","nativeGit":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity EAUgCm"}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.0540152Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.0541350Z  [32m✓[39m packages/cli/test/native-path-identity.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 184[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.5999903Z  [32m✓[39m packages/conformance/test/runner.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:06.8089448Z  [32m✓[39m packages/cli/test/banner.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:07.4426846Z  [32m✓[39m packages/conformance/test/corpus.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:07.7671814Z  [32m✓[39m packages/brand/test/brand.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:10.9264813Z  [32m✓[39m packages/web/test/room-keyboard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 4641[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:10.9266118Z    [32m✓[39m the room keyboard (standalone harness) [2m(1)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:10.9267141Z      [33m[2m✓[22m[39m drives the ceremony: Enter submits, approve card reached[33m 4639[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:18.6740066Z [90mstdout[2m | packages/cli/test/source-setup.test.ts[2m > [22m[2mreal native root frozen lifecycle builds the CLI without changing either lockfile
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:18.6742768Z [22m[39m{"nativeRootLifecycle":"win32","node":"v24.21.0","install":0,"compiledCli":0,"rootWrapper":0,"locks":{"pnpm-lock.yaml":"17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a","treadle\\pnpm-lock.yaml":"b6a01c90005b22006a617ed366e262527e565221bb3e0afc640f4068124a5ccb"}}
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:18.6744171Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0866611Z  [32m✓[39m packages/cli/test/source-setup.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 50705[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0869617Z    [33m[2m✓[22m[39m runs pinned install then build in the source workspace, independently of caller cwd[33m 3511[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0871410Z    [33m[2m✓[22m[39m uses only the pinned pnpm fallback when Corepack is absent[33m 2396[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0872657Z    [33m[2m✓[22m[39m refuses unavailable tools before installation[33m 508[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0873848Z    [33m[2m✓[22m[39m refuses wrong-version tools before installation[33m 534[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0874961Z    [33m[2m✓[22m[39m propagates install failure and stops[33m 1220[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0876005Z    [33m[2m✓[22m[39m propagates build failure and stops[33m 1492[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0877746Z    [33m[2m✓[22m[39m real native root frozen lifecycle builds the CLI without changing either lockfile[33m 40967[2mms[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0902272Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0903023Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0903479Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0908185Z [41m[1m FAIL [22m[49m packages/cli/test/pi-context.test.ts[2m > [22mregisters once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0914911Z [31m[1mError[22m: EPERM, Permission denied: \\?\C:\Users\RUNNER~1\AppData\Local\Temp\pi-context-FR0kYo '\\?\C:\Users\RUNNER~1\AppData\Local\Temp\pi-context-FR0kYo'[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0916842Z [36m [2m❯[22m packages/cli/test/pi-context.test.ts:[2m53:5[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0950727Z     [90m 51|[39m     if (entry === undefined) delete process.env.HARNESS_RUNTIME_ENTRY;
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0951765Z     [90m 52|[39m     else process.env.HARNESS_RUNTIME_ENTRY = entry;
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0952693Z     [90m 53|[39m     rmSync(root, { recursive: true, force: true });
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0953397Z     [90m   |[39m     [31m^[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0953922Z     [90m 54|[39m   }
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0954324Z     [90m 55|[39m }, 30000);
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0954521Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0954782Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0955013Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0957660Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0966839Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m60 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (62)[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0971194Z [2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m321 passed[39m[22m[2m | [22m[33m15 skipped[39m[90m (337)[39m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0972090Z [2m   Start at [22m 14:52:06
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0978044Z [2m   Duration [22m 74.99s[2m (tests 89%, import 4%, environment 4%, transform 2%)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0992601Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0993670Z [2m    Isolate [22m [33m62 workers spawned[39m[2m · ~326ms startup each (spawn + environment, per file)[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0994955Z [2m            [22m [2mat least ~6.40s faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.0995467Z 
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.1039767Z JSON report written to D:/a/wukong/wukong/treadle/test-results.json
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.1912765Z  ELIFECYCLE  Command failed with exit code 1.
+check (windows-latest, 24)	Typecheck, lint, format and tests	2026-10-12T14:53:21.3231909Z ##[error]Process completed with exit code 1.
+check (windows-latest, 22)	Typecheck, lint, format and tests	﻿2026-10-12T14:51:35.3828367Z ##[group]Run pnpm check
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:35.3828715Z [36;1mpnpm check[0m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:35.3882569Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:35.3883211Z env:
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:35.3883554Z   PNPM_HOME: C:\Users\runneradmin\setup-pnpm\node_modules\.bin
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:35.3883867Z ##[endgroup]
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:36.0130158Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:36.0131498Z > treadle-root@ check D:\a\wukong\wukong\treadle
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:36.0132496Z > tsc --build && eslint . && prettier --check . && vitest run
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:36.0132892Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:48.3539195Z Checking formatting...
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:52.2373244Z All matched files use Prettier code style!
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:52.6102286Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:52.6105198Z [1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90mD:/a/wukong/wukong/treadle[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:52.6106111Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:53.7547823Z  [32m✓[39m packages/cli/test/init-engine.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 572[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:56.1573798Z  [32m✓[39m packages/core/test/feedback.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 2788[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:56.1575363Z    [32m✓[39m durable artifact feedback [2m(22)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:56.1590904Z      [33m[2m✓[22m[39m rechecks sources inside the lock before acknowledging and enforces body/file/round counts[33m 1217[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:56.9176617Z {"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:57.9787764Z  [32m✓[39m packages/web/test/owner-workflow.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 3982[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:57.9790328Z    [32m✓[39m owner sequence across CLI and browser [2m(1)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:57.9791638Z      [33m[2m✓[22m[39m executes two checked tasks under one start receipt, then requires independent review and human closure[33m 3336[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:58.1044717Z  [32m✓[39m packages/cli/test/init-surfaces.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1728[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:58.1045565Z    [32m✓[39m session-recall payload + wirings (T-1) [2m(5)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:58.1046230Z      [33m[2m✓[22m[39m claude-gate allows specific requests and gates ambiguous continuation from isolated counts[33m 343[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:59.7438960Z  [32m✓[39m packages/cli/test/agents-guide.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1561[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:59.7440260Z    [33m[2m✓[22m[39m includes a truthful read-only CLI guide preview, and respects hooks-only/opt-out[33m 712[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:51:59.7441750Z    [33m[2m✓[22m[39m keeps actual removal --dry-run and --json previews read-only, including the install record[33m 568[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:00.5125108Z [90mstdout[2m | packages/cli/test/feedback-loop.test.ts[2m > [22m[2mdelivers only explicit submitted document feedback during wait and retains it across service restart
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:00.5127387Z [22m[39mFEEDBACK_RECOVERY {"kind":"restart-redelivery","session":"98cffa85-b64b-4cb5-b704-c26ccb6825ed","before_cursor":1,"after_cursor":1,"before_batches":["99cce074-b442-4dea-8ab2-b0267f413daf"],"after_batches":["99cce074-b442-4dea-8ab2-b0267f413daf"]}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:00.5128304Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.6321815Z [90mstdout[2m | packages/cli/test/feedback-loop.test.ts[2m > [22m[2mreplays a durably submitted batch after a lost acknowledgement without duplication
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.6325048Z [22m[39mFEEDBACK_RECOVERY {"kind":"lost-ack","session":"06982c4e-cd6d-4963-867a-ba4f03723d59","operation_id":"a708849a-7427-4a4c-9055-d0901a284fda","received_batch":"6bbcb5e7-b324-49e7-83f9-67960a6df0d1","replay_batch":"6bbcb5e7-b324-49e7-83f9-67960a6df0d1","committed_batches":1}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.6326626Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.8266136Z  [32m✓[39m packages/cli/test/feedback-loop.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2724[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.8269819Z    [33m[2m✓[22m[39m delivers only explicit submitted document feedback during wait and retains it across service restart[33m 456[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.8270891Z    [33m[2m✓[22m[39m delivers stale reattachment only after another human Submit and preserves the original code anchor[33m 1974[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9547443Z  [32m✓[39m packages/cli/test/feedback-snapshot.test.ts [2m([22m[2m13 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 4642[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9550776Z    [32m✓[39m selected feedback snapshots [2m(13)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9552559Z      [33m[2m✓[22m[39m snapshots staged/unstaged edits, explicit additions and deletions against an immutable baseline[33m 644[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9555356Z      [33m[2m✓[22m[39m keeps both sides of selected renames and reads committed head comparisons[33m 1032[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9571354Z      [33m[2m✓[22m[39m does not execute external diff, textconv, clean or smudge commands[33m 581[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9572572Z      [33m[2m✓[22m[39m ignores inherited Git routing and index configuration[33m 794[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9575036Z      [33m[2m✓[22m[39m fails offline for absent promisor objects without executing configured transport[33m 486[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9598995Z      [33m[2m✓[22m[39m selects a portable wildcard-sensitive filename literally and detects moving refs[33m 516[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:02.9602689Z      [33m[2m✓[22m[39m refuses symlink diff targets without following their text[33m 391[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.3934399Z  [32m✓[39m packages/web/test/feedback-ui.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1429[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.3935743Z    [33m[2m✓[22m[39m renders inert source, keyboard line selection, draft save and explicit Submit without owner writes[33m 556[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.6565775Z  [32m✓[39m packages/cli/test/feedback-cli.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 2413[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.6566804Z    [32m✓[39m portable CLI feedback [2m(10)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.6567791Z      [33m[2m✓[22m[39m replays an identical diff open after a symbolic baseline moves and rejects changed request identity[33m 570[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:05.6568976Z      [33m[2m✓[22m[39m returns pending on timeout/cancellation, refuses invalid bounds and never mutates state[33m 1060[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:07.7726720Z  [32m✓[39m packages/web/test/approval-ux.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1073[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:08.9930206Z  [32m✓[39m packages/web/test/approval-feedback-ux.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 437[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:09.3802927Z  [32m✓[39m packages/web/test/servers.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 192[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:09.9439312Z  [32m✓[39m packages/web/test/feedback-api.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 320[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.1491380Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.1851317Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.5749426Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.6091020Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.6418720Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.6765235Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7282535Z  [32m✓[39m packages/cli/test/where.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 622[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7284091Z    [32m✓[39m do where (T-0) [2m(7)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7286681Z      [33m[2m✓[22m[39m a worktree carries its own row, labeled with its tree[33m 354[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7803730Z  [32m✓[39m packages/web/test/workflow-ui.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 4174[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7804414Z    [32m✓[39m owner workflow UI [2m(4)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7805320Z      [33m[2m✓[22m[39m shows the ordered flow; decision approval does not start implementation[33m 549[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:10.7806080Z      [33m[2m✓[22m[39m requires a current independent review, then a separate confirmation to finish[33m 3336[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.0169013Z  [32m✓[39m packages/core/test/owner-workflow.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 63[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4488677Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4491432Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses explicit gated birth and separate revision-checked decision/start actions
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4492764Z [22m[39mREFUSED: decisions: D-1; T-1 needs D-1
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4493370Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4493771Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4494364Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-ZU0rka\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4495019Z recorded accept by human:owner; audit recorded
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4495554Z recorded start by human:owner; audit recorded
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4496362Z task T-1 — 2 items in the frozen slice (digest 0e58b61f165a…)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4496834Z   D    D-1
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4497220Z   TASK T-1 — Work
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4497432Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4713745Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4716072Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrejects stale answers and approvals in legacy packs too
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4717602Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-rO8Rdt\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4718611Z [22m[39mREFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4719372Z REFUSED: stale writer: file is at revision 2; pass the held --expected-revision
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4719727Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4719924Z asked Q-1 (revision 2)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.4720092Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5043895Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mexplicitly adopts active legacy bytes without inventing earlier start consent
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5045482Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-yKzHib\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5046220Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5046649Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5529856Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5531995Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mpreserves actual bootstrap start dates and refuses changed reviewed scope
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5533281Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-Y0kFtn\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5534280Z adopted owner workflow by human:owner; legacy bytes preserved; audit recorded
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5535072Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5535483Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5535493Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5697445Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5699891Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mrefuses closed adoption and agent adoption without touching records
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5701313Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-pr39k7\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5702094Z [22m[39mREFUSED: A complete spec cannot be adopted
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5702625Z REFUSED: Adoption needs an owner claim
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5702907Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5702923Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5937605Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5939121Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2muses the same exclusive lock for CLI mutations
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5940617Z [22m[39mREFUSED: Another writer holds this spec. Retry after it finishes; recover a dead lock explicitly.
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5941145Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5941827Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-0kbH4b\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.5943306Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6062439Z [90mstdout[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6063834Z [22m[39mborn: C:\Users\RUNNER~1\AppData\Local\Temp\cli-owner-7vWyX3\p\p.json (revision 1, stage awaiting_owner)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6064409Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6065304Z [90mstderr[2m | packages/cli/test/owner-workflow.test.ts[2m > [22m[2mowner workflow CLI[2m > [22m[2mdoes not import a fabricated bootstrap authorization
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6066287Z [22m[39mREFUSED: Bootstrap receipt does not match actual owner consent and reviewed scope
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6067024Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:11.6093026Z  [32m✓[39m packages/cli/test/owner-workflow.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 305[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:12.4960722Z  [32m✓[39m packages/cli/test/claude-project-paths.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1585[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:12.4961690Z    [33m[2m✓[22m[39m project hook commands survive relocation and nested cwd while preserving event stdin[33m 1365[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:12.6386783Z  [2m[90m↓[39m[22m packages/cli/test/installers.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m11 skipped[39m[2m)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7665545Z  [32m✓[39m packages/cli/test/copilot-hooks.test.ts [2m([22m[2m30 tests[22m[2m | [22m[33m3 skipped[39m[2m)[22m[33m 23541[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7666933Z    [33m[2m✓[22m[39m returns session context in the Copilot envelope and reconnects on prompts[33m 393[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7691385Z    [33m[2m✓[22m[39m reports runtime invalid failures and recovers after repair[33m 654[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7719027Z    [33m[2m✓[22m[39m reports runtime fail failures and recovers after repair[33m 979[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7758755Z    [33m[2m✓[22m[39m bounds a stalled runtime and returns recovery guidance[33m 20094[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:16.7829280Z    [33m[2m✓[22m[39m repairs a cold clone with committed config and no local state (hooksOnly=false)[33m 312[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:18.5242812Z  [32m✓[39m packages/cli/test/codex-project-paths.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1489[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:18.5246589Z    [33m[2m✓[22m[39m project hook commands survive relocation and nested cwd while preserving event stdin[33m 1187[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1422833Z  [32m✓[39m packages/cli/test/installers-powershell.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 7346[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1427552Z    [33m[2m✓[22m[39m PowerShell selects source and verifies the linked command[33m 803[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1429031Z    [33m[2m✓[22m[39m PowerShell refuses node-version before cloning[33m 450[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1430928Z    [33m[2m✓[22m[39m PowerShell refuses invalid-node-version before cloning[33m 443[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1462295Z    [33m[2m✓[22m[39m PowerShell refuses old-node-version before cloning[33m 482[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1467568Z    [33m[2m✓[22m[39m PowerShell updates only the selected existing branch[33m 844[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1479251Z    [33m[2m✓[22m[39m PowerShell preserves a checkout on a different branch[33m 786[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1482039Z    [33m[2m✓[22m[39m PowerShell stops after source-setup fails[33m 828[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1593053Z    [33m[2m✓[22m[39m PowerShell stops after pnpm:link fails[33m 959[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1670496Z    [33m[2m✓[22m[39m PowerShell defaults to main[33m 980[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.1693900Z    [33m[2m✓[22m[39m PowerShell rejects wrong pnpm before source mutation[33m 766[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6846022Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mthe do plane (integration, in-process)[2m > [22m[2manswers, approves, records, closes — the whole ceremony through the CLI
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6847121Z [22m[39manswered Q-1 by human:owner
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6847532Z answered Q-2 by human:owner
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6848032Z approved by human:owner at 2026-10-10T12:00:00Z
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6848487Z {"task":"T-1","status":"done","fail_streak":0}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6848929Z closed by human:owner: the record is frozen
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.6849216Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7002881Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo next (the frozen handout)[2m > [22m[2mhands out the task, saves the doing state, then reports closure honestly
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7003789Z [22m[39mtask T-1 — 2 items in the frozen slice (digest c85a13bb02f8…)
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7004235Z   D    D-1
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7004547Z   TASK T-1 — one
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7004705Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7844737Z [90mstdout[2m | packages/cli/test/do.test.ts[2m > [22m[2mdo accept / reject (the human act, last to port)[2m > [22m[2maccept resolves the decision and its questions; reject keeps them open
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7846039Z [22m[39maccepted D-9 by human:owner — resolved Q-1
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7846921Z rejected D-8: wrong shape — the questions stay open
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7847269Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:20.7860096Z  [32m✓[39m packages/cli/test/do.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 179[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:21.6986093Z  [32m✓[39m packages/cli/test/serve-runtime.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2910[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:21.6987731Z    [32m✓[39m shared service lifecycle [2m(8)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:21.6988862Z      [33m[2m✓[22m[39m cold-starts once across callers, survives parent command and restarts after stop[33m 1633[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:21.6990535Z      [33m[2m✓[22m[39m refuses a live or incomplete startup lock rather than expiring it[33m 400[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:21.6991958Z      [33m[2m✓[22m[39m recovers proven dead startup and recovery owners; unfinished candidates hold no lock[33m 692[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.3016082Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.5053057Z  [32m✓[39m packages/cli/test/know.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 516[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.6040944Z  [32m✓[39m packages/cli/test/feedback-harness.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1530[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.6042308Z    [33m[2m✓[22m[39m installs only feedback from canonical source on three surfaces, preserves foreign files and is idempotent[33m 328[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.6044822Z    [33m[2m✓[22m[39m context exposes counts and stable IDs without draft, submitted, reply or snapshot bodies and never admits work[32m 300[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.6046601Z    [33m[2m✓[22m[39m bounds context summaries and reports corrupt state without injecting its content or changing files[33m 900[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.7783029Z fatal: not a git repository (or any of the parent directories): .git
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:22.9277249Z  [32m✓[39m packages/web/test/pages.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 74[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:23.2580439Z  [32m✓[39m packages/knowledge/test/debts.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 115[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:23.5939762Z  [32m✓[39m packages/knowledge/test/ritual.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 860[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:23.5953103Z    [32m✓[39m the freshness stamp [2m(1)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:23.5960297Z      [33m[2m✓[22m[39m fresh at HEAD, stale after motion[33m 748[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:23.6013183Z  [32m✓[39m packages/knowledge/test/containment.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 134[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:24.8308466Z  [32m✓[39m packages/web/test/room-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:25.1537073Z  [32m✓[39m packages/web/test/theme.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 440[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.4770532Z  [32m✓[39m packages/web/test/project-library.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 486[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.8182598Z  [32m✓[39m packages/web/test/dom.smoke.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 419[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.8184038Z    [32m✓[39m the DOM harness (T-0 smoke) [2m(2)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.8185124Z      [33m[2m✓[22m[39m loads library.js, boots against the live server, and a click drives the router[33m 305[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.9659266Z  [32m✓[39m packages/brand/test/rebrand.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 304[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:26.9660187Z    [33m[2m✓[22m[39m rebrands repeatedly without changing internal identities and refuses invalid bins before writing[33m 302[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:28.3320199Z  [32m✓[39m packages/web/test/library-skin.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 289[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:28.7155460Z  [32m✓[39m packages/cli/test/project-registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 149[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:29.3044551Z  [32m✓[39m packages/cli/test/hook-entrypoint.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 456[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:29.3045411Z    [33m[2m✓[22m[39m executes hooks through ancestor aliases and leaves imported hooks silent with stdin intact[33m 455[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:30.6634049Z  [32m✓[39m packages/web/test/project-security.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 463[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:32.5269390Z  [32m✓[39m packages/web/test/inspector.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 4348[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:32.5277763Z    [32m✓[39m the phase inspector (T-3) [2m(1)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:32.5279303Z      [33m[2m✓[22m[39m renders the five phases with the exact FR-4 derivation states; click focuses the tab; read-only[33m 4346[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:33.4929437Z  [32m✓[39m packages/web/test/telemetry.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 902[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:33.4930062Z    [32m✓[39m the review telemetry + gate (T-8) [2m(1)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:33.4930651Z      [33m[2m✓[22m[39m renders the real counts, filters by severity, speaks the house sentence[33m 900[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:37.1873164Z  [32m✓[39m packages/cli/test/search-kb-install.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 4482[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:37.1893405Z    [33m[2m✓[22m[39m installs full search-kb resources for pi, preserves them on repeat, and refuses foreign edits[33m 704[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:37.1899703Z    [33m[2m✓[22m[39m installs full search-kb resources for claude, preserves them on repeat, and refuses foreign edits[33m 438[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:37.1939493Z    [33m[2m✓[22m[39m installs full search-kb resources for codex, preserves them on repeat, and refuses foreign edits[33m 2432[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:37.1950947Z    [33m[2m✓[22m[39m installs full search-kb resources for copilot, preserves them on repeat, and refuses foreign edits[33m 905[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:39.8293835Z  [32m✓[39m packages/cli/test/codex-context.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4153[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:39.8295120Z    [33m[2m✓[22m[39m runs the documented stdin/context contract, event workspace and next-event restart without owner acts[33m 4091[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:40.6718885Z  [32m✓[39m packages/cli/test/ci-report.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 488[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:40.6719712Z    [33m[2m✓[22m[39m retains failed and skipped gate outcomes without inventing a smoke success[33m 322[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:41.4120661Z  [32m✓[39m packages/cli/test/machine-managed-guard.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 609[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:41.4122367Z    [33m[2m✓[22m[39m guards actual corpus witnesses through argv, Claude stdin and Pi tool_call[33m 607[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:41.6371268Z  [32m✓[39m packages/knowledge/test/knowledge.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:41.6467253Z  [32m✓[39m packages/cli/test/pi-context.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 4096[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:41.6468613Z    [33m[2m✓[22m[39m registers once, uses ctx.cwd and reconnects before prompts without message mutation or session-owned shutdown[33m 4094[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:43.8133148Z  [32m✓[39m packages/cli/test/context.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1927[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:43.8134024Z    [33m[2m✓[22m[39m reports current gates and doing tasks without admission, writes or cross-worktree scanning[33m 1925[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:45.8246343Z  [32m✓[39m packages/cli/test/claude-context.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1871[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:45.8252546Z    [33m[2m✓[22m[39m connects startup/resume/preprompt workspace and never shuts down with session lifetime[33m 1870[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:46.3912373Z  [32m✓[39m packages/core/test/feedback-paths.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 350[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:46.3913235Z    [33m[2m✓[22m[39m maps the trusted root alias while refusing redirected descendants and sibling escapes[33m 348[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:49.0094578Z  [32m✓[39m packages/cli/test/harness-packages.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 7185[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:49.0095874Z    [33m[2m✓[22m[39m generates deterministic, local host packages and truthful capability metadata[33m 7183[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:49.1650463Z  [32m✓[39m packages/conformance/test/owner-schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:49.8570293Z  [32m✓[39m packages/core/test/core.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.0072109Z  [32m✓[39m packages/cli/test/init-skin.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.7166184Z [90mstdout[2m | packages/cli/test/native-path-identity.test.ts[2m > [22m[2midentifies the same native Git root despite filesystem path representations
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.7172649Z [22m[39mnative-path-identity/1 {"platform":"win32","node":"v22.23.3","input":"C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\native path identity 4u42dW","gitRoot":"C:/Users/runneradmin/AppData/Local/Temp/native path identity 4u42dW","lexicalWorkspace":"C:\\Users\\RUNNER~1\\AppData\\Local\\Temp\\native path identity 4u42dW","lexicalGit":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity 4u42dW","nativeWorkspace":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity 4u42dW","nativeGit":"C:\\Users\\runneradmin\\AppData\\Local\\Temp\\native path identity 4u42dW"}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.7177072Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.7187495Z  [32m✓[39m packages/cli/test/native-path-identity.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 576[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.7207867Z    [33m[2m✓[22m[39m identifies the same native Git root despite filesystem path representations[33m 575[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.8030350Z  [32m✓[39m packages/brand/test/brand-gate.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 972[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:50.8031597Z    [33m[2m✓[22m[39m ignores generated CI diagnostics while rejecting product literals in source[33m 970[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:51.2735989Z  [32m✓[39m packages/conformance/test/runner.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:51.5475530Z  [32m✓[39m packages/cli/test/banner.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:52.9663271Z  [32m✓[39m packages/conformance/test/corpus.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:53.1447876Z  [32m✓[39m packages/brand/test/brand.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:57.5046882Z  [31m❯[39m packages/web/test/room-keyboard.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 6426[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:57.5047606Z    [31m❯[39m the room keyboard (standalone harness) [2m(1)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:52:57.5048263Z [31m     [31m×[31m drives the ceremony: Enter submits, approve card reached[39m[33m 6424[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:10.7271210Z [90mstdout[2m | packages/cli/test/source-setup.test.ts[2m > [22m[2mreal native root frozen lifecycle builds the CLI without changing either lockfile
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:10.7273521Z [22m[39m{"nativeRootLifecycle":"win32","node":"v22.23.3","install":0,"compiledCli":0,"rootWrapper":0,"locks":{"pnpm-lock.yaml":"17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a","treadle\\pnpm-lock.yaml":"b6a01c90005b22006a617ed366e262527e565221bb3e0afc640f4068124a5ccb"}}
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:10.7274440Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9257277Z  [32m✓[39m packages/cli/test/source-setup.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 62138[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9258285Z    [33m[2m✓[22m[39m runs pinned install then build in the source workspace, independently of caller cwd[33m 2977[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9258947Z    [33m[2m✓[22m[39m uses only the pinned pnpm fallback when Corepack is absent[33m 1156[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9259582Z    [33m[2m✓[22m[39m refuses unavailable tools before installation[33m 407[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9260153Z    [33m[2m✓[22m[39m refuses wrong-version tools before installation[33m 380[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9260628Z    [33m[2m✓[22m[39m propagates install failure and stops[33m 710[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9261081Z    [33m[2m✓[22m[39m propagates build failure and stops[33m 1022[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9261676Z    [33m[2m✓[22m[39m real native root frozen lifecycle builds the CLI without changing either lockfile[33m 55413[2mms[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9307873Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9309025Z [31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9309454Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9312150Z [41m[1m FAIL [22m[49m packages/web/test/room-keyboard.test.ts[2m > [22mthe room keyboard (standalone harness)[2m > [22mdrives the ceremony: Enter submits, approve card reached
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9318276Z [31m[1mError[22m: Test timed out in 5000ms.
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9319381Z If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9320235Z [36m [2m❯[22m packages/web/test/room-keyboard.test.ts:[2m11:3[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9350347Z     [90m  9|[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9350973Z     [90m 10|[39m describe('the room keyboard (standalone harness)', () => {
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9351529Z     [90m 11|[39m   it('drives the ceremony: Enter submits, approve card reached', () =>…
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9352043Z     [90m   |[39m   [31m^[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9352492Z     [90m 12|[39m     const out = execFileSync(
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9352953Z     [90m 13|[39m       process.execPath,
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9353188Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9353445Z [31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9353718Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9355864Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9361381Z [2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m60 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (62)[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9363258Z [2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m321 passed[39m[22m[2m | [22m[33m15 skipped[39m[90m (337)[39m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9363768Z [2m   Start at [22m 14:51:52
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9367494Z [2m   Duration [22m 81.30s[2m (tests 88%, transform 5%, environment 4%, import 3%)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9390352Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9391586Z [2m    Isolate [22m [33m62 workers spawned[39m[2m · ~264ms startup each (spawn + environment, per file)[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9392760Z [2m            [22m [2mat least ~5.20s faster with [22m[33misolate: false[39m[2m — reuses workers across files instead of one per file[22m
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9393333Z 
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:13.9420920Z JSON report written to D:/a/wukong/wukong/treadle/test-results.json
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:14.0662577Z  ELIFECYCLE  Command failed with exit code 1.
+check (windows-latest, 22)	Typecheck, lint, format and tests	2026-10-12T14:53:14.1637877Z ##[error]Process completed with exit code 1.

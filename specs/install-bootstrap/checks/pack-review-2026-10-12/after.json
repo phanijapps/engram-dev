@@ -1,0 +1,16 @@
+{
+  "head": "71b5a2008d47461d7ea638a0628aa6422d0a95d0",
+  "changed": [],
+  "protectedBefore": {
+    "wiki/.okf/fingerprints.json": "df21baac037ef5c0dba533fa258603ce191af9a04852da4805d0b774e472aeb7",
+    "wiki/.okf/last-index.json": "8cf73f9a8dfcc227969bfbbd5890963714ffc4e40b18df105e948e84cdae27ab",
+    "specs/search-kb/search-kb.json": "09d7d18cfb4a17a3da0a2171c037ea17e293e746e673c538f8dac993ae49ec77",
+    "specs/search-kb/workflow.jsonl": "f87e97855707439e21267b899db41424d36bb1db59845a21ab4662ef86d0182a"
+  },
+  "protectedAfter": {
+    "wiki/.okf/fingerprints.json": "df21baac037ef5c0dba533fa258603ce191af9a04852da4805d0b774e472aeb7",
+    "wiki/.okf/last-index.json": "8cf73f9a8dfcc227969bfbbd5890963714ffc4e40b18df105e948e84cdae27ab",
+    "specs/search-kb/search-kb.json": "09d7d18cfb4a17a3da0a2171c037ea17e293e746e673c538f8dac993ae49ec77",
+    "specs/search-kb/workflow.jsonl": "f87e97855707439e21267b899db41424d36bb1db59845a21ab4662ef86d0182a"
+  }
+}

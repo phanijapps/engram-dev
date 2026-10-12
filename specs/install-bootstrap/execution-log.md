@@ -52,3 +52,30 @@ anchors with none needing review. Current logs:
 checks/delivery-2026-10-12T14-42-51-201Z/ and checks/T-4-attempt-2.log.
 Pass recorded at revision 15. Source/compiled artifacts are rebuilt. Final
 current-digest PACK review and PR publication follow; owner Finish remains pending.
+
+## Delivery supplement — 2026-10-12
+
+Implementation source is committed and pushed as `71b5a20`; draft PR #5 is
+https://github.com/phanijapps/wukong/pull/5. Independent read-only PACK review
+reran all four exact task commands with exit 0 at revision 15 and the unchanged
+plan and evidence digests. Actual report and before/after receipts are
+`review-pack.md` and `checks/pack-review-2026-10-12/`.
+
+Native CI run 38265890294 retained three failed attempts. The latest receipt
+reports Ubuntu and macOS Node 22/24 and Windows Node 22 passing, but Windows
+Node 24 failing on an existing telemetry test's 5000 ms timeout. Its eight
+source setup tests and ten PowerShell installer tests passed. The overall run
+is still failed; no all-platform claim is made.
+
+The user explicitly instructed "ignore windows errors for nwo". Windows error
+remediation is therefore deferred for this handoff, with raw logs and the
+qualified boundary retained in `delivery-status-2026-10-12.md` and independent
+`review-delivery-2026-10-12.md`. No implementation, CI configuration, task plan,
+or human workflow receipt is changed by the deferral. Recording the actual
+independent PACK verdict enables owner review; only the owner performs Finish.
+
+The guarded shared writer recorded the actual independent PACK PASS at revision
+16 for the unchanged plan and task evidence digests, retaining the qualified
+delivery exception in its note. The command `node
+specs/install-bootstrap/record-pack-review.mjs` exited 0. No human act was
+created; owner Finish remains pending.

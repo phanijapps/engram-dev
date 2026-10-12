@@ -1,0 +1,30 @@
+[
+  {
+    "task": "T-1",
+    "command": "pnpm exec vitest run packages/cli/test/source-setup.test.ts",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/install-bootstrap/checks/pack-review-2026-10-12/T-1.log"
+  },
+  {
+    "task": "T-2",
+    "command": "pnpm exec vitest run packages/cli/test/installers.test.ts packages/cli/test/installers-powershell.test.ts packages/cli/test/source-setup.test.ts",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/install-bootstrap/checks/pack-review-2026-10-12/T-2.log"
+  },
+  {
+    "task": "T-3",
+    "command": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/source-setup.test.ts",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/install-bootstrap/checks/pack-review-2026-10-12/T-3.log"
+  },
+  {
+    "task": "T-4",
+    "command": "node ../specs/install-bootstrap/verify-delivery.mjs",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/install-bootstrap/checks/pack-review-2026-10-12/T-4.log"
+  }
+]
