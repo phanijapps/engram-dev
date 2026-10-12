@@ -3,7 +3,7 @@
   "name": "install-bootstrap",
   "description": "Reliable source setup and Copilot initialization",
   "date": {
-    "updated": "2026-10-12T14:25:37Z"
+    "updated": "2026-10-12T14:31:01Z"
   },
   "status": {
     "lifecycle": "active",
@@ -300,7 +300,7 @@
     {
       "id": "T-2",
       "title": "Unify shell and PowerShell installers on current merged source",
-      "status": "todo",
+      "status": "done",
       "phase": "integration",
       "needs": [
         "T-1"
@@ -323,22 +323,28 @@
       "context": {
         "touch": [
           {
-            "path": "install.sh"
+            "path": "install.sh",
+            "sha256": "15f2cfd7acbfcad7ff0fdf68e9bcaba41fa586ee062e73eb089feb94be14c12d"
           },
           {
-            "path": "install.ps1"
+            "path": "install.ps1",
+            "sha256": "897d258f7fd237542b30d6b9de06cc1d4cdb4721b409aeb65c4efd5bb44e5ad1"
           },
           {
-            "path": "treadle/packages/cli/test/installers.test.ts"
+            "path": "treadle/packages/cli/test/installers.test.ts",
+            "sha256": "6db99b87a96ae25d7484f6b9ec1055a992fbdcaa1cb8664dea1f39d922bfbdca"
           },
           {
-            "path": "treadle/packages/cli/test/installers-powershell.test.ts"
+            "path": "treadle/packages/cli/test/installers-powershell.test.ts",
+            "sha256": "a56cee46803a8a27fcc53d7126eb65d60de1266b55e86d5c794d93e17b61a618"
           },
           {
-            "path": "scripts/setup.mjs"
+            "path": "scripts/setup.mjs",
+            "sha256": "a052a2b8a57c772a9b4f5c810a9b38546bef5a7809c9e9e21c317a1a9fd49679"
           },
           {
-            "path": "treadle/packages/cli/test/source-setup.test.ts"
+            "path": "treadle/packages/cli/test/source-setup.test.ts",
+            "sha256": "2f9e9e2127e76acb098b28b965bfe14b83eda26c424578385cc8fb2a399b5cbe"
           }
         ],
         "read": [
@@ -414,7 +420,16 @@
           "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
           "Use execution-log and actual command exits. Record native platform skips honestly."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/installers.test.ts packages/cli/test/installers-powershell.test.ts packages/cli/test/source-setup.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T14:31:01Z",
+          "by": "agent:codex",
+          "notes": "19 passed, 10 native Windows-only skips on Linux. Both source scripts use main/shared setup with pinned prereqs and preserve branch protection. Bash real command stubs prove wrong-tool/update/setup/link/verify short circuits; actual root lifecycle passes again. Exact log checks/T-2-attempt-2.log. Windows outcomes await native matrix."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -781,5 +796,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 9
+  "revision": 11
 }

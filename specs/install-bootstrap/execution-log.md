@@ -19,3 +19,11 @@ Actual log: checks/T-1-attempt-2.log. Pass recorded at revision 9.
 Windows process arguments use encoded literal PowerShell; caller paths enter
 through cwd. The real lifecycle test supplies native CI evidence after PR runs;
 local success does not establish those remote outcomes.
+
+T-2 admitted at revision 10. Both source installers now default to main and
+select pnpm 9.15.9 before source mutation. Shared setup performs install/build;
+the installer retains nested global link and real command verification.
+Protected branch mismatches still refuse without switching. Exact check after
+formatting passed 19 tests with 10 Windows-only skips on Linux. Failure fixtures
+cover wrong versions and failed update/setup/link/verification. Real root
+lifecycle passes again. Actual log: checks/T-2-attempt-2.log; pass revision 11.
