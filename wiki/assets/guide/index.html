@@ -676,6 +676,18 @@ treadle init harness --agent pi --scope project --yes</code></pre></div>
           </p>
         </div>
 
+          <p>
+            <strong>Workspace instructions, 2026-10-12:</strong> full project init creates
+            <code>AGENTS.md</code> with observed commands, repository paths, wiki retrieval,
+            and SDLC guidance. Existing instructions are preserved byte-for-byte in
+            <code>AGENTS.backup.md</code>; a differing backup blocks replacement.
+            Use <code>--no-project-guide</code> to keep root instructions untouched.
+            Global and <code>--hooks-only</code> installs do not generate the guide.
+            Removal preserves both documents; <code>--dry-run</code> and <code>--json</code>
+            are read-only previews for install and removal. The shared <code>search-kb</code>
+            skill supplies read-only OKF context to the SDLC skills.
+          </p>
+
         <div class="step" data-n="4">
           <h3>Undo it, exactly</h3>
           <div class="codewrap"><button class="copy">copy</button><pre><code>treadle init harness --agent pi --scope project --remove</code></pre></div>

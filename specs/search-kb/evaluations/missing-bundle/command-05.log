@@ -1,0 +1,4 @@
+stdout:
+
+stderr:
+ENOENT: no such file or directory, scandir '/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle/wiki'

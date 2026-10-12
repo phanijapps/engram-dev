@@ -1,0 +1,13 @@
+{
+  "format": "harness/0.1",
+  "agent": "copilot",
+  "scope": "project",
+  "written": [],
+  "wirings": [],
+  "at": "2026-10-12T04:37:52Z",
+  "projectGuide": {
+    "path": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide/AGENTS.md",
+    "sha256": "ade07a66437c75d6fbcefc435fccf5d60bc6872e34363e3af403255b6e45c98f",
+    "backup": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide/AGENTS.backup.md"
+  }
+}

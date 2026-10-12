@@ -1,0 +1,122 @@
+[
+  {
+    "name": "check",
+    "command": [
+      "pnpm",
+      "check"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "coverage",
+    "command": [
+      "pnpm",
+      "coverage"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "corpus-check",
+    "command": [
+      "pnpm",
+      "corpus:check"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "brand-check",
+    "command": [
+      "pnpm",
+      "brand:check"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "audit-prod",
+    "command": [
+      "pnpm",
+      "audit:prod"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "links",
+    "command": [
+      "pnpm",
+      "links"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wiki-fingerprints",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "fingerprints",
+      "..",
+      "../wiki"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wiki-stamp",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "stamp",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wiki-anchors",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wiki-validate",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "wiki-status",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  }
+]

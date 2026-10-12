@@ -1,0 +1,121 @@
+{
+  "id": "trust-lifecycle",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:51.741306+00:00",
+  "completedAt": "2026-10-12T04:40:33.613158+00:00",
+  "evaluator": "/root/search_kb_eval_a",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden -g '!.git'",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace /tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki policy --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki stable",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki draft",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki old",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/stable.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-10.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/draft.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-11.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/old.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "exitCode": 0,
+      "log": "command-12.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "wiki/draft.md": "5058594fa0a5b0b59a83c4ac17e643a8b7ef6809fb91d5647f8d405696bb5e49",
+    "wiki/index.md": "88c8ba5a905fe1af45e37e224e87d77f762697ed05f87d7ad718d370892ba6fb",
+    "wiki/old.md": "b289e5346417012d07ad3f94a3ddd9f917258ccffa5a38375ef7b1fd2ca17090",
+    "wiki/stable.md": "54b2ea58f6908940774f776f65cc7757f891d0ab6063268135012fdfb6f8389a"
+  },
+  "after": {
+    "wiki/draft.md": "5058594fa0a5b0b59a83c4ac17e643a8b7ef6809fb91d5647f8d405696bb5e49",
+    "wiki/index.md": "88c8ba5a905fe1af45e37e224e87d77f762697ed05f87d7ad718d370892ba6fb",
+    "wiki/old.md": "b289e5346417012d07ad3f94a3ddd9f917258ccffa5a38375ef7b1fd2ca17090",
+    "wiki/stable.md": "54b2ea58f6908940774f776f65cc7757f891d0ab6063268135012fdfb6f8389a"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The evaluator directly reads all three concepts and handles bare verified mappings correctly: human-reviewed stable, machine-confirmed draft, and unverified expired/deprecated history. It explicitly rejects automatic Start as accepted authority and makes no source-accuracy or runtime claim from advisory metadata. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

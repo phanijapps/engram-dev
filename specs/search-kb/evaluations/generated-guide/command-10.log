@@ -1,0 +1,4 @@
+     1	# Project rules
+     2	Knowledge is wiki/. Money values are integer cents, never floating point.
+
+STDERR:

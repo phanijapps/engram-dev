@@ -1,0 +1,12 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Old policy
+     4	description: Fixture context for Old policy.
+     5	status: deprecated
+     6	stale_after: "2000-01-01T00:00:00Z"
+     7	---
+     8	
+     9	Legacy policy forbids all retries.
+
+stderr:

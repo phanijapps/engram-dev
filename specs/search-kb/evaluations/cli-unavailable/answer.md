@@ -1,0 +1,3 @@
+Audit events have a **90-day retention period** according to KB concept `audit`. Its cited source agrees: `retentionDays = 90`. [Audit KB](/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable/wiki/audit.md:9), [Source constant](/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable/src/audit.ts:1)
+
+The harness CLI was unavailable, so I used direct Markdown retrieval and inspected the source. Those reads exited 0; CLI health, conformance, and freshness checks were not run. The concept has no verification metadata, and this evidence establishes the configured constant rather than proving that deployed cleanup actually enforces retention.

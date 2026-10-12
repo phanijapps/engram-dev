@@ -1,0 +1,5 @@
+stdout:
+      15  runtime/cache — Cache
+          The TTL is 45 seconds. Source: src/cache.ts:…
+
+stderr:

@@ -52,7 +52,12 @@ export function verifyEvaluation(root, id) {
   const result = JSON.parse(readFileSync(join(root, id, 'result.json'), 'utf8'));
   if (result.id !== id || result.skillDigest !== skillDigest()) throw Error(`${id}: stale/missing skill identity`);
   if (!result.startedAt || !result.completedAt || !result.evaluator) throw Error(`${id}: missing run identity/time`);
+  if (!result.before || !result.after || !Object.keys(result.before).length ||
+      !Object.values(result.before).every((v) => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v))) {
+    throw Error(`${id}: missing fixture baseline hashes`);
+  }
   if (JSON.stringify(result.before) !== JSON.stringify(result.after)) throw Error(`${id}: fixture mutation`);
+  if (JSON.stringify(snapshot(join(root, id, 'fixture'))) !== JSON.stringify(result.after)) throw Error(`${id}: archived fixture differs`);
   const output = join(root, id, 'answer.md');
   if (!lstatSync(output).isFile() || !readFileSync(output, 'utf8').trim()) throw Error(`${id}: missing actual output`);
   if (!Array.isArray(result.commands) || !result.commands.length || result.commands.some((c) =>

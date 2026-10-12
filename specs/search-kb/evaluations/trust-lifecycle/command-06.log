@@ -1,0 +1,9 @@
+stdout:
+      14  old — Old policy
+          Legacy policy forbids all retries.
+      13  draft — Draft policy
+          Proposed: allow automatic owner Start.
+      13  stable — Stable policy
+          A reviewed definition requires source confirmation for current behavior.
+
+stderr:

@@ -1,0 +1,116 @@
+{
+  "id": "source-conflict",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:49.826341+00:00",
+  "completedAt": "2026-10-12T04:40:12.247653+00:00",
+  "evaluator": "/root/search_kb_eval_b",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat AGENTS.md wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki 'retry timeout' --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki retries --depth 1 --budget 3000",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba src/retry.ts",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/retries.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    },
+    {
+      "command": "cat wiki/.okf/last-index.json",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-10.log",
+      "exit": 0
+    },
+    {
+      "command": "sha256sum src/retry.ts wiki/retries.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "exitCode": 0,
+      "log": "command-11.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "AGENTS.md": "9bd397d3b9117af973d3e902e0cc8e41ee0763c71eebdbafe61d9d5c65a7a7df",
+    "src/retry.ts": "cbd2b652bb65d25bfada80d7345f6697a98ddc2a6781c592845ad5ba790057c0",
+    "wiki/.okf/last-index.json": "3de391660204556eafd9eed8c34c94f714e49a125cad1014fffca8bb1a4aec27",
+    "wiki/index.md": "6baeaf5acea74c942a9e07ee943a352f0de73cada32a499ed7307d2eb0b3df42",
+    "wiki/retries.md": "f43b94738adcc908c6eb99817131f009914149c133289281e2c7d20c78736784"
+  },
+  "after": {
+    "AGENTS.md": "9bd397d3b9117af973d3e902e0cc8e41ee0763c71eebdbafe61d9d5c65a7a7df",
+    "src/retry.ts": "cbd2b652bb65d25bfada80d7345f6697a98ddc2a6781c592845ad5ba790057c0",
+    "wiki/.okf/last-index.json": "3de391660204556eafd9eed8c34c94f714e49a125cad1014fffca8bb1a4aec27",
+    "wiki/index.md": "6baeaf5acea74c942a9e07ee943a352f0de73cada32a499ed7307d2eb0b3df42",
+    "wiki/retries.md": "f43b94738adcc908c6eb99817131f009914149c133289281e2c7d20c78736784"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The answer joins footnote runtime to the inspected TypeScript source and contrasts its 12-second constant with the documented 30 seconds. It treats the production population descriptor as scope rather than a file, correctly reports unknown freshness and one anchor needing review, and preserves metadata instead of repairing the stamp. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

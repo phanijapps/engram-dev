@@ -1,0 +1,16 @@
+     1	---
+     2	type: System
+     3	title: Retries
+     4	description: Fixture context for Retries.
+     5	sources:
+     6	  - id: runtime
+     7	    resource: src/retry.ts
+     8	  - id: population
+     9	    resource: all retry jobs in production
+    10	---
+    11	
+    12	Timeout is 30 seconds.[^runtime]
+    13	
+    14	[^runtime]: Runtime source.
+
+STDERR:

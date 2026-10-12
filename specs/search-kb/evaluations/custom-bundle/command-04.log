@@ -1,0 +1,7 @@
+stdout:
+Knowledge lives in context/kb. Source resources resolve from the workspace root.
+# Knowledge
+
+- [Cache](runtime/cache.md)
+
+stderr:

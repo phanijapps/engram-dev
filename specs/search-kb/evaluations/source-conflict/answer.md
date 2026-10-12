@@ -1,0 +1,5 @@
+The current local source sets the retry timeout to **12 seconds** (`timeoutSeconds = 12`). [Runtime source](/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict/src/retry.ts:1)
+
+The KB concept `retries` instead says **30 seconds**, citing that same source through source ID `runtime`; this is a direct documentation/source conflict. The separate resource “all retry jobs in production” describes a scope, not an artifact I can inspect. Local source evidence establishes the constant, but does not establish what is deployed in production. [KB claim and provenance](/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict/wiki/retries.md:5)
+
+`know status wiki --workspace .` exited 0 but reported freshness **unknown** and **1 anchor needing review** (2 checked). Its index stamp contains `repo_head: fixture-head` and a January 1, 2026 timestamp; that stamp cannot verify current TypeScript content. The concept is unverified. The inspected source SHA-256 is `cbd2b652bb65d25bfada80d7345f6697a98ddc2a6781c592845ad5ba790057c0`. No metadata was refreshed. [Index stamp](/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict/wiki/.okf/last-index.json)

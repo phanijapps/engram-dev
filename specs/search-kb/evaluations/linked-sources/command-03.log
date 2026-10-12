@@ -1,0 +1,8 @@
+stdout:
+wiki/index.md
+wiki/systems/checkout.md
+src/checkout.ts
+wiki/systems/payments.md
+wiki/domain/inventory.md
+
+stderr:

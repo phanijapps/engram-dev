@@ -1,0 +1,11 @@
+     1	---
+     2	type: System
+     3	title: Audit
+     4	description: Fixture context for Audit.
+     5	sources:
+     6	  - resource: src/audit.ts
+     7	---
+     8	
+     9	Audit events are kept for 90 days. Source: src/audit.ts:1.
+
+STDERR:

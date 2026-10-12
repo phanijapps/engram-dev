@@ -1,0 +1,9 @@
+     1	---
+     2	type: System
+     3	title: Constraints
+     4	description: Fixture context for Constraints.
+     5	---
+     6	
+     7	Rollout starts with a single canary. Promotion needs human acceptance.
+
+STDERR:

@@ -1,0 +1,96 @@
+{
+  "id": "metadata-and-links",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:51.721913+00:00",
+  "completedAt": "2026-10-12T04:40:33.613019+00:00",
+  "evaluator": "/root/search_kb_eval_a",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden -g '!.git'",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace /tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki 'custom widget' --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki widget --depth 1 --budget 3000",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/widget.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/contracts/queue.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "exitCode": 1,
+      "log": "command-09.log",
+      "exit": 1
+    }
+  ],
+  "before": {
+    "wiki/index.md": "2e7dc07cf0b134c46efa811ddd762bb21eff7426afda86d294dc5e0d443d52b9",
+    "wiki/widget.md": "82e9bbc4f1651d682da8e28f8e5eeeb8818484ff977105c64eefc2b4db4beb3c"
+  },
+  "after": {
+    "wiki/index.md": "2e7dc07cf0b134c46efa811ddd762bb21eff7426afda86d294dc5e0d443d52b9",
+    "wiki/widget.md": "82e9bbc4f1651d682da8e28f8e5eeeb8818484ff977105c64eefc2b4db4beb3c"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The answer accepts a Vendor Widget type and extension with no optional title/description, correctly defaults lifecycle to stable and verification to unverified, and reports the missing bundle-root queue contract. The failed target read and three status warnings are retained and accurately distinguished from invalidation of usable evidence. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

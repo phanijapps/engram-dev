@@ -1,0 +1,7 @@
+stdout:
+      17  systems/checkout — Checkout
+          Reserve inventory before charging. See [payments…
+      14  domain/inventory — Inventory
+          A failed reservation stops checkout.
+
+stderr:

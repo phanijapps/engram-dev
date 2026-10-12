@@ -1,0 +1,1 @@
+Current HEAD stamp retained; mutating fingerprints/stamp commands were not rerun. Source accuracy still requires direct inspection; TypeScript/Markdown are not baselined.

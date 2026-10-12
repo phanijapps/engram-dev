@@ -1,0 +1,7 @@
+---
+type: System
+title: Replication
+description: Fixture context for Replication.
+---
+
+Writes wait for two replicas before acknowledging. No failover guarantee is declared.

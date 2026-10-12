@@ -1,0 +1,18 @@
+      18  initiatives/browser-agent-feedback — Browser feedback for coding agents
+          …diffs, with comments
+followed by coding-agent revisions, inside Wukong's existin…
+      13  project/setup — Installation and workspace setup
+          … walkthrough
+retains historical install instructions; use the current repository…
+       6  domain/policy-no-session-capture-in-engine — The engine never captures sessions, transcripts, or tokens
+          …Policy
+
+The okf engine does not capture agent sessions, transcripts, or token
+us…
+       6  initiatives/fresh-harness — fresh-harness: initiative record
+          # Purpose
+
+Install the harness on agent platforms with truthful plans, rev…
+       6  systems/sdd-harness-architecture — SDD harness architecture
+          …d claims.
+Task evidence can identify an agent or human. These are caller claims,…

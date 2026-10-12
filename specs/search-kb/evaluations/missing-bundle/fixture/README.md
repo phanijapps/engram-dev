@@ -1,0 +1,1 @@
+The deploy script records a release id. No knowledge bundle has been created.

@@ -1,0 +1,12 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Draft policy
+     4	description: Fixture context for Draft policy.
+     5	status: draft
+     6	verified: { by: "process:lint", at: "2026-01-01T00:00:00Z" }
+     7	---
+     8	
+     9	Proposed: allow automatic owner Start.
+
+stderr:

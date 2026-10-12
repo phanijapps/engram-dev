@@ -23,8 +23,18 @@ function run(name, argv) {
 }
 for (const gate of ['check', 'coverage', 'corpus:check', 'brand:check', 'audit:prod', 'links']) run(gate.replace(':', '-'), ['pnpm', gate]);
 const cli = ['pnpm', 'exec', 'tsx', 'packages/cli/src/main.ts'];
-run('wiki-fingerprints', [...cli, 'know', 'fingerprints', '..', '../wiki']);
-run('wiki-stamp', [...cli, 'know', 'stamp', '../wiki', '--workspace', '..']);
+const head = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: repo, encoding: 'utf8' });
+let currentStamp = false;
+try { currentStamp = head.status === 0 && JSON.parse(readFileSync(join(repo, 'wiki/.okf/last-index.json'), 'utf8')).repo_head === head.stdout.trim(); }
+catch { /* A missing/malformed stamp needs the authorized maintenance pass. */ }
+if (results.every((r) => r.exit === 0) && !currentStamp) {
+  run('wiki-fingerprints', [...cli, 'know', 'fingerprints', '..', '../wiki']);
+  run('wiki-stamp', [...cli, 'know', 'stamp', '../wiki', '--workspace', '..']);
+} else {
+  writeFileSync(join(dir, 'wiki-maintenance-note.txt'), currentStamp
+    ? 'Current HEAD stamp retained; mutating fingerprints/stamp commands were not rerun. Source accuracy still requires direct inspection; TypeScript/Markdown are not baselined.\n'
+    : 'Repository gates failed; fingerprints/stamp were not refreshed to conceal stale metadata.\n');
+}
 run('wiki-anchors', [...cli, 'know', 'anchors', '../wiki', '--workspace', '..']);
 run('wiki-validate', [...cli, 'know', 'validate', '../wiki']);
 run('wiki-status', [...cli, 'know', 'status', '../wiki', '--workspace', '..']);

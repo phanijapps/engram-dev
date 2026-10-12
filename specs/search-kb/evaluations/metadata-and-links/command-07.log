@@ -1,0 +1,18 @@
+stdout:
+<!-- okf context: seed=widget depth=1 token_budget=3000 -->
+
+<!-- trust tier: unverified (§5.3, advisory) -->
+
+# widget (seed)
+
+---
+type: Vendor Widget
+custom_extension: keep-this
+---
+
+The widget uses a queue. [Unwritten contract](/contracts/queue.md).
+
+
+
+
+stderr:

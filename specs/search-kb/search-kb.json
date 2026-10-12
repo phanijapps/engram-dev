@@ -3,11 +3,11 @@
   "name": "search-kb",
   "description": "Search OKF knowledge before SDLC work",
   "date": {
-    "updated": "2026-10-12T04:34:53Z"
+    "updated": "2026-10-12T04:52:29Z"
   },
   "status": {
     "lifecycle": "active",
-    "deliverable": "in_progress"
+    "deliverable": "in_review"
   },
   "metadata": {
     "brief": {
@@ -588,7 +588,7 @@
     {
       "id": "T-3",
       "title": "Evaluate behavior, verify delivery and prepare the PR",
-      "status": "todo",
+      "status": "done",
       "phase": "review",
       "needs": [
         "T-4"
@@ -655,97 +655,143 @@
         ],
         "touch": [
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md",
+            "sha256": "2dd71d841d5d0cd6c0a76907e2a4883e9388fda205f7d91e0b50c8e3cb8f7713"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/resources/okf-consumption.md",
+            "sha256": "db2440c518dc0020e55c00ad3a3cffafe27cdc2e053d24c9013bca0af44d21e1"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json"
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/cases.json",
+            "sha256": "b8e2d8daa93b63351d6215e1798f54faf3e71497baab864db843ed9c7e2eae37"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/search-kb/evals/rubric.md",
+            "sha256": "5f3565f6e8464e59f767526edc92d1ef86f93dc1e2d6e1edcf476f19a0982ed6"
           },
           {
-            "path": "specs/search-kb/verify-skill.mjs"
+            "path": "specs/search-kb/verify-skill.mjs",
+            "sha256": "ae6b290eb108eeab5b69c8e0127feac8acc6366f8482dd3751c884f80819e26f"
           },
           {
-            "path": "specs/search-kb/verify-delivery.mjs"
+            "path": "specs/search-kb/verify-delivery.mjs",
+            "sha256": "7b3b7f847e769d38482fe0b12a1c121e48c418cfc8ea8be42e976d58e1564ef8"
           },
           {
-            "path": "specs/search-kb/eval-support.mjs"
+            "path": "specs/search-kb/eval-support.mjs",
+            "sha256": "21040c345d5f0d7d67297401409457b6dd3501d4307a7cfd5698552c1cbe7322"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md",
+            "sha256": "1a337fc98dfa589e891cb44e0c7518486744d19e52ef2d49ca84177b46d6b430"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md",
+            "sha256": "b75ded1b0f1efc27c863226c6d2f87e500bcbde62d3069b2f5f788f2614a9f3e"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md",
+            "sha256": "741edec923e2375a11bbe01fe1958b0166c348d2402e03bf7b037c3b0b771e73"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md",
+            "sha256": "f14bd0714bddbb62d81a7e54133704701f971f632c06a7d43e5a740eef06e6f8"
           },
           {
-            "path": "treadle/packages/cli/test/search-kb-install.test.ts"
+            "path": "treadle/packages/cli/test/search-kb-install.test.ts",
+            "sha256": "16c450eefa2acfa5e1893b847de86b2a41d043c5e87b481937d6a8b934f599c5"
           },
           {
-            "path": "wiki/project/setup.md"
+            "path": "wiki/project/setup.md",
+            "sha256": "f2857cbc60505a81ec17b9a85828d2f3c1c5f547eaf3ac47ae5c0f89f088f680"
           },
           {
-            "path": "wiki/domain/wiki-contract.md"
+            "path": "wiki/domain/wiki-contract.md",
+            "sha256": "076cbef326125b2209515f39a5a4c6d74e1a1a7d03882be39f12d0abe1063695"
           },
           {
-            "path": "wiki/.okf/fingerprints.json"
+            "path": "wiki/.okf/fingerprints.json",
+            "sha256": "30adbd2d5fa7358a6d3626352d362b9556c58d9b34483ed458e11718355c1146"
           },
           {
-            "path": "wiki/.okf/last-index.json"
+            "path": "wiki/.okf/last-index.json",
+            "sha256": "2b8ac0c2600b6d72f40703b881daf704fe05178372d5b9d238f88a3dd2a5e99c"
           },
           {
-            "path": "treadle/packages/cli/src/harness/agents-guide.ts"
+            "path": "treadle/packages/cli/src/harness/agents-guide.ts",
+            "sha256": "28d2f89b6e992bba629c51099d0ceed842952bd2c30d5ce80b5cc82dac30813b"
           },
           {
-            "path": "treadle/packages/cli/src/harness/types.ts"
+            "path": "treadle/packages/cli/src/harness/types.ts",
+            "sha256": "24b6faa698d3ecd396e232b17fa846719791e513f13da4c77a3c5328c8e7e960"
           },
           {
-            "path": "treadle/packages/cli/src/harness/plan.ts"
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "b07a09dc62ba6da1fd1b17f64f98ee7e9278f37129144a6da1d4af31b00634fa"
           },
           {
-            "path": "treadle/packages/cli/src/harness/apply.ts"
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "e10d343af4bf001c0f4d0c4c55afcfe784a97f6c42fc07d26f0d83e79d363666"
           },
           {
-            "path": "treadle/packages/cli/src/commands/init.ts"
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "f40b3d0ecce9a7272ee500039b990bc71eff57d169334cca652e7258822e8ad3"
           },
           {
-            "path": "treadle/packages/cli/harness/templates/AGENTS.md"
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md",
+            "sha256": "c0c064b1b0973a9a4466c0c2bf3b065a14af436e8302dd8606caa6a01306b4b7"
           },
           {
-            "path": "treadle/packages/cli/test/agents-guide.test.ts"
+            "path": "treadle/packages/cli/test/agents-guide.test.ts",
+            "sha256": "69e8e063f9f701c8be5029e8e4906db8ba173e6a9b3ece9e9a16e809321c1b30"
           },
           {
-            "path": "treadle/packages/cli/test/init-engine.test.ts"
+            "path": "treadle/packages/cli/test/init-engine.test.ts",
+            "sha256": "87696f4f2e8cf466976bb4a8d1fdeb99d03c78b18f418b3aaf8c3b0e5e1ea64a"
           },
           {
-            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "db61fe7924acb8593daae8e086caeeff6b342eccc111bde9407252ede35cdee4"
           },
           {
-            "path": "treadle/packages/cli/test/init-skin.test.ts"
+            "path": "treadle/packages/cli/test/init-skin.test.ts",
+            "sha256": "dad41829e8d817cc83855c9a6c0ed0668b34dfd7cd098af5db7baa5765511dde"
           },
           {
-            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "594ddccd53aad012b11abfaea172999dee28282944867fbc594674d911368155"
           },
           {
-            "path": "AGENTS.md"
+            "path": "AGENTS.md",
+            "sha256": "48d6766e7c3ec8adb502de1fb8d0b0e5a7e65ed5f142000f35c0b4e65924f4f6"
           },
           {
-            "path": "AGENTS.backup.md"
+            "path": "AGENTS.backup.md",
+            "sha256": "2e4bcc8316dcde29ab6c809f32a6d58a10fb1d7747fd7ee371508aed776d66a5"
           },
           {
-            "path": "wiki/assets/guide/index.html"
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "2292618a2627fa99d2cb681a4d60572d397f5412a6e85caf8d59da0998521313"
           }
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "node ../specs/search-kb/verify-delivery.mjs",
+          "exit": 1,
+          "at": "2026-10-12T04:48:06Z",
+          "by": "agent:codex",
+          "notes": "All11 independent behavioral cases pass4/4 and hashes unchanged. Delivery failed on unused import lint and new brand fixture literals; coverage/corpus/audit/links pass, wiki0errors0warnings190anchors0review fresh. Failures and every actual gate result retained in checks/delivery-2026-10-12T04-46-30-056Z; repairing within source/test scope before rerun."
+        },
+        {
+          "cmd": "node ../specs/search-kb/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-12T04:52:29Z",
+          "by": "agent:codex",
+          "notes": "11 blind cases independently graded all five critical gates and4/4; 109 actual command records and unchanged fixture hashes retained. All six repository gates pass;312 tests,9 skipped; coverage floors met;wiki190anchors0review0errors0warningsfresh. First delivery failure retained and scoped lint/brand fixes verified. Mutating wiki maintenance ran once; rerun retained current HEAD stamp. Evidence checks/T-3-attempt-2.log and delivery-2026-10-12T04-50-12-243Z. PR publication follows independent current-digest PACK review."
+        }
+      ]
     }
   ],
   "workflow": {
@@ -804,5 +850,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 16
+  "revision": 19
 }

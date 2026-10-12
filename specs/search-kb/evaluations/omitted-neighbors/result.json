@@ -1,0 +1,98 @@
+{
+  "id": "omitted-neighbors",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:49.852551+00:00",
+  "completedAt": "2026-10-12T04:40:12.247986+00:00",
+  "evaluator": "/root/search_kb_eval_b",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat AGENTS.md wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 1,
+      "log": "command-04.log",
+      "exit": 1
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki 'service rollout constraints' --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki service --depth 1 --budget 3000",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki constraints",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/constraints.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "wiki/constraints.md": "b79b01b48e348060d1d8e7d86aa9916f1212d6f559f7af5b911a0344518c3f76",
+    "wiki/index.md": "b02df54526521228cf252f095a2e3d73ca51caa51a80fd4292dde7498154437d",
+    "wiki/service.md": "765cc501a7516376aef5abac9ae9cf716d3561e82b15352ce5b545863121ffb5"
+  },
+  "after": {
+    "wiki/constraints.md": "b79b01b48e348060d1d8e7d86aa9916f1212d6f559f7af5b911a0344518c3f76",
+    "wiki/index.md": "b02df54526521228cf252f095a2e3d73ca51caa51a80fd4292dde7498154437d",
+    "wiki/service.md": "765cc501a7516376aef5abac9ae9cf716d3561e82b15352ce5b545863121ffb5"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The actual neighborhood log includes the oversized seed and explicit omitted constraints marker. The evaluator reads constraints directly and cites the canary and human-acceptance requirements, explains the retrieval gap, and does not imply either source enforcement or owner acceptance. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

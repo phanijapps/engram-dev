@@ -1,0 +1,11 @@
+
+> treadle-root@ check /home/videogamer/code/memex_beta/treadle
+> tsc --build && eslint . && prettier --check . && vitest run
+
+
+/home/videogamer/code/memex_beta/treadle/packages/cli/src/harness/agents-guide.ts
+  14:25  error  'relative' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

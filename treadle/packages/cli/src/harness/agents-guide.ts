@@ -11,7 +11,7 @@ import {
   rmSync,
   writeFileSync,
 } from 'node:fs';
-import { dirname, join, relative } from 'node:path';
+import { dirname, join } from 'node:path';
 import { brand } from '@treadle/brand';
 import type { GuideInput, ProjectGuidePlan } from './types.js';
 

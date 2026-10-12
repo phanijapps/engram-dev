@@ -183,11 +183,11 @@ it('preserves both root documents and user edits during remove', () => {
 });
 it('renders observed root/nested commands and wiki usage without executing scripts or guessing conventions', () => {
   const f = fixture();
-  mkdirSync(join(f.root, 'treadle'));
+  mkdirSync(join(f.root, 'workspace'));
   mkdirSync(join(f.root, 'wiki'));
   writeFileSync(join(f.root, 'wiki/index.md'), '# Knowledge\n');
   writeFileSync(
-    join(f.root, 'treadle/package.json'),
+    join(f.root, 'workspace/package.json'),
     JSON.stringify({
       name: 'workspace',
       packageManager: 'pnpm@9.15.9',
@@ -195,7 +195,7 @@ it('renders observed root/nested commands and wiki usage without executing scrip
     }),
   );
   const p = f.plan();
-  expect(p.guide?.content).toContain('From `treadle`');
+  expect(p.guide?.content).toContain('From `workspace`');
   expect(p.guide?.content).toContain('pnpm run check');
   expect(p.guide?.content).toContain('know search wiki');
   expect(existsSync(join(f.root, 'PWNED'))).toBe(false);

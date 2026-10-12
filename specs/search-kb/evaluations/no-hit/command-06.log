@@ -1,0 +1,5 @@
+stdout:
+       1  domain/replication — Replication
+          …r two replicas before acknowledging. No failover guarantee is declared.
+
+stderr:

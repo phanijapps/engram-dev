@@ -1,0 +1,10 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Payments
+     4	description: Fixture context for Payments.
+     5	---
+     6	
+     7	Charge only after a successful reservation.
+
+stderr:

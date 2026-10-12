@@ -1,0 +1,5 @@
+stdout:
+      14  domain/replication — Replication
+          Writes wait for two replicas before acknowledging. No failov…
+
+stderr:

@@ -1,0 +1,45 @@
+stdout:
+<!-- okf context: seed=systems/checkout depth=1 token_budget=3000 -->
+
+<!-- trust tier: unverified (§5.3, advisory) -->
+
+# systems/checkout (seed)
+
+---
+type: System
+title: Checkout
+description: Fixture context for Checkout.
+sources:
+  - id: checkout
+    resource: src/checkout.ts
+---
+
+Reserve inventory before charging. See [payments](./payments.md) and [inventory](/domain/inventory.md).
+Source: src/checkout.ts:1.
+
+
+# domain/inventory (depth 1)
+
+---
+type: System
+title: Inventory
+description: Fixture context for Inventory.
+---
+
+A failed reservation stops checkout.
+
+
+# systems/payments (depth 1)
+
+---
+type: System
+title: Payments
+description: Fixture context for Payments.
+---
+
+Charge only after a successful reservation.
+
+
+
+
+stderr:
