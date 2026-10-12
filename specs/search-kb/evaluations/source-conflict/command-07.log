@@ -1,0 +1,25 @@
+<!-- okf context: seed=retries depth=1 token_budget=3000 -->
+
+<!-- trust tier: unverified (§5.3, advisory) -->
+
+# retries (seed)
+
+---
+type: System
+title: Retries
+description: Fixture context for Retries.
+sources:
+  - id: runtime
+    resource: src/retry.ts
+  - id: population
+    resource: all retry jobs in production
+---
+
+Timeout is 30 seconds.[^runtime]
+
+[^runtime]: Runtime source.
+
+
+
+
+STDERR:

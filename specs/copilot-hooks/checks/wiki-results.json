@@ -1,0 +1,79 @@
+[
+  {
+    "name": "fingerprints",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "fingerprints",
+      "..",
+      "../wiki"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "stamp",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "stamp",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "anchors",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "validate",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  },
+  {
+    "name": "knowledge-status",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "cwd": "treadle",
+    "exit": 0
+  }
+]

@@ -3,6 +3,9 @@ name: review
 description: Independently verify registered specpack tasks against their plan, source changes, and current evidence. Re-run task verification and record findings without applying implementation fixes. Use for reviewing landed SDD work or checking completion claims.
 ---
 
+When repository knowledge is needed for this step, use the installed `search-kb` skill for read-only OKF retrieval and source checks.
+If that skill is unavailable, use the existing wiki/source procedure below. Retrieval does not grant task admission or owner permission.
+
 CLI examples below use `do` and `know` subcommands. Prefix them with the installed
 harness executable; check its `--help` output or use the documented Node entry.
 

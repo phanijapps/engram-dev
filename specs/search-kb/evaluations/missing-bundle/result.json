@@ -1,0 +1,82 @@
+{
+  "id": "missing-bundle",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:51.688935+00:00",
+  "completedAt": "2026-10-12T04:40:33.612750+00:00",
+  "evaluator": "/root/search_kb_eval_a",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden -g '!.git'",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat README.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace /tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 1,
+      "log": "command-05.log",
+      "exit": 1
+    },
+    {
+      "command": "nl -ba src/deploy.ts",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba README.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "README.md": "a147a555743986f02d5ddf0d706f9e577f35c1f27827f22d54fd8002c05365d1",
+    "src/deploy.ts": "3ee24a56b83beb47606a785c2e06e145db0d8776f893ccb496c061cce582a6a9"
+  },
+  "after": {
+    "README.md": "a147a555743986f02d5ddf0d706f9e577f35c1f27827f22d54fd8002c05365d1",
+    "src/deploy.ts": "3ee24a56b83beb47606a785c2e06e145db0d8776f893ccb496c061cce582a6a9"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The evaluator observes the absent wiki directory and actual status exit 1, reads the README and deploy constant, and reports rollback policy gaps without inventing triggers or approvals. It creates no bundle and does not treat an empty validation as coverage. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

@@ -1,0 +1,11 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Stable policy
+     4	description: Fixture context for Stable policy.
+     5	verified: { by: "human:alex", at: "2026-01-01T00:00:00Z" }
+     6	---
+     7	
+     8	A reviewed definition requires source confirmation for current behavior.
+
+stderr:

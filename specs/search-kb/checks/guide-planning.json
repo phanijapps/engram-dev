@@ -1,0 +1,31 @@
+{
+  "revision": 4,
+  "schema_attempts": [
+    {
+      "revision": 3,
+      "exit": 1,
+      "error": "tasks/2/context/links/0 requires why"
+    },
+    {
+      "revision": 4,
+      "exit": 0
+    }
+  ],
+  "artifact_hashes": {
+    "checked": 11,
+    "exit": 0
+  },
+  "dag": {
+    "order": [
+      "T-1",
+      "T-2",
+      "T-4",
+      "T-3"
+    ],
+    "entry": [
+      "T-1"
+    ],
+    "exit": 0
+  },
+  "implementation": "not admitted; no owner acts"
+}

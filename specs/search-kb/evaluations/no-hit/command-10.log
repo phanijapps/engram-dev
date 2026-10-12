@@ -1,0 +1,10 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Replication
+     4	description: Fixture context for Replication.
+     5	---
+     6	
+     7	Writes wait for two replicas before acknowledging. No failover guarantee is declared.
+
+stderr:

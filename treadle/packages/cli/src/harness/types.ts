@@ -6,7 +6,13 @@ export type Scope = 'project' | 'global';
 export type ComponentKind = 'skill' | 'agent';
 
 export interface HookWiring {
-  kind: 'extension' | 'settings-hooks' | 'config-notify' | 'config-hooks' | 'prompt-file';
+  kind:
+    | 'extension'
+    | 'settings-hooks'
+    | 'config-notify'
+    | 'config-hooks'
+    | 'copilot-hooks'
+    | 'prompt-file';
   dest?: string;
   /** prompt-file wiring: the prompt template to install (the JS payload is not the prompt) */
   prompt?: string;
@@ -53,8 +59,25 @@ export interface PlanRow {
 
 export interface Plan {
   rows: PlanRow[];
+  guide?: ProjectGuidePlan;
   /** wiring actions the apply step performs after file rows (hook settings/config merges). */
   wirings: { surface: Surface; kind: HookWiring['kind']; target: string; detail: string }[];
+}
+
+export interface GuideInput {
+  path: string;
+  kind: 'missing' | 'file' | 'large-file' | 'directory' | 'symlink' | 'other' | 'directories';
+  sha256?: string;
+}
+
+export interface ProjectGuidePlan {
+  destination: string;
+  backup: string;
+  mode: 'create' | 'same' | 'replace' | 'refuse';
+  content: string;
+  inputs: GuideInput[];
+  backupRequired: boolean;
+  note?: string;
 }
 
 export interface InstallChoices {
@@ -62,6 +85,7 @@ export interface InstallChoices {
   scope: Scope;
   skills: string[] | 'all';
   agents: boolean;
+  projectGuide?: boolean;
   hooks: boolean;
   root: string;
   manifestPath?: string | undefined;

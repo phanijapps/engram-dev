@@ -1,0 +1,44 @@
+[
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-01.log"
+  },
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-02.log"
+  },
+  {
+    "command": "rg --files --hidden .",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-03.log"
+  },
+  {
+    "command": "cat AGENTS.md wiki/index.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 1,
+    "log": "command-04.log"
+  },
+  {
+    "command": "rg -n 'retention|audit' wiki",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-05.log"
+  },
+  {
+    "command": "nl -ba wiki/audit.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-06.log"
+  },
+  {
+    "command": "nl -ba src/audit.ts",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+    "exitCode": 0,
+    "log": "command-07.log"
+  }
+]

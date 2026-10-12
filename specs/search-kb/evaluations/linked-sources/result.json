@@ -1,0 +1,116 @@
+{
+  "id": "linked-sources",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:51.647712+00:00",
+  "completedAt": "2026-10-12T04:40:33.612328+00:00",
+  "evaluator": "/root/search_kb_eval_a",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden -g '!.git'",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace /tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki 'checkout inventory card' --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki systems/checkout --depth 1 --budget 3000",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba src/checkout.ts",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/systems/checkout.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/domain/inventory.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-10.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/systems/payments.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "exitCode": 0,
+      "log": "command-11.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "src/checkout.ts": "41f3fda1aba388c5b6ac420e5353629a078372d46f29f14ad6797ff0979ba956",
+    "wiki/domain/inventory.md": "a3fd5b3c4f0b4e0cb45fd3aff48a40db05c54462ef1e1b28c02f75b7b0f89e66",
+    "wiki/index.md": "9606a76f53a9396586f23493dc4dc1c8f11f2bdf0841397c7a0cb1b8f7cca2b7",
+    "wiki/systems/checkout.md": "427d0f1e4d8e978a1cdef5bacdb73f4ca51b24dbd3550d8643ca0f6f3767f9e3",
+    "wiki/systems/payments.md": "b57993ef375185fcae052e04e3d0f36868d91627e0c342a22f97dcd1f4bf2fe2"
+  },
+  "after": {
+    "src/checkout.ts": "41f3fda1aba388c5b6ac420e5353629a078372d46f29f14ad6797ff0979ba956",
+    "wiki/domain/inventory.md": "a3fd5b3c4f0b4e0cb45fd3aff48a40db05c54462ef1e1b28c02f75b7b0f89e66",
+    "wiki/index.md": "9606a76f53a9396586f23493dc4dc1c8f11f2bdf0841397c7a0cb1b8f7cca2b7",
+    "wiki/systems/checkout.md": "427d0f1e4d8e978a1cdef5bacdb73f4ca51b24dbd3550d8643ca0f6f3767f9e3",
+    "wiki/systems/payments.md": "b57993ef375185fcae052e04e3d0f36868d91627e0c342a22f97dcd1f4bf2fe2"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The answer derives reservation-before-charge and failure stopping from all three inspected concepts, resolves both link forms, and reads src/checkout.ts. It correctly limits the source constant to ordering intent rather than claiming an executable checkout flow. Status/search/read logs support the reported exits and no-stamp limitation. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

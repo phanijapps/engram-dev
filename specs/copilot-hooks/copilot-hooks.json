@@ -1,0 +1,539 @@
+{
+  "id": "copilot-hooks",
+  "name": "copilot-hooks",
+  "description": "Copilot lifecycle hook integration",
+  "date": {
+    "updated": "2026-10-11T22:19:13Z",
+    "closed": {
+      "at": "2026-10-11T22:19:13Z",
+      "by": "human:owner"
+    }
+  },
+  "status": {
+    "lifecycle": "complete",
+    "deliverable": "delivered"
+  },
+  "metadata": {
+    "analysis": {
+      "ref": "analysis.md",
+      "type": "text/markdown",
+      "sha256": "3aa924a2c41e1717f67b1096045336d83775e976255d75eb0b9e271a6cf7381b"
+    },
+    "brief": {
+      "ref": "brief.md",
+      "type": "text/markdown",
+      "sha256": "5af908858c3d65b8fcd0c2c2de484eed379ce7c1388d3f2347aae2e763bf1fbe"
+    },
+    "spec": {
+      "ref": "spec.md",
+      "type": "text/markdown",
+      "sha256": "974633f90ed8016637b39a0f03a34d27bc82d85d3a32b47644559d40134d4ba9"
+    },
+    "design": {
+      "ref": "design.md",
+      "type": "text/markdown",
+      "sha256": "3b59c56cfc854b1efca9a0ff4fce7432fd12a75c0ceba61ce5214e9a850e6942"
+    },
+    "plan": {
+      "ref": "plan.md",
+      "type": "text/markdown",
+      "sha256": "67834f543436855646441c3eb260b1eff4ed05ad13b8ab8853e8369a23e34d27"
+    },
+    "review": {
+      "ref": "implementation-review.md",
+      "type": "text/markdown",
+      "sha256": "b45ed5b9a2771503228679ff5d7be19f282194d22c3c80f767c8eab68df40b37"
+    }
+  },
+  "spec": {
+    "why": "Correct the false platform limitation and add local Copilot CLI lifecycle wiring with explicit cloud boundaries.",
+    "requirements": [
+      {
+        "id": "FR-1",
+        "text": "Project Copilot installation emits version 1 .github/hooks/wukong.json with direct event arrays, cross-platform command fields, and a 60-second timeout.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-2",
+        "text": "A bounded local adapter returns top-level sessionStart context; prompt callbacks reconnect without claiming discarded stdout reaches the model.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-3",
+        "text": "Upgrade and removal preserve foreign files, event entries, and settings; malformed owned hook configuration refuses modification.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-4",
+        "text": "Copilot limitations describe Wukong installed scope; cloud bootstrap and native execution claims require their own evidence.",
+        "priority": "P1"
+      },
+      {
+        "id": "FR-5",
+        "text": "Existing host wiring and owner authority remain intact; repository gates and wiki health pass.",
+        "priority": "P1"
+      }
+    ],
+    "clarifications": [],
+    "out_of_scope": [
+      "Cloud runtime bootstrap",
+      "User-level Copilot installation",
+      "VS Code extension hooks",
+      "preToolUse write gates",
+      "Native packages and publication",
+      "Native CLI activation and cloud job acceptance"
+    ]
+  },
+  "design": {
+    "decisions": [
+      {
+        "id": "D-1",
+        "decision": "Implement project-scoped local Copilot CLI sessionStart context and userPromptSubmitted reconnection; defer cloud bootstrap and native host acceptance.",
+        "because": "The documented prompt command output is discarded; local service reuse is bounded and cloud sandbox deployment is separate. See design.md for alternatives.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      },
+      {
+        "id": "D-2",
+        "decision": "Add an additive copilot-hooks wiring kind and dedicated wrapper, with exact ownership handling for .github/hooks/wukong.json.",
+        "because": "Copilot direct arrays and top-level context differ from current host formats; preserve foreign entries and existing integrations. See design.md for alternatives.",
+        "status": "accepted",
+        "accepted_by": "human:owner"
+      }
+    ],
+    "designs": [
+      {
+        "id": "DES-1",
+        "title": "Local Copilot protocol adapter",
+        "kind": "interface",
+        "detail": "Bounded stdin, sessionStart top-level additionalContext, prompt side effects without context claims, no prompt persistence. See design.md.",
+        "addresses": [
+          "FR-2",
+          "FR-4"
+        ]
+      },
+      {
+        "id": "DES-2",
+        "title": "Managed project JSON hooks",
+        "kind": "mechanism",
+        "detail": "Version 1 hook arrays with Unix and Windows commands; dry-run, preflight refusal, runtime pointer, exact ownership upgrade and removal. See design.md.",
+        "addresses": [
+          "FR-1",
+          "FR-3",
+          "FR-4",
+          "FR-5"
+        ]
+      },
+      {
+        "id": "DES-3",
+        "title": "Scoped delivery verification",
+        "kind": "mechanism",
+        "detail": "Temporary installer witness, current docs, repository gates, wiki maintenance and independent review with explicit native/cloud limits.",
+        "addresses": [
+          "FR-4",
+          "FR-5"
+        ]
+      }
+    ]
+  },
+  "tasks": [
+    {
+      "id": "T-1",
+      "title": "Implement local Copilot lifecycle adapter",
+      "status": "done",
+      "phase": "core",
+      "needs": [],
+      "satisfies": [
+        "FR-2",
+        "FR-4"
+      ],
+      "implements": [
+        "DES-1"
+      ],
+      "accepts": [],
+      "honors": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts",
+        "expect": "Documented protocol child-process fixtures pass with exact output shapes, bounded failures, and no prompt persistence."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/hooks/copilot-context.js"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/codex-context.js",
+            "sha256": "c796605097b4599f9f5e6107ca691a42c7fe9b84a87ccecb38c5eb95fce48fff"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/analysis.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/brief.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/spec.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/design.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/plan.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          }
+        ],
+        "wiki": [
+          "systems/copilot-hooks",
+          "systems/sdd-harness-architecture"
+        ],
+        "links": [
+          {
+            "url": "https://docs.github.com/en/copilot/reference/hooks-reference",
+            "why": "Provider event payload, output and deployment contract"
+          }
+        ],
+        "notes": [
+          "No native host or cloud job success follows from fixtures. Keep owner actions separate. Task commands T-1/T-2 run from treadle; T-3 from repository root."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T22:01:46Z",
+          "by": "agent:codex",
+          "notes": "11 protocol child-process fixtures pass, including 20-second runtime timeout, bounded malformed input, prompt output and recovery. Earlier wrong-path test-selection failure retained in checks/T-1-path-failure.log; repaired check in checks/T-1.log."
+        }
+      ]
+    },
+    {
+      "id": "T-2",
+      "title": "Wire project installation, upgrade and removal",
+      "status": "done",
+      "phase": "core",
+      "needs": [
+        "T-1"
+      ],
+      "satisfies": [
+        "FR-1",
+        "FR-3",
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-2"
+      ],
+      "accepts": [],
+      "honors": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "verify": {
+        "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+        "expect": "Project wiring works; foreign data survives; invalid config refuses before writes; emitted Unix commands execute; existing hosts stay green."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "treadle/packages/cli/harness/harness.json",
+            "sha256": "0ce6fc3bbfc899f44a70f1aee701f6317d337ab671e79aac7d51642c93274235"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/types.ts",
+            "sha256": "1148b943edf9e1b6b17c095522de8d3f26a5bb7dac7e3a75a431924f966d6776"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "1debaebaf0e11a639571d6ff295ea0162826be6e18088c84d7af6013742cc1e6"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "362a890273a8ffcd10345294bd9f8b2dce6d5bbab846db995a7338badf5bdb22"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "173a33ae762073530ec57ec666c2b8a68565e1efc04964742711df950271ec06"
+          },
+          {
+            "path": "treadle/packages/cli/src/harness/paths.ts",
+            "sha256": "967576ca451f8cc0ff2ef8ee393c413e5d5d3a0e656c5d6f1b3fa84634b3639b"
+          },
+          {
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "e5026bc40f8082bc3df66ec5e0d33f0b9f198acff3852800046d3c37254105e4"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-engine.test.ts",
+            "sha256": "c3e810eb7b8eecc6387bb82916aa3a3d8fb85412a3fc347cf56e807079736f29"
+          },
+          {
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "6cf770fded807e8d4deea2069c0dfa61441c8144293b8ef580ef6a1ffb60893a"
+          },
+          {
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "9f766bb850782ae16b9200a29fe9ca1b7459d6fdddeec1d6b70fba389ad4c61e"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/analysis.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/brief.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/spec.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/design.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/plan.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          }
+        ],
+        "wiki": [
+          "systems/copilot-hooks",
+          "systems/sdd-harness-architecture"
+        ],
+        "links": [
+          {
+            "url": "https://docs.github.com/en/copilot/reference/hooks-reference",
+            "why": "Provider event payload, output and deployment contract"
+          }
+        ],
+        "notes": [
+          "No native host or cloud job success follows from fixtures. Keep owner actions separate. Task commands T-1/T-2 run from treadle; T-3 from repository root."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T22:06:56Z",
+          "by": "agent:codex",
+          "notes": "63 tests pass in seven files. New JSON ownership, preflight, upgrade/removal, foreign and malformed config, symlink refusal, relocated Unix commands covered; existing hosts pass. Source typecheck/lint pass. Initial brand failure corrected with brand.binName; brand gate exits 0. Logs checks/T-2-pass.log and T-2-brand.log."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/codex-context.test.ts packages/cli/test/claude-context.test.ts packages/cli/test/codex-project-paths.test.ts packages/cli/test/claude-project-paths.test.ts",
+          "exit": 0,
+          "at": "2026-10-11T22:13:24.338Z",
+          "by": "agent:codex",
+          "notes": "Actual post-review repair re-verification exited 0; checks/T-2-review-repair.log. Original evidence and task state preserved; no owner act or repin."
+        }
+      ]
+    },
+    {
+      "id": "T-3",
+      "title": "Verify installation and refresh delivery documentation",
+      "status": "done",
+      "phase": "polish",
+      "needs": [
+        "T-2"
+      ],
+      "satisfies": [
+        "FR-4",
+        "FR-5"
+      ],
+      "implements": [
+        "DES-3"
+      ],
+      "accepts": [],
+      "honors": [],
+      "requires_decisions": [
+        "D-1",
+        "D-2"
+      ],
+      "verify": {
+        "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+        "expect": "Retained temporary install/remove witness; six repository gates exit 0; wiki reports 0 errors, 0 warnings, 0 anchors needing review, and fresh stamp."
+      },
+      "context": {
+        "touch": [
+          {
+            "path": "README.md",
+            "sha256": "5b77f98ae3fd9edf13d72bd5266399a12d2ec6dc142d14bf392fedca63ca1285"
+          },
+          {
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "bdd006907796eb2bd1ff0df899302a4d0e6fff64de90fc0051243d8e25839120"
+          },
+          {
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "8957a6047cb3254a09a1ab21a48f920d1922f4a4d1313ff8db2e60453f6d777c"
+          },
+          {
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/resources/operations.md",
+            "sha256": "45eefb770e85408a7b8b0a97165eb15a22989a3751043d2f167f6763aeed9a1a"
+          },
+          {
+            "path": "wiki/project/setup.md",
+            "sha256": "3b9e7cf12c944eafec00b20cd48368fd71a225666231b79a388251498d60a521"
+          },
+          {
+            "path": "wiki/systems/copilot-hooks.md",
+            "sha256": "ca0e21c724c5b00d019d8e0fa3687278e1030c7eb6d845a447f9a731c35203aa"
+          },
+          {
+            "path": "wiki/systems/index.md",
+            "sha256": "2f56b0266d6a59e699a3bb6dfc00f14a01f1372c879d43bd71eac8ecd4afc407"
+          },
+          {
+            "path": "wiki/.okf/fingerprints.json",
+            "sha256": "3c404e7bba78030fb5e7c9771d7907efc5cf9a5d09ad15a8be9c983c43603f14"
+          },
+          {
+            "path": "wiki/.okf/last-index.json",
+            "sha256": "2e8e13a1a7b204a662f905516e166505c8d682a143e1e50cf09decef1ed9c08c"
+          },
+          {
+            "path": "specs/copilot-hooks/verify-delivery.mjs"
+          }
+        ],
+        "read": [
+          {
+            "path": "AGENTS.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/analysis.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/brief.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/spec.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/design.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          },
+          {
+            "path": "specs/copilot-hooks/plan.md",
+            "why": "Read the governing scope and approved proposal before execution"
+          }
+        ],
+        "wiki": [
+          "systems/copilot-hooks",
+          "systems/sdd-harness-architecture"
+        ],
+        "links": [
+          {
+            "url": "https://docs.github.com/en/copilot/reference/hooks-reference",
+            "why": "Provider event payload, output and deployment contract"
+          }
+        ],
+        "notes": [
+          "No native host or cloud job success follows from fixtures. Keep owner actions separate. Task commands T-1/T-2 run from treadle; T-3 from repository root."
+        ]
+      },
+      "evidence": [
+        {
+          "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T22:10:11Z",
+          "by": "agent:codex",
+          "notes": "Exact delivery verifier exited 0: build, temporary CLI dry-run/install/repeat/remove, isolated local service and installed wrapper, six repository gates, wiki maintenance with 0 errors/warnings and 0 anchors needing review. Actual receipts checks/delivery-22950332-7cf1-4f7c-8d83-0f93c9914ae2/results.json. Native Copilot, Windows hook execution, cloud and authenticated Z.ai calls remain unverified."
+        },
+        {
+          "cmd": "node specs/copilot-hooks/verify-delivery.mjs",
+          "exit": 0,
+          "at": "2026-10-11T22:15:03.305Z",
+          "by": "agent:codex",
+          "notes": "Actual post-review repair re-verification exited 0; checks/delivery-1272f7f6-9f65-4f55-9217-eb8781693452/results.json. Original evidence and task state preserved; no owner act or repin."
+        }
+      ]
+    }
+  ],
+  "workflow": {
+    "policy": "owner-gated/1",
+    "plan": 1,
+    "phase_questions": {
+      "spec": []
+    },
+    "acts": [
+      {
+        "id": "72e20fc1-86d3-482d-97ca-a04d60ad00ba",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T21:55:16Z",
+        "revision": 5,
+        "decision": "D-1"
+      },
+      {
+        "id": "fbce2a72-6520-4c5e-ad50-1216754115fe",
+        "kind": "accept",
+        "by": "human:owner",
+        "at": "2026-10-11T21:55:19Z",
+        "revision": 6,
+        "decision": "D-2"
+      },
+      {
+        "id": "adad09c4-9b88-41da-b3b3-7d9c562961f2",
+        "kind": "start",
+        "by": "human:owner",
+        "at": "2026-10-11T21:55:47Z",
+        "revision": 7,
+        "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194"
+      },
+      {
+        "id": "873cc054-1192-4bf7-9dd3-b197168e89de",
+        "kind": "close",
+        "by": "human:owner",
+        "at": "2026-10-11T22:19:13Z",
+        "revision": 17
+      }
+    ],
+    "pending_audit": [],
+    "start_receipt": {
+      "by": "human:owner",
+      "at": "2026-10-11T21:55:47Z",
+      "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194"
+    }
+  },
+  "review": {
+    "verdicts": [
+      {
+        "on": "PACK",
+        "verdict": "PASS",
+        "by": "agent:copilot_correction_review",
+        "at": "2026-10-11T22:18:45.023Z",
+        "plan_digest": "cec6d1dcad85ee74b4b48070da21c63fb1feccb761a1afbc8ababf6ddcc31194",
+        "evidence_digest": "7a734860e359e50d8cef1bfba531055ff968dda888a4c00ad363e877a1dd8372",
+        "note": "Actual independent read-only implementation review, exact task re-runs and resolved defect probes; see implementation-review.md. Native Copilot, Windows hooks, cloud and Z.ai authentication remain unverified."
+      }
+    ]
+  },
+  "format": "specpack/0.4",
+  "revision": 17
+}

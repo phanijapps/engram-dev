@@ -1,0 +1,38 @@
+{
+  "revision": 2,
+  "schema": {
+    "command": "python3 jsonschema.Draft202012Validator(owner-workflow schema).validate(canonical pack)",
+    "version": "4.25.1",
+    "exit": 0
+  },
+  "artifact_digests": {
+    "exit": 0
+  },
+  "dag": {
+    "order": [
+      "T-1",
+      "T-2",
+      "T-3"
+    ],
+    "entry": [
+      "T-1"
+    ],
+    "exit": 0
+  },
+  "alignment": {
+    "command": "node treadle/packages/cli/dist/src/main.js do check specs/search-kb",
+    "exit": 0,
+    "violations": 0,
+    "gaps": 0
+  },
+  "status": {
+    "command": "node treadle/packages/cli/dist/src/main.js do status specs/search-kb",
+    "exit": 0,
+    "phase": "decisions",
+    "decisions": [
+      "D-1",
+      "D-2"
+    ]
+  },
+  "implementation": "not admitted; no owner acts"
+}

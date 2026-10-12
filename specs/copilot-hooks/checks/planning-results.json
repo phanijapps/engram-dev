@@ -1,0 +1,52 @@
+[
+  {
+    "name": "schema",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "/tmp/copilot-plan-validate.mts"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "alignment",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "check",
+      "../specs/copilot-hooks"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "status",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "status",
+      "../specs/copilot-hooks"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "where",
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "do",
+      "where",
+      "..",
+      "--json"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,191 @@
+{
+  "plan": [
+    {
+      "component": "analyze",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/analyze",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/analyze",
+      "mode": "create"
+    },
+    {
+      "component": "build-kb",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/build-kb",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/build-kb",
+      "mode": "create"
+    },
+    {
+      "component": "feedback",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot source — honestly skipped"
+    },
+    {
+      "component": "implement",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/implement",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/implement",
+      "mode": "create"
+    },
+    {
+      "component": "new-project",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/new-project",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/new-project",
+      "mode": "create"
+    },
+    {
+      "component": "plan",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/plan",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/plan",
+      "mode": "create"
+    },
+    {
+      "component": "review",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/review",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/review",
+      "mode": "create"
+    },
+    {
+      "component": "roadmap",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/roadmap",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/roadmap",
+      "mode": "create"
+    },
+    {
+      "component": "boy-scout",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/node/boy-scout",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/boy-scout",
+      "mode": "create"
+    },
+    {
+      "component": "nodejs-architecture",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/node/nodejs-architecture",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/nodejs-architecture",
+      "mode": "create"
+    },
+    {
+      "component": "nodejs-craft",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/node/nodejs-craft",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/nodejs-craft",
+      "mode": "create"
+    },
+    {
+      "component": "writer",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/productivity/writer",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/writer",
+      "mode": "create"
+    },
+    {
+      "component": "red-forman",
+      "kind": "agent",
+      "surface": "copilot",
+      "source": "agents/copilot/red-forman.md",
+      "destination": "/home/videogamer/code/memex_beta/.github/agents/red-forman.md",
+      "mode": "same"
+    },
+    {
+      "component": "post-tool-check",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/post-tool-check.js",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot wiring for this component in the manifest"
+    },
+    {
+      "component": "session-recall",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/session-recall.js",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot wiring for this component in the manifest"
+    },
+    {
+      "component": "codex-recall-prompt",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/session-recall.js",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot wiring for this component in the manifest"
+    },
+    {
+      "component": "codex-context",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/codex-context.js",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot wiring for this component in the manifest"
+    },
+    {
+      "component": "claude-context",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/claude-context.js",
+      "destination": "",
+      "mode": "skip",
+      "note": "no copilot wiring for this component in the manifest"
+    },
+    {
+      "component": "copilot-context",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/copilot-context.js",
+      "destination": "/home/videogamer/code/memex_beta/.harness/hooks/copilot-context.js",
+      "mode": "create"
+    },
+    {
+      "component": "copilot-context-support",
+      "kind": "hook",
+      "surface": "copilot",
+      "source": "hooks/codex-context.js",
+      "destination": "/home/videogamer/code/memex_beta/.harness/hooks/codex-context.js",
+      "mode": "same"
+    }
+  ],
+  "wirings": [
+    {
+      "surface": "copilot",
+      "kind": "copilot-hooks",
+      "target": "/home/videogamer/code/memex_beta/.github/hooks/wukong.json",
+      "detail": "sessionStart → {\"type\":\"command\",\"bash\":\"'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'\",\"powershell\":\"& 'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'\",\"cwd\":\".\",\"timeoutSec\":60}"
+    },
+    {
+      "surface": "copilot",
+      "kind": "copilot-hooks",
+      "target": "/home/videogamer/code/memex_beta/.github/hooks/wukong.json",
+      "detail": "userPromptSubmitted → {\"type\":\"command\",\"bash\":\"'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'\",\"powershell\":\"& 'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'\",\"cwd\":\".\",\"timeoutSec\":60}"
+    }
+  ],
+  "summary": {
+    "create": 12,
+    "same": 2,
+    "update": 0,
+    "refuse": 0,
+    "skip": 6
+  }
+}

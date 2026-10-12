@@ -1,3 +1,4 @@
+import { brand } from '@treadle/brand';
 /** T-3: the surface adapters — four surfaces against temp projects and
  *  a temp HOME. Every install asserted end to end; the hook payload
  *  itself proven in both entries (script + extension shape). */
@@ -75,7 +76,7 @@ describe('the four surface adapters (T-3)', () => {
       install('pi', w.project);
       expect(existsSync(join(w.project, '.pi/skills/analyze/SKILL.md'))).toBe(true);
       expect(existsSync(join(w.project, '.pi/skills/writer/references/rules.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.pi/agents/red-foreman.md'))).toBe(true);
+      expect(existsSync(join(w.project, '.pi/agents/red-forman.md'))).toBe(true);
       expect(existsSync(join(w.project, '.pi/extensions/post-tool-check.js'))).toBe(true);
     } finally {
       w.restore();
@@ -94,7 +95,7 @@ describe('the four surface adapters (T-3)', () => {
       );
       install('claude', w.project);
       expect(existsSync(join(w.project, '.claude/skills/build-kb/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.claude/agents/red-foreman.md'))).toBe(true);
+      expect(existsSync(join(w.project, '.claude/agents/red-forman.md'))).toBe(true);
       expect(existsSync(join(w.project, '.harness/hooks/post-tool-check.js'))).toBe(true);
       const s = JSON.parse(readFileSync(join(w.project, '.claude/settings.json'), 'utf8')) as {
         permissions: { allow: string[] };
@@ -116,7 +117,7 @@ describe('the four surface adapters (T-3)', () => {
     try {
       install('codex', w.project);
       expect(existsSync(join(w.project, '.codex/skills/analyze/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.codex/agents/red-foreman.toml'))).toBe(true);
+      expect(existsSync(join(w.project, '.codex/agents/red-forman.toml'))).toBe(true);
       expect(existsSync(join(w.project, '.harness/hooks/codex-context.js'))).toBe(true);
       const cfg = JSON.parse(readFileSync(join(w.project, '.codex/hooks.json'), 'utf8'));
       expect(cfg.hooks.SessionStart).toHaveLength(1);
@@ -128,12 +129,15 @@ describe('the four surface adapters (T-3)', () => {
     }
   });
 
-  it('copilot: instructions + agents + native SKILL.md skills; hooks honestly skipped', () => {
+  it('copilot: instructions + agents + native SKILL.md skills; lifecycle hooks installed', () => {
     const w = tempWorld();
     try {
       install('copilot', w.project);
       expect(existsSync(join(w.project, '.github/skills/analyze/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.github/agents/red-foreman.md'))).toBe(true);
+      expect(
+        existsSync(join(w.project, '.github/skills/search-kb/resources/okf-consumption.md')),
+      ).toBe(true);
+      expect(existsSync(join(w.project, '.github/agents/red-forman.md'))).toBe(true);
       const { manifest, root } = loadManifest(REAL_MANIFEST);
       const plan = compilePlan(manifest, root, {
         agent: 'copilot',
@@ -150,7 +154,13 @@ describe('the four surface adapters (T-3)', () => {
       });
       const hookRow = plan.rows.find((r) => r.kind === 'hook');
       expect(hookRow?.mode).toBe('skip');
-      expect(hookRow?.note).toContain('honest');
+      expect(hookRow?.note).toContain('wiring');
+      const config = JSON.parse(
+        readFileSync(join(w.project, '.github/hooks', brand.binName + '.json'), 'utf8'),
+      );
+      expect(config.version).toBe(1);
+      expect(config.hooks.sessionStart).toHaveLength(1);
+      expect(config.hooks.userPromptSubmitted).toHaveLength(1);
     } finally {
       w.restore();
       rmSync(w.home, { recursive: true, force: true });
@@ -164,7 +174,11 @@ describe('the four surface adapters (T-3)', () => {
       runHarnessInit({ agent: 'copilot', scope: 'global', remove: false }),
     );
     expect(Number(err?.exit)).toBe(2);
-    expect(err?.messages.some((m) => m.includes('copilot has no global scope'))).toBe(true);
+    expect(
+      err?.messages.some((m) =>
+        m.includes('Copilot global scope is not supported by this installer'),
+      ),
+    ).toBe(true);
   });
 
   it('the hook payload: script mode exits 0 on free paths, 3 on machine-managed, 1 on garbage', () => {

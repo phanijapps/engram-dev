@@ -1,0 +1,20 @@
+<!-- okf context: seed=domain/money depth=1 token_budget=3000 -->
+
+<!-- trust tier: unverified (§5.3, advisory) -->
+
+# domain/money (seed)
+
+---
+type: System
+title: Money
+description: Fixture context for Money.
+sources:
+  - resource: src/money.ts
+---
+
+Money values are integer cents. Source: src/money.ts:1.
+
+
+
+
+STDERR:

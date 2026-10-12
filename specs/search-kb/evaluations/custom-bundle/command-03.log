@@ -1,0 +1,7 @@
+stdout:
+AGENTS.md
+src/cache.ts
+context/kb/index.md
+context/kb/runtime/cache.md
+
+stderr:

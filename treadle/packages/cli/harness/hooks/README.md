@@ -16,8 +16,21 @@ Pi loads session-recall as an extension, using `ctx.cwd` for session_start and
 before_agent_start. Its companion helper registers no handlers. The native
 package loads the extension wrapper explicitly. Use one installation mode per
 host; loading native and compatibility callbacks together is unsupported.
-Native custom-agent packaging is limited to Claude. Copilot has no lifecycle
-hook wiring in this manifest.
+Native custom-agent packaging is limited to Claude. This manifest wires local Copilot CLI lifecycle hooks.
+GitHub Copilot CLI and cloud agent support hooks
+in `.github/hooks/*.json`.
+See [GitHub's hooks reference](https://docs.github.com/en/copilot/reference/hooks-reference).
+
+## Copilot capability correction — 2026-10-11
+
+Copilot command hooks use version 1 JSON with event arrays containing command entries.
+`sessionStart` accepts a top-level `additionalContext` result.
+Command-hook output from `userPromptSubmitted` is discarded, so it cannot supply prompt context.
+The existing Claude and Codex output envelope cannot be reused unchanged.
+Copilot CLI also supports user hook files, but Wukong's installer currently supports Copilot project scope only.
+Cloud hooks run inside an ephemeral Linux sandbox, separate from the desktop service.
+They need a runtime inside that sandbox. Cloud agent uses hook files from the repository's default branch.
+Local callback fixtures do not establish native Copilot execution.
 
 ## Codex project paths
 
@@ -103,3 +116,20 @@ No host session, transcript or token capture is added to lifecycle hooks.
 Sources: `treadle/packages/cli/src/harness/context.ts:15`,
 `treadle/packages/cli/src/commands/feedback.ts:98`, and
 `treadle/packages/cli/harness/skills/sdlc/feedback/resources/protocol.md:1`.
+
+## Local Copilot CLI installation
+
+Use `init harness --agent copilot --scope project --hooks-only`, prefixed with the installed CLI.
+Inspect `--dry-run` before installation. The installer creates `.github/hooks/wukong.json`
+and installs the wrapper and shared helper through the authoritative manifest.
+`sessionStart` returns bounded top-level context; `userPromptSubmitted` reconnects and emits `{}`.
+Prompt hooks do not refresh model context through stdout. Read CLI context explicitly when needed.
+The commands use Node from PATH and project-relative payload paths, with repository-root `cwd` and a 60-second timeout.
+Both Unix and PowerShell fields are emitted; local Unix callback execution is covered by fixtures.
+Native Windows activation and real Copilot sessions need separate host evidence.
+
+Upgrades remove only recorded definitions. Identical pre-existing foreign entries remain unowned.
+Removal preserves foreign event entries, metadata, and sibling hook files.
+Malformed or symlinked configuration refuses writes even under `--force`.
+Use the installer to regenerate the machine-local runtime pointer after the runtime moves.
+Cloud bootstrap and user-level Copilot installation remain outside this integration.

@@ -113,7 +113,7 @@ describe('the installer engine (T-1)', () => {
     }
   });
 
-  it('compiles a truthful plan: modes by normalized hash, copilot hook honestly skipped', () => {
+  it('compiles a truthful plan: modes by normalized hash, unwired component skipped', () => {
     const { root, manifestPath } = harnessFixture();
     try {
       const { manifest, root: mRoot } = loadManifest(manifestPath);
@@ -131,7 +131,7 @@ describe('the installer engine (T-1)', () => {
       );
       const copHook = copPlan.rows.find((r) => r.kind === 'hook');
       expect(copHook?.mode).toBe('skip');
-      expect(copHook?.note).toContain('honest');
+      expect(copHook?.note).toContain('wiring');
       expect(copPlan.rows.find((r) => r.component === 'one')?.mode).toBe('skip'); // no copilot source
     } finally {
       rmSync(root, { recursive: true, force: true });
@@ -145,10 +145,14 @@ describe('the installer engine (T-1)', () => {
       const c = choices(root, manifestPath);
       const plan = compilePlan(lm.manifest, lm.root, c);
       const out = applyPlan(plan, c, lm.root, '2026-10-10T00:00:00Z');
-      expect(out.written).toBe(5); // SKILL.md + extra.md + agent + hook
+      expect(out.written).toBe(6); // Skill resources, agent, hook, runtime pointer, and project guide.
       expect(existsSync(join(root, '.pi/skills/alpha/SKILL.md'))).toBe(true);
       expect(existsSync(join(root, '.pi/agents/one.md'))).toBe(true);
       expect(existsSync(statePath(c))).toBe(true);
+      expect(existsSync(join(root, 'AGENTS.md'))).toBe(true);
+      expect(JSON.parse(readFileSync(statePath(c), 'utf8')).written).not.toContain(
+        join(root, 'AGENTS.md'),
+      );
 
       const plan2 = compilePlan(lm.manifest, lm.root, c);
       const s2 = planSummary(plan2);
@@ -376,7 +380,7 @@ describe('the installer engine (T-1)', () => {
     }
   });
 
-  it('the shipped manifest is valid and carries the honest copilot null', () => {
+  it('the shipped manifest is valid and retains explicit per-component omissions', () => {
     const lm = loadManifest(defaultManifestPath());
     expect(lm.manifest.components.length).toBeGreaterThanOrEqual(12);
     expect(lm.manifest.hooks[0]?.wiring.copilot).toBeNull();

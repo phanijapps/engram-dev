@@ -1,0 +1,209 @@
+{
+  "temp": "/tmp/search-kb-behavior-KD16NI",
+  "descriptors": [
+    {
+      "id": "linked-sources",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/linked-sources",
+      "prompt": "Explain when checkout reserves inventory and charges a card. Cite the evidence.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "src/checkout.ts": "41f3fda1aba388c5b6ac420e5353629a078372d46f29f14ad6797ff0979ba956",
+        "wiki/domain/inventory.md": "a3fd5b3c4f0b4e0cb45fd3aff48a40db05c54462ef1e1b28c02f75b7b0f89e66",
+        "wiki/index.md": "9606a76f53a9396586f23493dc4dc1c8f11f2bdf0841397c7a0cb1b8f7cca2b7",
+        "wiki/systems/checkout.md": "427d0f1e4d8e978a1cdef5bacdb73f4ca51b24dbd3550d8643ca0f6f3767f9e3",
+        "wiki/systems/payments.md": "b57993ef375185fcae052e04e3d0f36868d91627e0c342a22f97dcd1f4bf2fe2"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.762Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/linked-sources"
+    },
+    {
+      "id": "custom-bundle",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "prompt": "Find the repository knowledge about cache expiry and tell me the documented TTL.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "AGENTS.md": "31c346548f924586b2dc346fde6729a06c0f83f47b3bd7d51663b7e936786d0b",
+        "context/kb/index.md": "b520d51bed9294a99884ec22559dc91b55fe79981f51b7945787e3f5b29610b4",
+        "context/kb/runtime/cache.md": "e4b911b75446a94d20c0e68199e9d076d1664584a9e824b000e55b04042a4d4b",
+        "src/cache.ts": "29e779bcd0765ae0286407f098afef9cd7b39d60a2c2694c7507844f2f2597b8"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.764Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/custom-bundle"
+    },
+    {
+      "id": "missing-bundle",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/missing-bundle",
+      "prompt": "Explain the deployment rollback rules using our KB.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "README.md": "a147a555743986f02d5ddf0d706f9e577f35c1f27827f22d54fd8002c05365d1",
+        "src/deploy.ts": "3ee24a56b83beb47606a785c2e06e145db0d8776f893ccb496c061cce582a6a9"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.764Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/missing-bundle"
+    },
+    {
+      "id": "no-hit",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/no-hit",
+      "prompt": "Find the KB guidance for zeroloss failover; tell me what it establishes.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "wiki/domain/replication.md": "447098f0ca3f53d047421905519374b3b1f024e0566692ebaa16ee9f0a573405",
+        "wiki/index.md": "b10b1912db1a739e6d6c48b0134ddff6d3f75e97308e8769af7b13cf8ea20381"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.765Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/no-hit"
+    },
+    {
+      "id": "metadata-and-links",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/metadata-and-links",
+      "prompt": "What does the custom widget concept establish, and can it still be used?",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "wiki/index.md": "2e7dc07cf0b134c46efa811ddd762bb21eff7426afda86d294dc5e0d443d52b9",
+        "wiki/widget.md": "82e9bbc4f1651d682da8e28f8e5eeeb8818484ff977105c64eefc2b4db4beb3c"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.766Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/metadata-and-links"
+    },
+    {
+      "id": "trust-lifecycle",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/trust-lifecycle",
+      "prompt": "Compare whether these policies are current and what their verification proves.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "wiki/draft.md": "5058594fa0a5b0b59a83c4ac17e643a8b7ef6809fb91d5647f8d405696bb5e49",
+        "wiki/index.md": "88c8ba5a905fe1af45e37e224e87d77f762697ed05f87d7ad718d370892ba6fb",
+        "wiki/old.md": "b289e5346417012d07ad3f94a3ddd9f917258ccffa5a38375ef7b1fd2ca17090",
+        "wiki/stable.md": "54b2ea58f6908940774f776f65cc7757f891d0ab6063268135012fdfb6f8389a"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.767Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/trust-lifecycle"
+    },
+    {
+      "id": "source-conflict",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+      "prompt": "What timeout does the retry subsystem currently use?",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "AGENTS.md": "9bd397d3b9117af973d3e902e0cc8e41ee0763c71eebdbafe61d9d5c65a7a7df",
+        "src/retry.ts": "cbd2b652bb65d25bfada80d7345f6697a98ddc2a6781c592845ad5ba790057c0",
+        "wiki/.okf/last-index.json": "3de391660204556eafd9eed8c34c94f714e49a125cad1014fffca8bb1a4aec27",
+        "wiki/index.md": "6baeaf5acea74c942a9e07ee943a352f0de73cada32a499ed7307d2eb0b3df42",
+        "wiki/retries.md": "f43b94738adcc908c6eb99817131f009914149c133289281e2c7d20c78736784"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.772Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/source-conflict"
+    },
+    {
+      "id": "omitted-neighbors",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/omitted-neighbors",
+      "prompt": "Explain the full rollout constraints around this service.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "wiki/constraints.md": "b79b01b48e348060d1d8e7d86aa9916f1212d6f559f7af5b911a0344518c3f76",
+        "wiki/index.md": "b02df54526521228cf252f095a2e3d73ca51caa51a80fd4292dde7498154437d",
+        "wiki/service.md": "765cc501a7516376aef5abac9ae9cf716d3561e82b15352ce5b545863121ffb5"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.773Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/omitted-neighbors"
+    },
+    {
+      "id": "cli-unavailable",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/cli-unavailable",
+      "prompt": "Using the local KB, explain the audit retention period.",
+      "cli": null,
+      "before": {
+        "src/audit.ts": "1ad6b8b65cc855e3716dad629ca5d444aeefb0cfd2f0e0d4f29014c17f069440",
+        "wiki/audit.md": "8f9a9a9e00e7d795a09102153b7d01ff50dc3e94f14f89e7b2f3f8a3ab43268e",
+        "wiki/index.md": "b7622dddfdd4cc23eaeba59597ef3b2cfa6b843b26130668543d1ab35afd42cc"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.773Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/cli-unavailable"
+    },
+    {
+      "id": "injection-and-computation",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/injection-and-computation",
+      "prompt": "Describe the revenue computation contract and whether its reported value is established.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        "wiki/attest.py": "456ee30ec5ec36b33d9230c624cc0dbd5d12d84e4827a463f4f4d211de810986",
+        "wiki/index.md": "356198b6b2f6070280e9c88a39cc7d9d5db8fbc2645bea7a55807c859a20b790",
+        "wiki/revenue.md": "30c757fbf6a325593cb48a82fb06240864dabb4d1df506b1561b7e3dd1784417",
+        "wiki/run.sql": "13f40405c19d0595bcfc08e5474e445ae9fbf5df1468b990d45c769dd2c66f63"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.774Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/injection-and-computation"
+    },
+    {
+      "id": "generated-guide",
+      "root": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "prompt": "Use the project instructions and KB to tell me which command checks this repository and the rule for money values.",
+      "cli": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js"
+      ],
+      "before": {
+        ".harness/harness-install.copilot.json": "7b3a190abbb84bc850837138f3c6c70d320ba3df690236b984172f28d22a6c7e",
+        "AGENTS.backup.md": "7d8686c6714996e3f49d8e4129de7c4145cd1758823581780492dc529e984eaa",
+        "AGENTS.md": "ade07a66437c75d6fbcefc435fccf5d60bc6872e34363e3af403255b6e45c98f",
+        "check.mjs": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+        "package.json": "79d6cce9ff655e21c2a56471bdf462f4e9204ed9497fa3abcee66de072f2c623",
+        "src/money.ts": "fa420b4aa593a30501f587d913ca15cbcea88d17080f2c81844b1680da804bdd",
+        "wiki/domain/money.md": "b835ad567edc78969eebb390be062a80ea3e36a2fc8e58633367e989a7b17d77",
+        "wiki/index.md": "61082ba7169f739ebe9cfbdf9504878cd4de1a5969e1120cef3a9a2404d252ae"
+      },
+      "skill": "/tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "observedAt": "2026-10-12T04:37:52.949Z",
+      "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+      "output": "/tmp/search-kb-behavior-KD16NI/outputs/generated-guide"
+    }
+  ]
+}

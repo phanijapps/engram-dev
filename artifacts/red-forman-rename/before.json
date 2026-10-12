@@ -1,0 +1,31 @@
+{
+  "head": "c843b8b7bfb685f748d8b568dee91043db9288ae",
+  "sources": {
+    "treadle/packages/cli/harness/agents/claude/red-foreman.md": {
+      "sha256": "f9517bf31abdc2b498cfa5f149589f0d1bd47ad99b80c710b70e84f296be3e0f"
+    },
+    "treadle/packages/cli/harness/agents/codex/red-foreman.toml": {
+      "sha256": "7654df0c9b5ff5d858b77d6c7dc27549ecf1dfdb03d1775b93168f1ae0a544bc"
+    },
+    "treadle/packages/cli/harness/agents/pi/red-foreman.md": {
+      "sha256": "4c8d85525372440a36161600432ec4e0b52ebc16437e8bc3b60c892e35a4d332"
+    },
+    "treadle/packages/cli/harness/agents/copilot/red-foreman.md": {
+      "sha256": "d6a301cef4de38cd9507642737daff7b50c199ae4ad72de64ec517349834bc17"
+    }
+  },
+  "installed": {
+    "claude": {
+      "path": "/home/videogamer/code/memex_beta/.claude/agents/red-foreman.md",
+      "sha256": "f9517bf31abdc2b498cfa5f149589f0d1bd47ad99b80c710b70e84f296be3e0f"
+    },
+    "codex": {
+      "path": "/home/videogamer/code/memex_beta/.codex/agents/red-foreman.toml",
+      "sha256": "3001e16f5f1dcd1434e2b23549a1b052d1268f8844129580611f18fb07c5d9b4"
+    },
+    "pi": {
+      "path": "/home/videogamer/code/memex_beta/.pi/agents/red-foreman.md",
+      "sha256": "4c8d85525372440a36161600432ec4e0b52ebc16437e8bc3b60c892e35a4d332"
+    }
+  }
+}

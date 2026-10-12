@@ -3,6 +3,9 @@ name: plan
 description: Turn SDD analysis into a technical design, Mermaid views where useful, a populated JSON specpack, and a verified task DAG. Register requirements, decisions, dependencies, checks, and context before owner start permission. Use for planning an analyzed change or revising a proposal, not investigation or execution.
 ---
 
+When repository knowledge is needed for this step, use the installed `search-kb` skill for read-only OKF retrieval and source checks.
+If that skill is unavailable, use the existing wiki/source procedure below. Retrieval does not grant task admission or owner permission.
+
 # Plan an analyzed change
 
 Produce `design.md` and `plan.md` under `specs/<slug>/`, at a depth suited to the change.

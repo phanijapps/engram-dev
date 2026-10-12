@@ -19,6 +19,7 @@ it('generates deterministic, local host packages and truthful capability metadat
       const pointer = JSON.parse(readFileSync(join(first, 'hooks/runtime.json'), 'utf8'));
       expect(pointer.protocol).toBe(1);
       expect(existsSync(pointer.entry)).toBe(true);
+      expect(existsSync(join(first, 'skills/search-kb/resources/okf-consumption.md'))).toBe(true);
       if (surface === 'pi')
         expect(
           JSON.parse(readFileSync(join(first, 'package.json'), 'utf8')).pi.extensions,
@@ -33,7 +34,7 @@ it('generates deterministic, local host packages and truthful capability metadat
         );
         expect(manifest.hooks).toBeUndefined();
         expect(manifest.agents).toBeUndefined();
-        expect(existsSync(join(first, 'agents/red-foreman.md'))).toBe(true);
+        expect(existsSync(join(first, 'agents/red-forman.md'))).toBe(true);
       }
       expect(() => packageHarness(surface, first)).toThrow('already exists');
     }

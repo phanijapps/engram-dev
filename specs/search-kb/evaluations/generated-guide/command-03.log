@@ -1,0 +1,10 @@
+./package.json
+./check.mjs
+./wiki/index.md
+./wiki/domain/money.md
+./src/money.ts
+./AGENTS.backup.md
+./AGENTS.md
+./.harness/harness-install.copilot.json
+
+STDERR:

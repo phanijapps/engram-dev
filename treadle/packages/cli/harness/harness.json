@@ -24,6 +24,17 @@
       }
     },
     {
+      "id": "search-kb",
+      "kind": "skill",
+      "source": "skills/sdlc/search-kb",
+      "dest": {
+        "pi": ".pi/skills/search-kb",
+        "claude": ".claude/skills/search-kb",
+        "codex": ".codex/skills/search-kb",
+        "copilot": ".github/skills/search-kb"
+      }
+    },
+    {
       "id": "feedback",
       "kind": "skill",
       "source": "skills/sdlc/feedback",
@@ -133,19 +144,19 @@
       }
     },
     {
-      "id": "red-foreman",
+      "id": "red-forman",
       "kind": "agent",
       "source": {
-        "pi": "agents/pi/red-foreman.md",
-        "claude": "agents/claude/red-foreman.md",
-        "codex": "agents/codex/red-foreman.toml",
-        "copilot": "agents/copilot/red-foreman.md"
+        "pi": "agents/pi/red-forman.md",
+        "claude": "agents/claude/red-forman.md",
+        "codex": "agents/codex/red-forman.toml",
+        "copilot": "agents/copilot/red-forman.md"
       },
       "dest": {
-        "pi": ".pi/agents/red-foreman.md",
-        "claude": ".claude/agents/red-foreman.md",
-        "codex": ".codex/agents/red-foreman.toml",
-        "copilot": ".github/agents/red-foreman.md"
+        "pi": ".pi/agents/red-forman.md",
+        "claude": ".claude/agents/red-forman.md",
+        "codex": ".codex/agents/red-forman.toml",
+        "copilot": ".github/agents/red-forman.md"
       }
     }
   ],
@@ -225,6 +236,25 @@
             "kind": "settings-hooks",
             "matcher": "UserPromptSubmit",
             "command": "node .harness/hooks/claude-context.js --host claude --event UserPromptSubmit"
+          }
+        ]
+      }
+    },
+    {
+      "id": "copilot-context",
+      "file": "hooks/copilot-context.js",
+      "companions": ["hooks/codex-context.js"],
+      "wiring": {
+        "copilot": [
+          {
+            "kind": "copilot-hooks",
+            "matcher": "sessionStart",
+            "command": "node .harness/hooks/copilot-context.js --event sessionStart"
+          },
+          {
+            "kind": "copilot-hooks",
+            "matcher": "userPromptSubmitted",
+            "command": "node .harness/hooks/copilot-context.js --event userPromptSubmitted"
           }
         ]
       }

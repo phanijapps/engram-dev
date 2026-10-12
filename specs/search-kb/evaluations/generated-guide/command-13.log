@@ -1,0 +1,11 @@
+     1	---
+     2	type: System
+     3	title: Money
+     4	description: Fixture context for Money.
+     5	sources:
+     6	  - resource: src/money.ts
+     7	---
+     8	
+     9	Money values are integer cents. Source: src/money.ts:1.
+
+STDERR:

@@ -3,3 +3,4 @@
 - [SDD harness architecture](sdd-harness-architecture.md)
 - [Wukong: the active TypeScript harness](treadle.md)
 - [Owner approval and completion workflow](owner-workflow.md)
+- [Copilot hooks and the local Wukong integration](copilot-hooks.md)

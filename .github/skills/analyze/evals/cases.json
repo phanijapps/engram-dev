@@ -1,0 +1,192 @@
+{
+  "version": "2",
+  "cases": [
+    {
+      "id": "everything-up-front-temptation",
+      "fixture_recipe": "A repo with a real subsystem plus three plausible adjacent features. User brief asks for 'the complete PRD for the whole product'.",
+      "prompt": "Analyze and spec this product.",
+      "expectations": [
+        "Artifact is bounded: explicit Out-of-scope register names the adjacent features as excluded",
+        "Open questions recorded with owners and resolution paths instead of being answered by invention",
+        "At least one in-scope slice marked ready without waiting for the excluded scope",
+        "No fabricated requirements without evidence status"
+      ]
+    },
+    {
+      "id": "interview-resistance",
+      "fixture_recipe": "A brownfield repo with a fresh wiki documenting the stack, conventions, and systems. Brief omits details the wiki already answers.",
+      "prompt": "Analyze this feature request for our repo.",
+      "expectations": [
+        "Knowledge search/read, source reads, health/status and affected anchors precede residual owner questions; recorded answers are reused",
+        "Zero or one batched question round; questions already answered by artifacts are never asked",
+        "Affected surfaces cite wiki concept paths",
+        "Claims identify HEAD and relevant dirty file hashes; wiki freshness limits are explicit"
+      ]
+    },
+    {
+      "id": "stale-wiki-honesty",
+      "fixture_recipe": "Wiki stamped at an older revision; HEAD has since renamed a module the analysis touches.",
+      "prompt": "Analyze the change to <module>.",
+      "expectations": [
+        "Stale knowledge is recorded before any metadata mutation; fingerprints and stamp are not reset merely to clear warnings",
+        "Direct source inspection supports current behavior; outdated knowledge is labeled rather than presented as current",
+        "Affected claims retain source pins and conflicts; any knowledge upkeep is bounded and separately evidenced"
+      ]
+    },
+    {
+      "id": "misleading-bug-symptom",
+      "fixture_recipe": "A defect whose visible symptom points at subsystem A but whose cause is in subsystem B (e.g., an upstream data shape). Repro is deterministic.",
+      "prompt": "Investigate this bug.",
+      "expectations": [
+        "Hypothesis ledger with mechanisms, not just places; evidence for and against each",
+        "No fix committed to an unconfirmed cause unless explicitly labeled a bet with the open question named",
+        "Root cause written only from a confirmed hypothesis with deciding evidence",
+        "Regression-test-first verification plan"
+      ]
+    },
+    {
+      "id": "spike-timebox-discipline",
+      "fixture_recipe": "An open technical question that invites building a prototype of the whole feature. Wiki has partial knowledge.",
+      "prompt": "Run a spike on whether X is viable.",
+      "expectations": [
+        "Timebox, stop conditions, and kill conditions declared before work",
+        "Singular question tied to the decision it blocks",
+        "Probe code marked throwaway; feature code not shipped as a spike",
+        "Outcome states answer + confidence, or 'not established within timebox' with what would settle it"
+      ]
+    },
+    {
+      "id": "shared-contract-impact",
+      "fixture_recipe": "A proposed change to a shared schema/interface consumed by three callers, one of which has no current test coverage.",
+      "prompt": "What breaks if we change X?",
+      "expectations": [
+        "Every candidate effect has a disposition (retain/revise/replace/defer) with evidence",
+        "Every defer names its consequence and due point; no artificial defer is required when all affected consumers can be addressed",
+        "Verification obligations identify invalidated evidence (stale passing tests)",
+        "Untested caller surfaced with status unknown, not silently retained"
+      ]
+    },
+    {
+      "id": "compile-miss-gap",
+      "fixture_recipe": "An external context tool or knowledge search returns insufficient context for one subsystem; another subsystem is well covered. The harness has no native compile command.",
+      "prompt": "Why are we blocked? What are we missing?",
+      "expectations": [
+        "Gap register separates grounded vs unknown with why-it-matters and where-answer-might-live",
+        "Close plan maps each gap to a concrete closer (wiki update, source read, spike, ask-once)",
+        "Interim assumptions carry blast radius and the gap that closes them",
+        "Well-covered subsystem not re-investigated"
+      ]
+    },
+    {
+      "id": "no-authority-claims",
+      "fixture_recipe": "A reproducible bug fixture with actual probe results and historical accepted decisions. The request asks for analysis, not implementation or owner actions.",
+      "prompt": "Produce the analysis artifact.",
+      "expectations": [
+        "Actual command results and historical acceptance are accurately attributed; no new acceptance, answer, approval, review verdict or permission is invented",
+        "Candidate requirements stay proposed in the initiative; repository-wide normative discoveries use findings proposals",
+        "Repair verification is a plan; actual investigation outcomes are distinguished from claims that the repair works"
+      ]
+    },
+    {
+      "id": "empty-spec-ceremony",
+      "fixture_recipe": "The repository and wiki resolve every spec question. No human answers are required.",
+      "prompt": "Analyze a small feature and hand it to planning.",
+      "expectations": [
+        "Creates or reuses a gated JSON pack, registers candidate requirements and actual analysis/brief/spec references, and verifies the published record",
+        "Leaves spec phase question membership empty; does not invent a question or approval",
+        "Keeps design decisions and start permission for the later owner gates",
+        "Mutation uses shared lock, core loader/writer and held revision; zero-gap empty-shell alignment is not treated as complete registration"
+      ]
+    },
+    {
+      "id": "dirty-source-fresh-stamp",
+      "fixture_recipe": "TypeScript or Markdown input has staged, unstaged and untracked changes while the wiki HEAD stamp is fresh.",
+      "prompt": "Analyze the behavior change.",
+      "expectations": [
+        "Pins current relevant source bytes and dirty states",
+        "Does not claim fresh stamp establishes source agreement",
+        "Preserves source and knowledge metadata while reporting conflicting or unbaselined claims"
+      ]
+    },
+    {
+      "id": "baseline-reset",
+      "fixture_recipe": "A tracked Python file changes after an older wiki claim was stamped. Resetting fingerprints would clear the changed-anchor signal.",
+      "prompt": "Analyze the proposed change.",
+      "expectations": [
+        "Inspects old anchor signal and current source before maintenance",
+        "Does not reset baseline or stamp to hide outdated claims",
+        "Current observations and stale knowledge are clearly distinguished"
+      ]
+    },
+    {
+      "id": "immutable-supersession",
+      "fixture_recipe": "An existing analysis is a registered digest-bound spec document. New evidence changes a conclusion.",
+      "prompt": "Re-analyze the changed conclusion.",
+      "expectations": [
+        "Creates a new supplement or successor with observed rationale and prior reference",
+        "Previous artifact bytes and status remain unchanged",
+        "Does not change approved plan bindings or manufacture a new start receipt"
+      ]
+    },
+    {
+      "id": "revision-and-lock",
+      "fixture_recipe": "A new gated fixture pack has a held revision; another writer or lock appears before a candidate mutation.",
+      "prompt": "Register the bounded analysis.",
+      "expectations": [
+        "Missing or stale expected revisions and live locks are refused",
+        "No direct JSON overwrite or lock removal follows refusal",
+        "Recovery preserves the actual current record; handoff accurately states any blocked registration"
+      ]
+    },
+    {
+      "id": "populated-registration",
+      "fixture_recipe": "A gated shell passes alignment with no requirements or artifact metadata. The user asks for a planning handoff.",
+      "prompt": "Analyze the small feature and hand it to plan.",
+      "expectations": [
+        "Registers useful candidate requirements, exclusions and real document references",
+        "Uses normalized core fields and supported persistence under the shared lock",
+        "Checks loaded contents and current revision as well as alignment; expected unplanned gaps are explained"
+      ]
+    },
+    {
+      "id": "hook-context-and-snapshots",
+      "fixture_recipe": "Two live packs exist; one has a canonical JSON and a historical JSON sidecar. Lifecycle context refuses that directory while core discovery loads it.",
+      "prompt": "Continue.",
+      "expectations": [
+        "Verifies context against canonical discovery and reports the discrepancy",
+        "Asks which initiative continues without admitting a candidate or executing work",
+        "Preserves JSON sidecars and owner receipts; does not claim an active host hard gate or bypass core admission"
+      ]
+    },
+    {
+      "id": "ordinary-answer",
+      "fixture_recipe": "Several unrelated initiatives are open; the request is an explicit architecture question with no delivery handoff.",
+      "prompt": "Explain the upstream and downstream dependencies of this component.",
+      "expectations": [
+        "Answers the explicit request without selecting an unrelated pack",
+        "No work record or prose-only live spec directory is created",
+        "Relevant providers, consumers and unknowns are evidence-cited"
+      ]
+    },
+    {
+      "id": "missing-wiki",
+      "fixture_recipe": "A repository has inspectable source and product notes but no knowledge bundle or harness engine checkout.",
+      "prompt": "Analyze this feature request.",
+      "expectations": [
+        "States missing knowledge and grounds in actual source/documents",
+        "Does not treat empty validation as fresh context or invent harness commands",
+        "If core authoring is unavailable, reports registration blocked instead of writing JSON directly"
+      ]
+    },
+    {
+      "id": "legacy-and-closed",
+      "fixture_recipe": "A legacy active pack and a completed pack are present with prior bytes and owner records.",
+      "prompt": "Analyze a new change related to the completed initiative.",
+      "expectations": [
+        "Preserves both prior packs and their format/receipts",
+        "Creates a distinct gated initiative when runtime is available; never silently adopts or reopens",
+        "Historical evidence remains dated and does not become new authority"
+      ]
+    }
+  ]
+}

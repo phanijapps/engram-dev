@@ -1,0 +1,174 @@
+[
+  {
+    "surface": "codex",
+    "stage": "dry-run",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "codex",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes",
+      "--dry-run"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "codex",
+    "stage": "apply",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "codex",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "claude",
+    "stage": "dry-run",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "claude",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes",
+      "--dry-run"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "claude",
+    "stage": "apply",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "claude",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "pi",
+    "stage": "dry-run",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "pi",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes",
+      "--dry-run"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "pi",
+    "stage": "apply",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "pi",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "copilot",
+    "stage": "dry-run",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "copilot",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes",
+      "--dry-run"
+    ],
+    "exit": 0
+  },
+  {
+    "surface": "copilot",
+    "stage": "apply",
+    "argv": [
+      "node",
+      "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+      "init",
+      "harness",
+      "--agent",
+      "copilot",
+      "--scope",
+      "project",
+      "--root",
+      "/home/videogamer/code/memex_beta",
+      "--manifest",
+      "/tmp/red-forman-install-ioyse0vh/harness.json",
+      "--no-hooks",
+      "--yes"
+    ],
+    "exit": 0
+  }
+]

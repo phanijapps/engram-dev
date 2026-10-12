@@ -1,0 +1,107 @@
+{
+  "id": "custom-bundle",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:51.667957+00:00",
+  "completedAt": "2026-10-12T04:40:33.612510+00:00",
+  "evaluator": "/root/search_kb_eval_a",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden -g '!.git'",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat AGENTS.md context/kb/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status context/kb --workspace /tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search context/kb 'cache expiry TTL' --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read context/kb runtime/cache",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba src/cache.ts",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba context/kb/runtime/cache.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba AGENTS.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+      "exitCode": 0,
+      "log": "command-10.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    "AGENTS.md": "31c346548f924586b2dc346fde6729a06c0f83f47b3bd7d51663b7e936786d0b",
+    "context/kb/index.md": "b520d51bed9294a99884ec22559dc91b55fe79981f51b7945787e3f5b29610b4",
+    "context/kb/runtime/cache.md": "e4b911b75446a94d20c0e68199e9d076d1664584a9e824b000e55b04042a4d4b",
+    "src/cache.ts": "29e779bcd0765ae0286407f098afef9cd7b39d60a2c2694c7507844f2f2597b8"
+  },
+  "after": {
+    "AGENTS.md": "31c346548f924586b2dc346fde6729a06c0f83f47b3bd7d51663b7e936786d0b",
+    "context/kb/index.md": "b520d51bed9294a99884ec22559dc91b55fe79981f51b7945787e3f5b29610b4",
+    "context/kb/runtime/cache.md": "e4b911b75446a94d20c0e68199e9d076d1664584a9e824b000e55b04042a4d4b",
+    "src/cache.ts": "29e779bcd0765ae0286407f098afef9cd7b39d60a2c2694c7507844f2f2597b8"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The evaluator reads repository guidance, searches and reads context/kb/runtime/cache rather than assuming wiki, inspects src/cache.ts, and reports 45 seconds with matching citations. It distinguishes a declared TTL constant from demonstrated expiry behavior and accurately reports no stamp. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

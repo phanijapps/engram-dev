@@ -1,0 +1,265 @@
+{
+  "at": "2026-10-11T22:09:26.691Z",
+  "results": [
+    {
+      "name": "build",
+      "argv": [
+        "pnpm",
+        "build"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "installer-dry-run",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "copilot",
+        "--scope",
+        "project",
+        "--root",
+        "/tmp/copilot-delivery ü BATTYZ/project",
+        "--hooks-only",
+        "--yes",
+        "--dry-run"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "installer-apply",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "copilot",
+        "--scope",
+        "project",
+        "--root",
+        "/tmp/copilot-delivery ü BATTYZ/project",
+        "--hooks-only",
+        "--yes"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "installer-repeat",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "copilot",
+        "--scope",
+        "project",
+        "--root",
+        "/tmp/copilot-delivery ü BATTYZ/project",
+        "--hooks-only",
+        "--yes"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "installed-wrapper",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/tmp/copilot-delivery ü BATTYZ/project/.harness/hooks/copilot-context.js",
+        "--event",
+        "sessionStart"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "installer-remove",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "init",
+        "harness",
+        "--agent",
+        "copilot",
+        "--scope",
+        "project",
+        "--root",
+        "/tmp/copilot-delivery ü BATTYZ/project",
+        "--hooks-only",
+        "--yes",
+        "--remove"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "check",
+      "argv": [
+        "pnpm",
+        "check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "coverage",
+      "argv": [
+        "pnpm",
+        "coverage"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "corpus",
+      "argv": [
+        "pnpm",
+        "corpus:check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "brand",
+      "argv": [
+        "pnpm",
+        "brand:check"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "audit",
+      "argv": [
+        "pnpm",
+        "audit:prod"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "links",
+      "argv": [
+        "pnpm",
+        "links"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "fingerprints",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "fingerprints",
+        "..",
+        "../wiki"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "stamp",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "stamp",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "anchors",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "anchors",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "validate",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "validate",
+        "../wiki"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "status",
+      "argv": [
+        "pnpm",
+        "exec",
+        "tsx",
+        "packages/cli/src/main.ts",
+        "know",
+        "status",
+        "../wiki",
+        "--workspace",
+        ".."
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "stop-isolated-service",
+      "argv": [
+        "/home/videogamer/.local/node-v24.19.0/bin/node",
+        "/home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js",
+        "stop",
+        "serve"
+      ],
+      "exit": 0,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "nativeHostVerified": false,
+  "cloudJobVerified": false
+}

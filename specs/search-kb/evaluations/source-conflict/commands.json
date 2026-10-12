@@ -1,0 +1,68 @@
+[
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-01.log"
+  },
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-02.log"
+  },
+  {
+    "command": "rg --files --hidden .",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-03.log"
+  },
+  {
+    "command": "cat AGENTS.md wiki/index.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-04.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace .",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-05.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki 'retry timeout' --limit 5",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-06.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki retries --depth 1 --budget 3000",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-07.log"
+  },
+  {
+    "command": "nl -ba src/retry.ts",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-08.log"
+  },
+  {
+    "command": "nl -ba wiki/retries.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-09.log"
+  },
+  {
+    "command": "cat wiki/.okf/last-index.json",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-10.log"
+  },
+  {
+    "command": "sha256sum src/retry.ts wiki/retries.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/source-conflict",
+    "exitCode": 0,
+    "log": "command-11.log"
+  }
+]

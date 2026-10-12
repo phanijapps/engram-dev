@@ -1,0 +1,84 @@
+[
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "fingerprints",
+      "..",
+      "../wiki"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "stamp",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "anchors",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "validate",
+      "../wiki"
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0
+  },
+  {
+    "command": [
+      "pnpm",
+      "exec",
+      "tsx",
+      "packages/cli/src/main.ts",
+      "know",
+      "status",
+      "../wiki",
+      "--workspace",
+      ".."
+    ],
+    "exit": 0,
+    "note": "after preserving pre-existing metadata"
+  }
+]

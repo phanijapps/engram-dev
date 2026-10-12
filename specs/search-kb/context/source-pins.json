@@ -1,0 +1,19 @@
+{
+  "head": "c843b8b7bfb685f748d8b568dee91043db9288ae",
+  "sources": {
+    "AGENTS.md": "2e4bcc8316dcde29ab6c809f32a6d58a10fb1d7747fd7ee371508aed776d66a5",
+    "wiki/domain/wiki-contract.md": "076cbef326125b2209515f39a5a4c6d74e1a1a7d03882be39f12d0abe1063695",
+    "wiki/project/documentation-map.md": "bb102014610d82d0fa79ad86c2bb024ecb141fd8bd62feed733d1a3ced875f38",
+    "wiki/systems/sdd-harness-architecture.md": "0ebed49cfd0cc372d60a753cb4662d4a9eed2de3d2a1f4fef2a2a23f778b24d0",
+    "wiki/assets/contracts/OKF_SPEC_v0.2.txt": "891404d16789d87e98bc26a77468c6b7df52dbee88b880c2bfcadff6a4b44299",
+    "treadle/packages/cli/harness/harness.json": "87061e7b7a89f86208da7b9aa7fcd280f0f9fa173d495b83ca3d1bbde8f3db00",
+    "treadle/packages/cli/src/commands/know.ts": "e47aceae4e7e0e93cdb53ae988f2e6744eb874ca4e26afad3a4f1b68a432dc57",
+    "treadle/packages/knowledge/src/search.ts": "6b0b08b7e4efdc74ae294b0db5ffbd2ba0e6da806321839f0eed15022eaa9a78",
+    "treadle/packages/knowledge/src/read.ts": "99a7ae8e1ee0ed8ab24172ba52029f39db5f27145bb3faebb6a0419fb2b9c068",
+    "treadle/packages/knowledge/src/links.ts": "6b486f58d1fcf9a73a81759e741277753be696b8f2ed6046a47c7d376e398ddf",
+    "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md": "07fc62e184b52bee4c266c8bf1863320e56df0c55fe36bb2d4167360b6e3a75d",
+    "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md": "475cc1f14e7c049cdb24114ea47fecb086cb0f04b7ed831030d66a4a5ed8e1d8",
+    "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md": "a85a45bc3af0bf05b2ec58bf3785e61cc7feaa62fbe6e50ab558dd36e3269548",
+    "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md": "f9b37039693503a2a6c88956945be79a95cbd49f373bec062d621a936fc597bb"
+  }
+}

@@ -1,0 +1,14 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Checkout
+     4	description: Fixture context for Checkout.
+     5	sources:
+     6	  - id: checkout
+     7	    resource: src/checkout.ts
+     8	---
+     9	
+    10	Reserve inventory before charging. See [payments](./payments.md) and [inventory](/domain/inventory.md).
+    11	Source: src/checkout.ts:1.
+
+stderr:

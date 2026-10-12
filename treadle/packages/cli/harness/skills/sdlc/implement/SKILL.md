@@ -3,6 +3,9 @@ name: implement
 description: Execute the owner-approved specpack sequence one task at a time from machine handouts and frozen context. Run checks and record actual evidence. Use for implementation after start permission, not planning or independent review.
 ---
 
+When repository knowledge is needed for this step, use the installed `search-kb` skill for read-only OKF retrieval and source checks.
+If that skill is unavailable, use the existing wiki/source procedure below. Retrieval does not grant task admission or owner permission.
+
 CLI examples below use `do` and `know` subcommands. Prefix them with the installed
 harness executable; check its `--help` output or use the documented Node entry.
 

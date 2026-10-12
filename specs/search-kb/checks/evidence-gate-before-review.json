@@ -1,0 +1,6 @@
+{
+  "command": "node specs/search-kb/verify-delivery.mjs --evidence-only",
+  "exit": 1,
+  "observation": "linked-sources: absent/failing independent rubric review",
+  "context": "Observed before independent assessments were attached; not the declared T-3 delivery command."
+}

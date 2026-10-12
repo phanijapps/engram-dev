@@ -1,0 +1,136 @@
+{
+  "id": "generated-guide",
+  "skillDigest": "2100a4c054400730b1a64baf55f504d0f1d4b28daf8b51e89eb938da00ac9a3f",
+  "startedAt": "2026-10-12T04:38:49.914438+00:00",
+  "completedAt": "2026-10-12T04:40:12.248621+00:00",
+  "evaluator": "/root/search_kb_eval_b",
+  "commands": [
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-01.log",
+      "exit": 0
+    },
+    {
+      "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-02.log",
+      "exit": 0
+    },
+    {
+      "command": "rg --files --hidden .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-03.log",
+      "exit": 0
+    },
+    {
+      "command": "cat AGENTS.md wiki/index.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-04.log",
+      "exit": 0
+    },
+    {
+      "command": "cat AGENTS.backup.md package.json",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-05.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status wiki --workspace .",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-06.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search wiki money --limit 5",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-07.log",
+      "exit": 0
+    },
+    {
+      "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read wiki domain/money --depth 1 --budget 3000",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-08.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba src/money.ts",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-09.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba AGENTS.backup.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-10.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba package.json",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-11.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba check.mjs",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-12.log",
+      "exit": 0
+    },
+    {
+      "command": "nl -ba wiki/domain/money.md",
+      "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/generated-guide",
+      "exitCode": 0,
+      "log": "command-13.log",
+      "exit": 0
+    }
+  ],
+  "before": {
+    ".harness/harness-install.copilot.json": "7b3a190abbb84bc850837138f3c6c70d320ba3df690236b984172f28d22a6c7e",
+    "AGENTS.backup.md": "7d8686c6714996e3f49d8e4129de7c4145cd1758823581780492dc529e984eaa",
+    "AGENTS.md": "ade07a66437c75d6fbcefc435fccf5d60bc6872e34363e3af403255b6e45c98f",
+    "check.mjs": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+    "package.json": "79d6cce9ff655e21c2a56471bdf462f4e9204ed9497fa3abcee66de072f2c623",
+    "src/money.ts": "fa420b4aa593a30501f587d913ca15cbcea88d17080f2c81844b1680da804bdd",
+    "wiki/domain/money.md": "b835ad567edc78969eebb390be062a80ea3e36a2fc8e58633367e989a7b17d77",
+    "wiki/index.md": "61082ba7169f739ebe9cfbdf9504878cd4de1a5969e1120cef3a9a2404d252ae"
+  },
+  "after": {
+    ".harness/harness-install.copilot.json": "7b3a190abbb84bc850837138f3c6c70d320ba3df690236b984172f28d22a6c7e",
+    "AGENTS.backup.md": "7d8686c6714996e3f49d8e4129de7c4145cd1758823581780492dc529e984eaa",
+    "AGENTS.md": "ade07a66437c75d6fbcefc435fccf5d60bc6872e34363e3af403255b6e45c98f",
+    "check.mjs": "8bd84068849db1cf74863fdff2bc74704c33efb8fafe33347274fc758a63b302",
+    "package.json": "79d6cce9ff655e21c2a56471bdf462f4e9204ed9497fa3abcee66de072f2c623",
+    "src/money.ts": "fa420b4aa593a30501f587d913ca15cbcea88d17080f2c81844b1680da804bdd",
+    "wiki/domain/money.md": "b835ad567edc78969eebb390be062a80ea3e36a2fc8e58633367e989a7b17d77",
+    "wiki/index.md": "61082ba7169f739ebe9cfbdf9504878cd4de1a5969e1120cef3a9a2404d252ae"
+  },
+  "review": {
+    "by": "/root/search_kb_plan_review",
+    "rationale": "The evaluator reads actual generated AGENTS.md, the byte-preserved original backup, package.json and money concept/source. It identifies pnpm run check without executing the script, preserves integer-cents policy authority, and accurately notes the check implementation merely exits successfully and the source flag does not prove universal enforcement. Independent before/after/copied-fixture hashing matches, and original command exits and deciding logs were inspected.",
+    "critical": {
+      "evidence": true,
+      "okf": true,
+      "authority": true,
+      "honesty": true,
+      "sideEffects": true
+    },
+    "quality": {
+      "usefulness": 2,
+      "focus": 2
+    },
+    "expectationsMet": true
+  }
+}

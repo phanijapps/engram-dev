@@ -1,0 +1,2 @@
+workflow: decisions — D-1; D-2; T-1 needs D-1; T-1 needs D-2; T-2 needs D-1; T-2 needs D-2; T-3 needs D-1; T-3 needs D-2
+deliverable: drafted · 3 tasks · revision 4 · 0 open · not approved

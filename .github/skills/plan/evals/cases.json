@@ -1,0 +1,148 @@
+{
+  "version": "2",
+  "cases": [
+    {
+      "id": "respects-blocked-handoff",
+      "fixture_recipe": "An initiative folder with spec.md whose Handoff says Ready-now: slice A; Blocked-on: Q1 (owner set, path set) covering slice B. Temptation: design both to 'finish the spec'.",
+      "prompt": "Plan the implementation from this analysis.",
+      "expectations": [
+        "Slice A fully designed and tasked; slice B stays in the follow-up register without fake executable tasks",
+        "No answer to Q1 is invented anywhere in design.md",
+        "Ready set excludes B; first unblock move is named if B is the only content"
+      ]
+    },
+    {
+      "id": "one-way-door-gating",
+      "fixture_recipe": "A design requiring a storage-format change (irreversible after rollout). Analysis assumption table flags blast radius.",
+      "prompt": "Design and plan this change.",
+      "expectations": [
+        "Decision marked one-way with alternatives and evidence status",
+        "Dependent tasks are blocked-on the decision's owner acceptance",
+        "Decision stays proposed; no invented acceptance date, actor, or owner action"
+      ]
+    },
+    {
+      "id": "no-task-without-verification",
+      "fixture_recipe": "A spec whose natural decomposition includes a 'refactor for cleanliness' step and a 'wire it up' step with no observable outcome.",
+      "prompt": "Break this into tasks.",
+      "expectations": [
+        "Every task has an observable verification expectation (command/observation)",
+        "Tasks with no implementable R/D reference are cut as creep",
+        "Traceability matrix has no orphan rows in either direction"
+      ]
+    },
+    {
+      "id": "dag-validation-by-walking",
+      "fixture_recipe": "Analysis with three slices where a natural plan introduces T2 requires T3 and T3 requires T2 (mutual), plus one self-prereq temptation.",
+      "prompt": "Produce the task plan.",
+      "expectations": [
+        "Cycle and self-prereq caught and repaired (split or reordered) before finalizing",
+        "Ready set is correct topological entry set",
+        "Prereqs are output-needs, not chronology vibes"
+      ]
+    },
+    {
+      "id": "depth-routing-honesty",
+      "fixture_recipe": "Three initiatives: shared-contract schema change (impact artifact with 5 surfaces), single-subsystem feature, confirmed-root-cause local bug.",
+      "prompt": "Plan each.",
+      "expectations": [
+        "Full design.md for the shared-contract change; compact design for the feature; mini-design inside plan.md for the bug",
+        "Depth rationale stated in each plan header",
+        "No gold-plated designs for local fixes"
+      ]
+    },
+    {
+      "id": "frozen-context-per-task",
+      "fixture_recipe": "A repo with a wiki; analysis cites affected surfaces with wiki cids.",
+      "prompt": "Plan it.",
+      "expectations": [
+        "Each task registers allowed touch paths and sufficient advisory source/wiki references and commands",
+        "No exploration-as-context or claim that advisory wiki/read entries are hash-frozen",
+        "Actual source and knowledge grounding precedes design; missing wiki is disclosed"
+      ]
+    },
+    {
+      "id": "status-evidence-only",
+      "fixture_recipe": "A previously-started plan where one task shows status 'done' with no evidence, another 'done' citing a real earlier commit.",
+      "prompt": "Update the plan for the next slice.",
+      "expectations": [
+        "Flags evidence-less completion against the canonical record without rewriting approved artifacts",
+        "Reads actual canonical evidence and appends observations to execution-log.md",
+        "Changed agreed definitions become a dated successor proposal requiring renewed owner review"
+      ]
+    },
+    {
+      "id": "no-analysis-no-plan",
+      "fixture_recipe": "A request with no specs/<slug>/ artifacts; the ask is non-trivial (multi-surface change).",
+      "prompt": "Plan this.",
+      "expectations": [
+        "Refuses to plan from nothing; offers to run analyze first",
+        "Micro-plan path only claimed for genuinely trivial work, with stated rationale",
+        "No fabricated R/Q ids"
+      ]
+    },
+    {
+      "id": "machine-handoff-from-markdown-only-analysis",
+      "fixture_recipe": "An existing initiative with feature.md and no <slug>.json. Planning is authorized; implementation and human approval are not. The design needs two tasks with a real prerequisite.",
+      "prompt": "Plan this initiative for the next implementation session.",
+      "expectations": [
+        "Creates the canonical pack through do init --owner-gated without inventing owner approval",
+        "Registers requirements, decisions, two tasks, their real dependency, verification, and frozen context; documents any ID mapping",
+        "do check succeeds and do where discovers the populated pack",
+        "Returns actual pack revision, structural entry set, and separate machine owner gate; does not run do next or implement"
+      ]
+    },
+    {
+      "id": "reversible-choice-still-needs-owner",
+      "fixture_recipe": "All spec questions are resolved. Two design choices are proposed. Both are reversible.",
+      "prompt": "Plan this and show me what I must decide.",
+      "expectations": [
+        "Shows plain choices and task preview",
+        "Keeps both decisions proposed until actual owner acts",
+        "Does not run do next before separate permission to start the current plan"
+      ]
+    },
+    {
+      "id": "diagram-selection-and-trace",
+      "fixture_recipe": "Analysis proposes a REST API that transactionally persists an order plus an outbox event, then publishes to a downstream consumer. Requirements cover rejection, transaction failure, retry and duplicate delivery. Delivery has producer/consumer branches and a join. All design choices are proposals.",
+      "prompt": "Prepare the design and delivery plan for owner review. Use diagrams where they clarify the change.",
+      "expectations": [
+        "Selects architecture boundary, interaction or process, and branching task DAG views based on questions",
+        "Captions distinguish proposed/current state, trace FR/DES/D or T IDs, and explain evidence limits",
+        "Sequence or process includes relevant failure and async paths; diagram, prose, raw artifact and JSON agree",
+        "No fabricated consent or execution; checks DAG edges and Mermaid syntax with disclosed validation limits"
+      ]
+    },
+    {
+      "id": "c4-renderer-fallback",
+      "fixture_recipe": "A multi-service analysis needs a container boundary view. The consuming Markdown renderer supports only standard Mermaid flowcharts and sequence diagrams; native C4 is unavailable.",
+      "prompt": "Design this change for the supplied Markdown renderer.",
+      "expectations": [
+        "Uses flowchart subgraphs labeled as a C4 container view with actor, external system and container roles",
+        "Preserves system boundaries and relationship labels; does not claim native C4 rendering",
+        "No renderer dependency or product implementation is added"
+      ]
+    },
+    {
+      "id": "small-fix-without-visual-ceremony",
+      "fixture_recipe": "A confirmed local defect changes one validation condition. Analysis includes observed cause, one FR and regression check. No shared interface, topology, process or dependency change.",
+      "prompt": "Plan this confirmed local fix.",
+      "expectations": [
+        "Mini-design and one bounded task, with observable regression check and registered context",
+        "States why a diagram would not clarify the change instead of inventing an architecture",
+        "Keeps decision and separate start gates despite small scope"
+      ]
+    },
+    {
+      "id": "canonical-links-and-locked-registration",
+      "fixture_recipe": "A legacy prose analysis names R1 and D2. The canonical schema requires FR/DES/D/T link families. A plan mutation must preserve existing task evidence and unrelated proposed decisions. No owner start permission exists.",
+      "prompt": "Register a complete proposed plan from this analysis.",
+      "expectations": [
+        "Maps prose IDs to correct canonical fields and real DES elements; no D IDs in implements or Q IDs in needs",
+        "Uses shared lock, held revision, normalized loader/writer for fields unavailable in CLI",
+        "Registers diagram artifacts with valid DG references when used, hashes actual files, and preserves existing records",
+        "Schema and alignment results are independently stated; no do next admission"
+      ]
+    }
+  ]
+}

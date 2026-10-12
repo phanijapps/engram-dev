@@ -1,0 +1,13 @@
+task T-2 — 12 items in the frozen slice (digest 08c8d2e8eb6c…)
+  D    D-1
+  D    D-2
+  D    D-3
+  D    D-4
+  DES  DES-1 — OKF retrieval and evidence interpretation
+  DES  DES-2 — Portable skill routing and installation
+  FR   FR-1
+  FR   FR-2
+  FR   FR-3
+  FR   FR-4
+  TASK T-1 — Author the read-only OKF search skill and evaluation fixtures
+  TASK T-2 — Integrate SDLC routing and install the skill to Copilot

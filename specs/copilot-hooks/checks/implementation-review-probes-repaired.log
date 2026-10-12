@@ -1,0 +1,17 @@
+[
+  {
+    "scenario": "runtime pointer conflict",
+    "dryRunRefusedRows": 1,
+    "actualWiringRefused": [
+      "Runtime pointer differs; inspect it before using --force"
+    ],
+    "actualWritten": 0
+  },
+  {
+    "scenario": "dangling configuration symlink on removal",
+    "refused": "Error: Malformed or unsafe Copilot configuration; repair it before removal",
+    "payloadPreserved": true,
+    "statePreserved": true,
+    "linkPreserved": true
+  }
+]

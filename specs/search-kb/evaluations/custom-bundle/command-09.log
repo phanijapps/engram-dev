@@ -1,0 +1,12 @@
+stdout:
+     1	---
+     2	type: System
+     3	title: Cache
+     4	description: Fixture context for Cache.
+     5	sources:
+     6	  - resource: src/cache.ts
+     7	---
+     8	
+     9	The TTL is 45 seconds. Source: src/cache.ts:1.
+
+stderr:

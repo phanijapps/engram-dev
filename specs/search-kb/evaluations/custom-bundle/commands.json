@@ -1,0 +1,62 @@
+[
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/SKILL.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-01.log"
+  },
+  {
+    "command": "cat /tmp/search-kb-behavior-KD16NI/skill/resources/okf-consumption.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-02.log"
+  },
+  {
+    "command": "rg --files --hidden -g '!.git'",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-03.log"
+  },
+  {
+    "command": "cat AGENTS.md context/kb/index.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-04.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know status context/kb --workspace /tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-05.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know search context/kb 'cache expiry TTL' --limit 5",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-06.log"
+  },
+  {
+    "command": "/home/videogamer/.local/node-v24.19.0/bin/node /home/videogamer/code/memex_beta/treadle/packages/cli/dist/src/main.js know read context/kb runtime/cache",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-07.log"
+  },
+  {
+    "command": "nl -ba src/cache.ts",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-08.log"
+  },
+  {
+    "command": "nl -ba context/kb/runtime/cache.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-09.log"
+  },
+  {
+    "command": "nl -ba AGENTS.md",
+    "cwd": "/tmp/search-kb-behavior-KD16NI/fixtures/custom-bundle",
+    "exitCode": 0,
+    "log": "command-10.log"
+  }
+]

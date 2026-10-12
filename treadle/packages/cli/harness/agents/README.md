@@ -1,13 +1,14 @@
 # Surface subagents
 
-One subagent, three surfaces. Author here; install to the surface's
+One subagent, four surfaces. Author here; install to the surface's
 agent directory.
 
-| Surface     | Source                   | Install to                                              |
-| ----------- | ------------------------ | ------------------------------------------------------- |
-| pi          | `pi/red-foreman.md`      | `.pi/agents/` (project) or `~/.pi/agent/agents/` (user) |
-| Claude Code | `claude/red-foreman.md`  | `~/.claude/agents/`                                     |
-| Codex       | `codex/red-foreman.toml` | `~/.codex/agents/`                                      |
+| Surface     | Source                  | Install to                                              |
+| ----------- | ----------------------- | ------------------------------------------------------- |
+| pi          | `pi/red-forman.md`      | `.pi/agents/` (project) or `~/.pi/agent/agents/` (user) |
+| Claude Code | `claude/red-forman.md`  | `~/.claude/agents/`                                     |
+| Codex       | `codex/red-forman.toml` | `~/.codex/agents/`                                      |
+| Copilot     | `copilot/red-forman.md` | `.github/agents/` (project)                             |
 
-The persona contract lives in AGENTS.md §Red-foreman review; these
+The review requirement lives in AGENTS.md under Agent practice; these
 files are its per-surface encodings. Keep them in sync when it changes.

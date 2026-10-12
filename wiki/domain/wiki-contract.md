@@ -4,14 +4,16 @@ type: Domain
 description: "The current OKF bundle layout, concept fields, source references, and evidence limits."
 status: stable
 created: 2026-10-10
-updated: 2026-10-10
+updated: 2026-10-12
 sources:
   - { "id": "s1", "resource": "treadle/packages/knowledge/src/parse.ts" }
   - { "id": "s2", "resource": "treadle/packages/knowledge/src/validate.ts" }
   - { "id": "s3", "resource": "treadle/packages/knowledge/src/links.ts" }
   - { "id": "s4", "resource": "treadle/packages/knowledge/src/stamp.ts" }
   - { "id": "s5", "resource": "treadle/packages/cli/src/commands/know.ts" }
-  - { "id": "s6", "resource": "AGENTS.md" }
+  - { "id": "s6", "resource": "AGENTS.backup.md" }
+  - { "id": "s7", "resource": "AGENTS.md" }
+  - { "id": "s8", "resource": "treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md" }
 ---
 
 # Bundle
@@ -23,7 +25,7 @@ Source: `treadle/packages/knowledge/src/parse.ts:17`.
 
 A concept needs a nonempty `type`. Title and description are recommended
 by the validator and required by this repository's documentation discipline.
-Sources: `treadle/packages/knowledge/src/validate.ts:162`; `AGENTS.md:1`.
+Sources: `treadle/packages/knowledge/src/validate.ts:162`; `AGENTS.backup.md:166`.
 Lifecycle values are `draft`, `stable`, and `deprecated`.
 Source: `treadle/packages/knowledge/src/validate.ts:211`.
 Spec stages remain a [different vocabulary](/domain/specpack-status-vocabulary.md).
@@ -78,3 +80,15 @@ Run from `treadle/`:
 
 Report untracked sources explicitly. A zero review count does not mean those
 sources were baselined. Source: `treadle/packages/cli/src/commands/know.ts:158`.
+
+
+# Read-only knowledge retrieval — observed 2026-10-12
+
+The `search-kb` skill consumes existing bundles and follows relevant links and source evidence.
+It preserves optional metadata and unknown types, reports broken links and missing knowledge, and distinguishes trust from owner authority.
+It does not reset stamps, repair knowledge, execute computations, or admit work.
+Source: `treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md`; `resources/okf-consumption.md` in that skill.
+
+The root `AGENTS.md` now provides concise installer-generated navigation and refers to `AGENTS.backup.md` for preserved project rules.
+The repository's concept authoring requirements remain in that original rulebook; they are not extra mandatory OKF consumer fields.
+Source: `AGENTS.md:1`; `AGENTS.backup.md:166`.
