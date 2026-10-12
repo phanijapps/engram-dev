@@ -51,6 +51,59 @@ it('runs the documented stdin/context contract, event workspace and next-event r
     rmSync(root, { recursive: true, force: true });
   }
 }, 30000);
+const fixtureReport = (packs: Record<string, unknown>[]) => ({
+  format: 'context/1',
+  workspace: '/w',
+  wiki: { root: '/w/wiki', available: true, freshness: 'fresh', limit: 'fixture limit' },
+  specs: { root: '/w/specs', packs, selectionRequired: true },
+  guidance: { newSpec: 'fixture new spec', continueSpec: 'fixture continue spec' },
+});
+const connection = { service: { url: 'http://127.0.0.1:1/' }, project: { id: 'p1' } };
+const reason = 'Approve the answered spec questions before planning continues';
+const pack = (name: string, stage = 'planning', reasons = [reason, reason, reason, reason]) => ({
+  name,
+  stage,
+  workflow: { phase: 'spec', reasons },
+  doing: [],
+  candidate: { id: 'T-1', admitted: false },
+  openQuestions: ['Q-1'],
+  evidence: [{ task: 'T-1', note: 'x'.repeat(2000) }],
+  feedback: { sessions: 1, unresolved: 2 },
+});
+it('keeps 40 open packs inside the budget with guidance first and an explicit omitted count', async () => {
+  const { compactBlock, CONTEXT_BUDGET } = await import(hook);
+  const packs = Array.from({ length: 40 }, (_, i) => pack(`pack-${String(i).padStart(2, '0')}`));
+  const block: string = compactBlock(fixtureReport(packs), connection);
+  expect(CONTEXT_BUDGET).toBeLessThan(10000);
+  expect(block.length).toBeLessThanOrEqual(CONTEXT_BUDGET);
+  const lines = block.split('\n');
+  const firstPack = lines.findIndex((line) => line.startsWith('pack-'));
+  expect(lines.indexOf('fixture continue spec')).toBeLessThan(firstPack);
+  expect(lines).toContain('More than one spec is open. Ask which spec to continue; never guess.');
+  const listed = lines.filter((line) => line.startsWith('pack-')).length;
+  expect(listed).toBeGreaterThan(10);
+  expect(lines.at(-1)).toBe(
+    `${40 - listed} more open spec(s) omitted; run do where /w --json for the full list.`,
+  );
+  expect(block).toContain('feedback (counts/IDs only) {"sessions":1,"unresolved":2}');
+  expect(block.split(reason).length - 1).toBe(listed * 3);
+  expect(block).not.toContain('x'.repeat(100));
+});
+it('lists open packs only and counts delivered and refused packs', async () => {
+  const { compactBlock } = await import(hook);
+  const block: string = compactBlock(
+    fixtureReport([
+      pack('open-one', 'planning', ['Q-1']),
+      pack('done-one', 'delivered'),
+      { name: 'bad-one', stage: 'refused', error: 'Missing spec JSON' },
+    ]),
+    connection,
+  );
+  expect(block).toContain('open-one: planning | gate spec (Q-1) | candidate T-1 (not admitted)');
+  expect(block).not.toContain('done-one:');
+  expect(block).toContain('Open specs: 1; delivered or closed: 1; refused: 1 (bad-one)');
+  expect(block).not.toContain('omitted');
+});
 it('bounds malformed input and unavailable runtime with actionable status', () => {
   const out = spawnSync(process.execPath, [hook, '--event', 'SessionStart'], {
     input: '{',

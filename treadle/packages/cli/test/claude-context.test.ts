@@ -31,6 +31,8 @@ it('connects startup/resume/preprompt workspace and never shuts down with sessio
       const out = JSON.parse(r.stdout);
       expect(out.hookSpecificOutput.hookEventName).toBe(event);
       expect(out.hookSpecificOutput.additionalContext).toContain(workspace);
+      // Claude Code inlines at most 10,000 characters of hook context.
+      expect(out.hookSpecificOutput.additionalContext.length).toBeLessThanOrEqual(9000);
       const current = JSON.parse(readFileSync(join(state, 'service.json'), 'utf8')).instance;
       if (instance) expect(current).toBe(instance);
       instance = current;
