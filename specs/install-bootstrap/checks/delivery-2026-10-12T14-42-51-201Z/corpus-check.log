@@ -1,0 +1,6 @@
+
+> treadle-root@ corpus:check /home/videogamer/code/memex_beta/treadle
+> node scripts/corpus-check.mjs
+
+corpus regenerated (TS): 90 golden files under /home/videogamer/code/memex_beta/treadle/packages/conformance/corpus
+corpus:check: goldens reproduce exactly

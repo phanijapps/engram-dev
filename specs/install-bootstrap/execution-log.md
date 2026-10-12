@@ -38,3 +38,17 @@ source-backed README, canonical hook guidance, wiki and dated HTML supplement.
 Native temporary-root identity now uses realpath for platform aliases.
 Exact check passed 49 tests; links and wiki validation also exit 0. Log
 checks/T-3-attempt-2.log; pass revision 13. Native host activation is not claimed.
+
+T-4 admitted at revision 14. First delivery passed root lifecycle, portable
+runtime package/smoke, all six gates, and wiki checks. Independent implementation
+audit found false materialization guidance for an empty custom manifest and
+Corepack-only recovery guidance despite the supported fallback. Both contained
+defects were repaired in the admitted scope. Added the empty-manifest regression;
+recovery now uses node scripts/setup.mjs. Initial and repaired reports remain
+separate; independent repaired audit passed 50 targeted tests.
+Complete repaired delivery passed again: 327 tests, 10 native Windows-only
+skips, all six gates, coverage above floors, wiki zero errors/warnings and 194
+anchors with none needing review. Current logs:
+checks/delivery-2026-10-12T14-42-51-201Z/ and checks/T-4-attempt-2.log.
+Pass recorded at revision 15. Source/compiled artifacts are rebuilt. Final
+current-digest PACK review and PR publication follow; owner Finish remains pending.

@@ -1,0 +1,1 @@
+Current HEAD stamp retained. Python-only fingerprints do not attest dirty TypeScript/Markdown sources.

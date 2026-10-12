@@ -1,12 +1,38 @@
 import { brand } from '@treadle/brand';
-import { afterEach, expect, it } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { runHarnessInit } from '../src/commands/init.js';
 const hook = fileURLToPath(new URL('../harness/hooks/copilot-context.js', import.meta.url));
 const roots: string[] = [];
+
+it('does not claim hook materialization when a custom manifest has no hooks', async () => {
+  const f = fixture();
+  const manifest = join(f.root, 'manifest.json');
+  writeFileSync(manifest, JSON.stringify({ format: 'harness/0.1', components: [], hooks: [] }));
+  const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+  const code = process.exitCode;
+  try {
+    await runHarnessInit({
+      agent: 'copilot',
+      scope: 'project',
+      root: f.root,
+      manifest,
+      hooks: true,
+      hooksOnly: true,
+      agents: false,
+    });
+    expect(log.mock.calls.flat().join('\n')).not.toContain('runtime pointer are installed');
+    expect(existsSync(join(f.root, '.harness/hooks'))).toBe(false);
+    expect(process.exitCode).toBe(code);
+  } finally {
+    log.mockRestore();
+    process.exitCode = code;
+  }
+});
 afterEach(() => {
   for (const root of roots.splice(0)) rmSync(root, { recursive: true, force: true });
 });

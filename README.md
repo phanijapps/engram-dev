@@ -257,6 +257,7 @@ Root installation uses a matching root lockfile and runs the shared setup helper
 through `prepare`. The helper installs from the frozen `treadle/pnpm-lock.yaml`
 and builds that workspace. You can also run `corepack pnpm run setup` explicitly,
 including after an installation with lifecycle scripts disabled.
+With standalone pinned pnpm, `node scripts/setup.mjs` also provides setup without Corepack.
 Installing directly from `treadle/` remains supported. Application dependencies
 and portable runtime packaging stay inside that workspace.
 

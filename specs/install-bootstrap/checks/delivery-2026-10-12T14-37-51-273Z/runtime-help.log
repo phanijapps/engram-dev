@@ -1,0 +1,21 @@
+Usage: wukong [options] [command]
+
+Wukong — The human drives; the machine moves. (formerly treadle)
+
+Options:
+  -V, --version      output the version number
+  -h, --help         display help for command
+
+Commands:
+  do                 the loop plane: init, add, next, record, answer, approve,
+                     close, check, status
+  init               stand something up: harness — the interactive installer
+  know               the knowledge plane: search, read, validate, links,
+                     findings, fingerprints, anchors, status
+  start
+  stop
+  status
+  project            connect explicit trusted local workspaces
+  context [options]
+  package
+  help [command]     display help for command

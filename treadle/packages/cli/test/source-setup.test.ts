@@ -126,7 +126,7 @@ it('reports source setup guidance when the root compiled entry is absent', () =>
     encoding: 'utf8',
   });
   expect(result.status).toBe(1);
-  expect(result.stderr).toContain('corepack pnpm run setup');
+  expect(result.stderr).toContain('node scripts/setup.mjs');
 });
 
 function realCommand(args: string[], cwd: string) {
