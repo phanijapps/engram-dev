@@ -76,7 +76,7 @@ describe('the four surface adapters (T-3)', () => {
       install('pi', w.project);
       expect(existsSync(join(w.project, '.pi/skills/analyze/SKILL.md'))).toBe(true);
       expect(existsSync(join(w.project, '.pi/skills/writer/references/rules.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.pi/agents/red-foreman.md'))).toBe(true);
+      expect(existsSync(join(w.project, '.pi/agents/red-forman.md'))).toBe(true);
       expect(existsSync(join(w.project, '.pi/extensions/post-tool-check.js'))).toBe(true);
     } finally {
       w.restore();
@@ -95,7 +95,7 @@ describe('the four surface adapters (T-3)', () => {
       );
       install('claude', w.project);
       expect(existsSync(join(w.project, '.claude/skills/build-kb/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.claude/agents/red-foreman.md'))).toBe(true);
+      expect(existsSync(join(w.project, '.claude/agents/red-forman.md'))).toBe(true);
       expect(existsSync(join(w.project, '.harness/hooks/post-tool-check.js'))).toBe(true);
       const s = JSON.parse(readFileSync(join(w.project, '.claude/settings.json'), 'utf8')) as {
         permissions: { allow: string[] };
@@ -117,7 +117,7 @@ describe('the four surface adapters (T-3)', () => {
     try {
       install('codex', w.project);
       expect(existsSync(join(w.project, '.codex/skills/analyze/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.codex/agents/red-foreman.toml'))).toBe(true);
+      expect(existsSync(join(w.project, '.codex/agents/red-forman.toml'))).toBe(true);
       expect(existsSync(join(w.project, '.harness/hooks/codex-context.js'))).toBe(true);
       const cfg = JSON.parse(readFileSync(join(w.project, '.codex/hooks.json'), 'utf8'));
       expect(cfg.hooks.SessionStart).toHaveLength(1);
@@ -134,7 +134,7 @@ describe('the four surface adapters (T-3)', () => {
     try {
       install('copilot', w.project);
       expect(existsSync(join(w.project, '.github/skills/analyze/SKILL.md'))).toBe(true);
-      expect(existsSync(join(w.project, '.github/agents/red-foreman.md'))).toBe(true);
+      expect(existsSync(join(w.project, '.github/agents/red-forman.md'))).toBe(true);
       const { manifest, root } = loadManifest(REAL_MANIFEST);
       const plan = compilePlan(manifest, root, {
         agent: 'copilot',

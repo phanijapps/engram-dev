@@ -133,19 +133,19 @@
       }
     },
     {
-      "id": "red-foreman",
+      "id": "red-forman",
       "kind": "agent",
       "source": {
-        "pi": "agents/pi/red-foreman.md",
-        "claude": "agents/claude/red-foreman.md",
-        "codex": "agents/codex/red-foreman.toml",
-        "copilot": "agents/copilot/red-foreman.md"
+        "pi": "agents/pi/red-forman.md",
+        "claude": "agents/claude/red-forman.md",
+        "codex": "agents/codex/red-forman.toml",
+        "copilot": "agents/copilot/red-forman.md"
       },
       "dest": {
-        "pi": ".pi/agents/red-foreman.md",
-        "claude": ".claude/agents/red-foreman.md",
-        "codex": ".codex/agents/red-foreman.toml",
-        "copilot": ".github/agents/red-foreman.md"
+        "pi": ".pi/agents/red-forman.md",
+        "claude": ".claude/agents/red-forman.md",
+        "codex": ".codex/agents/red-forman.toml",
+        "copilot": ".github/agents/red-forman.md"
       }
     }
   ],

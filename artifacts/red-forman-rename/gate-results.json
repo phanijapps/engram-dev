@@ -1,0 +1,32 @@
+[
+  {
+    "command": "pnpm check",
+    "exit": 0,
+    "log": "gate-check.log"
+  },
+  {
+    "command": "pnpm coverage",
+    "exit": 0,
+    "log": "gate-coverage.log"
+  },
+  {
+    "command": "pnpm corpus:check",
+    "exit": 0,
+    "log": "gate-corpus-check.log"
+  },
+  {
+    "command": "pnpm brand:check",
+    "exit": 0,
+    "log": "gate-brand-check.log"
+  },
+  {
+    "command": "pnpm audit:prod",
+    "exit": 0,
+    "log": "gate-audit-prod.log"
+  },
+  {
+    "command": "pnpm links",
+    "exit": 0,
+    "log": "gate-links.log"
+  }
+]

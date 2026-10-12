@@ -63,7 +63,7 @@ export async function promptForMissing(
       ? false
       : flags.agents === true
         ? true
-        : await confirm('Install the harness agents (red-foreman)?', true);
+        : await confirm('Install the harness agents (red-forman)?', true);
   if (agents === undefined) return 'cancelled';
 
   const out: Flags = {

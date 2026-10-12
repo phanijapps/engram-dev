@@ -81,3 +81,13 @@ Source: [VS Code custom endpoint setup](https://code.visualstudio.com/docs/agent
 Z.ai Coding Plan uses a different endpoint and restricts subscription use to its supported tool list.
 That current list does not name Copilot. Do not assume a Coding Plan key supplies Copilot quota.
 Source: [Z.ai supported tools](https://docs.z.ai/devpack/tool/others).
+
+
+# Reviewer agent name — 2026-10-11
+
+The adversarial reviewer is `red-forman` on Codex, Claude Code, Pi, and Copilot.
+The authoritative manifest supplies its agent ID and per-host file names.
+Use the harness installer to install the definitions; reload the host to refresh discovered names.
+Sources: `treadle/packages/cli/harness/harness.json`;
+`treadle/packages/cli/harness/agents/README.md`.
+Historical review records retain the actor identity recorded at the time of each review.

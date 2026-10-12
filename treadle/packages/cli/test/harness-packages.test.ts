@@ -33,7 +33,7 @@ it('generates deterministic, local host packages and truthful capability metadat
         );
         expect(manifest.hooks).toBeUndefined();
         expect(manifest.agents).toBeUndefined();
-        expect(existsSync(join(first, 'agents/red-foreman.md'))).toBe(true);
+        expect(existsSync(join(first, 'agents/red-forman.md'))).toBe(true);
       }
       expect(() => packageHarness(surface, first)).toThrow('already exists');
     }

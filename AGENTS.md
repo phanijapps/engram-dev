@@ -110,7 +110,7 @@ bind `127.0.0.1`, use CSP and trust on-disk Markdown. They are not remote servic
 and do not sanitize untrusted repository content. Follow the existing path,
 origin, revision and write guards.
 
-**Review.** Require a read-only red-foreman review before claiming work finished.
+**Review.** Require a read-only red-forman review before claiming work finished.
 The reviewer must be independent of implementation, cite findings with severity
 and locations, and rerun relevant expectations. Record the verdict beside the
 work. Fix findings within approved scope; return new scope to owner review.

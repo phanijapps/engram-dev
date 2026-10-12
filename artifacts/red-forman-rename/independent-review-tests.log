@@ -1,0 +1,10 @@
+
+ RUN  v5.0.3 /home/videogamer/code/memex_beta/treadle
+
+{"ok":false,"reason":"payload is not bounded JSON: Unexpected token 'o', \"not json\" is not valid JSON"}
+
+ Test Files  2 passed (2)
+      Tests  13 passed (13)
+   Start at  18:31:57
+   Duration  1.26s (tests 80%, transform 12%, import 7%, worker 1%)
+
