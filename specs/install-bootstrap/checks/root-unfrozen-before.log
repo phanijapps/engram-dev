@@ -1,0 +1,8 @@
+Progress: resolved 1, reused 0, downloaded 0, added 0
+ ERR_PNPM_WORKSPACE_PKG_NOT_FOUND  In : "@treadle/brand@workspace:*" is in the dependencies but no package named "@treadle/brand" is present in the workspace
+
+This error happened while installing the dependencies of @treadle/web@0.1.0
+
+Packages found in the workspace: 
+(node:1703873) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+(Use `node --trace-deprecation ...` to show where the warning was created)

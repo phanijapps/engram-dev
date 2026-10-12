@@ -2,26 +2,15 @@
   "name": "engram-dev",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "packageManager": "pnpm@9.15.9",
-  "description": "The SDD harness \u2014 knowledge first, then a tight loop. Install: curl -fsSL https://raw.githubusercontent.com/phanijapps/engram-dev/main/install.sh | bash (corepack + pnpm under the hood)",
-  "dependencies": {
-    "@treadle/brand": "file:treadle/packages/brand",
-    "@treadle/core": "file:treadle/packages/core",
-    "@treadle/knowledge": "file:treadle/packages/knowledge",
-    "@treadle/web": "file:treadle/packages/web",
-    "@treadle/cli": "file:treadle/packages/cli"
-  },
+  "description": "Private source setup wrapper for the nested TypeScript workspace.",
   "scripts": {
-    "prepare": "cd treadle && corepack enable && pnpm install --frozen-lockfile && pnpm build"
+    "prepare": "node scripts/setup.mjs",
+    "setup": "node scripts/setup.mjs",
+    "build": "corepack pnpm --dir treadle build"
   },
   "bin": {
     "wukong": "./bin/engram.js"
-  },
-  "bundleDependencies": [
-    "@treadle/brand",
-    "@treadle/core",
-    "@treadle/knowledge",
-    "@treadle/web",
-    "@treadle/cli"
-  ]
+  }
 }

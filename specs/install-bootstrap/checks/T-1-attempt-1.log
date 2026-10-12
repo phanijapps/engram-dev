@@ -1,0 +1,17 @@
+Captured from exec session 50694, exact declared T-1 command, exit 1.
+
+ ❯ packages/cli/test/source-setup.test.ts (8 tests | 1 failed) 10091ms
+   × real native root frozen lifecycle builds the CLI without changing either lockfile 9196ms
+
+ FAIL packages/cli/test/source-setup.test.ts > real native root frozen lifecycle builds the CLI without changing either lockfile
+AssertionError: expected lockfile hashes to deeply equal original hashes.
+
+- Expected root: ed2dc02ee73028a149cbd4823dbcdbb84cdbe7bef85f06c0e09978335592f4ae
++ Received root: 17c814b167307942d3609c7b9d916ceddb85839573ab39baa114e30edb132a1a
+  Nested unchanged: b6a01c90005b22006a617ed366e262527e565221bb3e0afc640f4068124a5ccb
+
+at packages/cli/test/source-setup.test.ts:123:29
+Test Files 1 failed (1)
+Tests 1 failed | 7 passed (8)
+Start at 10:22:16
+Duration 10.27s
