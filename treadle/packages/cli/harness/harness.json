@@ -24,6 +24,17 @@
       }
     },
     {
+      "id": "search-kb",
+      "kind": "skill",
+      "source": "skills/sdlc/search-kb",
+      "dest": {
+        "pi": ".pi/skills/search-kb",
+        "claude": ".claude/skills/search-kb",
+        "codex": ".codex/skills/search-kb",
+        "copilot": ".github/skills/search-kb"
+      }
+    },
+    {
       "id": "feedback",
       "kind": "skill",
       "source": "skills/sdlc/feedback",

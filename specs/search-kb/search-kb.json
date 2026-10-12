@@ -3,7 +3,7 @@
   "name": "search-kb",
   "description": "Search OKF knowledge before SDLC work",
   "date": {
-    "updated": "2026-10-12T04:17:30Z"
+    "updated": "2026-10-12T04:20:05Z"
   },
   "status": {
     "lifecycle": "active",
@@ -303,7 +303,7 @@
     {
       "id": "T-2",
       "title": "Integrate SDLC routing and install the skill to Copilot",
-      "status": "todo",
+      "status": "done",
       "phase": "integration",
       "needs": [
         "T-1"
@@ -366,40 +366,51 @@
         ],
         "touch": [
           {
-            "path": "treadle/packages/cli/harness/harness.json"
+            "path": "treadle/packages/cli/harness/harness.json",
+            "sha256": "87061e7b7a89f86208da7b9aa7fcd280f0f9fa173d495b83ca3d1bbde8f3db00"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/analyze/SKILL.md",
+            "sha256": "07fc62e184b52bee4c266c8bf1863320e56df0c55fe36bb2d4167360b6e3a75d"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/plan/SKILL.md",
+            "sha256": "475cc1f14e7c049cdb24114ea47fecb086cb0f04b7ed831030d66a4a5ed8e1d8"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/implement/SKILL.md",
+            "sha256": "a85a45bc3af0bf05b2ec58bf3785e61cc7feaa62fbe6e50ab558dd36e3269548"
           },
           {
-            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md"
+            "path": "treadle/packages/cli/harness/skills/sdlc/review/SKILL.md",
+            "sha256": "f9b37039693503a2a6c88956945be79a95cbd49f373bec062d621a936fc597bb"
           },
           {
             "path": "treadle/packages/cli/test/search-kb-install.test.ts"
           },
           {
-            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "892d717bb10dbd1ed2f5beb88a6ef56b6578345b7e5a9cef6d9baec7c6a81b48"
           },
           {
-            "path": "treadle/packages/cli/test/harness-packages.test.ts"
+            "path": "treadle/packages/cli/test/harness-packages.test.ts",
+            "sha256": "27fc5a4a917ca026bf9c4552998f1118d6999b9d4fda4ac7959901a3e059d7e9"
           },
           {
-            "path": ".github/hooks/wukong.json"
+            "path": ".github/hooks/wukong.json",
+            "sha256": "c1af96a3a944d58beaae724b35d3a1f08c9f4b78c024a06d9b122b1ab10d18dc"
           },
           {
-            "path": ".github/agents/red-forman.md"
+            "path": ".github/agents/red-forman.md",
+            "sha256": "2a54688fa9df1a2cebb839755ec0de6d011c8c0bb06c344e5577e318a1706b06"
           },
           {
-            "path": ".harness/hooks/copilot-context.js"
+            "path": ".harness/hooks/copilot-context.js",
+            "sha256": "87267d2727e82385fa17440bf5712cf342a57c027fc74d3d8103d02d0fc53d85"
           },
           {
-            "path": ".harness/hooks/codex-context.js"
+            "path": ".harness/hooks/codex-context.js",
+            "sha256": "c796605097b4599f9f5e6107ca691a42c7fe9b84a87ccecb38c5eb95fce48fff"
           },
           {
             "path": ".github/skills/search-kb/SKILL.md"
@@ -414,19 +425,32 @@
             "path": ".github/skills/search-kb/evals/rubric.md"
           },
           {
-            "path": ".github/skills/analyze/SKILL.md"
+            "path": ".github/skills/analyze/SKILL.md",
+            "sha256": "07fc62e184b52bee4c266c8bf1863320e56df0c55fe36bb2d4167360b6e3a75d"
           },
           {
-            "path": ".github/skills/plan/SKILL.md"
+            "path": ".github/skills/plan/SKILL.md",
+            "sha256": "475cc1f14e7c049cdb24114ea47fecb086cb0f04b7ed831030d66a4a5ed8e1d8"
           },
           {
-            "path": ".github/skills/implement/SKILL.md"
+            "path": ".github/skills/implement/SKILL.md",
+            "sha256": "a85a45bc3af0bf05b2ec58bf3785e61cc7feaa62fbe6e50ab558dd36e3269548"
           },
           {
-            "path": ".github/skills/review/SKILL.md"
+            "path": ".github/skills/review/SKILL.md",
+            "sha256": "f9b37039693503a2a6c88956945be79a95cbd49f373bec062d621a936fc597bb"
           }
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/search-kb-install.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/harness-packages.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T04:20:05Z",
+          "by": "agent:codex",
+          "notes": "17 tests passed. Full canonical search-kb resources installed across four isolated surfaces; repeat installs and foreign edits checked; native packages include reference. Copilot scoped refresh completed after prior-byte verification. Build exit0 and install dry-run/apply exit0; logs under checks/T-2-*."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -755,5 +779,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 11
+  "revision": 13
 }

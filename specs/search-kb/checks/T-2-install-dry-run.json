@@ -1,0 +1,56 @@
+{
+  "plan": [
+    {
+      "component": "analyze",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/analyze",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/analyze",
+      "mode": "update",
+      "extras": []
+    },
+    {
+      "component": "search-kb",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/search-kb",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/search-kb",
+      "mode": "create"
+    },
+    {
+      "component": "implement",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/implement",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/implement",
+      "mode": "update",
+      "extras": []
+    },
+    {
+      "component": "plan",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/plan",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/plan",
+      "mode": "update",
+      "extras": []
+    },
+    {
+      "component": "review",
+      "kind": "skill",
+      "surface": "copilot",
+      "source": "skills/sdlc/review",
+      "destination": "/home/videogamer/code/memex_beta/.github/skills/review",
+      "mode": "update",
+      "extras": []
+    }
+  ],
+  "wirings": [],
+  "summary": {
+    "create": 1,
+    "same": 0,
+    "update": 4,
+    "refuse": 0,
+    "skip": 0
+  }
+}

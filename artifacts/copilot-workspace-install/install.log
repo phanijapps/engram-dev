@@ -1,0 +1,5 @@
+wired /home/videogamer/code/memex_beta/.github/hooks/wukong.json (sessionStart)
+wired /home/videogamer/code/memex_beta/.github/hooks/wukong.json (userPromptSubmitted)
+project enrolled; runtime running: http://127.0.0.1:8788/
+Host activation is pending until you enable/reload the integration and, for Codex, review and trust its hook definition.
+installed: 48 file(s) written, 2 same, 6 skipped — plan recorded

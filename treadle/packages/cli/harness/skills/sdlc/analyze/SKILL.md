@@ -3,6 +3,9 @@ name: analyze
 description: Create bounded, evidence-grounded analysis of a feature, spec, defect, spike, impact question, or knowledge gap. Register initiative requirements and artifacts before planning handoff. Use for investigation and proposed work, not implementation or independent review.
 ---
 
+When repository knowledge is needed for this step, use the installed `search-kb` skill for read-only OKF retrieval and source checks.
+If that skill is unavailable, use the existing wiki/source procedure below. Retrieval does not grant task admission or owner permission.
+
 # Analyze
 
 Produce the smallest analysis that resolves the next decision or enables planning.

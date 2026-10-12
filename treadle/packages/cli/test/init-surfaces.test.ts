@@ -134,6 +134,9 @@ describe('the four surface adapters (T-3)', () => {
     try {
       install('copilot', w.project);
       expect(existsSync(join(w.project, '.github/skills/analyze/SKILL.md'))).toBe(true);
+      expect(
+        existsSync(join(w.project, '.github/skills/search-kb/resources/okf-consumption.md')),
+      ).toBe(true);
       expect(existsSync(join(w.project, '.github/agents/red-forman.md'))).toBe(true);
       const { manifest, root } = loadManifest(REAL_MANIFEST);
       const plan = compilePlan(manifest, root, {

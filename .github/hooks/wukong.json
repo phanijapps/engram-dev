@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "type": "command",
+        "bash": "'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
+        "powershell": "& 'node' '.harness/hooks/copilot-context.js' '--event' 'sessionStart'",
+        "cwd": ".",
+        "timeoutSec": 60
+      }
+    ],
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": "'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'",
+        "powershell": "& 'node' '.harness/hooks/copilot-context.js' '--event' 'userPromptSubmitted'",
+        "cwd": ".",
+        "timeoutSec": 60
+      }
+    ]
+  }
+}

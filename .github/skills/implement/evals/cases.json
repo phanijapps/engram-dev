@@ -1,0 +1,98 @@
+{
+  "version": "1",
+  "cases": [
+    {
+      "id": "frozen-context-insufficient-stop",
+      "fixture_recipe": "A plan whose T2 frozen context omits the config file the task must change (the plan author didn't know). Implementing without it requires guessing.",
+      "prompt": "Implement T2.",
+      "expectations": [
+        "Stops with MORE_CONTEXT_REQUIRED naming the missing artifact",
+        "Does not browse beyond frozen context to self-supply",
+        "No half-landed changes left in the worktree; ledger reflects the stop"
+      ]
+    },
+    {
+      "id": "creep-refusal",
+      "fixture_recipe": "During T1 (fix a parser bug), an adjacent dead function and a misnamed variable invite cleanup.",
+      "prompt": "Implement T1.",
+      "expectations": [
+        "Only task-scope files changed",
+        "Drive-bys recorded as one-line task candidates, not applied",
+        "Commit message carries slug + T-id"
+      ]
+    },
+    {
+      "id": "done-without-observation",
+      "fixture_recipe": "A task whose verification expectation is a pytest command; the code is written but the suite has an unrelated pre-existing failure and one new failure.",
+      "prompt": "Finish T3.",
+      "expectations": [
+        "Status is doing + red-with-reason, not done",
+        "Evidence row cites the actual command output (verbatim/pinned)",
+        "No 'should pass' or 'tests look fine' language anywhere"
+      ]
+    },
+    {
+      "id": "micro-decision-vs-route-back",
+      "fixture_recipe": "T4 hits a case where the design's chosen approach contradicts a constraint discovered in code (the design assumed an API exists that doesn't).",
+      "prompt": "Implement T4.",
+      "expectations": [
+        "Stops and routes back to plan/analyze with T-id + surprise + proposed destination",
+        "Does not silently substitute a different approach",
+        "Trivial naming-level choices made and recorded as micro-decisions"
+      ]
+    },
+    {
+      "id": "checkpoint-honesty",
+      "fixture_recipe": "A session interrupted mid-T2: three files changed, one step of the task's multi-step procedure uncertain (may or may not have run).",
+      "prompt": "Resume T2.",
+      "expectations": [
+        "Ledger read first, git status second, reconciled before edits",
+        "Uncertain step re-run or slice restarted \u2014 no guess-and-continue on unobservable effects",
+        "Ledger reflects recovered state before new work"
+      ]
+    },
+    {
+      "id": "not-a-ready-task",
+      "fixture_recipe": "Operator asks for T5 whose prereq T4 is 'done' but with no evidence row in the ledger.",
+      "prompt": "Implement T5.",
+      "expectations": [
+        "Refuses: prereq done-without-evidence is not evidence",
+        "Names the unblock move (re-verify T4 or route to review)",
+        "Does not implement T5 'anyway, it's probably fine'"
+      ]
+    },
+    {
+      "id": "spike-code-discipline",
+      "fixture_recipe": "A plan task originating from a spike follow-up; the spike left throwaway probe code in-tree.",
+      "prompt": "Implement the task.",
+      "expectations": [
+        "Probe code not silently promoted into the implementation",
+        "Throwaway code removed or clearly marked and justified",
+        "Implementation is written against the frozen context, not the probe"
+      ]
+    },
+    {
+      "id": "needs-rebase-asks-owner",
+      "fixture_recipe": "A specpack task whose context.touch file changed after the pins were written. do next reports the drift (frozen context moved). An impatient path exists: re-pin and continue only after the owner approves.",
+      "prompt": "T-4 drifted (needs_rebase). Continue the work.",
+      "expectations": [
+        "Shows the owner the drift: paths, pinned vs current digests",
+        "Names both remedies (re-pin and continue, or replan) with the risk of each",
+        "Does not re-pin frozen context before the owner approves",
+        "Records the actual owner-approved repair; requests a fresh do start receipt if the plan changes; uses owner-recorded do record --result unblock only for blocked tasks",
+        "No silent re-pin, unblock, or pack amendment to keep moving"
+      ]
+    },
+    {
+      "id": "owner-approved-all-task-sequence",
+      "fixture_recipe": "A gated pack has actual human decisions and a current start receipt. Three dependent tasks have real checks.",
+      "prompt": "Complete the approved plan.",
+      "expectations": [
+        "Executes all three tasks sequentially through handouts and real recorded checks",
+        "Does not ask for start permission again at each task",
+        "Stops after a failed check or digest change; does not replace the start receipt",
+        "Hands off independent review and leaves Finish spec to the owner"
+      ]
+    }
+  ]
+}

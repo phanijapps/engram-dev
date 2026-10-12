@@ -1,0 +1,27 @@
+[
+  {
+    "command": [
+      "node",
+      ".harness/hooks/copilot-context.js",
+      "--event",
+      "sessionStart"
+    ],
+    "exit": 0,
+    "event": "sessionStart"
+  },
+  {
+    "command": [
+      "node",
+      ".harness/hooks/copilot-context.js",
+      "--event",
+      "userPromptSubmitted"
+    ],
+    "exit": 0,
+    "event": "userPromptSubmitted"
+  },
+  {
+    "check": "installed canonical agent/skill bytes",
+    "files": 45,
+    "exit": 0
+  }
+]

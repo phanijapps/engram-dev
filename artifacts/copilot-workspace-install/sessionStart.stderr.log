@@ -1,0 +1,4 @@
+(node:1558101) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/videogamer/code/memex_beta/.harness/hooks/copilot-context.js is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/videogamer/code/memex_beta/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
