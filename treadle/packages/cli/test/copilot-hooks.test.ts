@@ -278,6 +278,88 @@ it.skipIf(process.platform === 'win32')(
   },
 );
 
+it.each([false, true])(
+  'repairs a cold clone with committed config and no local state (hooksOnly=%s)',
+  (hooksOnly) => {
+    const f = fixture();
+    const i = installer(f.root);
+    i.choices.projectGuide = false;
+    const packageFile = join(f.root, 'package.json');
+    const lockFile = join(f.root, 'pnpm-lock.yaml');
+    const guideFile = join(f.root, 'AGENTS.md');
+    writeFileSync(
+      packageFile,
+      JSON.stringify({
+        name: 'application',
+        packageManager: 'pnpm@9.15.9',
+        scripts: { postinstall: 'node application-install-trap.mjs' },
+      }),
+    );
+    writeFileSync(lockFile, 'application lock bytes\r\n');
+    writeFileSync(guideFile, 'Original owner rules\r\n');
+    writeFileSync(
+      join(f.root, 'application-install-trap.mjs'),
+      "throw Error('Application scripts must not run during init');",
+    );
+    expect(i.apply().wiringRefused).toEqual([]);
+    const config = JSON.parse(readFileSync(i.config, 'utf8'));
+    config.ownerMetadata = 'retain';
+    config.hooks.errorOccurred = [{ type: 'command', bash: 'echo foreign' }];
+    writeFileSync(i.config, JSON.stringify(config, null, 2) + '\n');
+    const sibling = join(f.root, '.github/hooks/foreign.json');
+    writeFileSync(sibling, 'foreign sibling bytes');
+    rmSync(join(f.root, '.harness'), { recursive: true, force: true });
+    expect(existsSync(statePath(i.choices))).toBe(false);
+    const before = [packageFile, lockFile, guideFile, i.config, sibling].map((path) =>
+      readFileSync(path),
+    );
+    i.choices.skills = hooksOnly ? [] : 'all';
+    i.choices.agents = !hooksOnly;
+    i.choices.projectGuide = !hooksOnly;
+    i.plan(); // A preview must not silently restore local payloads or alter target bytes.
+    expect(existsSync(join(f.root, '.harness'))).toBe(false);
+    expect(
+      [packageFile, lockFile, guideFile, i.config, sibling].map((path) => readFileSync(path)),
+    ).toEqual(before);
+    const applied = i.apply();
+    expect(applied.refused).toEqual([]);
+    expect(applied.wiringRefused).toEqual([]);
+    for (const file of ['copilot-context.js', 'codex-context.js', 'runtime.json']) {
+      expect(existsSync(join(f.root, '.harness/hooks', file))).toBe(true);
+    }
+    const afterConfig = JSON.parse(readFileSync(i.config, 'utf8'));
+    expect(afterConfig.ownerMetadata).toBe('retain');
+    expect(afterConfig.hooks.errorOccurred).toEqual(config.hooks.errorOccurred);
+    expect(readFileSync(sibling)).toEqual(before[4]);
+    expect([packageFile, lockFile].map((path) => readFileSync(path))).toEqual(before.slice(0, 2));
+    if (hooksOnly) {
+      expect(readFileSync(guideFile)).toEqual(before[2]);
+      expect(existsSync(join(f.root, 'AGENTS.backup.md'))).toBe(false);
+      expect(existsSync(join(f.root, '.github/skills'))).toBe(false);
+    } else {
+      expect(readFileSync(join(f.root, 'AGENTS.backup.md'))).toEqual(before[2]);
+      expect(readFileSync(guideFile, 'utf8')).toContain('AGENTS.backup.md');
+      expect(existsSync(join(f.root, '.github/skills/search-kb/SKILL.md'))).toBe(true);
+      expect(existsSync(join(f.root, '.github/agents/red-forman.md'))).toBe(true);
+    }
+    // Execute the copied adapter against the controlled runtime on every native OS.
+    const callback = spawnSync(
+      process.execPath,
+      [join(f.root, '.harness/hooks/copilot-context.js'), '--event', 'sessionStart'],
+      {
+        cwd: f.root,
+        input: JSON.stringify({ cwd: f.root }),
+        env: { ...process.env, HARNESS_RUNTIME_ENTRY: f.runtime },
+        encoding: 'utf8',
+        timeout: 28000,
+      },
+    );
+    expect(callback.status, callback.stderr).toBe(0);
+    expect(JSON.parse(callback.stdout).additionalContext).toContain(f.root);
+    expect(readFileSync(f.calls, 'utf8')).not.toContain('postinstall');
+  },
+);
+
 it('refuses removal when hook configuration became malformed, preserving installed payloads', () => {
   const f = fixture(),
     i = installer(f.root);

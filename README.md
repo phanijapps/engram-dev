@@ -33,12 +33,13 @@ to implement. For code changes, agree the scope and plan before execution.
 
 ## Getting started
 
-You need **Git**, **Node.js 22 or newer**, **pnpm 9.15.9**, and a supported coding
-agent. If pnpm's global commands are unavailable, run `pnpm setup` first.
+You need **Git**, **Node.js 22 or newer**, **Corepack or pnpm 9.15.9**, and a supported coding
+agent. If pnpm's global commands are unavailable, run `corepack pnpm@9.15.9 setup`
+first, or `pnpm setup` with the matching standalone pnpm.
 Open a new terminal after it updates your `PATH`.
 
-This is a **preview** on `codex/background-harness`. The commands below download
-that branch's installer. The installer selects the same branch for the source.
+The installers select merged source from `main`. They use Corepack with pinned
+pnpm, or an existing pnpm 9.15.9 installation.
 
 ### 1. Install Wukong
 
@@ -47,7 +48,7 @@ that branch's installer. The installer selects the same branch for the source.
 Run this in your terminal:
 
 ```sh
-curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/codex/background-harness/install.sh | bash
+curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/main/install.sh | bash
 ```
 
 **Windows**
@@ -55,7 +56,7 @@ curl -LsSf https://raw.githubusercontent.com/phanijapps/wukong/codex/background-
 Run this in PowerShell:
 
 ```powershell
-powershell -NoProfile -Command "irm https://raw.githubusercontent.com/phanijapps/wukong/codex/background-harness/install.ps1 | iex"
+powershell -NoProfile -Command "irm https://raw.githubusercontent.com/phanijapps/wukong/main/install.ps1 | iex"
 ```
 
 The installers build the source and link the `wukong` command automatically.
@@ -94,6 +95,24 @@ start and reconnect the local app on prompts. Cloud hooks run in a separate sand
 and need their own runtime; they cannot connect to your desktop's localhost service.
 See [GitHub's hook documentation](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/use-hooks)
 and [the integration correction](wiki/systems/copilot-hooks.md).
+
+Copilot init copies the selected agents and skills into `.github`, installs the
+wrapper and shared helper into `.harness/hooks`, and generates a local runtime
+pointer. It uses the installed Wukong CLI; it does not install your application's
+dependencies. Full project init creates `AGENTS.md` under its backup safeguards.
+
+The local `.harness` files are not included when you clone this repository.
+Run init on each machine before starting Copilot. To repair hooks while keeping
+existing project instructions, agents, and skills:
+
+```sh
+wukong init harness --agent copilot --scope project --hooks-only --no-agents --root .
+```
+
+Restart Copilot from the project root. If a full guide update encounters an
+existing differing `AGENTS.backup.md`, init refuses replacement. Hooks-only
+repair leaves both instruction files untouched; `--no-project-guide` preserves
+them during a full component install.
 
 ### 3. Ask your agent to begin
 
@@ -228,12 +247,18 @@ the Wukong runtime still targets Node 22 or newer.
 Clone and build the preview if you want to change Wukong itself:
 
 ```sh
-git clone --branch codex/background-harness https://github.com/phanijapps/wukong.git
-cd wukong/treadle
-pnpm install --frozen-lockfile
-pnpm build
-pnpm --dir packages/cli link --global
+git clone https://github.com/phanijapps/wukong.git
+cd wukong
+corepack pnpm install --frozen-lockfile
+corepack pnpm --dir treadle/packages/cli link --global
 ```
+
+Root installation uses a matching root lockfile and runs the shared setup helper
+through `prepare`. The helper installs from the frozen `treadle/pnpm-lock.yaml`
+and builds that workspace. You can also run `corepack pnpm run setup` explicitly,
+including after an installation with lifecycle scripts disabled.
+Installing directly from `treadle/` remains supported. Application dependencies
+and portable runtime packaging stay inside that workspace.
 
 The public command is `wukong`; the source workspace remains `treadle/`.
 Maintain installable agent content in `treadle/packages/cli/harness/`.

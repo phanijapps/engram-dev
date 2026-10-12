@@ -191,6 +191,19 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
   console.log(
     `installed: ${result.written} file(s) written, ${summary.same} same, ${summary.skip} skipped — plan recorded`,
   );
+  if (choices.agent === 'copilot' && choices.hooks && choices.scope === 'project') {
+    console.log(
+      'Copilot hook scripts and the local runtime pointer are installed in .harness/hooks/.',
+    );
+    console.log(
+      'Run init on each machine after cloning or moving the runtime; reload Copilot from this project root.',
+    );
+    console.log(
+      'Hook repair: ' +
+        brand.binName +
+        ' init harness --agent copilot --scope project --hooks-only --no-agents --root .',
+    );
+  }
 }
 
 function choicesFromFlags(f: Flags): InstallChoices {

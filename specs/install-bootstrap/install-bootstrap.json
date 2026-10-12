@@ -3,7 +3,7 @@
   "name": "install-bootstrap",
   "description": "Reliable source setup and Copilot initialization",
   "date": {
-    "updated": "2026-10-12T14:31:01Z"
+    "updated": "2026-10-12T14:37:50Z"
   },
   "status": {
     "lifecycle": "active",
@@ -434,7 +434,7 @@
     {
       "id": "T-3",
       "title": "Verify and explain Copilot cold-clone initialization",
-      "status": "todo",
+      "status": "done",
       "phase": "integration",
       "needs": [
         "T-2"
@@ -457,40 +457,52 @@
       "context": {
         "touch": [
           {
-            "path": "treadle/packages/cli/src/commands/init.ts"
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "f40b3d0ecce9a7272ee500039b990bc71eff57d169334cca652e7258822e8ad3"
           },
           {
-            "path": "treadle/packages/cli/src/harness/plan.ts"
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "b07a09dc62ba6da1fd1b17f64f98ee7e9278f37129144a6da1d4af31b00634fa"
           },
           {
-            "path": "treadle/packages/cli/src/harness/apply.ts"
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "e10d343af4bf001c0f4d0c4c55afcfe784a97f6c42fc07d26f0d83e79d363666"
           },
           {
-            "path": "treadle/packages/cli/src/harness/manifest.ts"
+            "path": "treadle/packages/cli/src/harness/manifest.ts",
+            "sha256": "d4dbc7dfe8046131af7ff5103ebc30e9628af3485f677f441043bfe754f5bcca"
           },
           {
-            "path": "treadle/packages/cli/harness/hooks/README.md"
+            "path": "treadle/packages/cli/harness/hooks/README.md",
+            "sha256": "3b8d25334707834598337ec3ab6d4e305c349eebb5f9ddb60c82b46d5063eb50"
           },
           {
-            "path": "treadle/packages/cli/harness/templates/AGENTS.md"
+            "path": "treadle/packages/cli/harness/templates/AGENTS.md",
+            "sha256": "c0c064b1b0973a9a4466c0c2bf3b065a14af436e8302dd8606caa6a01306b4b7"
           },
           {
-            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "594ddccd53aad012b11abfaea172999dee28282944867fbc594674d911368155"
           },
           {
-            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "db61fe7924acb8593daae8e086caeeff6b342eccc111bde9407252ede35cdee4"
           },
           {
-            "path": "README.md"
+            "path": "README.md",
+            "sha256": "abd4aa3daa3a1c4658c838977227ab1fff73f30b8d836e4aeb2c65e0388a8e72"
           },
           {
-            "path": "wiki/project/setup.md"
+            "path": "wiki/project/setup.md",
+            "sha256": "b250cd5beff1b2b279d18cd87ef965c5a908eb3e892d5caeca35c204d2b154da"
           },
           {
-            "path": "wiki/assets/guide/index.html"
+            "path": "wiki/assets/guide/index.html",
+            "sha256": "95eae0c6d74d424b0f8f5bdc536da21efe76fc922fda5c227376660dac5e4347"
           },
           {
-            "path": "treadle/packages/cli/test/source-setup.test.ts"
+            "path": "treadle/packages/cli/test/source-setup.test.ts",
+            "sha256": "b6255fe51709d8b46af14af6cb3979d2fd80ec14c12537cd5c0235e60e6f6841"
           }
         ],
         "read": [
@@ -566,7 +578,16 @@
           "No nested lock regeneration, workspace relocation, host trust claim, cloud bootstrap or provider request.",
           "Use execution-log and actual command exits. Record native platform skips honestly."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/copilot-hooks.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/source-setup.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T14:37:50Z",
+          "by": "agent:codex",
+          "notes": "49 tests pass after native temporary-root normalization. Full and hooks-only cold clones with committed config but no .harness state create all payloads/pointer; actual copied adapter executes on each available native process path; app manifests/locks, foreign config and sibling files preserved, full exact backup/hooks-only untouched guide asserted. Docs/CLI explain per-machine init and root setup; links and wiki validate exit0. Log checks/T-3-attempt-2.log."
+        }
+      ]
     },
     {
       "id": "T-4",
@@ -796,5 +817,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 11
+  "revision": 13
 }

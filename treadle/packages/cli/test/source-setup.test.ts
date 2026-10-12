@@ -1,7 +1,15 @@
 import { expect, it } from 'vitest';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import {
+  cpSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  realpathSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, join, resolve } from 'node:path';
 
@@ -10,7 +18,7 @@ const source = resolve(workspace, '..');
 const workspaceName = basename(workspace);
 const roots: string[] = [];
 function temporary() {
-  const root = mkdtempSync(join(tmpdir(), 'source setup with spaces '));
+  const root = realpathSync.native(mkdtempSync(join(tmpdir(), 'source setup with spaces ')));
   roots.push(root);
   return root;
 }

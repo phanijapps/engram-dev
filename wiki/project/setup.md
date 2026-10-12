@@ -12,6 +12,10 @@ sources:
   - {id: agent-guide, resource: treadle/packages/cli/src/harness/agents-guide.ts}
   - {id: installer, resource: treadle/packages/cli/src/commands/init.ts}
   - {id: search-skill, resource: treadle/packages/cli/harness/skills/sdlc/search-kb/SKILL.md}
+  - {id: root-setup, resource: scripts/setup.mjs}
+  - {id: root-manifest, resource: package.json}
+  - {id: shell-bootstrap, resource: install.sh}
+  - {id: windows-bootstrap, resource: install.ps1}
 ---
 
 # Installation
@@ -127,3 +131,40 @@ This workspace's Copilot definitions are in `.github/agents` and `.github/skills
 The installer copies the adapter and shared helper to `.harness/hooks` and generates a machine-local runtime pointer there.
 The pointer names the installed CLI; run init again if that runtime moves.
 Source: `treadle/packages/cli/src/harness/plan.ts`; `treadle/packages/cli/src/harness/apply.ts`.
+
+# Root source setup and cloned projects — 2026-10-12
+
+The private source root delegates setup to the active workspace under `treadle`.
+Root `pnpm install --frozen-lockfile` runs `prepare`, which calls the shared Node helper.
+Root `pnpm run setup` invokes that helper explicitly, including when lifecycle scripts were disabled.
+The helper checks Node and pnpm 9.15.9, installs from the nested frozen lockfile, then builds.
+It uses Corepack when available or a checked pnpm fallback. Failed installation stops before build.
+Sources: `package.json`; `pnpm-lock.yaml`; `scripts/setup.mjs`.
+
+The root no longer resolves workspace packages through file dependencies.
+Dependency resolution and portable deployment remain under `treadle`.
+The local root bin resolves the compiled nested CLI and reports setup guidance if unavailable.
+Sources: `bin/engram.js`; `treadle/scripts/package-runtime.mjs`.
+
+Bash and PowerShell source installers select `main` by default and invoke shared setup.
+They validate prerequisites before changing source, preserve explicit ref overrides,
+and refuse an existing different branch instead of silently switching it.
+They then link the nested CLI globally and verify the command.
+Sources: `install.sh`; `install.ps1`.
+
+Source setup and target initialization are separate. An installed CLI supplies
+canonical harness files to any target repository; target init does not install application dependencies.
+Copilot init copies wrapper/helper and creates `.harness/hooks/runtime.json` locally.
+This repository ignores `.harness`, so cloned portable `.github` definitions need init on each machine.
+Use `wukong init harness --agent copilot --scope project --hooks-only --no-agents --root .`
+for hook repair while preserving existing guides, skills, and agents. Reload Copilot from that root.
+Full project init retains the generated-guide and backup collision safeguards described above;
+`--no-project-guide` preserves both root instruction files during full component installation.
+Sources: `.gitignore`; `treadle/packages/cli/src/commands/init.ts`;
+`treadle/packages/cli/test/copilot-hooks.test.ts`.
+
+The real root lifecycle regression executes frozen install, build, both lock-hash checks,
+and compiled CLI smoke in a temporary source directory with spaces.
+It runs in the existing test matrix. A declared matrix is not a completed native execution receipt.
+Local copied-callback tests likewise do not establish native Copilot activation.
+Source: `treadle/packages/cli/test/source-setup.test.ts`.

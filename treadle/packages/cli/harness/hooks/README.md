@@ -133,3 +133,24 @@ Removal preserves foreign event entries, metadata, and sibling hook files.
 Malformed or symlinked configuration refuses writes even under `--force`.
 Use the installer to regenerate the machine-local runtime pointer after the runtime moves.
 Cloud bootstrap and user-level Copilot installation remain outside this integration.
+
+## Cold-clone setup — 2026-10-12
+
+Project hook definitions can be committed, but this repository ignores `.harness/`.
+A clone therefore needs local initialization before Copilot can execute its callbacks.
+Full project init copies selected skills, agents, wrapper and helper, creates the
+local runtime pointer, and enrolls the project. It uses the installed CLI and does
+not install dependencies in the target repository.
+
+Run `init harness --agent copilot --scope project --hooks-only --no-agents --root .`
+through the installed CLI to repair hooks without changing guides or other components.
+Existing identical portable config can be used even when local ownership state is absent.
+Foreign config and sibling files remain preserved. Differing local payloads or
+unsafe paths retain their existing refusal behavior; inspect a dry-run before force.
+Reload Copilot from the root after installation. Repeat init on a new machine or
+after the runtime moves. Generated files alone do not establish native activation.
+
+For this source repository, root frozen installation or explicit `pnpm run setup`
+installs and builds the nested workspace. Source setup does not initialize arbitrary
+target projects. Both source bootstrap scripts select main by default; explicit
+branch overrides remain available and protected existing checkouts are not switched.

@@ -27,3 +27,14 @@ Protected branch mismatches still refuse without switching. Exact check after
 formatting passed 19 tests with 10 Windows-only skips on Linux. Failure fixtures
 cover wrong versions and failed update/setup/link/verification. Real root
 lifecycle passes again. Actual log: checks/T-2-attempt-2.log; pass revision 11.
+
+T-3 admitted at revision 12. Added full and hooks-only cold-clone fixtures with
+committed config and absent local state. Wrapper/helper/pointer materialize;
+the copied adapter executes against the controlled runtime. Target application
+manifest/lock, foreign event metadata and sibling files remain preserved.
+Full init creates exact guide backup; hooks-only preserves original guide and
+does not install skills or agents. Added per-machine setup/reload output and
+source-backed README, canonical hook guidance, wiki and dated HTML supplement.
+Native temporary-root identity now uses realpath for platform aliases.
+Exact check passed 49 tests; links and wiki validation also exit 0. Log
+checks/T-3-attempt-2.log; pass revision 13. Native host activation is not claimed.
