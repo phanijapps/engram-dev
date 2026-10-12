@@ -12,13 +12,14 @@ import {
   writeFileSync,
   type Stats,
 } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { runtimeEntry } from '../serve/runtime.js';
-import { normalize } from './content.js';
+import { normalize, normalizedHash } from './content.js';
 import { readCopilotHooks, runtimePointerValue, copilotPointerConflict } from './manifest.js';
 import { destRoots } from './paths.js';
 import { wiringTarget } from './plan.js';
 import type { InstallChoices, Plan, PlanRow } from './types.js';
+import { guideConflict, publishProjectGuide } from './agents-guide.js';
 
 const stateName = (agent: string): string => `harness-install.${agent}.json`;
 
@@ -37,6 +38,7 @@ interface StateDoc {
   written: string[];
   wirings: WiringRecord[];
   at: string;
+  projectGuide?: { path: string; sha256: string; backup?: string };
 }
 
 export interface ApplyResult {
@@ -87,6 +89,15 @@ export function applyPlan(
   manifestRoot: string,
   at: string,
 ): ApplyResult {
+  const guideFailure = guideConflict(plan.guide);
+  if (guideFailure)
+    return {
+      written: 0,
+      removedLeftovers: [],
+      refused: [],
+      wiringNotes: [],
+      wiringRefused: [guideFailure],
+    };
   const previous = existsSync(statePath(choices))
     ? (JSON.parse(readFileSync(statePath(choices), 'utf8')) as StateDoc)
     : undefined;
@@ -234,10 +245,18 @@ export function applyPlan(
       written.push(pointer);
     }
   }
+  let guideWritten = 0;
+  if (refused.length === 0 && wiringRefused.length === 0 && plan.guide) {
+    try {
+      guideWritten = publishProjectGuide(plan.guide);
+    } catch (error) {
+      wiringRefused.push(`Project guide publication failed: ${(error as Error).message}`);
+    }
+  }
   if (
     refused.length === 0 &&
     wiringRefused.length === 0 &&
-    (written.length > 0 || wiringRecords.length > 0)
+    (written.length > 0 || wiringRecords.length > 0 || guideWritten > 0)
   ) {
     if (choices.hooks)
       for (const old of previous?.wirings ?? [])
@@ -252,10 +271,27 @@ export function applyPlan(
       written: [...new Set([...(previous?.written ?? []), ...written])],
       wirings: choices.hooks ? wiringRecords : [...(previous?.wirings ?? []), ...wiringRecords],
       at,
+      ...(plan.guide
+        ? {
+            projectGuide: {
+              path: plan.guide.destination,
+              sha256: normalizedHash(plan.guide.content),
+              ...(existsSync(plan.guide.backup) ? { backup: plan.guide.backup } : {}),
+            },
+          }
+        : previous?.projectGuide
+          ? { projectGuide: previous.projectGuide }
+          : {}),
     };
     writeFileSync(statePath(choices), JSON.stringify(doc, null, 2) + '\n');
   }
-  return { written: written.length, removedLeftovers, refused, wiringNotes, wiringRefused };
+  return {
+    written: written.length + guideWritten,
+    removedLeftovers,
+    refused,
+    wiringNotes,
+    wiringRefused,
+  };
 }
 
 function mergeClaudeSettings(
@@ -324,7 +360,7 @@ function setCodexNotify(target: string, command: string): WiringRecord | null {
   return { target, kind: 'config-notify', matcher: 'notify', command: line };
 }
 
-function unwireRecorded(w: WiringRecord): boolean {
+function unwireRecorded(w: WiringRecord, preview = false): boolean {
   if (w.kind === 'copilot-hooks') {
     const doc = readCopilotHooks(w.target);
     if (!doc) return false;
@@ -332,6 +368,7 @@ function unwireRecorded(w: WiringRecord): boolean {
     if (!entries) return false;
     const kept = entries.filter((entry) => !sameDefinition(entry, JSON.parse(w.command)));
     if (kept.length === entries.length) return false;
+    if (preview) return true;
     if (kept.length) doc.hooks[w.matcher] = kept;
     else delete doc.hooks[w.matcher];
     if (
@@ -361,6 +398,7 @@ function unwireRecorded(w: WiringRecord): boolean {
             .filter((e) => e.hooks.length > 0);
           if ((hooks[w.matcher] ?? []).length === 0) delete hooks[w.matcher];
           if (Object.keys(hooks).length === 0) delete d['hooks'];
+          if (preview) return true;
           writeFileSync(w.target, JSON.stringify(d, null, 2) + '\n');
           return true;
         }
@@ -376,6 +414,7 @@ function unwireRecorded(w: WiringRecord): boolean {
         .filter((l) => l.trim() !== w.command.trim())
         .join('\n');
       if (without !== text) {
+        if (preview) return true;
         writeFileSync(w.target, without);
         return true;
       }
@@ -387,12 +426,14 @@ function unwireRecorded(w: WiringRecord): boolean {
 export interface RemoveResult {
   removed: string[];
   unwired: string[];
+  record: string;
 }
 
 /** --remove: delete exactly what the recorded plan wrote, undo wiring
  *  edits, remove the state file. Nothing else — and nothing outside
  *  the install roots, even if the state file says so (R2 #6). */
 export function removeInstall(choices: InstallChoices): RemoveResult {
+  const preview = choices.dryRun || choices.json;
   const sp = statePath(choices);
   if (!existsSync(sp)) throw new Error(`no recorded install at ${sp} — nothing to remove`);
   const doc = JSON.parse(readFileSync(sp, 'utf8')) as StateDoc;
@@ -416,6 +457,11 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
     p.startsWith(roots.runtime + sep);
   const tampered: string[] = [];
   const removed: string[] = [];
+  const normalized = (p: string): string =>
+    process.platform === 'win32' ? resolve(p).toLowerCase() : resolve(p);
+  const projectDocuments = new Set(
+    ['AGENTS.md', 'AGENTS.backup.md'].map((name) => normalized(join(choices.root, name))),
+  );
   const shared = new Set<string>();
   for (const f of readdirSync(roots.state).filter(
     (f) => /^harness-install\..+\.json$/.test(f) && join(roots.state, f) !== sp,
@@ -424,13 +470,14 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
     for (const file of other.written ?? []) shared.add(file);
   }
   for (const p of [...new Set(doc.written)].sort().reverse()) {
+    if (projectDocuments.has(normalized(p))) continue;
     if (shared.has(p)) continue;
     if (!insideRoots(p)) {
       tampered.push(p); // the state file is data — data never arms deletion outside the roots
       continue;
     }
     if (existsSync(p)) {
-      rmSync(p);
+      if (!preview) rmSync(p);
       removed.push(p);
     }
   }
@@ -443,10 +490,10 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
   for (const w of doc.wirings) {
     if (w.target !== wiringTarget(choices.agent, choices.scope, choices.root, w.kind))
       throw Error('Install record has an unexpected wiring target');
-    if (unwireRecorded(w)) unwired.push(w.target);
+    if (unwireRecorded(w, preview)) unwired.push(w.target);
   }
   // prune empty dirs we created (only if empty — never foreign content)
-  for (const p of removed) {
+  for (const p of preview ? [] : removed) {
     let dir = dirname(p);
     while (
       (dir.startsWith(roots.base) && dir !== roots.base) ||
@@ -462,8 +509,8 @@ export function removeInstall(choices: InstallChoices): RemoveResult {
       }
     }
   }
-  rmSync(sp);
-  return { removed, unwired };
+  if (!preview) rmSync(sp);
+  return { removed, unwired, record: sp };
 }
 
 function sameDefinition(a: unknown, b: unknown): boolean {

@@ -15,7 +15,14 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join, dirname, basename } from 'node:path';
 import { normalizedHash } from './content.js';
-import { destPath, sourceFile, readCopilotHooks, copilotPointerConflict } from './manifest.js';
+import {
+  destPath,
+  sourceFile,
+  readCopilotHooks,
+  copilotPointerConflict,
+  defaultManifestPath,
+} from './manifest.js';
+import { planProjectGuide } from './agents-guide.js';
 import { destRoots } from './paths.js';
 import type {
   HarnessManifest,
@@ -306,7 +313,11 @@ export function compilePlan(
         note: conflict,
       });
   }
-  return { rows, wirings };
+  const guide =
+    scope === 'project' && choices.projectGuide !== false
+      ? planProjectGuide(choices.root, join(dirname(defaultManifestPath()), 'templates/AGENTS.md'))
+      : undefined;
+  return { rows, wirings, ...(guide ? { guide } : {}) };
 }
 
 export function planSummary(plan: Plan): {
@@ -318,6 +329,7 @@ export function planSummary(plan: Plan): {
 } {
   const s = { create: 0, same: 0, update: 0, refuse: 0, skip: 0 };
   for (const r of plan.rows) s[r.mode]++;
+  if (plan.guide?.mode === 'refuse') s.refuse++;
   return s;
 }
 

@@ -11,6 +11,7 @@ import {
   type InstallChoices,
   type Scope,
   type Surface,
+  type ProjectGuidePlan,
   UsageError,
 } from '../harness/types.js';
 import { promptForMissing } from '../harness/skin.js';
@@ -24,6 +25,7 @@ export interface Flags {
   agents?: boolean;
   hooks?: boolean;
   hooksOnly?: boolean;
+  projectGuide?: boolean;
   root?: string;
   manifest?: string;
   dryRun?: boolean;
@@ -42,6 +44,7 @@ export function registerInit(initCmd: Command): void {
     .option('--skills <ids...>', 'skill ids to install (default: all)')
     .option('--no-agents', 'skip agent components')
     .option('--no-hooks', 'skip hooks')
+    .option('--no-project-guide', 'leave project AGENTS.md and its backup unchanged')
     .option('--hooks-only', 'install lifecycle hooks without copying skills or agents')
     .option('--root <dir>', 'project root (default: cwd)')
     .option('--manifest <path>', 'manifest override (default: the shipped harness.json)')
@@ -85,8 +88,20 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
   if (choices.remove) {
     try {
       const r = removeInstall(choices);
+      if (choices.json) {
+        console.log(
+          JSON.stringify(
+            { removal: { files: r.removed, wirings: r.unwired, record: r.record } },
+            null,
+            2,
+          ),
+        );
+        return;
+      }
       console.log(
-        `removed ${r.removed.length} file(s); unwired ${r.unwired.length} wiring(s) — exactly the recorded install`,
+        choices.dryRun
+          ? `would remove ${r.removed.length} file(s) and the install record; unwire ${r.unwired.length} wiring(s) — no writes`
+          : `removed ${r.removed.length} file(s); unwired ${r.unwired.length} wiring(s) — exactly the recorded install`,
       );
     } catch (e) {
       console.error(`error: ${(e as Error).message}`);
@@ -109,12 +124,23 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
   const summary = planSummary(plan);
 
   if (choices.json) {
-    console.log(JSON.stringify({ plan: plan.rows, wirings: plan.wirings, summary }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          plan: plan.rows,
+          wirings: plan.wirings,
+          ...(plan.guide ? { guide: plan.guide } : {}),
+          summary,
+        },
+        null,
+        2,
+      ),
+    );
     if (summary.refuse > 0) process.exitCode = 3; // R2 #15: scripted consumers see would-refuse
     return;
   }
   if (choices.dryRun) {
-    printPlan(plan.rows, plan.wirings);
+    printPlan(plan.rows, plan.wirings, plan.guide);
     if (summary.refuse > 0) process.exitCode = 3; // R2 #15
     return;
   }
@@ -122,9 +148,10 @@ export async function runHarnessInit(rawFlags: Flags): Promise<void> {
     printPlan(
       plan.rows.filter((r) => r.mode === 'refuse'),
       [],
+      plan.guide,
     );
     console.error(
-      `\nrefused: ${summary.refuse} row(s) differ and --force is not set — nothing was written`,
+      `\nrefused: ${summary.refuse} planned action(s) refused — nothing was written; inspect the plan before retrying`,
     );
     process.exitCode = 3;
     return;
@@ -207,6 +234,7 @@ function choicesFromFlags(f: Flags): InstallChoices {
     scope,
     skills: f.hooksOnly ? [] : f.skills && f.skills.length > 0 ? f.skills : 'all',
     agents: !f.hooksOnly && f.agents !== false,
+    projectGuide: !f.hooksOnly && f.projectGuide !== false,
     hooks: f.hooks !== false,
     root: resolve(f.root ?? process.cwd()), // R2 #9: resolved once — relative --root must not leak into user-level configs
     manifestPath: f.manifest ?? undefined,
@@ -232,6 +260,7 @@ function printPlan(
     note?: string;
   }[],
   wirings: { target: string; detail: string }[],
+  guide?: ProjectGuidePlan,
 ): void {
   if (rows.length === 0) console.log('(no rows)');
   for (const r of rows) {
@@ -239,6 +268,13 @@ function printPlan(
     console.log(
       `${r.mode.padEnd(7)} ${r.kind.padEnd(6)} ${r.component.padEnd(18)} ${r.destination || '(none)'}${note}`,
     );
+  }
+  if (guide) {
+    console.log(
+      `guide   ${guide.mode} ${guide.destination}${guide.note ? ' — ' + guide.note : ''}`,
+    );
+    if (guide.backupRequired) console.log(`backup  preserve exact bytes → ${guide.backup}`);
+    if (guide.mode !== 'refuse') console.log(guide.content);
   }
   for (const w of wirings) console.log(`wire    ${w.target}  — ${w.detail}`);
 }

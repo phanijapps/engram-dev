@@ -1,0 +1,10 @@
+
+> treadle-root@ build /home/videogamer/code/memex_beta/treadle
+> tsc --build && node scripts/copy-assets.mjs
+
+packages/cli/src/harness/agents-guide.ts(79,20): error TS4111: Property 'packageManager' comes from an index signature, so it must be accessed with ['packageManager'].
+packages/cli/src/harness/agents-guide.ts(80,56): error TS4111: Property 'packageManager' comes from an index signature, so it must be accessed with ['packageManager'].
+packages/cli/src/harness/agents-guide.ts(82,27): error TS4111: Property 'scripts' comes from an index signature, so it must be accessed with ['scripts'].
+packages/cli/src/harness/agents-guide.ts(94,82): error TS4111: Property 'packageManager' comes from an index signature, so it must be accessed with ['packageManager'].
+packages/cli/src/harness/agents-guide.ts(129,62): error TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name'].
+ ELIFECYCLE  Command failed with exit code 1.

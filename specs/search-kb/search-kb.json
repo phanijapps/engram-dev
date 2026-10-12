@@ -3,7 +3,7 @@
   "name": "search-kb",
   "description": "Search OKF knowledge before SDLC work",
   "date": {
-    "updated": "2026-10-12T04:20:05Z"
+    "updated": "2026-10-12T04:34:53Z"
   },
   "status": {
     "lifecycle": "active",
@@ -455,7 +455,7 @@
     {
       "id": "T-4",
       "title": "Generate and safely preserve project instructions at init",
-      "status": "todo",
+      "status": "done",
       "phase": "integration",
       "needs": [
         "T-2"
@@ -483,16 +483,20 @@
             "path": "treadle/packages/cli/src/harness/agents-guide.ts"
           },
           {
-            "path": "treadle/packages/cli/src/harness/types.ts"
+            "path": "treadle/packages/cli/src/harness/types.ts",
+            "sha256": "fc541de682b8e7beed7b8893f7e4442e20e57d517932478beecfd2b65bc3871a"
           },
           {
-            "path": "treadle/packages/cli/src/harness/plan.ts"
+            "path": "treadle/packages/cli/src/harness/plan.ts",
+            "sha256": "d9870085da8a2a213734006485d770744623706d4f6ec1421bb75509d3c773e9"
           },
           {
-            "path": "treadle/packages/cli/src/harness/apply.ts"
+            "path": "treadle/packages/cli/src/harness/apply.ts",
+            "sha256": "c56e17f6daab144ec2862aada47eb650f44ed9553d0a3027bd3d9e5e4e348405"
           },
           {
-            "path": "treadle/packages/cli/src/commands/init.ts"
+            "path": "treadle/packages/cli/src/commands/init.ts",
+            "sha256": "f68e012751bfe3deea0f9f337e45412ce8779f81b9d3f96164bcebbee36005de"
           },
           {
             "path": "treadle/packages/cli/harness/templates/AGENTS.md"
@@ -501,19 +505,24 @@
             "path": "treadle/packages/cli/test/agents-guide.test.ts"
           },
           {
-            "path": "treadle/packages/cli/test/init-engine.test.ts"
+            "path": "treadle/packages/cli/test/init-engine.test.ts",
+            "sha256": "8cfe9cf729ee5a05517c3411d36cb5ce258313d7d5adde75d43976d768354f04"
           },
           {
-            "path": "treadle/packages/cli/test/init-surfaces.test.ts"
+            "path": "treadle/packages/cli/test/init-surfaces.test.ts",
+            "sha256": "db61fe7924acb8593daae8e086caeeff6b342eccc111bde9407252ede35cdee4"
           },
           {
-            "path": "treadle/packages/cli/test/init-skin.test.ts"
+            "path": "treadle/packages/cli/test/init-skin.test.ts",
+            "sha256": "dad41829e8d817cc83855c9a6c0ed0668b34dfd7cd098af5db7baa5765511dde"
           },
           {
-            "path": "treadle/packages/cli/test/copilot-hooks.test.ts"
+            "path": "treadle/packages/cli/test/copilot-hooks.test.ts",
+            "sha256": "594ddccd53aad012b11abfaea172999dee28282944867fbc594674d911368155"
           },
           {
-            "path": "AGENTS.md"
+            "path": "AGENTS.md",
+            "sha256": "2e4bcc8316dcde29ab6c809f32a6d58a10fb1d7747fd7ee371508aed776d66a5"
           },
           {
             "path": "AGENTS.backup.md"
@@ -558,7 +567,23 @@
           "Keep prior project instructions authoritative through the byte-exact backup; no agent owner actions.",
           "Use brand naming; do not hardcode this workspace architecture into portable output."
         ]
-      }
+      },
+      "evidence": [
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/agents-guide.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/copilot-hooks.test.ts",
+          "exit": 1,
+          "at": "2026-10-12T04:26:39Z",
+          "by": "agent:codex",
+          "notes": "67 passed, one existing installer expectation failed: written count is now6 including generated guide, formerly5. Full failure retained at checks/T-4-attempt-1.log. Initial build strict index-signature errors retained in T-4-build-attempt-1.log, repaired build passed. Repairing scoped expectation and adding preservation assertions."
+        },
+        {
+          "cmd": "pnpm exec vitest run packages/cli/test/agents-guide.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/copilot-hooks.test.ts",
+          "exit": 0,
+          "at": "2026-10-12T04:34:53Z",
+          "by": "agent:codex",
+          "notes": "70 tests pass after independent preview-removal and copy-time input drift repairs; reviewer independently reproduced both fixes, PASS. Failure logs retained. Full Copilot init installed a 62-line guide with byte-exact AGENTS.backup.md; repeat dry-run guide same, all exit0. Evidence checks/T-4-review-repaired.log and T-4-workspace-verification.json."
+        }
+      ]
     },
     {
       "id": "T-3",
@@ -779,5 +804,5 @@
     }
   },
   "format": "specpack/0.4",
-  "revision": 13
+  "revision": 16
 }

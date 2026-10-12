@@ -145,10 +145,14 @@ describe('the installer engine (T-1)', () => {
       const c = choices(root, manifestPath);
       const plan = compilePlan(lm.manifest, lm.root, c);
       const out = applyPlan(plan, c, lm.root, '2026-10-10T00:00:00Z');
-      expect(out.written).toBe(5); // SKILL.md + extra.md + agent + hook
+      expect(out.written).toBe(6); // Skill resources, agent, hook, runtime pointer, and project guide.
       expect(existsSync(join(root, '.pi/skills/alpha/SKILL.md'))).toBe(true);
       expect(existsSync(join(root, '.pi/agents/one.md'))).toBe(true);
       expect(existsSync(statePath(c))).toBe(true);
+      expect(existsSync(join(root, 'AGENTS.md'))).toBe(true);
+      expect(JSON.parse(readFileSync(statePath(c), 'utf8')).written).not.toContain(
+        join(root, 'AGENTS.md'),
+      );
 
       const plan2 = compilePlan(lm.manifest, lm.root, c);
       const s2 = planSummary(plan2);
