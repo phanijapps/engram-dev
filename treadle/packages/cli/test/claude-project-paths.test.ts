@@ -121,7 +121,8 @@ it('project hook commands survive relocation and nested cwd while preserving eve
   } finally {
     rmSync(base, { recursive: true, force: true });
   }
-});
+  // About 13 sequential hook runs; under full-suite load they exceed the 5 s default.
+}, 30000);
 
 it('upgrades recorded absolute wiring once and preserves foreign hooks on reinstall and removal', () => {
   const project = mkdtempSync(join(tmpdir(), 'claude wiring '));
