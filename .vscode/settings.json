@@ -1,0 +1,8 @@
+{
+  // Copilot Chat uses the native .github/hooks/wukong.json. Claude-format hooks would
+  // run twice and crash under VS Code (see wiki/project/setup.md).
+  "chat.hookFilesLocations": {
+    ".claude/settings.json": false,
+    ".claude/settings.local.json": false
+  }
+}

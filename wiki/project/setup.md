@@ -16,6 +16,7 @@ sources:
   - {id: root-manifest, resource: package.json}
   - {id: shell-bootstrap, resource: install.sh}
   - {id: windows-bootstrap, resource: install.ps1}
+  - {id: hooks-readme, resource: treadle/packages/cli/harness/hooks/README.md}
 ---
 
 # Installation
@@ -168,3 +169,33 @@ and compiled CLI smoke in a temporary source directory with spaces.
 It runs in the existing test matrix. A declared matrix is not a completed native execution receipt.
 Local copied-callback tests likewise do not establish native Copilot activation.
 Source: `treadle/packages/cli/test/source-setup.test.ts`.
+
+# Owner actions across hosts — 2026-10-12
+
+Owner actions from the web library reach agents through lifecycle context, not push.
+Claude Code and Codex add the current stage of each open spec on every prompt.
+Copilot discards prompt-hook context. Its session-start context tells the agent to run `do status` before stage-dependent work.
+In VS Code, the Copilot prompt hook also shows you a notice when open spec state changed.
+See the hooks README: `treadle/packages/cli/harness/hooks/README.md`.
+
+The context block lists open specs only and stays within 9,000 characters.
+Claude Code inlines at most 10,000 characters of prompt-hook context.
+
+Hook payloads live in the gitignored `.harness/hooks`. After a clone, run
+`wukong init harness --agent <claude|codex|copilot> --hooks-only --no-project-guide`
+for each host you use. Committed Copilot wiring without its payload prints this
+guidance and exits 0. Claude Code and Codex wiring does not have this guard yet:
+without the payload, those hooks still exit 1 with a Node error until you run init.
+`specs/installer-hook-ownership` (H3) tracks the guard for their shared launcher.
+
+Known installer limits, tracked in `specs/installer-hook-ownership`:
+
+- In a clone, committed hook entries are not recorded as harness-owned. After a hook
+  format change, re-running init can add the new entry next to the old one (H1).
+  Check the hook file for duplicate entries after an upgrade.
+- Do not delete a hook config file before re-installing. The install can then
+  report "wired" and leave an empty `hooks` object (H2). Run the install a second time to recover.
+
+VS Code also loads `.claude/settings.json` when `chat.useClaudeHooks` is on.
+Turn that location off with `"chat.hookFilesLocations": { ".claude/settings.json": false }`;
+the native `.github/hooks` file then supplies context. `specs/vscode-claude-hooks` tracks the generator fix.

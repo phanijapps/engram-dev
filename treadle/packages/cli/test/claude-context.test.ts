@@ -1,5 +1,5 @@
 import { it, expect } from 'vitest';
-import { mkdtempSync, mkdirSync, readFileSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -50,3 +50,38 @@ it('connects startup/resume/preprompt workspace and never shuts down with sessio
     }
   }
 }, 30000);
+it('keeps a crowded workspace inside the Claude Code inline limit through the real entrypoint', () => {
+  const root = mkdtempSync(join(tmpdir(), 'claude context budget ')),
+    runtime = join(root, 'runtime.mjs');
+  const reason = 'Approve the answered spec questions before planning continues';
+  const packs = Array.from({ length: 40 }, (_, i) => ({
+    name: `pack-${i}`,
+    stage: 'planning',
+    workflow: { phase: 'spec', reasons: [reason, reason, reason] },
+    doing: [],
+    candidate: null,
+    openQuestions: ['Q-1'],
+  }));
+  writeFileSync(
+    runtime,
+    `const args = process.argv.slice(2);
+if (args[0] === 'project') console.log(JSON.stringify({ service: { url: 'http://127.0.0.1:1/' }, project: { id: 'p' } }));
+else console.log(JSON.stringify({ format: 'context/1', workspace: process.cwd(), wiki: { root: 'wiki', available: true, freshness: 'fresh', limit: 'fixture' }, specs: { root: 'specs', packs: ${JSON.stringify(packs)}, selectionRequired: true }, guidance: { newSpec: 'n', continueSpec: 'c' } }));
+`,
+  );
+  try {
+    const r = spawnSync(process.execPath, [hook, '--event', 'UserPromptSubmit'], {
+      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime },
+      input: JSON.stringify({ cwd: root, hook_event_name: 'UserPromptSubmit' }),
+      encoding: 'utf8',
+      timeout: 30000,
+    });
+    expect(r.status, r.stderr).toBe(0);
+    const context: string = JSON.parse(r.stdout).hookSpecificOutput.additionalContext;
+    // Claude Code inlines at most 10,000 characters of hook context.
+    expect(context.length).toBeLessThanOrEqual(9000);
+    expect(context.split('\n').at(-1)).toMatch(/^\d+ more open spec\(s\) omitted/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

@@ -1,6 +1,6 @@
 import { brand } from '@treadle/brand';
 import { afterEach, expect, it, vi } from 'vitest';
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readdirSync, readFileSync, rmSync, utimesSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
@@ -43,16 +43,17 @@ function fixture(mode = 'ok') {
     calls = join(root, 'calls.jsonl');
   writeFileSync(
     runtime,
-    `import {appendFileSync} from 'node:fs';
+    `import {appendFileSync,existsSync,readFileSync} from 'node:fs';
 const args=process.argv.slice(2);
 appendFileSync(${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
 if(${JSON.stringify(mode)}==='hang'){setInterval(()=>{},1000);}
 else if(${JSON.stringify(mode)}==='invalid'){console.log('not json');}
 else if(${JSON.stringify(mode)}==='fail'){process.exit(1);}
 else if(args[0]==='project'){console.log(JSON.stringify({service:{url:'http://127.0.0.1:9999/'},project:{id:'test'}}));}
-else {console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wiki:{root:'wiki',available:true,freshness:'fresh',limit:'HEAD-only'},specs:{root:'specs',packs:[]},guidance:{newSpec:'New spec',continueSpec:'Continue spec'}}));}
+else {const packs=existsSync(${JSON.stringify(join(root, 'packs.json'))})?JSON.parse(readFileSync(${JSON.stringify(join(root, 'packs.json'))},'utf8')):[];console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wiki:{root:'wiki',available:true,freshness:'fresh',limit:'HEAD-only'},specs:{root:'specs',packs},guidance:{newSpec:'New spec',continueSpec:'Continue spec'}}));}
 `,
   );
+  const state = join(root, 'session state');
   const run = (
     event = 'sessionStart',
     input = JSON.stringify({ cwd: root, prompt: 'PRIVATE_PROMPT', sessionId: 'PRIVATE_ID' }),
@@ -60,11 +61,11 @@ else {console.log(JSON.stringify({format:'context/1',workspace:process.cwd(),wik
     spawnSync(process.execPath, [hook, '--event', event], {
       cwd: root,
       input,
-      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime },
+      env: { ...process.env, HARNESS_RUNTIME_ENTRY: runtime, HARNESS_COPILOT_STATE_DIR: state },
       encoding: 'utf8',
       timeout: 28000,
     });
-  return { root, runtime, calls, run };
+  return { root, runtime, calls, run, state };
 }
 it('returns session context in the Copilot envelope and reconnects on prompts', () => {
   const f = fixture(),
@@ -99,10 +100,114 @@ it.each(['invalid', 'fail'])('reports runtime %s failures and recovers after rep
     failed = f.run();
   expect(failed.status).toBe(0);
   expect(JSON.parse(failed.stdout).additionalContext).toContain('unavailable');
+  expect(JSON.parse(failed.stdout).additionalContext).toContain(
+    'This host does not refresh spec state on each prompt.',
+  );
   expect(f.run('userPromptSubmitted').stdout.trim()).toBe('{}');
   const healthy = fixture();
   writeFileSync(f.runtime, readFileSync(healthy.runtime));
   expect(JSON.parse(f.run().stdout).additionalContext).toContain('Harness connected:');
+});
+const openPack = (stage: string, phase: string) => ({
+  name: 'demo-pack',
+  stage,
+  workflow: { phase, reasons: [] },
+  doing: [],
+  candidate: null,
+  openQuestions: [],
+});
+it('tells the agent to pull spec state at session start', () => {
+  const f = fixture(),
+    out = JSON.parse(f.run().stdout).additionalContext;
+  expect(out).toContain('This host does not refresh spec state on each prompt.');
+  expect(out).toContain(`"${process.execPath}" "${f.runtime}" do status <packDir>`);
+});
+it('notifies the user only when open spec state changed, keeping no names or prompts', () => {
+  const f = fixture(),
+    prompt = () => JSON.parse(f.run('userPromptSubmitted').stdout);
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([openPack('drafted', 'spec')]));
+  expect(f.run().status).toBe(0);
+  expect(prompt()).toEqual({});
+  writeFileSync(
+    join(f.root, 'packs.json'),
+    JSON.stringify([openPack('in_progress', 'implementation')]),
+  );
+  expect(prompt()).toEqual({
+    systemMessage:
+      'Spec state changed since your last prompt: demo-pack (in_progress, gate implementation). Ask the agent to run do status before it continues.',
+  });
+  expect(prompt()).toEqual({});
+  const stored = readdirSync(f.state).map((file) => readFileSync(join(f.state, file), 'utf8'));
+  expect(stored).toHaveLength(1);
+  expect(stored[0]).not.toMatch(/demo-pack|PRIVATE_PROMPT|PRIVATE_ID|implementation/);
+});
+it('keeps the pull instruction in the head and the whole output inside the budget', () => {
+  const f = fixture();
+  const reason = 'Approve the answered spec questions before planning continues';
+  const packs = Array.from({ length: 60 }, (_, i) => ({
+    ...openPack('planning', 'spec'),
+    name: `pack-${i}`,
+    workflow: { phase: 'spec', reasons: [reason, reason, reason] },
+  }));
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify(packs));
+  const context: string = JSON.parse(f.run().stdout).additionalContext;
+  expect(context.length).toBeLessThanOrEqual(9000);
+  const lines = context.split('\n');
+  const rule = lines.findIndex((l) => l.startsWith('This host does not refresh spec state'));
+  expect(rule).toBeGreaterThan(-1);
+  expect(rule).toBeLessThan(lines.findIndex((l) => l.startsWith('pack-')));
+  expect(lines.at(-1)).toMatch(/^\d+ more open spec\(s\) omitted/);
+});
+it('gives PowerShell a runnable pull command on Windows', async () => {
+  const f = fixture();
+  const saved = process.env.HARNESS_RUNTIME_ENTRY;
+  process.env.HARNESS_RUNTIME_ENTRY = f.runtime;
+  try {
+    const { pullInstruction } = await import(hook);
+    expect(pullInstruction('win32')).toContain(
+      `run: & "${process.execPath}" "${f.runtime}" do status`,
+    );
+    expect(pullInstruction('darwin')).toContain(
+      `run: "${process.execPath}" "${f.runtime}" do status`,
+    );
+  } finally {
+    if (saved === undefined) delete process.env.HARNESS_RUNTIME_ENTRY;
+    else process.env.HARNESS_RUNTIME_ENTRY = saved;
+  }
+});
+it('keys session state by session_id and reports packs that left the open list', () => {
+  const f = fixture();
+  const input = JSON.stringify({ cwd: f.root, session_id: 'vscode-session' });
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([openPack('drafted', 'spec')]));
+  expect(f.run('sessionStart', input).status).toBe(0);
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([]));
+  expect(JSON.parse(f.run('userPromptSubmitted', input).stdout)).toEqual({
+    systemMessage:
+      'Spec state changed since your last prompt: 1 spec(s) left the open list (finished, closed or refused). Ask the agent to run do status before it continues.',
+  });
+});
+it('prunes session state older than seven days', () => {
+  const f = fixture();
+  mkdirSync(f.state, { recursive: true });
+  const stale = join(f.state, 'a'.repeat(64) + '.json'),
+    foreign = join(f.state, 'notes.txt');
+  const old = new Date(Date.now() - 8 * 24 * 60 * 60 * 1000);
+  for (const file of [stale, foreign]) {
+    writeFileSync(file, '{}');
+    utimesSync(file, old, old);
+  }
+  expect(f.run().status).toBe(0);
+  expect(existsSync(stale)).toBe(false);
+  expect(existsSync(foreign)).toBe(true);
+  expect(readdirSync(f.state)).toHaveLength(2);
+});
+it('keeps working without a notice when session state cannot be written', () => {
+  const f = fixture();
+  writeFileSync(f.state, 'not a directory');
+  writeFileSync(join(f.root, 'packs.json'), JSON.stringify([openPack('drafted', 'spec')]));
+  const out = f.run('userPromptSubmitted');
+  expect(out.status, out.stderr).toBe(0);
+  expect(JSON.parse(out.stdout)).toEqual({});
 });
 it('rejects unsupported events before connecting', () => {
   const out = fixture().run('sessionEnd');
@@ -188,6 +293,30 @@ it('installs exact hook JSON, repeats without duplicates, and removes an owned e
   expect(existsSync(i.config)).toBe(false);
   expect(existsSync(statePath(i.choices))).toBe(false);
 });
+it.skipIf(process.platform === 'win32')(
+  'explains recovery instead of crashing when committed wiring outlives its payload',
+  () => {
+    const f = fixture(),
+      i = installer(f.root);
+    expect(i.apply().wiringRefused).toEqual([]);
+    const doc = JSON.parse(readFileSync(i.config, 'utf8'));
+    rmSync(join(f.root, '.harness/hooks/copilot-context.js'));
+    for (const event of ['sessionStart', 'userPromptSubmitted']) {
+      const out = spawnSync('bash', ['-c', doc.hooks[event][0].bash], {
+        cwd: f.root,
+        input: JSON.stringify({ cwd: f.root }),
+        env: { ...process.env, HARNESS_RUNTIME_ENTRY: f.runtime },
+        encoding: 'utf8',
+      });
+      expect(out.status, out.stderr).toBe(0);
+      expect(JSON.parse(out.stdout)).toEqual({});
+      expect(out.stderr).toContain(
+        `.harness/hooks/copilot-context.js is missing. Run: ${brand.binName} init harness --agent copilot --hooks-only`,
+      );
+      expect(out.stderr).not.toContain('at Module');
+    }
+  },
+);
 it('preserves foreign entries, metadata, sibling files and a pre-existing empty container', () => {
   const f = fixture(),
     i = installer(f.root);

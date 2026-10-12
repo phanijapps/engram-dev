@@ -353,6 +353,19 @@ const projectHookLauncher = (config: string, host: string): string =>
     'process.exit(result.status??1);',
   ].join('');
 
+// Committed host wiring can outlive the gitignored payload (a fresh clone). Context
+// hooks then explain the recovery and exit 0 instead of failing with a stack trace.
+// Single quotes only: the script passes through both bash and PowerShell quoting.
+const payloadGuard = (agent: string): string =>
+  [
+    "const fs=require('node:fs'),p=require('node:path');",
+    'const hook=p.resolve(process.argv[1]);',
+    `if(!fs.existsSync(hook)){console.error('Harness hook payload '+process.argv[1]+' is missing. Run: ${brand.binName} init harness --agent ${agent} --hooks-only');console.log('{}');process.exit(0);}`,
+    "const result=require('node:child_process').spawnSync(process.execPath,[hook,...process.argv.slice(2)],{stdio:'inherit'});",
+    'if(result.error)throw result.error;',
+    'process.exit(result.status??1);',
+  ].join('');
+
 function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): string {
   const suffix = (w.command ?? '')
     .replace(/^node\s+\S+/, '')
@@ -361,7 +374,7 @@ function hookCommand(w: HookWiring, path: string, scope: Scope, root: string): s
     .filter(Boolean);
   if (w.kind === 'copilot-hooks') {
     const payload = relative(root, path).split('\\').join('/');
-    const args = ['node', payload, ...suffix];
+    const args = ['node', '-e', payloadGuard('copilot'), '--', payload, ...suffix];
     const quote = (value: string): string => "'" + value.replaceAll("'", "'\"'\"'") + "'";
     return JSON.stringify({
       type: 'command',

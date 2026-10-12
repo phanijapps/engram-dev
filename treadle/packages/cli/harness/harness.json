@@ -41,7 +41,8 @@
       "dest": {
         "pi": ".pi/skills/feedback",
         "claude": ".claude/skills/feedback",
-        "codex": ".codex/skills/feedback"
+        "codex": ".codex/skills/feedback",
+        "copilot": ".github/skills/feedback"
       }
     },
     {
