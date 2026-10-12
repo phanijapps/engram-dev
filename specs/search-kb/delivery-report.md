@@ -55,7 +55,11 @@ were inspected directly. Local callback execution is verified; native Copilot
 activation, Windows hook execution, and cloud runtime bootstrap are separate.
 No model API key or provider authentication was tested or changed in this PR.
 
-Independent current-digest PACK review and PR publication follow the recorded
-task checks. The owner's Finish action remains separate and has not been issued
-by an agent. Earlier Copilot hook commits and the separately reviewed reviewer
-rename are prerequisites included in this branch because they are absent from main.
+Independent current-digest PACK review passed on revision 19 and source
+`4d15fbb`. All four exact task commands were rerun successfully; source,
+canonical pack, and wiki metadata hashes remained unchanged during review.
+The actual verdict is in `review-pack.md`, with logs under
+`checks/pack-review-2026-10-12/`. The locked writer recorded it at revision 20.
+The owner's Finish action remains separate and has not been issued by an agent.
+Earlier Copilot hook commits and the separately reviewed reviewer rename are
+prerequisites included in this branch because they are absent from main.

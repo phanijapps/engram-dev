@@ -1,0 +1,10 @@
+check: exit 0
+coverage: exit 0
+corpus-check: exit 0
+brand-check: exit 0
+audit-prod: exit 0
+links: exit 0
+wiki-anchors: exit 0
+wiki-validate: exit 0
+wiki-status: exit 0
+Delivery PASS: 11 actual evaluated cases, six repository gates and wiki checks. Evidence /home/videogamer/code/memex_beta/specs/search-kb/checks/delivery-2026-10-12T04-57-00-770Z

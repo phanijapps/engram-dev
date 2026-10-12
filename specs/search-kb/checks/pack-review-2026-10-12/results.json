@@ -1,0 +1,30 @@
+[
+  {
+    "task": "T-1",
+    "command": "node ../specs/search-kb/verify-skill.mjs",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/search-kb/checks/pack-review-2026-10-12/T-1.log"
+  },
+  {
+    "task": "T-2",
+    "command": "pnpm exec vitest run packages/cli/test/search-kb-install.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/harness-packages.test.ts",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/search-kb/checks/pack-review-2026-10-12/T-2.log"
+  },
+  {
+    "task": "T-4",
+    "command": "pnpm exec vitest run packages/cli/test/agents-guide.test.ts packages/cli/test/init-engine.test.ts packages/cli/test/init-surfaces.test.ts packages/cli/test/copilot-hooks.test.ts",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/search-kb/checks/pack-review-2026-10-12/T-4.log"
+  },
+  {
+    "task": "T-3",
+    "command": "node ../specs/search-kb/verify-delivery.mjs",
+    "cwd": "/home/videogamer/code/memex_beta/treadle",
+    "exit": 0,
+    "log": "specs/search-kb/checks/pack-review-2026-10-12/T-3.log"
+  }
+]

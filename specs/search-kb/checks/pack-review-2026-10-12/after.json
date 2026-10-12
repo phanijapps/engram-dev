@@ -1,0 +1,12 @@
+{
+  "head": "4d15fbbff995ca7e42745b0bcc6144cf91c13780",
+  "changed": [],
+  "wikiMetadataBefore": {
+    "wiki/.okf/fingerprints.json": "e0bdcccd8d6bbe58835119e8d1d73a2d06e413fc713815f6f55d81bd5519dc0f",
+    "wiki/.okf/last-index.json": "795edd2118e81a16a89e735401fad6087a99599b776029f261a8513449e9c356"
+  },
+  "wikiMetadataAfter": {
+    "wiki/.okf/fingerprints.json": "e0bdcccd8d6bbe58835119e8d1d73a2d06e413fc713815f6f55d81bd5519dc0f",
+    "wiki/.okf/last-index.json": "795edd2118e81a16a89e735401fad6087a99599b776029f261a8513449e9c356"
+  }
+}
