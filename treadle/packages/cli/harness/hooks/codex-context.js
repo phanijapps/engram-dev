@@ -58,6 +58,7 @@ function invoke(config, args, cwd) {
 export const CONTEXT_BUDGET = 9000;
 const PACK_LINE_LIMIT = 700;
 const REFUSED_NAME_LIMIT = 10;
+const HEAD_LINE_LIMIT = 600;
 const isRefused = (pack) => pack.stage === 'refused' || Boolean(pack.error);
 const isFinished = (pack) => ['delivered', 'closed'].includes(String(pack.stage));
 // Cut on code points so a surrogate pair is never split.
@@ -115,8 +116,8 @@ export function compactBlock(report, connection, budget = CONTEXT_BUDGET, extraH
   const omittedNote = (n) =>
     `${n} more open spec(s) omitted; run do where ${report.workspace} --json for the full list.`;
   const reserve = omittedNote(open.length).length + 1;
-  const lines = [...head];
-  // An oversized head (very long paths) gives up whole trailing head lines, never a partial one.
+  const lines = head.map((line) => cap(String(line), HEAD_LINE_LIMIT));
+  // Capped head lines fit any realistic budget; if not, whole trailing lines go, never part of one.
   while (lines.length > 1 && lines.join('\n').length + (open.length ? reserve : 0) > budget)
     lines.pop();
   let size = lines.join('\n').length;

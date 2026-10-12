@@ -35,8 +35,15 @@ export function pullInstruction(platform = process.platform) {
 // Per-session fingerprints only: hashed pack names mapped to hashed compact lines (D-3).
 const stateDir = () => process.env.HARNESS_COPILOT_STATE_DIR || join(tmpdir(), 'wukong-copilot');
 const STATE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+const STATE_FILE = /^[0-9a-f]{64}\.json$/;
 function pruneState(now = Date.now()) {
-  for (const file of readdirSync(stateDir())) {
+  let files;
+  try {
+    files = readdirSync(stateDir()).filter((file) => STATE_FILE.test(file));
+  } catch {
+    return;
+  }
+  for (const file of files) {
     const path = join(stateDir(), file);
     try {
       if (now - statSync(path).mtimeMs > STATE_MAX_AGE_MS) rmSync(path, { force: true });
@@ -69,11 +76,11 @@ function changedPacks(event, report) {
   }
   try {
     mkdirSync(stateDir(), { recursive: true });
-    pruneState();
     writeFileSync(path, JSON.stringify({ packs: current, at: new Date().toISOString() }));
   } catch {
     return none;
   }
+  pruneState();
   if (!previous || typeof previous !== 'object') return none;
   return {
     changed: openPacks(report).filter(

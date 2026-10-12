@@ -125,8 +125,20 @@ it('reserves the omitted note against the head and keeps extra head lines in bud
   const block: string = compactBlock(fixtureReport(open), connection, 1200, ['HOST RULE']);
   expect(block.length).toBeLessThanOrEqual(1200);
   const lines = block.split('\n');
+  expect(lines.indexOf('HOST RULE')).toBeGreaterThan(-1);
   expect(lines.indexOf('HOST RULE')).toBeLessThan(lines.findIndex((l) => l.startsWith('open-')));
   expect(lines.at(-1)).toMatch(/^\d+ more open spec\(s\) omitted/);
+});
+it('keeps guidance, host rules and counts when the workspace path is very long', async () => {
+  const { compactBlock, CONTEXT_BUDGET } = await import(hook);
+  const report = { ...fixtureReport([pack('open-one')]), workspace: '/' + 'deep/'.repeat(480) };
+  const lines: string[] = compactBlock(report, connection, CONTEXT_BUDGET, ['HOST RULE']).split(
+    '\n',
+  );
+  expect(lines).toContain('fixture continue spec');
+  expect(lines).toContain('HOST RULE');
+  expect(lines.some((l) => l.startsWith('Open specs: 1;'))).toBe(true);
+  expect(lines.find((l) => l.startsWith('Workspace: '))!.length).toBeLessThanOrEqual(600);
 });
 it('caps a pack line on a code-point boundary', async () => {
   const { packLine, packSummary } = await import(hook);

@@ -189,13 +189,17 @@ it('keys session state by session_id and reports packs that left the open list',
 it('prunes session state older than seven days', () => {
   const f = fixture();
   mkdirSync(f.state, { recursive: true });
-  const stale = join(f.state, 'stale.json');
-  writeFileSync(stale, '{}');
+  const stale = join(f.state, 'a'.repeat(64) + '.json'),
+    foreign = join(f.state, 'notes.txt');
   const old = new Date(Date.now() - 8 * 24 * 60 * 60 * 1000);
-  utimesSync(stale, old, old);
+  for (const file of [stale, foreign]) {
+    writeFileSync(file, '{}');
+    utimesSync(file, old, old);
+  }
   expect(f.run().status).toBe(0);
   expect(existsSync(stale)).toBe(false);
-  expect(readdirSync(f.state)).toHaveLength(1);
+  expect(existsSync(foreign)).toBe(true);
+  expect(readdirSync(f.state)).toHaveLength(2);
 });
 it('keeps working without a notice when session state cannot be written', () => {
   const f = fixture();
