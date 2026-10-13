@@ -167,6 +167,21 @@ An agent sees an owner action when a hook adds current pack state, or when it re
 | Copilot CLI                            | Context block and a `do status` pull instruction | Output is discarded                                      |
 | VS Code Copilot Chat (`.github/hooks`) | Context block and a `do status` pull instruction | `systemMessage` to the user when open spec state changed |
 
+## Waking an idle agent — 2026-10-13
+
+`do wait <packDir> [--cursor C] [--timeout S]` blocks until an owner act, a gate-phase change (an agent's own evidence can also cause one) or a
+resolved clarification appears in the pack, then prints one JSON line
+(`pack`, `phase`, `new_acts`, `answered`, `cursor`). It reads pack files only, so it sees
+web and CLI actions and works with the web service stopped. Exit codes: 0 changed,
+10 timeout (re-arm, at most 3 times), 11 delivered, 1 error. Timeout defaults to 300 s (1–600).
+It writes a heartbeat under `os.tmpdir()/wukong-armed` (`HARNESS_ARMED_STATE_DIR` overrides);
+the web app shows "agent listening" from it. The output grants no approval.
+
+`harness.json` declares `wake` per host: Copilot is `background-command` (the session
+context tells the agent to run `do wait` as a background command and run `do status` on exit);
+Claude, Codex and Pi are `context-only` and still need a prompt. Whether Copilot resumes on
+background-command exit is recorded in `specs/agent-wake/host-evidence/copilot.json`.
+
 The context block puts guidance first, then one compact line per open spec.
 Delivered, closed and refused specs appear as counts. The block stays within 9,000 characters
 (Claude Code inlines at most 10,000) and states how many open specs it omitted.

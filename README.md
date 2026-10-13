@@ -165,8 +165,9 @@ One Start approval covers the agreed task sequence.
 Select **Finish spec** to complete and freeze the record.
 Tests and agent review do not grant permission to finish.
 
-Start permission does not wake an idle coding agent. Continue in the agent's chat
-after approval. See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
+Start permission does not launch a host. An agent that armed `do wait` (Copilot CLI
+does this from session context) continues by itself; the library shows "agent listening".
+Otherwise continue in the agent's chat after approval. See [the owner workflow](wiki/systems/owner-workflow.md) for the full contract.
 
 ## Review in your browser
 

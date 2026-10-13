@@ -576,3 +576,32 @@ it.skipIf(process.platform === 'win32')(
     expect(i.apply().written).toBe(0);
   },
 );
+it('tells Copilot to arm a background do wait, and keeps the hook in step with the manifest', async () => {
+  const f = fixture();
+  const saved = process.env.HARNESS_RUNTIME_ENTRY;
+  process.env.HARNESS_RUNTIME_ENTRY = f.runtime;
+  try {
+    const { wakeInstruction, WAKE_MODE } = await import(hook);
+    const { loadManifest, wakeMode } = await import('../src/harness/manifest.js');
+    expect(WAKE_MODE).toBe(
+      wakeMode(
+        loadManifest(fileURLToPath(new URL('../harness/harness.json', import.meta.url))).manifest,
+        'copilot',
+      ),
+    );
+    expect(wakeInstruction('darwin')).toContain(`"${process.execPath}" "${f.runtime}" do wait`);
+    expect(wakeInstruction('win32')).toContain(`& "${process.execPath}" "${f.runtime}" do wait`);
+    expect(wakeInstruction('darwin')).toContain('grants no approval');
+    expect(wakeInstruction('darwin', 'context-only')).toBe('');
+    expect(wakeInstruction('darwin', 'none')).toBe('');
+  } finally {
+    if (saved === undefined) delete process.env.HARNESS_RUNTIME_ENTRY;
+    else process.env.HARNESS_RUNTIME_ENTRY = saved;
+  }
+});
+it('adds the wake instruction to sessionStart context only', () => {
+  const f = fixture();
+  const input = JSON.stringify({ cwd: f.root, session_id: 's-wake' });
+  expect(JSON.parse(f.run('sessionStart', input).stdout).additionalContext).toContain('do wait');
+  expect(f.run('userPromptSubmitted', input).stdout).not.toContain('do wait');
+});

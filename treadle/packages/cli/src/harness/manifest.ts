@@ -2,7 +2,7 @@
 import { existsSync, readFileSync, lstatSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { isAbsolute, join, resolve, dirname } from 'node:path';
-import type { ComponentRow, HarnessManifest, HookRow, Surface } from './types.js';
+import type { ComponentRow, HarnessManifest, HookRow, Surface, WakeMode } from './types.js';
 import { runtimeEntry } from '../serve/runtime.js';
 
 export interface LoadedManifest {
@@ -27,7 +27,25 @@ export function loadManifest(path: string): LoadedManifest {
   }
   for (const c of m.components) validateComponent(c);
   for (const h of m.hooks) validateHook(h);
+  validateWake(m.wake);
   return { manifest: m, root: resolve(file, '..') };
+}
+
+const WAKE_MODES: readonly string[] = ['background-command', 'context-only', 'none'];
+const SURFACES: readonly string[] = ['pi', 'claude', 'codex', 'copilot'];
+function validateWake(wake: unknown): void {
+  if (wake === undefined) return;
+  if (!wake || typeof wake !== 'object' || Array.isArray(wake))
+    throw new Error('wake refused: expected a per-host map');
+  for (const [host, mode] of Object.entries(wake)) {
+    if (!SURFACES.includes(host)) throw new Error(`wake refused: unknown host ${host}`);
+    if (typeof mode !== 'string' || !WAKE_MODES.includes(mode))
+      throw new Error(`wake refused: ${host} must be background-command|context-only|none`);
+  }
+}
+/** The host's declared wake mode; an undeclared host stays context-only. */
+export function wakeMode(m: HarnessManifest, host: Surface): WakeMode {
+  return m.wake?.[host] ?? 'context-only';
 }
 
 function safePath(p: string): boolean {

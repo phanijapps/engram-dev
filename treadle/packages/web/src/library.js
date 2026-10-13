@@ -668,6 +668,7 @@ function paintOwner(loading = false) {
     return;
   }
   const w = S.workflow;
+  const armed = !!S.specs.find((s) => s.name === S.sel)?.armed;
   const gated = !!S.spec.workflow;
   const reasons = (w.reasons || []).map((r) => `<li>${esc(r)}</li>`).join('');
   const descriptions = {
@@ -685,9 +686,10 @@ function paintOwner(loading = false) {
   host.innerHTML = `<section class="owner-panel" aria-labelledby="owner-heading"><h2 id="owner-heading" tabindex="-1">${esc(PHASE_WORDS[w.phase] || 'Owner review')}</h2>
     <p>${gated ? esc(descriptions[w.phase] || 'Read the current approval state before acting.') : 'This spec uses the legacy approval rules.'}</p>
     ${reasons ? `<details class="gate-reasons"><summary>What is needed</summary><ul>${reasons}</ul></details>` : ''}
-    ${w.audit_pending ? `<p class="audit-notice">Your action was recorded. ${w.audit_pending} audit entries still need recovery.</p>` : ''}</section>`;
+    ${w.audit_pending ? `<p class="audit-notice">Your action was recorded. ${w.audit_pending} audit entries still need recovery.</p>` : ''}
+    ${gated && w.phase !== 'delivered' ? `<p class="agent-armed" data-armed="${armed ? 'true' : 'false'}">${armed ? 'A wait is armed in an agent session. It may continue after your action; prompt the agent if it does not.' : 'No agent is listening. After you act, prompt your agent to continue.'}</p>` : ''}</section>`;
   const actions = $('owner-actions');
-  actions.innerHTML = `${w.can_start ? '<p>This permission applies to this exact plan. It does not wake an idle agent.</p><button type="button" class="btn primary" id="owner-start">Start implementation</button>' : ''}
+  actions.innerHTML = `${w.can_start ? `<p>This permission applies to this exact plan. ${armed ? 'A wait is armed; the agent may continue.' : 'It does not wake an idle agent.'}</p><button type="button" class="btn primary" id="owner-start">Start implementation</button>` : ''}
     ${w.can_close ? '<button type="button" class="btn primary" id="owner-finish">Finish spec</button><div id="finish-confirm" hidden><p>Finish and freeze this spec?</p><button type="button" class="btn primary" id="owner-confirm-finish">Yes, finish spec</button> <button type="button" class="btn" id="owner-cancel-finish">Keep open</button></div>' : ''}`;
   actions.hidden = !w.can_start && !w.can_close;
   const start = $('owner-start');

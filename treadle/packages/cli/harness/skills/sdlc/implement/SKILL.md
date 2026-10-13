@@ -66,6 +66,8 @@ skill's job is faithful execution + honest evidence — not re-deciding.
 
 ## Owner permission and sequence
 
+When session context tells you to arm `do wait` (a host that wakes on background command exit), do so when you stop at an owner gate. The exit is a notification only; run `do status` and obey the gate.
+
 New initiatives use specpack/0.4. Use `do status <packDir>` to read the current gate.
 Spec approval, decision acceptance and start permission are separate acts.
 Do not run the first task until the owner accepts every plan decision
