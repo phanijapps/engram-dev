@@ -45,7 +45,7 @@ function fixture(mode = 'ok') {
     runtime,
     `import {appendFileSync,existsSync,readFileSync} from 'node:fs';
 const args=process.argv.slice(2);
-appendFileSync(${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
+appendFileSync(['_lease','start'].includes(args[0])?${JSON.stringify(calls + '.lease')}:${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
 if(${JSON.stringify(mode)}==='hang'){setInterval(()=>{},1000);}
 else if(${JSON.stringify(mode)}==='invalid'){console.log('not json');}
 else if(${JSON.stringify(mode)}==='fail'){process.exit(1);}
@@ -209,8 +209,28 @@ it('keeps working without a notice when session state cannot be written', () => 
   expect(out.status, out.stderr).toBe(0);
   expect(JSON.parse(out.stdout)).toEqual({});
 });
+it('writes a lease and starts an autostop service on sessionStart, and removes it on sessionEnd', async () => {
+  const f = fixture(),
+    input = JSON.stringify({ cwd: f.root, sessionId: 'S1', pid: 4242 });
+  expect(f.run('sessionStart', input).status).toBe(0);
+  const lease = `${f.calls}.lease`;
+  for (let i = 0; i < 50 && !existsSync(lease); i++) await new Promise((r) => setTimeout(r, 100));
+  await new Promise((r) => setTimeout(r, 300));
+  const lines = readFileSync(lease, 'utf8')
+    .trim()
+    .split('\n')
+    .map((l) => JSON.parse(l));
+  const start = lines.find((l) => l[0] === '_lease' && l[1] === 'start');
+  expect(start).toEqual(expect.arrayContaining(['--session', 'S1', '--pid', '4242']));
+  expect(lines).toContainEqual(['start', 'serve', '--stop-when-idle']);
+  const end = f.run('sessionEnd', input);
+  expect(end.status, end.stderr).toBe(0);
+  expect(end.stdout.trim()).toBe('{}');
+  await new Promise((r) => setTimeout(r, 500));
+  expect(readFileSync(lease, 'utf8')).toMatch(/"_lease","end".*"--session","S1"/);
+});
 it('rejects unsupported events before connecting', () => {
-  const out = fixture().run('sessionEnd');
+  const out = fixture().run('preToolUse');
   expect(out.status).toBe(0);
   expect(JSON.parse(out.stdout)).toEqual({});
   expect(out.stderr).toContain('invalid');
@@ -271,7 +291,7 @@ it('installs exact hook JSON, repeats without duplicates, and removes an owned e
   expect(i.apply().wiringRefused).toEqual([]);
   const doc = JSON.parse(readFileSync(i.config, 'utf8'));
   expect(doc.version).toBe(1);
-  for (const event of ['sessionStart', 'userPromptSubmitted']) {
+  for (const event of ['sessionStart', 'userPromptSubmitted', 'sessionEnd']) {
     expect(doc.hooks[event]).toHaveLength(1);
     expect(doc.hooks[event][0]).toMatchObject({ type: 'command', cwd: '.', timeoutSec: 60 });
     expect(doc.hooks[event][0].bash).toContain(event);

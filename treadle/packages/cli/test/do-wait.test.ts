@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { getEventListeners } from 'node:events';
+import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -12,6 +13,8 @@ import {
   encodeCursor,
   writeArmed,
   clearArmed,
+  writeLease,
+  removeLease,
   type PackDoc,
 } from '@treadle/core';
 import { waitForOwnerChange, WAIT_EXIT } from '../src/commands/wait.js';
@@ -119,6 +122,27 @@ describe('do wait', () => {
       pollMs: 50,
     });
     expect(again.code).toBe(WAIT_EXIT.timeout);
+  });
+  it('stops with an interrupted event when its owner process is gone', async () => {
+    const dead = spawnSync(process.execPath, ['-e', '']).pid;
+    const t = await waitForOwnerChange(dir, { timeout: 5, pollMs: 50, ownerPid: dead });
+    expect(t.code).toBe(WAIT_EXIT.timeout);
+    expect(t.event['interrupted']).toBe(true);
+    const alive = await waitForOwnerChange(dir, { timeout: 1, pollMs: 50, ownerPid: process.pid });
+    expect(alive.event['timeout']).toBe(true);
+  });
+  it('stops when the lease of its session is removed', async () => {
+    const lease = mkdtempSync(join(tmpdir(), 'wait-lease-'));
+    process.env['HARNESS_LEASE_DIR'] = lease;
+    try {
+      writeLease('S', { pid: process.pid });
+      setTimeout(() => removeLease('S'), 300);
+      const t = await waitForOwnerChange(dir, { timeout: 5, pollMs: 50, ownerLease: 'S' });
+      expect(t.event['interrupted']).toBe(true);
+    } finally {
+      delete process.env['HARNESS_LEASE_DIR'];
+      rmSync(lease, { recursive: true, force: true });
+    }
   });
   it('ignores an agent-authored revision bump', async () => {
     const waiting = waitForOwnerChange(dir, { timeout: 1, pollMs: 50 });

@@ -11,6 +11,10 @@ import {
   decodeCursor,
   writeArmed,
   clearArmed,
+  pidAlive,
+  agentOwnerPid,
+  leaseForPid,
+  leaseLive,
   type OwnerCursor,
 } from '@treadle/core';
 
@@ -25,6 +29,10 @@ export interface WaitOptions {
   timeout?: number | undefined;
   pollMs?: number | undefined;
   signal?: AbortSignal | undefined;
+  /** The agent process that started this wait; the wait ends when it exits. */
+  ownerPid?: number | undefined;
+  /** The session lease of that agent; the wait ends when the lease is removed (sessionEnd). */
+  ownerLease?: string | undefined;
 }
 export interface WaitResult {
   code: number;
@@ -69,7 +77,11 @@ export async function waitForOwnerChange(
             event: { pack, ...(change ?? { phase: cur.phase }), cursor: encodeCursor(cur) },
           };
       }
-      if (o.signal?.aborted)
+      if (
+        o.signal?.aborted ||
+        (o.ownerPid !== undefined && !pidAlive(o.ownerPid)) ||
+        (o.ownerLease !== undefined && !leaseLive(o.ownerLease))
+      )
         return {
           code: WAIT_EXIT.timeout,
           event: { pack, interrupted: true, cursor: encodeCursor(prev) },
@@ -111,6 +123,7 @@ export function registerWait(parent: Command): void {
       WAIT_DEFAULT_SECONDS,
     )
     .action(async (packDir: string, o: { cursor?: string; timeout: number }) => {
+      const ownerPid = agentOwnerPid();
       const ac = new AbortController();
       const stop = (): void => ac.abort();
       process.once('SIGINT', stop);
@@ -119,6 +132,8 @@ export function registerWait(parent: Command): void {
         cursor: o.cursor,
         timeout: o.timeout,
         signal: ac.signal,
+        ownerPid,
+        ownerLease: ownerPid === undefined ? undefined : leaseForPid(ownerPid),
       });
       console.log(JSON.stringify(result.event));
       process.exitCode = result.code;
