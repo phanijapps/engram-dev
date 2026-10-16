@@ -10,6 +10,17 @@ export {
 export { withPackLock, recoverPackLock } from './specpack/transaction.js';
 export { ARMED_FRESH_MS, writeArmed, clearArmed, isArmed } from './specpack/armed.js';
 export {
+  LEASE_TTL_MS,
+  writeLease,
+  removeLease,
+  liveLeases,
+  pidAlive,
+  agentOwnerPid,
+  leaseForPid,
+  leaseLive,
+  type Lease,
+} from './specpack/leases.js';
+export {
   ownerCursor,
   ownerChange,
   encodeCursor,

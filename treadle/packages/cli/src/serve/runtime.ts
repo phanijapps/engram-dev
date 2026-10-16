@@ -1,4 +1,5 @@
 /** Per-user service identity. No process is stopped by a descriptor PID. */
+import { liveLeases } from '@treadle/core';
 import { createServer, type Server, type IncomingMessage } from 'node:http';
 import { randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { spawn, execFileSync } from 'node:child_process';
@@ -28,13 +29,24 @@ export interface ServiceDescriptor {
   token: string;
   controlURL: string;
   url: string;
+  /** Present and true while the service stops itself when no session lease is live. */
+  autostop?: boolean;
 }
 export interface ServiceOptions {
   dir?: string;
   port?: number;
   entry?: string;
   timeout?: number;
+  /** Start a service that stops itself once no session lease is live. */
+  autostop?: boolean;
+  /** An explicit manual start: an already-running idle-stop service becomes persistent. */
+  keep?: boolean;
 }
+export interface IdleStop {
+  graceMs: number;
+  pollMs: number;
+}
+export const IDLE_GRACE_MS = 30_000;
 export type ControlHandler = (path: string, body: Record<string, unknown>) => unknown;
 
 export function stateDirectory(): string {
@@ -204,6 +216,15 @@ async function claimDirectory(
     await removeOwnedDirectory(candidate);
   }
 }
+async function keepIfAsked(
+  dir: string,
+  d: ServiceDescriptor,
+  options: ServiceOptions,
+): Promise<ServiceDescriptor> {
+  if (!options.keep || !d.autostop) return d;
+  await control(d, '/keepalive', {});
+  return readDescriptor(dir) ?? d;
+}
 export async function ensureService(options: ServiceOptions = {}): Promise<ServiceDescriptor> {
   const dir = options.dir ?? stateDirectory();
   privateDirectory(dir);
@@ -211,7 +232,7 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
     deadline = Date.now() + (options.timeout ?? 15000);
   while (Date.now() < deadline) {
     const existing = readDescriptor(dir);
-    if (existing && (await healthy(existing))) return existing;
+    if (existing && (await healthy(existing))) return keepIfAsked(dir, existing, options);
     if (existing && alive(existing.pid))
       throw Error(
         'Service identity cannot be verified while its process is alive; inspect status before retrying',
@@ -270,12 +291,18 @@ export async function ensureService(options: ServiceOptions = {}): Promise<Servi
     }
     try {
       const second = readDescriptor(dir);
-      if (second && (await healthy(second))) return second;
+      if (second && (await healthy(second))) return keepIfAsked(dir, second, options);
       if (second && alive(second.pid)) throw Error('Another live service cannot be verified');
       if (second) eraseDescriptor(dir, second.instance);
       const child = spawn(
         process.execPath,
-        [options.entry ?? runtimeEntry(), '_serve', '--port', String(options.port ?? 8788)],
+        [
+          options.entry ?? runtimeEntry(),
+          '_serve',
+          '--port',
+          String(options.port ?? 8788),
+          ...(options.autostop ? ['--stop-when-idle'] : []),
+        ],
         {
           detached: true,
           stdio: 'ignore',
@@ -367,6 +394,7 @@ export async function runService(
   options: ServiceOptions & {
     controlHandler?: ControlHandler;
     startUI?: (port: number) => Promise<UIHandle>;
+    idleStop?: IdleStop;
   } = {},
 ): Promise<{ descriptor: ServiceDescriptor; close(): Promise<void> }> {
   const dir = options.dir ?? stateDirectory();
@@ -390,6 +418,8 @@ export async function runService(
     if ((e as NodeJS.ErrnoException).code !== 'EADDRINUSE' || options.port === 0) throw e;
     ui = await startUI(0);
   }
+  let keep = false;
+  let closing = false;
   let descriptor: ServiceDescriptor,
     closed = false;
   const close = async (): Promise<void> => {
@@ -424,6 +454,14 @@ export async function runService(
         });
         return reply(200, { ok: true });
       }
+      if (req.url === '/keepalive' && req.method === 'POST') {
+        await requestBody(req);
+        if (closing) return reply(503, { error: 'Service is stopping; start it again' });
+        keep = true;
+        descriptor = { ...descriptor, autostop: false };
+        atomicJSON(join(dir, 'service.json'), descriptor);
+        return reply(200, { ok: true });
+      }
       if (req.method !== 'POST' || !req.headers['content-type']?.startsWith('application/json'))
         return reply(404, { error: 'No such control operation' });
       const result = options.controlHandler?.(req.url ?? '', await requestBody(req));
@@ -444,8 +482,29 @@ export async function runService(
       token,
       controlURL,
       url: ui.url,
+      ...(options.idleStop ? { autostop: true } : {}),
     };
     atomicJSON(join(dir, 'service.json'), descriptor);
+    if (options.idleStop) {
+      const { graceMs, pollMs } = options.idleStop;
+      let idleSince: number | undefined;
+      const timer = setInterval(() => {
+        if (keep) return clearInterval(timer);
+        if (liveLeases().length) idleSince = undefined;
+        else if (idleSince === undefined) idleSince = Date.now();
+        else if (Date.now() - idleSince >= graceMs) {
+          if (liveLeases().length) {
+            idleSince = undefined;
+            return;
+          }
+          if (keep) return;
+          closing = true;
+          clearInterval(timer);
+          close().catch(() => {});
+        }
+      }, pollMs);
+      timer.unref();
+    }
     return { descriptor, close };
   } catch (e) {
     await close();

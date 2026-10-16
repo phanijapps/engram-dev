@@ -262,6 +262,11 @@
             "kind": "copilot-hooks",
             "matcher": "userPromptSubmitted",
             "command": "node .harness/hooks/copilot-context.js --event userPromptSubmitted"
+          },
+          {
+            "kind": "copilot-hooks",
+            "matcher": "sessionEnd",
+            "command": "node .harness/hooks/copilot-context.js --event sessionEnd"
           }
         ]
       }

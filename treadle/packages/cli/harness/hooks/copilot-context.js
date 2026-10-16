@@ -10,6 +10,7 @@ import {
   statSync,
   writeFileSync,
 } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -103,10 +104,47 @@ function changedPacks(event, report) {
     left: Object.keys(previous).filter((key) => !(key in current)).length,
   };
 }
+// Bounded: the hook stays quick even when the runtime is cold; a missed lease only weakens cleanup (D-2, D-3).
+function leaseCall(action, event) {
+  const session = event.session_id ?? event.sessionId;
+  const args = ['_lease', action, '--from', String(process.ppid), '--cwd', String(event.cwd ?? '')];
+  if (typeof session === 'string' && session) args.push('--session', session);
+  if (action === 'start' && Number.isInteger(event.pid) && event.pid > 1)
+    args.push('--pid', String(event.pid));
+  try {
+    // Synchronous: the agent pid is found by walking up from this hook, which must still be alive.
+    const { node, entry } = runtimeConfig();
+    spawnSync(node, [entry, ...args], { stdio: 'ignore', timeout: 2000 });
+  } catch {
+    // no runtime available: the hook still returns its context
+  }
+}
+function runtimeCall(args) {
+  try {
+    const { node, entry } = runtimeConfig();
+    // Detached so a slow runtime never delays the session.
+    const child = spawn(node, [entry, ...args], {
+      stdio: 'ignore',
+      detached: true,
+      windowsHide: true,
+    });
+    child.on('error', () => {});
+    child.unref();
+  } catch {
+    // no runtime available: the hook still returns its context
+  }
+}
+function startLease(event) {
+  leaseCall('start', event);
+  runtimeCall(['start', 'serve', '--stop-when-idle']);
+}
+function endLease(event) {
+  leaseCall('end', event);
+}
 export async function runCopilotEvent(expectedEvent) {
   const event = await stdinEvent();
   if (
-    !['sessionStart', 'userPromptSubmitted'].includes(expectedEvent) ||
+    !['sessionStart', 'userPromptSubmitted', 'sessionEnd'].includes(expectedEvent) ||
     !event ||
     typeof event !== 'object' ||
     Array.isArray(event)
@@ -118,6 +156,12 @@ export async function runCopilotEvent(expectedEvent) {
     );
     return;
   }
+  if (expectedEvent === 'sessionEnd') {
+    endLease(event);
+    console.log('{}');
+    return;
+  }
+  if (expectedEvent === 'sessionStart') startLease(event);
   const instruction =
     expectedEvent === 'sessionStart' ? [pullInstruction(), wakeInstruction()].filter(Boolean) : [];
   const result = await eventContext(event.cwd, instruction);

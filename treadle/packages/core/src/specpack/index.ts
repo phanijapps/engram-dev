@@ -9,6 +9,15 @@ export {
 export { withPackLock, recoverPackLock } from './transaction.js';
 export { ARMED_FRESH_MS, writeArmed, clearArmed, isArmed } from './armed.js';
 export {
+  LEASE_TTL_MS,
+  writeLease,
+  removeLease,
+  liveLeases,
+  pidAlive,
+  agentOwnerPid,
+  type Lease,
+} from './leases.js';
+export {
   ownerCursor,
   ownerChange,
   encodeCursor,

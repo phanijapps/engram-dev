@@ -218,7 +218,7 @@ wukong stop serve
 
 One service runs per operating-system user and serves connected projects.
 The preferred port is **8788**; the service prints another address if it is occupied.
-Project connections survive restarts. Closing an agent session leaves the app available.
+Project connections survive restarts. With Copilot CLI, the session hooks start the service so that it stops about 30 seconds after the last session ends; other hosts and manual starts leave it running until `wukong stop serve`.
 After an explicit stop, the next supported session event starts it again.
 
 All listeners bind to `127.0.0.1`. Use trusted repositories and keep the ports local.

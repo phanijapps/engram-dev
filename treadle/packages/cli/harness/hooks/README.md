@@ -182,6 +182,18 @@ context tells the agent to run `do wait` as a background command and run `do sta
 Claude, Codex and Pi are `context-only` and still need a prompt. Whether Copilot resumes on
 background-command exit is recorded in `specs/agent-wake/host-evidence/copilot.json`.
 
+## Stopping with the session — 2026-10-14
+
+The Copilot `sessionStart` hook writes a machine-local lease under `os.tmpdir()/wukong-leases`
+(`HARNESS_LEASE_DIR` overrides) and starts the shared service with `start serve --stop-when-idle`.
+The lease holds a session id, the agent pid (from the payload if present, else the nearest
+non-shell ancestor) and an 8 h TTL. No prompt, transcript or pack text is stored. The `sessionEnd`
+hook removes it. An idle-stop service closes after 30 s (`HARNESS_IDLE_GRACE_MS`) with no live lease.
+A service started by `init`, `project` or plain `start serve` never self-stops. `do wait` ends with
+`interrupted` when the agent process that started it has exited. Open browser tabs do not keep it alive.
+Whether Copilot sends `sessionEnd` on Ctrl+C or a closed terminal is recorded in
+`specs/session-lifecycle/host-evidence/copilot.json`; a dead pid or the TTL covers a missed event.
+
 The context block puts guidance first, then one compact line per open spec.
 Delivered, closed and refused specs appear as counts. The block stays within 9,000 characters
 (Claude Code inlines at most 10,000) and states how many open specs it omitted.
