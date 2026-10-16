@@ -8,6 +8,15 @@ export {
   flushOwnerAudit,
 } from './specpack/audit.js';
 export { withPackLock, recoverPackLock } from './specpack/transaction.js';
+export { ARMED_FRESH_MS, writeArmed, clearArmed, isArmed } from './specpack/armed.js';
+export {
+  ownerCursor,
+  ownerChange,
+  encodeCursor,
+  decodeCursor,
+  type OwnerCursor,
+  type OwnerChange,
+} from './specpack/owner-change.js';
 export {
   validateWorkflow,
   planDigest,

@@ -161,6 +161,12 @@
       }
     }
   ],
+  "wake": {
+    "pi": "context-only",
+    "claude": "context-only",
+    "codex": "context-only",
+    "copilot": "background-command"
+  },
   "hooks": [
     {
       "id": "post-tool-check",

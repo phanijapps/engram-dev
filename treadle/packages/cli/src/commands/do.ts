@@ -6,6 +6,7 @@
  */
 import type { Command } from 'commander';
 import { registerFeedback } from './feedback.js';
+import { registerWait } from './wait.js';
 import { where, recallBlock } from '../harness/where.js';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname as packDirFrom } from 'node:path';
@@ -32,6 +33,8 @@ import {
   deriveStage,
   type PackDoc,
   type OwnerAct,
+  encodeCursor,
+  ownerCursor,
 } from '@treadle/core';
 
 const now = () => new Date().toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -100,6 +103,7 @@ function workflowOwner(
 
 export function registerDo(doCmd: Command): void {
   registerFeedback(doCmd);
+  registerWait(doCmd);
   doCmd
     .command('answer <packDir>')
     .requiredOption('--q <id>', 'the question id')
@@ -665,6 +669,7 @@ export function registerDo(doCmd: Command): void {
           `workflow: ${gate.phase} — ${gate.reasons.join('; ') || 'approved work may continue'}`,
         );
       }
+      console.log(`cursor: ${encodeCursor(ownerCursor(d, l.path))}`);
       const open = (d.spec.clarifications ?? []).filter((q) => q.status === 'open').length;
       console.log(
         `deliverable: ${d.deliverable ?? '«underived»'} · ${d.tasks.length} tasks · revision ${d.revision ?? 1} · ${open} open · ${d.approved_at ? 'approved' : 'not approved'}`,

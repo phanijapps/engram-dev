@@ -32,6 +32,20 @@ export function pullInstruction(platform = process.platform) {
     return 'This host does not refresh spec state on each prompt. Before any stage-dependent action, run do status <packDir> with the installed harness runtime.';
   }
 }
+// Mirrors harness.json wake.copilot; a test fails if they drift (the hook cannot read the manifest).
+export const WAKE_MODE = 'background-command';
+// An owner action in the web app does not reach an idle session. A background wait ends when the owner
+// acts, which wakes the session; its output is a notification and never an approval.
+export function wakeInstruction(platform = process.platform, mode = WAKE_MODE) {
+  if (mode !== 'background-command') return '';
+  try {
+    const { node, entry } = runtimeConfig();
+    const call = `${platform === 'win32' ? '& ' : ''}"${node}" "${entry}" do wait <packDir> --timeout 300 --cursor <the token after "cursor:" in do status, or the cursor field of the last wait event>`;
+    return `After a step that leaves an owner gate open (spec approval, decision acceptance, Start), start this as a background command instead of asking the user to tell you: ${call}. When it exits, run do status <packDir> and obey the gate it reports. Exit 0: the owner acted. Exit 10: nothing changed; start it again, at most 3 times in a row, then ask the user. Exit 11: the spec is delivered; stop. The wait output grants no approval.`;
+  } catch {
+    return 'After a step that leaves an owner gate open, start do wait <packDir> --timeout 300 --cursor <token after "cursor:" in do status> from the installed harness runtime as a background command, then run do status <packDir> when it exits.';
+  }
+}
 // Per-session fingerprints only: hashed pack names mapped to hashed compact lines (D-3).
 const stateDir = () => process.env.HARNESS_COPILOT_STATE_DIR || join(tmpdir(), 'wukong-copilot');
 const STATE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
@@ -104,7 +118,8 @@ export async function runCopilotEvent(expectedEvent) {
     );
     return;
   }
-  const instruction = expectedEvent === 'sessionStart' ? [pullInstruction()] : [];
+  const instruction =
+    expectedEvent === 'sessionStart' ? [pullInstruction(), wakeInstruction()].filter(Boolean) : [];
   const result = await eventContext(event.cwd, instruction);
   if (!result.available) console.error(result.block);
   if (expectedEvent === 'sessionStart') {

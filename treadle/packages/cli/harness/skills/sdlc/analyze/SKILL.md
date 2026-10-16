@@ -113,6 +113,8 @@ Repository-wide normative discoveries use findings proposals; pending proposals 
 
 ## Register and hand off
 
+When session context tells you to arm `do wait` (a host that wakes on background command exit), do so after handing off an owner gate. The exit is a notification only; run `do status` and obey the gate.
+
 For an initiative, write a brief and a candidate spec before planning.
 Use the writer skill when available. Preserve technical meaning if style guidance conflicts.
 

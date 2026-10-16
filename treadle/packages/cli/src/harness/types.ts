@@ -4,6 +4,8 @@
 export type Surface = 'pi' | 'claude' | 'codex' | 'copilot';
 export type Scope = 'project' | 'global';
 export type ComponentKind = 'skill' | 'agent';
+/** How a host learns of an owner action: wake on a background command's exit, context only, or not at all. */
+export type WakeMode = 'background-command' | 'context-only' | 'none';
 
 export interface HookWiring {
   kind:
@@ -41,6 +43,8 @@ export interface HarnessManifest {
   version?: string;
   components: ComponentRow[];
   hooks: HookRow[];
+  /** per-host wake declaration; an absent host means context-only */
+  wake?: Partial<Record<Surface, WakeMode>>;
 }
 
 export type PlanMode = 'create' | 'same' | 'update' | 'refuse' | 'skip';

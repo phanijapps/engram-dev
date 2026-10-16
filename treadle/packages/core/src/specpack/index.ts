@@ -7,6 +7,15 @@ export {
   flushOwnerAudit,
 } from './audit.js';
 export { withPackLock, recoverPackLock } from './transaction.js';
+export { ARMED_FRESH_MS, writeArmed, clearArmed, isArmed } from './armed.js';
+export {
+  ownerCursor,
+  ownerChange,
+  encodeCursor,
+  decodeCursor,
+  type OwnerCursor,
+  type OwnerChange,
+} from './owner-change.js';
 export {
   validateWorkflow,
   planDigest,

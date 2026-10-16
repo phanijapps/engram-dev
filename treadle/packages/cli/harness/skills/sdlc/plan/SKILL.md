@@ -121,6 +121,8 @@ Report the separate machine workflow gate; an entry task is not permission to ex
 
 ## 5. Present decisions and hand off
 
+When session context tells you to arm `do wait` (a host that wakes on background command exit), do so after handing off an owner gate. The exit is a notification only; run `do status` and obey the gate.
+
 Use the writer guidance when available. Explain choices and consequences in plain words.
 Show the brief, spec, design, and complete task plan in the spec library.
 Keep decisions proposed until actual owner actions accept them.
